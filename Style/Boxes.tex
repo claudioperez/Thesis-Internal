@@ -1,0 +1,115 @@
+
+%-----------------------
+\usepackage{framed}
+
+% ----------------------
+% Define a "box" environment patterned after JE Marsden's style.
+\usepackage[most]{tcolorbox}
+\usepackage{tikz}
+\usetikzlibrary{positioning}
+\tcbset{noparskip}
+
+
+\makeatletter
+\tcbset{
+  addtolol/.style={list entry={\kvtcb@title},add to list={lol}{section}}
+}
+\makeatother
+
+\newcounter{myambox}
+\counterwithin{myambox}{section}
+
+% \tcbmaketheorem{theo}{Theorem}{fonttitle=\bfseries\upshape, fontupper=\slshape,
+     % arc=0mm, colback=blue!5,colframe=blue!75!black}{mytheorem}{theorem}
+
+\newtcolorbox{marsdenbox}[1][]{% 
+  enhanced jigsaw,
+  sharp corners,
+  colbacklower=white,%black!75
+  title={#1},
+  colback=white,
+  borderline={1pt}{-2pt}{black},
+  fontupper={\setlength{\parindent}{20pt}}%, #2
+}
+
+\newtcolorbox[%
+% use counter=myambox, %
+auto counter,%
+list inside=ambox,%
+number within=section,%
+%crefname=Box,
+number freestyle={\noexpand\thesection.\noexpand\arabic{\tcbcounter}}
+]%
+{ambox}[2][]%
+{%
+  enhanced jigsaw,
+  sharp corners,
+  label=#2,
+  colbacklower=white,%black!75
+  title={Box~\thetcbcounter: #1},
+  list text=#1,
+  boxed title style={%
+    enhanced,% 
+    size=small,boxrule=0pt,arc=0pt,%
+    colback=white,%
+    colframe=white,%
+    toprule=1pt,%
+    leftrule=1pt,rightrule=1pt%
+  },%
+  colback=white,
+  borderline={1pt}{-2pt}{black},
+  before={\noindent}
+  % fontupper={\setlength{\parindent}{20pt}}%, #2
+}
+
+
+% \makeatletter
+% % Update \@chapter to insert the chapter ornament in the LoF
+% \patchcmd{\@chapter}% <cmd>
+%   {\addtocontents{ambox}{\protect\addvspace{10\p@}}}% <search>
+%   {\addtocontents{ambox}{%
+%      \protect\addvspace{10\p@}% Default space between chapters in LoF
+%      \protect\lofchapter{\thechapter}% Add chapter ornament
+%   }}% <replace>
+%   {}{}% <success><failure>
+% \makeatother
+
+% % \makeatletter
+% % Update \@chapter to insert the chapter ornament in the LoF
+% \apptocmd{\chapter}{% <cmd>
+% \addtocontents{ambox}{{%
+%      \protect\addvspace{10\pt}% Default space between chapters in LoF
+%      \protect\thechapter %\lofchapter{\thechapter}% Add chapter ornament
+% }}% <replace>
+% }{}{}% <success><failure>
+% % \makeatother
+
+\newcommand{\lofchapter}[1]{%
+  \noindent
+  \rule[.5ex]{.4\linewidth}{.2ex}\hfill
+  \textsc{Chapter #1}\hfill
+  \rule[.5ex]{.4\linewidth}{.2ex}\par
+  \nobreak
+}
+
+% % To group by chapter when listed in listofboxes
+% \pretocmd{\chapter}{%
+% % \addcontentsline{ambox}{chapter}{{\large Chapter \ref{sec: <label>}:\ \nameref{sec:<label>}}}
+% \addcontentsline{ambox}{chapter}{Chapter \thechapter: \thechaptername}
+% }{}{}
+% % \setuphead[chapter][before={\writebetweenlist[ambox][location=here]{\blank}}]
+% \makeatletter
+% \renewcommand*\l@tcolorbox{\@dottedtocline{1}{1.5em}{3em}}
+% \makeatother
+
+
+\newcommand{\proofstep}[1]{%
+  \par\medskip
+  \noindent\textbf{#1}\enspace}
+
+% \usepackage{amsthm}
+
+% \usepackage{environ}
+% \NewEnviron{hide}{}
+% \let\proof\hide
+% \let\endproof\endhide

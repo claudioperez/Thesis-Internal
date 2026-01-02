@@ -1,0 +1,116 @@
+
+\textbf{1. Compute the Trace of the Strain Field}
+
+We compute the trace of each term in the provided strain field $\bm{E}$.
+
+\begin{enumerate}
+    \item \textbf{Axial and Bending Terms ($E_A, E_B$):}
+    \begin{align*}
+    \operatorname{tr}\Big( (a_\varepsilon + \bm{r}\cdot\IesanLoadM)\,\big(\FrameBasis\otimes\FrameBasis-\nu\,\mathbf{1}_\Section\big) \Big)
+    &= (a_\varepsilon + \bm{r}\cdot\IesanLoadM) \Big( \operatorname{tr}(\FrameBasis\otimes\FrameBasis) - \nu \operatorname{tr}\mathbf{1}_\Section \Big) \\
+    &= (a_\varepsilon + \bm{r}\cdot\IesanLoadM)(1 - 2\nu)
+    \end{align*}
+
+    \item \textbf{Shear and Torsion Terms ($E_C, E_E$):}
+    The vectors $\bm{\varepsilon}_{\vartheta}$ and $\bm{w}_b$ are defined on the cross-section and are thus orthogonal to $\FrameBasis$ (i.e., $\bm{\varepsilon}_{\vartheta} \cdot \FrameBasis = 0$ and $\bm{w}_b \cdot \FrameBasis = 0$).
+    \[
+    \operatorname{tr}\Big( \tfrac{1}{2}\big[\FrameBasis\otimes\bm{\varepsilon}_{\vartheta}+\bm{\varepsilon}_{\vartheta}\otimes\FrameBasis\big] \Big) = \tfrac{1}{2}(\FrameBasis \cdot \bm{\varepsilon}_{\vartheta} + \bm{\varepsilon}_{\vartheta} \cdot \FrameBasis) = 0
+    \]
+    \[
+    \operatorname{tr}\Big( \tfrac{1}{2}\big[\FrameBasis\otimes\bm w_b+\bm w_b\otimes\FrameBasis\big] \Big) = \tfrac{1}{2}(\FrameBasis \cdot \bm{w}_b + \bm{w}_b \cdot \FrameBasis) = 0
+    \]
+    Thus, the shear terms are traceless.
+
+    \item \textbf{Warping Normal Strain Term ($E_D$):}
+    \begin{align*}
+    \operatorname{tr}\Big( ((\bm{r}-\CentroidLocation)\cdot\bm{b}_{\Section})\,(\FrameBasis\otimes\FrameBasis) &\;-\;x\nu\,((\bm{r}-\CentroidLocation)\cdot\bm{b}_{\Section})\,\mathbf{1}_\Section \Big) \\
+    &= ((\bm{r}-\CentroidLocation)\cdot\bm{b}_{\Section}) \operatorname{tr}(\FrameBasis\otimes\FrameBasis) - x\nu\,((\bm{r}-\CentroidLocation)\cdot\bm{b}_{\Section}) \operatorname{tr}(\mathbf{1}_\Section) \\
+    &= ((\bm{r}-\CentroidLocation)\cdot\bm{b}_{\Section})(1) - x\nu\,((\bm{r}-\CentroidLocation)\cdot\bm{b}_{\Section})(2) \\
+    &= ((\bm{r}-\CentroidLocation)\cdot\bm{b}_{\Section}) (1 - 2x\nu)
+    \end{align*}
+\end{enumerate}
+
+Summing these components gives the total trace:
+$$
+\operatorname{tr}\StrainTensor = (1-2\nu)(a_\varepsilon + \bm{r}\cdot\IesanLoadM) + (1-2x\nu)((\bm{r}-\CentroidLocation)\cdot\bm{b}_{\Section})
+$$
+
+\textbf{2. Compute the Stress Field}
+
+Separate the calculation into the normal stress components (proportional to $\FrameBasis \otimes \FrameBasis$ and $\mathbf{1}_\Section$) and the shear stress components.
+
+\begin{itemize}
+\item \textbf{Normal Stress Components}
+
+Let $\bm{E}_{\text{normal}}$ be the non-shear terms from $\bm{E}$:
+$$
+\bm{E}_{\text{normal}} = (a_\varepsilon + \bm{r}\cdot\IesanLoadM)\,\big(\FrameBasis\otimes\FrameBasis-\nu\,\mathbf{1}_\Section\big) + ((\bm{r}-\CentroidLocation)\cdot\bm{b}_{\Section})\,(\FrameBasis\otimes\FrameBasis) \;-\;x\nu\,((\bm{r}-\CentroidLocation)\cdot\bm{b}_{\Section})\,\mathbf{1}_\Section
+$$
+The normal stress $\StressTensor_{\text{normal}}$ is:
+$$
+\StressTensor_{\text{normal}} = \lambda \operatorname{tr}(\bm{E}) \mathbf{1} + 2G \bm{E}_{\text{normal}}
+$$
+Group the terms multiplying $(\FrameBasis \otimes \FrameBasis)$ and $(\mathbf{1}_\Section)$:
+
+\textbf{$(\FrameBasis \otimes \FrameBasis)$ terms:}
+From $\lambda \operatorname{tr}(\bm{E}) \mathbf{1}$:
+\begin{align*}
+\lambda \operatorname{tr}(\bm{E}) (\FrameBasis \otimes \FrameBasis) &= \frac{E\nu}{(1+\nu)(1-2\nu)} \left( (1-2\nu)(a_\varepsilon + \bm{r}\cdot\IesanLoadM) + (1-2x\nu)((\bm{r}-\CentroidLocation)\cdot\bm{b}_{\Section}) \right) \FrameBasis \otimes \FrameBasis \\
+&= \left( \frac{E\nu}{1+\nu} (a_\varepsilon + \bm{r}\cdot\IesanLoadM) + \frac{E\nu(1-2x\nu)}{(1+\nu)(1-2\nu)}((\bm{r}-\CentroidLocation)\cdot\bm{b}_{\Section}) \right) (\FrameBasis \otimes \FrameBasis)
+\end{align*}
+From $2G \bm{E}_{\text{normal}}$ using $2G = E/(1+\nu)$:
+\begin{align*}
+2G \left( (a_\varepsilon + \bm{r}\cdot\IesanLoadM) + ((\bm{r}-\CentroidLocation)\cdot\bm{b}_{\Section}) \right) (\FrameBasis \otimes \FrameBasis)
+= \frac{E}{1+\nu} \left( (a_\varepsilon + \bm{r}\cdot\IesanLoadM) + ((\bm{r}-\CentroidLocation)\cdot\bm{b}_{\Section}) \right) (\FrameBasis \otimes \FrameBasis)
+\end{align*}
+Summing the $\FrameBasis \otimes \FrameBasis$ terms:
+\begin{itemize}
+    \item $(a_\varepsilon + \bm{r}\cdot\IesanLoadM)$: $\left( \frac{E\nu}{1+\nu} + \frac{E}{1+\nu} \right) = \frac{E(1+\nu)}{1+\nu} = E$
+    \item $((\bm{r}-\CentroidLocation)\cdot\bm{b}_{\Section})$: $\left( \frac{E\nu(1-2x\nu)}{(1+\nu)(1-2\nu)} + \frac{E}{1+\nu} \right) = \frac{E}{1+\nu} \left( \frac{\nu(1-2x\nu) + (1-2\nu)}{1-2\nu} \right) = \frac{E}{1+\nu} \left( \frac{\nu-2x\nu^2 + 1-2\nu}{1-2\nu} \right) = \frac{E(1-\nu-2x\nu^2)}{(1+\nu)(1-2\nu)}$
+\end{itemize}
+
+\textbf{$\mathbf{1}_\Section$ terms:}
+From $\lambda \operatorname{tr}(\bm{E}) \mathbf{1}$:
+\[
+\lambda (\operatorname{tr}\bm{E}) \mathbf{1}_\Section = \left( \frac{E\nu}{1+\nu} (a_\varepsilon + \bm{r}\cdot\IesanLoadM) + \frac{E\nu(1-2x\nu)}{(1+\nu)(1-2\nu)}((\bm{r}-\CentroidLocation)\cdot\bm{b}_{\Section}) \right) \mathbf{1}_\Section
+\]
+From $2G \bm{E}_{\text{normal}}$ using $2G = E/(1+\nu)$:
+\begin{align*}
+2G \left( -\nu(a_\varepsilon + \bm{r}\cdot\IesanLoadM) - x\nu((\bm{r}-\CentroidLocation)\cdot\bm{b}_{\Section}) \right) \mathbf{1}_\Section
+= -\frac{E\nu}{1+\nu} \left( (a_\varepsilon + \bm{r}\cdot\IesanLoadM) + x((\bm{r}-\CentroidLocation)\cdot\bm{b}_{\Section}) \right) \mathbf{1}_\Section
+\end{align*}
+%
+Summing the $\mathbf{1}_\Section$ terms:
+% \begin{itemize}
+%     \item $(a_\varepsilon + \bm{r}\cdot\IesanLoadM)$: $\left( \frac{E\nu}{1+\nu} - \frac{E\nu}{1+\nu} \right) = 0$
+%     \item $((\bm{r}-\CentroidLocation)\cdot\bm{b}_{\Section})$: $\left( \frac{E\nu(1-2x\nu)}{(1+\nu)(1-2\nu)} - \frac{E\nu x}{1+\nu} \right) = \frac{E\nu}{1+\nu} \left( \frac{1-2x\nu - x(1-2\nu)}{1-2\nu} \right)$ \\
+%     $= \frac{E\nu}{1+\nu} \left( \frac{1-2x\nu - x+2x\nu}{1-2\nu} \right) = \frac{E\nu(1-x)}{(1+\nu)(1-2\Vnu)}$
+% \end{itemize}
+
+\item \textbf{Shear Stress Components}
+
+The shear terms in $\bm{E}$ are traceless, so the volumetric stress $\lambda \operatorname{tr}(\bm{E}) \mathbf{1}$ does not contribute to them. The shear stress is given solely by the $2G \bm{E}_{\text{shear}}$ term.
+$$
+\begin{aligned}
+\StressTensor_{\text{shear}} &= 2G \bm{E}_{\text{shear}} \\
+&= 2G \left( \tfrac12\left(\FrameBasis\otimes\bm{\varepsilon}_{\vartheta}+\bm{\varepsilon}_{\vartheta}\otimes\FrameBasis\right)(a_\vartheta+c_\vartheta) + \tfrac12\left(\FrameBasis\otimes\bm w_b+\bm w_b\otimes\FrameBasis\right) \right) \\
+&= G(a_\vartheta+c_\vartheta)\left(\FrameBasis\otimes\bm{\varepsilon}_{\vartheta}+\bm{\varepsilon}_{\vartheta}\otimes\FrameBasis\right) + G\left(\FrameBasis\otimes\bm w_b+\bm w_b\otimes\FrameBasis\right)
+\end{aligned}
+$$
+Using $\bm{\varepsilon}_{\vartheta}= \,\FrameBasis\times\bm{r} +\nabla \varphi$
+
+\end{itemize}
+
+\textbf{3. Final Stress Field}
+
+Combining all components, the final stress tensor $\StressTensor$ is:
+$$
+\begin{aligned}
+\StressTensor &=
+\left( E (a_\varepsilon + \bm{r}\cdot\IesanLoadM) + (1-\nu-2x\nu^2)\frac{E}{(1+\nu)(1-2\nu)} ((\bm{r}-\CentroidLocation)\cdot\bm{b}_{\Section}) \right) \FrameBasis \otimes \FrameBasis \\[4pt]
+&\quad + (1-x)\lambda \left( ((\bm{r}-\CentroidLocation)\cdot\bm{b}_{\Section}) \right) \mathbf{1}_\Section \\[4pt]
+&\quad + G(a_\vartheta+c_\vartheta)\left(\FrameBasis\otimes\bm{\varepsilon}_{\vartheta}+\bm{\varepsilon}_{\vartheta}\otimes\FrameBasis\right) \\
+&\quad + G\left(\FrameBasis\otimes\bm w_b+\bm w_b\otimes\FrameBasis\right)
+\end{aligned}
+$$
+

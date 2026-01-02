@@ -1,0 +1,204 @@
+\subsection{Class II(E)}\label{sec:proof-s3}
+\begin{proof}[Proof of \cref{prop:class-ii-e}]
+We want plane-section traces \(\TraceDeDpRoot\) that also come from some
+\(\mathbf{X}\) in the equilibrium-invariance group $G$. 
+To this end, fix a reference plane-section trace \(\TraceDeDpRoot^R\) of the form \eqref{eq:T0-plane-structure}, with blocks
+\(\TraceBT^R, \TraceFT^R,\dots\), and look at
+\begin{equation*}
+  \TraceDeDpRoot = \mathbf{X}\,\TraceDeDpRoot^R.
+\end{equation*}
+
+Equilibrium invariance requires:
+\begin{equation*}
+  \TraceDeDpRoot^\top \mathbb{J}\,\TraceDeDpRoot^{-\top}
+  = \TraceDeDpRoot^{R,\top} \mathbb{J}\,\TraceDeDpRoot^{R,-\top}
+  \;\Longleftrightarrow\;
+  \mathbf{X}^\top \mathbb{J}\,\mathbf{X}^{-\top} = \mathbb{J}.
+\end{equation*}
+So \(\mathbf{X}^\top \in G\).
+Write \(\mathbf{X}^\top = \mathbf{K}\) with the structure \eqref{eq:K-structure}, so
+\begin{equation}
+  \mathbf{X} = \mathbf{K}^\top =
+  \begin{bmatrix}
+    K_{11}     & \mathbf{0}^\top      & K_{31}      & \bm{k}_{41}^\top \\
+    \bm{k}_{12}& \mathbf{K}_{22}^\top & \bm{k}_{32} & \mathbf{K}_{42}^\top \\
+    K_{13}     & \mathbf{0}^\top      & K_{33}      & \bm{k}_{43}^\top \\
+    \mathbf{0} & \mathbf{0}           & \mathbf{0}  & \mathbf{K}_{44}^\top
+  \end{bmatrix}.
+  \tag{4}
+\end{equation}
+
+Now impose: \(\TraceDeDpRoot = \mathbf{X}\,\TraceDeDpRoot^R\) must again have the
+plane-section pattern \eqref{eq:T0-plane-structure}. 
+Multiply in blocks and enforce only the fixed
+zeros/ones of \eqref{eq:T0-plane-structure}.
+
+Let \(\TraceBT^R\) be the \(2\times 1\) block in \(\TraceDeDpRoot^R\). 
+Computing the blocks of \(\TraceDeDpRoot\) and enforcing:
+
+\begin{itemize}
+  \item \(T_{11} = 1\) gives \(K_{11} = 1\).
+  \item \(T_{21} = \mathbf{0}\) gives \(\bm{k}_{12} = \mathbf{0}\).
+  \item \(T_{22} = \mathbf{0}\) gives \(\mathbf{K}_{42} = \mathbf{0}\).
+  \item \(T_{31} = 0\) gives \(K_{13} = 0\).
+  \item \(T_{32} = \mathbf{0}\) gives \(\bm{k}_{43} = \mathbf{0}\).
+  \item \(T_{33} = 1\) gives \(K_{33} = 1\).
+  \item \(T_{42} = -\FrameBasis^\times\) yields
+    \[
+      \mathbf{K}_{44}^\top (-\FrameBasis^\times) = -\FrameBasis^\times
+      \;\Rightarrow\;
+      \mathbf{K}_{44} = \oneS,
+    \]
+    which also forces \(\mathbf{K}_{22} = \oneS\).
+  \item \(T_{13} = 0\) gives the single scalar constraint
+    \begin{equation*}
+      K_{31} + \bm{k}_{41}\cdot\TraceBT^R = 0.
+      % \tag{5}
+    \end{equation*}
+\end{itemize}
+
+All other blocks of \(\TraceDeDpRoot\) are allowed to be arbitrary, and do not impose further equations. 
+Collecting the conditions on \(\mathbf{K}\):
+\[
+  K_{11} = 1,\quad
+  K_{13} = 0,\quad
+  K_{33} = 1,\quad
+  \bm{k}_{12} = \mathbf{0},\quad
+  \mathbf{K}_{22} = \oneS,\quad
+  \mathbf{K}_{42} = \mathbf{0},\quad
+  \bm{k}_{43} = \mathbf{0},\quad
+  \mathbf{K}_{44} = \oneS,
+\]
+with
+\[
+  K_{31} = -\bm{k}_{41}\cdot\TraceBT^R.
+\]
+
+The only free blocks left in \(\mathbf{K}\) are the two \(2\)-vectors
+\(\bm{k}_{32},\bm{k}_{41}\).  So an admissible plane-section /
+equilibrium-invariant \(\mathbf{K}\in G\) has block form
+\begin{equation*}
+  \mathbf{K} =
+  \begin{bmatrix}
+    1 & \mathbf{0}^\top       & 0 & \mathbf{0}^\top \\
+    \mathbf{0} & \oneS        & \mathbf{0} & \mathbf{0} \\
+    -\bm{k}_{41}\cdot\TraceBT^R & \bm{k}_{32}^\top & 1 & \mathbf{0}^\top \\
+    \bm{k}_{41} & \mathbf{0}  & \mathbf{0} & \oneS
+  \end{bmatrix}
+\end{equation*}
+with \(\bm{k}_{32},\bm{k}_{41}\in\mathbb{R}^2\) arbitrary. 
+The corresponding admissible plane-section \(\mathbf{X}\) (since
+\(\mathbf{X}^\top = \mathbf{K}\)) is
+\begin{equation*}
+  \mathbf{X} =
+  \begin{bmatrix}
+    1 & \mathbf{0}^\top & -\bm{k}_{41}\cdot\TraceBT^R & \bm{k}_{41}^\top \\
+    \mathbf{0} & \oneS   & \bm{k}_{32} & \mathbf{0} \\
+    0 & \mathbf{0}^\top  & 1 & \mathbf{0}^\top \\
+    \mathbf{0} & \mathbf{0} & \mathbf{0} & \oneS
+  \end{bmatrix}
+\end{equation*}
+Thus, P1 and S2 picks out exactly this 4‑parameter
+subgroup inside \(G\). 
+%
+It is convenient to rename
+\[
+  \bm{b} \coloneq \bm{k}_{41},\qquad
+  \bm{c} \coloneq \bm{k}_{32}.
+\]
+Then
+\begin{equation*}
+  \mathbf{X} =
+  \begin{bmatrix}
+    1 & \mathbf{0} & -\bm{b}\cdot {\TraceBT}^R & \bm{b}^\top \\
+    \mathbf{0} & \oneS  & \bm{c} & \mathbf{0} \\
+    0 & \mathbf{0} & 1 & \mathbf{0} \\
+    \mathbf{0} & \mathbf{0} & \mathbf{0} & \oneS
+  \end{bmatrix},
+\end{equation*}
+%
+Write the reference plane-section trace as
+\begin{equation*}
+  \TraceDeDpRoot^R =
+  \begin{pmatrix}
+    1          & \bm{r}_R^\top & 0 & {\TraceNF}_R^\top \\
+    \mathbf{0} & \mathbf{0}    & {\TraceFT}_R & {\TraceFF}_R \\
+    0          & \mathbf{0} & 1 & {\TraceTF}_R^\top \\
+    \mathbf{0} & -\FrameBasis^\times & {\TraceBT}_R & {\TraceMF}_R
+  \end{pmatrix}.
+\end{equation*}
+Then \(\TraceDeDpRoot = \mathbf{X}\,\TraceDeDpRoot^R\) has the same plane-section
+pattern
+\begin{equation*}
+  \TraceDeDpRoot =
+  \begin{bmatrix}
+    1          & \CenterTrace^\top & 0 & \TraceNF^\top \\
+    \mathbf{0} & \mathbf{0}              & \TraceFT & \TraceFF \\
+    0          & \mathbf{0}              & 1 & \TraceTF^\top \\
+    \mathbf{0} & -\FrameBasis^\times     & \TraceBT & \TraceMF
+  \end{bmatrix},
+\end{equation*}
+with the new blocks expressed in terms of the reference ones and
+\(\bm{b},\bm{c}\):
+
+\begin{align*}
+  \CenterTrace^\top
+    &= \bm{r}_R^\top - \bm{b}^\top \FrameBasis^\times, \\ %[4pt]
+  \TraceFT
+    &= {\TraceFT}_R + \bm{c}, \\ %[4pt]
+  \TraceFF
+    &= {\TraceFF}_R + \bm{c}\otimes{\TraceTF}_R, \\ %[4pt]
+  \TraceNF^\top
+    &= {\TraceNF}_R^\top
+       - (\bm{b}^\top {\TraceBT}_R)\,{\TraceTF}_R^\top
+       + \bm{b}^\top {\TraceMF}_R, \\%[4pt]
+  \TraceTF
+    &= {\TraceTF}_R, \\%[4pt]
+  \TraceBT
+    &= {\TraceBT}_R, \\%[4pt]
+  \TraceMF
+    &= {\TraceMF}_R.
+\end{align*}
+%
+Define
+\[
+  \Delta \TraceDeDpRoot \coloneq \TraceDeDpRoot - \TraceDeDpRoot^R =
+  \begin{bmatrix}
+    0 & \Delta \bm{r}^\top & 0 & \Delta \TraceNF^\top \\[2pt]
+    \mathbf{0} & \mathbf{0} & \Delta \TraceFT & \Delta \TraceFF \\[2pt]
+    0 & \mathbf{0}^\top & 0 & \mathbf{0}^\top \\[2pt]
+    \mathbf{0} & \mathbf{0} & \mathbf{0} & \mathbf{0}
+  \end{bmatrix},
+\quad\text{with}\quad
+\]
+\begin{align*}
+  \Delta \bm{r}
+    &= \CenterTrace - \bm{r}_R
+     = \FrameBasis\times\bm{b}, \\ %[4pt]
+  \Delta \TraceNF^\top
+    &= \TraceNF^\top - {\TraceNF}_R^\top
+     = -({\TraceBT}_R \cdot \bm{b})\,{\TraceTF}_R^\top
+       + \bm{b}^\top {\TraceMF}_R, \\ %[4pt]
+  \Delta \TraceFT
+    &= \TraceFT - {\TraceFT}_R = \bm{c}, \\ %[4pt]
+  \Delta \TraceFF
+    &= \TraceFF - {\TraceFF}_R = \bm{c}\otimes {\TraceTF}_R.
+\end{align*}
+The remaining blocks
+\(\TraceTF,\TraceBT,\TraceMF\) are unchanged. 
+In summary:
+
+\begin{itemize}
+  \item \(\bm{b}\) is a \emph{trace-center gauge} for axial–bending:
+        it shifts the trace center \(\CenterTrace\) and induces a
+        matching change in \(\TraceNF\) while preserving equilibrium and
+        energy structure.
+  \item \(\bm{c}\) is a \emph{shear-basis gauge}: it mixes shear with
+        torsion/flexure via \(\TraceFT,\TraceFF\) without affecting the
+        purely torsional/bending blocks.
+  \item The blocks corresponding to pure torsion and pure bending
+        (the 1’s in columns 1 and 3, the \(-\FrameBasis^\times\) block,
+        and \(\TraceTF,\TraceBT,\TraceMF\)) are structural invariants of
+        the equilibrium-invariant plane-section family.
+\end{itemize}
+\end{proof}

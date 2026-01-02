@@ -1,0 +1,266 @@
+% \begin{Details}
+
+\subsection{Motivation}
+
+
+\subsubsection{Applications}
+Shear links are used in the Richmond-San Rafel Bridge \citep{seible2000long}.
+
+The response of bearings \cite{montalto2024buckling,montalto2024effective}.
+
+Several finite element analysis products implement distinct models for special cases like thin-walled or open sections.
+\subsection{Objectives}
+
+While the trace formalism clarifies the classical shear correction debate, the 
+primary objective of this work is not the determination of shear correction 
+factors \emph{per se}. Rather, our goal is to develop a framework for obtaining 
+\emph{warping modes} suitable for inelastic beam analysis.
+
+In linear elastic analysis, the distinction between different traces is 
+largely academic: all traces that exactly represent the Saint-Venant class 
+yield equivalent global stiffness matrices, differing only in the physical 
+interpretation assigned to boundary conditions. The situation changes 
+fundamentally when material nonlinearity is introduced. 
+Inelastic constitutive 
+evaluation requires knowledge of the actual strain distribution at material 
+points throughout the cross-section—not merely the integrated stress 
+resultants. This distribution depends on the \emph{warping shapes} employed 
+in the kinematic description, and the classical Saint-Venant warping functions 
+do not, in general, furnish the correct shapes for a given trace.
+
+The connection to shear correction arises because addressing this requirement 
+forces us to confront the same fundamental ambiguity that underlies the shear 
+correction debate. Different traces imply different associations between 
+beam strains and pointwise deformations, and hence different effective 
+warping shapes. The trace matrix $\TraceDeDpRoot$ encodes precisely this 
+association: it transforms the canonical Ie\c{s}an parameters of the 
+Saint-Venant solution into the strain measures of a particular beam theory, 
+and its inverse determines the warping shapes that reconstruct the continuum 
+strain field from those beam strains.
+
+A secondary objective is computational efficiency. Existing implementations 
+of inelastic beam elements with warping \citep{saritas2009inelastic,%
+lecorvec2012nonlinear,dire2018mixed} introduce auxiliary kinematic fields 
+that must be interpolated along the element length. These additional degrees 
+of freedom either inflate the global system of equations—incurring a cost 
+that scales as the cube of the DOF count for direct linear solvers—or must 
+be condensed out at the element level during each Newton iteration. We seek 
+a formulation in which warping effects are entirely absorbed into the 
+section-level constitutive relation, so that standard six-DOF beam elements 
+can be employed without modification.
+
+\subsection{Scope}
+
+The developments in this work are restricted to the following setting:
+\begin{itemize}
+\item Prismatic, initially straight beams with arbitrary cross-section geometry.
+\item Homogeneous, isotropic material response at the continuum level 
+      (though the section-level formulation accommodates inelasticity 
+      through fiber discretization).
+\item The Saint-Venant class of loadings: axial force, biaxial bending moments, 
+      torque, and biaxial shear forces, all applied as end resultants.
+\item Quasi-static response; dynamic and frequency-matching considerations 
+      are outside our scope.
+\item Small to moderate material strain.
+\end{itemize}
+
+We do not treat thin-walled sections as a special case requiring separate 
+theoretical development. The formulation applies to arbitrary solid or 
+thin-walled cross-sections, with the classical thin-walled results 
+(Vlasov torsion, etc.) emerging as limiting cases.
+
+\subsection{Outline}
+
+The remainder of this work is organized as follows.
+
+\Cref{sec:genwarp} develops the governing equations for a geometrically exact 
+beam enriched with an arbitrary number of warping modes. 
+Beam theories are classified into four types according to how warping amplitudes are related to the primary beam strains, and show that the constitutive relations for all types are connected by linear transformations. 
+The Type~3 formulation, in which warping amplitudes are algebraically constrained to the beam strains, 
+is identified as the target for standard six-DOF finite elements.
+
+\Cref{sec:gensec} develops the section-level constitutive theory that connects 
+the one-dimensional beam model to the three-dimensional continuum. 
+We introduce material points in the cross-section through an extended displacement field and derive strain measures consistent with the beam kinematics.
+
+\Cref{sec:sv} presents a systematic treatment of Saint~Venant's solutions following the representation of \cite{iesan1986saintvenants}. 
+The complete Saint~Venant displacement field is decomposed into five rigid-body patterns 
+and eight warping patterns, establishing the minimal warping content required 
+for exact representation of the class.
+
+\Cref{sec:timo} introduces the trace formalism and characterizes the family 
+of traces satisfying our admissibility criteria. We derive explicit expressions 
+for the trace matrices corresponding to classical beam theories and introduce 
+the energy-conjugate trace, which produces symmetric section stiffness and arises naturally from variational considerations.
+
+Finally, we present numerical examples demonstrating exact recovery of 
+Saint~Venant solutions through the proposed formulation and illustrating 
+the behavior under inelastic material response.
+% \end{Details}
+
+\subsection{Overview}
+The objective of this work is to develop a model of slender bodies that reduces the 3D elastostatic boundary value problem to a problem with one spatial dimension. 
+
+The draft first lays out the nonlinear governing equations of equilibrium for general lines in space in \cref{sec:genwarp}. 
+These equations are determined solely from the geometric nature of a line embedded in space, and make no reference to material points that are not contained on this line. 
+The general model is geometrically exact and allows an arbitrary number of auxiliary ``warping amplitude" fields, and specializations are obtained that eliminate the additional fields in a general manner. 
+
+Next a section-level constitutive theory is developed in \cref{sec:gensec} which allows for the consideration of material points that do not lie on the reference line.
+
+The next two sections are centered on identifying a minimal set of warping shapes which allow for the exact reconstruction of Saint Venant's classical continuum solutions through the reduced model of \cref{sec:genwarp}. 
+This begins with a brief recapitulation of Saint Venant's solution in \cref{sec:sv}. 
+Then in \cref{sec:timo}, we proceed to fit a curve through the Saint Venant solution. 
+\begin{Aside}
+This draft develops a general family of beam theories enriched by an arbitrary number of warping modes. 
+The work begins in the most general setting where we allow for inelasticity and finite deformation. 
+We discuss the implications of eliminating warping modes by association with classical strains measures. 
+Then we move on to selecting a minimal set of warping shapes. 
+To this end, we take a detour into the simple world of the SV class. 
+We present Iesan's representation of the class, and break the 3D solution into 5 rigid patterns and 8 warping patterns. 
+Next we must determine an association of these patterns with strains arising from the configuration manifold we investigated earlier; ie, 
+$$\left\{\bm{u}: [0,L]\rightarrow \mathbb{R}^3, \FrameRotation: [0,L]\rightarrow \mathrm{SO}(3), \bm{\alpha}: [0,L]\rightarrow \mathbb{R}^{n_w}\right\}$$ 
+At this point we are confronted with the fundamental ambiguity in associating these fields to full 3D deformation fields. 
+So then we introduce the abstraction of traces, $T: \hat{u} \rightarrow (u, \theta)$ which formalize this ambiguity. 
+There are three natural restrictions we impose on the class of traces we'll investigate: 1) they generate at-most-linear strain measures under the SV class, 2) they preserve plane-section-preserving deformations, and 3) they are capable of exactly reconstructing the exact strain field for any problem in the SV class.
+\end{Aside}
+
+\begin{Prompt}
+
+\section*{Introduction}
+
+In linear analysis, Saint~Venant torsion and shear cross-sectional constants enrich the plane-section hypothesis by incorporating the effects of cross-section warping. 
+In inelastic analysis, this treatment is more difficult and is often omitted; many nonlinear fiber-section implementations, therefore, lack the warping fields underlying the determination of the torsional constant $J$ and the effective shear areas $A_y, A_z$. 
+This paper investigates a general section formulation that augments classical kinematics with a compact set of axial warping modes whose amplitudes can be tied to the twist rate $\vartheta^{\prime}$ and the engineering shear deformations $\gamma_y, \gamma_z$. 
+The proposed section model recovers the classical elastic relations and holds under inelastic material response, while remaining compatible with standard inelastic frame element formulations.
+
+
+\section*{Section Kinematics}
+
+\paragraph{Classical Theory}
+
+Introductory treatments of beam theory typically assume a restricted three-dimensional displacement field \(\hat{\symbfit{x}}\):
+%
+\begin{equation}
+\hat{\symbfit{x}}(\reflenx,y,z) = \symbfit{x}(\reflenx) + \symbfit{R}(\reflenx)\,\symbfit{r}(y,z), 
+\qquad 
+\symbfit{r}=\begin{pmatrix} 0,\; y ,\; z\end{pmatrix},
+\label{eq:finite-plane-kinematics}
+\end{equation}
+%
+where \(\reflenx\) is the coordinate along the beam axis, and \((y,z)\) are the coordinates in the section plane normal to it with \((\symbfit{x}(\reflenx),\,\symbfit{R}(\reflenx))\) the primary kinematic variables describing the position \(\symbfit{x}\) of the reference line in space, and the rotation \(\symbfit{R}\) of a cross section. 
+\cref{eq:finite-plane-kinematics} implies that plane sections remain plane. 
+Under infinitesimal displacements it reduces to
+%
+\begin{equation}
+\hat{\symbfit{x}}(\reflenx,y,z) = \symbfit{x}(\reflenx) + \symbfit{\theta}(\reflenx)\times\symbfit{r}(y,z).
+\label{eq:linear-plane-kinematics}
+\end{equation}
+%
+For a linear isotropic material with shear modulus \(G\), \cref{eq:finite-plane-kinematics} leads to the resultant torque \(T\) and the shears \(V_y,\,V_z\) in terms of the twist rate \(\vartheta'\) and the shear deformations \(\gamma_y,\, \gamma_z\) in the form: %\citep{hjelmstad2005fundamentals}:
+\begin{equation*}
+T = G \Io \,\vartheta', \qquad V_y = G A\,\gamma_y, \qquad V_z = G A\,\gamma_z,
+\end{equation*}
+where \(\Io\) is the polar moment of inertia and \(A\) the cross sectional area. 
+These constitutive relations are generally unsatisfactory and are seldom used in practice. 
+Rather, the Saint~Venant torsion constant \(\Jo\) and the shear-corrected areas \(A_y\) and \(A_z\) 
+are introduced so as to match the exact solutions from the theory of elasticity in which the plane section hypothesis of \cref{eq:finite-plane-kinematics} is violated. 
+This leads to the standard relations:
+\begin{equation}
+T = G \Jo\,\vartheta', \qquad V_y = G A_y\,\gamma_y, \qquad V_z = G A_z\,\gamma_z.
+\label{eq:correct-resultants}
+\end{equation}
+under elastic conditions following the procedure in well known references \citep{cowper1966shear,renton1991generalized}.
+Difficulty arises when applying a similar methodology to inelastic response.
+
+\paragraph{Complete Kinematics}
+An alternative displacement field to \cref{eq:finite-plane-kinematics} which naturally produces the resultants from \cref{eq:correct-resultants} takes the form \citep{hjelmstad1987warping}:
+\begin{equation}
+\hat{\symbfit{x}}(\reflenx,y,z) = \symbfit{x}(\reflenx) + \FrameRotation(\reflenx)\left(\symbfit{r} + \big(\symbfit{\varphi}(y,z)\cdot\symbfit{\alpha}(\reflenx)\big)\,\FrameBasis\right),
+\label{eq:finite-warping-kinematics}
+\end{equation}
+where $\FrameBasis$ is the unit vector orthogonal to the cross-section plane, $\symbfit{\varphi}$ is a vector of warping shape functions $\varphi_i(y,z)\in\mathbb{R}$ and $\symbfit{\alpha}(\reflenx)$ is a vector of auxiliary kinematic variables describing the amplitude \(\alpha_i\) of each warping shape \(\varphi_i\). 
+%
+In most practical applications, the amplitudes \(\symbfit{\alpha}\) are eliminated by associating them with natural section deformations:
+\begin{equation}
+\alpha_1 = \vartheta',\qquad 
+\alpha_2 = \gamma_y,\qquad 
+\alpha_3 = \gamma_z.
+\label{eq:amplitude-constraint}
+\end{equation}
+Thus, when the shape functions \(\varphi_i\) are chosen appropriately, linearizing \eqref{eq:finite-warping-kinematics} and integrating over the section furnishes exactly \eqref{eq:correct-resultants}:
+\begin{equation*}
+T = G J\,\vartheta',\qquad V_y = G A_y\,\gamma_y,\qquad V_z = G A_z\,\gamma_z.
+\end{equation*}
+\end{Prompt}
+
+\subsection{Details}
+We seek a kinematic model for a beam finite element with fully integrated material response, that exactly reproduces the SV solution under linear isotropy. 
+
+Our ultimate goal is to obtain a resultant model that can be used with standard beam finite elements. 
+These elements work in terms of the primary equilibrium operator $\mathbb{B}_p$, so if we can return from the section with the quantity that figures in this operator, the element needs no modification. 
+It is worth noting that this breaks down under \emph{nonuniform torsion}, because the bishear rate that is picked up by $\mathbf{L}_{\rm vp}\bm{w}'$ is not exactly proportional to any of the 1D strain measures ($\bm\gamma$ and $\bm\kappa$). 
+However, this approach will be sufficient to exactly capture the Saint Venant class which only includes \emph{uniform} torsion.
+
+For example, a classical linear inelastic Timoshenko element takes trial nodal displacements, computes $\bm\gamma,\bm\kappa$, sends these to the section, and interpolates the returned resultants against $\mathbb{B}_p$ given by
+\[
+\mathbb{B}_{\rm p} = -\begin{bmatrix}
+    \mathbf{1}\partial_x & \mathbf{0}  \\
+    \FrameBasis^{\times}& \mathbf{1} \partial_x 
+\end{bmatrix}
+\]
+Our objective is to ``trick" these elements into modeling a more complex problem by returning \emph{effective} resultants. 
+
+
+\subsection{Literature}
+
+% \cite[p39]{vlasov1961thinwalled}
+
+\subsubsection{Shear warping.}
+\begin{Details}
+% \paragraph{Elastostatics}
+\cite{iesan1986saintvenants}, \cite{iesan2009classical}.
+
+\cite{brown1994nonuniform}
+\end{Details}
+
+\paragraph{Shear Correction}
+\cite{nicholson1977timoshenko}
+Typically matching criteria are \parencite{steinboeck2013energyconsistent}
+\begin{itemize}
+\item Equal average displacement values.
+\cite{cowper1966shear} derived a shear coefficient by matching shear rotation angles from displacement averages with shear rotation angles from beam theory. 
+Dharmarajan and McCutchen (1973) extended \cite{cowper1966shear} method for homogeneous orthotropic beams. 
+This approach has been adopted by \cite{cowper1966shear,simo1984numericala}. 
+
+\item Equal shear strain energies (\cite{krenk1985pretwist,renton1991generalized,schramm1994shear}). \cite{gruttmann1999shear} only investigated monosymmetric sections.
+
+\item Equal natural frequencies (\cite{timoshenko1922transverse}, \cite{kaneko1975timoshenkos}, Hutchinson, 1981),
+\end{itemize}
+
+\cite{elfatmi2007nonuniform} put forth a warping beam theory with three warping modes based on the full Saint~Venant solution. 
+This work considers  arbitrary section geometry, but neglects the Poisson effect.
+
+
+Inelastic response with warping is investigated by \cite{neal1961effecta,neal1961effect}.
+
+\subsubsection{Torsion-flexural coupling}
+\cite{kim2005exact,elfatmi2007nonuniform}, and \cite{du2020threedimensional}. 
+See also \cite{lewinski2021incorporating} who implemented the model of \cite{elfatmi2007nonuniform}.
+See also \cite{ladeveze1998new}.
+
+
+\subsubsection{Element Kinematics}
+\paragraph{Finite Deformation}
+% Exact rotations plus warping
+\cite{simo1991geometricallyexact} introduced a geometrically exact formulation which incorporates one cross-sectional warping mode in a Reissner-like (unconstrained) formulation. 
+This was investigated further by \cite{gruttmann2000theory} who emphasized the use of sections intersecting the reference curve at an arbitrary point. 
+This theory has also been investigated by \cite{rong2020geometrically} in the context of isogeometric analysis who considered the nonlinear Wagner term. 
+However, in this work the reference curve is restricted to intersect sections at the centroid. 
+
+\subsubsection{Section Kinematics}
+\paragraph{Moderate Strain (Wagner)}
+\cite{rong2020geometrically} incorporated Wagner effects in a geometrically exact beam element with torsion warping.
+
+\cite{chadha2019comprehensive} investigate the a model that accounts for transverse warping induced through axial loading of a beam.
+
+% The asymmetric formulation of \cite{hsiao2000corotational} takes the shear-center as reference point.

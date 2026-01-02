@@ -1,0 +1,178 @@
+$$
+\left[\begin{array}{cccc}
+\mathbf{1} & \mathbf{0} & \mathbf{0} & \mathbf{0} \\
+\mathbf{0} & \mathbf{1} & \mathbf{0} & \mathbf{0} \\
+\mathbf{0} & \mathbf{0} & \mathbf{1}-\mathbf{L}_{\rm ww} & \mathbf{0} \\
+\mathbf{L}_{\rm vn} & \mathbf{L}_{\rm vm} & \mathbf{0} & \mathbf{1}-\mathbf{L}_{\rm vv}
+\end{array}\right]^T
+\left[\begin{array}{cccc}
+\mathbf{K}_{\rm n n} & \mathbf{K}_{\rm n m} & \mathbf{K}_{\rm n w} & \mathbf{K}_{\rm n v} \\
+& \mathbf{K}_{\rm m m} & \mathbf{K}_{\rm m w} & \mathbf{K}_{\rm m v} \\
+& & \mathbf{K}_{\rm w w} & \mathbf{K}_{\rm w v} \\
+& & & \mathbf{K}_{\rm v v}
+\end{array}\right]
+\left[\begin{array}{cccc}
+\mathbf{1} & \mathbf{0} & \mathbf{0} & \mathbf{0} \\
+\mathbf{0} & \mathbf{1} & \mathbf{0} & \mathbf{0} \\
+\mathbf{L}_{\rm wn} & \mathbf{L}_{\rm wm} & \mathbf{1}-\mathbf{L}_{\rm ww} & \mathbf{0} \\
+\mathbf{L}_{\rm vn} & \mathbf{L}_{\rm vm} & \mathbf{0} & \mathbf{1}-\mathbf{L}_{\rm vv}
+\end{array}\right]
+$$
+% L^* (Green–adjoint) constrained section stiffness
+% Convention: lower-triangular blocks omitted
+
+\[
+\bar{\mathbf K}\;=\;(\mathbf L^{*})^{\!\top}\,
+\underbrace{\begin{bmatrix}
+\mathbf{K}_{\rm nn} & \mathbf{K}_{\rm nm} & \mathbf{K}_{\rm nw} & \mathbf{K}_{\rm nv}\\
+& \mathbf{K}_{\rm mm} & \mathbf{K}_{\rm mw} & \mathbf{K}_{\rm mv}\\
+& & \mathbf{K}_{\rm ww} & \mathbf{K}_{\rm wv}\\
+& & & \mathbf{K}_{\rm vv}
+\end{bmatrix}}_{\displaystyle \mathbf K}
+\,
+\underbrace{\begin{bmatrix}
+\mathbf{1} & \mathbf{0} & \mathbf{0} & \mathbf{0}\\
+\mathbf{0} & \mathbf{1} & \mathbf{0} & \mathbf{0}\\
+\mathbf{L}_{\rm wn} & \mathbf{L}_{\rm wm} & \mathbf{1}-\mathbf{L}_{\rm ww} & \mathbf{0}\\
+\mathbf{L}_{\rm vn} & \mathbf{L}_{\rm vm} & \mathbf{0} & \mathbf{1}-\mathbf{L}_{\rm vv}
+\end{bmatrix}}_{\displaystyle \mathbf L},
+\qquad
+\mathbf L^{*}=
+\begin{bmatrix}
+\mathbf{1} & \mathbf{0} & \mathbf{0} & \mathbf{0}\\
+\mathbf{0} & \mathbf{1} & \mathbf{0} & \mathbf{0}\\
+\mathbf{0} & \mathbf{0} & \mathbf{1}-\mathbf{L}_{\rm ww} & \mathbf{0}\\
+\mathbf{L}_{\rm vn} & \mathbf{L}_{\rm vm} & \mathbf{0} & \mathbf{1}-\mathbf{L}_{\rm vv}
+\end{bmatrix}.
+\]
+
+\medskip
+
+\noindent\textbf{Shorthand (L$^{*}$ version).}
+\[
+\begin{aligned}
+\mathbf{K}_{\mathrm{pp}} &:= 
+\begin{bmatrix}\mathbf K_{\rm nn} & \mathbf K_{\rm nm}\\[2pt] \mathbf K_{\rm nm}^{\!\top} & \mathbf K_{\rm mm}\end{bmatrix},\quad
+\mathbf K_{\mathrm{zz}} :=
+\begin{bmatrix}\mathbf K_{\rm ww} & \mathbf K_{\rm wv}\\[2pt] \mathbf K_{\rm wv}^{\!\top} & \mathbf K_{\rm vv}\end{bmatrix},\\[4pt]
+\mathbf R_{\mathrm p} &:= \mathbf K_{\rm pw}\,\mathbf L_{\rm wp}+\mathbf K_{\rm pv}\,\mathbf L_{\rm vp},
+\qquad
+\mathbf Q_{\mathrm p} := \begin{bmatrix}\mathbf L_{\rm wp}\\[2pt]\mathbf L_{\rm vp}\end{bmatrix},
+\qquad
+\mathbf Q_{\mathrm p}^{*} := \begin{bmatrix}
+\mathbf{0} & \mathbf L_{\rm vp}
+\end{bmatrix},\\[4pt]
+\mathbf U_{\mathrm{pw}}^{*} &:= \mathbf K_{\rm pw}+\mathbf L_{\rm vp}^{\!\top}\,\mathbf K_{\rm wv}^{\!\top},\qquad
+\mathbf U_{\mathrm{pv}}^{*} := \mathbf K_{\rm pv}+\mathbf L_{\rm vp}^{\!\top}\,\mathbf K_{\rm vv}.
+\end{aligned}
+\]
+
+\medskip
+
+\noindent\textbf{Result (lower triangle omitted; projectors simplified).}
+\[
+\left[
+\begin{array}{ccc}
+\displaystyle
+\mathbf K_{\mathrm{pp}}
++ \mathbf R_{\mathrm p}
++ \underbrace{\mathbf L_{\rm vp}^{\!\top}\,\mathbf K_{\rm vp}}_{\text{\small \(=(\mathbf K_{\rm pv}\mathbf L_{\rm vp})^{\!\top}\)}}
++ \mathbf Q_{\mathrm p}^{*}\,\mathbf K_{\mathrm{zz}}\,\mathbf Q_{\mathrm p}
+&
+\displaystyle
+\mathbf U_{\mathrm{pw}}^{*}\,(\mathbf{1}-\mathbf L_{\rm ww})
+&
+\displaystyle
+\mathbf U_{\mathrm{pv}}^{*}\,(\mathbf{1}-\mathbf L_{\rm vv})
+\\[10pt]
+&
+\displaystyle
+(\mathbf{1}-\mathbf L_{\rm ww})\,\mathbf K_{\rm ww}\,(\mathbf{1}-\mathbf L_{\rm ww})
+&
+\displaystyle
+(\mathbf{1}-\mathbf L_{\rm ww})\,\mathbf K_{\rm wv}\,(\mathbf{1}-\mathbf L_{\rm vv})
+\\[10pt]
+&
+&
+\displaystyle
+(\mathbf{1}-\mathbf L_{\rm vv})\,\mathbf K_{\rm vv}\,(\mathbf{1}-\mathbf L_{\rm vv})
+\end{array}
+\right]
+\]
+where
+\(
+\mathbf K_{\rm vp}=\mathbf K_{\rm pv}^{\!\top}
+\)
+by major symmetry of \(\mathbf K\).
+
+
+\subsubsection{Quadratic (Warping)}
+\[
+\begin{aligned}
+\mathbf{K}^Q_{\rm pp}
+&= \begin{bmatrix}
+    \mathbf{0} & \mathbf{L}_{\rm vp}^T
+\end{bmatrix}
+\begin{bmatrix}
+    K_{\rm ww} & K_{\rm wv} \\
+    K_{\rm wv}^T & K_{\rm vv}
+\end{bmatrix}
+\begin{bmatrix}
+    \mathbf{L}_{\rm wp} \\ \mathbf{L}_{\rm vp}
+\end{bmatrix} \\
+&= \begin{bmatrix}
+    \mathbf{0} & \mathbf{L}_{\rm vp}^T
+\end{bmatrix}
+\begin{bmatrix}
+    K_{\rm ww}\mathbf{L}_{\rm wp}+ K_{\rm wv}\mathbf{L}_{\rm vp} \\
+    K_{\rm wv}^T \mathbf{L}_{\rm wp} + K_{\rm vv}\mathbf{L}_{\rm vp}
+\end{bmatrix} \\
+&= \mathbf{L}_{\rm vp}^T \left[
+K_{\rm wv}^T \mathbf{L}_{\rm wp} + K_{\rm vv}\mathbf{L}_{\rm vp}
+\right]
+\end{aligned}
+\]
+
+\subsubsection{Linear}
+\paragraph{KL}
+
+$$
+\begin{aligned}
+\mathbf{R}_p & =\mathbf{K}_{\rm p w} \mathbf{L}_{\rm w p}+\mathbf{K}_{\rm p v} \mathbf{L}_{\rm v p} \\
+& =\left[\begin{array}{rr}
+G \bm{W}_{(b)} & \mathbf{0}_{3\times3} \\ 
+\bm{r} \times G \bm{W}_{(b)} & \mathbf{0}_{3\times3}
+\end{array}\right]
++\left[\begin{array}{rr}
+G\left(\FrameBasis_\alpha \otimes \nabla_\alpha \bm{\WarpShearIesan}-\mathbf{1}_{\Section}\right) & G \nabla \WarpTwistIesan\otimes\FrameBasis \\
+\bm{r} \times G\left( \FrameBasis_\alpha \otimes \nabla_\alpha \bm{\WarpShearIesan} - \mathbf{1}_{\Section}\right) & G \bm{r} \times \nabla \WarpTwistIesan\otimes\FrameBasis
+\end{array}\right]
+\end{aligned}
+$$
+
+$$
+\begin{aligned}
+\mathbf{R}_p +\mathbf{R}_{p}^T
+& =G\left[\begin{array}{rr}
+ \big(\bm{W}_{(b)}+\bm{W}_{(b)}^T\big) & %\bm{r} \times \bm{W}_{(b)}
+ \\ 
+\bm{r} \times \bm{W}_{(b)} & \mathbf{0}_{3\times3}
+\end{array}\right]
++G\left[\begin{array}{rr}
+\left.\FrameBasis_\alpha \otimes \nabla_\alpha \bm{\WarpShearIesan}+\nabla_\alpha \bm{\WarpShearIesan}\otimes\FrameBasis_\alpha -2\,\mathbf{1}_{\Section}\right.
+&  \mathrm{sym}\qquad \\
+\bm{r} \times \left(\FrameBasis_\alpha \otimes \nabla_\alpha \bm{\WarpShearIesan} -  \FrameBasis_\alpha \otimes \FrameBasis_\alpha\right) + \FrameBasis\otimes\nabla \WarpTwistIesan
+& \bm{r} \times  \nabla \WarpTwistIesan\otimes\FrameBasis + \FrameBasis\otimes (\bm{r} \times  \nabla \WarpTwistIesan)
+\end{array}\right] \\
+%
+& =G\left[\begin{array}{rr}
+  \big(\bm{W}_{(b)}+\bm{W}_{(b)}^T\big)
++ \left.\FrameBasis_\alpha \otimes \nabla_\alpha \bm{\WarpShearIesan}+\nabla_\alpha \bm{\WarpShearIesan}\otimes\FrameBasis_\alpha -2\,\mathbf{1}_{\Section}\right.
+&  \mathrm{sym}\qquad \\
+\bm{r} \times \left(\FrameBasis_\alpha \otimes \nabla_\alpha \bm{\WarpShearIesan} -  \mathbf{1}_{\Section} + \bm{W}_{(b)}\right)
++ \FrameBasis\otimes\nabla \WarpTwistIesan
+& \bm{r} \times  \nabla \WarpTwistIesan\otimes\FrameBasis
+ + \FrameBasis\otimes (\bm{r} \times  \nabla \WarpTwistIesan)
+\end{array}\right]
+\end{aligned}
+$$

@@ -1,0 +1,100 @@
+
+\paragraph{Helmholtz–Hodge Stress.}
+Recall the shear stress field of Problem 2 takes the form:
+\[
+\bm{\tau}=G\Big[\ c_{\vartheta}\big(\nabla \WarpTwistIesan+\FrameBasis\times\bm{r}\big)
++\nabla (\bm{\WarpShearIesan}\cdot\bm{b}_{\Section})
+-\nu\bigl(\operatorname{dev}(\bm{r}\otimes\bm{r})-\bm{r}\otimes\CentroidLocation \bigr)\,\bm{b}_{\Section}
+\Big] \\
+\]
+Introduce the solenoidal b-\emph{Poisson tensor}
+\[
+\bm{\Pi} = \operatorname{dev}\bm{r}\otimes\bm{r} - \bm{r}\otimes\CentroidLocation
+\]
+Define the Poisson vector field
+\[
+\begin{aligned}
+\bm{\pi}
+&=\bm{\Pi}\,\bm{b}_{\Section}
+\end{aligned}
+\qquad\text{so}\qquad
+\begin{aligned}
+\operatorname{div} \bm{\pi} &= \,2\,\big(\bm{r}-\CentroidLocation\big) \cdot \bm{b}_{\Section} \\
+\operatorname{curl}\bm{\pi}
+&= 2\,(\FrameBasis\times\bm{r})\cdot\bm{b}_{\Section}.
+\end{aligned}
+\]
+$$
+\operatorname{grad} \bm{\pi} = \bm{b}_{\Section} \otimes \bm{r} + \big( (\bm{r} - \CentroidLocation) \cdot \bm{b}_{\Section} \big) \mathbf{1} - \frac{2}{3} \bm{r}\otimes \bm{b}_{\Section}
+$$
+%
+The traction–free boundary condition for \eqref{eq:bvp-warp-shear-iesan} is compactly
+\(
+\partial_{\bm\nu}\WarpShearIesan = \nu\,\bm{\pi}\cdot\bm{\nu}.
+\)
+%
+In terms of \(\bm{\pi}\) the stress is:
+\[
+\bm{\tau}=G\big(\nabla\WarpShear-\nu\,\bm{\pi}\big)
+\]
+Decompose \(\bm{\pi}\) via a scalar potential \(\WarpShearPotentialPoisson\), a stream function \(\zeta\), and a harmonic field \(\bm{h}\):
+\[
+\bm{\pi}=\nabla\WarpShearPotentialPoisson + \FrameBasis\times\nabla\zeta + \bm{h},
+\]
+where \(\bm{h}\) is harmonic Neumann (\(\operatorname{div}\bm{h}=\operatorname{curl}\bm{h}=0,\ \bm{h}\cdot\bm\nu=0\) on \(\partial\Section\)) and \(\WarpShearPotentialPoisson\) solves the Neumann problem
+\[
+\left\{
+\begin{aligned}
+\Delta\WarpShearPotentialPoisson&=\operatorname{div}_{\Section}\bm{\pi} , % =2(\bm{r}-\CentroidLocation)\cdot\bm{b}_{\Section},
+\\
+\partial_{\bm\nu}\WarpShearPotentialPoisson&=\bm{\pi}\cdot\bm\nu
+&\quad\text{on } \SectionBoundary,
+\end{aligned}
+\right.
+\]
+with the usual zero–mean gauge. The stream \(\zeta\) solves the Dirichlet problem:
+\[
+\begin{cases}
+\Delta \,\zeta \;=\; \operatorname{curl}\bm{\pi} & \text{in }\Section,\\[2pt]
+\zeta\big|_{\SectionBoundary_k} \;=\; 0 & \text{on }\Gamma_k,\;k\in \{1,...,\dim\bm{h}\}.
+\end{cases}
+\]
+
+Define the Helmholtz potentials for \(\bm{\tau}\) by
+\[
+\WarpShearPotential:=G\Big(c_{\vartheta}\,\WarpTwistIesan
+\;+\;\WarpShearIesan
+\;-\;\nu\,\WarpShearPotentialPoisson\Big),\qquad
+\WarpShearStream:=-\,G\Big(\nu\,\zeta+\tfrac12\,r^2\,c_{\vartheta}\Big).
+\]
+Then the shear admits the Helmholtz–Hodge decomposition \citep{cantarella2002vector}
+\[
+\boxed{
+\ \bm{\tau}=\nabla \WarpShearPotential
+\;+\; \FrameBasis\times\nabla\WarpShearStream
+\;-\;G\nu\,\bm{h}\ }.
+\]
+
+\noindent\emph{Consequences.}
+Using \(\Delta\WarpShearIesan=-2(\bm{b}_{\Section}\cdot\bm{r}+b_\varepsilon)\) and \(\Delta \WarpShearIesan = 0\)
+\[
+\operatorname{div}\bm{\tau}
+=\Delta\WarpShearPotential
+=G\Big(\Delta(\bm{\WarpShearIesan}\cdot\bm{b}_{\Section})
+-\nu\,\Delta\WarpShearPotentialPoisson\Big)
+=-E\,(\bm{b}_{\Section}\cdot\bm{r}+b_\varepsilon),
+\]
+\[
+\operatorname{curl}\bm{\tau}
+=\operatorname{curl}\big(\FrameBasis\times\nabla\WarpShearStream\big)
+=-\,G\nu\,\Delta\zeta\;-\;2G\,c_{\vartheta}
+=\,-\,G\nu\,\operatorname{curl}\bm{\pi}\;-\;2G\,c_{\vartheta}.
+\]
+Note that \(\operatorname{curl}(\nabla \WarpShearPotentialPoisson)=\operatorname{curl} \bm{h}=0\). On \(\SectionBoundary\),
+\[
+\partial_{\bm\nu}\WarpShearPotential
++(\nabla\WarpShearStream)\cdot(\FrameBasis\times\bm\nu)
+-G\nu\,\bm{h}\cdot\bm\nu
+=0,
+\]
+which is equivalent to the Saint–Venant free–side condition for \(\WarpShearIesan\) together with \eqref{eq:bvp-warp-twist-iesan}.

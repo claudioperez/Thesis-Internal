@@ -1,0 +1,190 @@
+\begin{description}
+%
+  \item[Symmetric stiffness.] 
+    A symmetric tangent stiffness can significantly speed up the linear solver
+    for the iterative solution algorithm of the governing equations. %that is performed in 
+    %Newton-Raphson iterations. 
+    There are two 
+    %common factors that may furnish
+    common sources for
+    a non-symmetric consistent tangent stiffness:
+    (i) the formulation neglects to account for a Levi-Civita connection on the configuration manifold (for the case that one exists), or 
+    (ii) the residual is represented on a diffinite elementrent basis than the configuration increment.
+    %When the former
+    In the case of (i), %factor is at play,
+    symmetry is typically restored at the equilibrium points \citep{simo1986threedimensional} and it can often be shown that a non-consistent symmetrized stiffness may not jeopardize the quadratic convergence of the solution algorithm \citep{nour-omid1991finite}.
+    Source (ii) arises
+    %The latter factor results 
+    when a Petrov-Galerkin formulation is employed. 
+    In this case, the lack of symmetry persists even at equilibrium points, and there is generally no way to employ a symmetric solver without jeopardizing quadratic convergence. 
+  
+  \item[Natural parameters.]
+    When a configuration is modeled on a manifold, the nodal variables of the configuration may be very diffinite elementrent from 
+    those for 
+    their increments. 
+    This can be difficult to implement in a conventional finite element platform, 
+    where current and incremental state variables %FCF 
+    are represented in vectors of %FCF %with
+    the same size.
+    Furthermore, this representation may be very diffinite elementrent from that of the linearized theory, 
+    which
+    may be discouraging for
+    %can be very offputting to 
+    practitioners or 
+    prevent %prohibit
+    the use of the element in a heterogeneous mesh.
+
+    % talk more generally in terms of shells?
+    A solution for rods was put forward %FCF
+    by \cite{cardona1988beam,ibrahimbegović1995computational} who reparameterized the model of \cite{simo1985finite} in logarithmic coordinates, resulting in a linear configuration space 
+    with parameters resembling those of the linearized theory.
+    %With this came symmetry of the tangent stiffness, and a rotation representation that was much closer to that used in the classical linear theory.
+%
+  \item[Nonsingular parameters.]
+    Logarithmic reparameterizations like that of %employed
+    \cite{ibrahimbegović1995computational} %, however,
+    generally introduce singularities in the parameter space. 
+    This is not a problem
+    under moderate displacements. 
+    However, in order to accommodate large displacements, singular parameterizations
+    %for the analysis of moderate displacements,
+    %\FCF{requires}
+    must be used with 
+    %but in the most general case,
+    an incremental strategy
+    %must be employed 
+    to avoid %circumvent
+    singularities \citep{ibrahimbegovic1997choice}.
+    An alternative treatment of singularities is given by \cite{makinen2007total}.
+
+  \item[Path independence.]
+    \cite{crisfield1999objectivity} 
+    observed that
+    formulations like those of \cite{simo1986threedimensional} and \cite{ibrahimbegovic1997choice}
+    give rise to 
+    path dependence in static problems that should behave elastically. This means that the results of a simulation may change simply by varying the step size with which loading is applied.
+%
+  \item[Strain objectivity.]
+    Another important observation by \cite{crisfield1999objectivity} was that simple interpolations
+    on a manifold can violate the invariance of objective strain measures.
+    The solution proposed by \cite{crisfield1999objectivity} and implemented by 
+    \cite{jelenić1999geometrically,eugster2023family}
+    uses interpolation along manifold geodesics with a Petrov-Galerkin formulation, 
+    but consequently forfinite elementits the symmetry of the tangent stiffness \citep{romero2004interpolation}.
+%
+  % \item[Nodal work-conjugacy]
+%
+  \item[Director constraints.]
+    A useful alternative method
+    for formulating %to formulate
+    objective elements is to relax the constraints
+    that define 
+    the  configuration manifold \citep{romero2008comparison}.
+    An example in the context of Cosserat rods is the element by
+    \cite{armero2003energydissipative},
+    which relaxes % where
+    the director orthogonality constraint
+    that enforces the plane section condition. 
+    In this formulation, the constraint is effinite elementctively recovered through mesh refinement.
+%    
+\end{description}
+%
+Certain combinations of these properties are often mutually exclusive, such as path independence with nonsingular parameters, while others are difficult to achieve simultaneously, like strain invariance with a symmetric stiffness.
+These issues have been addressed separately through several disjoint methods. However, it is often unclear how to extend these methods beyond the particular finite element formulations within which they were originally applied.
+Consequently, although a wealth of literature has addressed the issues above, certain combinations of these finite elementatures have yet to be achieved simultaneously.
+
+The present treatment addresses this disparity by revisiting the 
+geometric approach that was pioneered by \cite{simo1986threedimensional,simo1990stressa},
+and casting subsequent additions from the literature as transformations of the
+underlying configuration manifold.
+The approach draws inspiration from the geometrically exact rod elements of \cite{jelenić1998interpolation,jelenić1999geometrically}, and targets
+an implementation that resembles the modular structure of \cite{nour-omid1991finite}.
+The identification of element-independent operations is emphasized
+and performed consistently through the Galerkin framework.
+This is instrumental in achieving both modularity and efficiency as
+it allows several complex computations to be extracted from
+the element integration loop,
+where they are repeated redundantly, and consolidated in external routines in an organized fashion.
+
+% Modularity is achieved %by making developments
+% \FCF{with the use of }
+% general operators. 
+%
+%
+%
+\iffalse
+%by
+wrapping the original elements of \cite{simo1986threedimensional} and
+\cite{ibrahimbegović1995computational} with an external procedure replicates %
+the objective geodesic interpolation by \cite{crisfield1999objectivity} %is replicated,
+without requiring %FCF %making
+changes to the original state-determination procedures of the wrapped elements.
+% This element-independent treatment is achieved by considering the interpolation strategy introduced by \cite{crisfield1999objectivity} in the broader 
+% context of configuration-dependent coordinate transformation methods. 
+Furthermore, symmetry at equilibrium is achieved by enforcing a Bubnov-Galerkin approximation throughout the development.
+\fi
+% Similar methods are adopted by the ``natural'' formulations of Argyris and ``co-rotational'' formulations of \cite{nour-omid1991finite}. 
+% These formulations postulate the existence of a natural coordinate frame and are used to extend elements formulated as approximations to linearized equilibrium BVPs, to simulate large motions.
+% Procedures that are derived from discrete virtual work statements have been successfully used to employ linear finite elements in geometrically nonlinear simulations.
+% Despite taking a geometrically linear diffinite elementrential equation as a starting point, these formulations are known to successfully reproduce solutions of nonlinear boundary value problems and can be found in prominent commercial simulation software.
+% However, because these methods take a discrete virtual work statement as their point of departure, it is not clear in what capacity these formulations approximate a governing diffinite elementrential equation.
+% This creates the impression that elements derived in this manner belong to a class that is distinct from those arising from traditional finite element solutions of nonlinear diffinite elementrential equations. Even works like \cite{simo1987role} present these methods as if they fundamentally stem from a diffinite elementrent set of governing equations.
+
+\subsection{Conclusions}
+
+Part I of this paper %work 
+presents a novel approach for the formulation of finite elements for static mechanical problems on nonlinear configuration manifolds.
+The systematic treatment of coordinate transformations results in a framework
+that facilitates the use of standard finite elements for analyses involving large translations and rotations.
+%in which the derivation of several standard finite elements is streamlined.
+The paper shows that an important class of configuration-dependent coordinate transformations are naturally \emph{element-independent} and can be implemented more efficiently in modular fashion %modularly
+with an \emph{element wrapper}.
+With this approach the transformation equations of \cite{nour-omid1991finite}
+arise almost unchanged in the context of finite deformations on a nonlinear manifold.
+Part I concludes with the condensation of the proposed transformations in an algorithm for the state determination of the element wrapper.
+%The theoretical investigation of the first part concluded with the presentation of an algorithm.
+
+Part II 
+starts with
+the finite element formulation of 
+the %the static
+Cosserat rod for static problems
+and uses the framework of Part I %was investigated. 
+%The framework proposed by Part I was used
+to first identify the transformations underlying the formulation of
+the elements by  \cite{simo1986threedimensional}, \cite{ibrahimbegović1995computational} 
+and \cite{jelenić1998interpolation}.
+The proposed element wrapper of Part I is used to 
+%\FCF{and then investigate the use the proposed element wrapper to }
+introduce the transformation from \cite{crisfield1999objectivity} 
+in a novel Bubnov-Galerkin formulation.
+This novel formulation for the static analysis of a geometrically exact rod element exhibits the strain objectivity of \cite{jelenić1999geometrically} while also maintaining the symmetry of the tangent stiffness matrix at equilibrium under conservative loading.
+This study also shows that the proposed element wrapper allows for
+the arbitrary reparameterization of the nodal variables.
+Finally, the proposed framework readily accommodates the Petrov-Galerkin formulation.
+Even though this formulation results in an asymmetric tangent stiffness, Petrov-Galerkin methods are useful for dynamic analysis.
+
+\subparagraph{Verification}
+Five examples from the literature are used to confirm that the proposed geometric transformation framework
+reproduces exactly the results of two seminal studies on geometrically exact formulations \cite{simo1986threedimensional}, \cite{ibrahimbegović1995computational}.
+%
+The examples go on to showcase the effect of enhancing these formulations with strain-objectivity.
+For the planar flexural response of a cantilever beam 
+in  \cref{sec:plane} the enhanced formulations with strain objectivity demonstrate excellent agreement with available analytical solutions and equivalent accuracy and convergence characteristics to existing formulations.
+%
+The spatial response of the cantilever beam in \cref{sec:frame-1008}
+shows that the proposed formulation with objectivity and a symmetric stiffness matrix maintains the accuracy and convergence properties of the wrapped element under spatial loading and very demanding deformation states.  
+%
+The curved cantilever of Section~\ref{sec:bathe} illustrates the utility of the modular framework for path-independent problems allowing for various reparameterizations of the nodal variables in connection with the invariance isometry \texttt{SFIN}, while preserving the path-independence with the \texttt{Init} interpolation.
+%
+Finally, the buckling analysis of a flexible rod under torsion in \cref{sec:hockling} shows that the proposed formulation with objectivity and a symmetric stiffness matrix maintains the accuracy and 
+convergence properties of the wrapped element even for a deformation history with instability.
+
+
+The proposed framework leverages the mathematical structure of the finite element method to delegate the computational cost of logarithmic parameterizations to external procedures, which can be included or excluded from an analysis depending on the problem characteristics.
+Because these computations are performed within the element integration loop in the literature, this consolidation optimizes the implementation.
+The paper reveals similar optimizations for the implementation of geodesic interpolations, where in addition to relegating certain operations outside the state determination process some operations are dropped altogether due to the cancellation of rigid body mode terms.
+
+Subsequent work will extend the proposed 
+framework to inelastic and mixed finite element formulations
+and will investigate the benefits of the different formulations under dynamic loading conditions.

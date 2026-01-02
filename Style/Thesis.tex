@@ -1,0 +1,159 @@
+%% thesis.tex 2014/04/11
+%
+% Based on sample files of unknown authorship.
+%
+% The Current Maintainer of this work is Paul Vojta.
+%
+
+
+\iffinal
+\documentclass[oldfontcommands]{ucbthesis}
+\else
+\documentclass[twoside,openright,oldfontcommands]{ucbthesis}
+\fi
+
+\usepackage{lscape}
+
+%%% References
+\usepackage[%
+style=apa,% TODO: REMOVE??
+bibencoding=auto,%
+natbib=true%
+]{biblatex}
+
+
+%%% Parts
+\usepackage{quoting}
+
+\makeatletter
+\let\old@endpart\@endpart
+\renewcommand\@endpart[1][]{%
+{\quoting%
+%\begin{quote}
+#1
+%\end{quote}%
+\endquoting}%
+\old@endpart}
+\makeatother
+
+
+
+%%% Tables
+\usepackage{threeparttable,booktabs}
+
+%% Pandoc tables:
+\usepackage{longtable,array,tabularray}
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{calc,etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+\input{Style/Draft}
+\input{Style/Math}
+% \input{Style/Theorems}
+\input{Style/Lists}
+\input{Style/Figures}
+\input{Style/Boxes}
+
+%%% Algorithms %%%
+
+\usepackage{algorithm, algorithmicx, algpseudocode}
+
+\usepackage{listings}%
+\usepackage{alltt}%
+
+%%% Code
+\input{Style/Syntax}
+
+\input{Style/BRACE2}
+
+%%% Color
+\usepackage[table,dvipsnames]{xcolor}
+\definecolor{peerblue}{RGB}{0,97,170}
+\definecolor{myblue}{RGB}{0,75,150}
+\definecolor{mygold}{RGB}{196,130,14}
+
+%%% Rotating
+\usepackage{rotating} % provides sidewaystable and sidewaysfigure
+
+%%% Links
+\usepackage{hyperref}
+
+\hypersetup{%
+  colorlinks  = true,  % Color links instead of boxing
+  urlcolor    = blue,  % Color for external hyperlinks
+  linkcolor   = red,   % Color of internal links
+  citecolor   = blue,  % Color of citations
+  filecolor   = blue,
+  bookmarksopen=true,%
+  bookmarksdepth=3%
+}
+
+\input{Style/Clever}
+
+\RequirePackage{bookmark}
+
+%%% 
+%%% Glossaries
+\usepackage[noredefwarn]{glossaries}
+\usepackage[automake]{glossaries-extra}
+\newglossary[flg]{frame}{fld}{fdn}{Frame formulations}
+\newglossary[tlg]{brace}{tld}{tdn}{General Terms}
+\makeglossaries
+
+% \input{Front/glossaries}
+% \input{Part III/glossaries}
+
+
+
+%%% Temporary
+\iffinal\else
+\usepackage{lipsum}
+\fi
+
+% If the Grad. Division insists that the first paragraph of a section
+% be indented (like the others), then include this line:
+% \usepackage{indentfirst}
+
+\addtolength{\abovecaptionskip}{\baselineskip}
+
+%% Other
+
+\hyphenation{mar-gin-al-ia}
+\hyphenation{bra-va-do}
+
+
+% \bibliography{dissertation}
+
+\newcommand{\Paper}[1]{ (Paper #1)}
+
+\renewcommand{\rm}[1]{\mathrm{#1}}
+
+
+%% 
+  % Promote headings by one level
+  \let\oldsection\section
+  \let\oldsubsection\subsection
+  \let\oldsubsubsection\subsubsection
+  \let\oldparagraph\paragraph
+  \let\oldsubparagraph\subparagraph
+
+  \renewcommand{\section}{\chapter}
+  \renewcommand{\subsection}{\oldsection}
+  \renewcommand{\subsubsection}{\oldsubsection}
+  \renewcommand{\paragraph}{\oldsubsubsection}
+  \renewcommand{\subparagraph}{\oldparagraph}
+
+
+
+% CMP: hoping these changes are allowed
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+\setcounter{secnumdepth}{2}

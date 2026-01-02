@@ -1,0 +1,174 @@
+\subsubsection{Strain Energy}
+
+
+\begin{equation*}
+\begin{aligned}
+\mathbf{S}_0(\bm{r}) &= \begin{bmatrix}
+1 & \bm{r}^\top & 0 & \mathbf{0}^\top \\[4pt]
+\mathbf{0} & \mathbf{0} & \mathbf{b}_{(\WarpTwistIesan)}(\bm{r}) & 
+\mathbf{b}_{(\WarpTwistIesan)}(\bm{r}) \otimes \CenterShearLocation + \mathbf{B}_{(\WarpShearIesan)}(\bm{r})
+\end{bmatrix} \\
+&= \begin{bmatrix}
+1 & \bm{r}^\top & 0 & \mathbf{0}^\top \\[4pt]
+\mathbf{0} & \mathbf{0} & \FrameBasis\times\bm{r} & 
+\mathbf{0} %\mathbf{b}_{(\WarpTwistIesan)}(\bm{r}) \otimes \CenterShearLocation (\bm{r})
+\end{bmatrix} 
++\begin{bmatrix}
+0 & \mathbf{0}^\top & 0 & \mathbf{0}^\top \\[4pt]
+\mathbf{0} & \mathbf{0} & \nabla\WarpTwistIesan & 
+\mathbf{b}_{(\WarpTwistIesan)}(\bm{r}) \otimes \CenterShearLocation + \mathbf{B}_{(\WarpShearIesan)}(\bm{r})
+\end{bmatrix}
+\end{aligned}
+% \label{eq:S0-explicit}
+\end{equation*}
+and
+\begin{equation*}
+\mathbf{S}_1 = \begin{bmatrix}
+    0 & \mathbf{0} & (\bm{r} - \CentroidLocation)^\top \\ 
+    \mathbf{0} & \mathbf{0} & \mathbf{0}
+\end{bmatrix}
+\end{equation*}
+where the shear strain shape functions are
+\begin{subequations}
+\begin{align}
+\mathbf{b}_{(\WarpTwistIesan)}(\bm{r}) &\coloneq \FrameBasis \times \bm{r} + \nabla\WarpTwistIesan(\bm{r}), 
+\label{eq:tau-phi} \\
+\mathbf{B}_{(\WarpShearIesan)}(\bm{r}) &\coloneq (\nabla\bm{\WarpShearIesan})^{\top} + \PoissonFlexure(\bm{r}).
+\label{eq:tau-psi}
+\end{align}
+\end{subequations}
+
+The strain energy at section $x$ is quadratic in the evolved parameters 
+$\exp({x\IesanEvolveSP})\bm{p}$:
+\begin{equation*}
+\mathcal{U}(x) = \frac{1}{2} \int_\Section \bm{\varepsilon}\cdot \mathbb{C}\, \bm{\varepsilon} \dA 
+= \frac{1}{2} \bm{p}\cdot \left(\mathbf{1} + x\mathbf{G}_{\mathcal{T}}^\top\right) \IesanEnergy\, \left(\mathbf{1} + x\mathbf{A}_T\right) \bm{p},
+\end{equation*}
+where the Saint~Venant energy matrix is
+\begin{equation}
+\begin{aligned}
+\IesanEnergy := \int_\Section \mathbf{S}_0^\top \mathbb{C}\, \mathbf{S}_0 \dA 
+&=\begin{bmatrix}
+EA & EA\CentroidLocation^\top & 0 & \mathbf{0} \\
+EA\CentroidLocation & E\IntRoR & \mathbf{0} & \mathbf{0} \\
+0 & \mathbf{0} & G\Jsv & G(\Jsv\CenterShearLocation + \mathbf{h}_{\WarpTwistIesan})^\top \\
+\mathbf{0} & \mathbf{0} & G(\Jsv\CenterShearLocation + \mathbf{h}_{\WarpTwistIesan}) & G(\mathbf{H}_{\WarpShearIesan} + \Jsv\CenterShearLocation\otimes\CenterShearLocation + \CenterShearLocation\otimes\mathbf{h}_{\WarpTwistIesan} + \mathbf{h}_{\WarpTwistIesan}\otimes\CenterShearLocation)
+\end{bmatrix}
+\end{aligned}
+\label{eq:energy-matrix}
+\end{equation}
+%
+where shear-torsion coupling terms are:
+\begin{subequations}
+\begin{align}
+\mathbf{H}_{\WarpShearIesan} &:= \int_\Section \mathbf{B}_{(b)}^\top \mathbf{B}_{(b)} \dA, 
+\label{eq:def-H-bb} \\[4pt]
+\mathbf{h}_{\WarpTwistIesan} &:= \int_\Section \mathbf{B}_{(b)}^\top \mathbf{b}_{(\varphi)} \dA 
+= -\Jsv\CenterShearLocation + \tfrac{\nu}{2}\bm{\zeta} - \nu\bm{\lambda},
+\label{eq:h-coupling}
+\end{align}
+\end{subequations}
+with \(\mathbf{B}_{(b)}\) and \(\mathbf{b}_{(\varphi)}\) give by \eqref{eq:tau-psi} and \eqref{eq:tau-phi}, respectively, 
+and $\bm{\zeta}$ and $\bm{\lambda}$ capture Poisson-torsion interactions:
+\begin{equation}
+\bm{\zeta} := \int_\Section r^2 \nabla\WarpTwistIesan \dA, \qquad 
+\bm{\lambda} := \int_\Section (\bm{r} - \CentroidLocation)(\bm{r} \cdot \nabla\WarpTwistIesan) \dA.
+\label{eq:def-zeta-lambda}
+\end{equation}
+
+\subsubsection{Trace Matrix}
+
+The inverse of the energy matrix \eqref{eq:energy-matrix} is:
+\begin{equation*}
+\begin{aligned}
+\IesanEnergy^{-1}
+&=\begin{bmatrix}
+\frac{1}{EA} + \CentroidLocation\cdot (E\IntRGoRG)^{-1}\CentroidLocation 
+& -\CentroidLocation^\top (E\IntRGoRG)^{-1} 
+& 0 
+& \mathbf{0} \\[6pt]
+-(E\IntRGoRG)^{-1}\CentroidLocation 
+& (E\IntRGoRG)^{-1} 
+& \mathbf{0} 
+& \mathbf{0} \\[6pt]
+0 
+& \mathbf{0} 
+& % \displaystyle 
+  (G\Jsv)^{-1} 
+  + \TraceTF\cdot
+    (G\tilde{\mathbf{H}}_{bb})^{-1}
+    \TraceTF
+& \displaystyle -\TraceTF^\top
+    (G\tilde{\mathbf{H}}_{bb})^{-1} \\[6pt]
+\mathbf{0} 
+& \mathbf{0} 
+& -(G\tilde{\mathbf{H}}_{bb})^{-1}\TraceTF
+& (G\tilde{\mathbf{H}}_{bb})^{-1}
+\end{bmatrix} 
+\end{aligned}
+% \label{eq:Cbar-inv}
+\end{equation*}
+where 
+\begin{equation}
+% \tilde{\Jsv} := \Jsv - \mathbf{h}_{\WarpTwistIesan}\cdot \mathbf{H}_{\WarpShearIesan}^{-1} \mathbf{h}_{\WarpTwistIesan}, 
+\tilde{\mathbf{H}}_{bb} := \mathbf{H}_{\WarpShearIesan} - \frac{1}{\Jsv}\mathbf{h}_{\WarpTwistIesan}\otimes\mathbf{h}_{\WarpTwistIesan},
+\qquad\text{and}\qquad
+\TraceTF := \frac{1}{\Jsv}\bigl(\Jsv\CenterShearLocation + \mathbf{h}_{\WarpTwistIesan}\bigr)
+\qquad 
+% \bm{\eta} := \mathbf{H}_{\WarpShearIesan}^{-1} \mathbf{h}_{\WarpTwistIesan}.
+\label{eq:reduced-torsion}
+\end{equation}
+
+Using \(\IesanStiff\) given by \eqref{eq:G0-neg-m} in \eqref{eq:T0-formula} furnishes the inverse trace matrix with the structure \eqref{eq:T0-inv}:
+\[
+\TraceDpDeRoot = \IesanEnergy^{-1}\IesanStiff^\top
+=
+\left[\begin{array}{cc|cc}
+1 
+& \mathbf{0}
+& 0 
+& \ShiftNK
+% -EA\Bigl(\dfrac{1}{EA} + \CentroidLocation\cdot (E\IntRGoRG)^{-1}\CentroidLocation\Bigr)
+% (\FrameBasis\times\CentroidLocation)^\top
+% + \CentroidLocation^\top (E\IntRGoRG)^{-1}(E\FrameBasis^\times\IntRoR)^\top
+\\[8pt]
+\mathbf{0} & \mathbf{0} & \mathbf{0} 
+& \FrameBasis^{\times} 
+\\ \hline && \\[-8pt]
+0 
+&  \ShiftT^\top 
+& \ShiftScaleT
+& \mathbf{0}
+\\[8pt]
+  \mathbf{0} 
+& \ShiftB
+& \ShiftK 
+& \mathbf{0}
+\end{array}\right]
+\]
+where 
+\begin{equation}
+\begin{aligned}
+\ShiftB &= (G\tilde{\mathbf{H}}_{bb})^{-1}(E\IntRGoRG)^\top &&\sim L^{-2} \\ 
+\ShiftA &= \mathbf{0},\\
+\TraceTF &= \frac{1}{\Jsv}(\Jsv \CenterShearLocation + \mathbf{h}_{\WarpTwistIesan}) &&\sim L \\
+\TraceFT 
+%&= G(E\IntRGoRG)^{-1}(\Jsv \CenterShearLocation + \mathbf{h}_{\WarpTwistIesan}) \sim L \\
+ &= G\Jsv (E\IntRGoRG)^{-1}\TraceTF &&\sim L \\
+\ShiftN &= \mathbf{0},\\[2pt]
+\ShiftNK &= -\Bigl(1 + EA\,\CentroidLocation\cdot (E\IntRGoRG)^{-1}\CentroidLocation\Bigr)
+  (\FrameBasis\times\CentroidLocation)
+  + \FrameBasis\times E\IntRoR\,(E\IntRGoRG)^{-1}\CentroidLocation && \sim L \\
+\ShiftF &= \mathbf{0},\\ 
+\hline \\[-8pt]
+\ShiftT 
+%&= -\frac{1}{\Jsv}\,\ShiftB^\top\bigl(\Jsv\CenterShearLocation + \mathbf{h}_{\WarpTwistIesan}\bigr) \\
+ &= -\ShiftB^\top\TraceTF && \sim L^{-1} \\
+\ShiftK &= -\tilde{\mathbf{H}}_{bb}^{-1}\bigl(\Jsv\CenterShearLocation + \mathbf{h}_{\WarpTwistIesan}\bigr) \\
+\ShiftScaleT 
+% &= 1 + \frac{1}{\Jsv}\bigl(\Jsv\CenterShearLocation + \mathbf{h}_{\WarpTwistIesan}\bigr)\cdot\tilde{\mathbf{H}}_{bb}^{-1}\bigl(\Jsv\CenterShearLocation + \mathbf{h}_{\WarpTwistIesan}\bigr) \\
+&= 1 - \TraceTF\cdot \ShiftK && \sim 1 \\
+\ShiftScaleN &= 0
+\end{aligned}
+\label{eq:energetic-trace-blocks}
+\end{equation}

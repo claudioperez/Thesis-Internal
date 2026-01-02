@@ -1,0 +1,18 @@
+
+\ExplSyntaxOn
+% Concrete user macros:
+\NewDocumentCommand \StrainTensor      {} { \cp_tensor_decor:nnn \cp_id:n { \bm{E} } { E } }
+\NewDocumentCommand \PlaneStrainTensor {} { \cp_tensor_decor:nnn \tilde   { \bm{E} } { E } }
+\NewDocumentCommand \StressTensor      {} { \cp_tensor_decor:nnn \cp_id:n { \bm{T} } { T } }
+\NewDocumentCommand \PlaneStressTensor {} { \cp_tensor_decor:nnn \tilde   { \bm{T} } { T } }
+
+\ExplSyntaxOff
+
+
+\newcommand{\StressVector}{\bm{\sigma}}
+\newcommand{\StrainVector}{\bm{\varepsilon}}
+\newcommand{\PointAxialStrain}{\varepsilon}
+\newcommand{\PointShearStrain}{\bm{\varepsilon}_{\gamma}}
+
+\newcommand{\StressTensorTangent}{\hat{\mathbb{C}}}
+\newcommand{\StressVectorTangent}{\mathbb{C}}

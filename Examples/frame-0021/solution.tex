@@ -1,0 +1,191 @@
+In this example a beam is subjected to nonuniform torsion. 
+
+% The beam ends can have either an imposed rotation $\vartheta=\vartheta_0$ or an imposed torque $T=\TwistRxn$. 
+% At the same time they have either an imposed warping $\vartheta'=\vartheta_0^{\prime}$ or an imposed bimoment $B=B_0$. 
+\begin{enumerate}
+\item $\mathrm{D}_{\vartheta}$ twisting angle restrained $\vartheta=0$
+\item $\mathrm{D}_{\alpha}$ warping restrained $\alpha=0$ or $\vartheta^{\prime}=0$
+\item Warping free $B \,(= \alpha') =0$ or $\theta^{\prime \prime}=0$
+\item Twisting free $\vartheta^{\prime \prime \prime}-\lambda^2 \vartheta^{\prime}=0$ %$\qquad\implies T=B'$
+\end{enumerate}
+
+\subsubsection*{General Solution}
+
+\paragraph{Kinematics}
+The rotation \(\bm{\Lambda}\)
+can be represented with only a single parameter, say \(\vartheta\), so that:
+\begin{equation}
+\begin{aligned}
+\bm{\Lambda} &= \operatorname{Exp} \vartheta \FrameBasis \\
+&=\cos \vartheta \mathbf{1} + \sin \vartheta \, \FrameBasis^{\times} + (1-\cos \vartheta)  \FrameBasis \otimes \FrameBasis
+\end{aligned}
+\qquad\text{and}\qquad 
+\begin{aligned}
+\bm{\kappa}^{\times} &= \bm{\Lambda}^{\prime}\bm{\Lambda}^{\mathrm{t}} \\
+&= \vartheta^{\prime} \, \FrameBasis^{\times}
+\end{aligned}
+\label{eq:rotation-field}
+\end{equation}
+from which we identify \(\Twist = \vartheta'\). 
+Note that under this motion the deformed (spatial) axial director \(\frameBasis\) remains equivalent to the reference axial director \(\FrameBasis\) (that is, \(\frameBasis = \FrameRotation \FrameBasis \equiv \FrameBasis\)). 
+The compatible linearized strain tensor \(\hat{\StrainTensor}\) is characterized by the strain vector \(\hat{\bm{\varepsilon}}\) of \cref{eq:wagner-gl-strain-pi} which takes the form:
+%
+\begin{equation}
+\begin{aligned}
+\hat{\bm{\varepsilon}} 
+&= \alpha' \WarpSV\,\FrameBasis + \Twist \FrameBasis \times (\PlanePosition-\tilde{\bm{\SectionLocation}}) + \alpha \nabla  \WarpSV \\
+% &= \alpha' \WarpSV\,\FrameBasis +  \Twist \, \bigl(\nabla \WarpSV + \FrameBasis\times(\PlanePosition - \tilde{\bm{\SectionCoordinate}})\bigr) - (\Twist - \alpha) \nabla \WarpSV
+\end{aligned}
+\label{eq:torsion-strain}
+\end{equation}
+% the infinitesimal strain vector
+% \begin{equation*}
+% \bm{\varepsilon} = \vartheta' \FrameBasis \times (\SectionCoordinate - \bm{\SectionLocation}) + \alpha' \varphi \FrameBasis + \alpha \nabla \varphi
+% \end{equation*}
+%
+
+\paragraph{Constitution}
+Consider the constitutive model from \cref{sec:GovEqn} for a cross section satisfying \(\tilde{\bm{\SectionLocation}} \equiv \bar{\bm{\SectionLocation}}\). 
+Align this point with the origin of the plane coordinate system, \(\PlanePosition = \bm{0}\). 
+For \(\bm{\gamma} = \bm{0}\) we have \(\bm{n} = N \, \FrameBasis\)
+The moment has only a torsional component
+$$
+\begin{aligned}
+\bm{m}\cdot \FrameBasis 
+&= \FrameBasis \cdot \int \PlanePosition \times \StressVector\, \mu \\
+&= \bar{G} I \Twist + \tfrac{1}{2}\{\WarpSV,\, r^2 \} \alpha 
+ + \tfrac{1}{2} \left\{\WarpSV + \EnhanConstFA \WarpFA,\, r^2 \right\} \EnhanParam \\
+&= \, \bar{G}I \Twist - \bar{G}\Jv \alpha - \bar{G}(\Jv - \EnhanConstFA \, \Jw) \EnhanParam
+\end{aligned}
+\qquad\text{with}\qquad 
+\begin{aligned}
+I &\triangleq \FrameBasis \cdot \LinearMM \FrameBasis \\
+\tilde{J} &\triangleq (\WarpSV,\, \WarpSV + \EnhanConstFA \WarpFA)_G = \Jv - \EnhanConstFA \Jw
+\end{aligned}
+$$
+The bi-moment is
+$$
+B = \bm{w} = \int \WarpTwistIesan \FrameBasis \cdot \StressVector \dA =  E \Jw \alpha'
+$$
+and the bi-shear is
+\begin{equation*}
+Q = \int \nabla \WarpSV \cdot \bm{\tau} \mu
+= \tfrac{1}{2}\left\{\WarpSV,\, r^2\right\} \Twist 
++ \bigl(\WarpSV,\, \WarpSV \bigr)_G \alpha 
++ \bigl(\WarpSV,\, \WarpSV + \EnhanConstFA \WarpFA\bigr) \EnhanParam
+= \bar{G}(-\Jv \Twist + \Jv \alpha + \tilde{J} \EnhanParam )
+\end{equation*}
+%
+
+\paragraph{Equilibrium}
+The moment equilibrium equation \cref{eq:finite-equilibrium}$_2$ is stated in terms of the spatial moment \((\FrameRotation \bm{m})'\). 
+However, for the rotation field \cref{eq:rotation-field}, \(\FrameRotation\FrameBasis = \FrameBasis\) and the resulting equation exactly matches the linear theory:
+\begin{equation*}
+\begin{array}{rlcl}
+\FrameBasis \cdot (\FrameRotation \bm{m})' &= \bigl(\bar{G}I \Twist - \bar{G}\Jv \alpha - (\Jv - \EnhanConstFA \, \Jw) \EnhanParam \bigr)' &=& 0 \\
+\bm{w}' - \bm{v} &= \bar{E}\Jw \alpha'' - \bar{G}(\Jv (\alpha - \Twist) + \tilde{J} \EnhanParam) &=& 0
+\end{array}
+\end{equation*}
+Note that \(\bm{x}' = \FrameBasis\) so that \(\FrameBasis\cdot \bm{x}' \times (\FrameRotation \bm{n})= \bm{0}\).
+
+\paragraph{Enhancement}
+Solving \(\EnhanParam\) for Condition~(ii) by \cref{eq:def-enhan-residual}
+% and using \cref{eq:def-sv-riesz} and \cref{eq:def-fa-riesz}
+% \(\left<\EnhanShape,\, {\sigma}^h\, \FrameBasis \right> = 0\)
+
+\begin{equation*}
+\begin{aligned}
+0 = \left<\EnhanShape,\, \bm{\sigma}^h \right> 
+&= \SectionIntegral{
+    (\nabla \WarpSV + \EnhanConstFA \nabla \WarpFA)
+    \cdot G \left(\alpha \nabla \WarpSV + \Twist\, \FrameBasis \times \PlanePosition + \EnhanShape \EnhanParam \right)
+    } \\
+&= \EnhanConstFA \Jw (\Twist - \alpha) - \Jv( \Twist - \alpha) + (\Jv - 2 \EnhanConstFA \Jw + \EnhanConstFA^2 \Js) \EnhanParam \\
+&= - (\Jv - \EnhanConstFA \Jw) (\Twist - \alpha) + (\Jv - 2 \EnhanConstFA \Jw + \EnhanConstFA^2 \Js) \EnhanParam
+\end{aligned}
+\end{equation*}
+%
+furnishing
+\begin{equation}
+\begin{aligned}
+\EnhanParam 
+&= (\Twist - \alpha) \bar{\eta} \\
+% &= \Twist - \alpha 
+\end{aligned}
+\quad\text{with}\quad 
+\bar{\eta} \triangleq \frac{\Jv - \EnhanConstFA \Jw}{\Jv - \EnhanConstFA (2 \Jw - \EnhanConstFA \Js)}
+\label{eq:enhan-param}
+\end{equation}
+%
+Substitution of \eqref{eq:fa-lambda} into \eqref{eq:def-enhan-strain} with \(\EnhanParam\) obtained in \eqref{eq:enhan-param} furnishes
+%
+\begin{equation}
+\begin{aligned}
+\bm{\varepsilon} 
+% &= \hat{\StrainVector} + \tilde{\StrainVector} \\
+% &= \underbrace{\alpha' \WarpSV\, \FrameBasis + \Twist\, \FrameBasis \times \PlanePosition + \alpha \nabla \WarpSV}_{\hat{\StrainVector}} + \EnhanShape \EnhanParam  \\
+&= \alpha' \WarpSV\, \FrameBasis + \Twist\, \FrameBasis \times \PlanePosition + \alpha \nabla \WarpSV + (\Twist - \alpha) \bar{\eta} (\nabla \WarpSV + \EnhanConstFA \nabla \WarpFA) \\
+% &= \alpha' \WarpSV\, \FrameBasis + \Twist\, \FrameBasis \times \PlanePosition  - \alpha  \EnhanConstFA \nabla \WarpFA + \Twist (\nabla \WarpSV + \EnhanConstFA \nabla \WarpFA) \\
+% &= \alpha' \WarpSV\, \FrameBasis + \Twist \, (\FrameBasis \times \PlanePosition  + \nabla \WarpSV) + (\Twist - \alpha)\EnhanConstFA \nabla \WarpFA \\
+\end{aligned}
+\label{eq:26}
+\end{equation}
+The shearing part of 
+\eqref{eq:torsion-strain} agrees with the strain associated with the RBV formulation \citep[eq. 108]{armero2021modeling} while \eqref{eq:26} is that of the Mixed formulation \citep[eq. 161]{armero2021modeling}.
+%
+\paragraph{Solution}
+The moment equilibrium equation allows one to write:
+\begin{equation*}
+    \alpha (\reflenx)= \eta \bigl(
+     \vartheta^{\prime}(\reflenx) - C\bigr)
+     \quad\text{with}\quad 
+     \eta = \frac{I - \tilde{J}\tilde{\eta}}{\Jv - \tilde{J}} = \frac{I - \tilde{J}\tilde{\eta}}{\beta \Jw}
+\end{equation*}
+This allows the bimoment and bishear to be expressed in terms of the twist rate \(\Twist\):
+\begin{equation*}
+B = \bar{E}\Jw \eta \Twist' 
+\qquad\text{and}\qquad
+Q = \bar{G}(\Jv + \tilde{J}\bar{\eta})(1 - \eta) \Twist
+\end{equation*}
+and from equilibrium of the bimoment
+\begin{equation}
+\bar{E}\Jw \eta \Twist'' - \bar{G}(\Jv + \tilde{J}\bar{\eta})(1 - \eta) \Twist = 0
+\end{equation}
+%
+In standard form:
+\begin{equation*}
+\vartheta''' - \lambda^2 \vartheta' = C,
+\qquad\text{with}\quad
+\lambda \triangleq \sqrt{\frac{\bar{G}J_{\eta}}{\bar{E}\Jw}\frac{1 - \eta}{\eta}}
+\end{equation*}
+and \(J_{\eta} = \Jv - \bar{\eta}\tilde{J}\). 
+%
+% and the solution is \citep{chen2008theory,elfatmi2007nonuniform}.
+% \begin{equation*}
+% \vartheta(x)= \bar{C}_1 \sinh \left(\lambda   x\right)+ \bar{C}_2  \cosh \left(\lambda   x\right)+ \bar{C}_3  x+ \bar{C}_4
+% \end{equation*}
+
+
+This furnishes for the dimensionless parameter $\eta \geq 1$ \citep{armero2022newa}
+\begin{equation}
+\eta = \begin{cases}
+1+\dfrac{\Jo}{\Jv} & \text { RBV, } \\
+1 & \text { TWKV, } \\ 
+1+\dfrac{\Jo}{\left(\Jw^2 / \Js \right)} & \text { Armero}\end{cases}
+\end{equation}
+where recall the Saint Venant constant is \(\Jo = \Io - \Jv\)
+and
+$$
+\vartheta''' - \lambda^2 \vartheta' = C,
+\qquad\text{with}\quad
+\lambda = \sqrt{\frac{GJ}{\eta E\Jw}}
+$$
+with general solution
+\begin{equation}
+\begin{aligned}
+\vartheta(\reflenx)= \frac{\TwistRxn}{\lambda \eta \, G\Jo}\left(
+ C_1 + \lambda\eta \, \reflenx +  C_2 \cosh \lambda \reflenx + C_3 \sinh \lambda \reflenx
+\right)
+\end{aligned}
+\label{eq:0028-gen-rot}
+\end{equation}

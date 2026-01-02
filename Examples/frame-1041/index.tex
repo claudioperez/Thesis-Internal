@@ -1,0 +1,25 @@
+
+This example reproduces an experiment by \cite{engel1953measurements}. 
+Several analyses are performed under increasing magnitudes of the applied moment couple \(M\), which is applied at the start of an analysis and then held constant while the torque \(T\) is gradually increased.
+
+%
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[c]{0.48\linewidth}
+        \includegraphics[width=\linewidth]{Figures/frame-1041.png}
+        % \caption{Enter Caption}
+        \label{fig:frame-1041}
+    \end{subfigure}
+    \begin{subfigure}[c]{0.48\linewidth}
+        \includegraphics[width=\linewidth]{Figures/frame-1041-solution.png}
+    \end{subfigure}
+    \caption{Comparison with the experiment by \cite{engel1953measurements} for Example~\ref{sec:frame-1041}.}
+    \label{fig:frame-1041-solution}
+\end{figure}
+
+\FrameSection{
+label/problem=frame-1041,
+% Section
+shape={Angle},
+kinematics/section={\eqref{eq:wagner-gl-strain-pi}},
+}

@@ -1,0 +1,83 @@
+\hypertarget{examples}{%
+\section{Examples}\label{sec:examples}}
+
+The proposed formulations are evaluated with five well-known  examples from the literature.
+% The first set originates from the study by \cite{jelenić1999geometrically}, and is used to assess conformance with the requirements %principles
+% of strain objectivity and path independence.
+% The second set assesses the 
+% accuracy against available 
+% exact solutions of the rod differential equations.
+% The following two examples
+% %Section~\ref{sec:helix} and Section~\ref{sec:hockling}
+% %investigate
+% %conclude with 
+% %two demanding examples
+% \FCF{are selected}
+% %in order
+% to demonstrate %which illustrate
+% the performance of the proposed formulations under very %extremely
+% large rotations.
+The simulations
+are performed in the Matlab based framework FEDEASLab \citep{filippou2004fedeaslabb}.
+The deformed shape renderings
+were done in collaboration with \cite{vouvakismanousakis2023opensees_model_generator,perez2024openseesrt}.
+All examples use %In all examples 
+a simple %Saint Venant-Kirchhoff
+hyperelastic material
+with %is employed where 
+the generalized stress \(\boldsymbol{s}\) and  strain \(\boldsymbol{e}\)
+%are related 
+related in the reference basis $\{\mathbf{D}, \mathbf{D}_\alpha\}$
+by:
+\[
+\left(\begin{array}{c}
+N   \\
+V_1 \\
+V_2 \\
+T   \\
+M_1 \\
+M_2 \\
+\end{array}\right)=\left[\begin{array}{cccccc}
+E A & 0 & 0 & 0 & 0 & 0 \\
+0 & G {A} & 0 & 0 & 0 & 0 \\
+0 & 0 & G {A} & 0 & 0 & 0 \\
+0 & 0 & 0 & G J & 0 & 0 \\
+0 & 0 & 0 & 0 & E I_{1} & E I_{12} \\
+0 & 0 & 0 & 0 & E I_{12} & E I_{2} \\
+\end{array}\right]\left(\begin{array}{c}
+\epsilon \\
+\gamma_1 \\
+\gamma_2 \\
+\tau \\
+\kappa_1 \\
+\kappa_2 \\
+\end{array}\right)
+\]
+%and
+with 
+the constitutive %FCF
+parameters \(G\), \(E\), \(I_\alpha\), \(I_{12}\) and \(A\)
+representing
+standard cross-sectional properties.
+A square cross-section is used in the renderings for depicting
+%in order to depict
+the rotations clearly,
+and should not be interpreted as a representation of the cross-section geometry.
+The reference configuration is depicted as a wireframe in the renderings, and the deformed configuration is shaded solid.
+%The standard Euclidean basis $\{\mathbf{E}_1, \mathbf{E}_2, \mathbf{E}_3\}$
+%\FCF{underlies the geometry definition for all problems
+% The \FCF{geometry} description 
+% of the problems refer to \FCF{uses}
+The problems are described in reference to the standard Euclidean basis $\{\mathbf{E}_1, \mathbf{E}_2, \mathbf{E}_3\}$,
+which is also depicted in the renderings. 
+All simulations use the relative work increment as the convergence criterion. 
+%The work increment is used %in all problems to indicate convergence
+%as convergence criterion throughout the analyses.
+% The wrapped elements under consideration are suceptible to shear locking,
+% which is mitigated by the use of reduced Gauss-Legendre quadrature of order \(n-1\), for $n$-noded elements.
+The state determination of all wrapped elements uses   
+% a uniformly reduced 
+Gauss-Legendre quadrature of order \(n-1\), where $n$ is the number of element nodes. %, as is typical for displacement-interpolated beam elements.
+The implementation of these simulations is available at \url{https://github.com/claudioperez/GeometricTransformations}.
+% Further details of the implementation in FEDEASLab are available in.
+

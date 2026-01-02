@@ -1,0 +1,353 @@
+
+From \eqref{eq:def-linear-align-strain}
+\begin{equation}
+\begin{aligned}
+\bar{\bm{\gamma}} &= \SectionAverage{-\tfrac{1}{2}\,x^2\,\mathbf{1}_{\Section}
+      + \bm{\Pi}_{(b)} \big)}\bm{b}_{\Section} \\
+&+\FrameBasis\times\mathbf{I}^{-1}\left(\int 
+-\tfrac{1}{6}\,x^3\,\FrameBasis\otimes(\FrameBasis\times\bm{r})
+      + x [\bm{r}^{\times}]\bm{\Pi}_{(b)}  
+      +\tfrac{1}{2}x^2\,\bm{r}\times\FrameBasis\otimes\big(\bm{r} -\CentroidLocation\big)
+    + \bm{r}\times\FrameBasis\otimes\bm{\WarpShearIesan}(\bm{r})\mathrm{~d}A
+\right)\,\bm{b}_{\Section}
+\end{aligned}
+\end{equation}
+%
+Using \(\SectionAverage{\bm{r}-\CentroidLocation} = \mathbf{0}\)
+\begin{equation}
+\begin{aligned}
+\bar{\bm{\gamma}} &= \SectionAverage{-\tfrac{1}{2}\,x^2\,\mathbf{1}_{\Section}
+      + \bm{\Pi}_{(b)}}\bm{b}_{\Section} \\
+&-\tfrac{1}{6}\,x^3\,A\FrameBasis\times\mathbf{I}^{-1}\FrameBasis\otimes(\FrameBasis\times\CentroidLocation) \bm{b}_{\Section} \\
+&+\tfrac{1}{2}x^2\,\FrameBasis\times\mathbf{I}^{-1}\int \bm{r}\times\FrameBasis\otimes\big(\bm{r} -\CentroidLocation\big) dA \bm{b}_{\Section} \\
+&+\FrameBasis\times\mathbf{I}^{-1}\left(\int 
+ x [\bm{r}^{\times}]\big(\bm{\Pi}_{(b)}  
+    + \FrameBasis\otimes\bm{\WarpShearIesan}(\bm{r})\big)\mathrm{~d}A
+\right)\,\bm{b}_{\Section}
+\end{aligned}
+\end{equation}
+%
+\begin{equation}
+\begin{aligned}
+\bar{\bm{\gamma}} &= \SectionAverage{-\tfrac{1}{2}\,x^2\,\mathbf{1}_{\Section}
+      + \bm{\Pi}_{(b)}  
+      +x\,\FrameBasis\otimes\big(\bm{r} -\CentroidLocation\big)}\bm{b}_{\Section} \\
+&-\tfrac{1}{6}\,x^3\,A\FrameBasis\times\mathbf{I}^{-1}\FrameBasis\otimes(\FrameBasis\times\CentroidLocation) \bm{b}_{\Section} \\
+&-\tfrac{1}{2}x^2\,\FrameBasis\times\mathbf{I}^{-1}\big(\mathbf{J} - A\CentroidLocation\otimes\CentroidLocation\big) \bm{b}_{\Section} \\
+&+\FrameBasis\times\mathbf{I}^{-1}\left(\int 
+ x [\bm{r}^{\times}]\big(\bm{\Pi}_{(b)}  
+    + \FrameBasis\otimes\bm{\WarpShearIesan}(\bm{r})\big)\mathrm{~d}A
+\right)\,\bm{b}_{\Section}
+\end{aligned}
+\end{equation}
+%
+
+
+\begin{Details}
+\[
+\begin{aligned}
+-\tfrac{1}{6}\reflenx^3\,\bar{\Theta}[\bm{b}_{\Section}]&=\int_{\Omega}(\bm{r}-\CentroidLocation)\times\Big(-\tfrac{1}{6}\,x^{3}\,\mathbf{1}_{\Section}\bm{b}_{\Section}\Big)\mathrm dA
+=-\tfrac{1}{6}\,x^{3}\Big(\int_{\Omega}(\bm{r}-\CentroidLocation)\,\mathrm dA\Big)\times\bm{b}_{\Section}=\mathbf{0},\\
+\reflenx\,\bar{\Theta}[]&=\int_{\Omega}(\bm{r}-\CentroidLocation)\times\big(x\,\bm{\Pi}_{(b)}(\bm{r})\bm{b}_{\Section}\big)\mathrm dA
+= x\int_{\Omega}(\bm{r}-\CentroidLocation)\times\big(\bm{\Pi}_{(b)}(\bm{r})\bm{b}_{\Section}\big)\,\mathrm dA
+\ \parallel\ \FrameBasis,
+\end{aligned}
+\]
+using \eqref{eq:barTheta-vanish} and that the cross product of in–plane vectors is axial,
+\[
+\begin{aligned}
+\tfrac{1}{2}\reflenx^2\bar{\Theta}[\FrameBasis\,(\bm{r}-\CentroidLocation)\cdot\bm{b}]
+&= \tfrac{1}{2}\,x^{2}\,\CentroidStaticInertia^{-1}\int_{\Omega}(\bm{r}-\CentroidLocation)\times\Big(\FrameBasis\,((\bm{r}-\CentroidLocation)\cdot\bm{b}_{\Section})\Big)\mathrm dA \\
+% &=\tfrac{1}{2}\,x^{2}\int_{\Omega}((\bm{r}-\CentroidLocation)\cdot\bm{b}_{\Section})\,(\bm{r}-\CentroidLocation)\times\FrameBasis\,\mathrm dA\\
+&=-\tfrac{1}{2}\,x^{2}\,\CentroidStaticInertia^{-1}\FrameBasis\times\big(\IntRGoRG \bm{b}_{\Section}\big),\\
+&= \tfrac{1}{2}\reflenx^2\,\FrameBasis\times\bm{b}_{\Section} \\
+%
+\bar{\Theta}[\FrameBasis\,\bm{\WarpShearIesan}\cdot \bm{b}_{\Section} ]
+&=\int_{\Omega}(\bm{r}-\CentroidLocation)\times\Big(\FrameBasis\,(\bm{\WarpShearIesan}(\bm{r})\cdot\bm{b}_{\Section})\Big)\mathrm dA \\
+&= \left(\bar{\Theta}[\FrameBasis\,\bm{\WarpShearIesan}\cdot\FrameBasis_{\alpha}]\otimes\FrameBasis_{\alpha} \right) \bm{b}_{\Section} \\
+&=\int_{\Omega}(\bm{\WarpShearIesan}(\bm{r})\cdot\bm{b}_{\Section})\,(\bm{r}-\CentroidLocation)\times\FrameBasis\,\mathrm dA \\
+\end{aligned}
+\]
+\end{Details}
+
+
+
+\begin{Quote}
+\[
+\hat{\bm u}(x,\bm{r})\{\bm{b}_{\Section}\}
+=\Big(-\tfrac{1}{6}\,x^{3}\,\mathbf{1}_{\Section}
++x\,\bm{\Pi}_{(b)}(\bm{r})
++\tfrac{1}{2}x^{2}\,\FrameBasis\otimes(\bm{r}-\CentroidLocation)
++\FrameBasis\otimes\bm{\WarpShearIesan}(\bm{r})\Big)\,\bm{b}_{\Section},
+\]
+
+\[
+\bar{\bm u}'(x)=\Big(-\tfrac{1}{2}\,x^{2}\,\mathbf{1}_{\Section}
++\Section[\bm{\Pi}_{(b)}]\Big)\bm{b}_{\Section},
+\]
+because \(\Section[\bm{r}-\CentroidLocation]=\mathbf{0}\) and, by the Saint–Venant normalization,
+\(\Section[\bm{\WarpShearIesan}]=\mathbf{0}\). 
+Termwise evaluation of \(\int_{\Omega}(\bm{r}-\CentroidLocation)\times\hat{\bm u}\,\mathrm dA\) furnishes:
+\[
+\begin{aligned}
+\bar{\Theta}[]&=\int_{\Omega}(\bm{r}-\CentroidLocation)\times\Big(-\tfrac{1}{6}\,x^{3}\,\mathbf{1}_{\Section}\bm{b}_{\Section}\Big)\mathrm dA
+=-\tfrac{1}{6}\,x^{3}\Big(\int_{\Omega}(\bm{r}-\CentroidLocation)\,\mathrm dA\Big)\times\bm{b}_{\Section}=\mathbf{0},\\
+\bar{\Theta}[]&=\int_{\Omega}(\bm{r}-\CentroidLocation)\times\big(x\,\bm{\Pi}_{(b)}(\bm{r})\bm{b}_{\Section}\big)\mathrm dA
+= x\int_{\Omega}(\bm{r}-\CentroidLocation)\times\big(\bm{\Pi}_{(b)}(\bm{r})\bm{b}_{\Section}\big)\,\mathrm dA
+\ \parallel\ \FrameBasis,
+\end{aligned}
+\]
+using \eqref{eq:barTheta-vanish} and that the cross product of in–plane vectors is axial,
+\[
+\begin{aligned}
+\int_{\Omega}(\bm{r}-\CentroidLocation)\times\Big(\tfrac{1}{2}\,x^{2}\,\FrameBasis\,((\bm{r}-\CentroidLocation)\cdot\bm{b}_{\Section})\Big)\mathrm dA 
+&= \tfrac{1}{2}\,x^{2}\,\int_{\Omega}(\bm{r}-\CentroidLocation)\times\Big(\FrameBasis\,((\bm{r}-\CentroidLocation)\cdot\bm{b}_{\Section})\Big)\mathrm dA \\
+&=\tfrac{1}{2}\,x^{2}\int_{\Omega}((\bm{r}-\CentroidLocation)\cdot\bm{b}_{\Section})\,(\bm{r}-\CentroidLocation)\times\FrameBasis\,\mathrm dA
+=-\tfrac{1}{2}\,x^{2}\,\FrameBasis\times\big(\IntRGoRG\bm{b}_{\Section}\big),
+\end{aligned}
+\]
+\[
+\begin{aligned}
+\int_{\Omega}(\bm{r}-\CentroidLocation)\times\Big(\FrameBasis\,(\bm{\WarpShearIesan}(\bm{r})\cdot\bm{b}_{\Section})\Big)\mathrm dA
+&= \left(\CentroidStaticInertia \bar{\Theta}[\FrameBasis\,\bm{\WarpShearIesan}\cdot\FrameBasis_{\alpha}]\otimes\FrameBasis_{\alpha} \right) \bm{b}_{\Section} \\
+&=\int_{\Omega}(\bm{\WarpShearIesan}(\bm{r})\cdot\bm{b}_{\Section})\,(\bm{r}-\CentroidLocation)\times\FrameBasis\,\mathrm dA \\
+&=-\,\FrameBasis\times\big(\mathbf Q\,\bm{b}_{\Section}\big),
+\end{aligned}
+\]
+with
+\[
+\mathbf Q:=\int_{\Omega}(\bm{r}-\CentroidLocation)\otimes\bm{\WarpShearIesan}(\bm{r})\,\mathrm dA .
+\]
+Hence
+\[
+\begin{aligned}
+\bar{\bm\theta}(x)
+&=\mathbf I^{-1}\!\left[
+x\int_{\Omega}(\bm{r}-\CentroidLocation)\times\big(\bm{\Pi}_{(b)}(\bm{r})\bm{b}_{\Section}\big)\,\mathrm dA
+-\tfrac{1}{2}\,x^{2}\,\FrameBasis\times(\IntRGoRG\bm{b}_{\Section})
+-\FrameBasis\times(\mathbf Q\,\bm{b}_{\Section})
+\right] \\
+\FrameBasis\times\bar{\bm\theta}(x)
+&=\FrameBasis\times\mathbf I^{-1}\!\left[
+x\int_{\Omega}(\bm{r}-\CentroidLocation)\times\big(\bm{\Pi}_{(b)}(\bm{r})\bm{b}_{\Section}\big)\,\mathrm dA
+-\tfrac{1}{2}\,x^{2}\,\FrameBasis\times(\IntRGoRG\bm{b}_{\Section})
+-\FrameBasis\times(\mathbf Q\,\bm{b}_{\Section})
+\right].
+\end{aligned}
+\]
+The first term inside brackets is parallel to \(\FrameBasis\), so it contributes nothing to \(\FrameBasis\times\bar{\bm\theta}\). On the section plane one has
+\(\FrameBasis\times\mathbf I^{-1}(\FrameBasis\times\bm v)=\IntRGoRG^{-1}\bm v\) for all \(\bm v\perp\FrameBasis\). Therefore
+\[
+\FrameBasis\times\bar{\bm\theta}(x)
+=\tfrac{1}{2}\,x^{2}\,\bm{b}_{\Section}
++\IntRGoRG^{-1}\mathbf Q\,\bm{b}_{\Section}.
+\]
+
+Using this in \eqref{eq:timo-gamma} furnishes
+\[
+\bar{\bm\gamma}(x)
+=\Big(-\tfrac{1}{2}\,x^{2}\,\mathbf{1}_{\Section}+\Section[\bm{\Pi}_{(b)}]\Big)\bm{b}_{\Section}
++\Big(\tfrac{1}{2}\,x^{2}\,\mathbf{1}_{\Section}+\IntRGoRG^{-1}\mathbf Q\Big)\bm{b}_{\Section}
+=\Big(\Section[\bm{\Pi}_{(b)}]+\IntRGoRG^{-1}\mathbf Q\Big)\bm{b}_{\Section}.
+\]
+
+The averaged shear is therefore
+\(\bar{\bm\gamma}=\bm\Gamma\,\bm{b}_{\Section}\) with 
+\(\bm\Gamma=\Section[\bm{\Pi}_{(b)}]+\IntRGoRG^{-1}\mathbf Q\),
+independent of \(x\) and with no need for projecting the warping.
+
+\[
+\SectionAverage{\bm{\Pi}_{(b)}} = \frac{1}{GA}E\mathbf{J}_{G} - \SectionAverage{\nabla\WarpShearIesan}^T
+\]
+\end{Quote}
+
+
+
+\begin{Quote}
+Let $\bm{\WarpShearIesan}:\Section\to\FrameBasis^\perp$ denote the shear warping field solving the Saint–Venant boundary–value problem \eqref{eq:bvp-warp-shear-iesan}. 
+We construct, from $\bm{\WarpShearIesan}$, a \emph{projected} field $\bm{\SimoWarp}$ that removes mean and first moments:
+\begin{equation}
+\label{eq:Pi-def-v2}
+\bm{\SimoWarp}:=\Pi[\bm{\WarpShearIesan}],
+\qquad\text{with}\quad
+\begin{aligned}
+\Pi[\bm u](\bm{r})&:=\bm u(\bm{r})
+-\SectionAverage{\bm u}
+-\Big(\IntRGoRG^{-1}\!\int_{\Section}\bm{r}\otimes\bm u\mathrm{~d}A\Big)^{\top}\bm{r}, \\
+\end{aligned}
+\end{equation}
+In the Timoshenko identification the axial residual $w$ induced by shear must not contaminate the section–rigid variables in \eqref{eq:bar-vars}. 
+This is enforced by requiring, for every shear resultant $\ShearForce(\reflenx)$,
+\begin{equation}
+\int_{\Section}w(\reflenx,\bm{r})\mathrm{~d}A=0,\qquad \int_{\Section}\bm{r}\,w(\reflenx,\bm{r})\mathrm{~d}A=\mathbf{0}.
+\label{eq:residual-constraints}
+\end{equation}
+Represent $w$ in Saint–Venant form as
+\begin{equation}
+\label{eq:w-def}
+w(\reflenx,\bm{r}):=-\frac{1}{GA}\,\ShearForce(\reflenx)\cdot \mathbf{D}\bm{\SimoWarp}(\bm{r}),
+\qquad
+\mathbf{D}:= GA\,(E\IntRGoRG)^{-1}.
+\end{equation}
+Then \eqref{eq:residual-constraints} hold for all $\ShearForce$ \emph{if and only if}
+\[
+\int_{\Section}\mathbf{D}\bm{\SimoWarp}\mathrm{~d}A=\mathbf{0},
+\qquad
+\int_{\Section}\bm{r}\otimes\mathbf{D}\bm{\SimoWarp}\mathrm{~d}A=\mathbf{0},
+\]
+which reduce to $\int_{\Section}\bm{\SimoWarp}\mathrm{~d}A=\mathbf{0}$ and $\int_{\Section}\bm{r}\otimes\bm{\SimoWarp}\mathrm{~d}A=\mathbf{0}$ because $\mathbf{D}$ is constant and symmetric. The operator $\Pi$ in \eqref{eq:Pi-def-v2} is a linear map that enforces these two moment conditions for every argument $\bm u$. 
+Note that $\bm{\SimoWarp}$ is a \emph{processed} field and is not required to solve \eqref{eq:bvp-warp-shear-iesan}.
+\end{Quote}
+
+
+\begin{remark}
+Recall that the Saint–Venant shear warping $\bm{\WarpShearIesan}:\Section\to\FrameBasis^\perp$ is defined by the boundary–value problem \eqref{eq:bvp-warp-shear-iesan}. 
+The projection \(\bm{\SimoWarp}\) enforces the moment constraints $\Section[\bm{\SimoWarp}]=\mathbf{0}$ and $\int_{\Section}\bm{r}\otimes\bm{\SimoWarp}\mathrm{~d}A=\mathbf{0}$ needed to ensure, for every shear resultant $\ShearForce$, the axial residual $w$ defined by \eqref{eq:w-def} has zero mean and zero first moment (cf.\ \eqref{eq:residual-constraints}).
+
+Since the Laplacian annihilates affine fields, $\Delta\bm{\SimoWarp} \equiv \Delta\bm{\WarpShearIesan}$. 
+Hence, for every $\bm{b}_{\Section}$,
+\[
+\Delta(\bm{\SimoWarp}\cdot\bm{b}_{\Section})=\Delta(\bm{\WarpShearIesan}\cdot\bm{b}_{\Section})
+=-\,2\,(\bm{r}-\CentroidLocation)\cdot\bm{b}_{\Section}
+\quad\text{in }\Section,
+\]
+i.e., the Poisson right–hand side in \eqref{eq:bvp-warp-shear-iesan} is preserved. 
+Writing $\bm{\SimoWarp}=\bm{\WarpShearIesan}-\bm a-\mathbf B^{T}\bm{r}$ with 
+$\bm a:=\Section[\bm{\WarpShearIesan}]$ and 
+$\mathbf B^{T}:=\IntRGoRG^{-1}\!\int_{\Section}\bm{r}\otimes\bm{\WarpShearIesan}\mathrm{~d}A$, one finds, for any $\bm{b}_{\Section}$,
+\[
+\partial_{\bm\nu}(\bm{\SimoWarp}\cdot\bm{b}_{\Section})
+=\partial_{\bm\nu}(\bm{\WarpShearIesan}\cdot\bm{b}_{\Section})
+-\bm{b}_{\Section}\cdot\mathbf B^{T}\bm\nu
+\quad\text{on }\partial\Section.
+\]
+The additional term $\bm{b}_{\Section}\cdot\mathbf B^{T}\bm\nu$ is constant along $\partial\Section$ and vanishes only in special cases (e.g., when $\int_{\Section}\bm{r}\otimes\bm{\WarpShearIesan}\mathrm{~d}A=\mathbf{0}$ due to symmetry or load alignment). 
+Therefore, \emph{$\bm{\SimoWarp}$ does not generally satisfy the Neumann condition of \eqref{eq:bvp-warp-shear-iesan}}.
+
+\emph{Normalization.} While \eqref{eq:bvp-warp-shear-iesan} fixes the mean of $\bm{\WarpShearIesan}\cdot\bm{b}_{\Section}$, the projector $\Pi$ replaces this by the two moment constraints $\Section[\bm{\SimoWarp}]=\mathbf{0}$ and $\int_{\Section}\bm{r}\otimes\bm{\SimoWarp}\mathrm{~d}A=\mathbf{0}$. 
+These are precisely the constraints needed so that the axial residual $w$ built from $\bm{\SimoWarp}$ via \eqref{eq:w-def} does not alter the section–average translation and rotation defined in \eqref{eq:bar-vars} and, consequently, yields the constitutive relation \eqref{eq:timo-law}.
+
+The projected field $\bm{\SimoWarp}$ preserves the Poisson equation in the interior but modifies the Neumann boundary data by a constant flux and enforces stronger moment constraints. 
+Thus, \emph{$\bm{\SimoWarp}$ does not generally solve \eqref{eq:bvp-warp-shear-iesan}}; this departure is intentional and is exactly what ensures that the induced axial residual $w$ is orthogonal (in mean and first moment) to the rigid section modes for every shear resultant.
+
+\end{remark}
+
+
+
+\begin{equation*}
+\bm{b}_{\Section} = \BfromBeta \bm{K}^{-1} \bar{\bm{K}} \bar{\bm\gamma}
+\end{equation*}
+
+
+
+\paragraph{Energetic conjugacy}
+
+If $\bar{\bm\gamma}$ is taken as generalized shear, the energetically conjugate resultant $\bar{\ShearForce}$ is defined by
+\begin{equation}
+\bar{\ShearForce}^{\,*}\cdot\bar{\bm\gamma}
+=\frac{1}{GA}\,\ShearForce^{*}\cdot\bm{K}^{-1}\,\ShearForce
+\quad\text{for all}\ \ShearForce^{*},\ \bar{\bm\gamma}.
+\label{eq:def-avg-conj-shear}
+\end{equation}
+Using $\ShearForce^{*}=GA\,\bar{\bm{K}}\,\bar{\bm\gamma}^{*}$ and \eqref{eq:shear-force-from-avg-strain} yields
+\begin{equation}
+\label{eq:conj-resultant}
+\bar{\ShearForce}=GA\,\bar{\bm{K}}^{\top}\bm{K}^{-1}\,\bar{\bm{K}}\,\bar{\bm\gamma}.
+\end{equation}
+Therefore $\bar{\ShearForce}=\ShearForce$ holds if and only if
+\begin{equation}
+\label{eq:coincidence}
+\bm{K}^{-1}=\mathbf{1}+\mathbf L.
+\end{equation}
+%
+Equivalently, eliminating $\bar{\bm\gamma}$ in favor of $\ShearForce$ via $\ShearForce=GA\,\bar{\bm{K}}\,\bar{\bm\gamma}$,
+\begin{equation}
+\label{eq:Fconj-vs-F}
+\bar{\ShearForce}=\bar{\bm{K}}^{\top}\bm{K}^{-1}\,\ShearForce.
+\end{equation}
+
+Since $\bm{K}$ and $\mathbf L$ originate from different section integrals (quadratic in the Saint–Venant stress operator in \eqref{eq:def-romano-k-shear} versus linear in $\nabla(\mathbf D\bm{\SimoWarp})$ in \eqref{eq:shear-force-from-avg-strain}), \eqref{eq:coincidence} is exceptional. Hence, in the Timoshenko identification \eqref{eq:timo-gamma}, the generalized stress conjugate to $\bar{\bm\gamma}$ is \eqref{eq:conj-resultant}, not the usual resultant $\ShearForce:=\int_{\Section}\ShearStress\mathrm{~d}A$.
+
+\subparagraph{Stiffness with respect to $\bar{\bm\gamma}$}
+
+The tangent mapping from $\bar{\bm\gamma}$ to the usual resultant is
+\begin{equation}
+\label{eq:tangent-F-gammabar}
+\partial_{\bar{\bm\gamma}}\ShearForce \;=\; GA\,\bar{\bm{K}}.
+\end{equation}
+In view of the definition \eqref{eq:def-L-avg} of \(\mathbf{L}\), the shear correction tensor $\bar{\bm{K}}$ need not be symmetric; hence \eqref{eq:tangent-F-gammabar} is not symmetric in general. 
+Symmetry is recovered in special geometries (e.g., sections with two orthogonal reflection symmetries) where $\mathbf L$ is diagonal and so is $\bar{\bm{K}}$.
+
+The \emph{energetic} tangent associated with the conjugate resultant \eqref{eq:Fconj-from-gamma} is
+\begin{equation}
+\label{eq:tangent-Fconj-gammabar}
+\partial_{\bar{\bm\gamma}}\bar{\ShearForce} \;=\; GA\,\bar{\bm{K}}^{\top}\bm{K}^{-1}\,\bar{\bm{K}},
+\end{equation}
+which is symmetric positive–definite because $\bm{K}$ is symmetric positive–definite and $\bar{\bm{K}}$ is invertible.
+
+
+
+\subsubsection{Summary}
+
+Combining \eqref{eq:shear-force-from-avg-strain} and \eqref{eq:sv-sliding} gives
+\begin{equation}
+\label{eq:map-gammas}
+\bm\gamma^{\rm sh}=\bm{K}^{-1}\,\bar{\bm{K}}\,\bar{\bm\gamma},\qquad
+\bar{\bm\gamma}=(GA)^{-1}(\mathbf{1}+\mathbf L)\,\ShearForce.
+\end{equation}
+
+The construction is consistent with the Saint–Venant fields of this paper and produces the exact relation $\ShearForce=GA\,\bar{\bm{K}}\,\bar{\bm\gamma}$. 
+However, the energy pairing \eqref{eq:def-avg-conj-shear} shows that $\bar{\bm\gamma}$ is not, in general, conjugate to the usual resultant $\ShearForce$; the conjugate is \eqref{eq:conj-resultant}. 
+In contrast, the measure $\bm\gamma^{\rm sh}$ in \eqref{eq:sv-sliding} is, by construction, conjugate to $\ShearForce$. 
+The two reductions are thus linked by the invertible map \eqref{eq:map-gammas} but select different strain–resultant pairs. Any three–dimensional use of the Timoshenko identification should account for this distinction when formulating constitutive blocks or energy functionals.
+
+
+The Timoshenko–type identification \eqref{eq:timo-gamma}–\eqref{eq:shear-force-from-avg-strain} uses $\bar{\bm\gamma}$ as generalized shear. 
+Its energetically conjugate resultant $\bar{\ShearForce}$ is defined by the Saint–Venant power pairing \eqref{eq:def-avg-conj-shear}. Using \eqref{eq:shear-force-from-avg-strain} and the definition of $\bm{K}$ in \eqref{eq:def-romano-k-shear}, one obtains
+\begin{equation}
+\label{eq:Fconj-from-gamma}
+\bar{\ShearForce}
+\;=\;GA\,\bar{\bm{K}}^{\top}\bm{K}^{-1}\,\bar{\bm{K}}\,\bar{\bm\gamma}.
+\end{equation}
+
+For a given section and $\nu$, the map $\ShearForce\mapsto\bar{\ShearForce}$ reweights the usual resultant by the Saint–Venant stress–shape tensor $\RomanoChiShear$ and the kinematic correction $\bar{\bm{K}}$. 
+It is the unique vector in $V$ such that $\bar{\ShearForce}\cdot\bar{\bm\gamma}$ equals the internal shear power $\int_{\Section} \ShearStress \cdot (G^{-1}\ShearStress)\mathrm{~d}A$ for the stress field generated by $\ShearForce$. 
+Thus $\bar{\ShearForce}$ is not, in general, the cross–sectional resultant $\ShearForce=\int_{\Section}\ShearStress\mathrm{~d}A$; it is the \emph{power–equivalent} resultant appropriate to the choice of $\bar{\bm\gamma}$ as generalized shear.
+
+
+Equation \eqref{eq:Fconj-vs-F} shows that the two coincide iff $\bar{\bm{K}}^{\top}\bm{K}^{-1}=\mathbf{1}$. 
+This is exceptional. 
+They remain collinear only when $\bar{\bm{K}}$ and $\bm{K}^{-1}$ commute and are scalar multiples of the identity (e.g., circular section). 
+For general open or anisotropic sections, $\bar{\ShearForce}$ differs in both magnitude and direction from $\ShearForce$.
+
+
+\begin{Quote}
+
+For \(\bar{\bm\theta}\), use \(\delta(\bar{\bm\theta}\times\bm{r})=\delta\bar{\bm\theta}\times\bm{r}\) and
+\(\bm a\cdot(\delta\bar{\bm\theta}\times\bm{r})=\delta\bar{\bm\theta}\cdot(\bm{r}\times\bm a)\) to obtain
+\[
+0=\delta_{\bar{\bm\theta}}\mathcal{J}=-2\,\delta\bar{\bm\theta}\cdot
+\int_{\Section}\!\bm{r}\times\big(\hat{\bm u}-\bar{\bm u}-\bar{\bm\theta}\times\bm{r}\big)\mathrm{~d}A
+\quad\implies\quad
+\int_{\Section}\!\bm{r}\times\big(\hat{\bm u}-\bar{\bm u}-\bar{\bm\theta}\times\bm{r}\big)\mathrm{~d}A=\mathbf{0} .
+\]
+Insert \(\bar{\bm u}\) from \eqref{eq:def-avg-ubar} with
+\(\CentroidLocation:=\SectionAverage{\bm{r}}\), set \(\CoordinateCentroid:=\bm{r}-\CentroidLocation\) (so \(\SectionAverage{\CoordinateCentroid}=\mathbf{0}\)), and simplify:
+\[
+\int_{\Section}\bm{r}\times(\hat{\bm u}-\bar{\bm u})\mathrm{~d}A
+=\int_{\Section}\bm{r}\times(\bar{\bm\theta}\times\bm{r})\mathrm{~d}A
+\quad\Longleftrightarrow\quad
+\int_{\Section}\CoordinateCentroid\times\hat{\bm u}\mathrm{~d}A
+=\int_{\Section}\CoordinateCentroid\times(\bar{\bm\theta}\times\CoordinateCentroid)\mathrm{~d}A .
+\]
+Recognizing the centroidal inertia tensor \(\CentroidStaticInertia\) 
+the second identity is \(\displaystyle \int_{\Section}\CoordinateCentroid\times(\bar{\bm\theta}\times\CoordinateCentroid)\mathrm{~d}A=\CentroidStaticInertia\,\bar{\bm\theta}\).
+Therefore
+\begin{equation}
+\bar{\bm\theta}
+=\CentroidStaticInertia^{-1}\!\int_{\Section}(\bm{r}-\CentroidLocation)\times\hat{\bm u}(\bm{r})\mathrm{~d}A.
+\label{eq:def-avg-thetabar}
+\end{equation}
+
+\end{Quote}
+

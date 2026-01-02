@@ -1,0 +1,103 @@
+
+@thesis{mckenna1997object,
+  title = {Object Oriented Finite Element Programming: {{Frameworks}} for Analysis, Algorithms, and Parallel Computing},
+  shorttitle = {Object Oriented Finite Element Programming},
+  author = {McKenna, Frank},
+  date = {1997},
+  institution = {University of California, Berkeley},
+  location = {Berkeley, Ca},
+  url = {https://opensees.berkeley.edu/OpenSees/doc/fmkdiss.pdf}
+}
+% == BibLateX quality report for mckenna1997object:
+
+
+@inproceedings{mckenna2000objectoriented,
+  title = {An {{Object-Oriented Software Design}} for {{Parallel Structural Analysis}}},
+  booktitle = {Advanced {{Technology}} in {{Structural Engineering}}},
+  author = {McKenna, Frank and Fenves, Gregory L.},
+  date = {2000-04-27},
+  pages = {1--8},
+  publisher = {American Society of Civil Engineers},
+  location = {Philadelphia, Pennsylvania, United States},
+  doi = {10.1061/40492(2000)30},
+  abstract = {A sequential object-oriented framework is extended for parallel processing using an Actor programming model. The paper presents results showing the performance improvements that can be obtained on a network of workstations.},
+  eventtitle = {Structures {{Congress}} 2000},
+  isbn = {978-0-7844-0492-8},
+  langid = {english}
+}
+% == BibLateX quality report for mckenna2000objectoriented:
+% ? Unsure about the formatting of the booktitle
+% ? Title looks like it was stored in title-case in Zotero
+% ? unused Url ("http://ascelibrary.org/doi/10.1061/40492%282000%2930")
+
+@article{mckenna2010nonlinear,
+  title = {Nonlinear {{Finite-Element Analysis Software Architecture Using Object Composition}}},
+  author = {McKenna, Frank and Scott, Michael H. and Fenves, Gregory L.},
+  date = {2010-01},
+  journaltitle = {Journal of Computing in Civil Engineering},
+  shortjournal = {J. Comput. Civ. Eng.},
+  volume = {24},
+  number = {1},
+  pages = {95--107},
+  issn = {0887-3801, 1943-5487},
+  doi = {10.1061/(ASCE)CP.1943-5487.0000002},
+  abstract = {Object composition offers significant advantages over class inheritance to develop a flexible software architecture for finiteelement analysis. Using this approach, separate classes encapsulate fundamental finite-element algorithms and interoperate to form and solve the governing nonlinear equations. Communication between objects in the analysis composition is established using software design patterns. Root-finding algorithms, time integration methods, constraint handlers, linear equation solvers, and degree of freedom numberers are implemented as interchangeable components using the Strategy pattern. The Bridge and Factory Method patterns allow objects of the finite-element model to vary independently from objects that implement the numerical solution procedures. The Adapter and Iterator patterns permit equations to be assembled entirely through abstract interfaces that do not expose either the storage of objects in the analysis model or the computational details of the time integration method. Sequence diagrams document the interoperability of the analysis classes for solving nonlinear finite-element equations, demonstrating that object composition with design patterns provides a general approach to developing and refactoring nonlinear finite-element software.},
+  langid = {english},
+  annotation = {333 citations (Crossref) [2022-06-27]}
+}
+% == BibLateX quality report for mckenna2010nonlinear:
+% 'issn': not a valid ISSN
+% ? Title looks like it was stored in title-case in Zotero
+% ? unused Url ("http://ascelibrary.org/doi/10.1061/%28ASCE%29CP.1943-5487.0000002")
+
+@article{mckenna2011opensees,
+  title = {{{OpenSees}}: {{A Framework}} for {{Earthquake Engineering Simulation}}},
+  shorttitle = {{{OpenSees}}},
+  author = {McKenna, Frank},
+  date = {2011-07},
+  journaltitle = {Computing in Science \& Engineering},
+  shortjournal = {Comput. Sci. Eng.},
+  volume = {13},
+  number = {4},
+  pages = {58--66},
+  issn = {1521-9615},
+  doi = {10.1109/MCSE.2011.66},
+  langid = {english},
+  annotation = {408 citations (Crossref) [2022-06-27]}
+}
+% == BibLateX quality report for mckenna2011opensees:
+% ? Title looks like it was stored in title-case in Zotero
+% ? unused Url ("http://ieeexplore.ieee.org/document/5931487/")
+
+@software{mckenna2017uqfem,
+  title = {{{uqFEM}}},
+  author = {McKenna, Frank and Padhye, Nikhil},
+  date = {2017},
+  version = {1.0}
+}
+
+@software{mckenna2018evw,
+  title = {Evw {{Application}}},
+  author = {McKenna, Frank},
+  date = {2018-06-30},
+  doi = {10.5281/ZENODO.1410695},
+  abstract = {The official homepage for the EVW Application is https://simcenter.designsafe-ci.org/learning-tools/evw-application/ This educational application allows the user to compare the responses of buildings subjected to earthquake and wind loading. The building is represented by a shear building model: an idealization of a structure in which the mass is lumped at the floor levels and the beams are assumed infinitely stiff in flexure and axially inextensible, and the columns are axially inextensible. The user inputs the floor weights and story properties (stiffness, yield strength, hardening ratio) of the stories, and a damping ratio for the structure. The user selects from a series of included ground motion acceleration records, or user provided motions. The user can quickly explore the effect of changing weight, height, and stiffness on the tine history response. In addition nonlinear effects due to P-Delta and soft story mechanisms can be studied. For earthquakes, the loading is applied using a uniform excitation approach in which forces are applied at floor level using inertial forces. For wind, the forces are determined at floor level using a stochastic process that takes into account gust speed, exposure category, drag coefficient and building parameters such as height and width.},
+  organization = {NHERI SimCenter}
+}
+% == BibLateX quality report for mckenna2018evw:
+% ? Title looks like it was stored in title-case in Zotero
+% ? unused Library catalog ("DOI.org (Datacite)")
+% ? unused Url ("https://zenodo.org/record/1410695")
+
+@software{mckenna2018multiple,
+  title = {Multiple {{Degrees Of Freedom Application}}},
+  author = {McKenna, Frank},
+  date = {2018-01-02},
+  doi = {10.5281/ZENODO.1410693},
+  abstract = {The official homepage for the Multiple Degrees of Freedom Application is https://simcenter.designsafe-ci.org/learning-tools/multiple-degrees-freedom-application/ This educational application allows the user to explore the effects of different building parameters on the time-varying response of a building under earthquake, wind, or other transient loads. The building is represented by a shear building model: an idealization of a structure in which the mass is lumped at the floor levels and the beams are assumed infinitely stiff in flexure and axially inextensible, and the columns are axially inextensible. The user inputs the floor weights and story properties (stiffness, yield strength, hardening ratio) of the stories, and a damping ratio for the structure. The user selects from a series of included ground motion acceleration records, or user provided motions. The user can quickly explore the effect of changing weight, height, and stiffness on the tine history response. In addition nonlinear effects due to P-Delta and soft story mechanisms can be studied. For this application the equations of motions are set up using the uniform excitation approach, i.e. MA + CV + KU = -MAg. A consequence of this approach is that the floor displacements solved for are relative displacements. These equations are solved using the Newmark constant acceleration method and Newton-Raphson solution algorithm. New features Added: 	Ability to scale earthquake ground motion 	Allow user to input a Harmonic ground motion 	Allow user to look at all periods of structure.},
+  organization = {NHERI SimCenter}
+}
+% == BibLateX quality report for mckenna2018multiple:
+% ? Title looks like it was stored in title-case in Zotero
+% ? unused Library catalog ("DOI.org (Datacite)")
+% ? unused Url ("http://doi.org/10.5281/zenodo.1410693")

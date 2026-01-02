@@ -1,0 +1,12 @@
+
+\usepackage[style=apa,bibencoding=auto,natbib=true]{biblatex}
+\renewcommand*{\mkbibnamefamily}[1]{\textsc{#1}}
+% \renewcommand\mkbibnamelast[1]{\textsc{#1}}
+\DeclareSourcemap{
+  \maps[datatype=bibtex, overwrite]{
+    \map{
+      \step[fieldset=annote, null]
+      \step[fieldset=annotation, null]
+    }
+  }
+}

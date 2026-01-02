@@ -1,0 +1,151 @@
+
+\usepackage{tcolorbox}
+\usepackage{xkeyval}
+\usepackage{siunitx}
+
+\makeatletter
+
+% Define all keys (all optional)
+\define@key{beamsec}{name}[]{\def\beamsec@name{#1}}
+\define@key{beamsec}{model}[]{\def\beamsec@shape{#1}}
+\define@key{beamsec}{shape}[]{\def\beamsec@shape{#1}}
+\define@key{beamsec}{material}[]{\def\beamsec@material{#1}}
+%% Labels
+\define@key{beamsec}{label/section}[]{\def\beamsec@label@section{#1}}
+\define@key{beamsec}{label/shape}[]{\def\beamsec@label@shape{#1}}
+\define@key{beamsec}{label/problem}[]{\def\beamsec@label@problem{#1}}
+
+%% Kinematics
+\define@key{beamsec}{kinematics/section}[]{\def\beamsec@kinematics@section{#1}}
+\define@key{beamsec}{kinematics/element}[]{\def\beamsec@kinematics@element{#1}}
+
+%% Section Geometry
+\define@key{beamsec}{d}[]{\def\beamsec@d{#1}}
+\define@key{beamsec}{b}[]{\def\beamsec@b{#1}}
+% 
+\define@key{beamsec}{A}[]{\def\beamsec@A{#1}}
+\define@key{beamsec}{Ay}[]{\def\beamsec@Ay{#1}}
+\define@key{beamsec}{Az}[]{\def\beamsec@Az{#1}}
+\define@key{beamsec}{Iy}[]{\def\beamsec@Iy{#1}}
+\define@key{beamsec}{Iz}[]{\def\beamsec@Iz{#1}}
+\define@key{beamsec}{J}[]{\def\beamsec@J{#1}}
+\define@key{beamsec}{ry}[]{\def\beamsec@ry{#1}}
+\define@key{beamsec}{rz}[]{\def\beamsec@rz{#1}}
+
+%% Material properties
+\define@key{beamsec}{E}[]{\def\beamsec@E{#1}}
+\define@key{beamsec}{G}[]{\def\beamsec@G{#1}}
+\define@key{beamsec}{nu}[]{\def\beamsec@nu{#1}}
+\define@key{beamsec}{Fy}[]{\def\beamsec@Fy{#1}}
+\define@key{beamsec}{rho}[]{\def\beamsec@rho{#1}}
+
+% Units
+\define@key{beamsec}{unit/length}[]{\def\beamsec@unit@length{#1}}
+\define@key{beamsec}{unit/stress}[]{\def\beamsec@unit@stress{#1}}
+
+% Helper for property row
+\newcommand{\beamsec@row}[3]{%
+  \ifx#2\empty\else$#1$ & $\!\!=\!$ & \num{#2}\ifx#3\empty\else\;\si{#3}\fi \tabularnewline \fi
+}
+
+\newtcolorbox{beamsecbox}{
+    colback=white,
+    colframe=black!60,
+    boxrule=0.4pt,
+    arc=1pt,
+    left=8pt,
+    right=8pt,
+    top=6pt,
+    bottom=6pt,
+}
+
+\newcommand{\FrameSection}[1]{%
+    % 1) Initialize all to empty
+    \def\beamsec@name{}\def\beamsec@shape{}\def\beamsec@material{}%
+    \def\beamsec@model{}
+    % Labels
+    \def\beamsec@label@section{}
+    \def\beamsec@label@problem{}
+    \def\beamsec@label@shape{}
+    % Kinematics 
+    \def\beamsec@kinematics@section{}
+    \def\beamsec@kinematics@element{}
+    % Section Geometry
+    \def\beamsec@d{}
+    \def\beamsec@b{}
+    \def\beamsec@A{}
+    \def\beamsec@Ay{}\def\beamsec@Az{}%
+    \def\beamsec@Iy{}\def\beamsec@Iz{}%
+    \def\beamsec@J{}\def\beamsec@ry{}\def\beamsec@rz{}%
+    % Material
+    \def\beamsec@E{}\def\beamsec@G{}\def\beamsec@nu{}
+    \def\beamsec@Fy{}\def\beamsec@rho{}%
+    \def\beamsec@unit@length{}\def\beamsec@unit@stress{}%
+
+    % 2) Parse keys
+    \setkeys{beamsec}{#1}%
+
+    %
+    \begin{beamsecbox}
+        % Header
+        \ifx\beamsec@label@problem\empty\else 
+          {\textbf{Properties for Example~\ref{sec:\beamsec@label@problem}. (\texttt{\beamsec@label@problem})}}\par
+        \fi
+        % \ifx\beamsec@shape\empty
+        %     \ifx\beamsec@material\empty\else
+        %         \beamsec@material\par
+        %     \fi
+        % \else
+        %     \beamsec@shape
+        %     \ifx\beamsec@material\empty\else\,·\,\beamsec@material\fi
+        %     \par
+        % \fi
+        \vspace{4pt}
+        \hrule
+        \vspace{6pt}
+        %
+        % side-by-side tables
+        \begin{minipage}[t]{0.3\linewidth}
+          \textit{Kinematics} \\[2pt]
+          \begin{tabular}{@{}rl}
+             Section: & \beamsec@kinematics@section \\
+             Element: & \beamsec@kinematics@element \\
+          \end{tabular}
+        \end{minipage}
+        \hfill
+        \begin{minipage}[t]{0.3\linewidth}
+            
+            \ifx\beamsec@shape\empty
+                \textit{Section}
+            \else 
+                \textit{\beamsec@shape}
+            \fi
+            \ifx\beamsec@label@shape\empty\else 
+              (\beamsec@label@shape)
+            \fi
+            \\[2pt]
+            \begin{tabular}{@{}lcl@{}}
+                \beamsec@row{d}{\beamsec@d}{\beamsec@unit@length\squared}
+                \beamsec@row{b}{\beamsec@b}{\beamsec@unit@length\squared}
+                \beamsec@row{A}{\beamsec@A}{\beamsec@unit@length\squared}
+                \beamsec@row{A_y}{\beamsec@Ay}{\beamsec@unit@length\tothe{2}}
+                \beamsec@row{A_z}{\beamsec@Az}{\beamsec@unit@length\tothe{2}}
+                \beamsec@row{I_y}{\beamsec@Iy}{\beamsec@unit@length\tothe{4}}
+                \beamsec@row{I_z}{\beamsec@Iz}{\beamsec@unit@length\tothe{4}}
+                \beamsec@row{J}{\beamsec@J}{{\beamsec@unit@length}\tothe{4}}
+            \end{tabular}
+        \end{minipage}%
+        \hfill
+        \begin{minipage}[t]{0.3\linewidth}
+            \textit{Material}\\[2pt]
+            \begin{tabular}{@{}rcl@{}}
+                \beamsec@row{E}{\beamsec@E}{\beamsec@unit@stress}
+                \beamsec@row{G}{\beamsec@G}{\beamsec@unit@stress}
+                % \beamsec@row{\nu}{\beamsec@nu}{}
+                \beamsec@row{F_y}{\beamsec@Fy}{\beamsec@unit@stress}
+                % \beamsec@row{\rho}{\beamsec@rho}{}
+            \end{tabular}
+        \end{minipage}
+    \end{beamsecbox}
+}
+\makeatother

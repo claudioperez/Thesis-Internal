@@ -1,0 +1,256 @@
+\subsubsection{Saint Venant Restriction}
+
+% \begin{definition}[Classical SV resultants]
+% \label{def:sv-resultants}
+% Let $\bm s_{\rm SV}(x;\IesanVector)$ denote the classical Saint~Venant stress resultants
+% associated with $\hat{\bm u}_{\rm P}(\IesanVector)$.
+% With $\IesanStiff$ and $\IesanEvolveSP$ defined earlier,
+% \[
+%   \bm s_{\rm SV}(x;\IesanVector)=\IesanStiff\,\exp(x\IesanEvolveSP)\,\IesanVector
+  
+% \]
+% \end{definition}
+
+%------------------------------------------------------------
+% Class I: properties imposed only on the SV restriction
+%------------------------------------------------------------
+
+\begin{definition}[Class I]
+\label{def:classI-minimal}
+A trace $\mathcal T$ is \textbf{Class I} if its SV restriction satisfies:
+
+\begin{enumerate}[label=(\roman*)]
+\item \textbf{(D1) SV strain-exactness.}
+The linear map $\IesanVector\mapsto \bm e_{\mathcal T}(0;\IesanVector)$ is invertible.
+
+\item \textbf{(T1) SV strain-affinity.}
+There exists a constant matrix $\TraceEvolveEE\in\mathbb R^{6\times 6}$ such that
+\[
+  \bm e_{\mathcal T}(x;\IesanVector) = (\mathbf 1+x\TraceEvolveEE)\,\bm e_{\mathcal T}(0;\IesanVector)
+  \qquad \forall x\in I,\ \forall \IesanVector\in\mathbb R^6.
+\]
+
+\item \textbf{(C1) Prismatic SV resultant mapping.}
+There exists a constant $\TraceStiffNM\in\mathrm{GL}(6)$ such that
+\[
+  \bm s_{\rm SV}(x;\IesanVector)=\TraceStiffNM\,\bm e_{\mathcal T}(x;\IesanVector)
+  \qquad \forall x\in I,\ \forall \IesanVector\in\mathbb R^6.
+\]
+
+\item \textbf{(P1${}^{\rm SV}$) Plane-section normalization on primary SV generators.}
+There exists a fixed trace center $\CenterTrace\in\Section$ such that for all
+$\IesanVector=(a_\varepsilon,\bm a_\Omega,a_\vartheta,\mathbf 0)$ (i.e. $\bm b_\Section=\mathbf 0$),
+the traced strain \emph{at $x=0$} satisfies
+\[
+  \epsilon = a_\varepsilon+\CenterTrace\cdot \bm a_\Omega,\qquad
+  \bm\gamma_\perp=\mathbf 0,\qquad
+  \varkappa=a_\vartheta,\qquad
+  \bm\kappa_\perp=-\FrameBasis^\times \bm a_\Omega.
+\]
+\end{enumerate}
+\end{definition}
+
+%------------------------------------------------------------
+% Matrices as representations of restricted operators
+%------------------------------------------------------------
+
+\begin{lemma}[Trace matrix as SV representation]
+\label{lem:trace-matrix-exists}
+If $\mathcal T$ satisfies (D1), then the SV-restricted linear map
+$\IesanVector\mapsto \bm e_{\mathcal T}(0;\IesanVector)$ admits a unique matrix representation
+$\TraceDeDpRoot\in\mathrm{GL}(6)$ such that
+\[
+  \bm e_{\mathcal T}(0;\IesanVector)=\TraceDeDpRoot\,\IesanVector.
+\]
+This matrix $\TraceDeDpRoot$ is the \emph{trace matrix} of the SV-equivalence class.
+\end{lemma}
+
+\begin{proposition}[Class I identities on $\mathcal U_{\rm SV}$]
+\label{prop:classI-identities}
+Let $\mathcal T$ be Class I. Then, for the SV restriction:
+
+\begin{enumerate}[label=(\alph*)]
+\item The prismatic resultant matrix is
+\[
+  \TraceStiffNM = \IesanStiff\,\TraceDpDeRoot.
+\]
+
+\item The strain evolution matrix is
+\[
+  \TraceEvolveEE = \TraceDeDpRoot\,\IesanEvolveSP\,\TraceDpDeRoot.
+\]
+
+\item The SV strain field is
+\[
+  \bm e_{\mathcal T}(x;\IesanVector)=(\mathbf 1+x\TraceEvolveEE)\TraceDeDpRoot\,\IesanVector
+  =\TraceDeDpRoot(\mathbf 1+x\IesanEvolveSP)\IesanVector.
+\]
+
+\item The SV derivative matrix is uniquely determined by
+\[
+  \TraceDeDpOne \;\coloneq\; \partial_{\IesanVector}\bm e_{\mathcal T}'(x;\IesanVector)
+  \;=\;\TraceDeDpRoot\,\IesanEvolveSP.
+\]
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+
+\begin{enumerate}
+\item[(a)] From \eqref{eq:snm0-in-p} and Lem.~\ref{lem:trace-matrix-exists}:
+\[
+  \snm(0;\IesanVector)=\IesanStiff\,\IesanVector
+  =\TraceStiffNM\,\bm e_{\mathcal T}(0;\IesanVector)
+  =\TraceStiffNM\,\TraceDeDpRoot\,\IesanVector,
+\]
+so $\TraceStiffNM=\IesanStiff\,\TraceDpDeRoot$.
+
+\item[(b)] Using SV equilibrium $ \bm s_{\rm SV}'=\mathbb J\,\bm s_{\rm SV}$ and (C1):
+\[
+  \TraceStiffNM\,\bm e_{\mathcal T}'=\mathbb J\,\TraceStiffNM\,\bm e_{\mathcal T},
+\]
+so $\bm e_{\mathcal T}'=(\TraceStiffNM^{-1}\mathbb J\TraceStiffNM)\bm e_{\mathcal T}$.
+Since $\mathbb J^2=\mathbf 0$, this implies $\bm e_{\mathcal T}$ is affine and
+\[
+  \bm e_{\mathcal T}'(x;\IesanVector)=(\TraceStiffNM^{-1}\mathbb J\TraceStiffNM)\,\bm e_{\mathcal T}(0;\IesanVector),
+\]
+hence $\TraceEvolveEE=\TraceStiffNM^{-1}\mathbb J\TraceStiffNM$.
+Substituting $\TraceStiffNM=\IesanStiff\TraceDpDeRoot$ and
+$\IesanEvolveSP=\IesanStiff^{-1}\mathbb J\,\IesanStiff$ gives
+$\TraceEvolveEE=\TraceDeDpRoot\,\IesanEvolveSP\,\TraceDpDeRoot$.
+
+\item[(c)] Integrate $\bm e_{\mathcal T}'=\TraceEvolveEE\,\bm e_{\mathcal T}(0;\IesanVector)$ and
+use Lem.~\ref{lem:trace-matrix-exists}.
+
+\item[(d)] Differentiate (c) with respect to $x$ and then $\IesanVector$.
+\end{enumerate}
+\end{proof}
+
+% \begin{proposition}[Plane-trace matrix block structure]
+% \label{prop:plane-trace-structure-rigorous}
+% If $\mathcal T$ is Class I, then (P1${}^{\rm SV}$) implies that the trace matrix
+% $\TraceDeDpRoot$ has the plane form
+% \[
+% \TraceDeDpRoot = \begin{pmatrix}
+% 1 & \CenterTrace^\top & 0 & \TraceNF^\top \\
+% \mathbf{0} & \mathbf{0} & \TraceFT & \TraceFF \\
+% 0 & \mathbf{0}^\top & 1 & \TraceTF^\top \\
+% \mathbf{0} & -\FrameBasis^\times & \TraceBT & \TraceMF
+% \end{pmatrix},
+% \]
+% with $\FrameBasis\cdot\TraceNF=\FrameBasis\cdot\TraceFT=\FrameBasis\cdot\TraceTF=\FrameBasis\cdot\TraceBT=0$,
+% and the remaining blocks $(\TraceNF,\TraceFT,\TraceFF,\TraceTF,\TraceBT,\TraceMF)$
+% are free subject only to $\TraceDeDpRoot\in\mathrm{GL}(6)$ (18 parameters).
+% \end{proposition}
+
+\subsubsection{Reconstruction}
+
+We use the (mild) abuse of notation $\mathcal T^{-1}$ to denote a chosen
+\emph{lifting} (embedding) of one--dimensional beam fields into a three--dimensional
+continuum displacement field.  In general this is \emph{not} a true inverse of $\mathcal T$ on
+$\CauchySpace$; rather, it is a right--inverse on the class of section--rigid
+motions for which the plane--section property (P1) is enforced, and a convenient
+parametrization of enriched kinematics when warping amplitudes are present.
+
+\subparagraph{Warping-enriched embedding.}
+Fix a set of cross-sectional warping shapes $\bm\Phi(\bm r)\in\mathbb R^{3\times n_w}$
+(either finite $n_w$ or an abstract countable basis).
+For beam fields
+\[
+  \bm z(x)=(\bm u(x),\bm\theta(x))\in C^1(I;\mathbb R^6),
+  \qquad
+  \bm\alpha(x)\in C^1(I;\mathbb R^{n_w}),
+\]
+define the lifting
+\begin{equation*}
+\mathcal T^{-1}[\bm z,\bm\alpha](x,\bm r)
+\;\coloneq\;
+\bm u(x)
++\bm\theta(x)\times\bigl(\bm r-\CenterTrace\bigr)
++\bm\Phi(\bm r)\,\bm\alpha(x).
+% \label{eq:def-trace-lifting}
+\end{equation*}
+
+% \paragraph{Section-rigid specialization.}
+% When $\bm\alpha\equiv\mathbf 0$, \eqref{eq:def-trace-lifting} reduces to the plane--section
+% embedding about $\CenterTrace$,
+% \[
+%   \mathcal T^{-1}[\bm z,\mathbf 0](x,\bm r)
+%   =\bm u(x)+\bm\theta(x)\times(\bm r-\CenterTrace).
+% \]
+% On the restricted class of section--rigid motions for which (P1) is imposed, this
+% lifting is a right--inverse:
+% \[
+%   \mathcal T\big[\mathcal T^{-1}[\bm z,\mathbf 0]\big]=\bm z
+%   \qquad \text{(on the P1-normalized section--rigid subclass).}
+% \]
+
+\subparagraph{Rigid motions and the $\bm Z_\delta$ map.}
+The rigid displacement field 
+\(
+  \hat{\bm u}_{\rm R}(x,\bm r;\bm q)
+  % =\bm q_u+\bm q_\theta\times\bigl(x\FrameBasis+\bm r\bigr),
+  % \qquad
+  \bm q=(\bm q_u,\bm q_\theta)\in\mathbb R^6.
+\) 
+admits the section--rigid embedding \eqref{eq:def-trace-lifting} with $\bm\alpha\equiv\mathbf 0$ by setting
+\[
+  \bm\theta_{\rm R}(x;\bm q)=\bm q_\theta,
+  \qquad
+  \bm u_{\rm R}(x;\bm q)=\bm q_u+\bm q_\theta\times\bigl(x\FrameBasis+\CenterTrace\bigr),
+\]
+since then
+\[
+  \bm u_{\rm R}(x;\bm q)+\bm\theta_{\rm R}(x;\bm q)\times(\bm r-\CenterTrace)
+  =\bm q_u+\bm q_\theta\times(x\FrameBasis+\bm r)
+  =\hat{\bm u}_{\rm R}(x,\bm r;\bm q).
+\]
+By the plane--section property (P1), the trace of $\hat{\bm u}_{\rm R}$ is therefore
+\[
+  \bm z_{\rm R}(x)=
+  \begin{pmatrix}
+  \bm u_{\rm R}(x;\bm q)\\[2pt]
+  \bm\theta_{\rm R}(x;\bm q)
+  \end{pmatrix}
+  =\bm Z_\delta(x)\,\bm q,
+\]
+where
+\begin{equation}
+  \bm Z_{\delta}(\reflenx)
+  \coloneq
+  \begin{pmatrix}
+    \mathbf{1} & \bm{x}_T^{\times}(\reflenx) \\
+    \mathbf{0} & \mathbf{1}
+  \end{pmatrix},
+  \qquad
+  \bm{x}_T(\reflenx)\coloneq \reflenx\FrameBasis+\CenterTrace,
+  \label{eq:def-z-delta-embed}
+\end{equation}
+and $\bm Z_\delta(\reflenx)\in \mathrm{GL}(6)$ with inverse obtained by changing the sign of
+$\bm{x}_T^{\times}$ in the upper-right block.
+
+\subparagraph{Saint~Venant decomposition in traced variables.}
+On the Saint~Venant motion family, write the continuum solution as
+\[
+  \hat{\bm u}(x,\bm r)
+  =\hat{\bm u}_{\rm P}(x,\bm r;\IesanVector)+\hat{\bm u}_{\rm R}(x,\bm r;\bm q),
+\]
+with $\IesanVector\in\mathbb R^6$ the Saint~Venant parameters and $\bm q\in\mathbb R^6$ the rigid parameters.
+Linearity of the trace gives the induced decomposition
+\begin{equation}
+  \bm z(x)
+  =\mathcal T[\hat{\bm u}](x)
+  =\TraceDzDpX(x)\,\IesanVector+\bm Z_\delta(x)\,\bm q,
+  \label{eq:trace-z-embed}
+\end{equation}
+where $\TraceDzDpX(x)$ is the \emph{particular trace map} for the Saint~Venant class.
+
+Finally, for a Type~3 formulation with $\bm e(x)=\mathbb B^*\bm z(x)$ and a Class~I trace,
+the affine strain structure \eqref{eq:def-T0} implies that $\TraceDzDpX(x)$ is characterized by the linear ODE obtained by differentiating
+$\bm e=\mathbb B^*\bm z$ and using $\mathbb B^*\bm Z_\delta\equiv \mathbf 0$:
+\[
+  \TraceDzDpX' + \mathbb J^\top \TraceDzDpX = \mathbf E_{\rm p}(x),
+  \qquad
+  \TraceDzDpX(0)=\mathbf 0,
+\]
+with $\mathbf E_{\rm p}(x)$ determined by the Class~I trace data  $\TraceDeDpRoot$ and $\TraceEvolveEE$, recovering the closed-form expression used previously.

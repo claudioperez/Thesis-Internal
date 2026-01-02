@@ -1,0 +1,124 @@
+\subsection{The Energy-Conjugate Trace}
+\label{sec:trace-energy}
+
+The energy-conjugate trace is defined by requiring that the beam strains 
+$\bm{e} = (\epsilon, \bm{\gamma}_\perp, \varkappa, \bm{\kappa}_\perp)$ 
+be work-conjugate to the stress resultants 
+$\bm{s} = (N, \bm{F}, T, \bm{M})$ \eqref{eq:energy-conjugacy-def}:
+\begin{equation*}
+\delta\bm{e} \cdot \snm = \int_\Section \delta\bm{\varepsilon} \cdot \bm{\sigma} \dA
+\end{equation*}
+for all variations within the Saint-Venant class. 
+The stress resultants are:
+\begin{equation*}
+N := \int_\Section \sigma \dA, \qquad 
+\bm{F} := \int_\Section \bm{\tau} \dA, \qquad 
+T := \int_\Section (\FrameBasis \times \bm{r}) \cdot \bm{\tau} \dA, \qquad 
+\bm{M} := \int_\Section \bm{r} \times \bm{\sigma} \dA,
+% \label{eq:resultant-defs}
+\end{equation*}
+where $\bm{\sigma} = \sigma\FrameBasis + \bm{\tau}$ is the traction on the section.
+
+\iffalse
+\subsubsection{Resultant Evolution}
+
+The stress resultants for a Saint-Venant solution evolve affinely along the beam:
+\begin{equation*}
+\bm{s}(x) = \mathbf{R}(x)\,\bm{p} = (\IesanStiff + x\mathbf{R}_1)\,\bm{p}.
+\end{equation*}
+where \(\IesanStiff\) is defined by \eqref{eq:R0-matrix}. 
+The constant part encodes the constitutive relations at $x = 0$.
+The $x$-linear part arises from moment equilibrium $\bm{M}' + \FrameBasis \times \bm{F}=\mathbf{0}$:
+\begin{equation*}
+\mathbf{R}_1 = \mathbb{J}\IesanStiff =\begin{pmatrix}
+0 & \mathbf{0}^\top & 0 & \mathbf{0}^\top \\[4pt]
+\mathbf{0} & \mathbf{0} & \mathbf{0} & \mathbf{0} \\[4pt]
+0 & \mathbf{0}^\top & 0 & \mathbf{0}^\top \\[4pt]
+\mathbf{0} & \mathbf{0} & \mathbf{0} & -E\FrameBasis^\times\IntRGoRG
+\end{pmatrix}.
+% \label{eq:R1-matrix}
+\end{equation*}
+\fi 
+
+
+% \input{Sections/A4-1}
+% \clearpage 
+\input{Sections/A4-3}
+
+\subsubsection{Summary}
+
+\begin{table}[ht]
+\centering
+\caption{Symbols introduced in the energy-conjugate trace derivation.}
+\label{tab:energy-trace-symbols}
+\begin{tabular}{@{}lll@{}}
+\toprule
+Symbol & Units & Description \\
+\midrule
+\multicolumn{3}{@{}l}{\textit{Shear strain shape functions}} \\[2pt]
+$\mathbf{b}_{(\varphi)}$ & L & Torsion shear shape,  \eqref{eq:tau-phi} \\
+$\mathbf{B}_{(b)}$ & L & Flexural shear shape, \eqref{eq:tau-psi} \\[6pt]
+\multicolumn{3}{@{}l}{\textit{Section stiffness quantities}} \\[2pt]
+$\mathbf{H}_{bb}$ & \Length{6} %\Length{4} 
+& Flexural shear stiffness, 
+    \eqref{eq:def-H-bb} \\
+$\mathbf{h}_{\varphi b}$ & \Length{5} %\Length{4}
+& Shear-torsion coupling 
+    \eqref{eq:h-coupling} \\
+% $\tilde{\Jo}$ & \Length{4} & Reduced torsion constant \eqref{eq:reduced-torsion} \\
+% $\bm{\eta}$ & \Length{-1} %--- 
+% & Shear-torsion coupling ratio \eqref{eq:reduced-torsion} \\[6pt]
+\multicolumn{3}{@{}l}{\textit{Poisson-torsion coupling}} \\[2pt]
+% $\bm{\zeta}$ & \Length{5} & Torsion gradient moment \eqref{eq:def-zeta-lambda} \\
+% $\bm{\lambda}$ & \Length{5} & Torsion-centroid coupling \eqref{eq:def-zeta-lambda} \\[6pt]
+% \multicolumn{3}{@{}l}{\textit{Resultant and energy matrices}} \\[2pt]
+% $\IesanEnergy$ & mixed & Canonical energy matrix \\
+% $\IesanStiff$ & mixed & Stress resultant matrix at $x = 0$ \eqref{eq:G0-neg-m} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{Details}
+\begin{proposition}[Consistency of Energy Conjugacy]
+The consistency condition \eqref{eq:consistency-condition} is satisfied by 
+the Saint-Venant structure.
+\end{proposition}
+
+\begin{proof}
+The matrix $\mathbf{R}_1$ has only the $(4,4)$ block nonzero, corresponding 
+to moment evolution under shear force: $\bm{M}' = \FrameBasis \times \bm{F}$.
+Thus $\IesanStiff^{-1}\mathbf{R}_1$ acts only on the $\bm{b}_{\Section}$ columns.
+
+A moment increment $\delta\bm{M} = -E\FrameBasis^\times\IntRGoRG\,\bm{b}_{\Section}$ 
+with $\delta N = \delta\bm{F} = \delta T = 0$ must arise from Ieşan parameter 
+increments. 
+From $\delta N = 0$:
+\begin{equation*}
+0 = EA\,\delta a_\varepsilon + EA\CentroidLocation \cdot \delta\bm{a}_\Omega
+\qquad \Longrightarrow \qquad
+\delta a_\varepsilon = -\CentroidLocation \cdot \delta\bm{a}_\Omega.
+\end{equation*}
+Substituting into the moment relation furnishes:
+\begin{equation*}
+\delta\bm{M} = EA\FrameBasis\times\CentroidLocation(\CentroidLocation \cdot \delta\bm{a}_\Omega) 
+- E\FrameBasis\times\IntRoR\,\delta\bm{a}_\Omega
+= -E\FrameBasis\times\IntRGoRG\,\delta\bm{a}_\Omega.
+\end{equation*}
+Thus $\delta\bm{a}_\Omega = \bm{b}_{\Section}$ and 
+$\delta a_\varepsilon = -\CentroidLocation \cdot \bm{b}_{\Section}$, confirming:
+\begin{equation*}
+\IesanStiff^{-1}\mathbf{R}_1 = \begin{pmatrix}
+0 & \mathbf{0}^\top & 0 & -\CentroidLocation^\top \\
+\mathbf{0} & \mathbf{0} & \mathbf{0} & \mathbf{0} \\
+0 & \mathbf{0}^\top & 0 & \mathbf{0}^\top \\
+\mathbf{0} & \mathbf{0} & \mathbf{0} & \mathbf{1}_\Section
+\end{pmatrix} = \IesanEvolveSP. \qedhere
+\end{equation*}
+\end{proof}
+\end{Details}
+
+% \input{Sections/A3_Energetic1}
+% \clearpage
+% \input{Sections/A3_Energetic-Work}
+% \clearpage 
+% \input{Sections/A3_Paradiso}

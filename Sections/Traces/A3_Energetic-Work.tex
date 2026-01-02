@@ -1,0 +1,873 @@
+
+\textbf{Setup.} The local parameters are
+\(\hat{\bm{e}} = (\epsilon_0, \bm{\beta}, \tau, \bm{\epsilon}_1)\) with
+sizes \((1, 2, 1, 2)\). The 3D strain is:
+\[\bm{\varepsilon} = \varepsilon\,\FrameBasis \otimes \FrameBasis + \FrameBasis \stackrel{s}{\otimes} \bm{\varepsilon}_\gamma - \nu\varepsilon\,\mathbf{1}_\Omega\]
+where:
+\[\varepsilon = \epsilon_0 + \bm{r} \cdot \bm{\epsilon}_1, \qquad \bm{\varepsilon}_\gamma = \tau\,\bm{\tau}_\varphi + \bm{\tau}_\psi\,\bm{\beta}\]
+with:
+\[\bm{\tau}_\varphi := \FrameBasis \times \bm{r} + \nabla\WarpTwistIesan, \qquad \bm{\tau}_\psi := \nabla\bm{\WarpShearIesan} + \bm{\Pi}_{(b)}\]
+
+\textbf{Computing
+\(\bar{\mathbf{C}} = \int_\Section \mathbf{B}^T \mathbb{C} \mathbf{B} \dA\).}
+
+The strain energy density splits into axial and shear parts:
+\[\tfrac{1}{2}\bm{\varepsilon}^T \mathbb{C} \bm{\varepsilon} = \tfrac{1}{2}E\varepsilon^2 + \tfrac{1}{2}G|\bm{\varepsilon}_\gamma|^2\]
+
+In the partition \((\epsilon_0, \bm{\beta}, \tau, \bm{\epsilon}_1)\):
+
+\[\bar{\mathbf{C}} = \begin{pmatrix}
+EA & \mathbf{0}^\top & 0 & EA\CentroidLocation^\top \\[4pt]
+\mathbf{0} & G\mathbf{H}_{\psi\psi} & G\mathbf{h}_{\varphi\psi} & \mathbf{0} \\[4pt]
+0 & G\mathbf{h}_{\varphi\psi}^\top & G\Jsv & \mathbf{0}^\top \\[4pt]
+EA\CentroidLocation & \mathbf{0} & \mathbf{0} & E\IntRoR
+\end{pmatrix}\]
+
+where:
+\[\Jsv := \int_\Section |\bm{\tau}_\varphi|^2 \dA, \qquad \mathbf{h}_{\varphi\psi} := \int_\Section \bm{\tau}_\psi^\top \bm{\tau}_\varphi \dA, \qquad \mathbf{H}_{\psi\psi} := \int_\Section \bm{\tau}_\psi^\top \bm{\tau}_\psi \dA\]
+
+\textbf{Evaluating \(\mathbf{h}_{\varphi\psi}\).}
+
+We have:
+\[\mathbf{h}_{\varphi\psi} = \int_\Section (\nabla\bm{\WarpShearIesan} + \bm{\Pi}_{(b)})^\top (\FrameBasis \times \bm{r} + \nabla\WarpTwistIesan) \dA\]
+
+Breaking into four terms:
+
+\emph{Term 1:}
+\(\int_\Section (\nabla\bm{\WarpShearIesan})^\top (\FrameBasis \times \bm{r}) \dA\)
+
+Using divergence theorem with
+\(\nabla \cdot (\FrameBasis \times \bm{r}) = 0\):
+\[\int_\Section (\FrameBasis \times \bm{r}) \cdot \nabla\WarpShearIesan_\alpha \dA = \oint_{\partial\Section} \WarpShearIesan_\alpha (\FrameBasis \times \bm{r}) \cdot \bm{\nu} \, ds\]
+
+\emph{Term 2:}
+\(\int_\Section (\nabla\bm{\WarpShearIesan})^\top \nabla\WarpTwistIesan \dA\)
+
+Using Green's identity with \(\Delta\WarpTwistIesan = 0\) and
+\(\partial_\nu\WarpTwistIesan = -(\FrameBasis \times \bm{r}) \cdot \bm{\nu}\):
+\[\int_\Section \nabla\WarpTwistIesan \cdot \nabla\WarpShearIesan_\alpha \dA = \oint_{\partial\Section} \WarpShearIesan_\alpha \partial_\nu\WarpTwistIesan \, ds = -\oint_{\partial\Section} \WarpShearIesan_\alpha (\FrameBasis \times \bm{r}) \cdot \bm{\nu} \, ds\]
+
+Terms 1 and 2 cancel:
+\[\int_\Section (\nabla\bm{\WarpShearIesan})^\top (\FrameBasis \times \bm{r} + \nabla\WarpTwistIesan) \dA = \mathbf{0}\]
+
+\emph{Term 3:}
+\(\int_\Section \bm{\Pi}_{(b)}^\top (\FrameBasis \times \bm{r}) \dA\)
+
+With
+\(\bm{\Pi}_{(b)} = -\nu(\text{dev}(\bm{r} \otimes \bm{r}) - \bm{r} \otimes \CentroidLocation)\),
+acting on column \(\alpha\):
+\[(\bm{\Pi}_{(b)})_\alpha = -\nu\big((r_\alpha - \bar{\rho}_\alpha)\bm{r} - \tfrac{1}{2}|\bm{r}|^2 \bm{e}_\alpha\big)\]
+
+Then:
+\[(\FrameBasis \times \bm{r}) \cdot (\bm{\Pi}_{(b)})_\alpha = -\nu(r_\alpha - \bar{\rho}_\alpha)\underbrace{(\FrameBasis \times \bm{r}) \cdot \bm{r}}_{=0} + \tfrac{\nu}{2}|\bm{r}|^2 (\FrameBasis \times \bm{r})_\alpha\]
+
+So:
+\[\int_\Section \bm{\Pi}_{(b)}^\top (\FrameBasis \times \bm{r}) \dA = \tfrac{\nu}{2} \int_\Section |\bm{r}|^2 (\FrameBasis \times \bm{r}) \dA\]
+
+\emph{Term 4:}
+\(\int_\Section \bm{\Pi}_{(b)}^\top \nabla\WarpTwistIesan \dA\)
+
+\[\int_\Section (\bm{\Pi}_{(b)})_\alpha \cdot \nabla\WarpTwistIesan \dA = -\nu \int_\Section (r_\alpha - \bar{\rho}_\alpha)(\bm{r} \cdot \nabla\WarpTwistIesan) \dA + \tfrac{\nu}{2} \int_\Section |\bm{r}|^2 \partial_\alpha\WarpTwistIesan \dA\]
+
+Combining terms 3 and 4:
+\[\mathbf{h}_{\varphi\psi} = \tfrac{\nu}{2} \int_\Section |\bm{r}|^2 (\FrameBasis \times \bm{r} + \nabla\WarpTwistIesan) \dA - \nu \int_\Section (\bm{r} - \CentroidLocation)(\bm{r} \cdot \nabla\WarpTwistIesan) \dA\]
+
+Define:
+\[\bm{\mu}_\varphi := \int_\Section |\bm{r}|^2 \bm{\tau}_\varphi \dA, \qquad \bm{\lambda}_\varphi := \int_\Section (\bm{r} \cdot \nabla\WarpTwistIesan)(\bm{r} - \CentroidLocation) \dA\]
+
+Then:
+\[\mathbf{h}_{\varphi\psi} = \tfrac{\nu}{2}\bm{\mu}_\varphi - \nu\bm{\lambda}_\varphi\]
+
+\textbf{Relation to shear center.} The shear center is defined by:
+\[\Jsv\,\CenterShearLocation = -\int_\Section \bm{r} \times \bm{\tau}_\psi \cdot \FrameBasis \dA = \int_\Section (\FrameBasis \times \bm{r})^\top \bm{\tau}_\psi \dA\]
+
+This is \emph{not} the same as \(\mathbf{h}_{\varphi\psi}\) because the
+latter includes the \(\nabla\WarpTwistIesan\) term.
+
+\subsubsection{The energy-conjugacy
+condition.}\label{the-energy-conjugacy-condition.}
+
+For beam strains \(\bm{e} = \mathbf{X}\hat{\bm{e}}\) to be
+work-conjugate to resultants
+\(\bm{s} = \mathbf{R}\mathbf{L}^{-1}\hat{\bm{e}}\):
+\[\bm{s}^\top \delta\bm{e} = \int_\Section \bm{\sigma}^\top \delta\bm{\varepsilon} \dA = \hat{\bm{e}}^\top \bar{\mathbf{C}} \delta\hat{\bm{e}}\]
+
+This requires:
+\[\mathbf{X}^\top \mathbf{R} \mathbf{L}^{-1} = \bar{\mathbf{C}}\]
+
+Hence:
+\[\mathbf{X}^{-1} = \bar{\mathbf{C}}^{-1} \mathbf{L}^{-\top} \mathbf{R}^\top\]
+
+\textbf{Computing \(\mathbf{L}^{-\top} \mathbf{R}^\top\).}
+
+Recall (with partition
+\(\hat{\bm{e}} = (\epsilon_0, \bm{\beta}, \tau, \bm{\epsilon}_1)\) and
+\(\bm{p} = (a_\varepsilon, \bm{a}_\Omega, a_\vartheta, \bm{b}_{\Section})\)):
+
+\[\mathbf{L}_0 = \begin{pmatrix}
+1 & \mathbf{0}^\top & 0 & \mathbf{0}^\top \\
+\mathbf{0} & \mathbf{0} & \mathbf{0} & \oneS \\
+0 & \mathbf{0}^\top & 1 & \CenterShearLocation^\top \\
+\mathbf{0} & \oneS & \mathbf{0} & \mathbf{0}
+\end{pmatrix}
+\qquad\text{so}\qquad 
+\mathbf{L}_0^{-\top} = \begin{pmatrix}
+1 & \mathbf{0}^\top & 0 & \mathbf{0}^\top \\
+\mathbf{0} & \mathbf{0} & -\CenterShearLocation & \oneS \\
+0 & \mathbf{0}^\top & 1 & \mathbf{0}^\top \\
+\mathbf{0} & \oneS & \mathbf{0} & \mathbf{0}
+\end{pmatrix}\]
+
+And with partition \(\bm{s} = (N, \bm{F}, T, \bm{M})\) (but noting
+\(\bm{M}\) appears as \(\FrameBasis \times \bm{M}\) in the formulas):
+
+\[\mathbf{R}^\top = \begin{pmatrix}
+-EA & \mathbf{0}^\top & 0 & -EA(\FrameBasis \times \CentroidLocation)^\top \\
+-EA\CentroidLocation & \mathbf{0} & \mathbf{0} & -(\FrameBasis \times E\IntRoR)^\top \\
+0 & \mathbf{0}^\top & -G\Jsv & \mathbf{0}^\top \\
+\mathbf{0} & -E\IntRGoRG & \mathbf{0} & \mathbf{0}
+\end{pmatrix}\]
+
+
+\paragraph{Energy matrix \(\bar{\mathbf{C}}\).}
+
+In partition
+\(\hat{\bm{e}} = (\epsilon_0, \bm{\beta}, \tau, \bm{\epsilon}_1)\):
+\[\bar{\mathbf{C}} = \begin{pmatrix}
+EA & \mathbf{0}^\top & 0 & EA\CentroidLocation^\top \\
+\mathbf{0} & G\mathbf{H}_{\psi\psi} & G\mathbf{h}_{\varphi\psi} & \mathbf{0} \\
+0 & G\mathbf{h}_{\varphi\psi}^\top & G\Jsv & \mathbf{0}^\top \\
+EA\CentroidLocation & \mathbf{0} & \mathbf{0} & E\IntRoR
+\end{pmatrix}
+\]
+
+\begin{Details}
+Verifying the \((3,3)\) entry (torsional stiffness):
+
+\[
+\int_\Section |\bm{\tau}_\varphi|^2 \dA = \int_\Section |\FrameBasis \times \bm{r} + \nabla\WarpTwistIesan|^2 \dA
+\]
+\[= \int_\Section r^2 \dA + 2\int_\Section (\FrameBasis \times \bm{r}) \cdot \nabla\WarpTwistIesan \dA + \int_\Section |\nabla\WarpTwistIesan|^2 \dA
+\]
+
+For the last term, using Green's first identity with
+\(\Delta\WarpTwistIesan = 0\):
+\[\int_\Section |\nabla\WarpTwistIesan|^2 \dA = \oint_{\partial\Section} \WarpTwistIesan \,\partial_\nu\WarpTwistIesan \, ds = -\oint_{\partial\Section} \WarpTwistIesan (\FrameBasis \times \bm{r}) \cdot \bm{\nu} \, ds\]
+
+By divergence theorem (using
+\(\nabla \cdot (\FrameBasis \times \bm{r}) = 0\)):
+\[\oint_{\partial\Section} \WarpTwistIesan (\FrameBasis \times \bm{r}) \cdot \bm{\nu} \, ds = \int_\Section \nabla\WarpTwistIesan \cdot (\FrameBasis \times \bm{r}) \dA\]
+
+Therefore:
+\[\int_\Section |\nabla\WarpTwistIesan|^2 \dA = -\int_\Section (\FrameBasis \times \bm{r}) \cdot \nabla\WarpTwistIesan \dA\]
+
+So:
+\[\int_\Section |\bm{\tau}_\varphi|^2 \dA = \int_\Section r^2 \dA + \int_\Section (\FrameBasis \times \bm{r}) \cdot \nabla\WarpTwistIesan \dA = \Jsv\]
+
+\textbf{The (2,3) entry (shear-torsion coupling):}
+
+\[\mathbf{h}_{\varphi\psi} = \int_\Section \bm{\tau}_\psi^\top \bm{\tau}_\varphi \dA = \int_\Section (\bm{\Pi}_{(b)}^\top + \nabla\bm{\WarpShearIesan})(\FrameBasis \times \bm{r} + \nabla\WarpTwistIesan) \dA\]
+
+Breaking into four terms:
+
+\emph{Term A:}
+\(\int_\Section (\nabla\bm{\WarpShearIesan})(\FrameBasis \times \bm{r}) \dA\)
+
+\emph{Term B:}
+\(\int_\Section (\nabla\bm{\WarpShearIesan})\nabla\WarpTwistIesan \dA\)
+
+Using Green's identity with \(\Delta\WarpTwistIesan = 0\) and
+\(\partial_\nu\WarpTwistIesan = -(\FrameBasis \times \bm{r}) \cdot \bm{\nu}\):
+\[[\text{Term B}]_\alpha = \oint_{\partial\Section} \WarpShearIesan_\alpha \,\partial_\nu\WarpTwistIesan \, ds = -\oint_{\partial\Section} \WarpShearIesan_\alpha (\FrameBasis \times \bm{r}) \cdot \bm{\nu} \, ds\]
+
+By divergence theorem:
+\[[\text{Term A}]_\alpha = \oint_{\partial\Section} \WarpShearIesan_\alpha (\FrameBasis \times \bm{r}) \cdot \bm{\nu} \, ds\]
+
+So Terms A and B cancel:
+\(\int_\Section (\nabla\bm{\WarpShearIesan})\bm{\tau}_\varphi \dA = \mathbf{0}\).
+✓
+
+\emph{Term C:}
+\(\int_\Section \bm{\Pi}_{(b)}^\top (\FrameBasis \times \bm{r}) \dA\)
+
+\emph{Term D:}
+\(\int_\Section \bm{\Pi}_{(b)}^\top \nabla\WarpTwistIesan \dA\)
+
+For the \(\alpha\)-th component, with
+\((\bm{\Pi}_{(b)})_\alpha = -\nu((r_\alpha - \bar{\rho}_\alpha)\bm{r} - \frac{1}{2}r^2\bm{e}_\alpha)\):
+
+\textbf{Term C:}
+\[(\bm{\Pi}_{(b)})_\alpha \cdot (\FrameBasis \times \bm{r}) = -\nu(r_\alpha - \bar{\rho}_\alpha)\underbrace{\bm{r} \cdot (\FrameBasis \times \bm{r})}_{=0} + \frac{\nu}{2}r^2(\FrameBasis \times \bm{r})_\alpha\]
+
+So:
+\[\text{Term C} = \frac{\nu}{2}\int_\Section r^2 (\FrameBasis \times \bm{r}) \dA\]
+
+\textbf{Term D:}
+\[(\bm{\Pi}_{(b)})_\alpha \cdot \nabla\WarpTwistIesan = -\nu(r_\alpha - \bar{\rho}_\alpha)(\bm{r} \cdot \nabla\WarpTwistIesan) + \frac{\nu}{2}r^2 \partial_\alpha\WarpTwistIesan\]
+
+So:
+\[\text{Term D} = \frac{\nu}{2}\int_\Section r^2 \nabla\WarpTwistIesan \dA - \nu\int_\Section (\bm{r} - \CentroidLocation)(\bm{r} \cdot \nabla\WarpTwistIesan) \dA\]
+
+Therefore:
+\[\mathbf{h}_{\varphi\psi} = \frac{\nu}{2}\int_\Section r^2 \bm{\tau}_\varphi \dA - \nu\int_\Section (\bm{r} - \CentroidLocation)(\bm{r} \cdot \nabla\WarpTwistIesan) \dA\]
+
+\textbf{Relation to shear center.} The shear center satisfies:
+\[\Jsv\,\CenterShearLocation = \int_\Section \bm{\tau}_\psi^\top (\bm{r} \times \FrameBasis) \dA = -\int_\Section \bm{\tau}_\psi^\top (\FrameBasis \times \bm{r}) \dA\]
+
+This involves only \((\FrameBasis \times \bm{r})\), not the full
+\(\bm{\tau}_\varphi = \FrameBasis \times \bm{r} + \nabla\WarpTwistIesan\).
+So: \[\mathbf{h}_{\varphi\psi} \neq -\Jsv\,\CenterShearLocation\]
+
+The difference is precisely the \(\nabla\WarpTwistIesan\) coupling
+terms. Define:
+\[\bm{\lambda} := \int_\Section (\bm{r} - \CentroidLocation)(\bm{r} \cdot \nabla\WarpTwistIesan) \dA, \qquad \bm{\zeta} := \int_\Section r^2 \nabla\WarpTwistIesan \dA\]
+
+Then:
+\[\mathbf{h}_{\varphi\psi} = -\Jsv\,\CenterShearLocation + \frac{\nu}{2}\bm{\zeta} - \nu\bm{\lambda}\]
+\end{Details}
+
+The quantities \(\bm{\zeta}\) and \(\bm{\lambda}\) encode torsion-shear
+coupling that exists even for symmetric sections when the origin is not
+at the centroid. These do NOT vanish under the normalization
+\(\int \WarpTwistIesan \dA = 0\).
+
+\subsubsection{Derive X}
+
+\textbf{Step 1: Compute \(\mathbf{L}_0^{-\top}\).}
+
+We have: \[\mathbf{L}_0^{-1} = \begin{pmatrix}
+1 & \mathbf{0}^\top & 0 & \mathbf{0}^\top \\
+\mathbf{0} & \mathbf{0} & \mathbf{0} & \oneS \\
+0 & -\CenterShearLocation^\top & 1 & \mathbf{0}^\top \\
+\mathbf{0} & \oneS & \mathbf{0} & \mathbf{0}
+\end{pmatrix}
+\qquad
+\mathbf{L}_0^{-\top} = \begin{pmatrix}
+1 & \mathbf{0}^\top & 0 & \mathbf{0}^\top \\
+\mathbf{0} & \mathbf{0} & -\CenterShearLocation & \oneS \\
+0 & \mathbf{0}^\top & 1 & \mathbf{0}^\top \\
+\mathbf{0} & \oneS & \mathbf{0} & \mathbf{0}
+\end{pmatrix}\]
+
+\textbf{Step 2: Compute \(\mathbf{R}^\top\).}
+
+From the resultant matrix with partition
+\(\bm{s} = (N, \bm{F}, T, \bm{M})\),
+\(\bm{p} = (a_\varepsilon, \bm{a}_\Omega, a_\vartheta, \bm{b}_{\Section})\):
+
+\[\mathbf{R}^\top = \begin{pmatrix}
+EA & \mathbf{0}^\top & 0 & EA(\FrameBasis\times\CentroidLocation)^\top \\
+EA\CentroidLocation & \mathbf{0} & \mathbf{0} & E(\FrameBasis^\times\IntRoR)^\top \\
+0 & \mathbf{0}^\top & G\Jsv & \mathbf{0}^\top \\
+\mathbf{0} & E\IntRGoRG & \mathbf{0} & \mathbf{0}
+\end{pmatrix}\]
+
+Using
+\((\FrameBasis\times\CentroidLocation)^\top = -\CentroidLocation^\top\FrameBasis^\times\)
+and \((\FrameBasis^\times\IntRoR)^\top = -\IntRoR\FrameBasis^\times\):
+
+\[\mathbf{R}^\top = \begin{pmatrix}
+EA & \mathbf{0}^\top & 0 & -EA\CentroidLocation^\top\FrameBasis^\times \\
+EA\CentroidLocation & \mathbf{0} & \mathbf{0} & -E\IntRoR\FrameBasis^\times \\
+0 & \mathbf{0}^\top & G\Jsv & \mathbf{0}^\top \\
+\mathbf{0} & E\IntRGoRG & \mathbf{0} & \mathbf{0}
+\end{pmatrix}
+\]
+
+\subparagraph{Step 3: Compute \(\mathbf{L}_0^{-\top}\mathbf{R}^\top\).}
+
+\[
+\mathbf{L}_0^{-\top}\mathbf{R}^\top = \begin{pmatrix}
+EA & \mathbf{0}^\top & 0 & -EA\CentroidLocation^\top\FrameBasis^\times \\
+\mathbf{0} & E\IntRGoRG & -G\Jsv\CenterShearLocation & \mathbf{0} \\
+0 & \mathbf{0}^\top & G\Jsv & \mathbf{0}^\top \\
+EA\CentroidLocation & \mathbf{0} & \mathbf{0} & -E\IntRoR\FrameBasis^\times
+\end{pmatrix}
+\]
+
+\subparagraph{Step 4: Invert \(\bar{\mathbf{C}}\).}
+
+The energy matrix has block structure:
+\[\bar{\mathbf{C}} = \begin{pmatrix}
+EA & \mathbf{0}^\top & 0 & EA\CentroidLocation^\top \\
+\mathbf{0} & G\mathbf{H}_{\psi\psi} & G\mathbf{h}_{\varphi\psi} & \mathbf{0} \\
+0 & G\mathbf{h}_{\varphi\psi}^\top & G\Jsv & \mathbf{0}^\top \\
+EA\CentroidLocation & \mathbf{0} & \mathbf{0} & E\IntRoR
+\end{pmatrix}\]
+
+Reordering to \((\epsilon_0, \bm{\epsilon}_1, \bm{\beta}, \tau)\)
+reveals block-diagonal structure:
+
+\[
+\bar{\mathbf{C}}_{\rm perm} = \begin{pmatrix}
+\mathbf{A} & \mathbf{0} \\
+\mathbf{0} & \mathbf{D}
+\end{pmatrix}
+\qquad\text{with:}\qquad
+\mathbf{A} = \begin{pmatrix} EA & EA\CentroidLocation^\top \\ EA\CentroidLocation & E\IntRoR 
+\end{pmatrix}, 
+\quad 
+\mathbf{D} = G\begin{pmatrix} \mathbf{H}_{\psi\psi} & \mathbf{h}_{\varphi\psi} \\ \mathbf{h}_{\varphi\psi}^\top & \Jsv \end{pmatrix}
+\]
+
+\textbf{Inverting \(\mathbf{A}\):} Schur complement is
+\(E\IntRoR - EA\CentroidLocation\otimes\CentroidLocation = E\IntRGoRG\):
+\[\mathbf{A}^{-1} = \begin{pmatrix} 
+\frac{1}{EA} + \CentroidLocation^\top(E\IntRGoRG)^{-1}\CentroidLocation & -\CentroidLocation^\top(E\IntRGoRG)^{-1} \\
+-(E\IntRGoRG)^{-1}\CentroidLocation & (E\IntRGoRG)^{-1}
+\end{pmatrix},
+\qquad\text{and}\qquad 
+\mathbf{D}^{-1} = \frac{1}{G}\begin{pmatrix}
+\mathbf{H}_{\psi\psi}^{-1} + \frac{1}{\tilde{\Jsv}}\bm{\eta}\otimes\bm{\eta} & -\frac{1}{\tilde{\Jsv}}\bm{\eta} \\
+-\frac{1}{\tilde{\Jsv}}\bm{\eta}^\top & \frac{1}{\tilde{\Jsv}}
+\end{pmatrix}\]
+
+\[\tilde{\Jsv} := \Jsv - \mathbf{h}_{\varphi\psi}^\top\mathbf{H}_{\psi\psi}^{-1}\mathbf{h}_{\varphi\psi}
+\qquad\text{and}\qquad 
+\bm{\eta} := \mathbf{H}_{\psi\psi}^{-1}\mathbf{h}_{\varphi\psi}
+\]
+
+
+Permuting back: \[\bar{\mathbf{C}}^{-1} = \begin{pmatrix}
+\frac{1}{EA} + \CentroidLocation^\top(E\IntRGoRG)^{-1}\CentroidLocation & \mathbf{0}^\top & 0 & -\CentroidLocation^\top(E\IntRGoRG)^{-1} \\
+\mathbf{0} & \frac{1}{G}(\mathbf{H}_{\psi\psi}^{-1} + \frac{1}{\tilde{\Jsv}}\bm{\eta}\otimes\bm{\eta}) & -\frac{1}{G\tilde{\Jsv}}\bm{\eta} & \mathbf{0} \\
+0 & -\frac{1}{G\tilde{\Jsv}}\bm{\eta}^\top & \frac{1}{G\tilde{\Jsv}} & \mathbf{0}^\top \\
+-(E\IntRGoRG)^{-1}\CentroidLocation & \mathbf{0} & \mathbf{0} & (E\IntRGoRG)^{-1}
+\end{pmatrix}\]
+
+\textbf{Final result:}
+
+\[
+\boxed{\mathbf{X}^{-1} = \begin{pmatrix}
+1 & \mathbf{0}^\top & 0 & \mathbf{0}^\top \\[4pt]
+\mathbf{0} & \frac{E}{G}(\mathbf{H}_{\psi\psi}^{-1} + \frac{1}{\tilde{\Jsv}}\bm{\eta}\otimes\bm{\eta})\IntRGoRG & -\Jsv\mathbf{H}_{\psi\psi}^{-1}\CenterShearLocation - \frac{\Jsv}{\tilde{\Jsv}}\bm{\eta}(1 + \bm{\eta}^\top\CenterShearLocation) & \mathbf{0} \\[4pt]
+0 & -\frac{E}{G\tilde{\Jsv}}\bm{\eta}^\top\IntRGoRG & \frac{\Jsv}{\tilde{\Jsv}}(1 + \bm{\eta}^\top\CenterShearLocation) & \mathbf{0}^\top \\[4pt]
+\mathbf{0} & \mathbf{0} & \mathbf{0} & -\FrameBasis^\times
+\end{pmatrix}}\]
+
+where 
+\(\bm{\eta}\) is
+the shear-torsion coupling vector \eqref{eq:def-eta}, 
+\(\tilde{\Jsv}\)
+is the reduced torsion constant \eqref{eq}, and 
+\(\mathbf{h}_{\varphi\psi}\) from \eqref{eq}.
+
+\subsubsection{Structure of X}
+
+\textbf{Local implementability:} Yes, automatically!
+
+By construction, we defined \(\bm{e} = \mathbf{X}\hat{\bm{e}}\) where
+\(\hat{\bm{e}}(x) = \mathbf{L}(x)\bm{p} = (\mathbf{L}_0 + x\mathbf{L}_1)\bm{p}\).
+Therefore:
+\[\TraceDeDpRoot = \mathbf{X}\mathbf{L}_0, \qquad \TraceDeDpOne = \mathbf{X}\mathbf{L}_1\]
+
+The implementability condition
+\(\TraceDeDpOne = \TraceDeDpRoot\mathbf{L}_0^{-1}\mathbf{L}_1\) is
+satisfied identically:
+\[\TraceDeDpRoot\mathbf{L}_0^{-1}\mathbf{L}_1 = \mathbf{X}\mathbf{L}_0\mathbf{L}_0^{-1}\mathbf{L}_1 = \mathbf{X}\mathbf{L}_1 = \TraceDeDpOne\]
+
+
+\textbf{Plane-section property:} No!
+
+To check this, we need \(\TraceDeDpRoot = \mathbf{X}\mathbf{L}_0\).
+Looking at the \((5\text{-}6, 5\text{-}6)\) block of
+\(\mathbf{X}^{-1}\):
+\[[\mathbf{X}^{-1}]_{(5:6, 5:6)} = -\FrameBasis^\times\]
+
+Inverting:
+\([\mathbf{X}]_{(5:6, 5:6)} = (-\FrameBasis^\times)^{-1} = \FrameBasis^\times\)
+
+Since \([\mathbf{L}_0]_{(5:6, 2:3)} = \oneS\) (the
+\(\bm{a}_\Omega \mapsto \bm{\epsilon}_1\) block), we get:
+\[[\TraceDeDpRoot]_{(5:6, 2:3)} = \FrameBasis^\times \cdot \oneS = \FrameBasis^\times\]
+
+But the plane-section property requires
+\([\TraceDeDpRoot]_{(5:6, 2:3)} = -\FrameBasis^\times\) (curvature from
+bending should be
+\(\bm{\kappa}_\perp = -\FrameBasis \times \bm{a}_\Omega\)).
+
+\textbf{The sign is wrong.} The energy-conjugate trace does not satisfy
+the plane-section property.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+
+You're absolutely right to push on this. Let me think carefully about
+what we actually have.
+
+\textbf{The core issue:}
+
+We derived \(\mathbf{X}^{-1}\) from the energy conjugacy condition at a
+single section. But the resultants themselves depend on \(x\)!
+Specifically, for a Saint-Venant solution:
+
+\begin{itemize}
+\tightlist
+\item
+  \(N, \bm{F}, T\) are constant along the beam
+\item
+  But \(\bm{M}(x) = \bm{M}_0 + x(\FrameBasis \times \bm{F})\) varies
+  linearly
+\end{itemize}
+
+This is just equilibrium: \(\bm{M}' = \FrameBasis \times \bm{F}\).
+
+\textbf{Let me redo the energy conjugacy condition properly:}
+
+At section \(x\), energy conjugacy requires:
+\[\bm{s}(x)^\top \delta\bm{e}(x) = \int_\Section \bm{\sigma}^\top \delta\bm{\varepsilon} \dA = \delta\hat{\bm{e}}(x)^\top \bar{\mathbf{C}} \hat{\bm{e}}(x)\]
+
+If we assume \(\bm{e}(x) = \mathbf{X}\hat{\bm{e}}(x)\) with
+\(\mathbf{X}\) independent of \(x\), then:
+\[\mathbf{X}^\top \bm{s}(x) = \bar{\mathbf{C}} \hat{\bm{e}}(x)\]
+
+Now express both sides in terms of \(\bm{p}\): -
+\(\hat{\bm{e}}(x) = (\mathbf{L}_0 + x\mathbf{L}_1)\bm{p}\) -
+\(\bm{s}(x) = -(\IesanStiff + x\mathbf{R}_1)\bm{p}\)
+
+where \(\mathbf{R}_1\) captures the moment variation:
+\[\mathbf{R}_1 = \begin{pmatrix}
+0 & \mathbf{0}^\top & 0 & \mathbf{0}^\top \\
+\mathbf{0} & \mathbf{0} & \mathbf{0} & \mathbf{0} \\
+0 & \mathbf{0}^\top & 0 & \mathbf{0}^\top \\
+\mathbf{0} & \mathbf{0} & \mathbf{0} & -\FrameBasis^\times E\IntRGoRG
+\end{pmatrix}\]
+
+The energy conjugacy condition becomes:
+\[-\mathbf{X}^\top (\IesanStiff + x\mathbf{R}_1)\bm{p} = \bar{\mathbf{C}} (\mathbf{L}_0 + x\mathbf{L}_1)\bm{p}\]
+
+Matching powers of \(x\): - \(x^0\):
+\(-\mathbf{X}^\top \IesanStiff = \bar{\mathbf{C}} \mathbf{L}_0\) -
+\(x^1\):
+\(-\mathbf{X}^\top \mathbf{R}_1 = \bar{\mathbf{C}} \mathbf{L}_1\)
+
+From \(x^0\):
+\(\mathbf{X}^\top = -\bar{\mathbf{C}} \mathbf{L}_0 \IesanStiff^{-1}\)
+
+Substituting into \(x^1\):
+\[\bar{\mathbf{C}} \mathbf{L}_0 \IesanStiff^{-1} \mathbf{R}_1 = \bar{\mathbf{C}} \mathbf{L}_1\]
+
+\textbf{This is a consistency condition.} If it holds, the
+energy-conjugate trace with constant \(\mathbf{X}\) is both
+implementable and exact. If not, we cannot have both.
+
+\subsubsection{Consistency condition:}
+
+We need: \(\mathbf{L}_0 \IesanStiff^{-1} \mathbf{R}_1 = \mathbf{L}_1\)
+or equivalently:
+\(\IesanStiff^{-1} \mathbf{R}_1 = \mathbf{L}_0^{-1} \mathbf{L}_1\)
+
+We already computed: \[\mathbf{L}_0^{-1}\mathbf{L}_1 = \begin{pmatrix}
+0 & \mathbf{0}^\top & 0 & -\CentroidLocation^\top \\
+\mathbf{0} & \mathbf{0} & \mathbf{0} & \mathbf{0} \\
+0 & \mathbf{0}^\top & 0 & \mathbf{0}^\top \\
+\mathbf{0} & \mathbf{0} & \mathbf{0} & \oneS
+\end{pmatrix}\]
+
+Now I need \(\IesanStiff^{-1}\mathbf{R}_1\). Recall:
+\[
+\IesanStiff = \begin{pmatrix}
+EA & EA\CentroidLocation^\top & 0 & \mathbf{0}^\top \\
+\mathbf{0} & \mathbf{0} & \mathbf{0} & E\IntRGoRG \\
+0 & \mathbf{0}^\top & G\Jsv & \mathbf{0}^\top \\
+EA(\FrameBasis\times\CentroidLocation) & E\FrameBasis^\times\IntRoR & \mathbf{0} & \mathbf{0}
+\end{pmatrix},
+\qquad 
+\mathbf{R}_1 = \begin{pmatrix}
+0 & \mathbf{0}^\top & 0 & \mathbf{0}^\top \\
+\mathbf{0} & \mathbf{0} & \mathbf{0} & \mathbf{0} \\
+0 & \mathbf{0}^\top & 0 & \mathbf{0}^\top \\
+\mathbf{0} & \mathbf{0} & \mathbf{0} & -\FrameBasis^\times E\IntRGoRG
+\end{pmatrix}
+\]
+
+
+The relevant part of \(\IesanStiff^{-1}\) is
+\([\IesanStiff^{-1}]_{(2,4)} = (E\IntRGoRG)^{-1}\).
+
+So:
+\[[\IesanStiff^{-1}\mathbf{R}_1]_{(2,4)} = (E\IntRGoRG)^{-1} \cdot (-\FrameBasis^\times E\IntRGoRG) = -\FrameBasis^\times\]
+
+But \([\mathbf{L}_0^{-1}\mathbf{L}_1]_{(2,4)} = \mathbf{0}\).
+
+\textbf{The consistency condition fails!}
+
+
+The energy-conjugate trace as derived gives
+\(\TraceDeDpOne \neq \TraceDeDpRoot \mathbf{L}_0^{-1}\mathbf{L}_1\), so it
+has nonzero locality defect. Or if we force implementability by setting
+\(\TraceDeDpOne = \TraceDeDpRoot \mathbf{L}_0^{-1}\mathbf{L}_1\), then it's
+not exactly energy-conjugate at all \(x\).
+
+Let me compute these systematically.
+
+\subsubsection{Structure of X:}
+
+From the block structure of \(\mathbf{X}^{-1}\):
+\[\mathbf{X}^{-1} = \begin{pmatrix}
+1 & \mathbf{0}^\top & 0 & \mathbf{0}^\top \\
+\mathbf{0} & \mathbf{A} & \mathbf{b} & \mathbf{0} \\
+0 & \mathbf{c}^\top & d & \mathbf{0}^\top \\
+\mathbf{0} & \mathbf{0} & \mathbf{0} & -\FrameBasis^\times
+\end{pmatrix},
+\qquad\text{and}\qquad 
+\mathbf{X} = \begin{pmatrix}
+1 & \mathbf{0}^\top & 0 & \mathbf{0}^\top \\
+\mathbf{0} & \tilde{\mathbf{A}} & \tilde{\mathbf{b}} & \mathbf{0} \\
+0 & \tilde{\mathbf{c}}^\top & \tilde{d} & \mathbf{0}^\top \\
+\mathbf{0} & \mathbf{0} & \mathbf{0} & \FrameBasis^\times
+\end{pmatrix}
+\]
+
+where: 
+\begin{itemize}
+\item 
+\(\mathbf{A} := \frac{E}{G}\Big(\mathbf{H}_{\psi\psi}^{-1} + \frac{\bm{\eta}\otimes\bm{\eta}}{\tilde{\Jsv}}\Big)\IntRGoRG\)
+\item
+\(\mathbf{b} := -\Jsv\mathbf{H}_{\psi\psi}^{-1}\CenterShearLocation - \frac{\Jsv}{\tilde{\Jsv}}\bm{\eta}(1 + \bm{\eta}^\top\CenterShearLocation)\)
+\item \(\mathbf{c}^\top := \frac{E}{G\tilde{\Jsv}}\bm{\eta}^\top\IntRGoRG\) -
+\(d := -\frac{\Jsv}{\tilde{\Jsv}}(1 + \bm{\eta}^\top\CenterShearLocation)\)
+\end{itemize}
+
+
+and
+\(\begin{pmatrix} \tilde{\mathbf{A}} & \tilde{\mathbf{b}} \\ \tilde{\mathbf{c}}^\top & \tilde{d} \end{pmatrix} = \begin{pmatrix} \mathbf{A} & \mathbf{b} \\ \mathbf{c}^\top & d \end{pmatrix}^{-1}\).
+
+Let me invert the central \(3 \times 3\) block systematically.
+
+\textbf{The central block of \(\mathbf{X}^{-1}\):}
+\[\begin{pmatrix} \mathbf{A} & \mathbf{b} \\ \mathbf{c}^\top & d \end{pmatrix}\]
+
+with: -
+\(\mathbf{A} = \frac{E}{G}\Big(\mathbf{H}_{\psi\psi}^{-1} + \frac{\bm{\eta}\bm{\eta}^\top}{\tilde{\Jsv}}\Big)\IntRGoRG\)
+-
+\(\mathbf{b} = -\Jsv\mathbf{H}_{\psi\psi}^{-1}\CenterShearLocation - \frac{\Jsv}{\tilde{\Jsv}}\bm{\eta}(1 + \bm{\eta}^\top\CenterShearLocation)\)
+- \(\mathbf{c}^\top = \frac{E}{G\tilde{\Jsv}}\bm{\eta}^\top\IntRGoRG\) -
+\(d = -\frac{\Jsv}{\tilde{\Jsv}}(1 + \bm{\eta}^\top\CenterShearLocation)\)
+
+\textbf{Step 1: Compute \(\mathbf{A}^{-1}\).}
+
+Using Sherman-Morrison on
+\(\mathbf{H}_{\psi\psi}^{-1} + \frac{\bm{\eta}\bm{\eta}^\top}{\tilde{\Jsv}}\):
+
+With
+\(\bm{\eta}^\top\mathbf{H}_{\psi\psi}\bm{\eta} = \mathbf{h}_{\varphi\psi}^\top\mathbf{H}_{\psi\psi}^{-1}\mathbf{h}_{\varphi\psi} = \Jsv - \tilde{\Jsv}\):
+
+\[\Big(\mathbf{H}_{\psi\psi}^{-1} + \frac{\bm{\eta}\bm{\eta}^\top}{\tilde{\Jsv}}\Big)^{-1} = \mathbf{H}_{\psi\psi} - \frac{\mathbf{H}_{\psi\psi}\bm{\eta}\bm{\eta}^\top\mathbf{H}_{\psi\psi}}{\tilde{\Jsv} + \Jsv - \tilde{\Jsv}} = \mathbf{H}_{\psi\psi} - \frac{\mathbf{h}_{\varphi\psi}\mathbf{h}_{\varphi\psi}^\top}{\Jsv}\]
+
+Therefore:
+\[\boxed{\mathbf{A}^{-1} = \frac{G}{E}\IntRGoRG^{-1}\Big(\mathbf{H}_{\psi\psi} - \frac{\mathbf{h}_{\varphi\psi}\mathbf{h}_{\varphi\psi}^\top}{\Jsv}\Big)}\]
+
+\textbf{Step 2: Compute \(\mathbf{A}^{-1}\mathbf{b}\).}
+
+Recall
+\(\bm{\xi} := \mathbf{h}_{\varphi\psi} + \Jsv\CenterShearLocation = \frac{\nu}{2}\bm{\zeta} - \nu\bm{\lambda}\)
+(the Poisson-torsion coupling).
+
+After lengthy but straightforward algebra:
+\[\Big(\mathbf{H}_{\psi\psi} - \frac{\mathbf{h}_{\varphi\psi}\mathbf{h}_{\varphi\psi}^\top}{\Jsv}\Big)\Big(\Jsv\mathbf{H}_{\psi\psi}^{-1}\CenterShearLocation + \frac{\Jsv\sigma}{\tilde{\Jsv}}\bm{\eta}\Big) = \Jsv\CenterShearLocation + \mathbf{h}_{\varphi\psi} = \bm{\xi}\]
+
+where \(\sigma := 1 + \bm{\eta}^\top\CenterShearLocation\).
+
+Therefore:
+\[\boxed{\mathbf{A}^{-1}\mathbf{b} = -\frac{G}{E}\IntRGoRG^{-1}\bm{\xi}}\]
+
+\textbf{Step 3: Compute \(\mathbf{c}^\top\mathbf{A}^{-1}\).}
+
+Using
+\(\bm{\eta}^\top\mathbf{H}_{\psi\psi} = \mathbf{h}_{\varphi\psi}^\top\)
+and \(\bm{\eta}^\top\mathbf{h}_{\varphi\psi} = \Jsv - \tilde{\Jsv}\):
+
+\[\mathbf{c}^\top\mathbf{A}^{-1} = \frac{1}{\tilde{\Jsv}}\bm{\eta}^\top\Big(\mathbf{H}_{\psi\psi} - \frac{\mathbf{h}_{\varphi\psi}\mathbf{h}_{\varphi\psi}^\top}{\Jsv}\Big) = \frac{1}{\tilde{\Jsv}}\Big(\mathbf{h}_{\varphi\psi}^\top - \frac{\Jsv - \tilde{\Jsv}}{\Jsv}\mathbf{h}_{\varphi\psi}^\top\Big)\]
+
+Therefore:
+\[\boxed{\mathbf{c}^\top\mathbf{A}^{-1} = \frac{\mathbf{h}_{\varphi\psi}^\top}{\Jsv}}\]
+
+\textbf{Step 4: Compute the Schur complement
+\(S = d - \mathbf{c}^\top\mathbf{A}^{-1}\mathbf{b}\).}
+
+Define
+\(\xi_{\Jsv} := \mathbf{h}_{\varphi\psi}^\top\IntRGoRG^{-1}\bm{\xi}\)  
+(a
+scalar coupling Poisson-torsion to bending stiffness).
+
+\[\mathbf{c}^\top\mathbf{A}^{-1}\mathbf{b} = -\frac{G}{E\Jsv}\xi_{\Jsv}\]
+
+\[S = -\frac{\Jsv\sigma}{\tilde{\Jsv}} + \frac{G\xi_{\Jsv}}{E\Jsv} = -\frac{E\Jsv^2\sigma - G\tilde{\Jsv}\xi_{\Jsv}}{E\Jsv\tilde{\Jsv}}\]
+
+Define: \[\boxed{\Delta := E\Jsv^2\sigma - G\tilde{\Jsv}\xi_{\Jsv}}\]
+
+Then \(S = -\frac{\Delta}{E\Jsv\tilde{\Jsv}}\) and:
+
+\[
+\begin{aligned}
+\tilde{d} = S^{-1} &= -\frac{E\Jsv\tilde{\Jsv}}{\Delta}\\
+\tilde{\mathbf{b}} &= -\mathbf{A}^{-1}\mathbf{b}\,\tilde{d} = -\frac{G\Jsv\tilde{\Jsv}}{\Delta}\IntRGoRG^{-1}\bm{\xi} \\
+\tilde{\mathbf{c}}^\top &= -\tilde{d}\,\mathbf{c}^\top\mathbf{A}^{-1} = \frac{E\tilde{\Jsv}}{\Delta}\mathbf{h}_{\varphi\psi}^\top \\
+\tilde{\mathbf{A}} &= \mathbf{A}^{-1} - \frac{\tilde{\mathbf{b}}\tilde{\mathbf{c}}^\top}{\tilde{d}} \\
+&= \frac{G}{E}\IntRGoRG^{-1}\Big(\mathbf{H}_{\psi\psi} - \frac{\mathbf{h}_{\varphi\psi}\mathbf{h}_{\varphi\psi}^\top}{\Jsv} + \frac{G\tilde{\Jsv}}{\Delta}\bm{\xi}\mathbf{h}_{\varphi\psi}^\top\Big)
+\end{aligned}
+\]
+
+\subsection{Trace Matrices}
+
+\textbf{Computing \(\TraceDeDpRoot = \mathbf{X}\mathbf{L}_0\):}
+
+With: \[\mathbf{L}_0 = \begin{pmatrix}
+1 & \mathbf{0}^\top & 0 & \mathbf{0}^\top \\
+\mathbf{0} & \mathbf{0} & \mathbf{0} & \oneS \\
+0 & \mathbf{0}^\top & 1 & \CenterShearLocation^\top \\
+\mathbf{0} & \oneS & \mathbf{0} & \mathbf{0}
+\end{pmatrix},
+\qquad
+\mathbf{L}_1 = \begin{pmatrix}
+0 & \mathbf{0}^\top & 0 & -\CentroidLocation^\top \\
+\mathbf{0} & \mathbf{0} & \mathbf{0} & \mathbf{0} \\
+0 & \mathbf{0}^\top & 0 & \mathbf{0}^\top \\
+\mathbf{0} & \mathbf{0} & \mathbf{0} & \oneS
+\end{pmatrix}
+\]
+
+Therefore: \[
+\boxed{
+\TraceDeDpRoot = \begin{pmatrix}
+1 & \mathbf{0}^\top & 0 & \mathbf{0}^\top \\[4pt]
+\mathbf{0} & \mathbf{0} & \tilde{\mathbf{b}} & \tilde{\mathbf{A}} + \tilde{\mathbf{b}}\CenterShearLocation^\top \\[4pt]
+0 & \mathbf{0}^\top & \tilde{d} & \tilde{\mathbf{c}}^\top + \tilde{d}\CenterShearLocation^\top \\[4pt]
+\mathbf{0} & \FrameBasis^\times & \mathbf{0} & \mathbf{0}
+\end{pmatrix},
+\qquad
+\TraceDeDpOne = \begin{pmatrix}
+0 & \mathbf{0}^\top & 0 & -\CentroidLocation^\top \\[4pt]
+\mathbf{0} & \mathbf{0} & \mathbf{0} & \mathbf{0} \\[4pt]
+0 & \mathbf{0}^\top & 0 & \mathbf{0}^\top \\[4pt]
+\mathbf{0} & \mathbf{0} & \mathbf{0} & \FrameBasis^\times
+\end{pmatrix}}
+\]
+
+
+\textbf{Physical interpretation:}
+
+The fact that
+it corresponds to a trace center at the origin is a \emph{consequence}
+of the variational definition, not an input.
+
+Specifically, the axial strain \(\epsilon\) is energy-conjugate
+to the axial force \(N\), not to any moment. Pure bending
+(\(\bm{a}_\Omega \neq 0\) with \(a_\varepsilon = 0\)) produces zero
+axial force, so energy conjugacy requires
+\(\delta\epsilon^{(a)} \cdot N = 0\), which is satisfied if
+\(\epsilon^{(a)} = 0\).
+
+\subsection{Trace Matrices (Corrected)}
+
+Looking back at \([\mathbf{X}^{-1}]_{(5:6, 5:6)} = \FrameBasis^\times\),
+we have:
+\[[\mathbf{X}]_{(5:6, 5:6)} = (\FrameBasis^\times)^{-1} = -\FrameBasis^\times
+\]
+
+
+The corrected trace matrices are:
+
+\[
+\boxed{\TraceDeDpRoot = \begin{pmatrix}
+1 & \mathbf{0}^\top & 0 & \mathbf{0}^\top \\[4pt]
+\mathbf{0} & \mathbf{0} & \tilde{\mathbf{b}} & \tilde{\mathbf{A}} + \tilde{\mathbf{b}}\CenterShearLocation^\top \\[4pt]
+0 & \mathbf{0}^\top & \tilde{d} & \tilde{\mathbf{c}}^\top + \tilde{d}\CenterShearLocation^\top \\[4pt]
+\mathbf{0} & -\FrameBasis^\times & \mathbf{0} & \mathbf{0}
+\end{pmatrix}
+\qquad 
+\TraceDeDpOne = \begin{pmatrix}
+0 & \mathbf{0}^\top & 0 & -\CentroidLocation^\top \\[4pt]
+\mathbf{0} & \mathbf{0} & \mathbf{0} & \mathbf{0} \\[4pt]
+0 & \mathbf{0}^\top & 0 & \mathbf{0}^\top \\[4pt]
+\mathbf{0} & \mathbf{0} & \mathbf{0} & -\FrameBasis^\times
+\end{pmatrix}}\]
+
+Now the \((4, 2:3)\) block of \(\TraceDeDpRoot\) is
+\(-\FrameBasis^\times\), consistent with the plane-section property
+\(\bm{\kappa}_\perp = -\FrameBasis \times \bm{a}_\Omega\).
+
+\subsection{Correspondance}
+
+Let me reconcile the two derivations carefully.
+
+\subsubsection{The shear-flexure
+relation}\label{the-shear-flexure-relation}
+
+Your earlier derivation gives:
+\[\bm{\gamma}^{\rm sh} = \BishearTensorRB^{-\top}\mathbf{H}\,\bm{b}_{\Section} \quad \Longleftrightarrow \quad \bm{b}_{\Section} = \mathbf{H}^{-1}\BishearTensorRB^\top\,\bm{\gamma}^{\rm sh}\]
+
+From my \(\mathbf{X}^{-1}\), the \((2,2)\) block (ignoring torsion
+coupling) gives:
+\[\bm{\beta} = \frac{E}{G}\mathbf{H}_{\psi\psi}^{-1}\IntRGoRG\,\bm{\gamma}_\perp\]
+
+\textbf{Reconciling via equilibrium:}
+
+The key insight is that \(\BishearTensorRB\) (defined from the shear
+stress distribution) equals \(E\IntRGoRG\) by equilibrium. Under pure
+flexure loading \(\bm{b}_{\Section}\), the shear force is:
+\[\bm{F} = \int_\Section G\,\bm{\varepsilon}_\gamma^{(b)} \dA = G\int_\Section \bm{\tau}_\psi \dA \cdot \bm{b}_{\Section} = \BishearTensorRB\,\bm{b}_{\Section}\]
+
+But from the Ieşan equilibrium relation:
+\[\bm{F} = E\IntRGoRG\,\bm{b}_{\Section}\]
+
+Therefore: \[\boxed{\BishearTensorRB = E\IntRGoRG}\]
+
+\textbf{Verifying consistency:}
+
+Substituting into your formula:
+\[\bm{b}_{\Section} = \mathbf{H}^{-1}\BishearTensorRB^\top\,\bm{\gamma}^{\rm sh} = (G\mathbf{H}_{\psi\psi})^{-1}(E\IntRGoRG)^\top\,\bm{\gamma}^{\rm sh} = \frac{E}{G}\mathbf{H}_{\psi\psi}^{-1}\IntRGoRG\,\bm{\gamma}^{\rm sh}\]
+
+This matches my \([\mathbf{X}^{-1}]_{(2,2)}\) block exactly (when
+torsion coupling vanishes). ✓
+
+\textbf{The effective shear stiffness:}
+
+Your formula:
+\[\mathbf{K}_{\rm eff} = \BishearTensorRB\,\mathbf{H}^{-1}\BishearTensorRB^\top = (E\IntRGoRG)\,(G\mathbf{H}_{\psi\psi})^{-1}\,(E\IntRGoRG)^\top = \frac{E^2}{G}\IntRGoRG\,\mathbf{H}_{\psi\psi}^{-1}\,\IntRGoRG\]
+
+And the shear force-strain relation:
+\[\bm{F} = \mathbf{K}_{\rm eff}\,\bm{\gamma}^{\rm sh}\]
+
+\textbf{Including torsion coupling:}
+
+When \(\CenterShearLocation \neq \mathbf{0}\) or \(\bm{\eta} \neq \mathbf{0}\),
+the full \((2,2)\) block of \(\mathbf{X}^{-1}\) is:
+\[[\mathbf{X}^{-1}]_{(2,2)} = \frac{E}{G}\Big(\mathbf{H}_{\psi\psi}^{-1} + \frac{\bm{\eta}\bm{\eta}^\top}{\tilde{\Jsv}}\Big)\IntRGoRG\]
+
+
+\subsection{Kinematic fields}
+
+By integrating the strains.
+
+\textbf{From curvature to rotation:}
+
+We have \(\bm{\kappa} = \bm{\theta}'\), so:
+\[\vartheta(x) = \vartheta(0) + \int_0^x \varkappa(s)\,ds\]
+\[\bm{\theta}_\perp(x) = \bm{\theta}_\perp(0) + \int_0^x \bm{\kappa}_\perp(s)\,ds\]
+
+From the trace matrices:
+\[\varkappa = \tilde{d}\,a_\vartheta + (\tilde{\mathbf{c}}^\top + \tilde{d}\CenterShearLocation^\top)\bm{b}_{\Section} \quad \text{(constant in } x\text{)}\]
+\[\bm{\kappa}_\perp(x) = -\FrameBasis^\times\bm{a}_\Omega - x\FrameBasis^\times\bm{b}_{\Section}\]
+
+Integrating:
+\[\vartheta(x) = \vartheta(0) + x\big(\tilde{d}\,a_\vartheta + (\tilde{\mathbf{c}}^\top + \tilde{d}\CenterShearLocation^\top)\bm{b}_{\Section}\big)\]
+\[\bm{\theta}_\perp(x) = \bm{\theta}_\perp(0) - x\FrameBasis^\times\bm{a}_\Omega - \frac{1}{2}x^2\FrameBasis^\times\bm{b}_{\Section}\]
+
+\textbf{From shear strain to displacement:}
+
+We have \(\bm{\gamma} = \bm{u}' + \FrameBasis \times \bm{\theta}\).
+
+For the axial part, \((\FrameBasis \times \bm{\theta})_\parallel = 0\),
+so:
+\[u_\parallel(x) = u_\parallel(0) + \int_0^x \epsilon(s)\,ds = u_\parallel(0) + a_\varepsilon x - \frac{1}{2}x^2\CentroidLocation^\top\bm{b}_{\Section}\]
+
+For the transverse part,
+\((\FrameBasis \times \bm{\theta})_\perp = \FrameBasis^\times\bm{\theta}_\perp\),
+so:
+\[\bm{u}_\perp' = \bm{\gamma}_\perp - \FrameBasis^\times\bm{\theta}_\perp\]
+
+With
+\(\bm{\gamma}_\perp = \tilde{\mathbf{b}}\,a_\vartheta + (\tilde{\mathbf{A}} + \tilde{\mathbf{b}}\CenterShearLocation^\top)\bm{b}_{\Section}\)
+(constant):
+\[\bm{u}_\perp(x) = \bm{u}_\perp(0) + x\bm{\gamma}_\perp - \FrameBasis^\times\int_0^x \bm{\theta}_\perp(s)\,ds\]
+
+Computing the integral:
+\[\int_0^x \bm{\theta}_\perp(s)\,ds = x\bm{\theta}_\perp(0) - \frac{1}{2}x^2\FrameBasis^\times\bm{a}_\Omega - \frac{1}{6}x^3\FrameBasis^\times\bm{b}_{\Section}\]
+
+Using \((\FrameBasis^\times)^2 = -\mathbf{I}_2\):
+\[\bm{u}_\perp(x) = \bm{u}_\perp(0) + x\bm{\gamma}_\perp - x\FrameBasis^\times\bm{\theta}_\perp(0) - \frac{1}{2}x^2\bm{a}_\Omega - \frac{1}{6}x^3\bm{b}_{\Section}\]
+
+\textbf{Matching to the Ieşan solution:}
+
+The section-rigid part of the Ieşan displacement at \(\bm{r} = \mathbf{0}\)
+is:
+\[\hat{\bm{u}}_{\rm rigid}(x, \mathbf{0}) = xa_\varepsilon\FrameBasis - \frac{1}{2}x^2(\CentroidLocation \cdot \bm{b}_{\Section})\FrameBasis - \frac{1}{2}x^2\bm{a}_\Omega - \frac{1}{6}x^3\bm{b}_{\Section}\]
+
+The warping contribution at \(\bm{r} = \mathbf{0}\) is:
+\[\hat{\bm{u}}_{\rm warp}(x, \mathbf{0}) = \WarpTwistIesan(\mathbf{0})(a_\vartheta + c_\vartheta)\FrameBasis + \bm{W}_{(a)}(\mathbf{0})\bm{a}_\Omega + \big(\bm{\Pi}_{(b)}(\mathbf{0}) + x\bm{\Pi}_{(b)}(\mathbf{0}) + \bm{\WarpShearIesan}(\mathbf{0})\big)\bm{b}_{\Section}\]
+
+Wait---let me be more careful. The warping contributions depend on
+whether the warping functions are normalized to vanish at the origin.
+
+\textbf{Key observation:}
+
+For the plane-section property with trace center at origin, we have:
+\[\bm{u}(x) = \hat{\bm{u}}(x, \mathbf{0}) - \bm{\Phi}(\mathbf{0})\bm{\alpha}(x)\]
+
+At \(x = 0\):
+\[\bm{u}(0) = \hat{\bm{u}}(0, \mathbf{0}) - \bm{\Phi}(\mathbf{0})\bm{\alpha}(0)\]
+
+The Ieşan displacement at \((0, \mathbf{0})\) includes: - Axial:
+\(\WarpTwistIesan(\mathbf{0})\tau\,\FrameBasis\) (from torsion warping) -
+Transverse:
+\(\bm{W}_{(a)}(\mathbf{0})\bm{a}_\Omega + \bm{\Pi}_{(b)}(\mathbf{0})\bm{b}_{\Section} + \bm{\WarpShearIesan}(\mathbf{0})\bm{b}_{\Section}\)
+
+\textbf{For a doubly-symmetric section with origin at centroid:}
+
+All warping functions satisfy \(\WarpTwistIesan(\mathbf{0}) = 0\),
+\(\bm{W}_{(a)}(\mathbf{0}) = \mathbf{0}\), \(\bm{\Pi}_{(b)}(\mathbf{0}) = \mathbf{0}\),
+\(\bm{\WarpShearIesan}(\mathbf{0}) = \mathbf{0}\) by symmetry.
+
+Then: \[\bm{u}(0) = \mathbf{0}, \qquad \bm{\theta}(0) = \mathbf{0}\]
+
+The boundary condition \(\bm{u}(0) = \bm{\theta}(0) = \mathbf{0}\) means
+``the origin is fixed and the section has no rotation''---a classical
+clamped condition.
+
+\textbf{For a general asymmetric section:}
+
+The warping functions do not vanish at the origin. So:
+\[\bm{u}(0) = \WarpTwistIesan(\mathbf{0})\tau\,\FrameBasis + \bm{W}_{(a)}(\mathbf{0})\bm{a}_\Omega + (\bm{\Pi}_{(b)}(\mathbf{0}) + \bm{\WarpShearIesan}(\mathbf{0}))\bm{b}_{\Section}\]
+
+This is nonzero in general!
+
+\subsubsection{Physical
+interpretation:}\label{physical-interpretation-1}
+
+The energy-conjugate trace with \(\bm{u}(0) = \bm{\theta}(0) = \mathbf{0}\)
+does NOT mean ``the origin is fixed.'' It means:
+
+\[\hat{\bm{u}}(0, \mathbf{0}) = \bm{\Phi}(\mathbf{0})\bm{\alpha}(0)\]
+
+The origin can have nonzero displacement, provided it equals the warping
+contribution there. This is an \textbf{implicit constraint coupling the
+rigid and warping modes}.
+
+Alternatively, if we want a true ``origin fixed'' boundary condition
+\(\hat{\bm{u}}(0, \mathbf{0}) = \mathbf{0}\), then:
+\[\bm{u}(0) = -\bm{\Phi}(\mathbf{0})\bm{\alpha}(0) \neq \mathbf{0}\]
+
+\textbf{Summary:}
+
+For asymmetric sections, the energy-conjugate trace boundary condition
+\(\bm{u}(0) = \bm{\theta}(0) = \mathbf{0}\) does not correspond to fixing a
+physical point. The trace center is at the coordinate origin, but the
+warping evaluated there creates an offset between the beam-theoretic
+``displacement'' and the actual 3D displacement of that point.
+
+\subsection{Summary}
+
+
+\textbf{Special case: \(\bm{\xi} = \mathbf{0}\) (doubly-symmetric section or
+\(\nu = 0\)).}
+
+When the Poisson-torsion coupling vanishes: -
+\(\mathbf{h}_{\varphi\psi} = -\Jsv\CenterShearLocation\) -
+\(\xi_{\Jsv} = 0\), so \(\Delta = E\Jsv^2\sigma\) -
+\(\tilde{\mathbf{b}} = \mathbf{0}\) -
+\(\tilde{d} = -\frac{\tilde{\Jsv}}{\Jsv\sigma}\) -
+\(\tilde{\mathbf{c}}^\top = -\frac{\tilde{\Jsv}}{\Jsv\sigma}\CenterShearLocation^\top\)
+-
+\(\tilde{\mathbf{A}} = \frac{G}{E}\IntRGoRG^{-1}\Big(\mathbf{H}_{\psi\psi} - \Jsv\CenterShearLocation\CenterShearLocation^\top\Big)\)
+
+\textbf{Further special case: \(\CenterShearLocation = \mathbf{0}\) (origin
+at shear center).}
+
+Then \(\sigma = 1\), \(\bm{\eta} = \mathbf{0}\), \(\tilde{\Jsv} = \Jsv\), and:
+- \(\tilde{\mathbf{b}} = \mathbf{0}\) -
+\(\tilde{\mathbf{c}}^\top = \mathbf{0}^\top\) - \(\tilde{d} = -1\) -
+\(\tilde{\mathbf{A}} = \frac{G}{E}\IntRGoRG^{-1}\mathbf{H}_{\psi\psi}\)
+
+The shear and torsion decouple completely.

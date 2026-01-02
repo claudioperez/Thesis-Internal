@@ -1,0 +1,241 @@
+
+
+\begin{definition}[Affine Trace]
+A trace $\mathcal{T}$ is \emph{affine} if the beam strains it generates under 
+Saint-Venant loading are at most linear in the axial coordinate:
+\begin{equation*}
+\bm{e}(x) \triangleq \begin{pmatrix} \bm{\gamma}(x) \\ \bm{\kappa}(x) \end{pmatrix} 
+= \bm{e}_0 + x\,\bm{e}_1
+% \label{eq:affine-strain}
+\end{equation*}
+for some $\bm{e}_0, \bm{e}_1 \in \mathbb{R}^6$ depending linearly on the 
+Ieşan parameters $\bm{p}$.
+\end{definition}
+
+% \paragraph{2. Exact Traces}
+
+\begin{definition}[Type-3 Exact Trace]\label{def:type3-exact}
+An affine trace is \emph{type-3 exact} if there exists a linear operator 
+$\mathbf{B}: \mathbb{R}^6 \to L^2(\Section; \mathrm{Sym}^2\mathbb{R}^3)$, 
+independent of $x$, such that
+\begin{equation}
+\bm{\varepsilon}(x, \bm{r}) = \mathbf{B}(\bm{r})\,\bm{e}(x)
+\label{eq:type3-exact}
+\end{equation}
+for all $x$, $\bm{r}$, and $\bm{p}$.
+\end{definition}
+
+\begin{Aside}
+\begin{lemma}[Universal Generator]
+\label{lem:universal-generator}
+The Saint-Venant strain field is affine in $x$:
+\begin{equation}
+\bm{\varepsilon}(x, \bm{r}) = \mathbf{S}_0(\bm{r})\,\bm{p} + x\,\mathbf{S}_1(\bm{r})\,\bm{p}.
+\label{eq:sv-affine}
+\end{equation}
+There exists a unique matrix $\mathbb{S} \in \mathbb{R}^{6 \times 6}$ such that
+\begin{equation}
+\mathbf{S}_1(\bm{r}) = \mathbf{S}_0(\bm{r})\,\mathbb{S}
+\label{eq:S1-S0-A}
+\end{equation}
+for all $\bm{r} \in \Section$. 
+Moreover, $\mathbb{S}^2 = \mathbf{0}$.
+\end{lemma}
+
+\begin{proof}
+The affine structure \eqref{eq:sv-affine} follows directly from the Ieşan 
+solution \eqref{eq:iesan-point-strain}. Since distinct Ieşan parameters 
+produce distinct strain fields at $x = 0$, the operator $\mathbf{S}_0$ is 
+injective on $\mathbb{R}^6$. 
+Thus $\mathbb{S} \triangleq \mathbf{S}_0^{-1}\mathbf{S}_1$ 
+is uniquely defined, where the inverse is understood on the image of $\mathbf{S}_0$.
+
+For nilpotency, observe that the Saint-Venant strain has no $x^2$ term. 
+If we write $\bm{\varepsilon}(x, \bm{r}) = \mathbf{S}_0(\bm{r})\,(\mathbf{1} + x\mathbb{S} + \tfrac{1}{2}x^2\mathbb{S}^2 + \cdots)\,\bm{p}$, 
+consistency with \eqref{eq:sv-affine} requires $\mathbf{S}_0\mathbb{S}^2 = \mathbf{0}$. 
+Injectivity of $\mathbf{S}_0$ then implies $\mathbb{S}^2 = \mathbf{0}$.
+\end{proof}
+\end{Aside}
+
+
+\begin{Quote}
+\begin{proposition}[Universal Evolution]
+\label{prop:universal-evolution}
+A type-3 exact affine trace is uniquely identified by a matrix 
+$\TraceDeDpRoot \in \mathrm{GL}(6)$, with beam strains given by
+\begin{equation}
+\bm{e}(x) = \TraceDeDpRoot\,\exp\left(x\IesanEvolveSP\right)\,\bm{p}
+\label{eq:strain-evolution}
+\end{equation}
+where $\IesanEvolveSP$ is the universal generator of Lemma~\ref{lem:universal-generator}. 
+The section strain operator is
+\begin{equation}
+\mathbf{B}(\bm{r}) = \mathbf{S}_0(\bm{r})\,\TraceDpDeRoot.
+% \label{eq:B-from-T0}
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+Suppose $\bm{e}(x) = \sum_{n \geq 0} x^n \mathbf{T}_n\,\bm{p}$. 
+Type-3 exactness \eqref{eq:type3-exact} combined with the 
+Saint-Venant structure \eqref{eq:sv-affine} gives:
+\begin{equation*}
+\mathbf{S}_0\,\bm{p} + x\,\mathbf{S}_1\,\bm{p} 
+= \mathbf{B}\,\TraceDeDpRoot\,\bm{p} + x\,\mathbf{B}\,\TraceDeDpOne\,\bm{p} 
++ x^2\,\mathbf{B}\,\mathbf{T}_2\,\bm{p} + \cdots
+\end{equation*}
+Matching coefficients:
+\begin{equation*}
+\mathbf{S}_0 = \mathbf{B}\,\TraceDeDpRoot, \qquad 
+\mathbf{S}_1 = \mathbf{B}\,\TraceDeDpOne, \qquad 
+\mathbf{0} = \mathbf{B}\,\mathbf{T}_n \;\; (n \geq 2).
+\end{equation*}
+
+Since $\mathbf{B}$ must be injective on the Saint-Venant strain space 
+(otherwise distinct beam strains would produce identical 3D strains), 
+we have $\mathbf{T}_n = \mathbf{0}$ for $n \geq 2$.
+
+From the first equation, $\mathbf{B} = \mathbf{S}_0\,\TraceDpDeRoot$, 
+where invertibility of $\TraceDeDpRoot$ follows from the fact that distinct 
+Saint-Venant states have distinct strain fields at $x = 0$: if 
+$\bm{e}_0 = \TraceDeDpRoot\,\bm{p} = \mathbf{0}$ for some $\bm{p} \neq \mathbf{0}$, 
+then $\bm{\varepsilon}(0, \bm{r}) = \mathbf{B}\,\bm{e}_0 = \mathbf{0}$ would 
+imply $\mathbf{S}_0\,\bm{p} = \mathbf{0}$, contradicting injectivity of $\mathbf{S}_0$.
+
+Substituting into the second equation:
+\begin{equation*}
+\mathbf{S}_1 = \mathbf{S}_0\,\TraceDpDeRoot\,\TraceDeDpOne.
+\end{equation*}
+Comparing with \eqref{eq:S1-S0-A}, we obtain $\TraceDeDpOne = \TraceDeDpRoot\,\IesanEvolveSP$. 
+Thus:
+\begin{equation*}
+\bm{e}(x) = \TraceDeDpRoot\,\bm{p} + x\,\TraceDeDpRoot\,\IesanEvolveSP\,\bm{p} 
+= \TraceDeDpRoot\,(\mathbf{1} + x\IesanEvolveSP)\,\bm{p} 
+= \TraceDeDpRoot\,\exp\left(x\IesanEvolveSP\right)\,\bm{p},
+\end{equation*}
+where the final equality uses nilpotency: $\exp\left(x\IesanEvolveSP\right) = \mathbf{1} + x\IesanEvolveSP$.
+\end{proof}
+
+\begin{lemma}[Explicit Form of $\IesanEvolveSP$]
+\label{lem:A-explicit}
+With partition $\bm{p} = (a_\varepsilon, \bm{a}_\Omega, a_\vartheta, \bm{b}_{\Section})$ 
+of sizes $(1, 2, 1, 2)$, the universal generator has the block form
+\begin{equation}
+\IesanEvolveSP = \begin{pmatrix}
+0 & \mathbf{0}^\top & 0 & -\CentroidLocation^\top \\[4pt]
+\mathbf{0} & \mathbf{0} & \mathbf{0} & \mathbf{1}_\Section \\[4pt]
+0 & \mathbf{0}^\top & 0 & \mathbf{0}^\top \\[4pt]
+\mathbf{0} & \mathbf{0} & \mathbf{0} & \mathbf{0}
+\end{pmatrix}.
+% \label{eq:A-matrix}
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+From the Ieşan solution, the $x$-dependence in the Saint-Venant strain field 
+arises solely from flexure: the axial strain acquires a term 
+$-x\,\CentroidLocation \cdot \bm{b}_{\Section}$, and the fiber rotation 
+(which determines curvature) acquires $x\,\bm{b}_{\Section}$. 
+No other parameters evolve with $x$. Thus $\mathbf{S}_1$ has nonzero entries 
+only in the $\bm{b}_{\Section}$ columns, and these correspond to shifting 
+$a_\varepsilon \mapsto a_\varepsilon - x\,\CentroidLocation \cdot \bm{b}_{\Section}$ 
+and $\bm{a}_\Omega \mapsto \bm{a}_\Omega + x\,\bm{b}_{\Section}$. 
+The relation $\IesanEvolveSP = \mathbf{S}_0^{-1}\mathbf{S}_1$ then yields \eqref{eq:A-matrix}.
+\end{proof}
+\end{Quote}
+
+
+\begin{proposition}[Universal Evolution]
+\label{prop:universal-evolution}
+An affine trace satisfying Definition~\ref{def:type3-exact} is uniquely identified by a matrix 
+$\TraceDeDpRoot \in \mathrm{GL}(6)$, with beam strains given by
+\begin{equation*}
+\bm{e}(x) = \TraceDeDpRoot\,\exp\left(x\mathbf{A}_T\right)\,\bm{p}
+\end{equation*}
+where $\IesanEvolveSP$ is the universal $6\times6$ nilpotent matrix \eqref{eq:A-matrix}. 
+The section strain operator is
+\begin{equation}
+\mathbf{B}(\bm{r}) = \mathbf{S}_0(\bm{r})\,\TraceDpDeRoot
+\label{eq:B-from-T0}
+\end{equation}
+where $\mathbf{S}_0(\bm{r})$ is the Saint-Venant strain operator at $x = 0$.
+\end{proposition}
+
+\begin{proof}
+\begin{Aside}
+For any type-3 exact prismatic trace, there exists a section stiffness matrix 
+$\mathbf{C}_T$ relating resultants to beam strains: $\bm{s}(x) = \mathbf{C}_T\,\bm{e}(x)$. 
+Substituting into \eqref{eq:equilibrium-ode}:
+\begin{equation*}
+\mathbf{C}_T\,\bm{e}'(x) = \mathbb{J}\,\mathbf{C}_T\,\bm{e}(x),
+\end{equation*}
+which yields the strain transport equation:
+\begin{equation*}
+\bm{e}'(x) = \TraceEvolveEE\,\bm{e}(x), 
+\qquad 
+\TraceEvolveEE \triangleq \mathbf{C}_T^{-1}\mathbb{J}\,\mathbf{C}_T.
+\end{equation*}
+
+The solution is $\bm{e}(x) = \exp\left(x\TraceEvolveEE\right)\,\bm{e}_0$. 
+Since $\mathbb{J}^2 = \bm{0}$, 
+similarity gives $\TraceEvolveEE^2 = \bm{0}$, so 
+$\exp\left(x\TraceEvolveEE\right) = \mathbf{1} + x\TraceEvolveEE$.
+\end{Aside}
+The Saint-Venant strain field \eqref{eq:iesan-point-strain} has a remarkable 
+factorization. At any section $x$, the pointwise strains depend on the load 
+parameters \(\bm{p}\) only through the combinations
+\begin{equation*}
+a_\varepsilon - x\,\CentroidLocation \cdot \bm{b}_{\Section}, \qquad 
+\bm{a}_\Omega + x\,\bm{b}_{\Section}, \qquad 
+a_\vartheta + c_\vartheta, \qquad 
+\bm{b}_{\Section}.
+\end{equation*}
+These are precisely the components of $\exp\left(x\IesanEvolveSP\right)\bm{p}$, since 
+$\IesanEvolveSP^2 = 0$ implies
+%
+\begin{equation*}
+\exp\left(x\IesanEvolveSP\right) = \mathbf{1} + x\IesanEvolveSP.
+\end{equation*}
+%
+Thus the Saint-Venant strain field admits the factorization
+\begin{equation}
+\bm{\varepsilon}(x, \bm{r}) = \mathbf{S}_0(\bm{r})\,\exp\left(x\IesanEvolveSP\right)\,\bm{p}
+\label{eq:sv-factorization}
+\end{equation}
+where the section strain operator $\mathbf{S}_0(\bm{r}): \mathbb{R}^6 \to \mathbb{R}^3$ 
+maps the load parameters \(\bm p\) to the independent continuum strain components 
+$(\varepsilon, \bm{\varepsilon}_\gamma)$ at a point $\bm{r}$ on the section. 
+%
+For an affine trace satisfying \eqref{eq:type3-exact}, substitution of \eqref{eq:sv-factorization} yields
+\begin{equation*}
+\mathbf{S}_0(\bm{r})\,\exp\left(x\IesanEvolveSP\right)\,\bm{p} = \mathbf{B}(\bm{r})\,\bm{e}(x).
+\end{equation*}
+Evaluating at $x = 0$ gives $\mathbf{S}_0(\bm{r})\,\bm{p} = \mathbf{B}(\bm{r})\,\bm{e}_0$ 
+for all $\bm{p}$. Since this holds for all Ieşan parameters, there exists 
+$\TraceDeDpRoot \in \mathrm{GL}(6)$ such that $\bm{e}_0 = \TraceDeDpRoot\,\bm{p}$ 
+and $\mathbf{B}(\bm{r}) = \mathbf{S}_0(\bm{r})\,\TraceDpDeRoot$. 
+%
+Substituting back:
+\begin{equation*}
+\mathbf{S}_0(\bm{r})\,\exp\left(x\IesanEvolveSP\right)\,\bm{p} 
+= \mathbf{S}_0(\bm{r})\,\TraceDpDeRoot\,\bm{e}(x).
+\end{equation*}
+The operator $\mathbf{S}_0(\bm{r})$ is injective on $\mathbb{R}^6$ 
+(distinct Ieşan parameters produce distinct strain fields), so
+\begin{equation*}
+\bm{e}(x) = \TraceDeDpRoot\,\exp\left(x\mathbf{A}_T\right)\,\bm{p}. 
+\qedhere
+\end{equation*}
+\end{proof}
+
+The first row gives the axial strain $\varepsilon = a_\varepsilon + \bm{r} \cdot \bm{a}_\Omega$, 
+which is independent of warping. The second and third rows give the shear strain
+\begin{equation*}
+\bm{\varepsilon}_\gamma = \mathbf{b}_{(\WarpTwistIesan)} \,a_\vartheta
++ \left(\mathbf{b}_{(\WarpTwistIesan)} \otimes \CenterShearLocation + \mathbf{B}_{(\WarpShearIesan)}\right)\,\bm{b}_{\Section},
+\end{equation*}
+where the term $\mathbf{b}_{(\WarpTwistIesan)} \otimes \CenterShearLocation$ arises from 
+the flexure-induced twist $c_\vartheta = \CenterShearLocation \cdot \bm{b}_{\Section}$. 
+Under linear isotropy, the transverse strains $\varepsilon_{yy}, \varepsilon_{zz}, \varepsilon_{yz}$ 
+are determined by Poisson coupling: 
+$\bm{\varepsilon}_\perp = -\nu\varepsilon\,\mathbf{1}_\Section$.

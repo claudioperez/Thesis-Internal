@@ -1,0 +1,141 @@
+\subsubsection*{Misc}
+
+\begin{proposition}
+\cref{eq:warp-fa-bvp} is well defined.
+
+The displacement problem of torsion is a pure Neumann problem of the
+Laplace operator:
+\begin{equation*}
+\left\{
+\begin{array}{rl}
+\Delta \varphi &= f \quad \text { in } \quad \PlaneManifold \\
+\nabla_{\bm{\nu}} \varphi &= g \quad \text { on } \quad \PlaneBoundary \\
+\int_\Omega \varphi &= 0
+\end{array}
+\right.
+\end{equation*}
+where, in order for the problem to be well defined one must have \parencite{shapiro2017neumann}:
+\[
+\int_\Gamma g = \int_{\Omega} f
+\]
+\end{proposition}
+
+\begin{proof}
+Define $X := \nabla \WarpFA$.
+%
+The strong form of the governing PDE is:
+$$
+\mathcal{L}_X \volG = \WarpSV \cdot \volE
+\quad \text{in } \PlaneManifold,
+\qquad
+\nabla_\nu \WarpFA = 0 \quad \text{on } \PlaneBoundary
+$$
+
+We now apply Gauss' theorem in the form \citep{abraham1988manifolds}:
+
+$$
+\int_{\PlaneManifold} \operatorname{div}_\mu X \, \mu = \int_{\PlaneBoundary} \iota_X \mu
+$$
+
+Or in standard notation:
+
+$$
+\int_{\PlaneManifold} \nabla \cdot (n_G \nabla \WarpFA) \, \dd A = \int_{\PlaneBoundary} n_G \nabla \WarpFA \cdot \nu \, \dd s
+$$
+
+Now use the PDE $\nabla \cdot (n_G \nabla \WarpFA) = n_E \WarpSV$ so the volume integral becomes:
+
+$$
+\int_{\PlaneManifold} n_E \WarpSV \, dA = \int_{\PlaneBoundary} n_G \nabla \WarpFA \cdot \nu \, ds
+$$
+
+Apply Boundary Condition; Given $\nabla_\nu \WarpFA = 0$ on \(\PlaneBoundary\) 
+Then:
+
+$$
+\nabla \WarpFA \cdot \nu = 0 \quad \text{on } \PlaneBoundary
+\quad \Rightarrow \quad
+n_G \nabla \WarpFA \cdot \nu = 0
+$$
+
+Therefore:
+
+$$
+\int_{\PlaneBoundary} n_G \nabla \WarpFA \cdot \nu \, ds = 0
+$$
+
+and so the divergence theorem yields:
+
+$$
+\int_{\PlaneManifold} n_E \WarpSV \, dA = 0
+$$
+\end{proof}
+
+
+\subsection{Laplacian}
+So the Laplacian becomes:
+
+$$
+\operatorname{div}_{G}(\nabla \WarpSV 
++\FrameBasis \times \boldsymbol{r})
+=
+\frac{1}{\WeightG} \operatorname{div}_{A} \left(\WeightG (\nabla \WarpSV +\FrameBasis \times \boldsymbol{r})\right)
+=
+\frac{1}{\WeightG} \nabla \cdot\left(\WeightG (\nabla \WarpSV +\FrameBasis \times \boldsymbol{r})\right)
+=0
+$$
+
+\begin{equation*}
+\begin{aligned}
+\mathcal{L}_{\nabla \WarpFA} \volG &= \WarpSV \volE  
+\quad\text{in }\Omega, \\
+( \operatorname{div}_{\volG}\nabla\WarpFA )\volG
+  &=\WarpSV\,\volE.
+\end{aligned}
+\qquad
+\begin{aligned}
+\nabla_\nu \WarpFA = 0 \quad \text{on } \PlaneBoundary \\
+\ii_{\nu}\dd\WarpFA = 0
+\quad\text{on }\PlaneBoundary;
+\end{aligned}
+\end{equation*}
+
+
+\subsection{Equivalence of Warping Boundary Conditions}
+
+Consider two functions \( \WarpSV \colon \Omega \to \mathbb{R} \) governed by the same differential equation:
+\[
+\operatorname{div}_\mu \left( \nabla \WarpSV + \FrameBasis \times \PlanePosition \right) = 0 \quad \text{in } \Omega,
+\]
+but with differing boundary conditions.
+
+\paragraph{Formulation 1 (homogeneous Neumann):}
+\begin{equation}
+\nabla_{\bm{\nu}} \WarpSV = 0 \quad \text{on } \partial \Omega.
+\label{eq:hom-neumann}
+\end{equation}
+
+\paragraph{Formulation 2 (nonhomogeneous Neumann):}
+\begin{equation}
+\nabla_{\bm{\nu}} \WarpSV = -\FrameBasis \times (\PlanePosition - \bm{\SectionLocation}) \cdot \bm{\nu}
+\quad \text{on } \partial \Omega,
+\label{eq:nonhom-neumann}
+\end{equation}
+where \( \SectionLocation \in \mathbb{R}^2 \) is a fixed reference point in the plane (e.g., the shear center), and \( \bm{\nu} \) is the outward unit normal.
+
+\paragraph{Equivalence.}
+The two formulations are equivalent up to an additive affine function. That is, if \( \WarpSV \) satisfies \cref{eq:nonhom-neumann}, then
+\[
+\WarpSV'(\PlanePosition) := \WarpSV(\PlanePosition) + \FrameBasis \cdot (\PlanePosition - \bm{\SectionLocation})
+\]
+satisfies \cref{eq:hom-neumann}. Conversely, given a solution \( \WarpSV' \) to \cref{eq:hom-neumann}, the function
+\[
+\WarpSV(\PlanePosition) := \WarpSV'(\PlanePosition) - \FrameBasis \cdot (\PlanePosition - \bm{\SectionLocation})
+\]
+satisfies \cref{eq:nonhom-neumann}.
+
+\paragraph{Interpretation.}
+\cref{eq:nonhom-neumann} treats \( \WarpSV \) as a \emph{pure warping function}, with torsional twist represented explicitly in the boundary condition. \cref{eq:hom-neumann} instead absorbs the affine twist into the interior solution, simplifying the boundary data. Both formulations yield the same shear strain field:
+\[
+\nabla \WarpSV + \FrameBasis \times \PlanePosition.
+\]

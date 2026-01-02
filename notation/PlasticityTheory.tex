@@ -1,0 +1,122 @@
+\input{notation/PlasticityModels}
+
+\newcommand{\FlowDirection}{\bm{\eta}}
+\newcommand{\FlowUnit}{\bm{n}}
+\newcommand{\MisesDirection}{\bar{\bm{\eta}}}
+\newcommand{\BasisScale}{\phi_m}
+\newcommand{\FlowScale}{c_{\lambda}}
+
+
+\newcommand{\FourTensor}[1]{\mathbb{#1}}
+\newcommand{\tp}[1]{#1^{\mathrm{t}}}
+\newcommand{\JntGLn}[1]{#1} % Transpose (Adjoint)
+\newcommand{\AdjGLn}[1]{#1} % Adjugate
+% \newcommand{\HatSO3}[1]{#1}
+% \newcommand{\VeeSO3}[1]{#1}
+\newcommand{\FrameBody}{\mathcal{B}}
+\newcommand{\ThickBody}{\hat{\mathcal{B}}}
+
+\newcommand{\EnhanDim}{n_a}
+\newcommand{\symbun}{\stackrel{\mathrm{s}}{\otimes}}
+\newcommand{\TensorMaterial}{\mathcal{T}}
+\newcommand{\VectorMaterial}{\mathcal{I}_{\TensorMaterial}}
+\newcommand{\ResultMaterial}{\mathcal{R}_{\PlaneManifold}}
+\newcommand{\SectionEvaluation}[1]{\ResultMaterial\left( #1 \right)}
+\newcommand{\TotalEquilibrium}{\operatorname{B}}
+\newcommand{\PrimeEquilibrium}{\mathbb{B}_{\mathrm{p}}}
+\newcommand{\PrimeKinematic}{{\mathbb{B}_{\mathrm{p}}^{*}}}
+\newcommand{\EquilibriumDerivative}{\operatorname{B}_{\mathrm{p}}}
+% Configuration
+\newcommand{\deflenx}{\varsigma}
+\newcommand{\reflenx}{\xi}
+\newcommand{\SpaceRotation}{\bm{R}}
+\newcommand{\PlanePosition}{\bm{r}}
+\newcommand{\WarpAmplitude}{\bm{\alpha}}
+\newcommand{\nwarp}{n_w}
+% Stress
+\newcommand{\Bishear}{{N_{\varphi}}}
+\newcommand{\bishear}{\bm{v}}
+\newcommand{\Bimoment}{{M_{\varphi}}}
+\newcommand{\bimoment}{\bm{w}}
+\newcommand{\CurveLoads}{\bm{f}_m}
+\newcommand{\CurveInert}{\dot{\bm{h}}}
+\newcommand{\ShearResult }{\bm{n}}
+\newcommand{\CurveResult }{\bm{m}}
+\newcommand{\curveResult }{\bm{m}_{\chi}}
+\newcommand{\shearResult }{\bm{n}_{\chi}}
+
+\newcommand{\StressTensor}{\bm{\bm{\sigma}}}
+\newcommand{\StressVector}{\bm{\sigma}}
+% Strain
+\newcommand{\FrameStrain}{\bm{e}}
+\newcommand{\FrameStretch}{\lambda}
+\newcommand{\StrainTensor}{\bm{E}}
+\newcommand{\StrainVector}{\bm{\varepsilon}}
+\newcommand{\ShearStrainX}{\epsilon}
+\newcommand{\ShearStrain }{\bm{\gamma}}
+\newcommand{\CurveStrain }{\bm{\kappa}}
+\newcommand{\CurveStrainScale}{\bm{\varkappa}}
+\newcommand{\WarpStrain  }{\bm{\alpha}'}
+\newcommand{\shearStrain }{{\bm{\gamma}_{\chi}}}
+\newcommand{\curveStrain }{{\bm{\kappa}_{\chi}}}
+
+% Material
+\newcommand{\ShearModuli}{\bm{C}_N}
+\newcommand{\CurveModuli}{\bm{C}_M}
+\newcommand{\SectionIntegral}[1]{\int \, #1 \, \mathrm{d} A }
+\newcommand{\ElasticLinearMM}{I}
+% BASES
+\newcommand{\frameBasis}{\hat{\textbf{\i}}}
+\newcommand{\FrameBasis}{\mathbf{i}}
+\newcommand{\PlaneBasis}{\mathbf{i}}
+\newcommand{\SpaceBasis}{\mathbf{e}}
+% COORDINATES
+\newcommand{\FrameX}{}
+\newcommand{\FrameXi}{x}
+\newcommand{\FrameYi}{y}
+\newcommand{\FrameZi}{z}
+\newcommand{\FrameYZi}{\beta}
+
+\newcommand{\StressSpace}{\mathscr{S}}
+\newcommand{\StressSpaceH}{\mathscr{S}^h}
+
+
+\newcommand{\starG}{\star}     % Hodge star in the Euclidean plane
+\newcommand{\volG}{\mu_{\scriptscriptstyle{G}}}     % = G\,\dd A
+\newcommand{\volE}{\mu_{\scriptscriptstyle{E}}}     % = E\,\dd A
+\newcommand{\qvec}{\mathbf w}  % = \kvec\times\rvec
+
+\newcommand{\astar}{\!*\,}             % 2-D Hodge star (acts as 90° rotation)
+
+\newcommand{\dd}{\mathrm d}
+\newcommand{\ii}{\iota}
+\newcommand{\x}{\mathbf x}
+\newcommand{\rvec}{\mathbf r}      % = \PlanePosition-\SectionLocation
+\newcommand{\kvec}{\mathbf i}      % = \FrameBasis
+\newcommand{\starE}{\star} % Euclidean Hodge star in 2-D
+
+% \newcommand{\interior}[2]{#1\, \mathbin{\lrcorner}\, #2}
+\newcommand{\interior}[2]{{\iota}_{#1} {#2}}
+
+
+\newcommand{\NotationTable}{
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{c|ccc}
+         &  \cite{auricchio1995two} & \cite{suchocki2022finite} & \cite{hartloper2021constitutive} \\
+       $L$ & $U$ & & \\
+       $\varphi(\lambda)$ & $T$ & $w$ & $e$ \\
+       $\kappa(\lambda)$ & & $\alpha$ \\
+       $\BackStress$ & $\bm{\alpha}$ & $\mathbf{X}$ \\
+       $\RelativeStress$ & $\bm{\Sigma}$ & - & $\bm{\xi}$ \\
+       $\PartialStress$ & $\bm{\Sigma}_A$ & $\mathbf{Z}$ \\
+       $\FlowStress$ & $\sigma_y$ & $R$ & $\sigma_y$ \\
+       $\frac{-2G}{g'}$ & $A$ & & $\frac{1}{\beta}$ \\
+       $\vartheta_{\rm dev}$ & C & 
+    \end{tabular}
+    \caption{Notation}
+    \label{tab:placeholder}
+\end{table}
+
+}

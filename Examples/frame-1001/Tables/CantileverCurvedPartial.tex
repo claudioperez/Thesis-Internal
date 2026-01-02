@@ -1,0 +1,50 @@
+
+%
+%
+%
+\begin{center}
+\begin{table*}%[hb]%
+\caption{End displacements \(\Delta \boldsymbol{x}(L)\) of the curved cantilever from \cite{bathe1979large}.}
+\label{tab:bathe02}
+%\begin{tabular}{llllrrrrrl}
+\begin{tabular*}{\textwidth}{@{\extracolsep\fill}cccccccccc@{}}
+%\begin{tabular*}{\textwidth}{@{\extracolsep\fill}cccccccc@{}}
+\toprule
+\textbf{Interpolation} & \textbf{Isometry} & \textbf{Parameters} &
+\textbf{Path} & \textbf{Avg. Iter.} & \textbf{Max. Iter.} &
+  \(\Delta x_1\) & \(\Delta x_2\) & \(\Delta x_3\)
+\\ % 
+\midrule
+  \texttt{None} & \texttt{None} & \texttt{None}  & 1 &      12.67  & 16   & -23.477097 &  53.36568 &  -13.491949  \\
+                &               &                & 2 &       9.67  & 13   & -23.477822 &  53.36914 &  -13.490769  & \cite{simo1986threedimensional} \\
+                &               &                & 3 &       5.80  &  7   & -23.477858 &  53.36939 &  -13.487474  & \cite{ibrahimbegovic2002role}* \\
+                &               &                & 4 \\                                            
+  \hline                                                                                           
+  \texttt{None} & \texttt{SFIN} & \texttt{None}  & 1 &      12.67   & 16 &  -23.476973 &  53.36572 &  -13.492339  \\
+                &               &                & 2 &       9.67   & 13 &  -23.477794 &  53.36911 &  -13.490544  \\
+                &               &                & 3 &       5.80   &  7 &  -23.477864 &  53.36939 &  -13.487469  \\
+                &               &                & 4 \\                                            
+  \hline                                                                                           
+  \texttt{Incr} & \texttt{None} & \texttt{Incr}  & 1 &      14.33   & 17 &  -23.473508 &  53.36977 &  -13.495887    \\ % 1e-16
+                &               &                & 2 &      10.33   & 13 &  -23.474919 &  53.36985 &  -13.492595    \\
+                &               &                & 3 &       5.60   &  6 &  -23.476811 &  53.36946 &  -13.489425  & \cite{ibrahimbegovic2002role} \\
+                &               &                & 4 &       7.17   & 10 &  -23.476004 &  53.36952 &  -13.490988  & \\
+  \hline                                                                                           
+  \texttt{Incr} & \texttt{SFIN} & \texttt{Incr}  & 1 \\                                            
+                &               &                & 2 \\                                            
+                &               &                & 3 &       5.30   &  6 &  -23.476813 &  53.36947 &  -13.489432  \\
+                &               &                & 4 &       7.00   & 10 &  -23.476008 &  53.36954 &  -13.491009  \\
+  \hline                                                                                           
+  \texttt{Init} & \texttt{None} & \texttt{Init}  & 1 &      15.00   & 16 &  -23.450085 &  53.37303 &  -13.546693  \\ % 1e-16
+                &               &                & 2 &      10.33   & 13 &  -23.450085 &  53.37303 &  -13.546693  \\
+                &               &                & 3 &       5.40   &  6 &  -23.450085 &  53.37303 &  -13.546693  \\ % 1e-10
+                &               &                & 4 &       7.17   & 10 &  -23.450085 &  53.37303 &  -13.546693  & \cite{mikdad1995interpolation} \\ %\cite{ritto-corrêa2002differentiation
+  \hline                                                                                           
+  \texttt{Init} & \texttt{SFIN} & \texttt{Init}  & 1 &      16.67   & 29 &  -23.450656 &  53.3742  &  -13.546972  \\
+                &               &                & 2 \\                                            
+                &               &                & 3 &       5.40   &  6 &  -23.450656 &  53.3742  &  -13.546972  \\
+                &               &                & 4 &       7.18   & 10 &  -23.450656 &  53.3742  &  -13.546972  \\
+\bottomrule
+\end{tabular*}
+\end{table*}
+\end{center}

@@ -1,0 +1,505 @@
+
+\begin{Details}
+The inverse \(\TraceDpDeRoot\) admits the block structure in the same \((1,2,1,2)\) partition:
+\begin{equation*}
+\begin{aligned}
+\TraceDpDeRoot
+&=
+\left(\begin{array}{cc|cc}
+1 &
+-\big(\CenterTrace^\top (\FrameBasis^\times)^{-1}\bm{\Sigma}_{\kappa}
++ \TraceNF^\top\big)\,\bm{\Sigma}_{\gamma}^{-1}
+&
+-\CenterTrace^\top (\FrameBasis^\times)^{-1}
+\Big(\TraceBT - \bm{\Sigma}_{\kappa} \bm{\Sigma}_{\gamma}^{-1}\TraceFT\Big)
++\TraceNF\cdot \bm{\Sigma}_{\gamma}^{-1}\TraceFT
+  &
+  \CenterTrace^\top (\FrameBasis^\times)^{-1}
+\\[6pt]
+  \mathbf{0} &
+  -\FrameBasis^\times\bm{\Sigma}_{\kappa} \bm{\Sigma}_{\gamma}^{-1} 
+  & \FrameBasis \times\Big(\bm{\Sigma}_{\kappa} \bm{\Sigma}_{\gamma}^{-1}\TraceFT - \TraceBT\Big) &
+  \FrameBasis^\times
+  \\[6pt] \hline
+  0 &
+  -\TraceTF^\top \bm{\Sigma}_{\gamma}^{-1} &
+  1 + \TraceTF\cdot \bm{\Sigma}_{\gamma}^{-1}\TraceFT &
+  \mathbf{0}^\top
+  \\[6pt]
+  \mathbf{0} &
+  \bm{\Sigma}_{\gamma}^{-1} &
+  -\bm{\Sigma}_{\gamma}^{-1}\TraceFT &
+  \mathbf{0}
+  \end{array}\right)\\
+\end{aligned}
+\end{equation*}
+where
+\[
+\begin{aligned}
+\bm{\Sigma}_{\gamma} &\coloneqq \TraceFF - \TraceFT\otimes\TraceTF, \\
+\bm{\Sigma}_{\kappa} &\coloneqq \TraceMF - \TraceBT\otimes\TraceTF
+\end{aligned}
+\]
+\end{Details}
+
+
+\begin{Details}
+Recall
+\[
+\FrameBasis\cdot\CenterTrace
+=
+\FrameBasis\cdot\TraceNF
+=
+\FrameBasis\cdot\TraceFT
+=
+\FrameBasis\cdot\TraceBT
+=
+\FrameBasis\cdot\TraceTF
+=0,
+\]
+and $\TraceFF,\TraceMF$ are supported only in the lower–right $2\times2$ block (orthogonal to $\FrameBasis$). 
+For any $3\times3$ block $\bm{B}$, write it in the form
+\[
+\bm{B}
+=
+\FrameBasis\otimes\bigl(\mu_B\,\FrameBasis + \bm{\varsigma}_B^{\mathrm{N}}\bigr)
++
+\bm{\varsigma}_B^{\mathrm{F}}\otimes\FrameBasis
++ \bm{\Xi}_B,
+\]
+where
+\[
+\mu_B\in\mathbb{R},\qquad
+\bm{\varsigma}_B^{\mathrm{N}},\bm{\varsigma}_B^{\mathrm{F}}\in\mathbb{R}^2,
+\qquad
+\bm{\Xi}_B\in\mathbb{R}^{2\times2}
+\]
+are respectively the $(1,1)$–entry, the $yz$–part of the first row/column, and the lower–right $2\times2$ block of $\bm{B}$.
+All $2$–vectors and $2\times2$ matrices live in the plane orthogonal to $\FrameBasis$. 
+Introduce the $2\times2$ Schur matrix on $\FrameBasis^\perp$:
+\[
+\bm{\Sigma}_{\gamma}
+:=
+\TraceFF - \TraceFT\otimes\TraceTF,
+\]
+We now write
+\[
+\TraceDpDeRoot
+=
+\begin{pmatrix}
+\bm{\mathcal{A}}_{11}^{-1} & \bm{\mathcal{A}}_{12}^{-1}\\[2pt]
+\bm{\mathcal{A}}_{21}^{-1} & \bm{\mathcal{A}}_{22}^{-1}
+\end{pmatrix},
+\]
+with each $3\times3$ block $\bm{\mathcal{A}}_{ij}^{-1}$ expressed as
+\[
+\bm{\mathcal{A}}_{ij}^{-1}
+=
+\FrameBasis\otimes\bigl(\mu_{ij}\,\FrameBasis + \bm{\varsigma}_{ij}^{\mathrm{N}}\bigr)
++
+\bm{\varsigma}_{ij}^{\mathrm{F}}\otimes\FrameBasis
++ \bm{\Xi}_{ij},
+\qquad i,j\in\{1,2\}.
+\]
+
+All scalars $\mu_{ij}$, $2$–vectors $\bm{\varsigma}_{ij}^{\mathrm{N}},\bm{\varsigma}_{ij}^{\mathrm{F}}$ and
+$2\times2$ matrices $\bm{\Xi}_{ij}$ are now explicitly defined in terms of the original data. 
+\[
+\begin{aligned}
+\ShiftA := &&\bm{\Xi}_{11}
+&=
+\FrameBasis^\times\bigl(\TraceBT\otimes\TraceTF - \TraceMF\bigr)\,\bm{\Sigma}_{\gamma}^{-1},
+\\[2pt]
+&&\bm{\Xi}_{12}
+&= \FrameBasis^\times,
+\\[2pt]
+\ShiftB := &&\bm{\Xi}_{21}
+&=\bm{\Sigma}_{\gamma}^{-1},
+\\[2pt]
+&&\bm{\Xi}_{22} &= \mathbf{0}.
+\end{aligned}
+\]
+And:
+\[
+\begin{aligned}
+\ShiftN = 
+&&\bm{\varsigma}_{11}^{\mathrm{N}}
+&:=
+-\FrameBasis \times
+\bigl(\TraceBT\otimes\TraceTF - \TraceMF\bigr)\,\bm{\Sigma}_{\gamma}^{-1}\CenterTrace-\bm{\Sigma}_{\gamma}^{-1}\TraceNF, \\
+&&&=\FrameBasis \times
+\bigl(\TraceMF-\TraceBT\otimes\TraceTF \bigr)\,\bm{\Sigma}_{\gamma}^{-1}\CenterTrace-\bm{\Sigma}_{\gamma}^{-1}\TraceNF, \\
+&&&=-\ShiftA\CenterTrace - \ShiftB\TraceNF 
+\\[4pt]
+\ShiftNK=&&\bm{\varsigma}_{12}^{\mathrm{N}}
+&:=
+-\FrameBasis\times\CenterTrace,
+\\[4pt]
+%
+\ShiftT=
+&&\bm{\varsigma}_{21}^{\mathrm{N}}
+&:=
+-\bm{\Sigma}_{\gamma}^{-1}\TraceTF,
+\\
+%
+&&\bm{\varsigma}_{22}^{\mathrm{N}}
+&:= \mathbf{0}.
+\end{aligned}
+\]
+also
+\[
+\begin{aligned}
+&&\bm{\varsigma}_{11}^{\mathrm{F}}
+&:= \mathbf{0},
+\\[4pt]
+\ShiftF = 
+&&\bm{\varsigma}_{12}^{\mathrm{F}}
+&:=
+\FrameBasis\times\Bigl(
+-\TraceBT
++
+\bigl(\TraceMF - \TraceBT\otimes\TraceTF\bigr)\,\bm{\Sigma}_{\gamma}^{-1}\TraceFT
+\Bigr),\\
+&&&:=
+\FrameBasis\times\Bigl(
+-\TraceBT+\bigl(\TraceMF - \TraceBT\otimes\TraceTF\bigr)\,\ShiftB\TraceFT
+\Bigr),
+\\[4pt]
+&&\bm{\varsigma}_{21}^{\mathrm{F}}
+&:= \mathbf{0},
+\\[4pt]
+\ShiftK=&&\bm{\varsigma}_{22}^{\mathrm{F}}
+&:=
+-\bm{\Sigma}_{\gamma}^{-1}\TraceFT = -\ShiftB\TraceFT.
+\end{aligned}
+\]
+and scalars:
+\[
+\begin{aligned}
+&&\mu_{11}
+&:= 1,
+\\[4pt]
+&&\mu_{21}
+&:= 0,
+\\[4pt]
+\ShiftScaleT:=&&\mu_{22}
+&:= 1 + \TraceTF\cdot\bm{\Sigma}_{\gamma}^{-1}\TraceFT,
+\\
+&&& 
+~=1 + \TraceTF\cdot\ShiftB\TraceFT
+\\
+&&& 
+~=1 - \TraceTF\cdot\ShiftK
+\\[4pt]
+\ShiftScaleN :=&&\mu_{12}
+&:=
+% \frac{1}{\mu_r}
+% \Bigl(
+\CenterTrace\cdot\bigl(\FrameBasis\times\TraceBT\bigr)
+-
+\CenterTrace\cdot\FrameBasis\times
+\bigl(\TraceMF - \TraceBT\otimes\TraceTF\bigr)\,\bm{\Sigma}_{\gamma}^{-1}\TraceFT
++
+\TraceNF\cdot\bm{\Sigma}_{\gamma}^{-1}\TraceFT
+% \Bigr). \\
+\\
+% &&&=
+% \CenterTrace\cdot\FrameBasis\times\Bigl(
+% \TraceBT - \bigl(\TraceMF - \TraceBT\otimes\TraceTF\bigr)\,\bm{\Sigma}_{\gamma}^{-1}\TraceFT
+% \Bigr)+
+% \TraceNF\cdot\bm{\Sigma}_{\gamma}^{-1}\TraceFT\\
+&&&=
+-\CenterTrace\cdot\ShiftF %\bm{\varsigma}_{12}^{\mathrm{F}}
++
+\TraceNF\cdot\ShiftB\TraceFT
+\end{aligned}
+\]
+Finally:
+\[
+\TraceDpDeRoot
+=
+\begin{pmatrix}
+\FrameBasis\otimes\bigl(\FrameBasis+\ShiftN %\bm{\varsigma}_{11}^{\mathrm{N}}
+\bigr)
++ \ShiftA
+&
+\FrameBasis\otimes\bigl(\ShiftScaleN\FrameBasis+\CenterTrace\times\FrameBasis\bigr)
++ \ShiftF\otimes\FrameBasis %\bm{\varsigma}_{12}^{\mathrm{F}}\otimes\FrameBasis
++ \FrameBasis^{\times}
+\\[8pt]
+\FrameBasis\otimes\ShiftT %\bm{\varsigma}_{21}^{\mathrm{N}}
++ \ShiftB
+&
+\ShiftScaleT\FrameBasis\otimes\FrameBasis
++ \ShiftK %\bm{\varsigma}_{22}^{\mathrm{F}}
+\otimes\FrameBasis
+\end{pmatrix}.
+\]
+\end{Details}
+
+
+\begin{Details}
+\[
+\bm{\mathcal{A}}
+=
+\begin{pmatrix}
+\FrameBasis\otimes\bigl(\FrameBasis+\CenterTrace\bigr)
+&
+\FrameBasis\otimes\TraceNF
++ \TraceFT\otimes\FrameBasis
++ \TraceFF
+\\[4pt]
+-\FrameBasis^\times
+&
+\FrameBasis\otimes\bigl(\FrameBasis+\TraceTF\bigr)
++ \TraceBT\otimes\FrameBasis
++ \TraceMF
+\end{pmatrix},
+\]
+with
+% \[
+% \FrameBasis=(1,0,0)^\top,\quad
+% \FrameBasis^\times
+% =
+% \begin{bmatrix}
+% 0 & 0 & 0\\
+% 0 & 0 & -1\\
+% 0 & 1 & 0
+% \end{bmatrix},
+% \]
+\[
+\FrameBasis\cdot\TraceNF
+=
+\FrameBasis\cdot\TraceFT
+=
+\FrameBasis\cdot\TraceBT
+=
+\FrameBasis\cdot\TraceTF
+=0,
+\]
+and $\TraceFF,\TraceMF$ supported only in the lower–right $2\times2$ block (orthogonal to $\FrameBasis$).
+
+%------------------------------------------------------------
+% notation for 3x3 blocks built from scalars, 2-vectors, 2x2 blocks
+%------------------------------------------------------------
+For any $3\times3$ block $\bm{B}$, we write it in the form
+\[
+\bm{B}
+=
+\FrameBasis\otimes\bigl(\mu_B\,\FrameBasis + \bm{\varsigma}_B^{\mathrm{N}}\bigr)
++
+\bm{\varsigma}_B^{\mathrm{F}}\otimes\FrameBasis
++\bm{\Sigma}_B,
+\]
+where
+\[
+\mu_B\in\mathbb{R},\qquad
+\bm{\varsigma}_B^{\mathrm{N}},\bm{\varsigma}_B^{\mathrm{F}}\in\mathbb{R}^2,
+\qquad
+\bm{\Sigma}_B\in\mathbb{R}^{2\times2}
+\]
+are respectively the $(1,1)$–entry, the $yz$–part of the first row/column, and the lower–right $2\times2$ block of $\bm{B}$.
+All $2$–vectors and $2\times2$ matrices live in the plane orthogonal to $\FrameBasis$.
+
+%
+% 2x2 Schur complement on the orthogonal plane
+%
+Introduce the $2\times2$ Schur matrix on $\FrameBasis^\perp$:
+\[
+\bm{\mathcal{F}}
+:=
+\TraceFF - \TraceFT\otimes\TraceTF,
+\qquad
+\bm{\mathcal{F}}^{-1}\ \text{exists},
+\]
+and the scalar
+\[
+\mu_r := 1 + \FrameBasis\cdot\CenterTrace.
+\]
+%
+% components of A^{-1}
+%
+We now write
+\[
+\bm{\mathcal{A}}^{-1}
+=
+\begin{pmatrix}
+\bm{\mathcal{A}}_{11}^{-1} & \bm{\mathcal{A}}_{12}^{-1}\\[2pt]
+\bm{\mathcal{A}}_{21}^{-1} & \bm{\mathcal{A}}_{22}^{-1}
+\end{pmatrix},
+\]
+with each $3\times3$ block $\bm{\mathcal{A}}_{ij}^{-1}$ expressed as
+\[
+\bm{\mathcal{A}}_{ij}^{-1}
+=
+\FrameBasis\otimes\bigl(\mu_{ij}\,\FrameBasis + \bm{\varsigma}_{ij}^{\mathrm{N}}\bigr)
++
+\bm{\varsigma}_{ij}^{\mathrm{F}}\otimes\FrameBasis
++
+\begin{bmatrix}
+0 & 0\\[2pt]
+0 & \bm{\Sigma}_{ij}
+\end{bmatrix},
+\qquad i,j\in\{1,2\}.
+\]
+
+All scalars $\mu_{ij}$, $2$–vectors $\bm{\varsigma}_{ij}^{\mathrm{N}},\bm{\varsigma}_{ij}^{\mathrm{F}}$ and
+$2\times2$ matrices $\bm{\Sigma}_{ij}$ are now explicitly defined in terms of the original data.
+
+%-- 2x2 blocks
+
+\[
+\boxed{
+\begin{aligned}
+\bm{\Sigma}_{11}
+&:=
+\FrameBasis^\times\bigl(\TraceBT\otimes\TraceTF - \TraceMF\bigr)\,\bm{\mathcal{F}}^{-1},
+\\[2pt]
+\bm{\Sigma}_{12}
+&:= \FrameBasis^\times,
+\\[2pt]
+\bm{\Sigma}_{21}
+&:= \bm{\mathcal{F}}^{-1},
+\\[2pt]
+\bm{\Sigma}_{22}
+&:= \bm{0}.
+\end{aligned}
+}
+\]
+
+%-- "normal" 2-vectors (first-row yz part)
+
+We specify them via their transposes (row vectors acting on $yz$–components):
+\[
+\boxed{
+\begin{aligned}
+\bigl(\bm{\varsigma}_{11}^{\mathrm{N}}\bigr)^\top
+&:=
+-\frac{1}{\mu_r}
+\Bigl(
+\CenterTrace^\top\FrameBasis^\times
+\bigl(\TraceBT\otimes\TraceTF - \TraceMF\bigr)\,\bm{\mathcal{F}}^{-1}
++
+\TraceNF^\top\bm{\mathcal{F}}^{-1}
+\Bigr),
+\\[4pt]
+\bigl(\bm{\varsigma}_{12}^{\mathrm{N}}\bigr)^\top
+&:=
+-\frac{1}{\mu_r}\,\CenterTrace^\top\FrameBasis^\times,
+\\[4pt]
+\bigl(\bm{\varsigma}_{21}^{\mathrm{N}}\bigr)^\top
+&:=
+-\TraceTF^\top\bm{\mathcal{F}}^{-1},
+\\[4pt]
+\bm{\varsigma}_{22}^{\mathrm{N}}
+&:= \bm{0}.
+\end{aligned}
+}
+\]
+
+%-- "frame" 2-vectors (first-column yz part) ------------------
+
+\[
+\boxed{
+\begin{aligned}
+\bm{\varsigma}_{11}^{\mathrm{F}}
+&:= \bm{0},
+\\[4pt]
+\bm{\varsigma}_{12}^{\mathrm{F}}
+&:=
+\FrameBasis^\times\Bigl(
+-\TraceBT
++
+\bigl(\TraceMF - \TraceBT\otimes\TraceTF\bigr)\,\bm{\mathcal{F}}^{-1}\TraceFT
+\Bigr),
+\\[4pt]
+\bm{\varsigma}_{21}^{\mathrm{F}}
+&:= \bm{0},
+\\[4pt]
+\bm{\varsigma}_{22}^{\mathrm{F}}
+&:=
+-\bm{\mathcal{F}}^{-1}\TraceFT.
+\end{aligned}
+}
+\]
+
+%-- scalar coefficients ---------------------------------------
+
+\[
+\boxed{
+\begin{aligned}
+\mu_{11}
+&:= \mu_r^{-1},
+\\[4pt]
+\mu_{21}
+&:= 0,
+\\[4pt]
+\mu_{22}
+&:= 1 + \TraceTF^\top\bm{\mathcal{F}}^{-1}\TraceFT,
+\\[4pt]
+\mu_{12}
+&:=
+\frac{1}{\mu_r}
+\Bigl(
+\CenterTrace\cdot\bigl(\FrameBasis^\times\TraceBT\bigr)
+-
+\CenterTrace^\top\FrameBasis^\times
+\bigl(\TraceMF - \TraceBT\otimes\TraceTF\bigr)\,\bm{\mathcal{F}}^{-1}\TraceFT
++
+\TraceNF^\top\bm{\mathcal{F}}^{-1}\TraceFT
+\Bigr).
+\end{aligned}
+}
+\]
+
+%------------------------------------------------------------
+% final explicit block representation of A^{-1}
+%------------------------------------------------------------
+
+\[
+\boxed{
+\bm{\mathcal{A}}^{-1}
+=
+\begin{pmatrix}
+\FrameBasis\otimes\bigl(\mu_{11}\FrameBasis+\bm{\varsigma}_{11}^{\mathrm{N}}\bigr)
++ \bm{\varsigma}_{11}^{\mathrm{F}}\otimes\FrameBasis
++ \begin{bmatrix}0&0\\[2pt]0&\bm{\Sigma}_{11}\end{bmatrix}
+&
+\FrameBasis\otimes\bigl(\mu_{12}\FrameBasis+\bm{\varsigma}_{12}^{\mathrm{N}}\bigr)
++ \bm{\varsigma}_{12}^{\mathrm{F}}\otimes\FrameBasis
++ \begin{bmatrix}0&0\\[2pt]0&\bm{\Sigma}_{12}\end{bmatrix}
+\\[8pt]
+\FrameBasis\otimes\bigl(\mu_{21}\FrameBasis+\bm{\varsigma}_{21}^{\mathrm{N}}\bigr)
++ \bm{\varsigma}_{21}^{\mathrm{F}}\otimes\FrameBasis
++ \begin{bmatrix}0&0\\[2pt]0&\bm{\Sigma}_{21}\end{bmatrix}
+&
+\FrameBasis\otimes\bigl(\mu_{22}\FrameBasis+\bm{\varsigma}_{22}^{\mathrm{N}}\bigr)
++ \bm{\varsigma}_{22}^{\mathrm{F}}\otimes\FrameBasis
++ \begin{bmatrix}0&0\\[2pt]0&\bm{\Sigma}_{22}\end{bmatrix}
+\end{pmatrix}.
+}
+\]
+\end{Details}
+
+\begin{table}[H]
+\begin{center}
+\caption{Inverse trace matrix blocks.}
+\label{tab:T0-inv-blocks}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{rllllll}
+\toprule
+\multicolumn{2}{@{}l}{Block} & Size & Units & Coupling & \\ 
+\midrule
+$\ShiftB$ & & & & $\rm vw$ & $\rm vv[w]$ & ${\rm vv}$ \\
+$\ShiftA$ & & & & $\rm vm$ & ---         & ${\rm vm}$ \\
+$\ShiftN$ & & & & $\rm vn$ & ---         & ${\rm vn}$ \\
+$\ShiftT$ & & & & ---      & $\rm nw$    & ${\rm nw}$ \\
+$\ShiftK$ & & & & $\rm ww$ & $\rm ww[v]$ & ${\rm ww}$ \\
+$\ShiftF$ & & & & $\rm wm$ & ---         & ${\rm wm}$ \\ \midrule
+$\ShiftScaleN$ &  &  &  
+  & $\rm wn$ & --- & ${\rm wn}$ \\
+$\ShiftScaleT$ &  &  &  & $\rm ww$ & $\rm ww$ & --- \\
+\bottomrule
+\end{tabular}
+\end{center}
+\end{table}

@@ -1,0 +1,21 @@
+
+For each section-rigid basis function $\mathbf{R}_j(\bm{r})$ where $j \in \{1,\ldots,5\}$ indexes the basis of $\mathscr{R}(\Omega)$, and for each monomial power $m$, we introduce splitting parameters $\Xi_j^{(m)}$. 
+If the target field contains a term:
+\begin{equation}
+x^m \mathbf{R}_j(\bm{r}) \mathbf{c}_{j,m}
+\end{equation}
+where $\mathbf{c}_{j,m}$ are the coefficients from the Saint-Venant solution, we represent it as:
+
+Beam kinematic contribution:
+\begin{equation}
+[\bm{u}(x) + \bm{\theta}(x) \times \bm{r}] \supset x^m \Xi_j^{(m)} \mathbf{R}_j(\bm{r}) \mathbf{c}_{j,m}
+\end{equation}
+
+Warping field contribution:
+\begin{equation}
+\begin{aligned}
+\bm{\Phi}(\bm{r}) &\supset \mathbf{R}_j(\bm{r})(I - \Xi_j^{(m)}) \\
+\bm{\alpha}(x) &\supset x^m \mathbf{c}_{j,m}
+\end{aligned}
+\end{equation}
+

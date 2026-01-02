@@ -1,0 +1,84 @@
+
+
+
+
+\subsection{Dirichlet Problems}
+\subsubsection{Poisson-Dirichlet (L1-D0, Potential Stress)}
+\cite{lacarbonara2007solution} (who used \(\psi\))
+\begin{equation}
+\left\{
+\begin{aligned}
+\nabla^2 \hat{\Psi}_j&=\bar{\nu}\left(\frac{x_2}{J_2} \delta_{1 j}-\frac{x_1}{J_1} \delta_{2 j}\right)-2 \delta_{3 j} \text { in } \Omega ; \\
+\hat{\Psi}_j&=\bar{g}_j(\bm{r}) \text { on } \partial \Omega\\
+\text { with }&\\
+\bar{g}_1&=-\frac{1}{2 J_2} \int_0^s x_1^2 \mathrm{~d} x_2, \\
+\bar{g}_2&=\frac{1}{2 J_1} \int_0^s x_2^2 \mathrm{~d} x_1, \\
+\bar{g}_3&=0
+\end{aligned}
+\right.
+\end{equation}
+
+\subsubsection{Poisson-Dirichlet (L1-D3, Solenoidal Stress, Gruttmann)}
+\cite{gruttmann1999shear}:
+\begin{equation}
+\left\{
+\begin{aligned}
+\Delta \Psi=-f_2(y, z) \quad &\text{in } \Omega \\ \Psi(s)=h_1(s) \quad &\text{on } \partial \Omega
+\end{aligned}
+\right.
+\end{equation}
+\begin{equation*}
+f_2(y, z)=\bar{\nu}\left[a_2\left(y-y_0\right)-a_1\left(z-z_0\right)\right]
+\end{equation*}
+\begin{equation*}
+h_1(s)=\Psi_0+\frac{1}{2}\left(a_1 \bar{y}^2 \bar{z}-a_2 \bar{z}^2 \bar{y}\right)
+\end{equation*}
+\begin{equation*}
+\begin{aligned}
+\tau_{x y} & = \Psi,_z-\frac{1}{2} a_1 \bar{y}^2 \\
+\tau_{x z} & =-\Psi,_y-\frac{1}{2} a_2 \bar{z}^2
+\end{aligned}
+\end{equation*}
+\begin{equation}
+\Psi=-J_2 a_2 \psi_1-J_1 a_1 \psi_2+\Psi_0
+\end{equation}
+
+\subsubsection{Poisson-Dirichlet (L2-D1, Total Potential, Renton)}
+
+$\phi$ is a stress function which satisfies the equation
+\begin{equation}
+\left\{
+\begin{aligned}
+\Delta \phi=\bar{\nu} \frac{V}{I}y-\frac{\mathrm{d} f}{\mathrm{~d} y} \quad& \text{in } \Omega\\
+\phi = \text{const.} \quad&\text{on }\partial\Omega
+\end{aligned}
+\right.
+\end{equation}
+on the cross-section, $f(y)$ is a function such that
+$$
+\frac{\partial \phi}{\partial s}=\left[\frac{V}{2 I} x^2-f(y)\right] \frac{\mathrm{d} y}{\mathrm{~d} s}=0
+$$
+on the boundary of the cross-section, where $s$ is measured around the boundary, $x$ and $y$ are the principal axes of the cross-section through its centroid and $I$ is the second moment of area of the cross-section about the $y$ axis. Without loss of generality, $\phi$ can be taken as identically zero on the boundary.
+
+$$
+\tau_{y z}=-\frac{\partial \phi}{\partial x}
+$$
+
+
+\subsubsection{Poisson-Neumann (Displacement)}
+\begin{equation}
+\begin{aligned}
+\Delta \psi&=-\frac{1}{G} f_1, \\
+\partial_n \psi&=-\left(c_1 n_2+c_2 n_3\right)
+\end{aligned}
+\end{equation}
+
+
+
+Let $\bar{\psi}$ be the gauge-fixed flexural warping (i.e., $\bar{\psi}=\psi+c_2 x_2+c_3 x_3$ ). Then for shear along $x_2$,
+
+$$
+\Delta \bar{\psi}=-\frac{1}{G} a_1 x_2 \quad \text { in } \Omega, \quad \partial_n \bar{\psi}=0 \text { on } \partial \Omega
+$$
+
+and $\bar{\Psi}_1=G \bar{\psi}$. The Poisson piece $\psi_P$ is harmonic with the Neumann data shown above, $\psi_P=\bar{\Psi}_2 / G$. The total torsionless warping is $\psi_{\text {tot }}=\bar{\psi}+\psi_P$ (plus an arbitrary affine gauge).

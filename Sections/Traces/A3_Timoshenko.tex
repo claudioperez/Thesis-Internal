@@ -1,0 +1,365 @@
+\subsection{The Timoshenko Trace}\label{sec:trace-timo}
+\begin{Prompt}
+particular solution:
+\begin{equation}
+\begin{aligned}
+\hat{\bm u}_{\rm P}\{\bm a,\bm{b}_{\Section}\}
+&=\Big(-\tfrac12 \reflenx^2\,\mathbf{1}-\nu\,\operatorname{dev}\bm{r}\otimes\bm{r}+\reflenx\,\FrameBasis\otimes\bm{r}\Big)\bm{a}_{\Section}
++(\reflenx\,\FrameBasis-\nu\,\bm{r})\,a_{\varepsilon}
++\big(\reflenx\,\FrameBasis\times\bm{r}+\WarpTwistIesan\,\FrameBasis\big)a_\vartheta\\
+&\quad-\tfrac16\,\reflenx^3\,\bm{b}_{\Section}
+-\reflenx\,\nu\Big(\operatorname{dev}\bm{r}\otimes\bm{r}-\bm{r}\otimes\CentroidLocation\Big)\bm{b}_{\Section}
++\tfrac12 \reflenx^2\,\FrameBasis\otimes(\bm{r}-\CentroidLocation)\,\bm{b}_{\Section}
++\FrameBasis\otimes\bm{\WarpShearIesan}(\bm{r})\,\bm{b}_{\Section}\\
+&\quad+\big(\reflenx\,\FrameBasis\times\bm{r}+\WarpTwistIesan\,\FrameBasis\big)c_\vartheta, 
+\end{aligned}
+\end{equation}
+
+
+The infinitesimal strain is
+\[
+\StrainTensor
+= \varepsilon\,\FrameBasis\otimes\FrameBasis
+\;+\;\FrameBasis\stackrel{\rm s}{\otimes} \bm{\varepsilon}_{\gamma}
+\;-\;\nu\,\varepsilon\,\oneS,
+\]
+where
+\begin{subequations}
+\begin{align}
+\PointAxialStrain
+&= a_{\varepsilon} + \bm{r}\cdot\bm{a}_{\Section}
++ x\,(\bm{r}-\CentroidLocation)\cdot\bm{b}_{\Section}, \\
+\PointShearStrain &= (a_{\vartheta} + c_{\vartheta})(\FrameBasis\times \bm{r} + \nabla\WarpTwistIesan) - \nu \bigl(\operatorname{dev}\bm{r}\otimes\bm{r}
+- \bm{r}\otimes\CentroidLocation\bigr)\bm{b}_{\Section}
++ (\nabla \bm{\WarpShearIesan})^T \bm{b}_{\Section}
+\end{align}
+\label{eq:iesan-point-strain}
+\end{subequations}
+
+Dont assume any special coordinates. $r_0$ is arbitrary, nothing principal or centroidal.
+\end{Prompt}
+
+We work with two orthonormal transverse directions 
+$\{\bm{t}_1,\bm{t}_2\}$ in the section plane, with
+\[
+\FrameBasis\cdot\bm{t}_\alpha = 0,
+\qquad
+\bm{t}_1\cdot\bm{t}_2 = 0,
+\]
+and define bending axes
+\[
+\bm{n}_\alpha := \FrameBasis\times\bm{t}_\alpha,
+\qquad \alpha=1,2.
+\]
+Let $\bm{r}_0\in\Omega$ be a designated reference point (in 2D Timoshenko: 
+the neutral axis point $y=0$). The center of twist is denoted $\bm{r}_\vartheta$.
+
+\paragraph{Definition.}
+
+The trace translation is defined pointwise at $\bm{r}_0$:
+\begin{equation}
+\bm{u}(x) := \hat{\bm{u}}(x,\bm{r}_0).
+\label{eq:def-tim-trace-u}
+\end{equation}
+
+The bending rotation components about $\bm{n}_\alpha$ are defined by 
+Timoshenko-type directional derivatives of the axial displacement:
+\begin{equation}
+\theta_\alpha(x)
+:= \bm{n}_\alpha\cdot\bm{\theta}(x)
+:= -\,\bm{t}_\alpha\cdot\nabla_{\bm{r}}
+\big(\hat{\bm{u}}(x,\bm{r})\cdot\FrameBasis\big)\big|_{\bm{r}=\bm{r}_0},
+\qquad \alpha=1,2.
+\label{eq:def-tim-theta-bend}
+\end{equation}
+The twist component is defined as rotation about the center of twist:
+\begin{equation}
+\theta_\vartheta(x)
+:= \FrameBasis\cdot\bm{\theta}(x)
+:= \frac{1}{2}\,\big(\nabla_{\bm{x}}\times\hat{\bm{u}}(x,\bm{r})\big)
+\cdot\FrameBasis\Big|_{\bm{r}=\bm{r}_\vartheta}.
+\label{eq:def-tim-theta-twist}
+\end{equation}
+As usual, the full rotation vector is
+\begin{equation}
+\bm{\theta}(x)
+=
+\theta_\vartheta(x)\,\FrameBasis
++ \theta_1(x)\,\bm{n}_1 
++ \theta_2(x)\,\bm{n}_2.
+\label{eq:def-tim-theta-vector}
+\end{equation}
+
+We collect the constant-in-$x$ strain coefficients as
+\begin{equation}
+\bm{e}_0
+=
+\begin{pmatrix}
+\epsilon \\[2pt]
+\bm{\gamma}_{\perp,0} \\[2pt]
+\kappa_\vartheta \\[2pt]
+\bm{\kappa}_{\perp,0}
+\end{pmatrix}
+\in\mathbb{R}^6,
+\qquad
+\bm{e}_0(x;\bm{p})
+=
+\bm{e}_0 + x\,\bm{e}_1.
+\end{equation}
+
+
+We write the Ieşan parameter vector as
+\begin{equation}
+\bm{p}
+=
+\begin{pmatrix}
+a_\varepsilon \\[2pt]
+\bm{a}_\Omega \\[2pt]
+a_\vartheta \\[2pt]
+\bm{b}_{\Section}
+\end{pmatrix}
+\in\mathbb{R}^{1+2+1+2}.
+\end{equation}
+The SV displacement is decomposed into four modes:
+\[
+\hat{\bm{u}}
+=
+\hat{\bm{u}}^{(\varepsilon)} 
++ \hat{\bm{u}}^{(a)} 
++ \hat{\bm{u}}^{(\vartheta)} 
++ \hat{\bm{u}}^{(b)},
+\]
+corresponding to extension, bending, torsion, and flexure. We now summarize 
+the effect of each mode on $(\bm{u},\bm{\theta})$ and hence on the constant 
+strain coefficients; detailed SV expressions are identical to those used in 
+the section-average derivation and are not repeated here.
+
+\paragraph{Extension.}
+
+For the extension mode
+$\hat{\bm{u}}^{(\varepsilon)} = (x\,\FrameBasis - \nu\,\bm{r})\,a_\varepsilon$,
+we obtain
+\begin{equation}
+\bm{u}^{(\varepsilon)}(x) = x\,\FrameBasis\,a_\varepsilon - \nu\,\bm{r}_0\,a_\varepsilon,
+\qquad
+\bm{\theta}^{(\varepsilon)}(x) = \mathbf{0}.
+\end{equation}
+Thus
+\begin{equation}
+\epsilon^{(\varepsilon)} = a_\varepsilon,
+\quad
+\bm{\gamma}_{\perp,0}^{(\varepsilon)} = \mathbf{0},
+\quad
+\kappa_\vartheta^{(\varepsilon)} = 0,
+\quad
+\bm{\kappa}_{\perp,0}^{(\varepsilon)} = \mathbf{0}.
+\end{equation}
+
+\paragraph{Bending.}
+
+For the bending mode $\hat{\bm{u}}^{(a)}$, the axial displacement is
+\[
+\hat{\bm{u}}^{(a)}(x,\bm{r})\cdot\FrameBasis
+=
+-\tfrac{1}{2}x^2\,(\bm{a}_\Omega\cdot\bm{r}_\perp)
+- \nu\,\operatorname{dev}(\bm{r}_\perp\otimes\bm{r}_\perp)\bm{a}_\Omega
++ x\,(\bm{r}_\perp\cdot\bm{a}_\Omega),
+\]
+where $\bm{r}_\perp$ is the in-plane projection of $\bm{r}$. Applying the 
+Timoshenko bending rotation definition \eqref{eq:def-tim-theta-bend} at 
+$\bm{r}=\bm{r}_0$ yields
+\begin{equation}
+\theta_\alpha^{(a)}(x)
+=
+x\,(\bm{t}_\alpha\cdot\bm{a}_\Omega)
++ \Xi_{\alpha}^{(a)}\,\bm{a}_\Omega,
+\qquad
+\alpha=1,2,
+\end{equation}
+where the $2\times 2$ tensor
+\begin{equation}
+\Xi^{(a)} \in \mathbb{R}^{2\times 2},\quad
+(\Xi^{(a)})_{\alpha\beta}
+:=
+\nu\,\bm{t}_\alpha\cdot 
+\big[\operatorname{dev}(\bm{r}_0\otimes\bm{r}_0)\,\bm{e}_\beta\big],
+\end{equation}
+encodes the Poisson-induced bending rotation at $\bm{r}_0$, and 
+$\{\bm{e}_\beta\}$ is the in-plane basis aligned with $\bm{a}_\Omega$ 
+components. The twist component from pure bending remains zero:
+\begin{equation}
+\theta_\vartheta^{(a)}(x) = 0.
+\end{equation}
+
+Direct differentiation gives the curvature contributions
+\begin{equation}
+\bm{\kappa}_{\perp,0}^{(a)}
+=
+\bm{\theta}'^{(a)}(0)
+=
+\sum_{\alpha=1}^2 (\bm{t}_\alpha\cdot\bm{a}_\Omega)\,\bm{n}_\alpha
+=
+-\,\FrameBasis\times\bm{a}_\Omega,
+\qquad
+\kappa_\vartheta^{(a)} = 0.
+\end{equation}
+The bending contribution to $\bm{u}(x)$ differentiates to
+\[
+\bm{u}'^{(a)}(x)
+=
+- x\,\bm{a}_\Omega,
+\]
+so that the shear strain from bending is
+\begin{equation}
+\bm{\gamma}_{\perp,0}^{(a)}
+=
+\FrameBasis\times(\Xi^{(a)}\bm{a}_\Omega).
+\end{equation}
+
+\paragraph{Torsion.}
+
+For the torsion mode 
+$\hat{\bm{u}}^{(\vartheta)} = (x\,\FrameBasis\times\bm{r} + \omega(\bm{r})\,\FrameBasis)\,a_\vartheta$,
+the trace evaluates rotation about the center of twist $\bm{r}_\vartheta$:
+\begin{equation}
+\theta_\vartheta^{(\vartheta)}(x)
+=
+\big(x\,\FrameBasis + \bm{c}_\vartheta\big)\cdot\FrameBasis\,a_\vartheta
+=
+x\,a_\vartheta + c_\vartheta\,a_\vartheta,
+\end{equation}
+where $\bm{c}_\vartheta = \bm{r}_\vartheta$ and $c_\vartheta$ is the 
+flexure-induced twist offset (zero in pure torsion). The bending components 
+remain zero:
+\begin{equation}
+\theta_\alpha^{(\vartheta)}(x) = 0,\quad \alpha=1,2.
+\end{equation}
+Thus
+\begin{equation}
+\kappa_\vartheta^{(\vartheta)} = a_\vartheta,
+\qquad
+\bm{\kappa}_{\perp,0}^{(\vartheta)} = \mathbf{0},
+\qquad
+\bm{\gamma}_{\perp,0}^{(\vartheta)} = \FrameBasis\times(\bm{c}_\vartheta\,a_\vartheta).
+\end{equation}
+
+\paragraph{Flexure.}
+
+For the flexure mode $\hat{\bm{u}}^{(b)}$, the Timoshenko rotations are
+\begin{equation}
+\theta_\alpha^{(b)}(x)
+=
+-\,\bm{t}_\alpha\cdot\nabla_{\bm{r}}
+\big(\hat{\bm{u}}^{(b)}(x,\bm{r})\cdot\FrameBasis\big)\big|_{\bm{r}=\bm{r}_0},
+\qquad \alpha=1,2.
+\end{equation}
+Splitting $\hat{\bm{u}}^{(b)}$ into the classical polynomial SV part and the 
+shear warping contributions yields
+\begin{equation}
+\bm{\theta}^{(b)}(x)
+=
+-\tfrac{1}{2}x^2\,(\FrameBasis\times\bm{b}_{\Section})
++ x\,\Xi^{(b)}_\theta\,\bm{b}_{\Section}
++ \Xi^{(\psi)}_\theta\,\bm{b}_{\Section},
+\end{equation}
+with
+\begin{align}
+\Xi^{(b)}_\theta &\in\mathbb{R}^{3\times 2},
+&(\Xi^{(b)}_\theta)_{\bullet\beta} 
+&:= \sum_{\alpha=1}^2 \bm{n}_\alpha\,
+\Big(-\,\bm{t}_\alpha\cdot\big[\bm{W}_{(b)}(\bm{r}_0)\,\bm{e}_\beta\big]\Big),
+\\[2pt]
+\Xi^{(\psi)}_\theta &\in\mathbb{R}^{3\times 2},
+&(\Xi^{(\psi)}_\theta)_{\bullet\beta}
+&:= \sum_{\alpha=1}^2 \bm{n}_\alpha\,
+\Big(-\,\bm{t}_\alpha\cdot[\nabla_{\bm{r}}\bm{\psi}(\bm{r}_0)\,\bm{e}_\beta]\Big),
+\end{align}
+collecting the contributions from the polynomial flexure field and the shear 
+warping, respectively. Differentiation yields
+\begin{equation}
+\bm{\kappa}_{\perp,0}^{(b)}
+=
+\bm{\theta}'^{(b)}(0)
+=
+\big(\FrameBasis\otimes\bm{r}_s + \Xi^{(b)}_\theta\big)\bm{b}_{\Section},
+\end{equation}
+where $\bm{r}_s$ is the shear center. The twist curvature contribution is
+\begin{equation}
+\kappa_\vartheta^{(b)}
+=
+\partial_{\bm{b}}c_\vartheta\cdot\bm{b}_{\Section},
+\end{equation}
+as in the standard SV flexure–torsion coupling.
+
+The translation from flexure gives
+\begin{equation}
+\bm{u}'^{(b)}(0)
+=
+-\,\tfrac{1}{2}\,\bm{b}_{\Section}
++ \Gamma^{(b)}_0\,\bm{b}_{\Section},
+\end{equation}
+for a suitable $2\times 2$ tensor $\Gamma^{(b)}_0$ collecting the dependence 
+on $\bm{r}_0$ and warping values. Thus the shear strain contribution is
+\begin{equation}
+\bm{\gamma}_{\perp,0}^{(b)}
+=
+\big(-\tfrac{1}{2}\mathbf{1}_\Omega + \Gamma^{(b)}_0\big)\bm{b}_{\Section}
++ \FrameBasis\times\big(\Xi^{(b)}_\theta\bm{b}_{\Section}\big).
+\end{equation}
+
+\paragraph{Assembly of the trace matrices.}
+
+Collecting the constant strain coefficients from all four modes, we obtain
+\begin{equation}
+\bm{e}_0(\bm{p})
+=
+\TraceDeDpRoot\,\bm{p},
+\qquad
+\bm{e}_1(\bm{p})
+=
+\TraceDeDpOne\,\bm{p},
+\end{equation}
+with $\bm{e}_0 = (\epsilon,\bm{\gamma}_{\perp,0},\kappa_\vartheta,
+\bm{\kappa}_{\perp,0})^\top$ and $\bm{p}=(a_\varepsilon,\bm{a}_\Omega,
+a_\vartheta,\bm{b}_{\Section})^\top$. The Timoshenko–torsion hybrid trace matrix 
+has the block form
+\begin{equation}
+\TraceDeDpRoot
+=
+\begin{pmatrix}
+1 & \mathbf{0}^\top & 0 & 0 \\[4pt]
+\mathbf{0} 
+& \big(\FrameBasis\times\Xi^{(a)}\big)_\perp 
+& \big(\FrameBasis\times\bm{c}_\vartheta\big)_\perp 
+& \Big(-\tfrac{1}{2}\mathbf{1}_\Omega 
+      + \Gamma^{(b)}_0 
+      + \FrameBasis\times\Xi^{(b)}_\theta\Big)_\perp \\[4pt]
+0 & 0 & 1 & \partial_{\bm{b}}c_\vartheta \\[4pt]
+\mathbf{0} 
+& -(\FrameBasis\times)_\perp 
+& \mathbf{0} 
+& \big(\FrameBasis\otimes\bm{r}_s + \Xi^{(b)}_\theta\big)_\perp
+\end{pmatrix},
+\label{eq:T0-tim-hybrid}
+\end{equation}
+and the universal first-order matrix $\TraceDeDpOne$ (capturing the $x$-linear 
+coefficients) has the same structure as in the general SV analysis, namely
+\begin{equation}
+\TraceDeDpOne
+=
+\begin{pmatrix}
+0 & \mathbf{0}^\top & 0 & 0 \\[4pt]
+\mathbf{0} & \mathbf{0}^\top & 0 & \Gamma^{(b)}_1 \\[4pt]
+0 & \mathbf{0}^\top & 0 & 0 \\[4pt]
+\mathbf{0} & -\FrameBasis^{\times} & 0 & -\FrameBasis\times\mathbf{1}_\Omega
+\end{pmatrix},
+\label{eq:T1-tim-hybrid}
+\end{equation}
+where $\Gamma^{(b)}_1$ collects the $x$-linear shear gradient coefficients 
+from the flexure mode (unchanged across SV-equivalent traces). 
+
+In 2D plane bending with a single transverse direction $\bm{t}_1$, a single 
+bending axis $\bm{n}_1$, and torsion suppressed, the above reduces exactly to 
+Timoshenko’s original pointwise rotation definition 
+$\theta(x) = -\partial\hat{u}_x/\partial y|_{y=y_0}$ and reproduces the 
+classical $2/3$ shear factor.

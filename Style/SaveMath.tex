@@ -1,0 +1,38 @@
+% Preamble
+\usepackage{amsmath}
+\usepackage{xparse}
+\usepackage{environ} % captures environment body
+
+\ExplSyntaxOn
+
+% global storage: label -> math tokens
+\prop_new:N \g_cp_saved_equations_prop
+
+% Save equation body + typeset numbered equation with \label{<key>}
+\NewEnviron{SaveEquation}[1]
+  {
+    % store the body under the label key
+    \prop_gput:Nno \g_cp_saved_equations_prop {#1} { \BODY }
+    % typeset it normally (numbered here)
+    \begin{equation}\label{#1}
+    % Ensure numbering when mathtool's showonlyrefs is on:
+    \noeqref{#1}
+    % Put in equation
+      \BODY
+    % \tag*{(\textcolor{blue}{\textbf{\theequation}})}
+    % \tag*{\textcolor{blue}{\textbf{\eqref{#1}}}}
+    \end{equation}
+  }
+
+% Reuse: typeset the stored body and tag it with the original number
+\NewDocumentCommand{\RepeatEquation}{m}
+  {
+    \begin{equation}
+      \prop_get:NnNTF \g_cp_saved_equations_prop {#1} \l_tmpa_tl
+        { \l_tmpa_tl }
+        { \textbf{??~undefined~equation~body~for~} \texttt{#1} }
+      \tag*{((\ref{#1}))}
+    \end{equation}
+  }
+
+\ExplSyntaxOff

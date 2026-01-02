@@ -1,0 +1,318 @@
+\subsection{The Section-Average Trace}
+\label{sec:trace-cowper}
+
+The section-average trace extracts the $L^2$-optimal rigid approximation 
+to the displacement field \eqref{eq:def-section-avg-trace}:
+\begin{equation*}
+\bar{\bm{u}}(x) := \SectionAverage{\hat{\bm{u}}} - \bar{\bm{\theta}} \times \CentroidLocation, 
+\qquad 
+\bar{\bm{\theta}}(x) := \RotationAverage{\hat{\bm{u}}},
+\end{equation*}
+% where $\SectionAverage{\cdot}$ and $\RotationAverage{\cdot}$ are the 
+% translation and rotation average functionals of \eqref{eq:def-section-averages}.
+where the linear functionals \(\SectionAverage{\cdot}\) and \(\bar{\Theta}[\cdot]\) are defined for \(\bm{v}: [0,L]\times\Section\rightarrow\EuclideanSpace\)
+\begin{equation}
+\SectionAverage{\bm{u}} := \frac{1}{A}\int_{\Section}\bm{u}\dA,
+\qquad
+\RotationAverage{\bm u}:=\CentroidStaticInertia^{-1}\!\int_{\Section}(\bm{r}-\CentroidLocation)\times\bm u\dA,
+\quad\text{and}\quad
+\CentroidStaticInertia:=\int_{\Section}\big(|\CoordinateCentroid|^{2}\mathbf{1}-\CoordinateCentroid\otimes\CoordinateCentroid\big)\dA.
+\label{eq:def-section-averages}
+\end{equation}
+with \(\mathbf{1}\) the 3D identity in \(\mathbb{R}^3\) and \(\CentroidLocation\in\Section\) is the unique point satisfying \(\SectionAverage{\bm{r}-\CentroidLocation} = \mathbf{0}\).
+
+\begin{proposition}[Optimal Rigid Alignment]\label{prop:align-cowper}
+The plane-rigid field \(\bar{\bm u}(x)+\bar{\bm\theta}(x)\times\bm{r} \in \PlaneMotions\) that best fits a 3D field \(\hat{\bm u}(x,\bm{r}): [0,L]\times\Section\) in the least‑squares sense is given by:
+\begin{equation*}
+\bar{\bm u}(\reflenx)=\SectionAverage{\hat{\bm u}}-\bar{\bm\theta}(\reflenx)\times\SectionAverage{\bm{r}},
+\qquad
+\bar{\bm\theta}(\reflenx)=\bar{\Theta}[\hat{\bm u}],
+\end{equation*}
+\end{proposition}
+\input{Sections/Traces/A3_CowperProofs}
+
+The trace matrix $\TraceDpDeRoot$ is derived by evaluating the functionals \eqref{eq:def-section-averages} 
+to each Saint~Venant mode and extracting the strains at $x = 0$. 
+We then verify that the section-average trace is Class I by confirming that the $x$-dependence 
+follows the universal evolution $\exp\left(x\mathbf{A}\right)$.
+
+\paragraph{Extension Mode.}
+The extension displacement is
+\begin{equation*}
+\hat{\bm{u}}^{(\varepsilon)} = (x\,\FrameBasis - \nu\,\bm{r})\,a_{\varepsilon}.
+\end{equation*}
+The section averages are:
+\begin{align*}
+\SectionAverage{\hat{\bm{u}}^{(\varepsilon)}} &= x\,\FrameBasis\,a_\varepsilon - \nu\,\CentroidLocation\,a_\varepsilon, \\
+\RotationAverage{\hat{\bm{u}}^{(\varepsilon)}} &= \mathbf{0},
+\end{align*}
+where use has been made of the rotation average identities \eqref{eq:rotavg-identities}. 
+The extracted fields are:
+\begin{equation*}
+\bar{\bm{u}}^{(\varepsilon)}(x) = x\,\FrameBasis\,a_\varepsilon - \nu\,\CentroidLocation\,a_\varepsilon, 
+\qquad 
+\bar{\bm{\theta}}^{(\varepsilon)}(x) = \mathbf{0}.
+\end{equation*}
+The strains are:
+\begin{equation*}
+\bar{\bm{\gamma}}^{(\varepsilon)} = \FrameBasis\,a_\varepsilon, 
+\qquad 
+\bar{\bm{\kappa}}^{(\varepsilon)} = \mathbf{0}.
+\end{equation*}
+
+\paragraph{Bending Mode.} 
+The bending displacement is
+\begin{equation*}
+\hat{\bm{u}}^{(a)} = \Big( -\tfrac{1}{2}x^2\,\mathbf{1}_\Omega 
++ x\,\FrameBasis \otimes \bm{r} 
++ \bm{W}_{(a)} \Big) \bm{a}_\Omega,
+\end{equation*}
+where recall $\bm{W}_{(a)} := -\nu\,\mathrm{dev}(\bm{r} \otimes \bm{r})$ is the 
+Poisson bending warping \eqref{eq:def-eight-shapes}. 
+The section averages give:
+\begin{align*}
+\bar{\bm{\theta}}^{(a)}(x) &= -x\,(\FrameBasis \times \bm{a}_\Omega) 
++ \RotationAverage{\bm{W}_{(a)}}\,\bm{a}_\Omega.
+\end{align*}
+
+The curvature is:
+\begin{equation*}
+\bar{\bm{\kappa}}^{(a)} = -\FrameBasis \times \bm{a}_\Omega,
+\end{equation*}
+After simplification using the identity 
+$\FrameBasis \times (\FrameBasis \times \bm{a}_\Omega) = -\bm{a}_\Omega$, 
+the shear strain is:
+\begin{equation*}
+\bar{\bm{\gamma}}^{(a)} = \FrameBasis \times \RotationAverage{\bm{W}_{(a)}}\,\bm{a}_\Omega,
+\end{equation*}
+
+\paragraph{Torsion Mode.}
+
+The torsion displacement is
+\begin{equation*}
+\hat{\bm{u}}^{(\vartheta)} = \big( x\,(\FrameBasis \times \bm{r}) 
++ \WarpTwistIesan\,\FrameBasis \big)\,a_\vartheta.
+\end{equation*}
+The rotation average extracts:
+\begin{equation*}
+\bar{\bm{\theta}}^{(\vartheta)}(x) = x\,\FrameBasis\,a_\vartheta 
++ \CenterTwistLocation\,a_\vartheta,
+\end{equation*}
+where the \emph{twist center} $\CenterTwistLocation$ is:
+\begin{equation}
+\CenterTwistLocation := \RotationAverage{\WarpTwistIesan\,\FrameBasis}.
+\label{eq:def-twist-center}
+\end{equation}
+The center of twist \eqref{eq:def-twist-center} has been attributed to \cite{trefftz1935uber} by \cite{pilkey2003analysis}.
+
+The strains are:
+\begin{equation*}
+\bar{\varkappa}^{(\vartheta)} = a_\vartheta, 
+\qquad 
+\bar{\bm{\gamma}}^{(\vartheta)} = (\FrameBasis \times \CenterTwistLocation)\,a_\vartheta,
+\end{equation*}
+
+\paragraph{Flexure Mode.}
+Recall the particular solution under pure flexure \eqref{eq:iesan-displacement-2}:
+\begin{equation*}
+\hat{\bm{u}}_{\rm I\!I} = \big( x\,\FrameBasis \times \bm{r} 
++ \WarpTwistIesan\,\FrameBasis \big)\,\CenterShearLocation \cdot \bm{b}_{\Section}
++ \Big( -\tfrac{1}{6}x^3\,\mathbf{1}_\Omega 
++ x\,\PoissonFlexure 
++ \tfrac{1}{2}x^2\,\FrameBasis \otimes (\bm{r} - \CentroidLocation) 
++ \FrameBasis \otimes \bm{\WarpShearIesan} \Big)\,\bm{b}_{\Section},
+\end{equation*}
+where recall $\PoissonFlexure:\Section\rightarrow\Section\otimes\Section$ is the Poisson flexural warping shape \eqref{eq:def-eight-shapes}.
+
+\subparagraph{Rotation.}
+The rotation average \(\RotationAverage{\hat{\bm u}_{\rm I\!I}}\) gives:
+\begin{equation*}
+\bar{\bm{\theta}}^{(b)}(x) = -\tfrac{1}{2}x^2\,(\FrameBasis \times \bm{b}_{\Section}) 
++ x\,\FrameBasis\otimes\TraceTF\,\bm{b}_{\Section} 
++ \TraceMF\,\bm{b}_{\Section},
+% \label{eq:cowper-theta-flexure}
+\end{equation*}
+where with \(\FrameBasis\otimes\bm{\SectionLocation}_{\pi} := \RotationAverage{\PoissonFlexure}\):
+\begin{subequations}
+\begin{align}
+% \mathbf{K}_1 &:= 
+\TraceTF &:= \CenterShearLocation + \RotationAverage{\PoissonFlexure}^{\top}\FrameBasis
+=: \CenterShearLocation + \bm{\SectionLocation}_{\pi}, 
+\label{eq:cowper-TF} \\
+% \TraceTF =: \CenterShearLocation + \FrameBasis^{\top}\RotationAverage{\PoissonFlexure}, 
+% \\ %\label{eq:def-K1} \\
+%
+% \TraceMF 
+\bm{\Gamma}_0
+&:= \CenterTwistLocation \otimes \CenterShearLocation 
++ \RotationAverage{\FrameBasis \otimes \bm{\WarpShearIesan}}.
+\label{eq:cowper-MF}
+\end{align}
+\end{subequations}
+with the center of shear \(\CenterShearLocation\) given by \eqref{eq:def-shear-center}. 
+The curvature is:
+\begin{equation*}
+\bar{\bm{\kappa}}^{(b)}(x) = -x\,(\FrameBasis \times \bm{b}_{\Section}) + \FrameBasis\otimes\TraceTF\,\bm{b}_{\Section}.
+% \label{eq:kappa-flexure}
+\end{equation*}
+
+% \subparagraph{Shear strain.}
+After computing the translation average, displacement derivative, and 
+combining with $\FrameBasis \times \bar{\bm{\theta}}^{(b)}$, the quadratic 
+terms cancel, yielding:
+\begin{equation*}
+\bar{\bm{\gamma}}^{(b)}(x) = -x\FrameBasis \otimes \CentroidLocation\,\bm{b}_{\Section} + \TraceFF\,\bm{b}_{\Section},
+\end{equation*}
+where:
+\begin{equation}
+\begin{aligned}
+\TraceFF 
+&:= \SectionAverage{\PoissonFlexure} 
+- \CentroidLocation^\times \RotationAverage{\PoissonFlexure}
++ \FrameBasis \times (\CenterTwistLocation \otimes \CenterShearLocation 
++ \RotationAverage{\FrameBasis \otimes \bm{\WarpShearIesan}}),
+\end{aligned}
+\label{eq:def-Gamma0}
+\end{equation}
+\begin{Details}
+\begin{equation}
+\begin{aligned}
+\TraceFF &:= (\FrameBasis \times \CentroidLocation) \otimes \CenterShearLocation 
++ \SectionAverage{\PoissonFlexure} 
+- \left((\FrameBasis \times \CentroidLocation) \otimes \CenterShearLocation 
++ \CentroidLocation^\times \RotationAverage{\PoissonFlexure}\right)
++ \FrameBasis \times \bm{\Gamma}_0, \\
+&:= \SectionAverage{\PoissonFlexure} 
+- \CentroidLocation^\times \RotationAverage{\PoissonFlexure}
++ \FrameBasis \times \bm{\Gamma}_0,\\
+&:= \SectionAverage{\PoissonFlexure} 
+- \CentroidLocation^\times \RotationAverage{\PoissonFlexure}
++ \FrameBasis \times (\CenterTwistLocation \otimes \CenterShearLocation 
++ \RotationAverage{\FrameBasis \otimes \bm{\WarpShearIesan}}),
+\end{aligned}
+\end{equation}
+\end{Details}
+
+\subsubsection{Trace Matrix}
+
+Collecting the contributions at $x = 0$, the trace matrix is:
+\begin{equation}
+\TraceDeDpRoot = \begin{bmatrix}
+1 & \mathbf{0} & 0 & \mathbf{0} %(\TraceFF)_\parallel^\top 
+\\[4pt]
+\mathbf{0} 
+& \mathbf{0} % (\FrameBasis \times \RotationAverage{\bm{W}_{(a)}})_\perp 
+& \FrameBasis \times \CenterTwistLocation & \TraceFF \\[4pt]
+0 & \mathbf{0} & 1 & \TraceTF^\top %\CenterShearLocation^\top + (\RotationAverage{\PoissonFlexure})_\parallel^\top 
+\\[4pt]
+\mathbf{0} & -\FrameBasis^\times & \mathbf{0} & \mathbf{0} %\TraceMF
+\end{bmatrix}
+\qquad\text{and}\qquad 
+\TraceDeDpOne = \begin{bmatrix}
+0 & \mathbf{0} & 0 & -\CentroidLocation^\top \\[4pt]
+\mathbf{0} & \mathbf{0} & \mathbf{0} & \mathbf{0} \\[4pt]
+0 & \mathbf{0} & 0 & 0 \\[4pt]
+\mathbf{0} & \mathbf{0} & \mathbf{0} & -\FrameBasis^\times
+\end{bmatrix}
+\label{eq:T0-cowper}
+\end{equation}
+so \(\TraceBT = \TraceNF = \mathbf{0}\). 
+\begin{itemize}
+    \item \eqref{eq:req-d1} requires \(\TraceDeDpOne = \TraceDeDpRoot\IesanEvolveSP\), which in view of \eqref{eq:res-d1-block} is satisfied by \eqref{eq:T0-cowper}
+    \item \eqref{eq:req-p1} requires \(\TraceDeDpRoot\) exhibit the block form \eqref{eq:T0-plane-structure}, 
+\end{itemize}
+In view of \eqref{eq:Tinv-from-T}:
+\begin{equation}
+\begin{array}{rlllll}
+% \renewcommand{\arraystretch}{1.3}
+\ShiftB & =\left(
+\SectionAverage{\PoissonFlexure} 
+- \CentroidLocation^\times \RotationAverage{\PoissonFlexure}
++ \FrameBasis \times\RotationAverage{\FrameBasis \otimes \bm{\WarpShearIesan}}
+-(\FrameBasis\times\CenterTwistLocation)\otimes \bm{\SectionLocation}_{\pi}
+\right)^{-1}
+\\
+\ShiftK& \!=-\ShiftB\FrameBasis\times\CenterTwistLocation 
+\\
+\ShiftT & =-\ShiftB(\CenterShearLocation + \bm{\SectionLocation}_{\pi})
+\\
+\ShiftScaleT & =1 - (\CenterShearLocation + \bm{\SectionLocation}_{\pi})\cdot\ShiftK 
+ \\
+\ShiftA &=-\FrameBasis^\times (\CenterTwistLocation \otimes \CenterShearLocation + \RotationAverage{\FrameBasis \otimes \bm{\WarpShearIesan}})\,\ShiftB 
+& =\mathbf{0}
+\\
+\ShiftN && = \mathbf{0} 
+ \\
+\ShiftF & =-\ShiftA(\FrameBasis\times\CenterTwistLocation)
+&= \mathbf{0}
+ \\
+\ShiftScaleN  &=\TraceNF\cdot\ShiftB(\FrameBasis\times\CenterTwistLocation)
+& = 0
+ \\
+\end{array}
+\end{equation}
+
+\subsubsection{Summary}
+
+\begin{table}[H]
+    \centering
+    \caption{Caption}
+    % \label{tab:placeholder}
+    \begin{tabular}{llcl}
+    \toprule
+    Symbol & & Units & Description \\ \midrule
+    \(\CentroidLocation\)     & \eqref{eq:def-centroid} \\
+    \(\CenterShearLocation\)  & \eqref{eq:def-shear-center} \\
+    \(\CenterTwistLocation\)  & \eqref{eq:def-twist-center} \\
+    \(\bm{\SectionLocation}_{\pi}\) & \(\RotationAverage{\bm{\Pi}_{(b)}}^{\top}\FrameBasis\) \\
+    \(\SectionAverage{\bm{\Pi}_{(b)}}\) & \(\tfrac12\Io\oneS - \IntRGoRG\) \\
+    \bottomrule
+    \end{tabular}
+\end{table}
+
+\begin{Details}
+\textbf{Verification of Type-3 Exactness}
+
+For the section-average trace to be type-3 exact, the $x$-linear contributions 
+must satisfy $\bm{e}_1 = \TraceDeDpRoot\mathbf{A}\,\bm{p}$. 
+From the mode-by-mode analysis, the $x$-linear strains arise only from flexure:
+\begin{equation*}
+\bm{e}_1 = \begin{pmatrix}
+(\bm{\Gamma}_1)_\parallel^\top \\
+(\bm{\Gamma}_1)_\perp \\
+\mathbf{0}^\top \\
+-\FrameBasis^\times
+\end{pmatrix} \bm{b}_{\Section}
+= \begin{pmatrix}
+-\CentroidLocation^\top \\
+\mathbf{0} \\
+\mathbf{0}^\top \\
+-\FrameBasis^\times
+\end{pmatrix} \bm{b}_{\Section}.
+\end{equation*}
+
+Computing $\TraceDeDpRoot\mathbf{A}$: The matrix $\mathbf{A}$ acts only on the 
+$\bm{b}_{\Section}$ columns, mapping $\bm{b}_{\Section}$ to 
+$(-\CentroidLocation \cdot \bm{b}_{\Section}, \bm{b}_{\Section}, 0, \mathbf{0})^\top$ 
+in $(a_\varepsilon, \bm{a}_\Omega, a_\vartheta, \bm{b}_{\Section})$ coordinates. Thus:
+\begin{align*}
+[\TraceDeDpRoot\mathbf{A}]_{\cdot, \bm{b}_{\Section}} 
+&= -\CentroidLocation \cdot [\TraceDeDpRoot]_{\cdot, a_\varepsilon} 
++ [\TraceDeDpRoot]_{\cdot, \bm{a}_\Omega} \\
+&= -\CentroidLocation \cdot \begin{pmatrix} 1 \\ \mathbf{0} \\ 0 \\ \mathbf{0} \end{pmatrix}
++ \begin{pmatrix} \mathbf{0}^\top \\ (\FrameBasis \times \RotationAverage{\bm{W}_{(a)}})_\perp \\ \mathbf{0}^\top \\ -\FrameBasis^\times \end{pmatrix} \\
+&= \begin{pmatrix} -\CentroidLocation^\top \\ (\FrameBasis \times \RotationAverage{\bm{W}_{(a)}})_\perp \\ \mathbf{0}^\top \\ -\FrameBasis^\times \end{pmatrix}.
+\end{align*}
+
+The key observation is that $\RotationAverage{\bm{W}_{(a)}}$ is parallel to 
+$\FrameBasis$ (since $\bm{r} \times \bm{W}_{(a)}$ lies in the axial direction), 
+so $(\FrameBasis \times \RotationAverage{\bm{W}_{(a)}})_\perp = \mathbf{0}$.
+
+Therefore $\TraceDeDpRoot\mathbf{A} = \bm{e}_1$, confirming 
+$\bm{e}(x) = \TraceDeDpRoot \exp\left(x\mathbf{A}\right)\bm{p}$.
+\end{Details}
+
+
+\clearpage
+% \input{Sections/A3_Cowper0}
+% \input{Sections/41_Approach4}

@@ -1,0 +1,88 @@
+
+
+
+\begin{definition}[Divergence]
+\citep[pp]{marsden1994mathematical} 
+Given a vector field \(\bm{X}\) and a volume form \(\mu\), define the divergence \(\operatorname{div}_{\mu}\bm{X}\) 
+\[
+(\operatorname{div}_{\mu}\bm{X})\mu \triangleq \mathcal{L}_{\bm{X}}\mu
+\equiv \dd (\interior{\bm{X}}{\mu})
+\]
+\end{definition}
+
+where \(\interior{.}{.}\) is the \emph{interior product} . 
+
+Also 
+$\langle\mathbf{x} \wedge \mathbf{v}, \mathbf{w}\rangle=\left\langle\mathbf{v}, \iota_{\mathbf{x}^{\flat}} \mathbf{w}\right\rangle$
+And
+$\iota_v \omega=*\left(v^{\flat} \wedge * \omega\right)$
+
+\begin{proposition}
+Define a new volume form \(\mu_1 = \alpha \mu_2\) for some positive scalar field \(\alpha\). 
+Then
+\[
+\alpha \operatorname{div}_1 \bm{X} = \operatorname{div}_2(\alpha \bm{X})
+\]
+\[
+\alpha \operatorname{div}_{\alpha \mu} \bm{X} = \operatorname{div}_{\mu}(\alpha \bm{X})
+\]
+and
+\[
+\operatorname{div}_{\mu} \bm{X} = \operatorname{div}_{(\alpha \mu)} \bm{X}+\bm{X}[\log \alpha]
+\]
+\end{proposition}
+\begin{proof}
+% Recall $\mathcal{L}_X\left(\alpha \mu_2\right)= X[\alpha] \mu_2+\alpha \mathcal{L}_X \mu_2$
+$$
+\begin{aligned}
+\left(\operatorname{div}_1 \bm{X}\right) \mu_1 & =\dd \left(\interior{\bm{X}}{} \mu_1\right) \\
+& =\dd \left(\interior{\bm{X}}{}\left(\alpha \mu_2\right)\right) \\
+& =\dd \left(\alpha \interior{\bm{X}}{} \mu_2\right) \\
+& =\dd \alpha \wedge \interior{\bm{X}}{} \mu_2 + \alpha \dd\left(\interior{\bm{X}}{} \mu_2\right) \\
+& = \bm{X}[\alpha] \mu_2+\alpha\left(\operatorname{div}_2 \bm{X}\right) \mu_2 \\
+& =\left(\frac{1}{\alpha}\bm{X}[\alpha]+\operatorname{div}_2 \bm{X}\right) \mu_1
+\end{aligned}
+$$
+Since $\dd \alpha \wedge \mu_2$ is an ( $n+1$ )-form on an $n$-manifold, it is zero, so
+
+$$
+0=\interior{\bm{X}}{}\left(\dd \alpha \wedge \mu_2\right)=\left(\interior{\bm{X}}{} \dd \alpha\right) \wedge \mu_2- \dd \alpha \wedge\left(\interior{\bm{X}}{} \mu_2\right)
+$$
+Note that \(X[\alpha] = \alpha X[\log \alpha]\) is a consequence of the chain rule \(\nabla_X(g(h)) = g' \nabla_X h\):
+\[
+X[\log \alpha]
+:=\dd (\log \alpha)(X)
+= \nabla_X(\log \alpha) 
+=\frac{1}{\alpha} \nabla_X \alpha
+=\frac{X[\alpha]}{\alpha}
+\]
+
+\end{proof}
+\iffalse
+The divergence operator can then be defined relative to measures \(\volG\) and \(\volE\). 
+That is, for a vector field $V$, define the divergence with respect to $\mu$ as:
+$$
+\operatorname{div}_\mu \boldsymbol{V}:=\frac{1}{n_E} \nabla \cdot\left(n_E \boldsymbol{V}\right)
+$$
+
+The elliptic operator associated with a measure $\dd \mu = w\, \dd V$ is precisely:
+
+$$
+\operatorname{div}_\mu(\nabla f)=\frac{1}{w} \nabla \cdot(w \nabla f) .
+$$
+\fi 
+
+
+
+\begin{theorem}[Divergence theorem]
+Let $M$ be a Riemannian manifold and let $X \in$ $\Gamma_{C^1}(T M)$. Then,
+\begin{equation}
+\int_{\PlaneManifold} \operatorname{div}_\mu X \, \mu = \int_{\PlaneBoundary} \iota_X \, \mu
+\label{eq:gauss-div-thm}
+\end{equation}
+$$
+\int_{\PlaneManifold} \operatorname{div}_g X \omega_g=\int_{\PlaneBoundary}\langle X, \nu\rangle \sigma_g
+$$
+
+where $\nu$ is the unit vector normal to $\partial M$.
+\end{theorem}

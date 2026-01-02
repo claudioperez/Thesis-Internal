@@ -1,0 +1,154 @@
+
+\InputDetail{Style/Notation}
+\newcommand{\BRACE}{\emph{BRACE}$^2$}
+
+% Obsolete
+\newcommand{\ShapeRank}{N_{\varphi}}
+\newcommand{\FieldRank}{N_{\alpha}}
+\newcommand{\WarpIndex}{N_{\rm warp}}
+
+\newcommand{\Traction}{t}
+
+
+\newcommand{\FourTensor}[1]{\mathbb{#1}}
+% \newcommand{\tp}[1]{#1^{\mathrm{t}}}
+% \newcommand{\JntGLn}[1]{#1} % Transpose (Adjoint)
+% \newcommand{\AdjGLn}[1]{#1} % Adjugate
+
+\newcommand{\FrameBody}{\mathcal{B}}
+\newcommand{\ThickBody}{\hat{\mathcal{B}}}
+
+\newcommand{\EnhanDim}{n_a}
+\newcommand{\symbun}{\stackrel{\mathrm{s}}{\otimes}}
+\newcommand{\TensorMaterial}{\mathcal{M}}
+\newcommand{\VectorMaterial}{\mathcal{I}_{\TensorMaterial}}
+\newcommand{\ResultMaterial}{\mathcal{R}_{\PlaneManifold}}
+\newcommand{\SectionEvaluation}[1]{\ResultMaterial\left( #1 \right)}
+\newcommand{\TotalEquilibrium}{\operatorname{B}}
+\newcommand{\PrimeEquilibrium}{\mathbb{B}_{\mathrm{p}}}
+\newcommand{\PrimeKinematic}{{\mathbb{B}_{\mathrm{p}}^{*}}}
+\newcommand{\EquilibriumDerivative}{\operatorname{B}_{\mathrm{p}}}
+% Configuration
+\newcommand{\deflenx}{\varsigma}
+\newcommand{\reflenx}{x}
+\newcommand{\WarpAmplitude}{\bm{\alpha}}
+\newcommand{\nwarp}{n_w}
+
+
+%% MATERIAL
+\newcommand{\FrameStrain}{\bm{e}}
+\newcommand{\FrameStretch}{\lambda}
+
+\input{notation/material}
+
+\newcommand{\ShearStrainX}{\epsilon}
+\newcommand{\ShearStrain }{\bm{\gamma}}
+\newcommand{\CurveStrain }{\bm{\kappa}}
+\newcommand{\CurveStrainScale}{\bm{\varkappa}}
+\newcommand{\WarpStrain  }{\bm{\alpha}'}
+\newcommand{\shearStrain }{{\bm{\gamma}_{\chi}}}
+\newcommand{\curveStrain }{{\bm{\kappa}_{\chi}}}
+\newcommand{\PointShearStrainShear}{\bm{\varepsilon}_{\gamma}^{(b)}}
+\newcommand{\PointShearStrainTwist}{\bm{\varepsilon}_{\gamma}^{(\vartheta)}}
+\newcommand{\PointShearStress}{\bm{\tau}}
+
+% SECTION
+% Coordinates
+\newcommand{\PlaneManifold}{S}
+\newcommand{\PlaneBoundary}{\partial S}
+\newcommand{\PlanePoint}{\varsigma}
+
+% Isotropic constants
+\newcommand{\LinearMM}{\bm{I}_{\mathrm{m}}}
+\newcommand{\LinearWW}{\bm{I}_{\mathrm{w}}}
+\newcommand{\LinearVV}{\bm{I}_{\mathrm{v}}}
+\newcommand{\LinearNM}{\symbfup{\Gamma}_{\mathrm{nm}}} % just use A\bar{\rho}^{\times} ?
+\newcommand{\SectionNW}{\symbfup{\Gamma}_{\mathrm{nw}}}
+\newcommand{\SectionNV}{\symbfup{\Gamma}_{\mathrm{nv}}}
+\newcommand{\LinearMW}{\symbfup{\Gamma}_{\mathrm{mw}}}
+\newcommand{\LinearMV}{\symbfup{\Gamma}_{\mathrm{mv}}}
+
+\newcommand{\IntRoR}{\mathbf{J}_{o}}
+\newcommand{\IntRGoRG}{\mathbf{J}_{\!\rm G}}
+% Torsion
+\newcommand{\Jw}{I_{\varphi}}
+\newcommand{\Jv}{\symit{\Gamma}_{\varphi}}
+\newcommand{\Js}{J_{\scriptscriptstyle{A}}}
+\newcommand{\Jo}{J_{\varphi}} % Jsv wrt origin
+\newcommand{\Jsv}{J_{\varphi}} % Jsv wrt shear center
+\newcommand{\Io}{J_o}
+\newcommand{\Ja}{J_{\scriptscriptstyle{A}}}
+% Flexure
+
+% Condensed stiffness
+\newcommand{\BishearTensorPB}{\symbfup{H}_{\psi}}
+\newcommand{\BishearTensorRB}{\symbfup{H}_{(a)}}
+\newcommand{\BishearTensorBB}{\symbfup{H}_{(b)}}
+
+
+% Material
+\newcommand{\ShearModuli}{\bm{C}_N}
+\newcommand{\CurveModuli}{\bm{C}_M}
+\newcommand{\SectionIntegral}[1]{\int \, #1  \dA}
+
+\newcommand{\SectionAverage}[2][]{\bar{\Section}_{#1}\left[#2\right]}
+\newcommand{\RotationAverage}[2][]{\bar{\Theta}\left[#2\right]}
+
+\newcommand{\ElasticLinearMM}{I}
+\input{notation/frame}
+\input{notation/library}
+
+
+\newcommand{\BetaFromB}{\bm{X}} % \bm{\Xi}
+\newcommand{\ScaleShearGeomA}{\bar{\symbfup{\Xi}}_{\Lambda}}
+\newcommand{\ScaleShearGeomB}{\bar{\symbfup{\Xi}}_{v}}
+\newcommand{\RomanoChiShear}{{\bm{\chi}^{\rm sh}}}
+\newcommand{\IesanLoadM}{\bm{a}_{\Lambda}}
+\newcommand{\IesanLoadN}{a_{u}}
+
+\renewcommand{\vec}[1]{\bm{#1}}
+\newcommand{\tensor}[1]{\bm{#1}}
+% \newcommand{\pos}{\bm{x}}
+% \newcommand{\disp}{\bm{u}}
+\newcommand{\warpdisp}{{\bm{u}^{\rm w}}}
+\newcommand{\EuclideanSpace}{\mathbb{E}}
+\newcommand{\BodyBoundaryNormal}{\bm{n}}
+\newcommand{\BodyLateralSurface}{\partial_{\FrameBasis}\Body}
+\newcommand{\BodyLateralNormal}{\bm{n}_{\Pi}}
+\newcommand{\ShearStress}{\bm{\tau}}
+\newcommand{\AxialStress}{\sigma}
+
+% Differential Operators
+\newcommand{\one}{\mathbf{1}}
+\newcommand{\One}{\mathbf{1}}
+\newcommand{\Zero}{\mathbf{0}}
+\newcommand{\dev}{\operatorname{dev}}
+
+\newcommand{\grad}{\operatorname{grad}}
+\newcommand{\Div}{\operatorname{div}}
+\newcommand{\sym}{\operatorname{sym}}
+\newcommand{\curl}{\operatorname{curl}}
+\newcommand{\gradS}{\nabla_{\!\Section}}
+\newcommand{\DivS}{\Div_{\Section}}
+\newcommand{\curlS}{\curl_{\Section}}
+\newcommand{\LaplacianS}{\Delta_{\Section}}
+
+% Domains
+\newcommand{\Body}{B}
+\newcommand{\Boundary}{\partial B}
+\newcommand{\Section}{\Omega}
+\newcommand{\SectionBoundary}{\Gamma}
+\newcommand{\LateralSurface}{\Pi}
+
+% Other
+\newcommand{\Force}{\bm{F}}
+\newcommand{\Moment}{\bm{M}}
+
+\input{notation/warping}
+\input{notation/equilibrium}
+\input{notation/iesan}
+\input{notation/trace}
+\input{notation/frame-gauge}
+
+\newcommand{\LightRule}{\arrayrulecolor{black!30}\midrule\arrayrulecolor{black}}
+

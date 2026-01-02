@@ -1,0 +1,28 @@
+
+% indicating agreement with exact solution (at M=2.75*loops, 2-nodes)
+
+% indicating agreement with referenced formulations (at M=2.5, F=0.0625, 2-nodes)
+
+
+\begin{tabular*}{\textwidth}{@{\extracolsep\fill}cccccccc@{}}
+\toprule
+\textbf{Interpolation} & \textbf{Isometry}  & \textbf{Parameters} & 
+\(n\)  & \(\Delta x_1\) & \(\Delta x_2\) & \(\Delta x_3\)  \\
+\midrule
+% \texttt{None} & \texttt{None} & \texttt{None} & 2  & -0.994522 & 3.73019 & 0 \\
+  \texttt{None} & \texttt{SFIN} & \texttt{None} & 2  & -0.994522 & 3.73019 & 0 \\
+% \texttt{Incr} & \texttt{None} & \texttt{Incr} & 2  & -0.994522 & 3.73019 & 0 \\
+  \texttt{Incr} & \texttt{SFIN} & \texttt{Incr} & 2  & -0.994522 & 3.73019 & 0 \\
+% \texttt{Init} & \texttt{None} & \texttt{Init} & 2  & -0.994522 & 3.73019 & 0 \\
+% \texttt{None} & \texttt{SFIN} & \texttt{Incr} & 2  & -0.994522 & 3.73019 & 0 \\
+  \texttt{Incr} & \texttt{SFIN} & \texttt{None} & 2  & -0.994522 & 3.73019 & 0 \\
+% \texttt{None} & \texttt{None} & \texttt{Incr} & 2  & -0.994522 & 3.73019 & 0 \\
+%
+  \hline
+  \texttt{None} & \texttt{SFIN} & \texttt{None} & 3 & -0.996837 & 3.72923 & 0 \\
+  \texttt{Incr} & \texttt{SFIN} & \texttt{Incr} & 3 & -0.996837 & 3.72923 & 0 \\ %-6.66134e-16
+  \texttt{Incr} & \texttt{SFIN} & \texttt{None} & 3 & -0.996837 & 3.72923 & 0 \\ % -1.11022e-15 \\
+\midrule
+\textbf{Analytic} &             &               &   & \textbf{-0.996837} & \textbf{3.72923} & \textbf{0} \\ %-6.66134e-16
+\hline
+\end{tabular*}

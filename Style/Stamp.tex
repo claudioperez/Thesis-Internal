@@ -1,0 +1,31 @@
+%% NOTE: To turn stamp on/off add or remove "\pagestyle{stamped}"
+
+% In the preamble
+\usepackage{datetime}
+% \usepackage{datetime2}
+
+% % Custom timestamp format
+% \renewcommand{\DTMnow}[1]{%
+%   \DTMdisplaydate{#1}~\DTMcurrenttime%
+% }
+% \DTMnewdatestyle{custom}{%
+%   \renewcommand{\DTMdisplaydate}[4]{%
+%     \DTMmonthname{##2}-##3
+%   }
+% }
+% \DTMsetdatestyle{custom}
+
+% Custom timestamp format
+\newcommand{\customtimestamp}{%
+ \the\month-\the\day-\currenttime
+}
+
+% Redefine the footer to include the timestamp
+% \makepagestyle{stamped}
+% Create a new page style based on an existing one
+\copypagestyle{stamped}{headings} % Base 'stamped' on 'headings'
+
+\makeevenfoot{stamped}{}{\customtimestamp}{} % Even pages
+\makeoddfoot{stamped}{}{\customtimestamp}{}  % Odd pages
+
+\pagestyle{stamped}

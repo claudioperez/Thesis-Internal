@@ -1,0 +1,160 @@
+\usepackage{silence}
+
+\WarningFilter{latex}{Command \underbar has changed}
+\WarningFilter{latex}{Command \underline has changed}
+\WarningFilter{latex}{Command \showhyphens has changed}
+% unicode-math vs mathtools overlap messages
+\WarningFilter{unicode-math}{Using \overbracket and \underbracket}
+\WarningFilter{unicode-math}{I'm going to overwrite the following commands}
+\WarningFilter{tablefootnote}{Hyperreferences in rotated content will be misplaced}
+
+% LaTeX Font Warnings about missing small caps shapes in Latin Modern (TU encoding)
+\WarningFilter{latexfont}{Font shape `TU/lmr/bx/sc' undefined}
+\WarningFilter{latexfont}{Font shape `TU/lmr/m/scit' undefined}
+
+
+\usepackage{ifxetex,ifluatex}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+  \usepackage{bm}
+
+\else % if luatex or xetex
+    
+    %% cmp - replaced unicode-math with fontspec to make \boldsymbol work
+    % \usepackage{fontspec}
+    % \usepackage{bm}
+    \usepackage{amsmath}
+    \usepackage{mathtools}
+    \mathtoolsset{showonlyrefs}
+    \usepackage{unicode-math}
+    \unimathsetup{math-style=TeX, bold-style=TeX}
+    % \setmathfont{Latin Modern Math} % or XITS Math, etc.
+    % \setmainfont{Garamond}
+    % \setmainfont{Libertinus Serif}[SmallCapsFeatures={Letters=SmallCaps}]
+    % \setmathfont{Libertinus Math}
+    \newcommand{\bm}{\symbfit}
+
+    \defaultfontfeatures{Scale=MatchLowercase}
+    \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+
+\usepackage{amsthm}
+\iffalse
+    % \usepackage{amssymb}
+    % \usepackage[tbtags]{amsmath}
+    % \usepackage{mathrsfs}
+    % \usepackage{mathtools} 
+    
+    % Theorem environments
+    \theoremstyle{plain}
+    \newtheorem{theorem}{Theorem}[section]  % Numbered by section
+    \newtheorem{lemma}[theorem]{Lemma}
+    \newtheorem{corollary}[theorem]{Corollary}
+    \newtheorem{proposition}[theorem]{Proposition}
+    
+    \theoremstyle{definition}
+    \newtheorem{definition}[theorem]{Definition}
+    
+    \theoremstyle{definition}
+    \newtheoremstyle{boldremark}
+        {\dimexpr\topsep/2\relax} % space above
+        {\dimexpr\topsep/2\relax} % space below
+        {\addtolength{\leftskip}{1.5em}}          % body font
+        {}          % indent amount
+        {\bfseries} % theorem head font
+        {.}         % punctuation after theorem head
+        {.5em}      % space after theorem head
+        {}          % theorem hed spec. (empty = "normal")
+    \theoremstyle{boldremark}
+    \newtheorem{remark}{Remark}[section]
+\else 
+    \usepackage{thmtools}
+    \declaretheoremstyle[
+      headfont=\bfseries,
+      bodyfont=\itshape,
+      spaceabove=6pt,
+      spacebelow=6pt,
+    ]{plainthm}
+
+    \declaretheoremstyle[
+      headfont=\bfseries,
+      bodyfont=\itshape,
+      spaceabove=6pt,
+      spacebelow=6pt,
+    ]{defthm}
+
+    \declaretheoremstyle[
+      headfont=\bfseries,
+      bodyfont=\normalfont,
+      spaceabove=6pt,
+      spacebelow=6pt,
+    ]{remark}
+
+    %%
+    \declaretheorem[
+      style=plainthm,
+      numberwithin=section
+    ]{theorem}
+    
+    \declaretheorem[style=plainthm,sibling=theorem]{corollary}
+    \declaretheorem[
+      style=plainthm,
+      sibling=theorem
+    ]{lemma}
+    
+    \declaretheorem[
+      style=plainthm,
+      sibling=theorem
+    ]{proposition}
+    
+    \declaretheorem[
+      style=defthm,
+      sibling=theorem
+    ]{definition}
+    
+    % \declaretheorem[
+    %   style=remark,
+    % ]{remark}
+    
+    \theoremstyle{definition}
+    \newtheoremstyle{boldremark}
+        {\dimexpr\topsep/2\relax} % space above
+        {\dimexpr\topsep/2\relax} % space below
+        {\addtolength{\leftskip}{1.5em}}          % body font
+        {}          % indent amount
+        {\bfseries} % theorem head font
+        {.}         % punctuation after theorem head
+        {.5em}      % space after theorem head
+        {}          % theorem hed spec. (empty = "normal")
+    \theoremstyle{boldremark}
+    \newtheorem{remark}{Remark}[section]
+\fi 
+    
+\usepackage{pdflscape}
+
+\usepackage{nicematrix}
+
+
+\usepackage{empheq}
+
+
+% \usepackage{arydshln} % for ":" column divider
+\usepackage{array}   % for \newcolumntype macro
+\newcolumntype{L}{>{$}l<{$}} % math-mode version of "l" column type
+\newcolumntype{C}{>{$}c<{$}} % math-mode version of "l" column type
+
+\newcolumntype{t}{>{\scriptstyle\tt}c}
+
+\usepackage{comment}
+\newif\ifproofs
+% \proofsfalse
+\proofstrue
+\ifproofs 
+\else 
+\excludecomment{proof}
+\fi
+
+
+\numberwithin{equation}{section}

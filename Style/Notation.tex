@@ -1,0 +1,38 @@
+\usepackage{etoolbox}
+\usepackage{xparse}
+
+% Helper command to load a single notation file
+\newcommand{\loadnotation}[1]{%
+  \input{notation/#1.tex}%
+}
+
+% The notation environment
+\NewDocumentEnvironment{Notation}{O{}}{%
+  \forcsvlist{\loadnotation}{#1}%
+}{}
+
+
+\ExplSyntaxOn
+
+\cs_new_protected:Npn \cp_tensor_decor:nnn #1 #2 #3
+  {
+    % #1 = decorator applied to the symbol (e.g. \hat, \tilde, identity)
+    % #2 = unindexed (bold) base symbol (e.g. \bm{E})
+    % #3 = indexed (nonbold) base symbol (e.g. E)
+    \peek_meaning:NTF _
+      { \cp_tensor_decor_sub:nnn {#1}{#2}{#3} }
+      { #1 { #2 } }
+  }
+
+\cs_new_protected:Npn \cp_tensor_decor_sub:nnn #1 #2 #3
+  {
+    \c_math_subscript_token
+    { #1 { #3 } \cp_tensor_symbol_read_subscript: }
+  }
+
+\cs_new_protected:Npn \cp_tensor_symbol_read_subscript:
+  #1 { _ {#1} }
+
+% Identity decorator:
+\cs_new:Npn \cp_id:n #1 {#1}
+\ExplSyntaxOff

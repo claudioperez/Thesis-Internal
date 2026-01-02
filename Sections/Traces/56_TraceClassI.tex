@@ -1,0 +1,1099 @@
+\subsection{Tracing Motions}\label{sec:trace}
+
+\begin{Quote}
+The primary motivation stems from the desire to eliminate cross sectional warping 
+modes by association with the element strains \(\bm{\gamma},\bm{\kappa}\). 
+
+An outline:
+\begin{itemize}
+    \item Introduce the \emph{trace} abstraction, which formalizes the ambiguity in representing the Saint-Venant class through classical fields \(\bm{u},\bm{\theta}\). 
+    \item Investigate the special class of traces that exhibit Type 3 locality... they can be exactly represented with \emph{only} 6-DOF.
+    \item Elaborate the effect of the trace on the boundary conditions that the beam model is capable of representing. 
+\end{itemize}
+\end{Quote}
+
+% The eight warping shapes of \eqref{eq:def-eight-shapes} provide a complete basis 
+% for representing particular solutions to Saint-Venant's continuum problems. 
+% Any section-rigid pattern $\bm{v} + \bm{\omega} \times \bm{r}$ may be freely transferred between these components without changing the continuum displacement field. 
+
+
+The ambiguity inherent in the representation \eqref{eq:trace-lift-linear}, is investigated systematically through the abstraction of a \emph{trace}. 
+A trace $\mathcal{T}$ identifies 
+a rule for associating one-dimensional fields to a given the continuum displacement \(\hat{\bm u}(x,\bm{r})\):
+\begin{SaveEquation}{eq:trace-map}
+\mathcal{T}: \hat{\bm{u}}(x, \bm{r}) \;\longmapsto\; 
+\Big(\bm{u}(x),\, \bm{\theta}(x)
+,\, \bm{\alpha}(x)
+\Big)
+% =:\bm{z}(x)
+% \label{eq:trace-def}
+\end{SaveEquation}
+% such that the decomposition
+% \begin{equation}
+% \hat{\bm{u}}_{\rm P}(x, \bm{r}) = \bm{u}(x) + \bm{\theta}(x) \times \bm{r} 
+% + \bm{\Phi}(\bm{r})\,\bm{\alpha}(x)
+% \label{eq:trace-decomp}
+% \end{equation}
+% holds identically. 
+
+There are infinitely many traces that may exactly represent a given solution \(\hat{\bm u}_{\rm P}\) to a Saint-Venant problem, and each imparts a distinct physical meaning to boundary conditions like \(\bm{\theta}_{\mathcal{T}}(x_0) = \mathbf{0}\) in a finite element simulation. 
+It is natural to restrict attention to the finite dimensional space of traces which exhibit the following properties:
+\begin{enumerate}
+    \item Strain measures \(\bm{e}\) generated under Saint-Venant loading are at most linear in the axial coordinate $\reflenx$. 
+    \item Any Saint-Venant strain field is exactly reconstructed from only the plane section strains \(\bm\gamma_{\mathcal{T}},\bm\kappa_{\mathcal{T}}\).
+    \item Continuum plane-section deformations are preserved, in the sense that section‑rigid fields are mapped to pure beam rigid motions.
+\end{enumerate}
+% Properties (1)–(2) are enforced by the strain–affine and strain–exact conditions (D1), together with homogeneity of the resultant stiffness (C1). 
+% Property (3) is enforced by the plane‑section condition (P1). 
+% These restrictions motivate a sequence of definitions with corresponding propositions which eventually reduce traces of interest to an 18 dimensional space. Among these free parameters emerge the classical shear correction coefficients.
+
+\begin{definition}[Axial Traces]
+\label{def:sv-trace}
+An axial \emph{trace} 
+on a continuum motion \(\hat{\bm u}\) 
+is a linear map
+\[
+\mathcal{T} :\CauchySpace\to C^1(I;\mathbb{R}^{6+n_w}),
+\qquad
+\hat{\bm{u}}(x,\bm{r}) \mapsto 
+\bm{z}(x) =
+\begin{pmatrix}
+\bm{u}(x),&
+\bm{\theta}(x),&
+\bm{\alpha}(x)
+\end{pmatrix},
+\]
+of the form
+$$[\mathcal{T}\hat{\bm{u}}](x) = \mathcal{T}_x\bigl[\hat{\bm{u}}(x, \cdot)\bigr]$$
+where $\{\mathcal{T}_x\}_{x \in I}$ is a family of bounded linear functionals on section displacements, \(\CauchySpace\) is the space of admissible motions \(\hat{\bm u}\), 
+$I \subset \mathbb{R}$ is the axial interval, and the image is interpreted 
+as a pair of centerline fields
+\[
+\bm{u} : I \to \mathbb{R}^3,
+\qquad
+\bm{\theta} : I \to \mathbb{R}^3.
+\]
+A trace $\mathcal{T}$ is linear if, for any 
+$\hat{\bm{u}}_1,\hat{\bm{u}}_2 \in \CauchySpace$ and 
+$\alpha,\beta \in \mathbb{R}$,
+\[
+\mathcal{T}[\alpha \hat{\bm{u}}_1 + \beta \hat{\bm{u}}_2]
+=
+\alpha\,\mathcal{T}[\hat{\bm{u}}_1] + \beta\,\mathcal{T}[\hat{\bm{u}}_2].
+\]
+A trace is prismatic if $\mathcal{T}_x = \mathcal{T}_0$ for all $x$. 
+\end{definition}
+
+\subsection{Lifting Motions}
+
+\begin{definition}[Trace lifting / embedding]
+\label{def:trace-lifting}
+Let $\mathcal Z\coloneq C^1(I;\mathbb R^6)$ with $\bm z=(\bm u,\bm\theta)$, and
+let $\mathcal A_{n_w}\coloneq C^1(I;\mathbb R^{n_w})$.
+
+Define the \emph{lifting} (embedding) operator
+\[
+\mathcal T^{-1}:\mathcal Z\times \mathcal A_{n_w}\to \CauchySpace
+\]
+by \eqref{eq:trace-lift-linear}:
+\begin{equation}
+\mathcal T^{-1}[\bm z,\bm\alpha](x,\bm{r})
+\;\coloneq\;
+\bm{u}(x)
++\bm\theta(x)\times\bm{r}
++\bm\Phi(\bm{r})\,\bm\alpha(x).
+\end{equation}
+\end{definition}
+
+% \begin{definition}[Trace-induced 1D strain map on $\mathcal U_{\rm SV}$]
+For a given trace $\mathcal T$, define the induced strain map
+\[
+  \bm e_{\mathcal T}(x)\coloneq (\bm\gamma,\bm\kappa) = \mathbb{B}^* \mathcal T[\hat{\bm u}](x),
+  \qquad\text{with}\qquad 
+  \mathbb{B}^* := \One \partial_x + \mathbb{J}^{\top}
+\]
+% \end{definition}
+
+\begin{Aside}
+\begin{definition}[Completeness of warping shapes]
+\label{def:phi-complete}
+Assume $\mathcal W(\Section)$ is a Hilbert space with inner product $\langle\cdot,\cdot\rangle_{\mathcal W}$.
+An infinite collection $\{\bm\Phi_j\}_{j\ge1}\subset\mathcal W(\Section)$ is \emph{complete} if its linear span is dense in $\mathcal W(\Section)$.
+
+Let $\bm\Phi^{(n)}$ denote the truncation to the first $n$ shapes.
+\end{definition}
+
+\begin{proposition}[Exact reconstruction in the limit $n_w\to\infty$]
+\label{prop:limit-exactness}
+Assume $\{\bm\Phi_j\}_{j\ge1}$ is complete in $\mathcal W(\Section)$.
+Then for every $\hat{\bm u}\in\CauchySpace$ whose sectionwise residual
+\[
+\bm w(x,\cdot)\;\coloneq\; \hat{\bm u}(x,\cdot)-\bm u(x)-\bm\theta(x)\times(\cdot)
+\]
+belongs to $\mathcal W(\Section)$ for each $x$, there exists a (generally nonunique) coefficient
+field $\bm\alpha(x)\in\ell^2$ such that
+\[
+\bm\Phi(\cdot)\bm\alpha(x)=\bm w(x,\cdot)\quad\text{in }\mathcal W(\Section)\ \text{for a.e. }x,
+\]
+and the truncated liftings satisfy
+\[
+\mathcal T^{-1}_{(n)}[\bm z,\bm\alpha^{(n)}]\to \hat{\bm u}
+\quad\text{in the chosen motion norm as }n\to\infty
+\]
+for a suitable choice of coefficients $\bm\alpha^{(n)}$ (e.g. $\mathcal W$-orthogonal projection).
+\end{proposition}
+\end{Aside}
+
+
+% \begin{definition}[SV local parameter reconstruction from trace strains]
+% \label{def:sv-local-reconstruction}
+% Let $\mathcal T$ be Class I, with trace matrices $\TraceDeDpRoot\in\mathrm{GL}(6)$,
+% $\TraceDpDeRoot=(\TraceDeDpRoot)^{-1}$, and $\TraceEvolveEE$ as in Prop.~\ref{prop:trace-matrix}.
+
+% For an SV strain field $\bm e(x)$, define the reconstructed initial strain
+% \[
+% \bm e_0 \coloneq (\mathbf 1-x\TraceEvolveEE)\,\bm e(x)
+% \qquad (\text{using }\TraceEvolveEE^2=\mathbf 0),
+% \]
+% and the reconstructed Saint~Venant parameter vector
+% \begin{equation}
+% \IesanVector_{\rm rec}(x)\coloneq \TraceDpDeRoot\,\bm e_0
+% =\TraceDpDeRoot(\mathbf 1-x\TraceEvolveEE)\bm e(x).
+% \label{eq:p-reconstruction}
+% \end{equation}
+% \end{definition}
+
+\subsection{Saint-Venant Motions}
+
+\begin{definition}[Saint~Venant Family]
+\label{def:sv-family}
+Let $\IesanMotions\subset \CauchySpace$ denote the (six-parameter) linear space of
+Saint~Venant \emph{particular} displacement fields
+\[
+  \IesanVector\in\mathbb R^6 \;\longmapsto\; \hat{\bm u}_{\rm P}(\IesanVector)\in\IesanMotions,
+\]
+where $\IesanVector$ are the
+Saint~Venant load parameters used in \eqref{eq:def-iesan-vector}
+and $\hat{\bm u}_{\rm P}(\IesanVector)$ is given by \eqref{eq:iesan-general-solution}.
+
+Let $\RigidMotions\subset\CauchySpace$ be the $6$-dimensional rigid-body subspace
+\[
+  \bm q\in\mathbb R^6 \;\longmapsto\; \hat{\bm u}_{\rm R}(\bm q)
+  =\bm q_u + \bm q_\theta\times(x\FrameBasis+\bm{r}).
+\]
+The twelve-dimensional vector space of 
+Saint-Venant displacement fields solving \eqref{eq:iesan-problem-1} and \eqref{eq:iesan-problem-2} is:
+\[
+  \mathcal U_{\rm SV}\coloneq \IesanMotions\oplus \RigidMotions
+  =\{\hat{\bm u}_{\rm P}(\IesanVector)+\hat{\bm u}_{\rm R}(\bm q)\}.
+\]
+\end{definition}
+
+
+\begin{definition}[SV-Compatible]
+\label{def:sv-compatible-lifting}
+A lifting $\mathcal T^{-1}$ (Def.~\ref{def:trace-lifting}) is called \emph{SV-compatible}
+with $\mathcal T$ if, for every Saint~Venant motion
+$\hat{\bm u}=\hat{\bm u}_{\rm P}(\IesanVector)+\hat{\bm u}_{\rm R}(\bm q)\in\mathcal U_{\rm SV}$,
+there exist $\bm z\in\mathcal Z$ and $\bm\alpha\in\mathcal A_{n_w}$ such that
+\[
+\hat{\bm u} \equiv \mathcal T^{-1}[\bm z,\bm\alpha]
+\quad\text{(up to a rigid field, if you only care about strain equivalence),}
+\]
+and $\bm z$ agrees with the trace:
+\[
+\big(\bm{z}(x),\bm{\alpha}(x)\big)=\mathcal T[\hat{\bm u}](x)\qquad \forall x\in I.
+\]
+
+A warping operator $\bm\Phi:\mathbb R^{n_w}\to\mathcal W(\Section)$ is \emph{SV-compatible}
+if there exists a linear map
+\[
+\bm A:\mathbb R^6\to C^1(I;\mathbb R^{n_w}),\qquad
+\IesanVector\mapsto \bm\alpha_{\rm SV}(\cdot;\IesanVector),
+\]
+such that for every Saint~Venant particular field $\hat{\bm u}_{\rm P}(\IesanVector)$,
+\[
+\hat{\bm u}_{\rm P}(\IesanVector)\;\equiv\; \mathcal T^{-1}\big[\bm z_{\rm SV}(\IesanVector),\bm\alpha_{\rm SV}(\IesanVector)\big]
+\quad\text{(modulo a rigid field, or strain-equivalence).}
+\]
+\end{definition}
+
+\begin{definition}[Saint~Venant Equivalence]
+\label{def:sv-equivalence}
+Two traces $\mathcal T_1,\mathcal T_2$ are \emph{SV-equivalent} if
+$\mathcal T_1[\hat{\bm u}]=\mathcal T_2[\hat{\bm u}]$ for all $\hat{\bm u}\in\mathcal U_{\rm SV}$.
+All “trace matrix” objects below characterize only the SV-equivalence class.
+\end{definition}
+
+\subsubsection{Class I: Kinematic Consistency}
+
+\subparagraph{T1}
+It is useful to restrict our attention to traces generating strains \(\bm{e}(x)\) which are at most linear in $x$ for any problem in the Saint-Venant class.
+This ensures that the strains can be exactly represented by typical beam finite elements.
+
+\begin{definition}[Class I]\label{def:class-1} % def:e1
+A trace \(\mathcal{T}\) is called a \textbf{Class I} trace if:
+\begin{enumerate}[label=(\roman*)]
+    \item For all \(\hat{\bm u} \in \IesanMotions\oplus \RigidMotions\) the following relations are furnished by $x$-independent linear operators \(\TraceEvolveEE\),\(\TraceDeDpOne\), and \(\TraceStiffNM\in\mathrm{GL}(6)\):
+    \begin{subequations}
+    \begin{align}
+        \bm{e}'(x) &=: \TraceEvolveEE\,\bm{e}(0) 
+        \label{eq:req-t1} 
+        \\ 
+        \partial_{\IesanVector}\bm{e}'(x) &=: \TraceDeDpOne 
+        \label{eq:req-d1}
+        \\ 
+        \partial_{\bm{e}} \snm(x) &=: \TraceStiffNM 
+        \label{eq:req-c1}
+    \end{align}
+    \label{eq:class-i-a}
+    \end{subequations}
+
+    \item For all section-rigid fields \(\hat{\bm u} =\bm{v}(x)+\bm{\omega}(x)\times\bm{r} \in \PlaneMotions\), the trace fields \(\bm{u},\bm{\theta} = \mathcal{T} [\hat{\bm u}]\) are:
+    \begin{subequations}
+    \begin{align}
+        \bm{u}(x) &= \hat{\bm u}(x,\mathbf{0}) \\
+        \bm{\theta}(x) &= \bm{\omega}(x)
+    \end{align}
+    \label{eq:req-p1}
+    \end{subequations}
+\end{enumerate}
+\end{definition}
+%
+The plane section property \eqref{eq:req-p1} ensures that for the few continuum solutions where plane sections \emph{do} remain plane, the rotation field \(\bm{\theta}\) becomes exactly the physical cross section rotation.
+For example, in the simple \(\mathrm{P}_{\rm I}\) case of a cantilever loaded by a moment, \eqref{eq:req-p1} limits the traces under consideration to those which would not introduce spurious spring-like behavior at the root through the boundary condition \(\bm{\theta}(0) = \mathbf{0}\). 
+In problems where warping does arise, this spring phenomenon becomes inescapable. 
+
+
+Strains \(\bm{e}\) generated from a trace with the property \eqref{eq:class-i-a} can be written in the form:
+\begin{equation}
+\bm{e}_{\rm z}(x) 
+% = \TraceDeDpRoot(\mathbf{1} + x\TraceEvolveEP)\bm{p}
+=(\mathbf{1} + x\TraceEvolveEE)\TraceDeDpRoot\bm{p}
+\label{eq:def-T0}
+\end{equation}
+\begin{remark}
+A trace is not uniquely determined by its action on any finite-dimensional subspace of $\mathcal{U}(\Omega)$. 
+In particular, infinitely many distinct traces may agree on the twelve-dimensional Saint~Venant subspace $\bar{\mathrm{P}} \subset \mathcal{U}(\Omega)$. Nevertheless, for beam analysis, the behavior on $\bar{\mathrm{P}}$ is precisely what matters: it determines the stiffness matrix, the strain measures, and the physical meaning of boundary conditions. 
+We therefore characterize traces by their restriction to $\bar{\mathrm{P}}$, with the understanding that this characterization defines an equivalence class of section operators rather than a unique trace.
+\end{remark}
+\begin{proposition}\label{prop:trace-matrix}
+The equivalence class (\cref{def:sv-equivalence}) of traces with the properties \eqref{eq:class-i-a} is uniquely represented in the Saint~Venant class by a matrix \(\TraceDpDeRoot \in\mathrm{GL}(6)\), and 
+\begin{subequations}
+    \begin{align} 
+        \TraceEvolveEE &= \TraceDeDpRoot \IesanEvolveSP \TraceDpDeRoot \\
+        \TraceDeDpOne &= \TraceDeDpRoot \IesanEvolveSP \label{eq:res-d1} \\
+        \TraceStiffNM &= \IesanStiff \TraceDpDeRoot \label{eq:def-CT}
+    \end{align}
+\end{subequations}
+where \(\IesanEvolveSP\) is the evolution operator given by \eqref{eq:A-matrix-neg}.
+\end{proposition}
+
+
+\subparagraph{P1}
+\begin{proposition}[Structure of Plane Traces]
+\label{prop:plane-trace-structure}
+If $\mathcal T$ is Class I, then (P1${}^{\rm SV}$) implies that the trace matrix
+$\TraceDeDpRoot$ has the block form:
+\begin{equation}
+\TraceDeDpRoot = \begin{bmatrix}
+1 & \mathbf{0} % \CenterTrace 
+& 0 & \TraceNF^\top \\[4pt]
+\mathbf{0} & \mathbf{0} & \TraceFT & \TraceFF \\[4pt] 
+0 & \mathbf{0}^\top & 1 & \TraceTF^\top \\[4pt]
+\mathbf{0} & -\FrameBasis^\times & \TraceBT & \TraceMF
+\end{bmatrix}
+\qquad\text{with}\qquad 
+\operatorname{det}\TraceDeDpRoot = \operatorname{det}\left(\TraceFF - \TraceFT\otimes\TraceTF\right)
+% = \left(\begin{array}{rrrr}
+% & \FrameBasis\otimes(\FrameBasis+\CenterTrace) & & \FrameBasis\otimes\TraceNF + \TraceFT\otimes\FrameBasis + \TraceFF \\[4pt]
+%  &  -\FrameBasis^\times & & \FrameBasis\otimes(\FrameBasis+ \TraceTF) + \TraceBT\otimes\FrameBasis + \TraceMF %\\[4pt]
+% \end{array}\right)
+\label{eq:T0-plane-structure}
+\end{equation}
+where \(\FrameBasis\cdot\TraceNF = \FrameBasis\cdot\TraceFT = \FrameBasis\cdot\TraceBT = \FrameBasis\cdot\TraceTF = 0\) and partitions correspond to 
+$\bm{e} = (\epsilon, \bm{\gamma}_\perp, \varkappa, \bm{\kappa}_\perp)$ 
+and $\bm{p} = (a_\varepsilon, \bm{a}_\Omega, a_\vartheta, \bm{b}_{\Section})$.
+The free parameters comprise an 18-dimensional family\footnote{These parameters must satisfy the additional restriction that $\TraceDeDpRoot$ be invertible.}.
+\iftrue %false
+\begin{table}[H]
+\begin{center}
+\caption{Trace matrix block structure.}
+\label{tab:T0-blocks}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{clll}
+\toprule
+Block & Size &  Units & Description \\ 
+\midrule
+$\TraceBT$ & $\mathbb{R}^2$  & --- 
+& Curvature--torsion coupling \\
+% $\CenterTrace$ & $\mathbb{R}^2$ &  L & Trace center location \\
+$\TraceFT$ & $\mathbb{R}^2$  & L 
+& Shear--torsion coupling \\
+$\TraceTF$ & $\mathbb{R}^2$  & \Length{1} %--- 
+& Twist--flexure coupling \\
+$\TraceMF$ & $\mathbb{R}^{2\times2}$  & \Length{1} % ---
+& Curvature--flexure coupling \\
+$\TraceNF$ & $\mathbb{R}^2$  & \Length{2} %L 
+& Axial--flexure coupling \\
+$\TraceFF$ & $\mathbb{R}^{2\times2}$  & \Length{2} %L   
+& Shear--flexure coupling \\
+\midrule
+Total: & 18 & & \\
+\bottomrule
+\end{tabular}
+\end{center}
+\end{table}
+\fi
+\end{proposition}
+
+\begin{proof}
+The plane section property constrains how $\TraceDeDpRoot$ acts on the section-rigid part of each Saint Venant mode.
+
+\textit{Extension} ($a_\varepsilon$): The section-rigid displacement is 
+$x\,a_\varepsilon\FrameBasis$, giving $\bm{\theta} = \mathbf{0}$ and 
+$\bm{u} = x\,a_\varepsilon\FrameBasis$. The strains are 
+$\epsilon = a_\varepsilon$ with all other components zero. 
+This fixes column 1 of $\TraceDeDpRoot$ to $(1, \mathbf{0}, 0, \mathbf{0})^\top$.
+
+\textit{Bending} ($\bm{a}_\Omega$): The section-rigid rotation is 
+$\bm{\theta} = -x\,\FrameBasis \times \bm{a}_\Omega$, giving curvature 
+$\bm{\kappa}_\perp = -\FrameBasis \times \bm{a}_\Omega$. 
+
+The shear strain 
+$\bm{\gamma}_\perp$ receives no section-rigid contribution. 
+This fixes columns 2--3: entries $(1, 2\text{--}3) = \CenterTrace^\top$, 
+$(2\text{--}3, 2\text{--}3) = \mathbf{0}$, $(4, 2\text{--}3) = 0$, and 
+$(5\text{--}6, 2\text{--}3) = -\FrameBasis^\times$.
+
+\textit{Torsion} ($a_\vartheta$): The section-rigid rotation is 
+$\bm{\theta} = x\,a_\vartheta\FrameBasis$, giving twist $\varkappa = a_\vartheta$. 
+This fixes column 4 entries $(1, 4) = 0$, $(4, 4) = 1$, $(5\text{--}6, 4) = \mathbf{0}$.
+The shear--torsion coupling $\TraceFT$ and curvature--torsion coupling $\TraceBT$
+arise from warping and remain free.
+
+\textit{Flexure} ($\bm{b}_{\Section}$): The section-rigid part contributes to 
+$\epsilon$ and $\bm{\kappa}_\perp$ through the $x$-dependent terms, 
+but these appear in $\TraceDeDpOne = \TraceDeDpRoot\IesanEvolveSP$, not $\TraceDeDpRoot$. 
+All entries in columns 5--6 arise from warping contributions and remain free 
+parameters: $\TraceNF$ (axial--flexure), $\TraceFF$ (shear--flexure), 
+$\TraceTF$ (twist--flexure), and $\TraceMF$ (curvature--flexure).
+
+Counting the free parameters: $\CenterTrace$ (2) + $\TraceNF$ (2) + 
+$\TraceFT$ (2) + $\TraceFF$ (4) + $\TraceTF$ (2) + $\TraceMF$ (4) + $\TraceBT$ (2) = 18.
+\end{proof}
+
+Conditions D1 and P1 furnish the following universal form for \(\TraceDeDpOne\):
+\begin{equation}
+\TraceDeDpOne =
+\TraceDeDpRoot\IesanEvolveSP =
+% \TraceDeDpRoot\TraceEvolveEP =
+\begin{bmatrix}
+0 & \mathbf{0} & 0 & -\CentroidLocation^\top %+\CenterTrace^{\top}
+\\
+\mathbf{0} & \mathbf{0} & \mathbf{0} & \mathbf{0} \\
+0 & \mathbf{0} & 0 & \Zero \\
+\mathbf{0} & \mathbf{0} & \mathbf{0} & -\FrameBasis^\times
+\end{bmatrix}
+% \label{eq:T1}
+\label{eq:res-d1-block}
+\end{equation}
+
+The inverse \(\TraceDpDeRoot\) exhibits the block structure:
+\begin{SaveEquation}{eq:T0-inv}
+\TraceDpDeRoot = \left[\begin{array}{cc|cc}
+1 & \ShiftN^{\top} 
+& \ShiftScaleN & \mathbf{0} \\
+\mathbf{0} & \ShiftA & \ShiftF %\bm{\varsigma}_{12}^{\mathrm{F}} 
+& \FrameBasis^\times \\[3pt] \hline &&& \\[-8pt]
+0 & \ShiftT^\top & \ShiftScaleT & \mathbf{0} \\%[4pt]
+\mathbf{0} & \ShiftB & \ShiftK %-\ShiftB\TraceFT 
+& \mathbf{0}
+\end{array}\right]
+% \label{eq:T0-inv}
+\end{SaveEquation}
+with:
+% with entries given in terms of the blocks  $\TraceFF$, $\TraceFT$, $\CenterTrace$, and $\TraceTF$ from \cref{tab:T0-blocks}:
+\begin{table}[H]
+\begin{center}
+\caption{Trace matrix block structure.}
+\label{tab:T0-blocks}
+\renewcommand{\arraystretch}{1.3}
+% \begin{tabular}{clll}
+% \toprule
+% Block & Size &  Units & Description \\ 
+\begin{tabular}{rlllll}
+\toprule
+\multicolumn{2}{@{}l}{Block} & Size & Units & Coupling & \\ 
+\midrule
+$\ShiftB$ &  & $\mathbb{R}^{2 \times 2}$  &  \Length{-2} 
+  & \(\bm\gamma\stackrel{\CenterShearLocation}{\rightarrow}\Twist\)
+  & $\bm{\gamma}\rightarrow\bm\alpha_{\WarpShearIesan}\stackrel{\CenterShearLocation}{\rightarrow}\alpha_{\WarpTwistIesan}$ \\
+$\ShiftA$ & & $\mathbb{R}^{2 \times 2}$ &  \Length{-1} 
+  &  $\bm\gamma\rightarrow\bm\kappa$
+  & --- \\
+$\TraceBT$ & & $\mathbb{R}^2$  & --- 
+& Curvature--torsion coupling \\
+$\TraceFT$ & & $\mathbb{R}^2$  & L 
+& Shear--torsion coupling \\
+$\TraceTF$ & & $\mathbb{R}^2$  & \Length{1} %--- 
+& Twist--flexure coupling \\
+% $\TraceMF$ & $\mathbb{R}^{2\times2}$  & \Length{1} % ---
+% & Curvature--flexure coupling \\
+$\TraceNF$ & & $\mathbb{R}^2$  & \Length{2} %L 
+& Axial--flexure coupling \\
+% $\TraceFF$ & $\mathbb{R}^{2\times2}$  & \Length{2} %L   
+% & Shear--flexure coupling \\
+\midrule
+Total: & & 18 & & \\
+\bottomrule
+\end{tabular}
+\end{center}
+\end{table}
+
+\begin{subequations}
+\begin{align}
+\ShiftB &=\left(\TraceFF-\TraceFT\otimes\TraceTF\right)^{-1} \\
+\ShiftA &=\FrameBasis^\times\bigl(\TraceBT\otimes\TraceTF - \TraceMF\bigr)\,\ShiftB \\
+\ShiftK &=-\ShiftB\TraceFT \\
+\ShiftT &=-\ShiftB\TraceTF \\
+\ShiftN &=- \ShiftB\TraceNF \\
+\ShiftF&=\FrameBasis\times\Bigl(
+-\TraceBT+\bigl(\TraceMF - \TraceBT\otimes\TraceTF\bigr)\,\ShiftB\TraceFT
+\Bigr)\\
+\ShiftScaleN&=\TraceNF\cdot\ShiftB\TraceFT \\
+\ShiftScaleT &=1 - \TraceTF\cdot\ShiftK
+\end{align}
+\label{eq:Tinv-from-T}
+\end{subequations}
+\begin{equation}
+\begin{aligned}
+    \TraceTF &=-\ShiftB^{-1}\ShiftT \\
+    \TraceFT &= -\ShiftB^{-1}\ShiftK \\
+\end{aligned}
+\end{equation}
+
+\begin{Details}
+\begin{table}[H]
+\begin{center}
+\caption{Inverse trace matrix blocks.}
+\label{tab:T0-inv-blocks}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{rlllll}
+\toprule
+\multicolumn{2}{@{}l}{Block} & Size & Units & Coupling & \\ 
+\midrule
+$\ShiftB$ & $\!=\left(\TraceFF-\TraceFT\otimes\TraceTF\right)^{-1} $& $\mathbb{R}^{2 \times 2}$ &  \Length{-2} 
+  & \(\bm\gamma\stackrel{\CenterShearLocation}{\rightarrow}\Twist\)
+  & $\bm{\gamma}\rightarrow\bm\alpha_{\WarpShearIesan}\stackrel{\CenterShearLocation}{\rightarrow}\alpha_{\WarpTwistIesan}$ \\
+$\ShiftA$ & $\!=\FrameBasis^\times\bigl(\TraceBT\otimes\TraceTF - \TraceMF\bigr)\,\ShiftB$ & $\mathbb{R}^{2 \times 2}$ &  \Length{-1} 
+  &  $\bm\gamma\rightarrow\bm\kappa$
+  & --- \\
+$\ShiftK$& $\!=-\ShiftB\TraceFT$ & $\mathbb{R}^2$ &  \Length{-1} 
+  & $\Twist\rightarrow\Twist$ 
+  & $\Twist\rightarrow\bm\alpha_{\WarpShearIesan}$ \\
+$\ShiftT$ & $\!=-\ShiftB\TraceTF$ & $\mathbb{R}^2$ &  \Length{-1} 
+  & --- & $\epsilon\rightarrow\alpha_{\WarpTwistIesan}$ \\
+% $\ShiftNK$ & $\!=-\FrameBasis\times\CenterTrace$ &  $\mathbb{R}^2$ &  L 
+%   & --- & --- \\
+$\ShiftN$ & $\!=- \ShiftB\TraceNF$ & $\mathbb{R}^2$ &  --- 
+  & $\bm\gamma\rightarrow\epsilon$ 
+  & --- \\
+$\ShiftF$ 
+  & $=\FrameBasis\times\Bigl(
+-\TraceBT+\bigl(\TraceMF - \TraceBT\otimes\TraceTF\bigr)\,\ShiftB\TraceFT
+\Bigr)$ & $\mathbb{R}^2$ &  --- 
+  & $\Twist\rightarrow\bm{\kappa}$ 
+  & --- \\
+$\ShiftScaleN$ & $\!=\TraceNF\cdot\ShiftB\TraceFT$ %-\CenterTrace\cdot\ShiftF 
+& $\mathbb{R}$ &  L
+  & $\Twist\rightarrow\epsilon$ 
+  & --- \\
+$\ShiftScaleT$ & $\!=1 - \TraceTF\cdot\ShiftK$ & $\mathbb{R}$ &  --- 
+  & $\Twist\rightarrow\Twist$ 
+  & $\Twist\rightarrow\alpha_{\WarpTwistIesan}$\\
+\bottomrule
+\end{tabular}
+\end{center}
+\end{table}
+\end{Details}
+
+
+\input{Sections/50/T0-inv}
+
+In view of \eqref{eq:T0-inv} with \(\IesanStiff\) given by \eqref{eq:G0-neg-m}, the section stiffness \(\TraceStiffNM=\IesanStiff\TraceDpDeRoot\) takes the general form:
+\begin{equation}
+\TraceStiffNM 
+=
+\left[\begin{array}{cc|cc}
+EA 
+& EA\left(\ShiftN 
++ \ShiftA^{\top}\CentroidLocation\right)^{\top} 
+& EA\left(\ShiftScaleN + \CentroidLocation\cdot \ShiftF\right) 
+& EA\CentroidLocation^\top\FrameBasis^\times
+\\
+\mathbf{0} &
+E\IntRGoRG\,\ShiftB &
+-\,E\IntRGoRG\,\ShiftB\TraceFT &
+\mathbf{0}
+\\ \hline &&& \\[-8pt] 
+0 &
+G\Jsv\,(\ShiftT)^\top
+& G\Jsv\,\ShiftScaleT &
+\mathbf{0}
+\\ %[8pt]
+-EA\FrameBasis\times\CentroidLocation 
+& -EA(\FrameBasis\times\CentroidLocation)\otimes\ShiftN
+  -\FrameBasis^\times E\IntRoR\,\ShiftA 
+&
+ -EA\FrameBasis\times\CentroidLocation\,\ShiftScaleN
+ -\FrameBasis\times E\IntRoR\,\ShiftF
+&
+% EA(\FrameBasis\times\CentroidLocation)\otimes\ShiftNK 
+- \FrameBasis^\times E\IntRoR\,\FrameBasis^\times
+\end{array}\right].
+\label{eq:C-C1}
+\end{equation}
+The (2,2) block reveals the generalized shear correction coefficients:
+\begin{equation*}
+\bm{K} = \frac{1}{GA}E\IntRGoRG\ShiftB
+\end{equation*}
+
+\paragraph{Implementation.}
+In view of the Saint~Venant strains \eqref{eq:iesan-point-strain}, the warping shapes \(\bm\Phi\) must contain:
+\[
+% \bm{\Phi}=
+\Big\{
+  \One,
+\ -\bm{r}^{\times},
+\ \bm{W}_{(a)},
+\ \bm{\Pi}_{(b)},
+\ \FrameBasis\,\varphi,
+\ \FrameBasis\otimes\bm{\psi}
+\Big\}.
+\]
+Note that because this contains the plane-rigid span \(\PlaneMotions\), the primary trace fields \(\bm{u},\bm{\theta}\)
+will not generally represent the full plane-rigid content, which becomes offloaded onto the warping field \(\bm\alpha\) through a linear operator \(\RigidShift\) determined by the trace. 
+Upon elimination of the warping fields \(\bm\alpha\) the material strains are 
+\begin{SaveEquation}{eq:eps-B-e}
+\StrainVector(\reflenx,\bm{r}) = \Big(\RigidStrainMatrix (\mathbf{1} + \RigidShift) + \WarpStrainMatrix \ShapeShift\Big) \,\bm{e}(\reflenx)
+\end{SaveEquation}
+with \(\bm{e}(x) = (\bm\gamma(x),\,\bm{\kappa}(x))\) and:
+\begin{equation*}
+\begin{aligned}
+\RigidStrainMatrix(\bm{r}) &:= [\mathbf{1}, \;-\bm{r}^{\times}]_{3\times6} \\
+\WarpStrainMatrix(\bm{r}) &:= [\nabla\WarpTwistIesan,\; \FrameBasis_{\beta}\otimes\nabla_{\beta}\bm{\WarpShearIesan} + \bm{\Pi}_{(b)}]_{3\times 3}
+\end{aligned}
+\end{equation*}
+In view of \eqref{eq:def-T0}, the strain at \(\reflenx=0\) is:
+\begin{equation}
+\bm{\varepsilon}(0,\bm{r}) = \Big(\RigidStrainMatrix (\bm{r})(\mathbf{1} + \RigidShift) + \WarpStrainMatrix(\bm{r})\ShapeShift\Big) \,\TraceDeDpRoot \bm{p}
+\label{eq:trace-strain}
+\end{equation}
+Equating the \(\reflenx\)-constant strains in \eqref{eq:iesan-point-strain} with \eqref{eq:trace-strain} and exploiting the block structure of \(\TraceDpDeRoot\) \eqref{eq:T0-inv} furnishes:
+\begin{equation}
+\RigidShift = \begin{bmatrix}
+\FrameBasis\otimes\ShiftN - \oneS & \ShiftScaleN\FrameBasis\otimes\FrameBasis %+ \FrameBasis\otimes(\CenterTrace\times\FrameBasis) 
+\\
+-\FrameBasis^{\times}\ShiftA + %\FrameBasis\otimes\ShiftNK + 
+\FrameBasis\otimes\ShiftB^{\top}\CenterShearLocation & (\ShiftScaleT + \ShiftK\cdot\CenterShearLocation - 1)\FrameBasis\otimes\FrameBasis + (\ShiftF\times\FrameBasis)\otimes\FrameBasis
+\end{bmatrix}_{6\times6}
+\label{eq:class-ii-Le}
+\end{equation}
+and
+\begin{equation}
+\ShapeShift = 
+\begin{bmatrix}
+(\ShiftB^{\top}\CenterShearLocation + \ShiftT)^{\top} & (\CenterShearLocation\cdot\ShiftK + \ShiftScaleT)\FrameBasis^{\top} \\
+\ShiftB & \ShiftK\otimes\FrameBasis
+\end{bmatrix}_{3\times6}
+\label{eq:class-i-La}
+\end{equation}
+
+\begin{itemize}
+\item In a Petrov-Galerkin formulation the stress resultants are furnished by 
+    \begin{SaveEquation}{eq:petrov-section}
+    \begin{aligned}
+        \snm &= \int \RigidStrainMatrix^{\top}\StressVector(\StrainVector)\dA\\
+        \TraceStiffNM &= \int \RigidStrainMatrix^{\top}\StressVectorTangent\Big(\RigidStrainMatrix (\mathbf{1} + \RigidShift) + \WarpStrainMatrix \ShapeShift\Big)\dA + \mathbf{K}_{\rm W}\\
+    \end{aligned}
+    \end{SaveEquation}
+    where \(\mathbf{K}_{\rm W}\) is the contribution from the Wagner term:
+\begin{equation}
+\begin{aligned}
+    \hat{\bm{K}}_{\mathrm{W}} =
+\Twist & \SectionIntegral{
+\left[\begin{matrix}
+\bm{0} & r^{2}  \mathbb{C} \FrameBasis \otimes \FrameBasis & \bm{0} & \bm{0} \\
+r^{2}  \FrameBasis \otimes \FrameBasis \mathbb{C} 
+& r^{2}  \left(\bm{r}^{\times} \mathbb{C} \FrameBasis \otimes \FrameBasis -  \FrameBasis \otimes \FrameBasis \mathbb{C} \bm{r}^{\times}\right) & r^{2}  \FrameBasis \otimes \FrameBasis \mathbb{C} \FrameBasis\otimes \bm{\varphi} & r^{2}  \FrameBasis \otimes \FrameBasis \mathbb{C} \FrameBasis_{\beta} \otimes \nabla_{\beta} \bm{\varphi}\\
+\bm{0} & r^{2}  \bm{\varphi} \otimes \FrameBasis \mathbb{C} \FrameBasis \otimes \FrameBasis & \bm{0} & \bm{0} \\
+\bm{0} & r^{2}  \nabla_{\beta} \bm{\varphi} \otimes \FrameBasis_{\beta} \mathbb{C} \FrameBasis \otimes \FrameBasis & \bm{0} & \bm{0} 
+\end{matrix}\right]} \\
++\Twist^2 & \SectionIntegral{\left[\begin{matrix}
+\bm{0} & \bm{0} & \bm{0} & \bm{0} \\
+\bm{0} & r^{4} \FrameBasis \otimes \FrameBasis \mathbb{C} \FrameBasis \otimes \FrameBasis & \bm{0} & \bm{0} \\
+\bm{0} & \bm{0} & \bm{0} & \bm{0} \\
+\bm{0} & \bm{0} & \bm{0} & \bm{0}
+\end{matrix}\right]
+} \\
+&+\SectionIntegral{\left[\begin{matrix}
+\bm{0} & \bm{0} & \bm{0} & \bm{0} \\
+\bm{0} & r^2 \AxialStress & \bm{0} & \bm{0} \\
+\bm{0} & \bm{0} & \bm{0} & \bm{0} \\
+\bm{0} & \bm{0} & \bm{0} & \bm{0} 
+\end{matrix}\right]
+}
+\end{aligned}
+\label{eq:section-wagner-tangent}
+\end{equation}
+
+\item Bubnov-Galerkin, the stress resultants and tangent are:
+    \begin{SaveEquation}{eq:bubnov-section}
+    \begin{aligned}
+    \TraceTotalEnergyStress &= (\mathbf{1} + \RigidShift^{\top})\snm + \ShapeShift^{\top}\int \WarpStrainMatrix^{\top}\StressVector(\StrainVector)\dA \\
+    \bar{\mathbf{C}}_T &= \int \Big(\RigidStrainMatrix (\mathbf{1} + \RigidShift) + \WarpStrainMatrix \ShapeShift\Big)^{\top}\StressVectorTangent\Big(\RigidStrainMatrix (\mathbf{1} + \RigidShift) + \WarpStrainMatrix \ShapeShift\Big)\dA
+    \end{aligned}
+    \end{SaveEquation}
+\end{itemize}
+
+\subsubsection{Reconstruction}
+Recall a Saint~Venant solution is the sum of a particular and homogeneous solution \eqref{eq:general-solution}:
+\begin{equation*}
+  \hat{\bm u}(x,\bm{r})
+  = \hat{\bm u}_{\rm P}(x,\bm{r};\bm{p})
+  + \hat{\bm u}_{\rm R}(x,\bm{r};\bm{q}),
+\end{equation*}
+where the homogeneous solution \(\hat{\bm u}_{\rm R}\) is the rigid field \eqref{eq:rigid-field} with six free parameters \(\bm{q} \coloneq (\bm{q}_u,\bm{q}_\theta)\in\mathbb{R}^6\). 
+
+The traced fields \(\bm{z} = (\bm{u},\,\bm{\theta})\) for the Saint~Venant particular solution similarly read
+\begin{equation}
+\bm{z}(x) = \TraceDzDpX(x)\bm{p} + \bm{Q}(x)\bm{q}_g
+% \qquad\text{or}\qquad
+% \begin{aligned}
+%   \bm{u}(x) &= \bm{U}_T(x)\,\bm{p}
+%               + \bm{U}_{\rm R}(x)\,\bm{q},
+%   \\
+%   \bm{\theta}(x) &= \bm{Q}_T(x)\,\bm{p}
+%                   + \bm{Q}_{\rm R}\,\bm{q}.
+% \end{aligned}
+\label{eq:trace-z}
+\end{equation}
+
+\paragraph{Particular Solution}
+In view of the compatibility relation \(\bm{e}(x) = \mathbb{B}^*\bm{z}(x)\) and the affine strain property \eqref{eq:def-T0}, the particular trace map \(\TraceDzDpX(x)\) solves the initial value problem:
+\begin{equation}
+\left\{\begin{aligned}
+    \TraceDzDpX' + \mathbb{J}^{\top}\TraceDzDpX &= \mathbf{E}_{\rm p}(x) %\TraceDeDpRoot + x\TraceDeDpOne
+    \\
+    \TraceDzDpX(0) &= \mathbf{0}
+\end{aligned}\right.
+\label{eq:z-ivp}
+\end{equation}
+with \(\mathbf{E}_{\rm p}(x)\) established by \eqref{eq:def-T0}. 
+Integrating \eqref{eq:z-ivp} furnishes:
+\begin{equation}
+\begin{aligned}
+\TraceDzDpX(x) 
+% &= x\TraceDeDpRoot + \tfrac12 x^2 \TraceDeDpOne - \mathbb{J}^{\top}\left(\tfrac12 x^2 \TraceDeDpRoot + \tfrac16 x^3 \TraceDeDpOne\right) \\
+&=\left(x \mathbf{1}-\tfrac{1}{2} x^2 \mathbb{J}^{\top}\right) \mathbf{E}_T^{-1}+\left(\tfrac{1}{2} x^2 \mathbf{1}-\tfrac{1}{6} x^3 \mathbb{J}^{\top}\right) \mathbf{E}_T^{-1} \IesanEvolveSP\\
+ % &=\left(x \mathbf{1}-\tfrac{1}{2} x^2 \mathbb{J}^{\top}\right) \TraceDeDpRoot+\left(\tfrac{1}{2} x^2 \mathbf{1}-\tfrac{1}{6} x^3 \mathbb{J}^{\top}\right) \TraceDeDpRoot \TraceEvolveEP
+\end{aligned}
+\label{eq:trace-Z-of-T}
+\end{equation}
+\paragraph{Homogeneous Solution}
+The contribution of the rigid field to the traced variables is fixed by the
+plane--section property \eqref{eq:req-p1}. 
+Thus for any \(x\), $\bm{u}_{\mathrm{R}}+\bm{\theta}_{\mathrm{R}}\times\bm{r}\in\ker\mathbb{B}^*$ with:
+\begin{equation*}
+  \bm{u}_{\rm R}(x;\bm{q})
+  = \bm{q}_u
+  + \bm{q}_\theta \times x\FrameBasis% + \bm{q}_\theta \times\CenterTrace),
+  \qquad\text{and}\qquad
+  \bm{\theta}_{q}(x;\bm{q}) = \bm{q}_\theta,
+\end{equation*}
+since the trace evaluates the displacement at \(\bm{r} = \mathbf{0}\)
+and extracts the section--rigid rotation. 
+These relations are written compactly as
+\begin{equation*}
+\bm{z}_{q}(x) = (\bm{u}_{\rm R},\, \bm{\theta}_{\rm R}) = \bm{Q}(x)\bm{q}
+\end{equation*}
+with
+\begin{equation}
+  \bm{Q}(\reflenx)
+  \coloneq
+  \begin{bmatrix}
+    \mathbf{1} & \reflenx\FrameBasis^{\times} \\
+    \mathbf{0} & \mathbf{1}
+  \end{bmatrix},
+  \qquad\text{so}\qquad
+  \bm{Q}(\reflenx)^{-1}
+  =
+  \begin{bmatrix}
+    \mathbf{1} & -\reflenx\FrameBasis^{\times} \\
+    \mathbf{0} & ~~\mathbf{1}
+  \end{bmatrix},
+  \quad%\text{with}\quad
+  % \bm{x}_T(\reflenx)
+  % \coloneq \reflenx\FrameBasis + \CenterTrace.
+  \label{eq:def-z-delta}
+\end{equation}
+
+\paragraph{Boundaries.} 
+Consider the Dirichlet conditions
+\begin{equation*}
+  \bm{u}(x_u) = \bm{u}_*,
+  \qquad
+  \bm{\theta}(x_\theta) = \bm{\theta}_*
+\end{equation*}
+where \(x_u\) and \(x_\theta\) are the axial locations at which the displacement \(\bm{u}_*\) and rotation \(\bm{\theta}_*\) are prescribed. 
+With \eqref{eq:trace-z} this furnishes the linear system
+\begin{equation}
+  \bm{z}_* := \begin{pmatrix}
+    \bm{u}_* \\
+    \bm{\theta}_*
+  \end{pmatrix}
+  =
+  \TraceDzDpX^*(x_u,x_\theta)\bm{p}
+  +
+  \bm{Q}(x_u)\bm{q}.
+\label{eq:z-boundary}
+\end{equation}
+where \(\bm{Q}(x_u)\) is furnished by \eqref{eq:def-z-delta},  and \(\TraceDzDpX^*(x_u,x_{\theta})\) is expressed using \eqref{eq:trace-Z-of-T}:
+\begin{equation}
+\TraceDzDpX^*(x_u,x_\theta) := \One_{u}\TraceDzDpX(x_u) + \One_{\theta}\TraceDzDpX(x_{\theta})
+\qquad\text{with}\qquad
+\begin{aligned}
+\One_{u} &:=\begin{bmatrix}
+  \One & \Zero \\
+  \Zero & \Zero
+\end{bmatrix} \\
+\One_{\theta} &:= \begin{bmatrix}
+  \Zero & \Zero \\ 
+  \Zero & \One
+\end{bmatrix}.
+\end{aligned}
+\end{equation}
+By P1, the rigid part spans exactly the six infinitesimal rigid motions, and
+\(\bm{Q}(x_u)\in\mathrm{GL}(6)\) by construction. 
+When the imposed boundary conditions eliminate all global rigid freedoms, the six rigid parameters \(\bm{q}\) are furnished by solving \eqref{eq:z-boundary}:
+\begin{equation}
+  \bm{q}
+  = \bm{Q}(x_u)^{-1}\,\bm{z}_* - \bm{Q}(x_u)^{-1}\,\TraceDzDpX^*(x_u,x_\theta)\,\bm{p}.
+  \label{eq:delta-Dp-zx}
+\end{equation}
+
+\begin{Aside}
+
+A rigid rotation about the transverse axes is equivalent to a
+constant transverse displacement rate along
+\(x\).
+
+\[
+\frac{\mathrm{d}}{\mathrm{d}x} \bm{u}_\perp^{\rm rigid}
+=
+-\FrameBasis\times\,\bm{q}_{S,\theta\perp}
+\qquad\Longleftrightarrow\qquad
+\bm{q}_{S,\theta\perp}=\FrameBasis\times\,\bm{u}_\perp'.
+\]
+
+But the ``rigid mode hiding in \(\bm{\alpha}\)'' is precisely a transverse
+rate of magnitude \(\bm\gamma\). So matching the hidden rigid content gives
+\(
+q_{S,\theta\perp}=\FrameBasis\times\,\bm{\gamma}.
+\).
+
+Write the rigid field operator
+
+\[
+\hat{\bm Q}(x,\bm{r}) = \big[\,\mathbf{1},\ (x\FrameBasis+\bm{r})^{\times}\,\big]_{3\times 6},
+\qquad
+\hat{\bm u}_{\rm R}(\bm{q}) = \hat{\bm Q}(x,\bm{r})\,\bm{q},\quad \bm{q}=(q_u,q_\theta)\in\mathbb R^6.
+\]
+
+% \subsection{\texorpdfstring{A. The trace‑dependent rigid rotation is
+% always
+% \(\FrameBasis\times\bm\gamma\)}{A. The trace‑dependent rigid rotation is always \textbackslash mathbf\{i\}\textbackslash times\textbackslash bm\textbackslash gamma}}
+
+The rigid ``shear gauge'' kernel element of the 1D kinematics $\mathbb{B}^*=\mathbf{1}\partial_x+\mathbb{J}^{\top}$ is:
+
+\[
+\bm{z}_g(x):=\begin{pmatrix}
+\bm{u}_g \\ \bm\theta_g
+\end{pmatrix}
+=
+\begin{pmatrix} 
+x\,\bm\gamma \\ 
+\FrameBasis\times\bm\gamma
+\end{pmatrix}
+\,
+\qquad \bm\gamma\cdot\FrameBasis=0.
+\]
+
+where \(\bm\gamma\) is the transverse shear strain vector embedded in
+\(\mathbb R^3\).
+\begin{Details}
+Direct check:
+
+\[
+(\mathbf{1}\partial_x+\mathbb{J}^{\top})\,z_g
+=
+\binom{\bm\gamma}{0}+\binom{\FrameBasis\times(\FrameBasis\times\bm\gamma)}{0}
+=
+\binom{\bm\gamma-\bm\gamma}{0}
+=\mathbf 0,
+\]
+so \(z_g\in\ker\mathbb{B}^*\), hence it is a rigid motion. 
+\end{Details}
+In fact \(z_g\) is exactly the trace of the rigid motion with parameters 
+
+\begin{equation}
+\bm{q}_g:=(0,\ \FrameBasis\times\bm\gamma),
+\label{eq:y-q}
+\end{equation}
+
+because
+
+\[
+\hat{\bm Q}(x,\bm{r})\,\bm{q}_g
+=(\FrameBasis\times\bm\gamma)\times(x\FrameBasis+\bm{r})
+=
+x\,\bm\gamma+(\FrameBasis\times\bm\gamma)\times\bm{r}.
+\]
+
+\end{Aside}
+
+\begin{Aside}
+\textbf{1) Obtaining \(\bm{q}_{S}\) from the Dirichlet trace}
+
+Apply the trace (primary part) to the general solution \(\hat{\bm u}_{\rm P}(x,\bm{r};\,\IesanVector) + \hat{\bm u}_{\rm R}(x,\bm{r};\bm{q}_{S})\) \eqref{eq:general-solution} at \(x_*\). 
+Using linearity and (P1) on rigid fields:
+
+\[
+\bm{z}_*
+=\mathcal T_z[\hat{\bm u}_{\rm P}(\IesanVector)](x_*)+\mathcal T_z[\hat{\bm u}_{\rm R}(\bm{q}_{S})](x_*)
+=\mathcal T_z[\hat{\bm u}_{\rm P}(\IesanVector)](x_*)+\bm{Q}(x_*)\,\bm{q}_{S} .
+\]
+
+So
+
+\begin{equation}
+\bm{q}_{S}
+=\bm{Q}(x_*)^{-1}\Big(\bm{z}_*-\mathcal T_z[\hat{\bm u}_{\rm P}(\IesanVector)](x_*)\Big).
+\label{eq:A}
+\end{equation}
+
+The rest of the derivation is: compute \(\mathcal T_z[\hat{\bm u}_{\rm P}(\IesanVector)]\)
+on the SV family using the framework.
+
+\textbf{2) The hidden plane part \(y\) and the shear gauge identity}
+
+The lifting \eqref{eq:trace-lift-linear} is
+
+\[
+\hat{\bm u}_T = \hat{\bm R}(x,\bm{r})(\bm{z}+\bm{y})+\bm\Phi_v\bm{\alpha}_v,
+\]
+
+where \(\bm{y}=(\eta_u,\eta_{\theta})\) is the plane‑section content hidden in \(\bm{\alpha}\).
+
+% Your own SV‑compatibility identifications include the key one:
+
+% \[
+% \boxed{
+% \bm\alpha_r=-\bm\gamma.
+% }
+% \tag{B}
+% \]
+
+% This is exactly the statement ``the trace hides a plane‑section mode
+% parameterized by the shear strain \(\bm\gamma\)''.
+
+Now impose \textbf{material strain exactness}. 
+Moving content between \(\bm{z}\) and \(\bm\alpha_r\) must not change the material strain tensor; in
+particular it must not change the induced Saint‑Venant strain measures
+\(\bm{e}\). 
+Therefore the plane field contributed by \(\bm\alpha_r\) must lie in the kinematic nullspace
+
+\[
+\ker\mathbb{B}^*=\{\,\bm{z}(x):\ \mathbb{B}^*\bm{z}=\bm{0}\,\}
+\]
+
+The unique rigid (i.e.~\(\ker\mathbb{B}^*\)) plane field whose parameter
+is the transverse shear vector \(\bm\gamma\) is obtained by taking the
+rigid rotation \eqref{eq:y-q}. 
+because its trace is
+
+\[
+\bm{Q}(x)\,\bm{q}_g
+=
+\Big(- x\FrameBasis\times(\FrameBasis\times\bm\gamma),
+\ \FrameBasis\times\bm\gamma\Big)
+=
+\big(x\bm\gamma,\ \FrameBasis\times\bm{\gamma}\big),
+\]
+
+using \(\bm\gamma\cdot\FrameBasis=0\) so
+\(\FrameBasis\times(\FrameBasis\times\bm\gamma)=-\bm\gamma\). 
+Hence the plane part hidden in \(\bm\alpha\) is forced to be
+
+\begin{equation}
+\bm{y}(x)=\big(x\bm\gamma,\ \FrameBasis\times\bm{\gamma}\big)=\bm{Q}(x)\,\bm{q}_g,
+\label{eq:y-rigid}
+\end{equation}
+with \(\bm{q}_g\) given by \eqref{eq:y-q}.
+
+This is the consequence of \textbf{(i)} enforcing the Dirichlet
+trace on \(z\), \textbf{(ii)} allowing plane modes inside \(\bm\alpha\) via
+\(\alpha_r\), and \textbf{(iii)} demanding strain‑tensor exactness.
+Those three facts force the only admissible \(\bm\gamma\)‑dependent hidden
+plane field to be the rigid motion generated by rotation
+\(\FrameBasis\times\bm\gamma\).
+
+\textbf{4) Final general formula for \(\bm{q}_{S}\) from Dirichlet trace + trace matrix}
+
+The trace of the particular field splits (by SV‑compatibility) as
+
+\[
+\mathcal T_z[\hat{\bm u}_{\rm P}(\IesanVector)](x)
+=
+\bm{z}_{\rm P}^{\rm sec}(x;\,\IesanVector)\;-\;\bm{y}(x),
+\]
+
+because the traced plane part is \(\bm{z}+\bm{y}\) and must equal the
+Iesan plane part \(z_{\rm P}^{\rm sec}\), while \(\bm{y}\) is the hidden plane mode \eqref{eq:y-rigid}.
+
+Evaluate at \(x_*\) and substitute into \eqref{eq:A}:
+
+\[
+\bm{q}_{S}
+=\bm{Q}(x_*)^{-1}\Big(\bm{z}_0-\big(z_{\rm P}^{\rm sec}(x_*;\IesanVector)-\bm{y}(x_*)\big)\Big)
+=
+\bm{Q}(x_*)^{-1}\Big(\bm{z}_0-z_{\rm P}^{\rm sec}(x_*;\IesanVector)\Big) + \bm{Q}(x_*)^{-1} \bm{y}(x_*).
+\]
+
+Using \(\bm{y}(x_*)=\bm{Q}(x_*)\bm{q}_g\) from \eqref{eq:y-rigid} furnishes
+
+\[
+\boxed{
+\bm{q}_{S}
+=
+\bm{Q}(x_*)^{-1}\Big(\bm{z}_* - \bm{z}_{\rm P}^{\rm sec}(x_*;\,\IesanVector)\Big)\;+\;\bm{q}_g,
+}
+\tag{F}
+\]
+with \(\bm{q}_g\) given by \eqref{eq:y-q}. 
+In components, with
+\(\bm{Q}(x)^{-1}\) given by \eqref{eq:def-z-delta},
+\[
+\boxed{
+q_{S,\theta}=\bm\theta_0-\bm\theta_{\rm P}^{\rm sec}(x_*;\,\IesanVector) + \FrameBasis\times\bm\gamma,
+}
+\tag{G1}
+\]
+
+\[
+\boxed{
+q_{S,u}=\bm{u}_0 - u_{\rm P}^{\rm sec}(x_*;\,\IesanVector)
++ x_*\FrameBasis\times\big(\bm\theta_0-\bm\theta_{\rm P}^{\rm sec}(x_*;\,\IesanVector)\big).
+}
+\tag{G2}
+\]
+
+\end{Aside}
+
+\begin{Aside}
+\textbf{C. The completely general \(\bm{q}_{S}\in\mathbb R^6\)}
+
+Consider Dirichlet data imposed on the trace fields at \(x=x_*\):
+
+\[
+\bm{u}(x_*)=\bm{u}_0,
+\qquad
+\bm\theta(x_*)=\bm\theta_0.
+\]
+
+Let \((\bm{u}_{\rm P}^{\rm sec}(x_*;\,\IesanVector),\,\bm\theta_{\rm P}^{\rm sec}(x_*;\,\IesanVector))\)
+denote the plane‑section part of the Iesan particular field at that
+station.
+
+Then the rigid completion that aligns the trace‑reconstructed solution
+with the Iesan particular field is obtained by matching plane‑section
+content at \(x_*\) with the shear‑gauge kernel element \(\bm{z}_g(x)\):
+
+\[
+\bm\theta_{\rm P}^{\rm sec}(x_*;\,\IesanVector) + q_{S,\theta}
+=
+\bm\theta_0 + \underbrace{(\FrameBasis\times\bm\gamma)}_{\text{trace gauge}},
+\]
+
+\[u_{\rm P}^{\rm sec}(x_*;\,\IesanVector) + q_{S,u} + q_{S,\theta}\times(x_*\FrameBasis)
+=
+u_0 + \underbrace{x_*\,\bm\gamma}_{\text{trace gauge}}.
+\]
+
+So
+
+\[
+\boxed{
+q_{S,\theta}
+=
+\bm\theta_0 + \FrameBasis\times\bm\gamma 
+-\;\bm\theta_{\rm P}^{\rm sec}(x_*;\,\IesanVector),
+}
+\]
+
+\[\boxed{
+q_{S,u}
+=
+\bm{u}_0 + x_*\,\bm\gamma\;-\;\bm{u}_{\rm P}^{\rm sec}(x_*;\,\IesanVector)\;-\;q_{S,\theta}\times(x_*\FrameBasis).
+}
+\]
+\end{Aside}
+
+\inputdraft{Sections/56_RigidStrain}
+
+\subsubsection{Summary.}
+The Class I traces represent a family of beam theories parameterized by 18 constants which are all capable of exactly representing Saint~Venant solutions through Type 3 beam finite elements.
+
+The lifting \eqref{eq:trace-lift-linear} is the common kinematic interface for both regimes:
+(i) in Type~1 beam theories, $\bm\alpha(x)$ is retained as an independent field and a section model may be posed as
+$(\bm\gamma,\bm\kappa,\bm\alpha,\bm\alpha')\mapsto(\bm n,\bm m,\bm w,\bm v)$; (ii) in Type~3 theories, $\bm\alpha,\bm\alpha'$
+are eliminated and reconstructed internally from $\bm{e}=(\bm\gamma,\bm\kappa)$ through the Class~I trace data, after which the same
+generalized section operator can be called and its output condensed back to a $6$-vector consistent with the element equilibrium operator.
+
+In a Type 3 finite element simulation, the trace matrix \(\TraceDpDeRoot\) is incorporated into the section response through the elimination operators \(\RigidShift\) \eqref{eq:class-ii-Le} and \(\ShapeShift\) \eqref{eq:class-i-La}.
+This determines:
+\begin{itemize}
+    \item The scaling of the warping shapes \(\bm\Phi\),
+    \item How much of the plane-rigid content is carried by \(\bm{u},\bm{\theta}\)
+\end{itemize}
+Under all loadings in the Saint-Venant class \(\IesanMotions\) the element response exactly represents the continuum motion \(\hat{\bm u}\) through the lifting \eqref{eq:trace-lift-linear}.
+
+\begin{table}[H]
+\caption{Summary of symbols (Class I).}
+\label{tab:trace-symbols}
+\centering
+\begin{tabular}{@{}lllll@{}}
+    \toprule
+    Symbol &  & Definition & Comprises & \\ 
+    \midrule
+    $\snm$ & & & $N,\ShearForce,T,\bm{M}$ \\
+    $\mathbb{J}$ & & \eqref{eq:J-matrix} & $\FrameBasis^{\times}$ & \\ 
+    $\IesanStiff$ &  & \eqref{eq:G0-neg-m} & $\IntRoR$, $\CentroidLocation$ & \cref{tab:iesan-constants} \\ 
+    $\bm{p}$ & & \eqref{eq:def-iesan-vector} 
+      & \(a_{\varepsilon},\, \bm{a}_{\Section},\, a_{\vartheta},\, \bm{b}_{\Section}\) & \cref{tab:iesan-constants} \\
+    \LightRule
+    $\TraceDpDeRoot$ &  & \eqref{eq:T0-inv}  %\cref{prop:trace-matrix} %
+      & $\ShiftB$,$\ShiftA$,$\ShiftF$,$\ShiftK$,$\ShiftN$,$\ShiftNK$ 
+      & \cref{tab:T0-inv-blocks} \\
+    $\TraceEvolveEE$ & & \eqref{eq:def-T0} & \\ 
+    $\TraceStiffNM$ & & \eqref{eq:def-CT} & & \cref{tab:iesan-constants},\cref{tab:T0-inv-blocks}
+    \\[3pt] 
+    \hline \\[-8pt]
+    $\bar{\mathbf{C}}_T$ \\
+    $\IesanEnergy$ & 
+     % & \eqref{eq:def-iesan-energy} 
+     \\
+    \bottomrule
+\end{tabular}
+\end{table}

@@ -1,0 +1,137 @@
+
+\subsubsection{Class I}
+\iffalse
+A trace \(\mathcal{T}\) is strain-affine if the strain \(\bm{e}\) can be written in the form:
+\begin{equation}
+\bm{e}(x) 
+= \TraceDeDpRoot(\mathbf{1} + x\TraceEvolveEP)\bm{p}
+=(\mathbf{1} + x\TraceEvolveEE)\TraceDeDpRoot\bm{p}
+% \label{eq:def-T0}
+\end{equation}
+for some constant \(\TraceDeDpRoot\in\mathrm{GL}(6)\) and \(6\times6\) \(\TraceEvolveEP\).
+% \iffalse 
+% does this also require nilpotency of G_T?
+Equivalently, there exists an index-2 nilpotent \(\TraceEvolveEE\) such that 
+\[
+\bm{e}'(x) = \TraceEvolveEE\bm{e}(x)
+\]
+for all loads \(\bm{p}\) in the Saint Venant class.
+% \fi
+
+It will be useful to introduce the matrix \(\TraceDeDpOne\) defined by:
+\begin{equation*}
+    \TraceDeDpOne \coloneq \TraceDpDeRoot\TraceEvolveEP
+\end{equation*}
+\fi
+
+\subparagraph{D1}
+
+\begin{proposition}[D1]
+A trace \(\mathcal{T}\) is strain-exact under all Saint-Venant loads if and only if following (equivalent) conditions hold:
+\begin{align}
+    \TraceEvolveEP &\stackrel{\rm D1}{=} \IesanStiff^{-1}\mathbb{J}\IesanStiff \label{eq:e1-g} \\
+    \TraceEvolveEE &\stackrel{\rm D1}{=} \TraceDeDpRoot\IesanEvolveSP\TraceDeDpRoot^{-1} %\bm{C}^{-1}\mathbb{J}\bm{C}
+    % \label{eq:e1-j} 
+    \TraceDeDpRoot\IesanEvolveSP &\stackrel{\rm D1}{=} \IesanStiff^{-1}\mathbb{J}\IesanStiff \label{eq:e1-g} \\
+    \TraceEvolveEE &\stackrel{\rm D1}{=} 
+    \TraceDeDpRoot\IesanEvolveSP\TraceDeDpRoot^{-1} %\bm{C}^{-1}\mathbb{J}\bm{C}
+    \label{eq:e1-j} \\
+\end{align}
+% where with \eqref{eq:R0-matrix}:
+% \[
+% \mathbb{J}\IesanStiff = \begin{pmatrix}
+% \mathbf{0} & \mathbf{0} \\[4pt]
+% \mathbf{0} & -\FrameBasis^\times E\IntRGoRG
+% \end{pmatrix}
+% \]
+\end{proposition}
+The condition D1 reduces the space of traces to 36 parameters \(\TraceDeDpRoot\). 
+
+In general, the strains \(\bm{e}(x)\) corresponding to a trace \(\mathcal{T}\) can be linearly related to the section resultants \(\snm(x)\):
+\begin{equation*}
+\snm(x) = \bm{C}_T(x)\bm{e}(x)
+\qquad\text{where}\qquad 
+\bm{C}_T(x) := \partial_{\bm{e}}\snm(x)
+\end{equation*}
+Because the Saint-Venant class of \cref{sec:sv} is restricted to prismatic beams, 
+it is sensible to restrict the traces of interest to only those whose section stiffness \(\bm{C}_T\) is independent of $x$. 
+This restriction provides the practical benefit of limiting the traces under consideration to those whose section response are independent of the section location, and thus defined solely from the cross sectional geometry and material. 
+% A section stiffness matrix is \emph{homogeneous} if it is independent of the axial coordinate $x$. 
+% We seek conditions on the trace matrices $\TraceDeDpRoot$, 
+% $\TraceDeDpOne$ that ensure homogeneity.
+
+
+
+
+\subparagraph{C1}
+\begin{proposition}[C1: Resultant-Prismatic]
+The resultant stiffness $\TraceStiffNM$ is prismatic if and only if
+
+\begin{equation}
+\TraceStiffNM\TraceEvolveEE = \mathbb{J}\TraceStiffNM
+\label{eq:cj-cj}
+\end{equation}
+% \begin{equation}
+% \TraceEvolveEP \stackrel{\rm C1}{=} \IesanEvolveSP %\TraceDeDpOne \stackrel{\rm C1}{=} \TraceDeDpRoot\,\IesanEvolveSP, 
+% \qquad \text{where}\qquad
+% \IesanEvolveSP \coloneq \IesanStiff^{-1}\mathbb{J}\,\IesanStiff,
+% \label{eq:T1-from-T0}
+% \end{equation}
+in which case $\TraceStiffNM = \IesanStiff\,\TraceDpDeRoot$. 
+This condition is exactly equivalent to D1.
+\end{proposition}
+
+\begin{proof}
+The classical stiffness satisfies $\snm(x) = \TraceStiffNM(x)\,\bm{e}(x)$, giving:
+\begin{equation*}
+\TraceStiffNM(x) = (\mathbf{1} + x\mathbb{J})\,\IesanStiff\,
+(\mathbf{1} + x\TraceEvolveEP)^{-1}\,\TraceDpDeRoot,
+\end{equation*}
+where $\TraceEvolveEP \coloneq \TraceDpDeRoot\TraceDeDpOne$. For $\TraceStiffNM$ to be 
+$x$-independent:
+\begin{equation*}
+(\mathbf{1} + x\mathbb{J})\,\IesanStiff = \IesanStiff\,(\mathbf{1} + x\TraceEvolveEP) 
+\quad \forall x.
+\end{equation*}
+Matching coefficients of $x$: $\mathbb{J}\,\IesanStiff = \IesanStiff\,\TraceEvolveEP$, 
+hence $\TraceEvolveEP = \IesanStiff^{-1}\mathbb{J}\,\IesanStiff \equiv \IesanEvolveSP$.
+\end{proof}
+
+
+Next we impose a final restriction on Class I which reduces the space of traces under consideration to an 18 parameter family.
+
+\subparagraph{P1/T0}
+% \begin{definition}[P1. Plane Preservation]
+% A trace satisfies the \emph{plane section property} if for any continuum 
+% displacement that is rigid over the section,
+% $\hat{\bm{u}}_\omega = \bm{c} + \bm{\omega} \times \bm{r}$,
+% % \begin{equation}
+% % \mathcal{T}[\hat{\bm{u}}_\omega] = 
+% % \begin{pmatrix} 
+% % \hat{\bm{u}}_\omega(x,\CenterTrace) \\[2pt] \bm{\omega} \end{pmatrix}
+% % % \label{eq:plane-section-property}
+% % \end{equation}
+% \end{definition}
+
+\subsubsection{Class II}
+\begin{Aside}
+\begin{proposition}[C2. Conjugate Prismatic]
+The energetic tangent $\bar{\mathbf{C}}_T$ is prismatic if and only if:
+\begin{equation*}
+\mathbf{M}(x) \coloneq 
+(\mathbf{1} + x\IesanEvolveSP)(\mathbf{1} + x\TraceEvolveEP)^{-1} \in O(\IesanEnergy)
+\end{equation*}
+for all $x$.
+\end{proposition}
+
+\begin{proof}
+The energy stiffness in beam strain coordinates is:
+\begin{equation*}
+\bar{\mathbf{C}}_T(x) = \TraceDeDpRoot^{-\top}\,\mathbf{M}(x)^\top\, 
+\IesanEnergy \, \mathbf{M}(x)\,\TraceDpDeRoot.
+\end{equation*}
+This is $x$-independent if and only if 
+$\mathbf{M}(x)^\top \IesanEnergy\, \mathbf{M}(x) = \IesanEnergy$ 
+for all $x$, i.e., $\mathbf{M}(x) \in O(\IesanEnergy)$.
+\end{proof}
+\end{Aside}

@@ -1,0 +1,519 @@
+\subsubsection{The Energy-Conjugate (Renton-Romano) Trace}
+
+The energy-conjugate trace is defined by requiring that the beam strains 
+$(\bm{\gamma}, \bm{\kappa})$ be work-conjugate to the classical resultants 
+$(\bm{n}, \bm{m})$. 
+That is, for any variation $\delta\hat{\bm{u}}$ within the 
+Saint-Venant class:
+\begin{equation}
+\delta\bm{\gamma} \cdot \bm{n} + \delta\bm{\kappa} \cdot \bm{m} 
+= \int_\Section \delta\bm{\varepsilon} : \bm{\sigma} \, \mathrm{d}A.
+\label{eq:energy-conjugacy}
+\end{equation}
+
+We derive this trace by examining the structure of the Saint-Venant strain 
+field and identifying which strain measures satisfy \eqref{eq:energy-conjugacy}.
+
+\paragraph{Saint-Venant strain fields.}
+
+From \eqref{eq:iesan-point-strain}, the pointwise strains in a Saint-Venant 
+solution are:
+\begin{equation}
+    \bm{\varepsilon} = \underbrace{\begin{bmatrix}
+        \FrameBasis\otimes\FrameBasis & \FrameBasis\otimes\bm{r} & \FrameBasis\times\bm{r} + \nabla\WarpTwistIesan
+        & \mathbf{B}_{(b)}
+    \end{bmatrix}}_{:=\mathbf{B}}
+    \begin{pmatrix}
+        \epsilon_0 \\ \bm{\epsilon}_1\\ \varkappa \\ \bm{\beta}
+    \end{pmatrix}
+\label{eq:sv-shear-strain}
+\end{equation}
+where the local parameters are 
+$\hat{\bm{e}} = (\epsilon_0, \bm{\beta}, \hat{\varkappa}, \bm{\epsilon}_1) = \mathbf{X}^{-1}\,\bm{e}$ and 
+\begin{equation*}
+\mathbf{B}_{b} = (\nabla\WarpShearIesan)^T + \bm{W}_{(b)}^T
+\qquad\text{with}\qquad
+\bm{W}_{(b)} := -\nu\big(\mathrm{dev}(\bm{r} \otimes \bm{r}) 
+- \bm{r} \otimes \CentroidLocation\big).
+\end{equation*}
+
+For a linear elastic material with Young's modulus $E$ and shear modulus $G$:
+\begin{equation*}
+\sigma = E\,\PointAxialStrain, \qquad \bm{\tau} = G\,\PointShearStrain.
+\end{equation*}
+
+The resultant reactions are related to the Ieşan parameters through a linear map:
+\begin{equation}
+\begin{pmatrix} 
+N  \\ \ShearForce \\  T \\ \bm{M} 
+\end{pmatrix}
+= -\IesanMatrix \, \IesanVector
+= -\begin{pmatrix}
+EA & EA\CentroidLocation^\top & 0 & \mathbf{0}_{1\times2} \\
+\mathbf{0}_{2\times1} & \mathbf{0}_{2\times2} & \mathbf{0}_{2\times1} & E\IntRGoRG \\
+0 & \mathbf{0}_{1\times 2} & G\Jsv & \mathbf{0}_{1\times2} \\
+EA \FrameBasis\times\CentroidLocation & \FrameBasis\times E\IntRoR & \mathbf{0}_{2\times 1} & \mathbf{0}_{2\times2} \\
+\end{pmatrix}
+\label{eq:resultant-map}
+\end{equation}
+where the \emph{resultant matrix} $\IesanMatrix \in \mathbb{R}^{6 \times 6}$ 
+encodes the Saint-Venant constitutive relations  \eqref{eq:2-15} and \eqref{eq:2-18}.
+$$
+\IesanMatrix^{-1} =
+\begin{pmatrix}
+\displaystyle \frac{1}{EA} + \CentroidLocation\cdot (E\IntRGoRG)^{-1}\,\CentroidLocation
+& \mathbf{0}_{1\times2}
+& 0
+& \CentroidLocation^\top (E\IntRGoRG)^{-1}\,\FrameBasis^\times
+\\[6pt]
+-(E\IntRGoRG)^{-1}\,\CentroidLocation
+& \mathbf{0}_{2\times2}
+& \mathbf{0}_{2\times1}
+& -(E\IntRGoRG)^{-1}\,\FrameBasis^\times
+\\[6pt]
+0
+& \mathbf{0}_{1\times2}
+& \displaystyle \frac{1}{G\Jsv}
+& \mathbf{0}_{1\times2}
+\\[6pt]
+\mathbf{0}_{2\times1}
+& \bigl(E\IntRGoRG\bigr)^{-1}
+& \mathbf{0}_{2\times1}
+& \mathbf{0}_{2\times2}
+\end{pmatrix}
+$$
+
+Thus the energetic trace is defined by the condition:
+\[
+\IesanMatrix \mathbf{X}^{-1} = \mathbf{X}^{-T}\underbrace{\int \mathbf{B}^T\mathbb{C}\mathbf{B}\dA}_{:=\bar{\mathbf{C}}} \mathbf{X}^{-1}
+\quad\implies\quad 
+\mathbf{X}^{-1} = \IesanMatrix^{-1} \bar{\mathbf{C}}^T
+\]
+with 
+\[
+\mathbb{C} := E\FrameBasis\otimes\FrameBasis + G\FrameBasis_{\alpha}\otimes\FrameBasis_{\alpha}
+\]
+Recall \eqref{eq:bishear-b-tensor}:
+\begin{equation*}
+\BishearTensorBB := \int\bm{W}_{(b)}^{\!\top}\,G\,\mathbf{B}_{(b)}\dA,
+\qquad\text{and}\qquad 
+\BishearTensorPB := \int\nabla\bm{\WarpShearIesan}\,G\,\mathbf{B}_{(b)}\dA
+\end{equation*}
+
+\paragraph{Work-conjugacy conditions.}
+
+The virtual work of the section is:
+\begin{equation}
+\delta W = \int_\Section \delta\PointAxialStrain\,\sigma \, \mathrm{d}A 
++ \int_\Section \delta\PointShearStrain \cdot \bm{\tau} \, \mathrm{d}A.
+\label{eq:virtual-work}
+\end{equation}
+
+We seek beam strains $(\epsilon, \bm{\gamma}_\perp, \varkappa, \bm{\kappa}_\perp)$ 
+such that:
+\begin{equation}
+\delta W = \delta\epsilon\,N + \delta\bm{\gamma}_\perp \cdot \bm{F} 
++ \delta\varkappa\,T + \delta\bm{\kappa}_\perp \cdot \bm{M}.
+\label{eq:conjugacy-target}
+\end{equation}
+
+We analyze each Ieşan mode separately.
+
+\subparagraph{Extension.}
+
+Consider $\delta a_\varepsilon \neq 0$ with all other parameters zero:
+\begin{equation*}
+\delta\PointAxialStrain = \delta a_\varepsilon, \qquad \delta\PointShearStrain = \mathbf{0}.
+\end{equation*}
+The virtual work is:
+\begin{equation*}
+\delta W = \delta a_\varepsilon \int_\Section \sigma \, \mathrm{d}A = \delta a_\varepsilon\,N.
+\end{equation*}
+Matching with \eqref{eq:conjugacy-target} requires:
+\begin{equation*}
+\boxed{\epsilon^{(\varepsilon)} = a_\varepsilon}
+\end{equation*}
+
+\subparagraph{Bending.}
+
+Consider $\delta\bm{a}_\Omega \neq \mathbf{0}$ with all other parameters zero:
+\begin{equation*}
+\delta\PointAxialStrain = \bm{r} \cdot \delta\bm{a}_\Omega, \qquad \delta\PointShearStrain = \mathbf{0}.
+\end{equation*}
+The virtual work is:
+\begin{equation*}
+\delta W = \int_\Section (\bm{r} \cdot \delta\bm{a}_\Omega)\,\sigma \, \mathrm{d}A 
+= \delta\bm{a}_\Omega \cdot \int_\Section \bm{r}\,\sigma \, \mathrm{d}A.
+\end{equation*}
+
+From the definition \eqref{eq:def-M}:
+\begin{equation*}
+\bm{M} = \FrameBasis \times \int_\Section \bm{r}\,\sigma \, \mathrm{d}A 
+\quad\Longrightarrow\quad 
+\int_\Section \bm{r}\,\sigma \, \mathrm{d}A = -\FrameBasis \times \bm{M} = \bm{M} \times \FrameBasis.
+\end{equation*}
+Thus:
+\begin{equation*}
+\delta W = \delta\bm{a}_\Omega \cdot (\bm{M} \times \FrameBasis) 
+= (\delta\bm{a}_\Omega \times \bm{M}) \cdot \FrameBasis 
+= -(\FrameBasis \times \delta\bm{a}_\Omega) \cdot \bm{M}.
+\end{equation*}
+
+For this to equal $\delta\bm{\kappa}_\perp \cdot \bm{M}$, we need:
+\begin{equation*}
+\boxed{\bm{\kappa}_\perp^{(a)} = -\FrameBasis \times \bm{a}_\Omega = -\FrameBasis^\times\,\bm{a}_\Omega}
+\end{equation*}
+
+\subparagraph{Torsion.}
+
+Consider $\delta a_\vartheta \neq 0$ with all other parameters zero:
+\begin{equation*}
+\delta\PointAxialStrain = 0, \qquad 
+\delta\PointShearStrain = \delta a_\vartheta\,(\FrameBasis \times \bm{r} + \nabla\WarpTwistIesan).
+\end{equation*}
+The virtual work is:
+\begin{align*}
+\delta W &= \int_\Section \delta a_\vartheta\,(\FrameBasis \times \bm{r} + \nabla\WarpTwistIesan) \cdot \bm{\tau} \, \mathrm{d}A \\
+&= \delta a_\vartheta \int_\Section (\FrameBasis \times \bm{r}) \cdot \bm{\tau} \, \mathrm{d}A 
++ \delta a_\vartheta \int_\Section \nabla\WarpTwistIesan \cdot \bm{\tau} \, \mathrm{d}A.
+\end{align*}
+
+The first integral is $T$ by definition \eqref{eq:def-T}. For the second integral, 
+we use the identity $\nabla \cdot (\WarpTwistIesan\,\bm{\tau}) = \nabla\WarpTwistIesan \cdot \bm{\tau} + \WarpTwistIesan\,\nabla \cdot \bm{\tau}$ 
+and the divergence theorem:
+\begin{equation*}
+\int_\Section \nabla\WarpTwistIesan \cdot \bm{\tau} \, \mathrm{d}A 
+= \oint_{\partial\Section} \WarpTwistIesan\,(\bm{\tau} \cdot \bm{\nu}) \, \mathrm{d}s 
+- \int_\Section \WarpTwistIesan\,(\nabla \cdot \bm{\tau}) \, \mathrm{d}A = 0,
+\end{equation*}
+since $\bm{\tau} \cdot \bm{\nu} = 0$ on $\partial\Section$ (traction-free lateral surface) 
+and $\nabla \cdot \bm{\tau} = 0$ (equilibrium in absence of body forces).
+
+Thus $\delta W = \delta a_\vartheta\,T$, and matching requires:
+\begin{equation}
+\varkappa^{(\vartheta)} = a_\vartheta
+\label{eq:conj-twist-torsion}
+\end{equation}
+
+\subparagraph{Flexure.}
+
+This is the most involved case. Consider $\delta\bm{b}_{\Section} \neq \mathbf{0}$ with 
+all other parameters zero:
+\begin{align}
+\delta\PointAxialStrain &= x\,(\bm{r} - \CentroidLocation) \cdot \delta\bm{b}_{\Section}, 
+\label{eq:var-axial-flexure} \\
+\delta\PointShearStrain &= \delta c_\vartheta\,(\FrameBasis \times \bm{r} + \nabla\WarpTwistIesan) 
++ \bm{W}_{(b)}\,\delta\bm{b}_{\Section} + (\nabla\bm{\WarpShearIesan})^\top\,\delta\bm{b}_{\Section},
+\label{eq:var-shear-flexure}
+\end{align}
+where $\delta c_\vartheta = \CenterShearLocation \cdot \delta\bm{b}_{\Section}$.
+
+\emph{Axial contribution.} From \eqref{eq:var-axial-flexure}:
+\begin{align*}
+\delta W_\sigma &= \int_\Section x\,(\bm{r} - \CentroidLocation) \cdot \delta\bm{b}_{\Section}\,\sigma \, \mathrm{d}A \\
+&= x\,\delta\bm{b}_{\Section} \cdot \int_\Section (\bm{r} - \CentroidLocation)\,\sigma \, \mathrm{d}A \\
+&= x\,\delta\bm{b}_{\Section} \cdot \left( \int_\Section \bm{r}\,\sigma \, \mathrm{d}A 
+- \CentroidLocation \int_\Section \sigma \, \mathrm{d}A \right) \\
+&= x\,\delta\bm{b}_{\Section} \cdot \left( \bm{M} \times \FrameBasis - \CentroidLocation\,N \right).
+\end{align*}
+
+Rearranging:
+\begin{equation}
+\delta W_\sigma = -x\,(\FrameBasis \times \delta\bm{b}_{\Section}) \cdot \bm{M} 
+- x\,(\CentroidLocation \cdot \delta\bm{b}_{\Section})\,N.
+\label{eq:axial-work-flexure}
+\end{equation}
+
+\emph{Shear contribution.} From \eqref{eq:var-shear-flexure}:
+\begin{align}
+\delta W_\tau &= \int_\Section \delta\PointShearStrain \cdot \bm{\tau} \, \mathrm{d}A \notag \\
+&= \delta c_\vartheta \int_\Section (\FrameBasis \times \bm{r} + \nabla\WarpTwistIesan) \cdot \bm{\tau} \, \mathrm{d}A 
++ \delta\bm{b}_{\Section} \cdot \int_\Section \bm{W}_{(b)}^\top\,\bm{\tau} \, \mathrm{d}A \notag \\
+&\quad + \delta\bm{b}_{\Section} \cdot \int_\Section \nabla\bm{\WarpShearIesan}\,\bm{\tau} \, \mathrm{d}A.
+\label{eq:shear-work-flexure-1}
+\end{align}
+
+The first integral: By the same argument as for torsion (using $\bm{\tau} \cdot \bm{\nu} = 0$ 
+and $\nabla \cdot \bm{\tau} = 0$), the $\nabla\WarpTwistIesan$ term vanishes:
+\begin{equation*}
+\int_\Section (\FrameBasis \times \bm{r} + \nabla\WarpTwistIesan) \cdot \bm{\tau} \, \mathrm{d}A = T.
+\end{equation*}
+
+The third integral: Using integration by parts on each column of $\bm{\WarpShearIesan}$:
+\begin{equation*}
+\int_\Section \nabla\WarpShearIesan_\alpha\,\bm{\tau} \, \mathrm{d}A 
+= \oint_{\partial\Section} \WarpShearIesan_\alpha\,(\bm{\tau} \cdot \bm{\nu}) \, \mathrm{d}s 
+- \int_\Section \WarpShearIesan_\alpha\,(\nabla \cdot \bm{\tau}) \, \mathrm{d}A = \mathbf{0}.
+\end{equation*}
+Thus $\int_\Section \nabla\bm{\WarpShearIesan}\,\bm{\tau} \, \mathrm{d}A = \mathbf{0}$.
+
+Substituting back:
+\begin{equation}
+\delta W_\tau = (\CenterShearLocation \cdot \delta\bm{b}_{\Section})\,T 
++ \delta\bm{b}_{\Section} \cdot \int_\Section \bm{W}_{(b)}^\top\,\bm{\tau} \, \mathrm{d}A.
+\label{eq:shear-work-flexure-2}
+\end{equation}
+
+\emph{Total virtual work from flexure.} Combining \eqref{eq:axial-work-flexure} 
+and \eqref{eq:shear-work-flexure-2}:
+\begin{align}
+\delta W^{(b)} &= -x\,(\CentroidLocation \cdot \delta\bm{b}_{\Section})\,N 
+- x\,(\FrameBasis \times \delta\bm{b}_{\Section}) \cdot \bm{M} \notag \\
+&\quad + (\CenterShearLocation \cdot \delta\bm{b}_{\Section})\,T 
++ \delta\bm{b}_{\Section} \cdot \int_\Section \bm{W}_{(b)}^\top\,\bm{\tau} \, \mathrm{d}A.
+\label{eq:total-work-flexure}
+\end{align}
+
+\emph{Matching with conjugacy condition.} We require:
+\begin{equation}
+\delta W^{(b)} = \delta\epsilon^{(b)}\,N + \delta\bm{\gamma}_\perp^{(b)} \cdot \bm{F} 
++ \delta\varkappa^{(b)}\,T + \delta\bm{\kappa}_\perp^{(b)} \cdot \bm{M}.
+\label{eq:match-flexure}
+\end{equation}
+
+Comparing term by term:
+\begin{itemize}
+\item Coefficient of $N$: $\delta\epsilon^{(b)} = -x\,(\CentroidLocation \cdot \delta\bm{b}_{\Section})$
+\item Coefficient of $\bm{M}$: $\delta\bm{\kappa}_\perp^{(b)} = -x\,(\FrameBasis \times \delta\bm{b}_{\Section})$
+\item Coefficient of $T$: $\delta\varkappa^{(b)} = \CenterShearLocation \cdot \delta\bm{b}_{\Section}$
+\item Coefficient of $\bm{F}$: This requires careful treatment of the remaining term.
+\end{itemize}
+
+The remaining term is $\delta\bm{b}_{\Section} \cdot \int_\Section \bm{W}_{(b)}^\top\,\bm{\tau} \, \mathrm{d}A$. 
+For this to equal $\delta\bm{\gamma}_\perp^{(b)} \cdot \bm{F}$, we need to express 
+it in terms of the shear force $\bm{F} = \int_\Section \bm{\tau} \, \mathrm{d}A$.
+
+Define the \emph{Poisson-shear tensor}:
+\begin{equation}
+\mathbf{P} := \int_\Section \bm{W}_{(b)}^\top\,\bm{\tau} \, \mathrm{d}A 
+\quad \in \mathbb{R}^2,
+\label{eq:def-P}
+\end{equation}
+which depends on the stress state $\bm{\tau}$. Under flexure loading, 
+$\bm{\tau} = G\,\PointShearStrain^{(b)}$ where:
+\begin{equation*}
+\PointShearStrain^{(b)} = c_\vartheta\,(\FrameBasis \times \bm{r} + \nabla\WarpTwistIesan) 
++ \bm{W}_{(b)}\,\bm{b}_{\Section} + (\nabla\bm{\WarpShearIesan})^\top\,\bm{b}_{\Section}.
+\end{equation*}
+
+The shear force under flexure is:
+\begin{align}
+\bm{F} &= G \int_\Section \PointShearStrain^{(b)} \, \mathrm{d}A \notag \\
+&= G\,c_\vartheta \int_\Section (\FrameBasis \times \bm{r} + \nabla\WarpTwistIesan) \, \mathrm{d}A 
++ G \int_\Section \bm{W}_{(b)} \, \mathrm{d}A\,\bm{b}_{\Section} 
++ G \int_\Section (\nabla\bm{\WarpShearIesan})^\top \, \mathrm{d}A\,\bm{b}_{\Section}.
+\label{eq:F-flexure}
+\end{align}
+
+Using $\int_\Section (\FrameBasis \times \bm{r}) \, \mathrm{d}A = A\,(\FrameBasis \times \CentroidLocation)$ 
+and noting that $\int_\Section \nabla\WarpTwistIesan \, \mathrm{d}A = \oint_{\partial\Section} \WarpTwistIesan\,\bm{\nu} \, \mathrm{d}s$ 
+(which need not vanish), define:
+\begin{align}
+\bm{q}_\varphi &:= \int_\Section (\FrameBasis \times \bm{r} + \nabla\WarpTwistIesan) \, \mathrm{d}A, 
+\label{eq:def-q-phi} \\
+\mathbf{Q}_W &:= \int_\Section \bm{W}_{(b)} \, \mathrm{d}A = A\,\SectionAverage{\bm{W}_{(b)}}, 
+\label{eq:def-Q-W} \\
+\mathbf{Q}_\psi &:= \int_\Section (\nabla\bm{\WarpShearIesan})^\top \, \mathrm{d}A.
+\label{eq:def-Q-psi}
+\end{align}
+
+Then:
+\begin{equation}
+\bm{F} = G\,c_\vartheta\,\bm{q}_\varphi + G\,(\mathbf{Q}_W + \mathbf{Q}_\psi)\,\bm{b}_{\Section} 
+= G\,(\CenterShearLocation \cdot \bm{b}_{\Section})\,\bm{q}_\varphi + G\,\mathbf{Q}\,\bm{b}_{\Section},
+\label{eq:F-flexure-compact}
+\end{equation}
+where $\mathbf{Q} := \mathbf{Q}_W + \mathbf{Q}_\psi \in \mathbb{R}^{3 \times 2}$.
+
+\emph{The shear conjugacy problem.} We need $\delta\bm{\gamma}_\perp^{(b)} \cdot \bm{F}$ 
+to equal $\delta\bm{b}_{\Section} \cdot \mathbf{P}$. 
+This is a compatibility condition 
+between the shear strain definition and the Poisson-shear coupling.
+
+In general, $\mathbf{P}$ and $\bm{F}$ are not simply related by a constant tensor 
+acting on $\delta\bm{b}_{\Section}$. However, we can define the energy-conjugate shear 
+strain implicitly.
+
+Write:
+\begin{equation}
+\delta\bm{b}_{\Section} \cdot \mathbf{P} = \delta\bm{b}_{\Section} \cdot \mathbf{P}(\bm{b}_{\Section}),
+\end{equation}
+where $\mathbf{P}(\bm{b}_{\Section})$ is linear in $\bm{b}_{\Section}$ through the stress $\bm{\tau}$.
+
+For the constitutive relation to be symmetric, we require:
+\begin{equation}
+\bm{\gamma}_\perp^{(b)} = \mathbf{K}^{-1}\,\bm{F},
+\label{eq:romano-shear-def}
+\end{equation}
+where $\mathbf{K}$ is the shear stiffness tensor defined by $\bm{F} = \mathbf{K}\,\bm{\gamma}_\perp$.
+
+From \eqref{eq:F-flexure-compact}, the shear force is linear in $\bm{b}_{\Section}$:
+\begin{equation}
+\bm{F} = \mathbf{R}\,\bm{b}_{\Section}, \qquad 
+\mathbf{R} := G\,(\bm{q}_\varphi \otimes \CenterShearLocation + \mathbf{Q}).
+\label{eq:F-R-relation}
+\end{equation}
+
+For energy conjugacy with symmetric stiffness, Romano defines:
+\begin{equation}
+\bm{\gamma}_\perp^{(b)} := \mathbf{K}^{-1}\,\mathbf{R}\,\bm{b}_{\Section},
+\label{eq:ec-shear-final}
+\end{equation}
+where the shear stiffness $\mathbf{K}$ is determined by the requirement that 
+the strain energy $\frac{1}{2}\bm{\gamma}_\perp \cdot \bm{F}$ equals the actual 
+shear strain energy $\frac{1}{2}\int_\Section \PointShearStrain \cdot \bm{\tau} \, \mathrm{d}A$.
+
+This gives:
+\begin{equation}
+\mathbf{K} = \mathbf{R}\,\mathbf{H}^{-1}\,\mathbf{R}^\top,
+\label{eq:K-formula}
+\end{equation}
+where $\mathbf{H}$ is the shear energy tensor:
+\begin{equation}
+\mathbf{H} := G \int_\Section \PointShearStrain^{(b)} \otimes \PointShearStrain^{(b)} \, \mathrm{d}A 
+\bigg|_{\bm{b}_{\Section} = \text{unit}}.
+\label{eq:def-H}
+\end{equation}
+
+Substituting \eqref{eq:K-formula} into \eqref{eq:ec-shear-final}:
+\begin{equation}
+\boxed{\bm{\gamma}_\perp^{(b)} = \mathbf{H}^{-1}\,\mathbf{R}^\top\,(\mathbf{R}\,\mathbf{H}^{-1}\,\mathbf{R}^\top)^{-1}\,\mathbf{R}\,\bm{b}_{\Section} 
+= \mathbf{H}^{-1}\,\mathbf{R}^\top\,\bm{\lambda}}
+\label{eq:ec-shear-explicit}
+\end{equation}
+where $\bm{\lambda}$ is a Lagrange multiplier enforcing the force-strain relation.
+
+For the simpler case where we directly define shear strain from the force:
+\begin{equation}
+\boxed{\bm{\gamma}_\perp^{(b)} = \mathbf{K}^{-1}\,\bm{F} = \mathbf{K}^{-1}\,\mathbf{R}\,\bm{b}_{\Section}}
+\end{equation}
+
+\paragraph{Summary of energy-conjugate strains.}
+
+Collecting results from all modes:
+\begin{align}
+\epsilon &= a_\varepsilon - x\,(\CentroidLocation \cdot \bm{b}_{\Section}), 
+\label{eq:ec-axial-final} \\
+\bm{\gamma}_\perp &= \mathbf{K}^{-1}\,\mathbf{R}\,\bm{b}_{\Section}, 
+\label{eq:ec-shear-final2} \\
+\varkappa &= a_\vartheta + \CenterShearLocation \cdot \bm{b}_{\Section}, 
+\label{eq:ec-twist-final} \\
+\bm{\kappa}_\perp &= -\FrameBasis^\times\,\bm{a}_\Omega - x\,(\FrameBasis \times \bm{b}_{\Section}).
+\label{eq:ec-curv-final}
+\end{align}
+
+\paragraph{Assembly of trace matrices.}
+
+The beam strains $\bm{e}(x) = (\epsilon, \bm{\gamma}_\perp, \varkappa, \bm{\kappa}_\perp)^\top$ 
+satisfy:
+\begin{equation}
+\bm{e}(x) = \TraceDeDpRoot\,\bm{p} + x\,\TraceDeDpOne\,\bm{p},
+\end{equation}
+with $\bm{p} = (a_\varepsilon, \bm{a}_\Omega, a_\vartheta, \bm{b}_{\Section})^\top$ and:
+
+\begin{equation}
+\TraceDeDpRoot = \begin{pmatrix}
+1 & \mathbf{0}^\top & 0 & \mathbf{0}^\top \\[4pt]
+\mathbf{0} & \mathbf{0} & \mathbf{0} & \mathbf{K}^{-1}\mathbf{R} \\[4pt]
+0 & \mathbf{0}^\top & 1 & \CenterShearLocation^\top \\[4pt]
+\mathbf{0} & -\FrameBasis^\times & \mathbf{0} & \mathbf{0}
+\end{pmatrix}
+\label{eq:T0-romano-final}
+\end{equation}
+
+\begin{equation}
+\TraceDeDpOne = \begin{pmatrix}
+0 & \mathbf{0}^\top & 0 & -\CentroidLocation^\top \\[4pt]
+\mathbf{0} & \mathbf{0} & \mathbf{0} & \mathbf{0} \\[4pt]
+0 & \mathbf{0}^\top & 0 & \mathbf{0}^\top \\[4pt]
+\mathbf{0} & \mathbf{0} & \mathbf{0} & -\FrameBasis^\times
+\end{pmatrix}
+\label{eq:T1-romano-final}
+\end{equation}
+
+\paragraph{Warping index.}
+
+The stacked matrix is:
+\begin{equation}
+\mathbf{T}_{\rm stack} = \begin{pmatrix} \TraceDeDpRoot \\ \TraceDeDpOne \end{pmatrix} 
+\in \mathbb{R}^{12 \times 6}.
+\end{equation}
+
+Column analysis:
+\begin{itemize}
+\item $a_\varepsilon$: Column $(1, \mathbf{0}, 0, \mathbf{0}; 0, \mathbf{0}, 0, \mathbf{0})^\top$ — rank 1.
+\item $\bm{a}_\Omega$: Columns with $-\FrameBasis^\times$ in curvature block — rank 2.
+\item $a_\vartheta$: Column $(0, \mathbf{0}, 1, \mathbf{0}; 0, \mathbf{0}, 0, \mathbf{0})^\top$ — rank 1.
+\item $\bm{b}_{\Section}$: In $\TraceDeDpRoot$: $\mathbf{K}^{-1}\mathbf{R}$ (shear) and $\CenterShearLocation^\top$ (twist). 
+In $\TraceDeDpOne$: $-\CentroidLocation^\top$ (axial) and $-\FrameBasis^\times$ (curvature).
+\end{itemize}
+
+The $\bm{b}_{\Section}$ columns contribute rank 2 through $\TraceDeDpOne$ (via $-\FrameBasis^\times$), 
+independent of the contributions from $\bm{a}_\Omega$ (which appear in different rows 
+of the stacked matrix).
+
+\begin{proposition}[Warping index of energy-conjugate trace]
+\label{prop:warp-index-romano-final}
+For sections with non-degenerate geometry, the energy-conjugate trace has 
+warping index:
+\begin{equation}
+w = 6 - \mathrm{rank}(\mathbf{T}_{\rm stack}) = 0.
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+The six columns of $\mathbf{T}_{\rm stack}$ are:
+\begin{enumerate}
+\item $a_\varepsilon$: Nonzero in row 1 of $\TraceDeDpRoot$.
+\item $a_{\Omega,1}$: Nonzero in rows 5--6 of $\TraceDeDpRoot$ (via $-\FrameBasis^\times$).
+\item $a_{\Omega,2}$: Nonzero in rows 5--6 of $\TraceDeDpRoot$ (via $-\FrameBasis^\times$).
+\item $a_\vartheta$: Nonzero in row 3 of $\TraceDeDpRoot$.
+\item $b_{\Omega,1}$: Nonzero in row 1 of $\TraceDeDpOne$ (via $-\CentroidLocation^\top$) 
+and rows 11--12 of $\TraceDeDpOne$ (via $-\FrameBasis^\times$).
+\item $b_{\Omega,2}$: Same structure as $b_{\Omega,1}$.
+\end{enumerate}
+These columns are linearly independent for generic $\CentroidLocation \neq \mathbf{0}$ 
+(non-centroidal origin), giving $\mathrm{rank}(\mathbf{T}_{\rm stack}) = 6$.
+
+For centroidal coordinates ($\CentroidLocation = \mathbf{0}$), the $\bm{b}_{\Section}$ columns 
+still contribute through $-\FrameBasis^\times$ in $\TraceDeDpOne$ and $\mathbf{K}^{-1}\mathbf{R}$ 
+in $\TraceDeDpRoot$, maintaining full rank.
+\end{proof}
+
+\begin{remark}[Constitutive symmetry]
+By construction, the energy-conjugate trace yields a symmetric section 
+stiffness matrix:
+\begin{equation}
+\bm{s} = \mathbf{C}\,\bm{e}, \qquad \mathbf{C} = \mathbf{C}^\top,
+\end{equation}
+where $\bm{s} = (N, \bm{F}, T, \bm{M})^\top$. This follows from the variational 
+derivation: the strains are defined as derivatives of the complementary 
+energy with respect to the resultants.
+\end{remark}
+
+\begin{remark}[Comparison with section-average trace]
+The two traces yield identical results for:
+\begin{itemize}
+\item Axial strain from extension: $\epsilon^{(\varepsilon)} = a_\varepsilon$
+\item Curvature from bending: $\bm{\kappa}_\perp^{(a)} = -\FrameBasis^\times\,\bm{a}_\Omega$
+\item Twist from torsion: $\varkappa^{(\vartheta)} = a_\vartheta$
+\item Curvature from flexure: $\bm{\kappa}_\perp^{(b)} = -x\,(\FrameBasis \times \bm{b}_{\Section})$
+\end{itemize}
+They differ in:
+\begin{itemize}
+\item Shear strain from flexure: section-average gives $\bm{\Gamma}_0\,\bm{b}_{\Section}$; 
+energy-conjugate gives $\mathbf{K}^{-1}\mathbf{R}\,\bm{b}_{\Section}$.
+\item Twist from flexure: section-average includes additional coupling terms; 
+energy-conjugate gives $\CenterShearLocation \cdot \bm{b}_{\Section}$.
+\end{itemize}
+The difference is a gauge transformation that preserves the warping index 
+but changes the constitutive coupling structure.
+\end{remark}
+
+\begin{remark}[Plane-section property]
+The energy-conjugate trace does not satisfy the plane-section property. 
+For a section-rigid displacement $\hat{\bm{u}} = \bm{a} + \bm{\omega} \times \bm{r}$, 
+the extracted beam strains $(\bm{\gamma}, \bm{\kappa})$ are not generally 
+$(\bm{a}' + \FrameBasis \times \bm{\omega}, \bm{\omega}')$ evaluated at a consistent 
+reference point. 
+\end{remark}

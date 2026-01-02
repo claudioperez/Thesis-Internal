@@ -1,0 +1,209 @@
+%
+
+\newif\ifthesis 
+\newif\iffinal 
+\thesisfalse
+\finalfalse
+
+\newif\ifnotes
+\notesfalse
+% \notestrue
+%
+
+\newcommand{\InputDetail}[1]{\input{#1}}
+\ifthesis
+\InputDetail{Style/Thesis}
+\renewcommand{\gls}[1]{#1} % TODO
+\else 
+\input{Style/Article}
+\newcommand{\gls}[1]{#1} % TODO
+\fi
+
+\input{notation}
+\InputDetail{notation/armero}
+\InputDetail{Macros/FrameSection}
+
+% \InputDetail{Style/Syntax}
+\InputDetail{Style/Notes}
+\InputDetail{Style/Tikz}
+\InputDetail{Style/Units}
+\InputDetail{Style/SaveMath}
+% \InputDetail{Style/Draft/Warning}
+
+
+\input{meta}
+
+\addbibresource{References/references.bib}
+\addbibresource{References/warping.bib}
+\addbibresource{References/bridges.bib}
+\addbibresource{References/elastostatics.bib}
+\addbibresource{References/filippou.bib}
+\addbibresource{References/cosserat.bib}
+\addbibresource{References/concrete.bib}
+\addbibresource{References/rotations.bib}
+\addbibresource{References/resume.bib}
+\addbibresource{References/mechanics.bib}
+\addbibresource{References/manifolds.bib}
+\addbibresource{Examples/frame-1041/references.bib}
+\addbibresource{Examples/frame-1035/references.bib}
+\addbibresource{Examples/frame-1030/references.bib}
+
+\renewcommand{\subparagraph}[1]{}
+
+
+\begin{document}
+
+\maketitle
+\ifthesis
+    \approvalpage
+    \copyrightpage
+\fi
+
+{
+\hypersetup{linkcolor=black}
+\iffinal\else
+  \setcounter{tocdepth}{2}
+  \setcounter{secnumdepth}{3}
+\fi
+\tableofcontents
+}
+\clearpage
+\iffinal\else
+\listoftables
+\clearpage 
+\fi
+\tcblistof[\section*]{ambox}{List of Boxes}
+\clearpage
+
+\begin{Notation}[section]
+\clearpage
+
+
+\part{Finite Element Formulations}
+
+\section{Introduction}
+\input{Sections/00_Introduction}
+\clearpage
+
+\section{Element Formulations}\label{sec:genwarp}
+\input{10_EquilibriumOverview}
+\clearpage
+\iftrue
+\input{10_Equilibrium}
+\clearpage
+\inputdraft{10_Equilibrium-1}
+\clearpage
+\inputdraft{10_Equilibrium-3}
+\clearpage
+\inputdraft{15_Examples}
+\fi
+
+\section{Geometric Transformations}
+\input{Body/Transformations/index}
+\clearpage 
+
+\input{20_SectionKinematics}
+\input{21_Literature}
+\clearpage 
+
+% \part{Exact Linear Type 3}
+% \subsection{Condensation}
+% \input{33_Condensation}
+\section{Continuum-Exact Dimensional Reduction}\label{sec:timo}
+\input{Sections/50_Introduction}
+\input{Sections/53_VenantShapeBasis}
+% \clearpage
+% \input{Sections/Archive/56_Resultants}
+% \clearpage
+\input{Sections/Traces/56_TraceClassI}
+\clearpage
+\inputdraft{Sections/Traces/56_TraceClassIb}
+\clearpage 
+\input{Sections/Traces/56_TraceClassII}
+\clearpage
+\inputdraft{Sections/Traces/56_TraceClasses}
+\clearpage
+\inputdraft{Sections/Traces/56_TraceSummary}
+\clearpage
+\inputdraft{Sections/58_Reconstruction}
+\inputdraft{Sections/Archive/56_Trace}
+\inputdraft{Sections/Archive/56_Trace3}
+\inputdraft{Sections/Archive/56_Trace1}
+\inputdraft{Sections/Archive/56_Trace2}
+% \input{Sections/Archive/56_PlaneTraces}
+
+\clearpage
+% \subsubsection{Warping Basis (1)}
+% \input{32_Elimination-1}
+% \clearpage
+% \subsubsection{Warping Basis (2)}
+% \input{32_Elimination-2}
+% \clearpage
+% \subsection{Observations}
+% \input{Sections/Archive/53_Boundaries}
+% \clearpage
+% \input{Sections/Archive/51_GaugeKinematics}
+% \input{52_KinematicExtras}
+
+\section{Discussion}
+\input{Sections/00_Outline}
+\clearpage 
+
+\iftrue %notes
+\section{Modeling Library}
+\input{Body/Implementation}
+\clearpage
+\fi
+
+
+\clearpage
+% \part{Verification}
+\input{Examples/index}
+
+\begin{appendices}
+\clearpage
+\section{Notation}\label{sec:notation}
+
+\InputDetail{Sections/A_Notation}
+\clearpage
+
+\include{Sections/30_Iesan}
+\input{Sections/33_Summary}
+\clearpage
+\inputdraft{Sections/30_RigidFields}
+\clearpage 
+% \input{30_SaintVenantProblem}
+% \clearpage
+
+
+\section{Trace Derivations}
+\input{Sections/Traces/A3_Cowper}
+\inputdraft{Sections/Traces/A3_CowperTheoremExtra}
+\clearpage
+% \input{Sections/Traces/A3_Cowper0}
+% % \inputdraft{Sections/Traces/57_Cowper}
+\clearpage
+\input{Sections/Traces/A3_Energetic}
+\clearpage 
+\input{Sections/Traces/A4_TraceODE}
+\clearpage
+\input{Sections/Traces/A3_ClassIIE}
+\clearpage
+\inputdraft{Sections/Traces/A3_Timoshenko}
+\clearpage
+\inputdraft{Sections/Traces/A3_Slaughter}
+\clearpage
+\inputdraft{Sections/Shapes/A_RectangleWarping}
+\clearpage 
+\inputdraft{Sections/A_AlgebraIdentities}
+\clearpage
+\inputdraft{Sections/A_IntegralIdentities}
+\end{appendices}
+\end{Notation}
+
+\clearpage
+\hypertarget{references}{\section{References}\label{sec:references}}
+\printbibliography[heading=none]
+
+\end{document}
+

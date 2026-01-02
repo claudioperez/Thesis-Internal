@@ -1,0 +1,491 @@
+\subsubsection{A: Extension-Bending-Torsion}
+From \cref{eq:section-linear-tangent}, it is evident that the complete response of a linear isotropic prism is characterized by the constant geometric cross section tensors:
+\begin{equation*}
+\left[
+\begin{matrix}
+    A \mathbf{1} 
+  & A\bar{\bm{\SectionLocation}}^{\times} % nm
+  & \SectionNW  % E
+  & \SectionNV  % G
+  \\
+
+%
+  & \LinearMM
+  & \LinearMW % E
+  & \LinearMV % G
+  \\
+
+%
+  & %
+  & \LinearWW % E?
+  & \\
+
+%
+  & %
+  & %
+  & \LinearVV
+\end{matrix}
+\right]
+\triangleq 
+\SectionIntegral{
+\TotalStrainMatrix^{\top} \TotalStrainMatrix
+}
+= \SectionIntegral{
+\left[
+\begin{matrix}
+\mathbf{1} 
+  &-\bm{r}^{\times} 
+  & \FrameBasis\otimes \bm{\varphi} 
+  & \FrameBasis_{\beta} \otimes \nabla_{\beta} \bm{\varphi} \\
+
+%- \bm{r}^{\times} 
+  & - \left[\bm{r}^{\times}\right]^{2} 
+  & \bm{r} \times \FrameBasis \otimes \bm{\varphi} 
+  & \bm{r} \times \FrameBasis_{\beta} \otimes \nabla_{\beta} \bm{\varphi} \\
+
+%\bm{\varphi} \otimes \FrameBasis
+  & %[\bm{\varphi} \otimes \FrameBasis] \bm{r}^{\times} 
+  & \bm{\varphi} \otimes \bm{\varphi}
+  & \mathbf{0} \\
+
+%
+  & % 
+  & %
+  & \nabla_{\beta} \bm{\varphi} \otimes \nabla_{\beta} \bm{\varphi}
+\end{matrix}
+\right]
+}
+% \label{eq:def-linear-isotropic-coupling-tensors}
+\end{equation*}
+where \(A\) is the cross sectional area, \(A \bar{\bm{\SectionLocation}}\) are the first moments of area, \(\LinearMM\) is the standard tensor of second area moments, \(\LinearWW\) generalizes the warping constant of \cite{vlasov1961thinwalled} to \(n_w\) warping shapes and \(\LinearVV\) encodes Saint Venant's constant as well as the shear correction factors of \cite{timoshenko1921correction}, when the warping shapes \(\bm{\varphi}\) are chosen appropriately.
+
+\begin{Quote}
+$$
+\begin{aligned}
+\FrameBasis_{\beta}\otimes\nabla_{\!\FrameBasis_{\beta}}\bm{\psi}
+&=\left[\begin{array}{cc}
+ \psi_{y,y} & \psi_{z,y} \\
+ \psi_{y,z} & \psi_{z,z} \\
+\end{array}\right]_{\FrameBasis_{\alpha}\otimes\FrameBasis_{\beta}}
+\end{aligned}
+$$
+
+$$
+\TotalStrainMatrix_{\rm p} = \left[\begin{array}{ccc|ccc}
+1 & 0 & 0 &  0 & z & -y \\
+0 & 1 & 0 & -z & 0 &  0 \\
+0 & 0 & 1 &  y & 0 &  0 \\
+\end{array}\right]
+$$
+\end{Quote}
+
+
+\paragraph{$\bm{n}$-$\bm{n}$}
+
+\paragraph{m-m}\label{m-m}
+
+\switchocg{tensor index}{
+\begin{ocg}{jmm-tensor}{tensor}{on}
+\[ 
+\boldsymbol{\sigma}=\mathbf{C}:\boldsymbol{\varepsilon}
+\]
+\end{ocg}
+\begin{ocg}{jmm-index}{index}{off}
+\[
+  \begin{bmatrix}
+    \sigma_{xx}\\[2pt] \sigma_{yy}\\[2pt] \sigma_{xy}
+  \end{bmatrix}
+  =
+  \begin{bmatrix}
+    \lambda+2\mu & \lambda & 0 \\
+    \lambda & \lambda+2\mu & 0 \\
+    0 & 0 & \mu
+  \end{bmatrix}
+  \begin{bmatrix}
+    \varepsilon_{xx}\\[2pt] \varepsilon_{yy}\\[2pt] 2\varepsilon_{xy}
+  \end{bmatrix}
+\]
+\end{ocg}
+}
+
+\[
+\LinearMM = \SectionIntegral{
+     [\bm{r}^\times][\bm{r}^\times]^{\top} 
+}
+= \SectionIntegral{\bm{r}\cdot\bm{r}\mathbf{1} - \bm{r}\otimes\bm{r}}
+% &= \int (\bm{r}\cdot\bm{r})\mathbf{1} - \bm{r}\otimes \bm{r}\, \mathrm{d}A \\
+% &=\left[\delta_{\alpha \beta} \mathbf{1}-\FrameBasis_\alpha \otimes 
+\]
+
+\paragraph{w-w}\label{w-w}
+
+\begin{equation}
+\LinearWW = \SectionIntegral{\bm{\varphi}\otimes\bm{\varphi}}
+= \SectionIntegral{ \begin{bmatrix}
+\varphi^2  & \varphi \psi_y & \varphi \psi_z \\
+           & \psi_y^2 & \psi_z \psi_y \\
+           &          & \psi_z^2
+\end{bmatrix}}
+= \begin{bmatrix}
+\Jw & 0 & 0 \\
+0 & C_{\psi} & 0 \\
+0 & 0 & C_{\psi}
+\end{bmatrix}
+\end{equation}
+
+\paragraph{\(\bm{v}-\bm{v}\)}
+
+\begin{equation}
+\LinearVV = \SectionIntegral{\nabla_{\beta} \bm{\varphi}\otimes\nabla_{\beta} \bm{\varphi}}
+\end{equation}
+\textcite{gruttmann2000theory} refer to \(\Jv\) 
+% NOTE: I previously used C_{\alpha} for J_v
+with the notation ``\(I_0 + I_T\)''
+\[
+\Jv  = \SectionIntegral{ \WarpTwistSC_{, y}^2 + \WarpTwistSC_{, z}^2} = J_S - J
+\]
+
+
+\begin{proposition}
+(Twist centre). The twist centre $\mathrm{C}^{\rm tw}$ is the pole in the plane of the cross section $\Omega$, such that a tangential stress field $\bm{\tau}\left(\bm{b}_{\Section}, c_{\vartheta}\right)$ with vanishing resultant moment about $\mathrm{C}^{\rm tw}$ performs no mutual work when interacting with any twist tangential strain field $\bm{\varepsilon}_{\gamma}^{\rm tw}(c_{\vartheta}, \bm{r})=c_{\vartheta}\left(\FrameBasis\times\bm{r}+\nabla \phi^{\rm tw}\right)$. 
+The position of $\mathrm{C}^{\rm tw}$ is given by the formula:
+
+$$
+\begin{aligned}
+& \bm{r}_{\mathrm{C}^{\rm tw}}=\FrameBasis \times\,\IntRGoRG^{-1} \int_{\Omega} \phi^{\rm tw}(\CoordinateCentroid ) \CoordinateCentroid \mathrm{~d}A 
+\qquad\text{ where }\quad 
+\phi^{\rm tw}:=\varphi^{\rm tw}(1) \in \mathrm{C}^2(\Omega ; \mathcal{R})
+\end{aligned}
+$$
+\end{proposition}
+
+
+\paragraph{Coupling in $\bm{n}-\bm{m}$}\label{n-m}
+Static moment:
+\[
+\LinearNM
+\triangleq \SectionIntegral{ -[\bm{r}^\times] } \equiv -A {\CentroidLocation}^{\times}
+\]
+where \textbf{two} independent constants known as the \emph{first moments of area} have been defined.
+
+\paragraph{Coupling in $\bm{n}-\bm{w}$}\label{n-w}
+Sectorial static moment:
+\[
+\SectionNW \triangleq \SectionIntegral{ \FrameBasis \otimes\bm{\varphi} }
+\] 
+where \textbf{three} independent constants have been defined
+\paragraph{Coupling in n-v}
+\[
+\SectionNV \triangleq \SectionIntegral{ \FrameBasis_{\beta}\otimes \nabla_{\beta}\bm{\varphi}
+}
+= \begin{bmatrix}
+0 &     0 & 0 \\
+J_{ny} & S_{nyy} & S_{nzy} \\
+J_{nz} & S_{nyz} & S_{nzz}
+\end{bmatrix}
+\] 
+assuming \(\bm{\varphi}' = \mathbf{0}\).
+
+\paragraph{m-w}\label{m-w}
+% NOTE: May remove the symbols J_my, etc... if they are always equal to -Iv, then they are redundant.
+Sometimes referred to as the \emph{Sectorial deviation moment}:
+\[
+\LinearMW 
+= \SectionIntegral{ \bm{r} \times\FrameBasis \otimes \bm{\varphi} } 
+= \begin{bmatrix}
+0 & 0 & 0 \\
+J_{my} & S_{myy} & S_{mzy} \\
+J_{mz} & S_{myz} & S_{mzz}
+\end{bmatrix}
+\]
+introducing \textbf{two} shear-interacting constants \(J_{my}\) and \(J_{mz}\) for torsion.
+%
+For moment-bishear interaction:
+\[
+\LinearMV
+= \SectionIntegral{ \bm{r} \times\FrameBasis_{\beta} \otimes \nabla_{\beta}\bm{\varphi} }
+\]
+Generally, however, \(\LinearMV \equiv - \LinearVV\).
+\[
+\LinearMW 
+= \SectionIntegral{ \bm{r} \times\FrameBasis \otimes \bm{\varphi} } 
+= \SectionIntegral{ \begin{bmatrix}
+0 & -z \varphi_{, y} + y \varphi_{, z} \\
+ z \varphi & 0 \\
+-y \varphi & 0
+\end{bmatrix}
+}
+= \begin{bmatrix}
+0 & S_{\alpha} \\
+S_{y} & 0 \\
+S_{z} & 0
+\end{bmatrix}
+\]
+
+
+
+\begin{remark}\label{rem:torsion-constant}
+The torsion constant \(\Jsv\) integrates the warping function \(\WarpTwistIesan\) which considers twist about the origin of the coordinate system.
+
+The classical Saint-Venant torsion constant \(\Jsv\) integrates the warping function \(\WarpTwistSC\) defined about the shear center. 
+For \(\Jsv\), the following identities hold:
+\begin{equation*}
+    \begin{aligned}
+        \Jsv &= \int (\FrameBasis\times\tilde{\bm{r}} + \nabla \WarpTwistSC) \cdot (\FrameBasis\times\tilde{\bm{r}} + \nabla \WarpTwistSC) \mathrm{~d}A \\
+        &= \int \FrameBasis\times\tilde{\bm{r}} \cdot (\FrameBasis\times\tilde{\bm{r}} + \nabla \WarpTwistSC) \mathrm{~d}A \\
+        &= \int \tilde{\bm{r}}\cdot\tilde{\bm{r}} + \FrameBasis\times\tilde{\bm{r}} \cdot \nabla \WarpTwistSC \\
+        &= \left<\tilde{\bm{r}},\, \tilde{\bm{r}}\right>_G + \left\{\WarpTwistSC,\, \tfrac12 r^2\right\}_G
+    \end{aligned}
+\end{equation*}
+where the following was employed:
+\[
+\int \nabla \WarpTwistSC \cdot (\FrameBasis\times \tilde{\PlanePosition} + \nabla\WarpTwistSC)\mathrm{~d}A = 0.
+\]
+Define the constants \(\Jv\) and \(\Jw\):
+\begin{equation*}
+    \Jv = ( \WarpTwistSC,\,\WarpTwistSC)_G,
+    \qquad
+    J_{\rm{mv}} = \left\{\WarpTwistSC,\,\tfrac12 r^2\right\}_G
+    \qquad\text{and}\qquad 
+    \Jw = \left<\WarpTwistSC,\,\WarpTwistSC\right>_E
+\end{equation*}
+Then the following identities hold:
+\begin{equation*}
+\begin{aligned}
+    \Jsv  = \Io - \Jv %\\
+         = \Io + J_{\rm{mv}} %\\
+         = \Io + \Jv + 2 J_{\rm{mv}}
+\end{aligned}
+\end{equation*}
+\end{remark}
+
+
+
+\subsubsection{B: Flexure}
+
+\begin{proposition}[Shear centre]
+Any shear tangential stress field has a vanishing twisting moment about a pole of the cross section $\Omega$, called the shear centre $\mathrm{C}^{\rm sh}$ whose position is given by the formula:
+$$
+\begin{aligned}
+\FrameBasis\times\bm{r}_{\mathrm{C}^{\rm sh}}
+&=\BishearTensorRB^{-1} \int_{\Omega} G\mathbf{B}_{(b)}(\bm{r})^{\top}\, \FrameBasis\times \bm{r}\mathrm{~d}A \\
+&=-\BishearTensorRB^{-1} \left(\int_{\Omega} G\mathbf{B}_{(b)}^{\top} [\bm{r}^{\times}]\mathrm{~d}A\right)\,\FrameBasis
+\end{aligned}
+$$
+\end{proposition}
+
+\cite{paradiso2019consistent}. 
+Traditionally the evaluation of $\bm{\tau}_{\mathrm{sh}}$ is simplified by first evaluating the so called ``geometric" center of shear
+
+\begin{equation}
+\bm{r}_\psi=\FrameBasis \times \mathbf{J}_G^{-1} \bm{\gamma}_\psi=\FrameBasis \times \mathbf{J}_G^{-1} \int_{\Section} \mathbf{B}_{(b)} \FrameBasis?\times\bm{r} \mathrm{~d}A
+\label{eq:para-47}
+\end{equation}
+See also \cite{elter1983two}.
+
+
+\begin{Quote}
+Regarding \eqref{eq:iesan-2-22} and the constant tensor relating to \(c_{\vartheta}\). 
+The outward unit normal is $\bm{\nu}$ and the unit tangent is $\bm{t}$.
+\[
+\bm{J}
+:=\int_{\Section}\bm{r}^\times\!\left(\nabla\bm{\WarpShearIesan})^{\!\top}
++\tfrac{\nu}{2}\,r^2\mathbf{1}\right)\,da
+\;\in\mathbb{R}^{2}.
+\]
+% \paragraph{A boundary–area identity.}
+Using the 2D identity \(\bm{r}\times\nabla\psi=\nabla\cdot(\psi\,\bm{r})\)
+and the divergence theorem, one obtains, columnwise,
+\begin{equation}
+\bm{J}
+= \oint_{\SectionBoundary}\!\Phi\,(\bm{r}\cdot\bm{t})\,ds
+\;+\;\tfrac{\nu}{2}\int_{\Section}\! r^{2}\,\bm{r}^\perp\,da.
+\label{eq:J-boundary-form}
+\end{equation}
+
+\subparagraph{Central symmetry about \(\CentroidLocation\).}
+A planar set \(\Sigma\subset\mathbb R^2\) is \emph{centrally symmetric about \(\CentroidLocation\)} if it is invariant under the point reflection (half–turn)
+\[
+\mathcal R_{\CentroidLocation}:\ \bm{r}\ \mapsto\ 2\CentroidLocation-\bm{r}.
+\]
+Equivalently,
+\[
+\Sigma-\CentroidLocation \;=\; -\,(\Sigma-\CentroidLocation),
+\qquad\text{ i.e. }\qquad
+\bm s\in\Sigma-\CentroidLocation\ \Longrightarrow\ -\bm s\in\Sigma-\CentroidLocation,
+\]
+with the translated coordinates \(\bm s=\bm{r}-\CentroidLocation\).
+
+If \(\partial\Sigma\) is piecewise \(C^1\), central symmetry about \(\CentroidLocation\) means the map
+\[
+\mathcal R_{\CentroidLocation}:\ \partial\Sigma\to\partial\Sigma,\qquad
+\bm{r}\mapsto\bm{r}' = 2\CentroidLocation-\bm{r},
+\]
+is a bijection and, at paired points, the unit tangent and normal satisfy
+\[
+\bm t(\bm{r}')=-\,\bm t(\bm{r}),\qquad
+\bm\nu(\bm{r}')=-\,\bm\nu(\bm{r}),\qquad
+ds(\bm{r}')=ds(\bm{r}).
+\]
+
+\paragraph{Multiply connected sections.}
+For a section with holes, \(\Sigma=\Sigma_{\text{outer}}\setminus\bigcup_{j} H_j\) is centrally symmetric about \(\CentroidLocation\) iff
+\[
+\mathcal R_{\CentroidLocation}(\Sigma_{\text{outer}})=\Sigma_{\text{outer}}
+\quad\text{and}\quad
+\{\mathcal R_{\CentroidLocation}(H_j)\}_j=\{H_j\}_j
+\]
+as sets; i.e., each hole is either individually centrally symmetric about \(\CentroidLocation\) or belongs to a centrally symmetric pair with respect to \(\CentroidLocation\).
+
+\paragraph{Relation to mirrors.}
+Two orthogonal reflection symmetries whose axes intersect at \(\CentroidLocation\) imply central symmetry about \(\CentroidLocation\) (but the converse need not hold: a shape can have central symmetry without any mirror symmetry).
+
+\paragraph{Centroid remark.}
+If \(\Section\) is centrally symmetric about \(\CentroidLocation\) and has uniform area density, then its area centroid coincides with \(\CentroidLocation\). 
+The converse need not be true: \(\bar{\bm{r}}=\CentroidLocation\) does \emph{not} by itself imply central symmetry.
+
+\paragraph{Vanishing Conditions}
+The representation \eqref{eq:J-boundary-form} makes parity-based
+cancellations immediate.
+\begin{itemize}
+\item \emph{Central symmetry about \(\CentroidLocation\)} and the zero-mean condition imply
+\(\Phi\) is odd in \(\bm{r}\) while \(\bm{r}\cdot\bm{t}\) is even;
+hence the boundary integral vanishes. The area integral
+\(\int_{\Section} r^2\bm{r}^\perp\,da\) is odd and also vanishes.
+Thus \(\bm{J}=\mathbf{0}\). This covers circles, ellipses, rectangles, regular
+polygons, and multiply connected sections with centrally symmetric hole patterns.
+\item \emph{Bisymmetry} (two orthogonal reflection axes through \(\CentroidLocation\))
+kills both components of \(\bm{J}\) by the same parity argument.
+\item If \(\nu=0\), the second term in \eqref{eq:J-boundary-form} disappears; a
+single symmetry axis through \(\CentroidLocation\) is then sufficient to kill the
+component perpendicular to that axis (bisymmetry kills both).
+\end{itemize}
+
+
+\paragraph{Summary.}
+(i) The integral \(\bm{J}\) vanishes under the symmetry conditions listed above,
+by \eqref{eq:J-boundary-form}. 
+\end{Quote}
+
+
+\[
+\int_{\Section}\Big(\bm\WarpShearIesan\otimes(\bm{r}\times\mathbf i)-\bm{r}\otimes(\bm{r}\times\mathbf i)\Big)\mathrm{~d}A.
+\]
+
+\[
+(\bm\WarpShearIesan-\bm{r})\otimes(\bm{r}\times\mathbf i)
+=
+\begin{bmatrix}
+0\cdot 0 & 0 & 0\\
+(\psi_y-y)\cdot 0 & (\psi_y-y)\,z & (\psi_y-y)\,(-y)\\
+(\psi_z-z)\cdot 0 & (\psi_z-z)\,z & (\psi_z-z)\,(-y)
+\end{bmatrix}.
+\]
+
+Therefore
+\[
+\int_{\Section}\Big(\bm\WarpShearIesan\otimes(\bm{r}\times\mathbf i)-\bm{r}\otimes(\bm{r}\times\mathbf i)\Big)\mathrm{~d}A
+=
+\displaystyle\int_{\Section} \begin{bmatrix}
+0 & 0 & 0 \\
+0 & z\,(\psi_y-y) & -y\,(\psi_y-y) \\
+0 &  z\,(\psi_z-z)\mathrm{~d}A & -y\,(\psi_z-z)
+\end{bmatrix}\mathrm{~d}A.
+\]
+
+
+\paragraph{psi - r}
+
+\[
+\int_{\Section}\Big(\bm\WarpShearIesan\otimes(\bm{r}\times\mathbf i)-\bm{r}\otimes(\bm{r}\times\mathbf i)\Big)\mathrm{~d}A.
+\]
+
+Equivalently, column-wise (since for any \( \bm a\otimes\bm b\), the (j)-th column is \(b_j \bm a\)):
+\[
+\int_{\Section} \bm\WarpShearIesan\otimes(\bm{r}\times\mathbf i) - \bm{r}\otimes(\bm{r}\times\mathbf i) \mathrm{~d}A
+=
+\int_{\Section} \Big[\,\bm 0\ \Big|\ z\,(\bm\WarpShearIesan-\bm{r})\mathrm{~d}A\ \Big|
+\ -y\,(\bm\WarpShearIesan-\bm{r})\mathrm{~d}A,\Big],
+\]
+
+The nonzero \(yz\)-block is the \(2\times2\) matrix
+\[
+\mathbf I = \int_{\Section}\big(\bm{\WarpShearIesan}-\bm{r}\big)\otimes(\FrameBasis\times\bm{r})\mathrm{~d}A
+=\underbrace{\int_{\Section}\bm{\WarpShearIesan}\otimes(\FrameBasis\times\bm{r})\mathrm{~d}A}_{\mathbf A}
+-\underbrace{\int_{\Section}\bm{r}\otimes(\FrameBasis\times\bm{r})\mathrm{~d}A}_{\mathbf G = -\IntRoR\FrameBasis^\times}.
+\]
+
+Mixed term \(\mathbf A\) via integral theorems
+
+Set \(f:=\tfrac12 r^2 \) so that \(\nabla f=\bm{r}\) and \(\FrameBasis\times\nabla f=\FrameBasis\times\bm{r}\).
+Then
+\[
+\mathbf A=\int_{\Section}\bm{\WarpShearIesan}\otimes\FrameBasis\times\nabla f\mathrm{~d}A.
+\]
+Apply the rotated-gradient integration by parts (Stokes/Green in 2-D \eqref{eq:thm-stokes-green}) with \(\bm a=\bm\psi\), \(g=f\):
+\[\mathbf A
+=\oint_{\partial\Section} \tfrac12 r^2 \,\bm\psi\otimes(J^{\top}\bm\nu)\,\mathrm{d}s
+-\int_{\Section} \tfrac12 r^2 \,(\nabla\bm\psi)\,J^{\top}\mathrm{~d}A.
+\]
+
+\[
+\mathbf I
+=\oint_{\partial\Section} \tfrac12 r^2 \,\bm\psi\otimes(J^{\top}\bm\nu)\,\mathrm{d}s
+-\int_{\Section} \tfrac12 r^2 \,(\nabla\bm\psi)\,J^{\top}\mathrm{~d}A
+-\mathbf M\,J^{\top}.
+\]
+
+
+\paragraph{Warping Integrals}.
+\begin{Quote}
+
+Setting \(\bm w=\bm\WarpShearIesan\) with the BVP data in Green's identity \eqref{eq:thm-green-vec} with the Divergence Theorem \eqref{eq:div-thm-vec}  gives
+\[
+\int_{\Section}\nabla\bm\WarpShearIesan(\nabla\bm\WarpShearIesan)^{\!\top}\mathrm{~d}A
+=2\int_{\Section}\bm\WarpShearIesan\otimes(\bm{r}-\CentroidLocation)\mathrm{~d}A
++\int_{\SectionBoundary}\bm\WarpShearIesan\otimes
+\Big(\big(\operatorname{dev}\bm{r}\otimes\bm{r}-\bm{r}\otimes\CentroidLocation\big)^{\!\top}\bm\nu\Big)\,\mathrm{d}s,
+\]
+while
+\[
+-\int_{\Section}\nabla\bm\WarpShearIesan\mathrm{~d}A
+=-\int_{\SectionBoundary}\bm\nu\otimes\bm\WarpShearIesan\,\mathrm{d}s.
+\]
+
+Therefore, the identity
+\[
+\int_{\Section}\nabla\bm\WarpShearIesan(\nabla\bm\WarpShearIesan)^{\!\top}\mathrm{~d}A
+= -\int_{\Section}\nabla\bm\WarpShearIesan\mathrm{~d}A
+\]
+holds \emph{if and only if}
+\[
+\int_{\SectionBoundary}\!\!\Big[
+\bm\WarpShearIesan\otimes\Big(\big(\operatorname{dev}\bm{r}\otimes\bm{r}-\bm{r}\otimes\CentroidLocation\big)^{\!\top}\bm\nu\Big)
++\bm\nu\otimes\bm\WarpShearIesan\Big]\mathrm{d}s
+\;+\;2\int_{\Section}\bm\WarpShearIesan\otimes(\bm{r}-\CentroidLocation)\mathrm{~d}A
+\;\equiv\;\mathbf{0}.
+\tag{\(*\)}
+\]
+This is the necessary and sufficient condition.
+
+From \((*)\) you can read off a few \emph{simple sufficient scenarios}:
+\begin{itemize}
+  \item If \(\displaystyle \int_{\Section}\bm\WarpShearIesan\otimes(\bm{r}-\CentroidLocation)\mathrm{~d}A=\mathbf{0}\) (i.e., \(\bm\WarpShearIesan\) is \(L^2\)-orthogonal to \(\bm{r}-\CentroidLocation\)) \emph{and}
+  \[
+  \big(\operatorname{dev}\bm{r}\otimes\bm{r}-\bm{r}\otimes\CentroidLocation\big)^{\!\top}\bm\nu=-\,\bm\nu
+  \quad\text{on }\SectionBoundary,
+  \]
+  then the boundary integral in \((*)\) vanishes and the equality holds.
+  \item On a centrally symmetric \(\Section\) about \(\CentroidLocation\), if \(\bm\WarpShearIesan\) is odd with respect to \(\CentroidLocation\) (so the area integral in \((*)\) vanishes) \emph{and} the boundary factor
+  \(\big(\operatorname{dev}\bm{r}\otimes\bm{r}-\bm{r}\otimes\CentroidLocation\big)^{\!\top}\bm\nu+\bm\nu\)
+  is pointwise odd along symmetric boundary pairs, then the boundary integral also vanishes.
+\end{itemize}
+
+A final algebraic remark: since \(\int_{\Section}\nabla\bm\WarpShearIesan(\nabla\bm\WarpShearIesan)^{\!\top}\) is symmetric positive-semidefinite, the matrix \(-\int_{\Section}\nabla\bm\WarpShearIesan\) must itself be symmetric positive-semidefinite whenever the identity holds. Equivalently,
+\[
+\int_{\Section}\nabla\bm\WarpShearIesan\ \text{ must be symmetric and negative-semidefinite.}
+\]
+This is a necessary condition that you can check independently via \(\int_{\Section}\nabla\bm\WarpShearIesan=\int_{\SectionBoundary}\bm\nu\otimes\bm\WarpShearIesan\,\mathrm{d}s\).
+
+\end{Quote}
+

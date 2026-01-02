@@ -1,0 +1,66 @@
+
+
+This problem highlights the strain invariance %that is
+exhibited by the external application of the \texttt{SFIN} transformation to the wrapped
+elements. 
+Originally presented by \cite{crisfield1999objectivity} for a 2-node element,
+the analysis involves evaluating the curvature
+\(\bm{\kappa} = \Twist \FrameBasis + \kappa_\alpha \FrameBasis_\alpha\)
+in an element of length \(L = 1\) under
+the following imposed rotations at the first and the last node, respectively:
+\[
+\bm{\Lambda}_1= \operatorname{Exp} \left(\begin{array}{c}
+1 \\
+-0.5 \\
+\hphantom{-}0.25
+\end{array}\right),
+%
+\quad \bm{\Lambda}_n= \operatorname{Exp}\left(\begin{array}{c}
+-0.4 \\
+\hphantom{-}0.7 \\
+\hphantom{-}0.1
+\end{array}\right).
+\]
+The current study extends the investigation by  
+%In the test by 
+\cite{jelenić1999geometrically}
+to \(n\)-node elements %, only two-node elements were used.
+with the interior nodes of higher-order elements subjected to 
+identity rotations so that \(\bm{\Lambda}_a = \bm{1}\) when \(a \notin \{1,n\}\).
+
+New curvatures
+\(\bm{\kappa}^+ = \Twist^+ \FrameBasis + \kappa_\alpha^+\FrameBasis_\alpha\) are then determined 
+in a coordinate system that results from a uniform rotation:
+\[
+\quad \bm{R} = \operatorname{Exp}\left(\begin{array}{c}
+\hphantom{-}0.2 \\
+\hphantom{-}1.2 \\
+-0.5
+\end{array}\right)
+\]
+so that the imposed rotations are given by \(\bm{\Lambda}_a^+ = \bm{R}\bm{\Lambda}_a\) at each node.
+
+Table \ref{tab:objective} reports the components of \(\bm{\kappa}\) and \(\bm{\kappa}^+\) at the first integration
+point.
+Because the loading consists only of nodal rotations
+imposed in a single increment 
+and only strains are evaluated, the results for all three wrapped elements
+are identical and reported only once in the table.
+The results for two-node elements under the \texttt{None} and \texttt{SFIN} 
+transformations match the values %derived
+in \cite{crisfield1999objectivity} exactly.
+The agreement between the components of \(\bm{\kappa}\) and \(\bm{\kappa}^+\)
+% \FCF{unclear what the following means} 
+for cases using the \texttt{SFIN} isometry
+confirms that strain objectivity is restored for the wrapped elements.
+
+\begin{center}
+\begin{table}[!h]%
+\caption{%
+Curvature components of Example~\ref{sec:frame-1000} for elements with \(n\) nodes.
+All cases using the \texttt{SFIN} isometry
+show perfect agreement between \(\bm{\kappa}\) and \(\bm{\kappa}^+\).}
+\label{tab:objective}
+\input{Examples/frame-1001/Tables/JelenicInvariance.tex}
+\end{table}
+\end{center}

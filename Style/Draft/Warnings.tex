@@ -1,0 +1,15 @@
+
+%%-------------------------------
+%% Forward Reference Warping
+% \makeatletter
+% \let\latex@label\label
+% \let\latex@eqref\eqref
+% \def\label#1{\global\@namedef{LABEL@#1@USED}{}\latex@label{#1}}
+% \def\eqref#1{%
+%   \ifcsname LABEL@#1@USED\endcsname\else
+%     \@latex@warning{Forward Reference '#1'}%
+%   \fi
+%   \latex@eqref{#1}%
+% }
+% \makeatother
+%%-------------------------------

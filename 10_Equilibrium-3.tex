@@ -1,0 +1,220 @@
+\subsection{Type 1: Independent warping}
+
+The most general approach to modeling warping is to take the $n_w$ warping amplitudes $\bm{\alpha}$ as independent configuration variables.
+This generalizes the approach of \cite{reissner1952nonuniform} for torsional warping.
+
+\subsubsection{Equilibrium}
+
+\vspace{1ex}
+\begin{ambox}[Type 1: Independent warping]{box:type1-warping}
+A Type~1 constitutive response maps the $6+2n_w$ strains $(\bm{\gamma},\bm{\kappa},\bm{\alpha}',\bm{\alpha})$ to the $6+2n_w$ generalized stresses $(\bm{n},\bm{m},\bm{w},\bm{v})$,
+\[
+  [\bm{n},\bm{m},\bm{w},\bm{v}]
+    = \mathcal{S}(\bm{\gamma},\bm{\kappa},\bm{\alpha}',\bm{\alpha}).
+\]
+The (linearized) momentum balance can be written as
+\begin{equation*}
+  \begin{aligned}
+    \mathbb{B}_{\mathrm{p}}\,\bm{A}_*
+      \begin{pmatrix} \bm{n} \\ \bm{m} \end{pmatrix}
+      + \bm{f}_{\mathrm{p}}
+      &= \dot{\bm{\mu}},
+    \\
+    \bm{w}' - \bm{v} + \bm{f}_{\mathrm{w}}
+      &= \mathbf{0},
+  \end{aligned}
+\end{equation*}
+where $\bm{A}_*$ accounts for the transformation from material to spatial resultants, and $\bm{f}_{\mathrm{p}}$ collects the primary body loads.
+\end{ambox}
+
+\subsection{Type 2: Constrained warping}
+
+It is common to assume that the amplitudes of certain warping modes are proportional to a component of one of the primary strain variables $\bm{e}_{\mathrm{p}} = (\bm{\gamma},\bm{\kappa})$.
+For example, torsional warping is often assumed to be proportional to the rate of twist
+$\varkappa \triangleq \bm{\kappa}\cdot\FrameBasis$.
+To formalize this, we partition the warping modes into three disjoint index sets
+$\mathcal{I}_v$, $\mathcal{I}_w$, and $\mathcal{I}_f$, corresponding to algebraically constrained, differentially constrained, and free modes, respectively.
+
+We introduce projection operators $\mathbf{L}_{\rm vv},\mathbf{L}_{\rm ww}\in\mathbb{R}^{n_w\times n_w}$ onto the subspaces of algebraically and differentially constrained modes, satisfying
+\[
+  \mathbf{L}_{\rm vv}^2 = \mathbf{L}_{\rm vv}, \qquad
+  \mathbf{L}_{\rm ww}^2 = \mathbf{L}_{\rm ww}, \qquad
+  \mathbf{L}_{\rm vv}\mathbf{L}_{\rm ww}
+    = \mathbf{L}_{\rm ww}\mathbf{L}_{\rm vv}
+    = \mathbf{0}.
+\]
+The constraints are expressed through linear maps
+$\mathbf{L}_{\rm vp},\mathbf{L}_{\rm wp}\in\mathbb{R}^{n_w\times 6}$ via
+%
+\begin{equation}
+  \left\{
+  \begin{aligned}
+    \mathbf{L}_{\rm vv}\,\bm{\alpha} &= \mathbf{L}_{\rm vp}\,\bm{e}_{\mathrm{p}}, \\
+    \mathbf{L}_{\rm ww}\,\bm{\alpha}' &= \mathbf{L}_{\rm wp}\,\bm{e}_{\mathrm{p}},
+  \end{aligned}
+  \right.
+  % \label{eq:linear-warp-constraints}
+\end{equation}
+%
+with compatibility conditions
+$\mathbf{L}_{\rm vv}\mathbf{L}_{\rm vp} = \mathbf{L}_{\rm vp}$ and
+$\mathbf{L}_{\rm ww}\mathbf{L}_{\rm wp} = \mathbf{L}_{\rm wp}$.
+
+The warping amplitude vector is decomposed as
+\begin{equation}
+  \bm{\alpha}
+    = \bar{\bm{\alpha}}
+      + \mathbf{L}_{\rm vv}\bm{\alpha}
+      + \mathbf{L}_{\rm ww}\bm{\alpha},
+  \label{eq:decompose-alpha}
+\end{equation}
+where the reduced warping vector
+$\bar{\bm{\alpha}} \triangleq (\mathbf{I}-\mathbf{L}_{\rm vv}-\mathbf{L}_{\rm ww})\bm{\alpha}$
+contains only the free components.
+
+\subsubsection{Algebraic constraints}
+
+\paragraph{Kinematics}
+Using the constraints \eqref{eq:linear-warp-constraints}, the full strain vector $\bm{e}$ can be expressed in terms of the primary strains and the reduced warping variables as
+\begin{equation}
+  \bm{e}
+  =
+  \begin{pmatrix}
+    \bm{\gamma} \\ \bm{\kappa} \\ \bm{\alpha}' \\ \bm{\alpha}
+  \end{pmatrix}
+  =
+  \underbrace{
+  \begin{bmatrix}
+    \mathbf{1} & \mathbf{0} & \mathbf{0} & \mathbf{0} \\
+    \mathbf{0} & \mathbf{1} & \mathbf{0} & \mathbf{0} \\
+    \mathbf{L}_{\rm wn} & \mathbf{L}_{\rm wm} & \mathbf{1}-\mathbf{L}_{\rm ww} & \mathbf{0} \\
+    \mathbf{L}_{\rm vn} & \mathbf{L}_{\rm vm} & \mathbf{0} & \mathbf{1}-\mathbf{L}_{\rm vv}
+  \end{bmatrix}
+  }_{\mathbf{L}}
+  \begin{pmatrix}
+    \bm{\gamma} \\ \bm{\kappa} \\ \bar{\bm{\alpha}}' \\ \bar{\bm{\alpha}}
+  \end{pmatrix},
+  \label{eq:warping-projection}
+\end{equation}
+where $\mathbf{L}_{\rm vn}$ and $\mathbf{L}_{\rm vm}$ are the partitions of $\mathbf{L}_{\rm vp}$ corresponding to $\bm{\gamma}$ and $\bm{\kappa}$, respectively, and similarly for $\mathbf{L}_{\rm wn}$ and $\mathbf{L}_{\rm wm}$.
+
+\begin{remark}
+Here $\bar{\bm{\alpha}}$ collects the unconstrained warping amplitudes, while $\bm{\alpha}$ is the union of these free amplitudes with the constrained ones.
+For example, given a two-mode warping model $\bm{\alpha} = (\alpha_1,\alpha_2)$ and the constraint
+$\alpha_1 = \mathbf{1}\cdot\bm{\kappa}$, we may take
+\[
+  \mathbf{L}_{\rm vv}
+  =
+  \begin{bmatrix}
+    1 & 0 \\[0.3ex]
+    0 & 0
+  \end{bmatrix},
+  \qquad
+  \bar{\bm{\alpha}}
+    = \bm{\alpha} - \mathbf{L}_{\rm vv}\bm{\alpha}
+    = (0,\alpha_2),
+  \qquad
+  \bm{\alpha}
+    = \bar{\bm{\alpha}} + (\alpha_1,0).
+\]
+\end{remark}
+
+\paragraph{Equilibrium}
+
+To derive the equilibrium equations for the constrained system we consider the Galerkin projection of the equilibrium residual.
+The weak contribution from the warping part is
+\begin{equation*}
+  \mathcal{G}_{\chi}[\bm{\eta}]
+    = \bigl\langle \mathbb{B}_{\mathrm{p}}
+        \begin{pmatrix} \bm{n} \\ \bm{m} \end{pmatrix},
+        \bm{\eta}_{\mathrm{p}}\bigr\rangle
+      - \bigl\langle \bm{w}' - \bm{v} ,\, \delta\bm{\alpha} \bigr\rangle .
+\end{equation*}
+Using the decomposition \eqref{eq:decompose-alpha} and the constraint equations
+\eqref{eq:linear-warp-constraints}, the test functions $\delta\bm{\alpha}$ can be expressed in terms of variations of the reduced variables.
+Exploiting the linearity of the inner product and the transpose property of the constraint operators, one obtains
+\begin{equation*}
+  \mathcal{G}_{\chi}[\bm{\eta}]
+    =
+    \bigl\langle
+      \begin{pmatrix} \bm{n} \\ \bm{m} \end{pmatrix}
+      + \mathbf{L}_{\rm vp}^{\top}\bm{v}
+      - \mathbf{L}_{\rm vp}^{\top}\bm{w}' ,
+      \delta\bm{e}_{\mathrm{p}}
+    \bigr\rangle
+    - \bigl\langle \bm{w}' - \bm{v} ,\, \delta\bar{\bm{\alpha}} \bigr\rangle .
+\end{equation*}
+
+This motivates the definition of augmented stress resultants
+\begin{equation}
+  \begin{aligned}
+    \bar{\bm{n}} &\triangleq \bm{n} + \mathbf{L}_{\rm vn}^{\top}\bm{v}, \\
+    \bar{\bm{m}} &\triangleq \bm{m} + \mathbf{L}_{\rm vm}^{\top}\bm{v}, \\
+    \bar{\bm{w}} &\triangleq (\mathbf{1}-\mathbf{L}_{\rm vv}-\mathbf{L}_{\rm ww})^{\top}\bm{w}, \\
+    \bar{\bm{v}} &\triangleq (\mathbf{1}-\mathbf{L}_{\rm vv}-\mathbf{L}_{\rm ww})^{\top}\bm{v},
+  \end{aligned}
+  % \label{eq:augment-stress}
+\end{equation}
+and the corresponding resultant transformation
+\[
+  \bar{\bm{s}}
+  =
+  \begin{pmatrix}
+    \bar{\bm{n}} \\ \bar{\bm{m}} \\ \bar{\bm{w}} \\ \bar{\bm{v}}
+  \end{pmatrix}
+  =
+  \underbrace{
+  \begin{bmatrix}
+    \mathbf{1} & \mathbf{0} & \mathbf{0} & \mathbf{L}_{\rm vn}^{\top} \\
+    \mathbf{0} & \mathbf{1} & \mathbf{0} & \mathbf{L}_{\rm vm}^{\top} \\
+    \mathbf{0} & \mathbf{0} & \mathbf{1}-\mathbf{L}_{\rm vv}^{\top}-\mathbf{L}_{\rm ww}^{\top} & \mathbf{0} \\
+    \mathbf{0} & \mathbf{0} & \mathbf{0} & \mathbf{1}-\mathbf{L}_{\rm vv}^{\top}-\mathbf{L}_{\rm ww}^{\top}
+  \end{bmatrix}
+  }_{\mathbf{L}^*}
+  \begin{pmatrix}
+    \bm{n} \\ \bm{m} \\ \bm{w} \\ \bm{v}
+  \end{pmatrix}.
+\]
+
+\vspace{1ex}
+\begin{ambox}[Type 2: Constrained warping]{box:warp2}
+For linear constraints on warping of the form \eqref{eq:linear-warp-constraints}, a Type~1 constitutive response can be re-used by the transformation
+\[
+  \bar{\bm{s}} = \mathbf{L}^*\,\mathcal{S}(\mathbf{L}\,\bar{\bm{e}}),
+\]
+where $\bar{\bm{s}} = (\bar{\bm{n}},\bar{\bm{m}},\bar{\bm{w}},\bar{\bm{v}})$ and
+$\bar{\bm{e}} = (\bm{\gamma},\bm{\kappa},\bar{\bm{\alpha}}',\bar{\bm{\alpha}})$.
+The momentum balance becomes
+\begin{equation}
+  \begin{aligned}
+    \mathbb{B}_{\mathrm{p}}\,\bm{A}_*
+      \bigl[\bar{\bm{s}}_{\mathrm{p}}
+            - \mathbf{L}_{\rm vp}^{\top}\bm{w}'\bigr]
+      + \bm{f}_{\mathrm{p}}
+      &= \dot{\bm{\mu}},
+    \\
+    \bar{\bm{w}}' - \bar{\bm{v}} + \bm{f}_{\mathrm{w}}
+      &= \mathbf{0},
+  \end{aligned}
+  \label{eq:type2-equilibrium}
+\end{equation}
+where $\bar{\bm{s}}_{\mathrm{p}} = (\bar{\bm{n}},\bar{\bm{m}})$ denotes the primary resultants.
+\end{ambox}
+
+\begin{remark}
+The treatment of the $\mathbf{L}_{\rm vp}^{\top}\bm{w}'$ term in \eqref{eq:type2-equilibrium} reveals a fundamental distinction between section-level and element-level operations.
+The constitutive evaluation at a section is pointwise in $\reflenx$ and therefore cannot access spatial derivatives.
+Consequently:
+\begin{itemize}
+  \item The \emph{section wrapper} receives $(\bm{\gamma},\bm{\kappa},\bar{\bm{\alpha}}',\bar{\bm{\alpha}})$, expands them via $\mathbf{L}$ to obtain the full strain $\bm{e}$, evaluates the Type~1 constitutive response $\mathcal{S}(\bm{e})$, and returns the partially augmented resultants
+  \[
+    \bar{\bm{n}} = \bm{n} + \mathbf{L}_{\rm vn}^{\top}\bm{v}, \qquad
+    \bar{\bm{m}} = \bm{m} + \mathbf{L}_{\rm vm}^{\top}\bm{v},
+  \]
+  together with the full $\bm{w}$-field.
+  \item The finite element must then compute $\bm{w}'$ from its interpolated bimoment field and apply the correction
+  $-\mathbf{L}_{\rm vp}^{\top}\bm{w}'$ to the primary equilibrium equations.
+\end{itemize}
+This division of labor implies that Type~2 elements require higher-order interpolation to represent $\bm{w}'$ accurately, making them more complex to implement than standard beam elements.
+This motivates the Type~3 formulation, in which the assumption $\bar{\bm{\alpha}}'=\mathbf{0}$ (uniform warping) eliminates the $\bm{w}'$ term entirely, keeps all manipulations at the section level, and allows standard $6$-DOF beam elements to be used without modification.
+\end{remark}

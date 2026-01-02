@@ -1,0 +1,142 @@
+
+\subsubsection{Strain Energy}
+
+The strain energy at section $x$ is quadratic in the evolved parameters 
+$\exp({x\IesanEvolveSP})\bm{p}$:
+\begin{equation*}
+\mathcal{U}(x) = \frac{1}{2} \int_\Section \bm{\varepsilon}\cdot \mathbb{C}\, \bm{\varepsilon} \dA 
+= \frac{1}{2} \bm{p}\cdot \left(\mathbf{1} + x\mathbf{G}_{\mathcal{T}^\top}\right) \IesanEnergy\, \left(\mathbf{1} + x\mathbf{A}_T\right) \bm{p},
+\end{equation*}
+where the Saint-Venant energy matrix is
+\begin{equation}
+\begin{aligned}
+\IesanEnergy := \int_\Section \mathbf{S}_0^\top \mathbb{C}\, \mathbf{S}_0 \dA 
+% &= \begin{pmatrix}
+% EA & \mathbf{0}^\top & 0 & EA\CentroidLocation^\top \\[4pt]
+% \mathbf{0} & G\mathbf{H}_{bb} & G\mathbf{h}_{\varphi b} & \mathbf{0} \\[4pt]
+% 0 & G\mathbf{h}_{\varphi b}^\top & G\Jsv & \mathbf{0}^\top \\[4pt]
+% EA\CentroidLocation & \mathbf{0} & \mathbf{0} & E\IntRoR \\
+% \end{pmatrix}\\
+% &= \begin{pmatrix}
+% EA & EA\CentroidLocation^\top & \mathbf{0}^\top & 0 \\[4pt]
+% EA\CentroidLocation & E\IntRoR & \mathbf{0} & \mathbf{0} \\
+% 0  & \mathbf{0}^\top & G\Jsv & G\mathbf{h}_{\varphi b}^\top \\[4pt]
+% \mathbf{0}& \mathbf{0}& G\mathbf{h}_{\varphi b} & G\mathbf{H}_{bb}   \\[4pt]
+% \end{pmatrix} \\
+&=\begin{pmatrix}
+EA & EA\CentroidLocation^\top & 0 & \mathbf{0}^\top \\
+EA\CentroidLocation & E\IntRoR & \mathbf{0} & \mathbf{0} \\
+0 & \mathbf{0}^\top & G\Jsv & G(\Jsv\CenterShearLocation + \mathbf{h}_{\varphi b})^\top \\
+\mathbf{0} & \mathbf{0} & G(\Jsv\CenterShearLocation + \mathbf{h}_{\varphi b}) & G(\mathbf{H}_{bb} + \Jsv\CenterShearLocation\otimes\CenterShearLocation + \CenterShearLocation\otimes\mathbf{h}_{\varphi b} + \mathbf{h}_{\varphi b}\otimes\CenterShearLocation)
+\end{pmatrix}
+\end{aligned}
+\label{eq:energy-matrix}
+\end{equation}
+%
+where shear-torsion coupling terms are:
+\begin{align}
+\mathbf{H}_{bb} &:= \int_\Section \mathbf{B}_{(b)}^\top \mathbf{B}_{(b)} \dA, 
+\label{eq:def-H-bb} \\[4pt]
+\mathbf{h}_{\varphi b} &:= \int_\Section \mathbf{B}_{(b)}^\top \mathbf{b}_{(\varphi)} \dA 
+= -\Jsv\CenterShearLocation + \tfrac{\nu}{2}\bm{\zeta} - \nu\bm{\lambda},
+\label{eq:h-coupling}
+\end{align}
+and $\bm{\zeta}$ and $\bm{\lambda}$ capture Poisson-torsion interactions:
+\begin{equation}
+\bm{\zeta} := \int_\Section r^2 \nabla\WarpTwistIesan \dA, \qquad 
+\bm{\lambda} := \int_\Section (\bm{r} - \CentroidLocation)(\bm{r} \cdot \nabla\WarpTwistIesan) \dA.
+\label{eq:def-zeta-lambda}
+\end{equation}
+
+\subsubsection{Trace Matrix}
+
+The inverse of the energy matrix \eqref{eq:energy-matrix} is:
+\begin{equation*}
+\begin{aligned}
+\IesanEnergy^{-1}
+% &= \begin{pmatrix}
+% \frac{1}{EA} + \CentroidLocation\cdot(E\IntRGoRG)^{-1}\CentroidLocation 
+% & \mathbf{0}^\top & 0 & -\CentroidLocation^\top(E\IntRGoRG)^{-1} \\[6pt]
+% \mathbf{0} & \frac{1}{G}\big(\mathbf{H}_{bb}^{-1} + \frac{1}{\tilde{\Jsv}}\bm{\eta}\otimes\bm{\eta}\big) 
+% & -\frac{1}{G\tilde{\Jsv}}\bm{\eta} & \mathbf{0} \\[6pt]
+% 0 & -\frac{1}{G\tilde{\Jsv}}\bm{\eta}^\top & \frac{1}{G\tilde{\Jsv}} & \mathbf{0}^\top \\[6pt]
+% -(E\IntRGoRG)^{-1}\CentroidLocation & \mathbf{0} & \mathbf{0} & (E\IntRGoRG)^{-1}
+% \end{pmatrix}\\
+% &=\begin{pmatrix}
+% \frac{1}{EA} + \CentroidLocation\cdot(E\IntRGoRG)^{-1}\CentroidLocation 
+% & \mathbf{0}^\top & 0 & -\CentroidLocation^\top(E\IntRGoRG)^{-1} \\[6pt]
+% -(E\IntRGoRG)^{-1}\CentroidLocation & \mathbf{0} & \mathbf{0} & (E\IntRGoRG)^{-1} \\[6pt]
+% 0 & -\frac{1}{G\tilde{\Jsv}}\bm{\eta}^\top & \frac{1}{G\tilde{\Jsv}} & \mathbf{0}^\top \\[6pt]
+% \mathbf{0} & \frac{1}{G}\big(\mathbf{H}_{bb}^{-1} + \frac{1}{\tilde{\Jsv}}\bm{\eta}\otimes\bm{\eta}\big) 
+% & -\frac{1}{G\tilde{\Jsv}}\bm{\eta} & \mathbf{0} \\[6pt]
+% \end{pmatrix}\\
+%
+% &=\begin{pmatrix}
+% \frac{1}{EA} + \CentroidLocation\cdot(E\IntRGoRG)^{-1}\CentroidLocation 
+% & -\CentroidLocation^\top(E\IntRGoRG)^{-1}  & 0 & \mathbf{0}^\top \\[6pt]
+% -(E\IntRGoRG)^{-1}\CentroidLocation & (E\IntRGoRG)^{-1} & \mathbf{0} & \mathbf{0}  \\[6pt]
+% 0  & \mathbf{0}^\top & \frac{1}{G\tilde{\Jsv}} & -\frac{1}{G\tilde{\Jsv}}\bm{\eta}^\top  \\[6pt]
+% \mathbf{0} & \mathbf{0}& -\frac{1}{G\tilde{\Jsv}}\bm{\eta} & \frac{1}{G}\big(\mathbf{H}_{bb}^{-1} + \frac{1}{\tilde{\Jsv}}\bm{\eta}\otimes\bm{\eta}\big) 
+%  \\[6pt]
+% \end{pmatrix}\\
+&=\begin{pmatrix}
+\frac{1}{EA} + \CentroidLocation\cdot (E\IntRGoRG)^{-1}\CentroidLocation & -\CentroidLocation^\top (E\IntRGoRG)^{-1} & 0 & \mathbf{0}^\top \\[6pt]
+-(E\IntRGoRG)^{-1}\CentroidLocation & (E\IntRGoRG)^{-1} & \mathbf{0} & \mathbf{0} \\[6pt]
+0 & \mathbf{0}^\top & \frac{1}{G\Jsv} + \bm{\eta}\cdot(G\tilde{\mathbf{H}}_{bb})^{-1}\bm{\eta} 
+& -\bm{\eta}^\top(G\tilde{\mathbf{H}}_{bb})^{-1} \\[6pt]
+\mathbf{0} & \mathbf{0} & -(G\tilde{\mathbf{H}}_{bb})^{-1}\bm{\eta} & (G\tilde{\mathbf{H}}_{bb})^{-1}
+\end{pmatrix} 
+\\
+&= \begin{pmatrix}
+\frac{1}{EA}\FrameBasis\otimes\FrameBasis - \FrameBasis\otimes(E\IntRGoRG)^{-1}\CentroidLocation-(E\IntRGoRG)^{-1}\CentroidLocation\otimes\FrameBasis + (E\IntRGoRG)^{-1} & \mathbf{0}\\
+    \mathbf{0} & 
+\end{pmatrix}
+\end{aligned}
+% \label{eq:Cbar-inv}
+\end{equation*}
+where $\tilde{\mathbf{H}}_{bb} := \mathbf{H}_{bb} - \frac{1}{\Jsv}\mathbf{h}_{\varphi b}\otimes\mathbf{h}_{\varphi b}$ 
+and
+\begin{equation}
+\tilde{\Jsv} := \Jsv - \mathbf{h}_{\varphi b}\cdot \mathbf{H}_{bb}^{-1} \mathbf{h}_{\varphi b}, 
+\qquad 
+\bm{\eta} := \mathbf{H}_{bb}^{-1} \mathbf{h}_{\varphi b}.
+\label{eq:reduced-torsion}
+\end{equation}
+
+Using \(\IesanStiff\) given by \eqref{eq:G0-neg-m} in \eqref{eq:T0-formula}:
+\[
+\TraceDpDeRoot = \IesanEnergy^{-1}\IesanStiff^\top
+=
+\left(\begin{array}{cc|cc}
+1 
+& \mathbf{0}^\top
+& 0 
+& -EA\Bigl(\dfrac{1}{EA} + \CentroidLocation\cdot (E\IntRGoRG)^{-1}\CentroidLocation\Bigr)
+(\FrameBasis\times\CentroidLocation)^\top
++ \CentroidLocation^\top (E\IntRGoRG)^{-1}(E\FrameBasis^\times\IntRoR)^\top
+\\[8pt]
+\mathbf{0} & \mathbf{0} & \mathbf{0} 
+& \FrameBasis^{\times} 
+%EA (E\IntRGoRG)^{-1}\CentroidLocation\otimes (\FrameBasis\times\CentroidLocation) - (E\IntRGoRG)^{-1}(E\FrameBasis^\times\IntRoR)^\top
+\\[8pt] \hline 
+0 
+&  -\bm{\eta}^\top \ShiftB %(G\tilde{\mathbf{H}}_{bb})^{-1}(E\IntRGoRG)^\top 
+& \mu_{(b)}
+& \mathbf{0}^\top
+\\[8pt]
+  \mathbf{0} 
+& \ShiftB
+& \ShiftK 
+& \mathbf{0}
+\end{array}\right)
+\]
+where:
+\begin{equation}
+\begin{aligned}
+\ShiftB &= (G\tilde{\mathbf{H}}_{bb})^{-1}(E\IntRGoRG)^\top \\
+\mu_{(b)} &= 1 + \bm{\eta}\cdot G\Jsv (G\tilde{\mathbf{H}}_{bb})^{-1}\bm{\eta} \\
+\ShiftK &= - G\Jsv (G\tilde{\mathbf{H}}_{bb})^{-1}\bm{\eta} \\
+\end{aligned}
+\end{equation}
+where \(\lambda = 1 + EA\,\CentroidLocation\cdot (E\IntRGoRG)^{-1}\CentroidLocation\).
+

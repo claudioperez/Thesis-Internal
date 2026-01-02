@@ -1,0 +1,78 @@
+\subsection{Reconstruction}
+
+\paragraph{Summary.}
+\begin{itemize}
+  \item For any redundant (``gauge'') trace operator $[\tilde{\bm U}_T;\tilde{\bm Q}_T]$ that is required not to change the beam strains, its image must lie in $\ker\mathbb{B}^*$.
+  \item For the Saint~Venant part $Z_T$ one \emph{does not} impose $\mathrm{Im}\,Z_T \subset \ker\mathbb{B}^*$; instead
+  \[
+    \mathbb{B}^* \bm{Z}_T(\reflenx) = \TraceDeDpX(\reflenx),
+  \]
+  where $\TraceDeDpX(\reflenx)$ is the $6\times 6$ strain operator defined by the trace conditions (in particular, by $\TraceDeDpRoot,\TraceDeDpOne$ below).
+\end{itemize}
+
+%------------------------------------------------------------
+\subsubsection{Kernel of $\mathbb{B}^*$ and gauge subspace}
+
+We take
+\[
+  \mathbb{B}^*
+  =
+  \begin{bmatrix}
+    \mathbf{1}\,\partial_x & \FrameBasis^{\times} \\
+    \mathbf{0}             & \mathbf{1}\,\partial_x
+  \end{bmatrix},
+  \qquad
+  \bm{e}(x) = (\bm{\gamma}(x),\bm{\kappa}(x))
+  =
+  \mathbb{B}^*\bm{z}(x),
+\]
+The condition $\mathbb{B}^*\bm{z}=\mathbf{0}$ is therefore equivalent to
+\[
+  \bm{\theta}'(x) = \mathbf{0},
+  \qquad
+  \bm{u}'(x) + \FrameBasis\times\bm{\theta}(x) = \mathbf{0},
+\]
+which integrates to
+\[
+  \bm{\theta}(x) = \bm{\theta}_0,
+  \qquad
+  \bm{u}(x) = \bm{u}_0 + x\,\bm{\theta}_0\times\FrameBasis,
+\]
+with arbitrary constants $\bm{u}_0,\bm{\theta}_0\in\mathbb{R}^3$. Hence
+\[
+  \ker\mathbb{B}^*
+  =
+  \Bigl\{\,(\bm{u},\bm{\theta}) : 
+   \bm{u}(x) = \bm{u}_0 + x\,\bm{\theta}_0\times\FrameBasis,\;
+   \bm{\theta}(x) = \bm{\theta}_0,\;
+   \bm{u}_0,\bm{\theta}_0\in\mathbb{R}^3
+  \Bigr\}
+\]
+is exactly the space of centerline traces of infinitesimal rigid motions.
+
+
+If a redundant field $\bm{\eta}$ is to be \emph{purely kinematic slack} that does not alter the beam strain, its shape functions must satisfy
+\[
+  \mathbb{B}^*
+  \begin{pmatrix}
+    \bm{u}^{(\eta)}(x)\\[2pt] \bm{\theta}^{(\eta)}(x)
+  \end{pmatrix} = \mathbf{0},
+\]
+so that $\mathrm{Im}[\tilde{\bm U}_T;\tilde{\bm Q}_T]\subseteq\ker\mathbb{B}^*$. If, in addition, these six gauge directions are chosen to span all strain-free centerline motions, then
+\[
+  \mathrm{Im}[\tilde{\bm U}_T;\tilde{\bm Q}_T]=\ker\mathbb{B}^*,
+\]
+and there exists an invertible $6\times6$ matrix $\mathbf{G}_\eta$ such that
+\[
+   \tilde{\bm Z}_T(\reflenx)
+  =
+  \bm{Z}_{\delta}\mathbf{G}_\eta.
+\]
+In particular, any strain-free enrichment necessarily lives inside this $6$-dimensional rigid subspace.
+
+Crucially, this restriction \emph{does not} apply to the Saint~Venant trace $\bm{Z}_T(\reflenx)=[\bm{U}_T(\reflenx);\bm{Q}_T(\reflenx)]$, since we require
+\[
+  \mathbb{B}^* \TraceDzDpX(\reflenx) = \TraceDeDpX(\reflenx)\neq 0
+\]
+in order to reproduce the Saint~Venant strain distribution. Thus
+$\mathrm{Im}[\tilde{\bm U}_T;\tilde{\bm Q}_T]\subset\ker\mathbb{B}^*$ is a gauge condition on the redundant field $\eta$, not on the Saint~Venant trace $\TraceDzDpX$.

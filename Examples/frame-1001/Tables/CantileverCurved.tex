@@ -1,0 +1,41 @@
+\begin{center}
+\begin{table*}[!h]%
+\caption{End displacements \(\Delta \boldsymbol{x}(L)\) of the curved cantilever by \cite{bathe1979large} for a discretization with 8, 2-node elements.}
+\label{tab:bathe}
+\begin{tabular*}{\textwidth}{@{\extracolsep\fill}cccccccccc@{}}
+\toprule
+\textbf{Interpolation} & \textbf{Isometry} & \textbf{Parameters} &
+\textbf{Steps} & \textbf{Avg. Iter.} & \textbf{Max. Iter.} &
+  \(\Delta x_1\) & \(\Delta x_2\) & \(\Delta x_3\)
+\\ % 
+% tol=1e-16, 8 elements, 2 nodes each
+\midrule
+  \texttt{None} & \texttt{None} & \texttt{None} &  \hphantom{.}8 & 6.38 & 8 &  -23.477869   &   53.36939  &   -13.487488 \\ 
+  \texttt{None} & \texttt{None} & \texttt{None} &             10 & 5.80 & 7 &  -23.477858   &   53.36939  &   -13.487474 \\ 
+% \hline
+  \texttt{None} & \texttt{SFIN} & \texttt{None} &  \hphantom{.}8 & 6.38 & 8 &  -23.477878   &   53.369398 &   -13.487481 \\ 
+  \texttt{None} & \texttt{SFIN} & \texttt{None} &             10 & 5.80 & 7 &  -23.477864   &   53.369395 &   -13.487469 \\ 
+  \hline
+% \texttt{None} & \texttt{SFIN} & \texttt{Init} &  \hphantom{.}8 & 6.38 & 8 &  -23.477883   &   53.369414 &    -13.487489 \\
+% \texttt{None} & \texttt{SFIN} & \texttt{Init} &             10 & 5.70 & 7 &  -23.477862   &   53.369394 &    -13.487472 \\
+% \hline
+  \texttt{Incr} & \texttt{None} & \texttt{Incr} &  \hphantom{.}8 & 8.38 & 9 &  -23.476519   &   53.369477 &   -13.489989 \\ 
+  \texttt{Incr} & \texttt{None} & \texttt{Incr} &             10 & 7.60 & 8 &  -23.476811   &   53.369459 &   -13.489425 \\ 
+% \hline
+  \texttt{Incr} & \texttt{SFIN} & \texttt{Incr} &  \hphantom{.}8 & 6.38 & 8 &  -23.476522   &   53.369491 &   -13.490001 \\ 
+  \texttt{Incr} & \texttt{SFIN} & \texttt{Incr} &             10 & 5.70 & 7 &  -23.476813   &   53.369467 &   -13.489432 \\
+  \hline
+  \texttt{Init} & \texttt{None} & \texttt{Init} &  \hphantom{.}8 & 8.12 & 9 &  -23.450085   &   53.373025 &   -13.546693 \\ 
+  \texttt{Init} & \texttt{None} & \texttt{Init} &             10 & 7.50 & 8 &  -23.450085   &   53.373025 &   -13.546693 \\
+% \hline
+  %
+  \texttt{Init} & \texttt{SFIN} & \texttt{Init} &  \hphantom{.}8 & 6.38 & 8 &  -23.450656   &   53.374198 &    -13.546972 \\
+  \texttt{Init} & \texttt{SFIN} & \texttt{Init} &             10 & 5.70 & 7 &  -23.450656   &   53.374198 &    -13.546972 \\
+% \hline
+  \texttt{Init} & \texttt{SFIN} & \texttt{None} &  \hphantom{.}8 & 6.38 & 8 &  -23.450656   &   53.374198 &    -13.546972 \\
+  \texttt{Init} & \texttt{SFIN} & \texttt{None} &             10 & 5.80 & 7 &  -23.450656   &   53.374198 &    -13.546972 \\
+\bottomrule
+\end{tabular*}
+\end{table*}
+\end{center}
+

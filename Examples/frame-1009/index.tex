@@ -1,0 +1,21 @@
+
+This example demonstrates a severe bug in the existing corotational formulation.
+
+\subparagraph{Setup}
+
+A cantilever is discretized by 8 beam elements. 
+No loading is applied. 
+Two methods of static analysis are considered: load and displacement control.
+
+\subparagraph{Expectation}
+
+Because no loading is applied, both methods of analysis should not produce any displacement.
+
+\subparagraph{Outcome}
+
+The original corotational formulation \citep{crisfield1990consistent} gives rise to non-zero nodal displacements,
+and therefore fails the experiment. 
+The severity of the problem is particularly
+clear in the case of displacement control, where after 200 steps a drift over 10\% is produced.
+
+When \texttt{Corotational02} is used, the displacements remain at exactly 0 at all nodes, in all DOFs.

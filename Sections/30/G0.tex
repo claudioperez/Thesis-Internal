@@ -1,0 +1,66 @@
+\begin{Aside}
+\begin{equation}
+\IesanStiff = \begin{pmatrix}
+EA & EA\CentroidLocation^\top & 0 & \mathbf{0}^\top \\[4pt]
+\mathbf{0} & \mathbf{0} & \mathbf{0} & E\IntRGoRG \\[4pt]
+0 & \mathbf{0}^\top & G\Jsv & \mathbf{0}^\top \\[4pt]
+EA\FrameBasis\times\CentroidLocation & \FrameBasis^\times E\IntRoR & \mathbf{0} & \mathbf{0}
+\end{pmatrix}
+= \begin{pmatrix}
+    EA\,\FrameBasis\otimes(\FrameBasis+\CentroidLocation) & E\IntRGoRG \\
+    EA(\FrameBasis\times\CentroidLocation)\otimes\FrameBasis 
+    + E\FrameBasis\times\IntRoR & G\Jsv \FrameBasis\otimes\FrameBasis
+\end{pmatrix}
+\label{eq:R0-matrix}
+\end{equation}
+Thus
+\begin{equation}
+\IesanStiff^{-1} =
+\begin{pmatrix}
+\displaystyle \frac{1}{EA} + \CentroidLocation\cdot (E\IntRGoRG)^{-1}\,\CentroidLocation
+& \mathbf{0}
+& 0
+& \CentroidLocation^\top (E\IntRGoRG)^{-1}\,\FrameBasis^\times
+\\[6pt]
+-(E\IntRGoRG)^{-1}\,\CentroidLocation
+& \mathbf{0}
+& \mathbf{0}
+& -(E\IntRGoRG)^{-1}\,\FrameBasis^\times
+\\[6pt]
+0
+& \mathbf{0}
+& \displaystyle \frac{1}{G\Jsv}
+& \mathbf{0}
+\\[6pt]
+\mathbf{0}
+& (E\IntRGoRG)^{-1}
+& \mathbf{0}
+& \mathbf{0}
+\end{pmatrix}
+\label{eq:G0-inv-pos-m}
+\end{equation}
+and
+\begin{equation}
+\IesanEvolveSP
+:=\IesanStiff^{-1}\mathbb{J}\IesanStiff = 
+\begin{pmatrix}
+\mathbf{0} & \oneS - \CentroidLocation^\times \FrameBasis^\times \\[4pt]
+\mathbf{0} & \mathbf{0}
+\end{pmatrix}
+=\begin{pmatrix}
+\mathbf{0} & \oneS - \FrameBasis\otimes\CentroidLocation \\[4pt]
+\mathbf{0} & \mathbf{0}
+\end{pmatrix}
+= \begin{pmatrix}
+0 & \mathbf{0}^\top & 0 & -\CentroidLocation^\top \\[4pt]
+\mathbf{0} & \mathbf{0} & \mathbf{0} & \oneS \\[4pt]
+0 & \mathbf{0}^\top & 0 & \mathbf{0}^\top \\[4pt]
+\mathbf{0} & \mathbf{0} & \mathbf{0} & \mathbf{0}
+\end{pmatrix}
+\label{eq:A-matrix}
+\end{equation}
+
+%-------------------------------------------------------------------------
+\hrule 
+
+\end{Aside}

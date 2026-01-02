@@ -1,0 +1,469 @@
+\subsection{Slaughter Trace}\label{sec:trace-slaughter}
+
+We now consider a trace obtained by evaluating the 
+displacement and rotation at a fixed reference point $\CenterTrace$ on 
+the cross-section (e.g.\ the centroid or shear center). The idea is to use the 
+local rigid approximation at $\CenterTrace$ rather than an $L^2$-optimal 
+one.
+
+\begin{definition}[Pointwise trace]
+\label{def:pointwise-trace}
+Let $\CenterTrace \in \Section$ be a fixed reference point. The 
+\emph{pointwise trace} associated with $\CenterTrace$ is defined by
+\begin{equation}
+\label{eq:def-point-trace}
+\bm{u}(x) := \hat{\bm{u}}(x,\CenterTrace),
+\qquad
+\bm{\theta}(x) := \tfrac{1}{2}\,\nabla_{\bm{x}} \times 
+\hat{\bm{u}}(x,\bm{r})\big|_{\bm{r}=\CenterTrace}.
+\end{equation}
+The warping amplitude $\bm{\alpha}(x)$ is determined by the residual
+\begin{equation}
+\Phi(\bm{r})\,\bm{\alpha}(x)
+=
+\hat{\bm{u}}(x,\bm{r}) - \bm{u}(x) - \bm{\theta}(x)\times\bm{r}.
+\end{equation}
+\end{definition}
+
+\begin{remark}
+Unlike the section-average trace of \cref{sec:trace}, the pointwise trace does 
+not minimize the $L^2$-norm of the warping residual; instead, it matches the 
+exact displacement and local rotation at a single reference point 
+$\CenterTrace$. The residual 
+$\tilde{\bm{u}} := \hat{\bm{u}} - (\bm{u} + \bm{\theta}\times\bm{r})$ 
+is generally \emph{not} orthogonal to the section-rigid modes.
+\end{remark}
+
+We derive the dependence of $\bm{e}(x)$ on $\bm{p}$ by 
+considering each mode separately.
+
+\paragraph{Extension.}
+
+The extension mode displacement is
+\begin{equation*}
+\hat{\bm{u}}^{(\varepsilon)} = (x\,\FrameBasis - \nu\,\bm{r})\,a_\varepsilon.
+\end{equation*}
+Evaluating at the reference point $\CenterTrace$:
+\begin{equation*}
+\bm{u}^{(\varepsilon)}(x)
+=
+\hat{\bm{u}}^{(\varepsilon)}(x,\CenterTrace)
+=
+\big(x\,\FrameBasis - \nu\,\CenterTrace\big)\,a_\varepsilon.
+\end{equation*}
+
+The rotation field associated with $\hat{\bm{u}}^{(\varepsilon)}$ is obtained 
+from the curl. The displacement gradient is
+\[
+\nabla_{\bm{x}}\hat{\bm{u}}^{(\varepsilon)}
+=
+\FrameBasis \otimes \FrameBasis - \nu\,\mathbf{1}_\Omega,
+\]
+whose skew part vanishes. Thus the local rotation vector is identically zero:
+\begin{equation*}
+\bm{\theta}^{(\varepsilon)}(x) = \mathbf{0}.
+\end{equation*}
+
+The strains are therefore
+\begin{equation*}
+\bm{\gamma}^{(\varepsilon)} 
+= (\bm{u}^{(\varepsilon)})' + \FrameBasis \times \bm{\theta}^{(\varepsilon)}
+= \FrameBasis\,a_\varepsilon,
+\qquad
+\bm{\kappa}^{(\varepsilon)} 
+= (\bm{\theta}^{(\varepsilon)})' = \mathbf{0}.
+\end{equation*}
+
+Hence
+\begin{equation}
+\bm{e}^{(\varepsilon)}(x)
+=
+\begin{pmatrix}
+\FrameBasis \\[2pt]
+\mathbf{0}
+\end{pmatrix} a_\varepsilon,
+\end{equation}
+which is constant in $x$. In particular, the contribution of $a_\varepsilon$ to 
+$\bm{e}_0$ is $\FrameBasis$ in the axial strain component and zero elsewhere, 
+and the contribution to $\bm{e}_1$ is zero.
+
+\paragraph{Bending.}
+
+The bending mode displacement is
+\begin{equation*}
+\hat{\bm{u}}^{(a)} = \Big( -\tfrac{1}{2}x^2\,\mathbf{1}_\Omega 
+- \nu\,\mathrm{dev}(\bm{r} \otimes \bm{r}) 
++ x\,\FrameBasis \otimes \bm{r} \Big) \bm{a}_\Omega.
+\end{equation*}
+
+\subparagraph{Pointwise deflection.}
+Evaluating at $\CenterTrace$:
+\begin{align*}
+\bm{u}^{(a)}(x)
+&=
+\hat{\bm{u}}^{(a)}(x,\CenterTrace) \\
+&=
+\Big( -\tfrac{1}{2}x^2\,\mathbf{1}_\Omega 
+- \nu\,\mathrm{dev}(\CenterTrace \otimes \CenterTrace) 
++ x\,\FrameBasis \otimes \CenterTrace \Big) \bm{a}_\Omega \\
+&=
+-\tfrac{1}{2}x^2\,\bm{a}_\Omega
+- \nu\,\mathrm{dev}(\CenterTrace \otimes \CenterTrace)\,\bm{a}_\Omega
++ x\,(\CenterTrace\cdot\bm{a}_\Omega)\,\FrameBasis.
+\end{align*}
+
+\subparagraph{Pointwise rotation.}
+The rotation vector is given by 
+$\bm{\theta}^{(a)} = \tfrac{1}{2}\nabla_{\bm{x}}\times\hat{\bm{u}}^{(a)}$ 
+evaluated at $\CenterTrace$. The only part contributing 
+a nonzero curl is the sum of the $x\,\FrameBasis\otimes\bm{r}$ term and the 
+Poisson-bending term. As in the section-average case, this can be written as
+\begin{equation}
+\bm{\theta}^{(a)}(x)
+=
+-x\,(\FrameBasis \times \bm{a}_\Omega)
++ \bm{\Xi}^{(a)}_{\theta,\mathrm{pt}}\,\bm{a}_\Omega,
+\label{eq:theta-a-pt}
+\end{equation}
+where the \emph{pointwise Poisson-bending rotation tensor} is defined by
+\begin{equation}
+\bm{\Xi}^{(a)}_{\theta,\mathrm{pt}} 
+:= \tfrac{1}{2}\,\nabla_{\bm{x}}\times\!\big[-\nu\,\mathrm{dev}(\bm{r} \otimes \bm{r})\big]
+\big|_{\bm{r}=\CenterTrace}
+\in \mathbb{R}^{3\times 2}.
+\end{equation}
+
+\subparagraph{Bending strains.}
+Differentiating:
+\begin{equation*}
+\bm{\kappa}^{(a)}(x)
+= (\bm{\theta}^{(a)})' 
+= -\FrameBasis \times \bm{a}_\Omega,
+\end{equation*}
+which is constant in $x$.
+
+For the shear-type strain,
+\begin{align*}
+(\bm{u}^{(a)})'(x)
+&=
+-x\,\bm{a}_\Omega + (\CenterTrace\cdot\bm{a}_\Omega)\,\FrameBasis, \\
+\bm{\gamma}^{(a)}(x)
+&=
+(\bm{u}^{(a)})' + \FrameBasis \times \bm{\theta}^{(a)} \\
+&=
+-x\,\bm{a}_\Omega + (\CenterTrace\cdot\bm{a}_\Omega)\,\FrameBasis 
++ \FrameBasis \times\big(-x\,(\FrameBasis \times \bm{a}_\Omega) 
++ \bm{\Xi}^{(a)}_{\theta,\mathrm{pt}}\,\bm{a}_\Omega\big) \\
+&=
+-x\,\bm{a}_\Omega + (\CenterTrace\cdot\bm{a}_\Omega)\,\FrameBasis 
++ x\,\bm{a}_\Omega + \FrameBasis \times \bm{\Xi}^{(a)}_{\theta,\mathrm{pt}}\,\bm{a}_\Omega \\
+&=
+(\CenterTrace\cdot\bm{a}_\Omega)\,\FrameBasis 
++ (\FrameBasis \times \bm{\Xi}^{(a)}_{\theta,\mathrm{pt}})\,\bm{a}_\Omega.
+\end{align*}
+Using $\bm{a}_\Omega \perp \FrameBasis$, the $x$-dependent terms cancel as in 
+the section-average trace. The remaining constant term can be grouped into a 
+tensor acting on $\bm{a}_\Omega$. In particular, if 
+$\CenterTrace$ lies on the centroidal axis (so that 
+$\CenterTrace\cdot\bm{a}_\Omega = 0$), then
+\begin{equation*}
+\bm{\gamma}^{(a)}(x)
+=
+(\FrameBasis \times \bm{\Xi}^{(a)}_{\theta,\mathrm{pt}})\,\bm{a}_\Omega,
+\end{equation*}
+which is constant in $x$.
+
+Thus, in general,
+\begin{equation}
+\bm{e}^{(a)}(x)
+=
+\begin{pmatrix}
+\bm{\gamma}^{(a)} \\
+\bm{\kappa}^{(a)}
+\end{pmatrix}
+=
+\begin{pmatrix}
+\bm{\Gamma}^{(a)} \\
+-\FrameBasis \times \mathbf{1}_\Omega
+\end{pmatrix}\bm{a}_\Omega,
+\end{equation}
+with 
+$\bm{\Gamma}^{(a)} := 
+(\CenterTrace\cdot \cdot)\,\FrameBasis 
++ \FrameBasis \times \bm{\Xi}^{(a)}_{\theta,\mathrm{pt}}$ an appropriate 
+$3\times 2$ tensor, and $\bm{e}^{(a)}(x)$ is constant in $x$.
+
+\paragraph{Torsion.}
+
+The torsion mode displacement is
+\begin{equation*}
+\hat{\bm{u}}^{(\vartheta)} = \big( x\,(\FrameBasis \times \bm{r}) 
++ \WarpTwistIesan(\bm{r})\,\FrameBasis \big)\,a_\vartheta.
+\end{equation*}
+
+\subparagraph{Pointwise deflection.}
+Evaluating at $\CenterTrace$:
+\begin{equation*}
+\bm{u}^{(\vartheta)}(x)
+=
+\big( x\,(\FrameBasis \times \CenterTrace) 
++ \WarpTwistIesan(\CenterTrace)\,\FrameBasis \big)\,a_\vartheta.
+\end{equation*}
+
+\subparagraph{Pointwise rotation.}
+The rigid part $x\,(\FrameBasis \times \bm{r})$ corresponds to a pure twist 
+about $\FrameBasis$ with rotation vector $x\,\FrameBasis$; the warping term 
+$\WarpTwistIesan\,\FrameBasis$ contributes an additional $x$-independent 
+rotation at $\CenterTrace$. Thus
+\begin{equation}
+\bm{\theta}^{(\vartheta)}(x)
+=
+\big(x\,\FrameBasis + \CenterTwistLocation\big)\,a_\vartheta,
+\label{eq:theta-torsion-pt}
+\end{equation}
+where we define the \emph{pointwise twist center}
+\begin{equation}
+\CenterTwistLocation
+:=
+\tfrac{1}{2}\,\nabla_{\bm{x}}\times\!\big(\WarpTwistIesan(\bm{r})\,\FrameBasis\big)
+\big|_{\bm{r}=\CenterTrace}
+\in \mathbb{R}^3.
+\end{equation}
+
+\subparagraph{Torsional strains.}
+Differentiating:
+\begin{equation*}
+\bm{\kappa}^{(\vartheta)}(x)
+=
+(\bm{\theta}^{(\vartheta)})' = \FrameBasis\,a_\vartheta,
+\end{equation*}
+constant in $x$.
+
+The shear-type strain is
+\begin{align*}
+(\bm{u}^{(\vartheta)})'(x)
+&=
+(\FrameBasis \times \CenterTrace)\,a_\vartheta, \\
+\bm{\gamma}^{(\vartheta)}(x)
+&=
+(\bm{u}^{(\vartheta)})' + \FrameBasis \times \bm{\theta}^{(\vartheta)} \\
+&=
+(\FrameBasis \times \CenterTrace)\,a_\vartheta
++ \FrameBasis \times (x\,\FrameBasis + \CenterTwistLocation)\,a_\vartheta \\
+&=
+(\FrameBasis \times \CenterTrace)\,a_\vartheta
++ \FrameBasis \times \CenterTwistLocation\,a_\vartheta,
+\end{align*}
+since $\FrameBasis \times \FrameBasis = \mathbf{0}$. 
+%
+Thus
+\begin{equation}
+\bm{e}^{(\vartheta)}(x)
+=
+\begin{pmatrix}
+\FrameBasis \times \CenterTrace 
++ \FrameBasis \times \CenterTwistLocation \\
+\FrameBasis
+\end{pmatrix} a_\vartheta,
+\end{equation}
+which is constant in $x$. In particular, for $\CenterTrace = \mathbf{0}$ 
+(centroidal point), the shear part reduces to 
+$\FrameBasis \times \CenterTwistLocation\,a_\vartheta$.
+
+\paragraph{Flexure.}
+
+The flexure mode displacement is
+\begin{equation*}
+\begin{aligned}
+\hat{\bm{u}}^{(b)} &= 
+\big(x\,\FrameBasis \times \bm{r} + \WarpTwistIesan(\bm{r})\,\FrameBasis\big)\,c_\vartheta 
+\\
+&\quad
++ \Big( -\tfrac{1}{6}x^3\,\mathbf{1}_\Omega 
++ x\,\bm{\Pi}_{(b)}(\bm{r}) 
++ \tfrac{1}{2}x^2\,\FrameBasis \otimes (\bm{r} - \CentroidLocation) 
++ \FrameBasis \otimes \bm{\WarpShearIesan}(\bm{r}) \Big)\,\bm{b}_{\Section},
+\end{aligned}
+\end{equation*}
+where $c_\vartheta = \CenterShearLocation \cdot \bm{b}_{\Section}$ is the 
+flexure-induced twist with shear center $\CenterShearLocation$ as in 
+\eqref{eq:def-shear-center}.
+
+\subparagraph{Pointwise deflection.}
+Evaluating at $\CenterTrace$:
+\begin{align*}
+\bm{u}^{(b)}(x)
+&=
+\big(x\,\FrameBasis \times \CenterTrace 
++ \WarpTwistIesan(\CenterTrace)\,\FrameBasis\big)\,c_\vartheta \\
+&\quad
++ \Big( -\tfrac{1}{6}x^3\,\mathbf{1}_\Omega 
++ x\,\bm{\Pi}_{(b)}(\CenterTrace) 
++ \tfrac{1}{2}x^2\,\FrameBasis \otimes (\CenterTrace - \CentroidLocation) 
++ \FrameBasis \otimes \bm{\WarpShearIesan}(\CenterTrace) \Big)\,\bm{b}_{\Section}.
+\end{align*}
+Expanding:
+\begin{align}
+\bm{u}^{(b)}(x)
+&=
+-\tfrac{1}{6}x^3\,\bm{b}_{\Section}
++ x\,\bm{\Pi}_{(b)}(\CenterTrace)\,\bm{b}_{\Section}
++ \tfrac{1}{2}x^2\,\FrameBasis\,\big((\CenterTrace - \CentroidLocation)\cdot\bm{b}_{\Section}\big)
++ \FrameBasis\,\big(\bm{\WarpShearIesan}(\CenterTrace)\cdot\bm{b}_{\Section}\big)
+\notag\\
+&\quad
++ \big(x\,\FrameBasis \times \CenterTrace 
++ \WarpTwistIesan(\CenterTrace)\,\FrameBasis\big)\,(\CenterShearLocation \cdot \bm{b}_{\Section}).
+\label{eq:u-b-pt}
+\end{align}
+
+\subparagraph{Pointwise rotation.}
+Similarly, the rotation vector at $\CenterTrace$ can be written in the 
+general form (by polynomial structure and symmetry)
+\begin{equation}
+\bm{\theta}^{(b)}(x)
+=
+-\tfrac{1}{2}x^2\,(\FrameBasis \times \bm{b}_{\Section})
++ x\,\bm{A}_{\theta,1}^{\mathrm{pt}}\,\bm{b}_{\Section}
++ \bm{A}_{\theta,0}^{\mathrm{pt}}\,\bm{b}_{\Section},
+\label{eq:theta-b-pt}
+\end{equation}
+where the \emph{pointwise flexural rotation tensors} 
+$\bm{A}_{\theta,1}^{\mathrm{pt}},\bm{A}_{\theta,0}^{\mathrm{pt}}\in\mathbb{R}^{3\times 2}$ 
+collect contributions from the flexure-induced twist $c_\vartheta$, the shear 
+warping $\bm{\Pi}_{(b)}$, and the Ieşan shear warping $\bm{\WarpShearIesan}$ 
+evaluated at $\CenterTrace$. Their explicit form is not needed for the 
+polynomial structure of the strains.
+
+Differentiating:
+\begin{equation}
+\bm{\kappa}^{(b)}(x)
+=
+(\bm{\theta}^{(b)})' 
+=
+-x\,(\FrameBasis \times \bm{b}_{\Section})
++ \bm{A}_{\theta,1}^{\mathrm{pt}}\,\bm{b}_{\Section},
+\label{eq:kappa-b-pt}
+\end{equation}
+which is affine in $x$.
+
+\subparagraph{Flexural shear strain.}
+Differentiating \eqref{eq:u-b-pt}:
+\begin{align*}
+(\bm{u}^{(b)})'(x)
+&=
+-\tfrac{1}{2}x^2\,\bm{b}_{\Section}
++ \bm{\Pi}_{(b)}(\CenterTrace)\,\bm{b}_{\Section}
++ x\,\FrameBasis\,\big((\CenterTrace - \CentroidLocation)\cdot\bm{b}_{\Section}\big) \\
+&\quad
++ \big(\FrameBasis \times \CenterTrace\big)\,(\CenterShearLocation \cdot \bm{b}_{\Section}).
+\end{align*}
+Thus
+\begin{align*}
+\bm{\gamma}^{(b)}(x)
+&=
+(\bm{u}^{(b)})' + \FrameBasis \times \bm{\theta}^{(b)} \\
+&=
+\Big(-\tfrac{1}{2}x^2\,\bm{b}_{\Section} 
++ \tfrac{1}{2}x^2\,\bm{b}_{\Section}\Big) \\
+&\quad
++ x\Big(\FrameBasis \otimes (\CenterTrace - \CentroidLocation) 
++ \FrameBasis \times \bm{A}_{\theta,1}^{\mathrm{pt}}\Big)\,\bm{b}_{\Section} \\
+&\quad
++ \Big(\bm{\Pi}_{(b)}(\CenterTrace) 
++ (\FrameBasis \times \CenterTrace)\otimes \CenterShearLocation 
++ \FrameBasis \times \bm{A}_{\theta,0}^{\mathrm{pt}}\Big)\,\bm{b}_{\Section}.
+\end{align*}
+The $x^2$-terms cancel, as expected. Define the pointwise flexural shear tensors
+\begin{align}
+\bm{\Gamma}^{\mathrm{pt}}_1 
+&:= \FrameBasis \otimes (\CenterTrace - \CentroidLocation) 
++ \FrameBasis \times \bm{A}_{\theta,1}^{\mathrm{pt}},
+\label{eq:def-Gamma1-pt} \\
+\bm{\Gamma}^{\mathrm{pt}}_0 
+&:= \bm{\Pi}_{(b)}(\CenterTrace) 
++ (\FrameBasis \times \CenterTrace)\otimes \CenterShearLocation 
++ \FrameBasis \times \bm{A}_{\theta,0}^{\mathrm{pt}}.
+\label{eq:def-Gamma0-pt}
+\end{align}
+
+Then
+\begin{equation}
+\bm{\gamma}^{(b)}(x)
+=
+x\,\bm{\Gamma}^{\mathrm{pt}}_1\,\bm{b}_{\Section}
++ \bm{\Gamma}^{\mathrm{pt}}_0\,\bm{b}_{\Section},
+\label{eq:gamma-flexure-pt}
+\end{equation}
+which is affine in $x$, and together with \eqref{eq:kappa-b-pt} yields the 
+flexural contribution to $\bm{e}(x)$.
+
+\paragraph{Assembly of trace matrices.}
+
+Collecting the contributions from all four Ieşan modes, the pointwise beam 
+strains can be written in the affine form
+\begin{equation}
+\bm{e}(x)
+=
+\bm{e}_{0,\mathrm{pt}} + x\,\bm{e}_{1,\mathrm{pt}}
+=
+\mathbf{T}_{0,\mathrm{pt}}\,\bm{p}
++ x\,\mathbf{T}_{1,\mathrm{pt}}\,\bm{p},
+\end{equation}
+where $\bm{p} = (a_\varepsilon, \bm{a}_\Omega, a_\vartheta, \bm{b}_{\Section})^\top$ 
+and $\bm{e} = (\epsilon, \bm{\gamma}_\perp, \varkappa, \bm{\kappa}_\perp)^\top$.
+
+From the mode-by-mode calculations above, the \emph{pointwise trace matrices} 
+$\mathbf{T}_{0,\mathrm{pt}},\mathbf{T}_{1,\mathrm{pt}} \in \mathbb{R}^{6\times 6}$ 
+have the block structure
+\begin{equation}
+\mathbf{T}_{0,\mathrm{pt}} = 
+\begin{pmatrix}
+1 & (\bm{\Gamma}^{(a)})_\parallel^\top & 0 & (\bm{\Gamma}^{\mathrm{pt}}_0)_\parallel^\top \\[4pt]
+\mathbf{0} & (\bm{\Gamma}^{(a)})_\perp & (\FrameBasis \times \CenterTwistLocation + \FrameBasis \times \CenterTrace)_\perp & (\bm{\Gamma}^{\mathrm{pt}}_0)_\perp \\[4pt]
+0 & 0 & 1 & (\bm{A}_{\theta,1}^{\mathrm{pt}})_\parallel^\top \\[4pt]
+\mathbf{0} & -\FrameBasis^{\times} & \mathbf{0} & (\bm{A}_{\theta,1}^{\mathrm{pt}})_\perp
+\end{pmatrix},
+\label{eq:T0-pointwise}
+\end{equation}
+\begin{equation}
+\mathbf{T}_{1,\mathrm{pt}} = 
+\begin{pmatrix}
+0 & \mathbf{0}^\top & 0 & (\bm{\Gamma}^{\mathrm{pt}}_1)_\parallel^\top \\[4pt]
+\mathbf{0} & \mathbf{0} & \mathbf{0} & (\bm{\Gamma}^{\mathrm{pt}}_1)_\perp \\[4pt]
+0 & 0 & 0 & (-\FrameBasis \times \mathbf{1}_\Omega)_\parallel^\top \\[4pt]
+\mathbf{0} & \mathbf{0} & \mathbf{0} & (-\FrameBasis \times \mathbf{1}_\Omega)_\perp
+\end{pmatrix},
+\label{eq:T1-pointwise}
+\end{equation}
+where $(\cdot)_\parallel$ and $(\cdot)_\perp$ denote the axial and transverse 
+components with respect to $\FrameBasis$, and the various tensors
+$\bm{\Xi}^{(a)}_{\theta,\mathrm{pt}}$, 
+$\CenterTwistLocation$, 
+$\bm{A}_{\theta,0}^{\mathrm{pt}}$, 
+$\bm{A}_{\theta,1}^{\mathrm{pt}}$, 
+$\bm{\Gamma}^{(a)}$, 
+$\bm{\Gamma}^{\mathrm{pt}}_0$, 
+$\bm{\Gamma}^{\mathrm{pt}}_1$
+are as defined above.
+
+\begin{remark}[Warping index of the pointwise trace]
+For a section with non-degenerate geometry (invertible inertia tensor and 
+nontrivial warping fields), the six columns of the stacked matrix
+\begin{equation}
+\mathbf{T}_{\mathrm{stack,pt}}
+:=
+\begin{pmatrix}
+\mathbf{T}_{0,\mathrm{pt}} \\[2pt]
+\mathbf{T}_{1,\mathrm{pt}}
+\end{pmatrix}
+\end{equation}
+are generically linearly independent, yielding 
+$\mathrm{rank}(\mathbf{T}_{\mathrm{stack,pt}})=6$. 
+In this case, the full Saint-Venant parameter vector 
+$\bm{p}$ is uniquely determined by the pointwise beam strains 
+$\bm{e}(x)$ (equivalently, by their coefficients 
+$\bm{e}_{0,\mathrm{pt}},\bm{e}_{1,\mathrm{pt}}$), and a six-strain Timoshenko 
+beam with this trace can, in principle, reproduce the entire classical 
+Saint-Venant torsion–extension–shear–bending class.
+\end{remark}

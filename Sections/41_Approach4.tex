@@ -1,0 +1,317 @@
+
+
+\subsubsection{Approach 2: Average Strain}
+
+Consider the alternative identification for the free parameters \(\bm{\StrainGauge}_{\gamma}\) which determine the reduced strain \(\bm{\gamma}\) that follows from the idea of \cite{cowper1966shear}. 
+This was employed by \cite{simo1982bifurcation,hjelmstad1983seismic,hjelmstad1987warping}. 
+Here the section rigid fields \(\bar{\bm u},\bar{\bm \theta}\) are sought to make section-rigid displacement \(\bm{u} + \bm{\theta}\times\bm{r}\) the \emph{least-square optimal fit} to the full field \(\hat{\bm u}\).
+
+In view of \cref{prop:align-cowper}, the section–average translation and rotation are:
+\begin{equation}
+\bar{\bm u}(\reflenx)\coloneq\SectionAverage{\hat{\bm u}} - \bar{\bm{\theta}}\times\SectionAverage{\,\bm{r}\,}
+\qquad
+\bar{\bm\theta}(\reflenx)\coloneq\bar{\Theta}[\hat{\bm u}],
+\label{eq:bar-vars}
+\end{equation}
+
+\begin{remark}
+The residual $\tilde{\bm u}\coloneq\hat{\bm u}-(\bar{\bm u}+\bar{\bm\theta}\times\bm{r})$ is orthogonal, in area mean, to the rigid section modes:
+\begin{equation*}
+\int_{\Section}\tilde{\bm u}\mathrm{~d}A=\mathbf{0},
+\qquad\text{and}\qquad 
+\int_{\Section}\bm{r}\times\tilde{\bm u}\mathrm{~d}A =\mathbf{0}.
+% \label{eq:def-u-tilde}
+\end{equation*}
+\end{remark}
+
+% \paragraph{Identify \texorpdfstring{\(\bar{\ShiftB}\)}{Xi}}
+Recall the particular solution under pure flexure \eqref{eq:iesan-displacement-2}:
+\begin{equation*}
+\begin{aligned}
+  \hat{\bm{u}}_{\rm I\!I}\{\bm{b}_{\Section}\}
+    &= (x \FrameBasis\times\bm{r} + \WarpTwistIesan\FrameBasis) c_{\vartheta}
+     +\left(-\tfrac{1}{6}\,x^3\,\mathbf{1}_{\Section}
+      + x \PoissonFlexure  
+      +\tfrac{1}{2}x^2\,\FrameBasis\otimes\big(\bm{r} -\CentroidLocation\big)
+    + \FrameBasis\otimes\bm{\WarpShearIesan}\;\right)\bm{b}_{\Section} \\
+\end{aligned}
+\end{equation*}
+
+\paragraph{Rotation.}
+
+
+% \begin{equation*}
+% \begin{aligned}
+% \bar{\bm \theta} &= \mathbf{I}^{-1}\left(\int 
+% -\tfrac{1}{6}\,x^3\,\FrameBasis\otimes(\FrameBasis\times\bm{r})
+%       + x [\bm{r}^{\times}]\PoissonFlexure  
+%       +\tfrac{1}{2}x^2\,\bm{r}\times\FrameBasis\otimes\big(\bm{r} -\CentroidLocation\big)
+%     + \bm{r}\times\FrameBasis\otimes\bm{\WarpShearIesan}(\bm{r})\mathrm{~d}A
+% \right)\,\bm{b}_{\Section}
+% \end{aligned}
+% \end{equation*}
+Evaluating \(\RotationAverage{\hat{\bm u}_{\rm I\!I}}\) furnishes
+\[
+\begin{aligned}
+\bar{\bm\theta}(\reflenx)
+&= \left(x\FrameBasis + \CenterTwistLocation\right)\,c_{\vartheta}
+-\tfrac{1}{2}\,\reflenx^{2}\,\FrameBasis\times\bm{b}_{\Section}
++\reflenx\,\bar{\Theta}[\PoissonFlexure\bm{b}_{\Section}]
++ \bar{\Theta}[\FrameBasis\,\WarpShearIesan_{\alpha}]\otimes\FrameBasis_{\alpha}\,\bm{b}_{\Section}\\
+\end{aligned}
+\]
+where \(\CenterTwistLocation \coloneq \RotationAverage{\FrameBasis\WarpTwistIesan}\in\Section\).
+The rotation gauge is 
+\[
+\GaugeCurve = \reflenx \RotationAverage{\PoissonFlexure\bm{b}_{\Section}} + \CenterTwistLocation c_{\vartheta} + \RotationAverage{\FrameBasis\otimes\bm{\WarpShearIesan}}\bm{b}_{\Section}
+\]
+The curvature is:
+\[
+\begin{aligned}
+\bar{\bm\theta}'(\reflenx)
+&= \FrameBasis\otimes\CenterShearLocation \,\bm{b}_{\Section}
+-\,\reflenx\,\FrameBasis\times\bm{b}_{\Section}
++\,\bar{\Theta}[\PoissonFlexure\bm{b}_{\Section}]
+\end{aligned}
+\]
+The residual centroid rotation is
+\[
+\bar{\bm\theta}\times\CentroidLocation = x\,\FrameBasis\times\CentroidLocation c_{\vartheta}
++x \RotationAverage{\PoissonFlexure\bm{b}}\times\CentroidLocation
++\tfrac{1}{2} x^2 \FrameBasis\otimes\CentroidLocation\,\bm{b}_{\Section}
++ \RotationAverage{\FrameBasis\bm{\WarpShearIesan}\cdot\bm{b}_{\Section}} \times \CentroidLocation
++ \CenterTwistLocation\times\CentroidLocation\,c_{\vartheta}
+\]
+where we use the identity \((\FrameBasis\times\bm{b}_{\Section})\times\CentroidLocation = - \FrameBasis\otimes\CentroidLocation\,\bm{b}_{\Section}\).
+
+\paragraph{Deflection.}
+Using \eqref{eq:iesan-displacement-2} in the definition \eqref{eq:bar-vars} for \(\bar{\bm u}\) furnishes:
+\begin{equation*}
+\begin{aligned}
+\bar{\bm u}(x) &= \reflenx\,(\FrameBasis\times\CentroidLocation)\, c_{\vartheta} 
++ \Big(-\tfrac16\,x^{3}\,\mathbf{1}_{\Section}
++x\,\Section[\PoissonFlexure]\Big)\bm{b}_{\Section}
+- \bar{\bm\theta}(x)\times\CentroidLocation \\
+&= \reflenx\,(\FrameBasis\times\CentroidLocation)\, c_{\vartheta} 
++ \Big(-\tfrac16\,x^{3}\,\mathbf{1}_{\Section}
++x\,\Section[\PoissonFlexure]\Big)\bm{b}_{\Section}
+- \left(x\,\FrameBasis\times\CentroidLocation c_{\vartheta}
++x \RotationAverage{\PoissonFlexure\bm{b}}\times\CentroidLocation
++\tfrac{1}{2} x^2 \FrameBasis\otimes\CentroidLocation\,\bm{b}_{\Section}
++ \RotationAverage{\FrameBasis\bm{\WarpShearIesan}\cdot\bm{b}_{\Section}} \times \CentroidLocation
++ \CenterTwistLocation\times\CentroidLocation\,c_{\vartheta}
+\right) \\
+&= 
+-\tfrac16\,x^{3}\,\bm{b}_{\Section}
+-\tfrac{1}{2} x^2 \FrameBasis\otimes\CentroidLocation\,\bm{b}_{\Section}
++ x\big(\,\Section[\PoissonFlexure]\bm{b}_{\Section}
+-  \RotationAverage{\PoissonFlexure\bm{b}}\times\CentroidLocation
+\big)
+- \RotationAverage{\FrameBasis\bm{\WarpShearIesan}\cdot\bm{b}_{\Section}} \times \CentroidLocation
+- \CenterTwistLocation\times\CentroidLocation\,c_{\vartheta} \\
+\end{aligned}
+\end{equation*}
+because \(\Section[\bm{r}-\CentroidLocation]=\mathbf{0}\) and, by the Saint–Venant normalization,
+\(\Section[\bm{\WarpShearIesan}]=\mathbf{0}\). 
+Define the vector \(\CenterShearLocation \in \Section\) with units of length by:
+\[
+\CenterShearLocation \coloneq \frac{1}{\Jsv}\int (\nabla \bm{\WarpShearIesan} + \PoissonFlexure^{\top})\bm{r}\times\FrameBasis \dA
+\qquad\text{so}\qquad c_{\vartheta} = \CenterShearLocation\cdot\bm{b}_{\Section}
+\]
+The deflection gauge \(\bm{\eta}_{u}\) is thus:
+\[
+\bm{\eta}_{u} = x\big(\,\Section[\PoissonFlexure]\bm{b}_{\Section}
+-  \RotationAverage{\PoissonFlexure\bm{b}}\times\CentroidLocation
+\big)
+- \RotationAverage{\FrameBasis\bm{\WarpShearIesan}\cdot\bm{b}_{\Section}} \times \CentroidLocation
+- (\CenterTwistLocation\times\CentroidLocation)\otimes\CenterShearLocation\,\bm{b}_{\Section}
+\]
+\begin{Details}
+The axial derivative is
+\[
+\bar{\bm u}'(\reflenx)
+= \FrameBasis\times\CentroidLocation\,c_{\vartheta}
++ \Big(-\tfrac{1}{2}\,x^{2}\,\mathbf{1}_{\Section}
++\SectionAverage{\PoissonFlexure}\Big)\bm{b}_{\Section} - \bar{\bm\theta}'\times\CentroidLocation,
+\]
+
+\[
+\begin{aligned}
+\FrameBasis\times\bar{\bm\theta}(\reflenx)
+&=
+  \tfrac12\,\reflenx^{2}\,\bm{b}_{\Section}
++ \FrameBasis\times\bar{\Theta}[\FrameBasis\,\WarpShearIesan_{\alpha}]\otimes\FrameBasis_{\alpha}\,\bm{b}_{\Section}
++  \FrameBasis\times\CenterTwistLocation c_{\vartheta} \\
+&=
+  \tfrac12\,\reflenx^{2}\,\bm{b}_{\Section}
++ \left(\FrameBasis\times\bar{\Theta}[\FrameBasis\,\WarpShearIesan_{\alpha}]\otimes\FrameBasis_{\alpha}
++  (\FrameBasis\times\CenterTwistLocation) \otimes \CenterShearLocation \right)\bm{b}_{\Section}
+\end{aligned}
+\]
+where the term \(\bar{\Theta}[\PoissonFlexure\bm{b}_{\Section}]\) is parallel to \(\FrameBasis\), and thus vanishes in \(\FrameBasis\times\bar{\bm\theta}\). 
+\end{Details}
+
+Using this in \eqref{eq:def-linear-align-strain} furnishes
+\begin{equation}
+\bar{\bm\gamma}(\reflenx)
+= - x \FrameBasis\otimes\CentroidLocation\,\bm{b}_{\Section} + \bm{\Xi}^{-1} \bm{b}_{\Section}
+%=\Big(\Section[\PoissonFlexure]+ \FrameBasis\times\bar{\Theta}[\FrameBasis\,\WarpShearIesan_{\alpha}]\otimes\FrameBasis_{\alpha}\Big)\bm{b}_{\Section}.
+\qquad\text{with}\qquad 
+\bm{\Xi}^{-1} = \Big(
+\Section[\PoissonFlexure]
++\CentroidLocation\times\RotationAverage{\PoissonFlexure}
++ \FrameBasis\times\RotationAverage{\FrameBasis\otimes\bm\WarpShearIesan}
+\Big)^{-1}
+\label{eq:def-bfrombeta-avg}
+\end{equation}
+
+
+% \inputdraft{Sections/57_Approach4_Extras}
+% \clearpage
+\paragraph{Constitutive relations}
+
+\iffalse 
+\begin{proposition}
+The Saint–Venant shear strain on $\Section$ splits as
+\begin{equation}
+\bm{\varepsilon}_{(b)}(\reflenx,\bm{r})=\bar{\bm\gamma}(\reflenx)+\nabla_{\!\Section}w(\reflenx,\bm{r}),
+\label{eq:cowper-shear-split}
+\end{equation}
+with $\bar{\bm{\gamma}}$ defined by \eqref{eq:timo-gamma}.
+\end{proposition}
+\begin{proof}
+Work with shear–bending and set $c_{\vartheta}=0$. 
+From the Saint–Venant kinematics, the displacement gradient \eqref{eq:grad-uhat-iesan} specializes to:
+\begin{align}
+\bm{u}(\reflenx,\bm{r})'
+&=\frac{\nu}{2}\Big((\FrameBasis\times\bm{r})\otimes(\FrameBasis\times\bm{r})-\bm{r}\otimes\bm{r}\Big)\,\bm{b}_{\Section}
+\;-\;\reflenx \,\mathbf d(0)\;-\;\tfrac{1}{2}\reflenx^2\,\bm{b}_{\Section},
+\label{eq:SV-dx-u}\tag{$\ast$} \\[2pt]
+\gradS w(\reflenx,\bm{r})
+&=\nabla \varphi^{\rm sh}(\bm{r})\;+\;\reflenx\,\mathbf d(0)\;+\;\tfrac{1}{2}\reflenx^2\,\bm{b}_{\Section},
+\label{eq:SV-dr-w}\tag{$\ast\ast$}
+\end{align}
+and, taking the symmetric tangential part as in \eqref{eq:iesan-point-shear-strain},
+\begin{equation}
+\label{eq:SV-shear-field}
+\bm{\varepsilon}_{(b)}(\reflenx,\bm{r})
+=
+\nabla \varphi^{\rm sh}(\bm{r})
++\frac{\nu}{2}\Big((\FrameBasis\times\bm{r})\otimes(\FrameBasis\times\bm{r})-\bm{r}\otimes\bm{r}\Big)\,\bm{b}_{\Section}.
+\end{equation}
+%
+Using \eqref{eq:SV-dx-u}–\eqref{eq:SV-dr-w} with the definitions \eqref{eq:def-avg-ubar}-\eqref{eq:def-avg-thetabar} and $\int_{\Section}\bm{r}\mathrm{~d}A = \mathbf{0}$,
+\begin{equation}
+\label{eq:bar-gamma-eval}
+\bar{\bm\gamma}(\reflenx)
+=\bar{\bm u}'(\reflenx)+\FrameBasis\times\bar{\bm\theta}(\reflenx)
+=\frac{\nu}{2} \SectionAverage{(\FrameBasis\times\bm{r})\otimes(\FrameBasis\times\bm{r})-\bm{r}\otimes\bm{r}}\bm{b}_{\Section}.
+\end{equation}
+Subtract \eqref{eq:bar-gamma-eval} from \eqref{eq:SV-shear-field}. The polynomial terms $\reflenx\,\mathbf d(0)$ and $\tfrac{1}{2}\reflenx^2\,\bm{b}_{\Section}$ cancel by \eqref{eq:SV-dr-w}, and one obtains
+\[
+\bm\varepsilon_{(b)}(\reflenx,\bm{r})-\bar{\bm\gamma}(\reflenx)=\nabla \varphi^{\rm sh}(\bm{r})=\nabla_{\!\Section}w(\reflenx,\bm{r}),
+\]
+which proves \eqref{eq:cowper-shear-split}.
+\end{proof}
+
+In view of \eqref{eq:cowper-shear-split}, the shear resultant is
+\begin{equation}
+\label{eq:F-balance}
+\ShearForce(\reflenx)
+=G\int_{\Section}\bm{\varepsilon}_{(b)}(\reflenx,\bm{r})\mathrm{~d}A
+=GA\,\bar{\bm\gamma}(\reflenx)+G\int_{\Section}\nabla_{\!\Section}w(\reflenx,\bm{r})\mathrm{~d}A.
+\end{equation}
+The final integral simplifies with \eqref{eq:w-def}:
+\begin{equation}
+\int_{\Section}\nabla_{\!\Section}w\mathrm{~d}A
+=-\frac{1}{GA}\Big(\int_{\Section}\nabla_{\!\Section}(\mathbf D\bm{\SimoWarp})\mathrm{~d}A\Big)^{\top}\ShearForce
+=:-\,\mathbf L\,\ShearForce,
+\qquad
+\mathbf L\coloneq\Section\big[\nabla_{\!\Section}(\mathbf D\bm{\SimoWarp})\big]^{\top}
+\label{eq:def-simo-L}
+\end{equation}
+\fi 
+
+Hence
+\begin{equation}
+(\mathbf{1}+\mathbf L)\,\ShearForce(\reflenx)=GA\,\bar{\bm\gamma}(\reflenx),
+\qquad
+\ShearForce(\reflenx)=GA\,\bar{\bm{K}}\,\bar{\bm\gamma}(\reflenx),
+\qquad
+\bar{\bm{K}}\coloneq(\mathbf{1}+\mathbf L)^{-1}.
+\label{eq:shear-force-from-avg-strain}
+\end{equation}
+The tensor $\bar{\bm{K}}$ reduces, on principal directions, to the familiar scalar shear coefficients.
+
+
+\subsection{Summary}
+\begin{itemize}
+    \item The kinematic model \eqref{eq:linear-alignment-field} fitted to the general solution of Saint Venant's problem furnishes a section constitutive model with 12 resultants, and thus, a \(12\times12\) section stiffness matrix. 
+    The first \(6\times6\) block of this matrix contains the plane section constants \(A,\Io, \LinearMM\). When the \(6\) extra warping resultants are condensed out, the resulting condensed \(6\times 6\) stiffness features the corrected section constants \(\Jsv,A_{y},A_{z}\).
+\end{itemize}
+
+
+
+\paragraph{Projected Warping}.
+\begin{Details}
+Define
+\begin{equation}
+\bm{\SimoWarp}(\bm{r})\coloneq\bm{\WarpShearIesan}(\bm{r})\;-\;\Section[\bm{\WarpShearIesan}]\;-\;\bar\Theta[\bm{\WarpShearIesan}]\times(\bm{r}-\CentroidLocation),
+\label{eq:def-simo-phi}
+\end{equation}
+Then \(\bm{\SimoWarp}\) is orthogonal, in area mean, to the rigid section modes:
+\[
+\SectionAverage{\bm{\SimoWarp}}=\mathbf{0},
+\qquad
+\int_{\Omega}(\bm{r}-\CentroidLocation)\times\bm{\SimoWarp}\mathrm{~d}A=\mathbf{0},
+\]
+and using \(\nabla(\bar\Theta[\bm{\WarpShearIesan}]\times(\bm{r}-\CentroidLocation))=\bar\Theta[\bm{\WarpShearIesan}]^{\times}\)
+\[
+\SectionAverage{\nabla\bm{\SimoWarp}}^{\!\top}
+=\SectionAverage{\nabla\bm{\WarpShearIesan}}^{\!\top}+ \bar\Theta[\bm{\WarpShearIesan}]^{\times}.
+\]
+
+Starting from
+\eqref{eq:def-bfrombeta-avg},
+using \eqref{eq:def-simo-phi} and the identities \eqref{eq:theta-rank-1}:
+\[
+\bar{\ShiftB}^{-1}
+=\Section[\PoissonFlexure]+\FrameBasis\times\bar\Theta[\FrameBasis\,\bm{\SimoWarp}]
++\Section[\bm{\WarpShearIesan}] - \bar\Theta[\bm{\WarpShearIesan}]^{\times}.
+\]
+In view of \eqref{eq:HF-eq-EJG}, for a homogeneous section with constant shear modulus \(G\):
+\begin{equation}
+\SectionAverage{\nabla\bm\WarpShearIesan}^{\!\top}
+=\frac{1}{A\SectionAverage{G}}\,\BishearTensorRB -\Section[\PoissonFlexure],
+\qquad
+\SectionAverage{\PoissonFlexure}
+=\frac{\nu}{2A}\,(\LinearMM-\IntRoR)
++\nu\,\CentroidLocation\otimes\CentroidLocation.
+\label{eq:avg-wb-identity}
+\end{equation}
+
+Eliminate \(\bar\Theta[\bm{\WarpShearIesan}]^{\times}\) \textbf{using the two boxed relations above}:
+\[
+\bar\Theta[\bm{\WarpShearIesan}]^{\times}
+=\SectionAverage{\nabla\bm{\SimoWarp}}^{\!\top}-\SectionAverage{\nabla\bm{\WarpShearIesan}}^{\!\top}
+=\SectionAverage{\nabla\bm{\SimoWarp}}^{\!\top}-\frac{1}{GA}\,E\IntRGoRG
++ \SectionAverage{\PoissonFlexure},
+\]
+to obtain, using \(\Section[\bm{\WarpShearIesan}]=\mathbf{0}\)
+\[
+\bar{\ShiftB}^{-1}
+=\frac{1}{GA}\,E\IntRGoRG
++\FrameBasis\times\bar\Theta[\FrameBasis\otimes\bm{\SimoWarp}]
+-\SectionAverage{\nabla\bm{\SimoWarp}}^{\!\top}.
+\]
+
+Finally, the following equivalent expression for \eqref{eq:def-bfrombeta-avg}:
+\begin{equation}
+\bar{\ShiftB}^{-1}=\frac{1}{GA}\,(\mathbf{1}+\mathbf L)\,E\,\IntRGoRG
+\qquad\text{with}\quad 
+\mathbf L
+\coloneq GA\Big(\FrameBasis\times\bar\Theta[\FrameBasis\otimes\bm{\SimoWarp}]
+-\SectionAverage{\nabla\bm{\SimoWarp}}^{\!\top}\Big)(E\IntRGoRG)^{-1}
+\label{eq:def-L-avg}
+\end{equation}
+\end{Details}

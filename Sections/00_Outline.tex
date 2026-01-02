@@ -1,0 +1,143 @@
+\subsection{Key Equations}
+\RepeatEquation{eq:trace-map}
+
+\begin{itemize}
+    \item \textbf{Trace State}
+        Trace Strains:
+        \RepeatEquation{eq:def-gam-kap}
+    \item Element
+        \begin{description}
+            \item[$\circ$ Exact] \RepeatEquation{eq:finite-alignment-field}
+            \item[$\circ$ Linear]
+            \RepeatEquation{eq:trace-lift-linear}
+        \end{description}
+    \item Section 
+        \RepeatEquation{eq:saint-venant-stress}
+        \RepeatEquation{eq:strain-tensor-decomp}
+        \begin{description}
+            \item[$\circ$ Wagner] \RepeatEquation{eq:wagner-gl-strain-pi}
+            \item[$\circ$ Linear] \RepeatEquation{eq:linear-gl-strain-pi}
+        \end{description}
+
+    \item Saint~Venant, with \eqref{eq:trace-lift-linear}
+     \begin{description}
+        \item[Type 3]
+          Trace Matrix:
+          \RepeatEquation{eq:T0-inv}
+          Fiber strain:
+          \RepeatEquation{eq:eps-B-e}
+          Resultants:
+          \begin{description}
+          \item[$\circ$ Petrov] 
+          \RepeatEquation{eq:petrov-section}
+          \item[$\circ$ Bubnov]
+          \RepeatEquation{eq:bubnov-section}
+          \end{description}
+     \end{description}
+\end{itemize}
+
+\clearpage
+\subsection{Summary}
+
+\begin{itemize}
+    \item A trace \(\mathcal{T}\) of a continuum displacement \(\hat{\bm u}\) is an operation:
+    \RepeatEquation{eq:trace-map}
+    whereby
+    \RepeatEquation{eq:trace-lift-linear}
+    \item Traces are physically distinguished by how they manifest in boundary fixities on the beam displacement \(\bm{u}\) and rotation \(\bm{\theta}\) fields.
+    \item The geometric \citep{cowper1966shear} and energetic \citep{renton1991generalized} theories of shear  
+     both represent exact continuum solutions, and are included in the Class I family of traces. 
+    \item Any Class I trace (\cref{def:class-1}) is compatible with Type 3 beam finite elements via a Petrov-Galerkin section \eqref{eq:petrov-section}, which preserves the classical section resultants, but furnishes an asymmetric tangent stiffness.
+    \item Class II traces (\cref{def:class-ii}) are the subset of Class I traces which may be implemented via a Bubnov-Galerkin section \eqref{eq:bubnov-section} to furnish a symmetric tangent stiffness.
+    \item Class III traces (\cref{def:class-iii}) are the subset of Class II traces that produce the classical beam stress resultants \(\snm = (N,\ShearForce,T,\bm{M})\) under the symmetric Bubnov-Galerkin implementation \eqref{eq:bubnov-section}.
+    \item All Class III traces are equivalent under Saint~Venant loads (\cref{def:sv-equivalence}), and their trace matrix is given by \eqref{eq:energetic-trace-blocks}.
+\end{itemize}
+
+\begin{itemize}
+    \item There is a 36-parameter space of particular solutions to Saint Venant's problem that can be consistently modeled by standard beam elements with only enhancements to the resultant model.
+    \item An 18 parameter subset of these solutions will admit a physically meaningful kinematic interpretation in the configuration variables \(\bm{u},\bm{\theta}\).
+    \item A  4 parameter subset is exactly variationally compatible with the linear Type 3 equilibrium operator.
+    \item There is a unique model.
+\end{itemize}
+
+Novelty:
+\begin{itemize}
+    \item Classical trace equations are obtained in a form suitable for 3D inelastic simulations with Type 3 elements, general sections, and non-zero Poisson ratio. 
+    \item Identify exact scaling relationship between shear warping functions \(\bm{\psi}\) and beam strains \(\bm\gamma\).
+    \item Nonlinear section geometry (Wagner term) incorporated inside section.
+    \item Classical shear correction coefficients are associated to continuum exact 3D displacements.
+\end{itemize}
+
+
+TODO:
+\begin{itemize}
+    \item Implement Class I trace blocks.
+    \item Implement trace blocks inside section.
+    \item How stable are Class I traces?
+    \item How useful are non-Class III traces?
+    \item Consolidate trace matrix blocks.
+    \item Investigate trace block relationships to section geometry.
+\end{itemize}
+
+Future:
+\begin{itemize}
+    \item Investigate traces incorporating material shear stress into Euler type beam elements.
+    \item Investigate Class III traces outside of Saint~Venant loading.
+\end{itemize}
+
+
+\begin{Aside}
+
+When one includes shear warping, the plane Timoshenko mode that classically scales with $\bm\gamma$ becomes parasitic. 
+
+ie, in the saint venant solution, shear strains arise like 
+$$
+\bm\varepsilon_{\gamma}(x,\bm{r}) = (\nabla\bm{\WarpShearIesan}(\bm{r}))^{\top} X \bm\gamma(x)
+$$ 
+where $X$ is some constant ``shear correction", which is not yet exactly the classical shear correction coefficient, but eventually will give rise to it. 
+This is incompatible with a naive enrichment of Timoshenko kinematics: 
+$$\hat{\bm u}(x,\bm{r}) = \bm{u}(x) + \bm{\theta}(x)\times \bm{r} + warping$$
+which would produce 
+$$
+\bm\varepsilon = \bm\gamma(x) + \bm\kappa(x)\times \bm{r} + warping-strain(x,r)
+$$
+Note the parasitic ``plane" $\bm{r}$-constant strain $\bm\gamma$. 
+We formalize this situation by introducing the kinematic ansatz:
+$$
+\hat{\bm u}(x,r) = \bm u(x) + \bm\theta(x)\times \bm{r} 
++ \bm\Phi(\bm{r})\bm\alpha(x) + \bm\Psi(\bm{r})\bm\eta(x)
+$$
+where $\bm\Phi$ is a general matrix basis of section warping functions, $\bm\alpha(x)$ their amplitudes, and $\bm\Psi(\bm{r})$ reintroduces the section-rigid patterns that are also represented by $\bm{u}(x),\bm\theta(x)$. 
+The auxiliary fields $\bm\alpha(x)$ and $\bm\eta(x)$ will eventually be eliminated to furnish a classical 6-DOF theory in only $\bm{u}(x),\bm\theta(x)$. 
+\end{Aside}
+
+
+
+Under the energy-conjugate trace, a clamped boundary condition 
+$\bm{u}(0) = \bm{\theta}(0) = \mathbf{0}$ does not fix a direct geometric average over the section, but rather constrains the energy-conjugate kinematic measures in a way that may be difficult to realize physically. 
+An illuminating geometric derivation of this model was put forth by \cite{serpieri2014equivalence}, which reveals it's interpretation as a long-wavelength approximation to the continuum problem of a tip-loaded cantilever that is \emph{fully} restrained at it's root \cite{ladeveze1998new}. 
+This problem does not fall under the relaxed Saint~Venant class, which precludes Dirichlet conditions of this nature. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+% 1. are these conclusions theoretically sound
+% 2. Am i missing any salient points of practical interest?
+% 3. How does one understand the implications of the boundary condition phenomenon on beam element continuity? does trace selection have an impact on compatibility in finite element analysis? eg, if i model a saint-venant transversely loaded cantilever with two beam finite finite elements under a given trace, what does the displacement field look like at the element interface?

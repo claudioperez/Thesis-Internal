@@ -1,0 +1,214 @@
+There are (at least) two natural
+ways to determine \(\Xi\); the cleanest is to enforce \emph{both} (i)
+equality of shear \textbf{resultants} and (ii) equality of \textbf{shear
+energy} between the Saint-Venant solution and your 1D beam law.
+Doing that leads to a compact, geometry-dependent formula for \(\Xi\).
+
+\subsubsection{Set-up section operators that are linear in b}
+
+Define the two section tensors 
+\[
+\mathbf R \;\triangleq\; \int_{\Sigma}\mathbf{B}_{(b)}(\bm{r})\,\mathrm dA,
+\qquad
+\begin{aligned}
+\mathbf H &\;\triangleq\; \int_{\Sigma}\mathbf{B}_{(b)}^{\!\top}\mathbf{B}_{(b)}\mathrm{~d}A \\
+&=\frac1G \int\mathbf{X}^{\top}\bm{B}_{\gamma}^{\top}G\bm{B}_{\gamma}\mathbf{X}\mathrm{~d}A \\
+&=\frac{1}G \mathbf{X}^{\top}\mathbf{C}\mathbf{X}
+\end{aligned}
+\]
+They have units \([\mathbf R]=L^4\), \([\mathbf H]=L^6\), and are SPD
+in the usual cases. One can verify that 
+\[
+\int_{\Sigma}\bm\tau\mathrm{~d}A  =  G\,\mathbf{R}\,\bm b_{\Sigma}
+ =  E\,\mathbf{J}_{\kappa}\,\bm b_{\Sigma},
+\quad\Rightarrow\quad
+\mathbf R=\tfrac{1}{G}\,E \mathbf{J}_{\kappa}.
+\]
+
+\begin{Quote}
+
+Adopt a \textbf{matrix} shear correction \(\bar{\mathbf{K}}\succ0\): \[
+\ShearForce  =  G\,A\,\bar{\mathbf{K}}\,\bm\beta,
+\qquad
+\mathcal U_{\rm sh}^{1\text{D}}  =  \tfrac{G}{2}\,A\,\bm\beta\cdot\bar{\mathbf{K}}\,\bm\beta.
+\]
+Require, for all \(\bm b_{\Sigma}\),
+\begin{itemize}
+\item
+  \textbf{Resultants:}
+  \(G\,A\,\bar{\mathbf{K}}\,(\Xi\bm b_{\Sigma}) \equiv G\,\mathbf R\,\bm b_{\Sigma}
+  \Rightarrow \bar{\mathbf{K}} \Xi = A^{-1}\mathbf R.\)
+\item
+  \textbf{Energy:}
+  \((\Xi\bm b_{\Sigma})\cdot GA\bar{\mathbf{K}}\,(\Xi\bm b_{\Sigma})
+  \equiv \,\bm b_{\Sigma}\cdot G\mathbf H\,\bm b_{\Sigma}
+  \Rightarrow\quad A\,\Xi^{\!\top}\bar{\mathbf{K}} \Xi=\mathbf H.\)
+\end{itemize}
+
+Solving these two matrix equations gives \textbf{unique SPD choices} \[
+\bar{\mathbf{K}}  =  A^{-1}\,\mathbf R\,\mathbf H^{-1}\,\mathbf R^{\!\top},
+\qquad
+\Xi  =  \mathbf R^{-\!\top}\,\mathbf H.
+\]
+
+Using \(\mathbf R=\tfrac{E}{G}\mathbf{J}\) and symmetry of \(\mathbf{J}\)
+simplifies them to 
+\[
+\bar{\mathbf{K}}  =  \frac{E^{2}}{G^{2}A}\,\mathbf{J}\,\mathbf H^{-1}\,\mathbf{J},
+\qquad
+\Xi  =  \frac{G}{E}\,\mathbf{J}^{-1}\,\mathbf H.
+\]
+
+These formulas ensure simultaneously:
+
+\begin{itemize}
+\tightlist
+\item
+  \(\ShearForce_{\rm 1D} = G\,A\,\bar{\mathbf{K}}\,\bm\beta = \int_{\Sigma}\bm\tau\mathrm{~d}A\)
+  for every \(\bm b_{\Sigma}\), and
+\item
+  \(\mathcal U_{\rm sh}^{1\text{D}} = \int_{\Sigma}\tfrac{|\bm\tau|^{2}}{2G}\mathrm{~d}A\)
+  for every \(\bm b_{\Sigma}\).
+\end{itemize}
+\end{Quote}
+
+\begin{ambox}[Procedure]{box:shear-identification}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Solve the SV BVP twice: once with \(\bm b_{\Sigma}=\mathbf e_y\), once
+  with \(\bm b_{\Sigma}=\mathbf e_z\). 
+  From the two solutions, assemble
+  \(\mathbf{B}_{(b)}(\bm{r})\).
+\item
+  Integrate to get \(\mathbf R=\int_{\Sigma}\mathbf{B}_{(b)}\mathrm{~d}A\)
+  and
+  \(\mathbf H=\int_{\Sigma}\mathbf{B}_{(b)}^{\!\top}\mathbf{B}_{(b)}\mathrm{~d}A\).
+\item
+  Compute \[
+  \bar{\mathbf{K}}=A^{-1}\mathbf R\mathbf H^{-1}\mathbf R^{\!\top},\qquad
+  \Xi=\mathbf R^{-\!\top}\mathbf H=\frac{G}{E}\mathbf{J}^{-1}\mathbf H.
+  \] Then use \(\bm\beta=\Xi\,\bm b_{\Sigma}\) and
+  \(\ShearForce =G\,A\,\bar{\mathbf{K}}\,\bm\beta\).
+\end{enumerate}
+\end{ambox}
+
+
+\subsection{New}
+
+Exactness down to the pointwise strain/stress field is attainable for the Saint–Venant class if (i) the full SV shear warping is retained in the section data, and (ii) the 1D unknown \(\bm\beta\) is tied to the SV load parameter \(\bm{b}_{\Section}\) by an appropriate linear map \(\Xi\). 
+The exact SV field is then recovered via a fixed lifting operator.
+
+Because the SV BVP is linear in \(\bm{b}_{\Section}\), there exists a \(2\times2\) matrix field \(\mathbf{B}_{(b)}(\bm{r})\) such that
+\[
+\bm\tau(\bm{r};\bm{b}_{\Section})=G\,\mathbf{B}_{(b)}(\bm{r})\,\bm{b}_{\Section},
+\qquad
+\mathbf{B}_{(b)}(\bm{r})\,\bm{b}_{\Section}
+=\nabla\big(\bm{\WarpShearIesan}\cdot\bm{b}_{\Section}\big)
+-\nu\Big(\operatorname{dev}\bm{r}\otimes\bm{r}-\bm{r}\otimes\CentroidLocation\Big)\bm{b}_{\Section}.
+\]
+
+To obtain exact stress/strain fields, it is sufficient to pick a linear, invertible map \( \bm\beta = \Xi\,\bm{b}_{\Section} \) and then always recover
+\[
+\bm{b}_{\Section} = \Xi^{-1}\bm\beta,\qquad
+\bm\tau(\bm{r}) = G\,\mathbf{B}(\bm{r})\,\bm{b}_{\Section}.
+\]
+This alone gives the exact Saint–Venant shear field (and warping) pointwise.
+
+However, \(\Xi\) is \emph{not unique} if you only insist on field exactness: any invertible \(\Xi\) works. 
+The moment you also want a well-posed 1-D constitutive law (symmetric, hyperelastic) that reproduces both the exact \emph{resultant} and the exact \emph{shear energy}, \(\Xi\) becomes unique.
+
+The construction proceeds as follows:
+\begin{enumerate}
+\item From Saint–Venant linearity define the section operators
+  \[
+  \mathbf R \;:=\;\int_{\Sigma}\mathbf{B}_{(b)}(\bm{r})\,\mathrm dA,
+  \qquad
+  \mathbf H \;:=\;\int_{\Sigma}\mathbf{B}_{(b)}(\bm{r})^{\!\top}\mathbf{B}_{(b)}(\bm{r})\,\mathrm dA.
+  \]
+  These are \(2\times2\) and (in the usual cases) symmetric positive definite. One also has
+  \[
+  \mathbf R \;=\; \frac{E}{G}\,\mathbf{J},
+  \qquad
+  \mathbf{J} \;=\; \int_{\Sigma}\big(\bm{r}-\CentroidLocation\big)\otimes\big(\bm{r}-\CentroidLocation\big)\,\mathrm dA.
+  \]
+with \( \int_\Sigma \bm\tau\,\mathrm dA = G\,\mathbf R\,\bm{b}_{\Section} \) and shear energy \( \int_\Sigma \tfrac{\|\bm\tau\|^2}{2G}\,\mathrm dA = \tfrac{G}{2}\,\bm{b}_{\Section}\cdot\mathbf H\,\bm{b}_{\Section} \). 
+Also \( \mathbf R = \tfrac{E}{G}\mathbf{J} \).
+
+\item Introduce \(\bm\beta = \Xi\,\bm{b}_{\Section}\). The 1D force resultant written in \(\bm\beta\) is
+\[
+\ShearForce \;=\; \int_\Sigma \bm\tau\,\mathrm dA \;=\; G\,\mathbf R\,\bm{b}_{\Section} \;=\; G\,\mathbf R\,\Xi^{-1}\bm\beta.
+\]
+If you want this to come from a symmetric quadratic energy \(W(\bm\beta)\) (i.e., a hyperelastic 1-D law), then \( \ShearForce = \partial_{\bm\beta} W \) with
+\[
+W(\bm\beta) \stackrel{!}{=} \tfrac{G}{2}\,\bm{b}_{\Section}\cdot\mathbf H\,\bm{b}_{\Section}
+= \tfrac{G}{2}\,\bm\beta \cdot\big(\Xi^{-\!\top}\mathbf H \Xi^{-1}\big)\bm\beta.
+\]
+Taking the derivative gives the constitutive operator in \(\bm\beta\)-space as \( G\,\Xi^{-\!\top}\mathbf H \Xi^{-1} \). Consistency with the exact resultant \( \ShearForce = G\,\mathbf R\,\Xi^{-1}\bm\beta \) for all \(\bm\beta\) requires
+\[
+\mathbf R\,\Xi^{-1} \;=\; \Xi^{-\!\top}\mathbf H \Xi^{-1}
+\quad\Longleftrightarrow\quad
+\Xi^{\!\top}\mathbf R \;=\; \mathbf H.
+\]
+Because \( \mathbf R \) is invertible, this identifies \(\Xi\) \emph{uniquely}:
+\[
+\Xi \;=\; \mathbf R^{-\!\top}\,\mathbf H \;=\; \tfrac{G}{E}\,\mathbf{J}^{-1}\mathbf H.
+\]
+Note that \(\Xi\) is not generally symmetric, but it is \(\mathbf{R}\)-self-adjoint. 
+$$
+\mathbf{R} \Xi=\Xi^T \mathbf{R}=\mathbf{H},
+\quad\text{and}\quad 
+\forall \boldsymbol{v} \neq 0: \quad \boldsymbol{v}\cdot \mathbf{R} \Xi \boldsymbol{v}=\boldsymbol{v}\cdot \mathbf{H} \boldsymbol{v}>0,
+$$
+Define the SPD matrix $\mathbf{S}:=\mathbf{R}^{-1 / 2} \mathbf{H} \mathbf{R}^{-1 / 2}$. 
+Then
+$$
+X=\mathbf{R}^{-1 / 2} \mathbf{S} \mathbf{R}^{1 / 2},
+$$
+so $\Xi$ is similar to $\mathbf{S}$ . Hence $\Xi$ is diagonalizable with real, positive eigenvalues. Equivalently, its eigenpairs come from the generalized eigenvalue problem
+$$
+\mathbf{H} v=\lambda \mathbf{R} v,
+$$
+
+  \item \textbf{Exact strain/stress recovery.}
+  Given a 1D solution \(\bm\beta(x)\), set
+  \[
+  \bm{b}_{\Section}(x) \;=\; \mathbf{X}\,\bm\beta(x)
+  \]
+  and reconstruct the exact SV stress field pointwise:
+  \[
+  \bm\tau(\reflenx,\bm{r}) \;=\; G\,\mathbf{B}_{(b)}(\bm{r})\,\mathbf{X}\,\bm\beta(x) \;=\; G\,\mathbf{B}_{(b)}(\bm{r})\,\bm{b}_{\Section}(\reflenx).
+  \]
+
+\item Once \(\Xi\) is fixed this way, the 1D constitutive matrix is no longer arbitrary; it is implied by the exact resultant map:
+\[
+\ShearForce \;=\; G\,\mathbf R\,\Xi^{-1}\bm\beta
+\;=\; G\,\mathbf R\,\mathbf H^{-1}\mathbf R^{\!\top}\,\bm\beta.
+\]
+If you prefer the conventional \( \ShearForce = G\,A\,\mathbf K\,\bm\beta \) packaging, then
+\[
+\boxed{\, \mathbf K \;=\; A^{-1}\,\mathbf R\,\mathbf H^{-1}\,\mathbf R^{\!\top} \, }.
+\]
+Here ``\(\mathbf K\)" follows from the unique \(\Xi\) that enforces energy and force exactness. It is symmetric positive definite, and writing \( \mathbf R = \tfrac{E}{G}\mathbf{J} \) gives \( \mathbf K = \tfrac{E^2}{G^2A}\,\mathbf{J}\,\mathbf H^{-1}\mathbf{J} \).
+\end{enumerate}
+\textbf{Summary:}
+\begin{itemize}
+\item If you only care about exact field reconstruction, any invertible \(\Xi\) works (so \(\Xi\) is not unique).
+\item If you additionally require a symmetric, energy-consistent 1-D law that reproduces both resultants and shear energy, then \(\Xi\) is uniquely \( \mathbf R^{-\!\top}\mathbf H\).
+
+\item \textbf{Validity of exactness.}
+  Exactness holds under the standard SV assumptions:
+  \begin{enumerate}
+    \item prismatic, homogeneous, linear-elastic, small-strain cross-section,
+    \item traction-free lateral surface,
+    \item end-resultant loading (or loads representable by the SV axial polynomials),
+    \item evaluation away from load-introduction boundary layers, or inclusion of SV end solutions for those layers.
+  \end{enumerate}
+  Under these conditions,
+  \[
+  \bm\beta \;\xrightarrow{\;\mathbf{X}\;}\; \bm{b}_{\Section} \;\xrightarrow{\;\mathbf{B}_{(b)}(\bm{r})\;}\; \bm\tau(\bm{r})
+  \]
+  reproduces the exact 3D SV shear stress/strain field associated with the 1D solution.
+\end{itemize}

@@ -1,0 +1,90 @@
+\usepackage{framed}
+\usepackage{quoting}
+\usepackage{comment}
+
+
+%----------------------------------
+
+\renewenvironment{quote}%
+{%
+%\def\(#1\){\ignorespaces} % LaTeX inline math
+%\def\[#1\]{\ignorespaces} % LaTeX display math
+\definecolor{shadecolor}{rgb}{0.97,0.97,0.97}%
+\begin{shaded*}\quoting[leftmargin=0pt, vskip=0pt]
+}%
+{\endquoting\end{shaded*}}
+
+
+\newenvironment{Aside}%
+{%
+%\def\(#1\){\ignorespaces} % LaTeX inline math
+%\def\[#1\]{\ignorespaces} % LaTeX display math
+\definecolor{shadecolor}{rgb}{0.97,0.97,0.97}%
+\begin{shaded*}\quoting[leftmargin=0pt, vskip=0pt]
+}%
+{\endquoting\end{shaded*}}
+
+
+%----------------------------------
+% \renewenvironment{quote}{}{}
+
+
+\newenvironment{example}%
+{%
+\definecolor{shadecolor}{rgb}{0.96,0.8,0.8}%
+\begin{shaded*}\quoting[leftmargin=0pt, vskip=0pt]
+}%
+{\endquoting\end{shaded*}}
+
+
+\newenvironment{Prompt}%
+{%
+\definecolor{shadecolor}{rgb}{0.96,0.8,0.8}%
+\begin{shaded*}\quoting[leftmargin=0pt, vskip=0pt]
+}%
+{\endquoting\end{shaded*}}
+
+
+\newenvironment{Note}%
+{%
+\definecolor{shadecolor}{rgb}{0.96,0.8,0.8}%
+\begin{shaded*}\quoting[leftmargin=0pt, vskip=0pt]
+}%
+{\endquoting\end{shaded*}}
+
+\newenvironment{ComponentExpression}%
+{%
+\definecolor{shadecolor}{rgb}{0.96,0.96,0.96}%
+\begin{shaded*}\quoting[leftmargin=0pt, vskip=0pt]
+}%
+{\endquoting\end{shaded*}}
+
+
+
+\ifnotes
+    \newenvironment{Details}%
+    {%
+    \definecolor{shadecolor}{rgb}{0.96,0.96,0.96}%
+    \begin{shaded*}\quoting[leftmargin=0pt, vskip=0pt]
+    }%
+    {\endquoting\end{shaded*}}
+
+    \newenvironment{Quote}%
+    {%
+    \definecolor{shadecolor}{rgb}{0.96,0.8,0.8}%
+    \begin{shaded*}\quoting[leftmargin=0pt, vskip=0pt]
+    }%
+    {\endquoting\end{shaded*}}
+
+    \newenvironment{Old}%
+    {%
+    \definecolor{shadecolor}{rgb}{0.96,0.8,0.8}%
+    \begin{shaded*}\quoting[leftmargin=0pt, vskip=0pt]
+    }%
+    {\endquoting\end{shaded*}}
+    
+\else
+\excludecomment{Details}
+\excludecomment{Old}
+\excludecomment{Quote}
+\fi

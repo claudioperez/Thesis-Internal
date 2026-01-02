@@ -1,0 +1,349 @@
+
+\section{Ie\c{s}an--Saint Venant Solution}\label{sec:sv}
+
+\begin{Quote}
+This will be used in the following section to identify a dimensionally reduced beam model that exactly represents these solutions.
+
+The treatment follows the program of Ie\c{s}an, whereby the Saint Venant class is decomposed into two problems: that of torsion-bending-elongation, and flexure.
+
+Salient features of Iesan's treatment which should be captured include:
+\begin{itemize}
+    \item The relaxed nature of Saint-Venant's class, including failure to exactly specify full boundary conditions in the continuum BVP, thus motivating the need for an additional postulate.
+    \item Ie\c{s}an's postulates that uniquely specify Saint Venant's solution.
+\end{itemize}
+\end{Quote}
+The objective of this section is to briefly recall the family of general solutions to Saint-Venant's problems \citep{iesan1987saintvenants,synge1945problem}. 
+This will be used in the following section to identify a dimensionally reduced beam model that exactly represents these solutions.
+
+\subsection{Introduction}
+
+Consider a prismatic, homogeneous, and isotropic linearly elastic body 
+\(
+\Body=(0,L)\times\Section
+\),
+where \(\Section\subset\mathbb{R}^2\) is a bounded (possibly multiply connected) cross-section
+spanned by \(\{\FrameBasis_y,\FrameBasis_z\}\). 
+Together with the axial unit \(\FrameBasis:= \FrameBasis_y\times\FrameBasis_z\), the vectors \(\{\FrameBasis,\,\FrameBasis_y,\,\FrameBasis_z\}\) form an orthonormal basis and the 3D identity is 
+\[
+\mathbf{1}=\FrameBasis\otimes\FrameBasis+\oneS
+\qquad\text{with}\qquad
+\oneS=\FrameBasis_{\beta}\otimes\FrameBasis_{\beta}
+\]
+A point in \(\Body\) has coordinates \(\reflenx\,\FrameBasis + \bm{r}\) in the reference configuration, where \(\bm{r} \in\Section_x\) is the coordinate of a point in the section at \(\reflenx\).
+The boundary of \(\Body\) consists of the the lateral boundary \(\BodyLateralSurface=\SectionBoundary\times(0,L)\) and the surfaces \(\Section_0,\,\Section_L\) of the sections at the ends \(\reflenx \in \{0,L\}\).  The \emph{resultants} are defined as the integrals of the stress tensor \(\StressTensor\;\):
+\begin{equation}
+\mathscr{F}(\hat{\bm u})=\int_{\Section_0}\StressTensor(\hat{\bm u})\,(-\FrameBasis)\dA,\qquad
+\mathscr{M}(\hat{\bm u})=\int_{\Section_0}\bm{r}\times\big(\StressTensor(\hat{\bm u})\,(-\FrameBasis)\big)\dA.
+\label{eq:def-resultants}
+\end{equation}
+
+Saint Venant's solutions arise from  \emph{relaxed} elastostatic problems, where end tractions are not prescribed pointwise, but rather specified through these resultants. 
+Neglecting to specify complete pointwise boundary data in this manner produces an ill-posed boundary-value problem which consequently lacks a unique solution \(\hat{\bm u}\):
+\begin{equation}
+\left\{
+\begin{aligned}
+\Div\,\StressTensor&=\mathbf{0} &&\text{in }\Body \\
+\StressTensor\,\bm n&=\mathbf{0} && \text{on }\BodyLateralSurface\\
+\mathscr{M}(\hat{\bm u}) &= \MomentRxn &&\text{on } \Section_0\\
+\mathscr{F}(\hat{\bm u}) &= \bar{\bm{N}} & \\
+\end{aligned}\right.
+\qquad\text{with}\qquad 
+%
+\begin{aligned}
+\StressTensor&:=\lambda\,(\operatorname{tr}\StrainTensor)\,\mathbf{1}+2G\,\StrainTensor,\\
+\StrainTensor&:=\tfrac12\big(\nabla\hat{\bm u}+\nabla\hat{\bm u}^{\!\top}\big),
+\end{aligned}
+\label{eq:cauchy-space}
+\end{equation}
+The treatment by \cite{iesan1986saintvenants} resolves this indeterminacy in a systematic fashion that is well-suited to the present investigation. 
+The family of Saint Venant problems is decomposed into two classes, the extension-bending-torsion problem \(\mathrm{P}_{\rm I}(\AxialRxn, \MomentRxn)\) for prescribed axial force \(\AxialRxn\) and moment \(\MomentRxn\) resultants, and the flexure problem \(\mathrm{P}_{\rm I\!I}(\ShearRxn)\) for a prescribed transverse resultant \(\ShearRxn = \bar{F}_{\alpha} \,\FrameBasis_{\alpha}\):
+\begin{equation}
+\mathrm{P}_{\rm I}(\AxialRxn,\MomentRxn)\left\{
+\begin{aligned}
+\Div\,\StressTensor&=\mathbf{0} &&\text{in }\Body\\
+\StressTensor\,\bm n&=\mathbf{0} &&\text{on }\BodyLateralSurface\\
+\mathscr{M}(\hat{\bm u}) &= \MomentRxn &&\text{on } \Section_0 \\
+\mathscr{F}(\hat{\bm u}) &= \AxialRxn\,\FrameBasis & \\
+\end{aligned}\right.
+%
+\qquad\text{and}\qquad 
+%
+\mathrm{P}_{\rm I\!I}(\ShearRxn) \left\{
+\begin{aligned}
+\Div\,\StressTensor&=\mathbf{0} &&\text{in }\Body\\
+\StressTensor\,\bm n&=\mathbf{0} &&\text{on }\BodyLateralSurface\\
+\mathscr{M}(\hat{\bm u}) &= \mathbf{0} &&\text{on } \Section_0\\
+\mathscr{F}(\hat{\bm u}) &= \bar{F}_{\alpha}\FrameBasis_{\alpha} & \\
+\end{aligned}\right.
+\label{eq:partial-elastostatic-equilibrium}
+\end{equation}
+The problems \(\mathrm{P}_{\rm I}\) and \(\mathrm{P}_{\rm I\!I}\), introduced by \cite{iesan1986saintvenants}, decompose the Saint Venant class of problems into two uncoupled classes with a fundamental connection. 
+\cite{iesan1986saintvenants} observes that mapping \(\hat{\bm u}\mapsto \hat{\bm u}'\) preserves lateral traction–free fields and transforms resultants as  \citep[Thm~2.1]{iesan1986saintvenants}\footnote{
+The units for these identities appear paradoxical, and may be understood as the follows. Since \(\StressTensor(\hat{\bm u}')=(\StressTensor(\hat{\bm u}))'\), the resultants computed from \(\hat{\bm u}'\) carry an extra factor \(1/\text{length}\) relative to those of \(\hat{\bm u}\). 
+Hence
+\[
+[\mathscr{F}(\hat{\bm u}')]=\text{force}/\text{length},\qquad
+[\mathscr{M}(\hat{\bm u}')]=\text{force},
+\]
+so \(\mathscr{M}(\hat{\bm u}')\) indeed has the same units as \(\FrameBasis\times\mathscr{F}(\hat{\bm u})\) (force). Interpreting \(\mathscr{M}(\hat{\bm u}')\) as the \(\reflenx\)-derivative of the bending/torsion resultant, the identity is the continuum analogue of the 1D balance \(\mathscr{M}'=\FrameBasis\times \mathscr{F}\).
+}
+\[
+\mathscr{F}(\hat{\bm u}')=\mathbf{0}, 
+\qquad 
+\mathscr{M}(\hat{\bm u}')=\mathscr{F}(\hat{\bm u})\times\FrameBasis,
+\qquad
+\FrameBasis\cdot\mathscr{M}(\hat{\bm u}')=0
+\] 
+Consequently, if a displacement \(\hat{\bm u}_{\rm I\!I}\) is a solution of the flexure problem \(\mathrm{P}_{\rm I\!I}(\ShearRxn)\), then its axial derivative \(\hat{\bm u}'_{\rm I\!I}\) is a solution of the extension-bending-torsion problem \(\mathrm{P}_{\rm I}(0,\,\FrameBasis\times\ShearRxn)\) \citep{iesan1987saintvenants}. % (Corollary~2.2). 
+This connection motivates the program of Ie\c{s}an, whereby a particular solution to \(\mathrm{P}_{\rm I}\) is identified by prescribing the shape of \(\hat{\bm u}'\), and a solution to \(\mathrm{P}_{\rm I\!I}\), identified by prescribing the shape of \(\hat{\bm u}''\). 
+These prescriptions select particular solutions within the relaxed class that are unique up to a rigid body field field, while leaving end tractions unspecified pointwise.
+
+\begin{remark}
+No restriction is imposed on the in–plane stress \((\FrameBasis_\alpha\otimes\FrameBasis_\beta)\,\StressTensor\) at this stage. 
+Components of interest are singled out as
+\[
+\AxialStress:=\FrameBasis\cdot\StressTensor\,\FrameBasis\in\mathbb{R},
+\qquad
+\PointShearStress :=(\FrameBasis_\beta\otimes\FrameBasis_\beta)\,\StressTensor\,\FrameBasis,
+\]
+Ie\c{s}an’s construction recovers the Saint–Venant form \eqref{eq:saint-venant-stress}
+\begin{equation*}
+\StressTensor = \AxialStress\,\FrameBasis\otimes\FrameBasis
++\FrameBasis\otimes\bm{\tau}+\bm{\tau}\otimes\FrameBasis,
+% \label{eq:saint-venant-stress}
+\end{equation*}
+i.e., the in–plane block vanishes as a consequence of the solution.
+\end{remark}
+
+
+\subsection{Problem I: extension--bending--torsion}
+
+\subsubsection*{Synopsis}
+Problem \(\mathrm{P}_{\rm I}\) covers extension, bending, and torsion under resultants with \(F_\alpha=0\). The identifying kinematic postulate is that the first axial derivative is a rigid body motion,
+\[
+\hat{\bm u}'_{\rm I}= a_{\varepsilon}\,\FrameBasis
++\big(a_{\vartheta}\,\FrameBasis-\FrameBasis\times\bm{a}_{\Section}\big)\times\hat{\bm{x}},
+\qquad
+\bm{a}_{\Section}\in\mathbb{R}^2,\; a_{\varepsilon},a_{\vartheta}\in\mathbb{R},
+\]
+which fixes the \(\reflenx\)-dependence of \(\hat{\bm u}\) and reduces the equilibrium equations to planar problems on \(\Section\).
+
+\subsubsection*{Statement}
+Given resultant reactions on \(\Section_{x_0}\) with prescribed reactions \(\AxialRxn\), \(\MomentRxn:=\TwistRxn\FrameBasis + \bar{M}_{\alpha}\,\FrameBasis_{\alpha}\),
+determine \((\hat{\bm u},\StressTensor)\) such that:
+\begin{equation}
+\left\{
+\begin{aligned}
+\hat{\bm u}_{\rm I} &\in \mathrm{P}_{\rm I}(\AxialRxn,\,\MomentRxn) \\
+\hat{\bm u}'_{\rm I}&= a_{\varepsilon}\,\FrameBasis
++\big(a_{\vartheta}\,\FrameBasis-\FrameBasis\times\bm{a}_{\Section}\big)\times\bm{x},
+\end{aligned}
+\right.
+\label{eq:iesan-problem-1}
+\end{equation}
+
+\subsubsection*{Solution}
+Integrating \eqref{eq:iesan-problem-1} furnishes the particular solution:
+\begin{equation}
+\begin{aligned}
+% \hat{\bm u}\{\bm a\} &\in \mathrm{P}_{\rm I}(\AxialRxn,\MomentRxn) \\
+\hat{\bm u}_{\rm I}\{\bm a\}
+&=\Big(-\tfrac12 \reflenx^2\,\mathbf{1}-\nu\,\operatorname{dev}\bm{r}\otimes\bm{r}+\reflenx\,\FrameBasis\otimes\bm{r}\Big)\bm{a}_{\Section}
++(\reflenx\,\FrameBasis-\nu\,\bm{r})\,a_{\varepsilon}
++\big(\reflenx\,\FrameBasis\times\bm{r}+\WarpTwistIesan\,\FrameBasis\big)a_\vartheta ,
+\end{aligned}
+\label{eq:iesan-displacement-1}
+\end{equation}
+where the torsion warping \(\WarpTwistIesan\) is determined by the Neumann problem:
+\begin{equation}
+\left\{
+\begin{aligned}
+\Delta \WarpTwistIesan&=0 && \text{in }\Section,\\
+\partial_{\bm{\nu}} \WarpTwistIesan&=-\,(\FrameBasis\times\PlanePosition)\cdot \bm{\nu} && \text{on } \SectionBoundary,\\
+\int_{\Section} \WarpTwistIesan\, \dA&=0, &&
+\end{aligned}
+\right.
+\label{eq:bvp-warp-twist-iesan}
+\end{equation}
+\begin{Details}
+\begin{equation*}
+\left\{
+\begin{aligned}
+\operatorname{div}_G\!\big(\nabla \WarpTwistIesan+\FrameBasis\times\PlanePosition\big)&=0 && \text{in }\Section,\\
+\partial_{\bm{\nu}} \WarpTwistIesan&=-\,(\FrameBasis\times\PlanePosition)\cdot \bm{\nu} && \text{on } \SectionBoundary,\\
+\int_{\Section} \WarpTwistIesan\, \volE&=0, &&
+\end{aligned}
+\right.
+% \label{eq:bvp-warp-twist-iesan}
+\end{equation*}
+\end{Details}
+The linearized strain tensor under \eqref{eq:iesan-displacement-1} is:
+\begin{equation}
+\StrainTensor^{(a)}=
+\big(a_{\varepsilon}+\bm{r}\cdot\bm{a}_{\Section}\big)\,(\FrameBasis\otimes\FrameBasis-\nu\,\oneS)
++\tfrac12\big(\FrameBasis\otimes\bm\varepsilon_\vartheta+\bm\varepsilon_\vartheta\otimes\FrameBasis\big),
+\quad
+\bm\varepsilon_\vartheta:=a_\vartheta\big(\FrameBasis\times\bm{r}+\nabla\WarpTwistIesan\big),
+\label{eq:iesan-strain-tensor-1}
+\end{equation}
+% and Saint–Venant components
+% \begin{equation*}
+% \bm{\tau}=G\big(\nabla\WarpTwistIesan+ \FrameBasis\times\bm{r}\big)a_\vartheta,
+% \qquad
+% \AxialStress=E\big(\bm{r}\cdot\bm{a}_{\Section}+a_{\varepsilon}\big).
+% % \label{eq:iesan-stress-1}
+% \end{equation*}
+The integration constants \((\bm{a}_{\Section},a_{\varepsilon},a_\vartheta)\) are fixed by:
+%
+\begin{equation}
+\begin{aligned}
+E\big(\IntRoR\,\bm{a}_{\Section}+A\,a_{\varepsilon}\,\CentroidLocation\big)&=\MomentRxn\times\FrameBasis,\\
+EA\big(\bm{a}_{\Section}\cdot\CentroidLocation+a_{\varepsilon}\big)&=-\AxialRxn,\\
+G\,\Jsv\,a_\vartheta&=-\TwistRxn,
+\end{aligned}
+\label{eq:2-15}
+\end{equation}
+where \(A\) is the cross sectional area, \(\CentroidLocation\) is the location of the centroid defined by:
+\begin{equation}
+\CentroidLocation := \frac{1}{A}\int \bm{r}\dA 
+\label{eq:def-centroid}
+\end{equation}
+and the torsion constant \(\Jsv\) and plane inertia tensor \(\IntRoR\) are defined by:
+\begin{equation}
+\IntRoR := \int \bm{r}\otimes\bm{r}\dA
+\qquad\text{and}\qquad
+\Jsv:=\int_\Section\Big(r^2+(\FrameBasis\times\bm{r})\cdot\nabla\WarpTwistIesan\Big)\dA .
+\label{eq:def-j-origin}
+\end{equation}
+Note that these are defined with respect to the arbitrary origin. 
+In the recovered field, \((\FrameBasis_\alpha\otimes\FrameBasis_\beta)\,\StressTensor=0\), i.e. \eqref{eq:saint-venant-stress} holds.
+
+\subsection{Problem II: flexure}
+
+\subsubsection*{Synopsis}
+Problem \(\mathrm{P}_{\rm I\!I}\) models flexure under a transverse resultant force \(\ShearRxn\) with \(\AxialRxn=0\) and \(\MomentRxn=\mathbf{0}\). 
+The identifying kinematic postulate requires that the second axial derivative is a rigid motion,
+\[
+\hat{\bm u}_{\rm I\!I}''= b_{\varepsilon}\,\FrameBasis
++\big(b_{\vartheta}\,\FrameBasis-\FrameBasis\times\bm{b}_{\Section}\big)\times\bm{x},
+\qquad
+\bm{b}_{\Section}\in\mathbb{R}^2,\; b_{\varepsilon},b_{\vartheta}\in\mathbb{R}.
+\]
+It follows that \(\hat{\bm u}'\) is a \(\mathrm{P}_{\rm I}\) Saint–Venant field with bending moments \(\FrameBasis\times\ShearRxn\) %(Corollary~2.2)
+, and hence
+\(
+\hat{\bm u}_{\rm I\!I}\{\bm b,\bm c\}=\int_0^{\reflenx}{\bm u}_{\rm I}\{\bm b\}\,\mathrm {~d}\reflenx+\bm{u}_{\rm I}\{\bm c\}+\tilde{\bm w}
+\).
+
+
+\subsubsection*{Statement}
+Given a transverse shear resultant \(\ShearRxn\) on \(\Section_0\), determine \((\hat{\bm u}\{\bm{b},\bm{c}\},\,\StressTensor)\) such that:
+%
+\begin{subequations}
+\begin{empheq}[left=\bar{\mathrm{P}}_{\rm I\!I}\empheqlbrace]{align}
+\hat{\bm u}_{\rm I\!I}&\in\mathrm{P}_{\rm I\!I}(\ShearRxn) \\
+\hat{\bm u}''_{\rm I\!I} &= b_{\varepsilon}\,\FrameBasis
++\big(b_{\vartheta}\,\FrameBasis-\FrameBasis\times\bm{b}_{\Section}\big)\times\bm{r},
+\label{eq:iesan-postulate-2}
+\end{empheq}
+\label{eq:iesan-problem-2}
+\end{subequations}
+
+
+\subsubsection*{Solution}
+Integrating \eqref{eq:iesan-problem-2} furnishes the particular solution:
+\begin{equation}
+\begin{aligned}
+\oneS\hat{\bm u}_{\rm I\!I}(\reflenx,\bm{r})
+&=-\tfrac16\,\reflenx^{3}\,\bm{b}_{\Section}
++\reflenx\,\nu\Big(\tfrac12 r^{2}\,\bm{b}_{\Section}-(\bm{b}_{\Section}\cdot\bm{r})\,\bm{r}\Big)
++\reflenx\,\nu\,(\CentroidLocation\cdot\bm{b}_{\Section})\,\bm{r}
++c_\vartheta\,\reflenx\,(\FrameBasis\times\bm{r}),\\
+\FrameBasis\cdot\hat{\bm u}_{\rm I\!I}(\reflenx,\bm{r})
+&=\tfrac12\,\reflenx^{2}\, (\bm{r}-\CentroidLocation)\cdot\bm{b}_{\Section}
++c_\vartheta\,\WarpTwistIesan(\bm{r})+\bm{\WarpShearIesan}(\bm{r}) \cdot \bm{b}_{\Section},
+\end{aligned}
+\label{eq:iesan-displacement-2}
+\end{equation}
+where flexural warping \(\bm{\WarpShearIesan}\) is determined by the  Poisson–Neumann problem:
+\begin{equation}
+\left\{
+\begin{aligned}
+\Delta\WarpShearIesan&=-2\big(\bm{r}-\CentroidLocation\big)\cdot\bm{b}_{\Section} && \text{in }\Section,\\
+\partial_{\bm\nu}\WarpShearIesan&=\nu\,\bm\nu\cdot\Big(\operatorname{dev}\bm{r}\otimes\bm{r}-\bm{r}\otimes\CentroidLocation\Big)\bm{b}_{\Section}
+&& \text{on } \SectionBoundary,\\
+\int_\Section \WarpShearIesan\,\volE&=0, &&
+\end{aligned}
+\right.
+\label{eq:bvp-warp-shear-iesan}
+\end{equation}
+where the deviator in the section plane is 
+\(\operatorname{dev}\bm{r}⊗\bm{r}=\bm{r}\otimes\bm{r}-\tfrac12(\bm{r}\cdot\bm{r})\,\mathbf{1}\). 
+This problem has been considered by \cite{romano2012torsion} with the symbol \(\phi^{\rm SH}\), \cite{pilkey2003analysis} with the symbols \(\Phi,\Psi\), 
+\cite{lacarbonara2007solution} with the symbol \(\omega_i\),
+and \cite{hjelmstad1983seismic} with the symbol \(\Psi\). 
+
+The strain under \eqref{eq:iesan-displacement-2} is
+\begin{equation}
+\begin{aligned}
+\StrainTensor(\hat{\bm u})
+&=(\varepsilon\,\FrameBasis+\bm\varepsilon_\gamma)\stackrel{\rm s}{\otimes}\FrameBasis
+-\nu\,\varepsilon\,\oneS,\\
+\varepsilon&=\reflenx\,(\bm{r}-\CentroidLocation)\cdot\bm{b}_{\Section},\\
+\bm\varepsilon_\gamma
+&= c_{\vartheta}\big(\nabla\WarpTwistIesan + \FrameBasis\times\bm{r}\big)
+-\nu\Big(\operatorname{dev}(\bm{r}\otimes\bm{r})-\bm{r}\otimes\CentroidLocation\Big)\bm{b}_{\Section}
++\nabla\big(\bm{\WarpShearIesan}\cdot\bm{b}_{\Section}\big),
+\end{aligned}
+\label{eq:iesan-strain-2}
+\end{equation}
+and the stress is
+\begin{equation}
+\begin{aligned}
+\AxialStress(\hat{\bm u})&=E\,\reflenx\,(\bm{r}-\CentroidLocation)\cdot\bm{b}_{\Section},\\
+\bm{\tau}(\hat{\bm u})
+&=G\Big[(a_\vartheta+c_\vartheta)\big(\nabla\WarpTwistIesan+\FrameBasis\times\bm{r}\big)
+-\nu\Big(\operatorname{dev}(\bm{r}\otimes\bm{r})-\bm{r}\otimes\CentroidLocation\Big)\bm{b}_{\Section}
++\nabla\big(\bm{\WarpShearIesan}\cdot\bm{b}_{\Section}\big)\Big].
+\end{aligned}
+\label{eq:iesan-stress-2}
+\end{equation}
+As with \(\mathrm{P}_{\rm I}\), the recovered field satisfies \(\PlaneStressTensor=\mathbf{0}\), and is therefore represented by  \eqref{eq:saint-venant-stress}.
+
+Differentiation in \(\reflenx\) links flexure to bending with \(\MomentRxn+\FrameBasis\times\ShearRxn=\mathbf{0}\).
+The free parameters are determined from
+\begin{equation}
+\begin{aligned}
+E\big(\IntRoR\,\bm{b}_{\Section}+A\,\CentroidLocation\,b_\varepsilon\big)&=-\ShearRxn,\\
+\bm{b}_{\Section}\cdot\CentroidLocation+b_\varepsilon&=0,\\
+b_\vartheta&=0,
+\end{aligned}
+\label{eq:2-18}
+\end{equation}
+and \(c_\vartheta\) is determined by the relaxed torsion boundary condition \(\FrameBasis\cdot\int \bm{r}\times\bm{\tau}\dA = 0\):
+\begin{equation}
+\Jsv\,c_\vartheta
+= -\FrameBasis\cdot\int_{\Section} \bm{r}\times \left(\nabla \bm{\WarpShearIesan}
++ \bm{\Pi}_{(b)} \right)\bm{b}_{\Section} \dA 
+% =-\int_\Section\Big[(\FrameBasis\times\bm{r})\cdot\nabla\big(\bm{\WarpShearIesan}\cdot\bm{b}_{\Section}\big)
+% +\tfrac12\,\nu\,r^2\,(\FrameBasis\times\bm{r})\cdot\bm{b}_{\Section}\Big]\dA .
+\label{eq:iesan-2-22}
+\end{equation}
+where \(\Jsv\) is the torsion constant defined by \eqref{eq:def-j-origin}, and the \emph{shear center} \(\CenterShearLocation\in\Section\) is defined by:
+\begin{equation}
+\CenterShearLocation := \frac{1}{\Jsv} \int_\Section (\nabla\bm{\WarpShearIesan} + \bm{\Pi}_{(b)}^\top)\,\bm{r} \times \FrameBasis \dA.
+\label{eq:def-shear-center}
+\end{equation}
+
+\begin{Details}
+\[
+\begin{aligned}
+c_{\vartheta} &=- \frac{1}{\Jsv}\int_{\Section} \Big[(\FrameBasis\times \bm{r})\cdot \nabla \WarpShearIesan
++ \tfrac{1}{2}\,\nu\, r^2 \,(\FrameBasis\times \bm{r})\cdot \bm{b}_{\Section}\Big]\dA \\
+ &=- \frac{1}{\Jsv}\int_{\Section} \Big[(\FrameBasis\times \bm{r})\cdot (\nabla \bm{\WarpShearIesan}^T
++ \tfrac{1}{2}\,\nu\, r^2 \,\oneS) \bm{b}_{\Section}\Big]\dA \\
+ &= \FrameBasis\cdot\frac{1}{\Jsv}\left[\int_{\Section} \bm{r}\times (\nabla \bm{\WarpShearIesan}^T
++ \tfrac{1}{2}\,\nu\, r^2 \,\oneS)\dA \right] \bm{b}_{\Section} \\
+\end{aligned}
+\]
+\end{Details}

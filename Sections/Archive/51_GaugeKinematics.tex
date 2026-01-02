@@ -1,0 +1,60 @@
+
+\subsubsection{Deflection and Rotation Fields}
+
+We introduce three classes of gauge parameters which represent the ambiguity in whether terms in \(\mathcal{R}(\Section)\) are assigned to the beam fields \(\bm{u},\bm{\theta}\) or the warping \(\bm{\alpha}\):
+
+\begin{enumerate}
+\item \textbf{Shear gauge} $\bm{\eta}_{\Section} \in \mathbb{R}^2$: Shifts the distribution of transverse rotation between $\bm{\theta}$ and compensating warping modes
+\item \textbf{Axial gauge} $\eta_\varepsilon \in \mathbb{R}$: Shifts constant axial strain between $\bm{u}$ and axial warping
+\item \textbf{Twist gauge} $\eta_{\vartheta} \in \mathbb{R}$: Redistributes twist between $\bm{\theta}$ and torsional warping
+\item \textbf{?gauge} $\bm{\eta}_{v}$
+\end{enumerate}
+
+The gauged kinematic fields become:
+%
+\begin{equation}
+\begin{aligned}
+\bm{u}(x) &= x(a_\varepsilon + \eta_\varepsilon)\FrameBasis
++ \reflenx\,\GaugeShearB
+- \tfrac{1}{2}x^2\IesanLoadM - \tfrac{1}{6}x^3\bm{b}_{\Section} - \tfrac{1}{2}x^2(\FrameBasis\otimes\CentroidLocation)\bm{b}_{\Section} \\
+\bm{\theta}(x) &= \GaugeTwist(x)\FrameBasis - \FrameBasis \times \GaugeShearA + x(a_\vartheta + c_\vartheta)\FrameBasis - x(\FrameBasis \times \IesanLoadM) - \tfrac{1}{2}x^2(\FrameBasis \times \bm{b}_{\Section})
+\end{aligned}
+\label{eq:gauged-kinematics}
+\end{equation}
+
+Each gauge parameter requires a compensating warping mode to maintain exactness with the Saint-Venant solution:
+\begin{subequations}
+\begin{align*}
+\bm{\Psi}_\varepsilon(\bm{r}) &= \FrameBasis,  &\alpha_\varepsilon &= -\reflenx\,\eta_\varepsilon \\
+\bm{\Psi}_{\Section}(\bm{r}) &= \oneS &\bm{\alpha}_{.} &= -x\GaugeShearB \\
+\bm{\Psi}_\vartheta(\bm{r}) &= \FrameBasis \times \bm{r},  &\GaugeTwist(x) &= -\reflenx\,\bar{\GaugeTwist} \\
+\bm{\Psi}_r(\bm{r}) &= \FrameBasis \otimes \bm{r},
+&\bm{\alpha}_r &= -\GaugeShearA \\
+\end{align*}
+\end{subequations}
+These compensating modes exactly cancel the spurious displacements introduced by the gauge shift. 
+This choice is what distinguishes the  ``energetic'' identification of \cite{renton1991generalized} from
+ the geometric identification of \cite{cowper1966shear}. 
+ The total displacement
+\(\hat{\bm{u}}\) remains exact regardless of this choice -- only the
+decomposition into beam kinematics changes.
+%
+
+From \eqref{eq:sv-kinematics-ii}, 1D deformations \(\bm{\gamma}=\bm{u}'+\FrameBasis\times\bm{\theta}\) and \(\bm{\kappa}=\bm{\theta}'\) obtained from \eqref{eq:gauged-kinematics} are:
+
+\begin{equation}
+\begin{aligned}
+\bm{\gamma}(x) 
+% &= \bm{u}' + \FrameBasis \times \bm{\theta} \\
+% &= (a_\varepsilon + \eta_\varepsilon)\FrameBasis 
+%  - \reflenx\IesanLoadM - \tfrac{1}{2}x^2\bm{b}_{\Section} - x(\FrameBasis\otimes\CentroidLocation)\bm{b}_{\Section} \\
+% &\quad + \FrameBasis \times (\eta_\vartheta\FrameBasis - \FrameBasis \times \GaugeShearA) + x\IesanLoadM + \tfrac{1}{2}x^2\bm{b}_{\Section} \\
+&= (a_\varepsilon + \eta_\varepsilon - x\CentroidLocation\cdot\bm{b}_{\Section})\FrameBasis
++ \bm{\eta}_{\Section} + \bm{\eta}_v \\
+%
+\bm{\kappa}(x) &= (a_\vartheta + c_\vartheta + \GaugeTwist')\FrameBasis - (\FrameBasis \times \IesanLoadM) - x(\FrameBasis \times \bm{b}_{\Section})
+\end{aligned}
+\label{eq:gauged-deformations}
+\end{equation}
+
+The gauge parameter $\bm{\eta}_{\Section}$ now appears directly in the strain measure, providing control over the shear strain distribution. 

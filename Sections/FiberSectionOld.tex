@@ -1,0 +1,123 @@
+
+\subsection{Constraints}
+In view of the constraint framework \eqref{eq:linear-warp-constraints}, setup the complete warping field \(\bm{\alpha}\) and constraint operators \(\mathbf{L}\) to enforce the identification \eqref{eq:identify-alpha-ii}:
+$$
+\bm{\alpha} = \begin{pmatrix}
+\alpha^{\varepsilon} \\
+\bm{\alpha}^{a} \\
+\bm{\alpha}^{b} \\ \hline
+\bm{\alpha}^{\WarpTwistIesan} \\
+\bm{\alpha}^{\WarpShearIesan} \\
+\bm{\alpha}^{\bm{r}} \\
+\alpha^{\rm i}
+\end{pmatrix}\in\mathbb{R}^{1+2+2+1+2+2+1},
+\quad
+\mathbf{L}_{\rm vp} = 
+\left[\begin{array}{cc}
+\FrameBasis^{\top} & \mathbf{0} \\
+\mathbf{0} & \mathbf{0} \\
+\mathbf{0} & \mathbf{0} \\ \hline
+\mathbf{0} & \FrameBasis^{\top} \\
+~~\PlaneBasis_\alpha \otimes \FrameBasis_\alpha & \mathbf{0} \\
+-\PlaneBasis_\alpha \otimes \FrameBasis_\alpha & \mathbf{0} \\
+\mathbf{0} & \mathbf{0}
+\end{array}\right]_{11\times 6}
+\qquad\text{and}\qquad 
+\mathbf{L}_{\rm wp} = \left[\begin{array}{cc}
+\mathbf{0} & \mathbf{0}_{1\times 3} \\
+\mathbf{0} & \mathbf{0}_{2\times 3} \\
+\PlaneBasis_\alpha \otimes \FrameBasis_\alpha & \mathbf{0}_{2\times 3} \\ \hline
+\mathbf{0} & \mathbf{0}_{1\times 3} \\
+\mathbf{0} & \mathbf{0}_{2\times 3} \\
+\mathbf{0} & \mathbf{0}_{2\times 3} \\
+\mathbf{0} & \mathbf{0}_{1\times 3}
+\end{array}\right]_{11\times 6}
+$$
+
+$$
+\mathbf{L}_{\rm vv}\left[\begin{array}{lll|llll}
+1 & & & & & \\
+& \mathbf{0}_{2\times 2} & & & & \\
+& & \mathbf{0}_{2\times 2} & & & \\
+& & & 1 & & \\
+& & & & \mathbf{1}_{2\times 2} & \\
+& & & & & \mathbf{1}_{2\times 2}
+\end{array}\right],
+\quad\text{and}\quad
+\mathbf{L}_{\rm ww} = \left[\begin{array}{lll|llll}
+0 & & & & \\
+& \mathbf{0} & & & \\
+& & \mathbf{1}_{2\times 2} & & \\
+&& & 0 & & \\
+&& & & \mathbf{0} & \\
+&& & & & \mathbf{0}
+\end{array}\right]
+$$
+
+
+\paragraph{Amplitudes}
+\emph{Independent:}
+\[
+\boxed{
+\begin{aligned}
+\bm{\alpha}_{(a)}&=\IesanLoadM,\\
+\bm{\alpha}_{(b)}&
+=x\bm{b}_{\Section},\\
+% \bm{\alpha}_{(\FrameBasis)}&=-\tfrac{1}{2} x^2\,\CentroidLocation\cdot\bm{b}_{\Section}
+\end{aligned}
+}
+\]
+
+\emph{Dependent (associated) amplitudes:}
+\begin{equation}
+\boxed{
+\begin{aligned}
+\alpha_{(\varepsilon)}&=a_\varepsilon&&=\epsilon,\\
+\bm{\alpha}_{(b)}'&
+=\bm{b}_{\Section}&&=\ShiftB\bm{\gamma},\\
+\alpha_{(\WarpTwistIesan)}&=a_\vartheta+c_\vartheta&&=\varkappa,\\
+\bm{\alpha}_{\WarpShearIesan}&=\bm{b}_{\Section}&&=\ShiftB\bm{\gamma} \\
+\bm{\alpha}_{r}&=-\GaugeShearA  &&=-\bm{\gamma}\\.
+\bm{\alpha}_{r}'&=-\GaugeShearB
+\end{aligned}
+}
+\label{eq:identify-alpha-ii}
+\end{equation}
+Thus, 
+\begin{equation}
+\begin{aligned}
+\alpha_{(\varepsilon)}'&=0,\\
+\bm{\alpha}_{(b)}'&=\ShiftB\bm{\gamma},\\
+\alpha_{(\WarpTwistIesan)}'&=0,\\
+\bm{\alpha}_{r}' &=\mathbf{0},\\
+\bm{\alpha}_{\WarpShearIesan}'&=\mathbf{0}.
+\end{aligned}
+\label{eq:identify-alpha-prime-ii}
+\end{equation}
+
+\paragraph{Warping Basis.}
+The warping basis is, in terms of the functions \eqref{eq:def-eight-shapes}:
+\[
+\bm{\Phi}=\Big[
+\ \bm{W}_{(\varepsilon)},
+\ \bm{W}_{(a)},
+\ \bm{W}_{(b)},
+\ \FrameBasis\,\varphi,
+\ \FrameBasis\otimes\bm{\psi},
+\ \FrameBasis\otimes\bm{r},
+\ [\;\FrameBasis\;]
+\Big].
+\]
+
+$$
+\begin{aligned}
+\bm{\Phi} = 
+\left[\begin{array}{c|cc|cc|c|cc|cc} %|c}
+-\nu \bm{r} & \bm{W}_{(a)} & &\bm{W}_{(b)} & & \FrameBasis\WarpTwistIesan & \FrameBasis\otimes\bm{\WarpShearIesan} && \FrameBasis\otimes\bm{r} & \\ \hline 
+% \FrameBasis \\ \hline
+~~~~ 0 & 0 & 0 & 0 & 0 &  \varphi & \psi_{y} & \psi_{z} &  y & z \\ %& 1 \\
+-\nu y & - & - & - & - &  0 & 0 & 0                     &  0 & 0 \\ %& 0 \\
+-\nu z & - & - & - & - &  0 & 0 & 0                     &  0 & 0 \\ %& 0 \\
+\end{array}\right]
+\end{aligned}
+$$

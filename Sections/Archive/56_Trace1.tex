@@ -1,0 +1,125 @@
+
+\subsubsection{Reference Trace}
+
+A central question for implementation is whether a section, given only the 
+beam strains $\bm{e} = (\bm{\gamma}, \bm{\kappa})$, can reconstruct the full 
+three-dimensional strain distribution $\bm{\varepsilon}(x, \bm{r})$ without 
+knowing its axial position $x$, or incorporating auxiliary warping fields \(\bm{\alpha}(x)\).
+
+The three-dimensional strain field at section $x$ depends on the following 
+\emph{local parameters}:
+\begin{equation}
+\hat{\bm{e}}(x) := \begin{pmatrix} 
+\epsilon_0(x) \\ \bm{\beta} \\ \hat{\varkappa} \\ \bm{\epsilon}_1(x) 
+\end{pmatrix} \in \mathbb{R}^6,
+\label{eq:local-params}
+\end{equation}
+where:
+\begin{itemize}
+\item $\epsilon_0(x) := a_\varepsilon - x\,\CentroidLocation \cdot \bm{b}_{\Section}$ 
+is the axial strain at the centroid,
+\item $\bm{\epsilon}_1(x) := \bm{a}_\Omega + x\,\bm{b}_{\Section}$ is the axial 
+strain gradient (curvature contribution),
+\item $\hat{\varkappa} := a_\vartheta + c_\vartheta$ is the total twist rate 
+(including flexure-induced twist),
+\item $\bm{\beta} := \bm{b}_{\Section}$ is the flexural shear loading parameter.
+\end{itemize}
+
+These parameters suffice for pointwise strain evaluation:
+\begin{align}
+\varepsilon(\bm{r}) &= \epsilon_0 + \bm{r} \cdot \bm{\epsilon}_1, 
+\label{eq:axial-strain-local} \\
+\bm{\varepsilon}_\gamma(\bm{r}) &= \hat{\varkappa}\,(\FrameBasis \times \bm{r} + \nabla\WarpTwistIesan) 
++ \big(\bm{W}_{(b)} + (\nabla\bm{\WarpShearIesan})^\top\big)\,\bm{\beta}.
+\label{eq:shear-strain-local}
+\end{align}
+
+The local parameters are related to the Ieşan parameters by
+\begin{equation}
+\hat{\bm{e}}(x) = \mathbf{L}(x)\,\bm{p} = (\mathbf{L}_0 + x\,\mathbf{L}_1)\,\bm{p},
+\label{eq:q-from-p}
+\end{equation}
+where, in the partition $\hat{\bm{e}} = (\epsilon_0, \bm{\beta}, \hat{\varkappa}, \bm{\epsilon}_1)$ 
+and $\bm{p} = (a_\varepsilon, \bm{a}_\Omega, a_\vartheta, \bm{b}_{\Section})$:
+\begin{equation}
+\mathbf{L}_0 := \begin{pmatrix}
+1 & \mathbf{0}^\top & 0 & \mathbf{0}^\top \\
+\mathbf{0} & \mathbf{0} & \mathbf{0} & \oneS \\
+0 & \mathbf{0}^\top & 1 & \CenterShearLocation^\top \\
+\mathbf{0} & \oneS & \mathbf{0} & \mathbf{0}
+\end{pmatrix}, \qquad
+\mathbf{L}_1 := \begin{pmatrix}
+0 & \mathbf{0}^\top & 0 & -\CentroidLocation^\top \\
+\mathbf{0} & \mathbf{0} & \mathbf{0} & \mathbf{0} \\
+0 & \mathbf{0}^\top & 0 & \mathbf{0}^\top \\
+\mathbf{0} & \mathbf{0} & \mathbf{0} & \oneS
+\end{pmatrix}.
+\label{eq:L-matrices}
+\end{equation}
+where the shear center $\CenterShearLocation$ is defined by \eqref{eq:def-shear-center}, 
+and the centroid location $\CentroidLocation$ by \eqref{eq:def-centroid}.
+
+\subsubsection{Implementable Traces}
+
+A trace is \emph{implementable} if a section can recover the local parameters 
+$\hat{\bm{e}}$ from the beam strains $\bm{e}$ without knowledge of $x$. This requires 
+the existence of an $x$-independent matrix $\mathbf{X}$ such that
+\begin{equation}
+\bm{e}(x) = \mathbf{X}\,\hat{\bm{e}}(x)
+\label{eq:implementable-def}
+\end{equation}
+for all Saint-Venant solutions. 
+%
+Substituting \eqref{eq:strain-polynomial} and \eqref{eq:q-from-p}:
+\begin{equation}
+\sum_m x^m\,\mathbf{T}_m\,\bm{p} = \mathbf{X}\,(\mathbf{L}_0 + x\,\mathbf{L}_1)\,\bm{p}.
+\end{equation}
+Matching powers of $x$ yields:
+\begin{subequations}
+\begin{align}
+\TraceDeDpRoot &= \mathbf{X}\,\mathbf{L}_0, \label{eq:T0-condition} \\
+\TraceDeDpOne &= \mathbf{X}\,\mathbf{L}_1, \label{eq:T1-condition} \\
+\mathbf{T}_m &= \mathbf{0} \quad \text{for } m \geq 2. \label{eq:Tm-condition}
+\end{align}
+\end{subequations}
+
+Since $\mathbf{L}_0$ is invertible, $\mathbf{X} = \TraceDeDpRoot\,\mathbf{L}_0^{-1}$, 
+and the consistency condition becomes:
+\begin{equation}
+\boxed{\TraceDeDpOne = \TraceDeDpRoot\,\mathbf{L}_0^{-1}\,\mathbf{L}_1}
+\label{eq:implementability-condition}
+\end{equation}
+where
+$$
+\mathbf{L}_0^{-1} = \begin{pmatrix}
+1 & \mathbf{0}^\top & 0 & \mathbf{0}^\top \\
+\mathbf{0} & \mathbf{0} & \mathbf{0} & \oneS \\
+0 & -\CenterShearLocation^\top & 1 & \mathbf{0}^\top \\
+\mathbf{0} & \oneS & \mathbf{0} & \mathbf{0}
+\end{pmatrix}
+\qquad \text{and}\qquad
+\mathbf{L}_0^{-1}\mathbf{L}_1 = \begin{pmatrix}
+0 & \mathbf{0}^\top & 0 & -\CentroidLocation^\top \\
+\mathbf{0} & \mathbf{0} & \mathbf{0} & \oneS\\
+0 & \mathbf{0}^\top & 0 & \mathbf{0}^\top \\
+\mathbf{0} & \mathbf{0} & \mathbf{0} & \mathbf{0} \\
+\end{pmatrix}$$
+
+This condition constrains how the $x$-dependence in the beam strains must 
+arise: it must come precisely from the $x$-dependence of the local parameters 
+$(\epsilon_0(x), \bm{\epsilon}_1(x))$, not from any independent geometric coupling.
+
+The space of implementable traces is parameterized by $GL(6)$: given any 
+invertible $\mathbf{X}$, defining $\TraceDeDpRoot := \mathbf{X}\,\mathbf{L}_0$ 
+and $\TraceDeDpOne := \mathbf{X}\,\mathbf{L}_1$ automatically satisfies 
+\eqref{eq:implementability-condition}. The matrix $\mathbf{X}$ represents a 
+linear relabeling of the local parameters as beam strains.
+
+For an implementable trace, the section implementation is straightforward. 
+Given beam strains $\bm{e}$, the section computes
+\begin{equation}
+\hat{\bm{e}} = \mathbf{X}^{-1}\,\bm{e} = \mathbf{L}_0\,\TraceDpDeRoot\,\bm{e}
+\label{eq:q-recovery}
+\end{equation}
+and evaluates the three-dimensional strains at each fiber via 
+\eqref{eq:axial-strain-local}--\eqref{eq:shear-strain-local}.

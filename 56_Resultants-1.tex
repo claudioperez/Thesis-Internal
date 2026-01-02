@@ -1,0 +1,150 @@
+\subsection{Resultants}
+
+
+\begin{enumerate}
+
+\item \(\bm{v}_{(r)} = \int \bm\tau\mathrm{~d}A\)
+\item \(\displaystyle\bm{w}_{(r)} = \int \bm{r}\sigma\mathrm{~d}A\)
+\item \(\ShearForce = \displaystyle\int\bm\tau\mathrm{~d}A\)
+\begin{Quote}
+
+When \(\nu=0\) shear stress is \(\bm\tau=G\,\nabla(\bm\WarpShearIesan\cdot\bm{b}_{\Section})\).
+ The internal shear resultant is
+  \[
+  \ShearForce
+  =G\int_{\Section}\nabla\phi\mathrm{~d}A.
+  \]
+  Compute \(\int_{\Section}\nabla\phi\) by Green’s identity componentwise.
+  For \(j\in{y,z}\),
+  \[
+  \int_{\Section} r_j\,\Delta\phi\mathrm{~d}A
+   = \oint_{\partial\Section} r_j\,\partial_{\bm\nu}\phi\,\mathrm{d}s
+  -\int_{\Section}\nabla r_j\cdot\nabla\phi\mathrm{~d}A
+   = -\int_{\Section}\partial_j\phi\mathrm{~d}A,
+  \]
+
+  Green's first identity: $\forall\,\bm a\in\FrameBasis^\perp\ \text{constant}$
+  \begin{equation}
+  \int_{\Section} (\bm a\cdot\bm{r})\,\Delta\phi\mathrm{~d}A
+  =\oint_{\partial\Section} (\bm a\cdot\bm{r})\,\partial_{\bm\nu}\phi\,\mathrm{d}s
+-\int_{\Section} \nabla(\bm a\cdot\bm{r})\cdot\nabla\phi\mathrm{~d}A
+  =\oint_{\partial\Section} (\bm a\cdot\bm{r})\,\partial_{\bm\nu}\phi\,\mathrm{d}s
+  -\int_{\Section} \bm a\cdot\nabla\phi\mathrm{~d}A.
+  \label{eq:thm-green-1-vec}
+  \end{equation}
+  because \(\partial_{\bm\nu}\phi=0\) and \(\nabla r_j=\mathbf e_j\) is constant.
+  Using \(\Delta\phi=-2\,\bm{r}\cdot\bm{b}_{\Section}\),
+  \[
+  -2\int_{\Section} r_j\,(\bm{r}\cdot\bm{b}_{\Section})\mathrm{~d}A
+   = -\int_{\Section}\partial_j\phi\mathrm{~d}A
+  \;\implies\;
+  \int_{\Section}\partial_j\phi\mathrm{~d}A
+   = 2\, \Big(\int_{\Section}\bm{r}\otimes\bm{r}\mathrm{~d}A\Big)\mathbf e_j\cdot\bm{b}_{\Section}.
+  \]
+  Stacking \(j\) gives the vector identity
+  \[
+  \int_{\Section}\nabla\phi\mathrm{~d}A
+   = 2\,\Big(\int_{\Section}\bm{r}\otimes\bm{r}\mathrm{~d}A\Big)\bm{b}_{\Section}.
+  \]
+  Therefore, with \(E=2G\) when \(\nu=0\),
+  \[
+  \ShearForce
+  =G\,\int_{\Section}\nabla(\bm{\WarpShearIesan}\cdot\bm{b}_{\Section})\mathrm{~d}A
+  =2G\Big(\int_{\Section}\bm{r}\otimes\bm{r} \mathrm{~d}A\Big)\bm{b}_{\Section}
+  =E\Big(\int_{\Section}\bm{r}\otimes\bm{r}\mathrm{~d}A\Big)\bm{b}_{\Section}
+  \]
+\end{Quote}
+
+So in view of the BVP for \(\bm\WarpShearIesan\) and the parameter \(\bm{b}_{\Section}\) fixed, \(\int_{\Section}G\,\nabla(\bm\WarpShearIesan\cdot\bm{b}_{\Section})\mathrm{~d}A = \left(\int_{\Section} E\, \bm{r}\otimes\bm{r}\mathrm{~d}A\right)\bm{b}_{\Section}\). 
+
+
+\item \(\displaystyle \bm{v}_{(\WarpShearIesan)}=\int_{\Section}(\nabla\bm{\WarpShearIesan})\,\bm{\tau}\mathrm{~d}A\) (units of force) 
+\begin{itemize}
+\item \textbf{Interpretation}. A net in-plane force obtained by weighting the shear-stress field \(\ShearStress(y,z)\) with the in-plane gradients of the shear-warping field. 
+It is the interior ``pumping" of shear work into the distortion mode: in virtual-work form,
+  \[
+  \delta W_{\text{int}}^{(\omega)}=\int_{\Section}\bm{\tau}\cdot(\nabla\bm{\WarpShearIesan})\,\delta\bm{q}\mathrm{~d}A
+  =\bm{v}_{(\WarpShearIesan)}\cdot\delta\bm{q}\,
+  \]
+  so \(\bm{v}_{(\WarpShearIesan)}\) is work-conjugate to the generalized in-plane warping parameters \(\bm{q}\) that scale \(\bm{\WarpShearIesan}\). Componentwise,
+  \[
+  (\nabla\bm{\WarpShearIesan})\,\bm{\tau}
+  = \nabla \cdot(\bm{\WarpShearIesan}\otimes\bm{\tau}) - \bm{\WarpShearIesan}\,\nabla \cdot\bm{\tau}.
+  \]
+  Hence
+  \[
+   \bm{v}_{(\WarpShearIesan)}=\oint_{\partial\Section} \bm{\WarpShearIesan}\,(\ShearStress \cdot \bm{\nu}) \,\mathrm{d}s
+  -\int_{\Section}\bm{\WarpShearIesan}\,(\nabla \cdot\bm{\tau})\mathrm{~d}A.
+  \]
+  
+Considering equilibrium with the Saint-Venant stress field \eqref{eq:sv-equilibrium} gives
+
+\[
+\bm{v}_{(\bm\WarpShearIesan)}=\int_{\Section}(\nabla\bm{\WarpShearIesan})\,\bm{\tau}\mathrm{~d}A
+= \int_{\Section}\bm\WarpShearIesan\,\sigma'\mathrm{~d}A.
+\]
+
+\item \(\BishearTensorPB\) needn't be symmetric. For any in-plane vector \(\bm b\), set \(\omega_{\bm b}(\bm{r}):=(\bm{r}-\CentroidLocation)\cdot \bm b\) and \(\WarpShearIesan_{\bm b}:=\bm b\cdot \bm\WarpShearIesan\). 
+Using the PDE \(\Delta(\bm{\WarpShearIesan} \cdot \bm b)=-2\,(\bm{r}-\CentroidLocation)\cdot \bm b\) and integrating by parts,
+\[
+\bm b \cdot\int_{\Section} \bm{\WarpShearIesan}\otimes (\bm{r}-\CentroidLocation)\cdot \bm b\mathrm{~d}A
+=-\tfrac12 \bm{b}\int_{\Section}\WarpShearIesan_{\bm b}\,\Delta\WarpShearIesan_{\bm b}\mathrm{~d}A
+=\tfrac12 \int_{\Section} |\nabla \WarpShearIesan_{\bm b}|^2\mathrm{~d}A
+- \tfrac12 \oint_{\partial\Section}\WarpShearIesan_{\bm b}\,\partial_{\nu}\WarpShearIesan_{\bm b}\,\mathrm{d}s.
+\tag{$\star$}
+\]
+Thus:
+\begin{itemize}
+\item When \(\nu=0\) the Neumann boundary is homogeneous and \(\partial_\nu\bm{\WarpShearIesan}\cdot\bm b=0\) on \(\partial\Section\). 
+With the zero-mean gauge \(\int_{\Section} \bm{\WarpShearIesan}\cdot {\bm b}=0\), \((\star)\) gives
+  \[
+  \bm b \cdot \BishearTensorPB\bm b=\tfrac12\int_{\Section} |\nabla \omega_{\bm b}|^2\mathrm{~d}A>0\quad(\bm b\neq\mathbf{0}),
+  \]
+  and a standard polarization argument shows
+  \[
+  \bm{b}_1 \cdot\BishearTensorPB\bm{b}_2
+  =\tfrac12 \int_{\Section}\nabla\omega_{\bm{b}_1}\cdot \nabla\omega_{\bm{b}_2}\mathrm{~d}A,
+  \]
+  so \(\BishearTensorPB\) is \textbf{symmetric positive definite}.
+
+\item With Poisson coupling \((\nu\neq 0)\) the boundary condition is inhomogeneous: \(\partial_\nu\omega_{\bm b}=g_{\bm b}\) with \(g_{\bm b}\) linear in \(\bm b\) and built from \(\PoissonFlexure\). 
+Then
+  \[
+  \bm{b}_1 \cdot \operatorname{sym} \BishearTensorPB \,\bm{b}_2
+  =\tfrac12 \int_{\Section} \nabla\omega_{\bm{b}_1}\cdot \nabla\omega_{\bm{b}_2}\mathrm{~d}A
+  -\tfrac14 \oint_{\partial\Section} \big(\omega_{\bm{b}_1}\,g_{\bm{b}_2}+\omega_{\bm{b}_2}\,g_{\bm{b}_1}\big)\,\mathrm{d}s.
+  \]
+  The extra boundary term destroys the general symmetry/positivity guarantee. 
+  Depending on geometry and \(g_{\bm b}\), \(\operatorname{sym}\BishearTensorPB\) can be positive (common in highly symmetric sections where the boundary term cancels by parity), semidefinite, or even indefinite.
+\end{itemize}
+In summary:
+\begin{itemize}
+\item Under homogeneous Neumann data (e.g., \(\nu=0\), centroidal \(\CentroidLocation)\), \(\BishearTensorPB\) is symmetric positive definite.
+\item With Poisson-induced boundary flux \(g_{\bm b}\neq 0\), you must check symmetry/definiteness case-by-case; bisymmetric sections with \(\CentroidLocation\) at the centroid often restore symmetry and positivity by cancellation of the boundary integral, but it’s not universal.
+\end{itemize}
+\end{itemize}
+
+\item \(\displaystyle \bm{w}_{(b)}=\int_{\Section}\PoissonFlexure^{\!\top}\,\bm{\tau}\mathrm{~d}A\)  (units of force)
+
+\begin{itemize}
+
+\item \textbf{Interpretation} An in-plane force that collects the boundary-driven, Poisson-coupled part of the shear–warping interaction. 
+The tensor field \(\PoissonFlexure(y,z)\) encodes how lateral contraction/expansion required by Poisson’s effect during flexure ``polarizes" the cross-section and must be balanced by shear tractions. 
+\item When it vanishes.
+\begin{itemize}
+  \item In general \(\bimoment_{(b)}' = \mathbf{0}\) from \(\bm{\tau}' = \mathbf{0}\)
+  \item If \(\nu=0\) (no Poisson coupling) then \(\PoissonFlexure\equiv\mathbf{0}\Rightarrow \bm{w}_{(b)}=\mathbf{0}\).
+  \item For special geometries/loadings where \(\bm{\tau}\) is \(L^2\)-orthogonal to the deviatoric quadratic form inside \(\bm{W}\) (e.g., certain symmetric sections about the chosen \(\CentroidLocation)\), \(\bm{w}_{(b)}\) can also vanish.
+  In general, though, \(\bm{w}_{(b)}\neq\mathbf{0}\): it is the surviving shear–warping resultant under the Saint-Venant hypotheses once Poisson-induced boundary compatibility is enforced.
+\end{itemize}
+\end{itemize}
+
+\end{enumerate}
+
+The new resultants \(\bm{v}_{(\WarpShearIesan)}\) and \(\bm{w}_{(b)}\) are additional in-plane forces that appear in the reduced 1D balance/constitutive equations when the cross-section is allowed to distort:
+\begin{itemize}
+  \item \(\bm{v}_{(\WarpShearIesan)}\) is an interior (bulk) coupling that is zero under strict SV but becomes a source term once SV is relaxed. 
+  \(\bm{v}_{(\WarpShearIesan)}\) vanishes only for \(\reflenx\)-uniform axial stress (uniform extension/bending); otherwise it captures the axial-stress-gradient forcing on the shear-warping mode.
+  \item \(\bm{w}_{(b)}\) is a boundary/Poisson coupling that persists even under SV and captures the shear–flexure interaction generated by lateral contraction effects; it influences effective shear stiffness, shear-center shifts, and flexure–shear coupling in the 1D equations.
+  \(\bm{w}_{(b)}\) captures the Poisson-driven boundary coupling with shear and is generally nonzero regardless of \(\sigma'\). 
+\end{itemize}

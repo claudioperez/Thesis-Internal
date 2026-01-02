@@ -1,0 +1,132 @@
+
+\subsubsection{Differential Constraints (1)}
+
+Consider a warping amplitude field \(\bm{\alpha}_{(\lambda)} = \mathbf{L}_{\rm ww}\bm{\alpha}\) whose \emph{derivative} is constrained to a primary strain:
+\begin{subequations}
+\begin{align}
+\mathbf{L}_{\rm ww}\bm{\alpha}' &=\; \mathbf{L}_{\rm wp}\,\bm{e}_{\rm p}  \label{eq:condif-0-1} \\
+\left<\bimoment' - \bm{v},\, \mathbf{L}_{\rm wp}\delta\bm{e}_{\rm p}\right> &= \mathbf{0} \label{eq:condif-0-2}
+\end{align}
+\label{eq:condif}
+\end{subequations}
+%
+The restriction \eqref{eq:condif-0-2} removes the bishear resultant in the constrained subspace, so the differential relation \eqref{eq:condif-0-1} cannot produce work through integrals of the strains $\bm{e}_{\rm p}$; the only admissible work is carried by the conjugate bimoment $\bimoment_{\lambda}$, which preserves objectivity and locality of the resultant. 
+
+
+Using a Lagrange multiplier \(\bm{\lambda}(\reflenx)\), the contribution to the weak form is:
+\begin{equation}
+  \mathcal G_{\lambda}
+  \;=\;
+  -\left<\,\bimoment_{\lambda}' - \bishear_{\lambda},\ \delta\bm{\alpha}_{\lambda}\right>
+  \;+\;
+  \left<\,\bm{\lambda},\ \delta(\bm{\alpha}_{\lambda}' - \mathbf{L}_{\rm wp} \bm{e}_{\rm p})\right> .
+  \label{eq:condif-1}
+\end{equation}
+
+Integrate by parts the \(\bm{\lambda}\,\delta\bm{\alpha}_{\lambda}'\) term:
+\[
+  \left<\bm{\lambda},\ \delta\bm{\alpha}_{\lambda}'\right>
+  = -\left<\bm{\lambda}',\ \delta\bm{\alpha}_{\lambda}\right>
+  + \big[\bm{\lambda}\cdot\delta\bm{\alpha}_{\lambda}\big]_{0}^{L}.
+\]
+
+So \eqref{eq:condif-1} becomes
+\begin{equation}
+  \mathcal G_{\lambda}
+  =
+  -\left<\,\bimoment_{\lambda}' - \bishear_{\lambda} + \bm{\lambda}',\ \delta\bm{\alpha}_{\lambda}\right>
+  \;+\;
+  \big[\bm{\lambda}\cdot\delta\bm{\alpha}_{\lambda}\big]_{0}^{L}
+  \;-\;
+  \left<\,\mathbf{L}_{\rm wp}^{\,T}\bm{\lambda},\ \delta \bm{e}_{\rm p}\right> .
+  \label{eq:condif-2}
+\end{equation}
+
+Stationarity with respect to the independent tests \(\delta\bm{\alpha}_{\lambda}\) and \(\delta \bm{e}_{\rm p}\) gives:
+\begin{enumerate}
+  \item Interior Euler–Lagrange (from \(\delta\bm{\alpha}_{\lambda}\)):
+  \begin{equation}
+    \bm{\lambda}' \;=\; \bishear_{\lambda} - \bimoment_{\lambda}'.
+    \label{eq:condif-3}
+  \end{equation}
+  \item Natural boundary: \([\bm{\lambda}\cdot\delta\bm{\alpha}_{\lambda}]_{0}^{L}\).
+  
+  For \emph{free ends} in the constrained mode (no external generalized traction), take
+  \begin{equation}
+    \bm{\lambda}|_{x=0,L}=0 .
+    \label{eq:condif-4}
+  \end{equation}
+  \item Contribution to the \emph{primary} block (from \(\delta \bm{e}_{\rm p}\)):
+  \begin{equation}
+    -\,\mathbf{L}_{\rm wp}^{\,T}\bm{\lambda}.
+    \label{eq:condif-5}
+  \end{equation}
+\end{enumerate}
+
+The effective resultant \(\bar{\bm{s}}\) that balances \(\mathbf{L}_{\rm wp}\delta\bm{e}_{\rm p}\) is the primary resultant 
+\(\bm{s}_{\lambda}(\reflenx)\) plus the differential constraint contribution \eqref{eq:condif-5}:
+\begin{equation}
+\bar{\bishear}(\reflenx) \;=\; \bm{s}_{\lambda}(\reflenx)
+\;-\;\mathbf{L}_{\rm wp}^{\,T}\bm{\lambda}(\reflenx).
+  \label{eq:condif-6}
+\end{equation}
+
+Solve \(\bm{\lambda}\) from \eqref{eq:condif-3} with the anchor \(\bm{\lambda}(0)=0\) prescribed by \eqref{eq:condif-4}:
+\begin{equation}
+  \bm{\lambda}(\reflenx)
+  = \int_{0}^{\reflenx}\!\big(\bishear_{\lambda}(\xi) - \bimoment_{\lambda}'(\xi)\big)\,\mathrm{d}\xi
+  = \int_{0}^{\reflenx}\!\bishear_{\lambda}(\xi)\,\mathrm{d}\xi 
+  \;-\;\big(\bimoment_{\lambda}(\reflenx)-\bimoment_{\lambda}(0)\big).
+  \label{eq:condif-7}
+\end{equation}
+
+Plug \eqref{eq:condif-7} into \eqref{eq:condif-6}:
+\begin{equation}
+  \bar{\bishear}(\reflenx)
+  = \bm{s}_{\lambda}(\reflenx)\;-\;\mathbf{L}_{\rm wp}^{\,T}\!\left(\int_{0}^{\reflenx}\!\bishear_{\lambda}(\xi)\,\mathrm d\xi\;-\;\big(\bimoment_{\lambda}(\reflenx)-\bimoment_{\lambda}(0)\big)\right).
+  \label{eq:condif-8}
+\end{equation}
+
+In view of the restriction \eqref{eq:condif-0-2}, 
+\[
+  \bishear_{\lambda} \equiv 0,\qquad \bimoment_{\lambda}' \equiv 0 \;\implies\; \bimoment_{\lambda}(\reflenx)=\bimoment_{\lambda}(0).
+\]
+This implies that the Lagrange multiplier \eqref{eq:condif-3} must vanish, and consequently, nothing is added to the primary resultant \(\bm{s}_{\lambda}\) under differential constraints of the form \eqref{eq:condif}. 
+Thus, we conclude that if warping is induced through an amplitude \(\bm{\alpha}_{\lambda}'\) that is proportional to \(\bm\gamma\) or \(\bm\kappa\), \eqref{eq:constrain-equilibrium-algebraic} remains valid under the condition that the corresponding bishear \(\bishear_{\lambda}\) vanishes, thus satisfying \eqref{eq:condif}.
+
+\begin{equation}
+\left\{
+\begin{aligned}
+\mathbb{B}_{\rm p}[{\bm{s}}_{\rm p} - \mathbf{L}^T_{\rm vp}(\bm{w}'-\bishear)] - \bm{f} &=\mathbf{0} \\
+\bar{\bm{w}}' - \bar{\bishear} &= \mathbf{0} \\
+\tilde{\bishear}&=\mathbf{0}
+\end{aligned}
+\right.
+\label{eq:constrain-equilibrium-differential}
+\end{equation}
+
+
+% \[
+% \begin{aligned}
+% -G 
+% &= \left<\mathbb{B}\bm{s},\,\bm{\eta}\right> - \left<\bimoment' - \bishear,\, \delta\bm{\alpha}\right> \\
+%  &= \left<\mathbb{B}\bm{s},\,\bm{\eta}\right> + \left<\bishear,\, \delta\bm{\alpha}\right> - \left<\bimoment',\,\delta\bm{\alpha}\right>\\
+% &= \left<\mathbb{B}\bm{s},\,\bm{\eta}\right> + \left<\bishear,\, \delta\bm{\alpha}\right> + \left<\bimoment,\, \delta\bm{\alpha}'\right> - [\bimoment \cdot\delta\bm{\alpha}]_{\partial} \\
+% &= \left<\mathbb{B}\bm{s},\,\bm{\eta}\right> + \left<\bishear,\, \delta\bm{\alpha}\right> + \left<\bimoment,\, \mathbf{L}_{\rm wp} \delta \bm{e}_{rm p}\right>+ \left<\bimoment,\, \delta \bar{\bm{\alpha}}\right> - [\bimoment \cdot\delta\bm{\alpha}]_{\partial}\\
+% &= \left<\bm{s}_p + \mathbf{L}_{\rm wp}^T \bimoment,\,\delta \bm{e}_p\right>
+%  + \left<\bishear,\, \delta\bm{\alpha}\right> 
+%  + \left<\bimoment,\, \delta \bar{\bm{\alpha}}\right>  - [\bimoment \cdot\delta\bm{\alpha}]_{\partial}\\
+% \end{aligned}
+% \]
+% Together with \eqref{eq:constrain-equilibrium-algebraic} this implies the equilibrium for algebraic/differential constraints:
+
+% \begin{equation}
+% \left\{
+% \begin{aligned}
+% \mathbb{B}_{\rm p}[{\bm{s}}_{\rm p} - \mathbf{L}^T_{\rm vp}(\bm{w}'-\bishear) + \mathbf{L}_{\rm wp}^T\bm{w}] - \bm{f} &=\mathbf{0} \\
+% \bar{\bm{w}}' - \bar{\bishear} &= \mathbf{0} \\
+% \tilde{\bishear}&=\mathbf{0}
+% \end{aligned}
+% \right.
+% \label{eq:constrain-equilibrium-differential}
+% \end{equation}

@@ -1,0 +1,564 @@
+\section{Section Formulation}\label{sec:gensec}
+
+\begin{Quote}
+In this section we introduce material points that are not contained on the reference line of the beam model. 
+The objective is to develop a family of constitutive relations for the material resultants \(\bm{s} = (n,m,w,v)\) and strains \(\bm{e} = (\gamma,\kappa,\alpha,\alpha')\) that represents these material points.
+
+Everything is developed under the unconstrained Type 1 equilibrium equations.
+\end{Quote}
+
+\paragraph{Objectives}
+\begin{itemize}
+\item Internal Wagner nonlinearity
+\item Arbitrary Geometry 
+\begin{itemize}
+
+    \item Torsion warping: For the linear shear-free case, a closed form solution is available which has been implemented by \cite{chaudhary1982generalized}
+
+    \item Shear Warping : Shear deformability can play a significant role in the evaluation of the global stiffness of a structure and in the distribution of the internal forces among its constitutive members. This is the case, for instance, of the structural skeletons of tall buildings, subjected to horizontal forces, when the presence of concrete \emph{shear walls} is predominant.
+
+    \item able to detect eventual elastic coupling between the warpings associated to torsion and shear forces
+    
+    \item General Geometry. C- and L-sections. Torsion-flexural coupling. \cite{kim2005exact,elfatmi2007nonuniform}, and \cite{du2020threedimensional}. 
+    See also \cite{lewinski2021incorporating} who implemented the model of \cite{elfatmi2007nonuniform}.
+
+    The asymmetric formulation of \cite{hsiao2000corotational} takes the shear-center as reference point.
+\end{itemize}
+
+\item Arbitrary Coordinates : All basic equations are formulated with respect to an arbitrary cartesian coordinate system which is not restricted to principal axes. 
+Thus the origin of this system is not necessarily a special point like the centroid. 
+
+\end{itemize}
+
+
+
+\subsection{Introduction}
+In this section we motivate a family of resultant constitutive relations that establishes a connection between the one-dimensional theory outlined above and the three dimensional framework of continuum mechanics.
+%
+That is, given a ``cross section'' \(\Section \subset \mathbb{R}^2\) where each point \(\hat{\rho}\) is assigned a tensorial stress-strain model \(\TensorMaterial: \StrainTensor \mapsto \bm{T}\), 
+the objective is to define a frame resultant model:
+\[
+\ResultMaterial : \ShearStrain,\CurveStrain,\bm{\alpha}',\bm{\alpha} \mapsto \bm{n},\bm{m},\bm{w},\bm{v}
+\]
+which may be expected, under suitable assumptions, to approach the response of a three dimensional body in the limit where a notion of \emph{slenderness} approaches infinity. 
+%
+%
+% We regarded the beam as a purely one-dimensional body: the state of stress $\TraceTotalEnergyStress(\xi_m)$ and strain $\FrameStrain(\xi_m)$ at a point $\xi_m$ are mathematically related only to the material points immediately to their left $\xi_m-d\xi$ and right $\xi_m+d\xi$. 
+%
+% However, in reality, a beam always has \emph{some} material emanating from the centerline \(\TraceLocation\), and ideally the dependence of $\TraceTotalEnergyStress$ on $\FrameStrain$ should take into account the distribution and composition of this additional material. 
+%
+
+
+Recall that up until this point we have regarded the beam as a purely one-dimensional body: the state of stress $\TraceTotalEnergyStress(\xi_m)$ and strain $\FrameStrain(\xi_m)$ at a point $\xi_m$ are mathematically related only to the material points immediately to their left $\xi_m-d\xi$ and right $\xi_m+d\xi$.
+
+However, in reality, a beam always has \emph{some} material emanating from the centerline \(\TraceLocation\), and ideally the dependence of $\TraceTotalEnergyStress$ on $\FrameStrain$ should take into account the distribution and composition of this additional material. 
+To this end, we formally introduce the material points $\hat{\bm{\rho}}$ in the cross section through an extended three-dimensional displacement field $\hat{\TraceLocation}(\reflenx, \hat{\bm{\rho}})$ which is assumed to depend only on the configuration variables of the reference curve \(\chi=\bigl(\TraceLocation(\reflenx), \FrameRotation (\reflenx), \bm{\alpha}(\reflenx)\bigr)\) at the 1D material point \(\reflenx\). 
+Because the beam strains \(\FrameStrain(\reflenx) = (\ShearStrain , \CurveStrain , \bm{\alpha}^{\prime}, \bm{\alpha})\) have been formulated as unique invariant functions of the configuration variables $\chi$, it follows that an invariant strain measure for the extended deformation $\hat{\bm{x}}$ should be expressible as functions of only the beam strains $\FrameStrain$.
+
+Recall that deformations of the reduced fields \(\bm{x}\) and \(\FrameRotation\) are measured objectively by the reduced strains \eqref{eq:def-gam-kap}:
+\RepeatEquation{eq:def-gam-kap}
+
+
+\subsection{Stress Constraints}
+
+Recall that the Saint-Venant field generates vanishing stress components \(\FrameBasis_{\alpha}\cdot\PlaneStressTensor\FrameBasis_{\beta} = 0\). 
+It is evident from \eqref{eq:stress-resultants} that the condition \eqref{eq:seSE} precludes stresses with components on \(\{\FrameBasis_y,\,\FrameBasis_z\}\) from contributing to the rod stress resultants \(\bm{s}\), which depends only on those participating in the expression \(\StressTensor\,\FrameBasis\). 
+The stress tensor has the representation:
+%
+\begin{SaveEquation}{eq:saint-venant-stress}
+\StressTensor = \AxialStress\, \FrameBasis \otimes \FrameBasis+\ShearStress \otimes \FrameBasis+\FrameBasis \otimes \ShearStress
+\qquad\text{with}\qquad
+\begin{aligned}
+\AxialStress    &\triangleq \FrameBasis\cdot \StressTensor\, \FrameBasis \\
+\ShearStress &\triangleq \PlaneBasis_{\beta}\otimes \PlaneBasis_{\beta} \StressTensor\,\FrameBasis
+\end{aligned}
+% \label{eq:frame-stress-tensor}
+% \label{eq:saint-venant-stress}
+\end{SaveEquation}
+where \(\AxialStress\) is the scalar axial stress and \(\ShearStress \in \mathbb{R}^2\) the vector of shear stresses. 
+This furnishes the representation for the stress vector \(\StressVector \in \mathbb{R}^3\):
+\begin{equation}
+\StressVector := \StressTensor\,\FrameBasis = \AxialStress \FrameBasis + \ShearStress
+\label{eq:def-stress-vector}
+\end{equation}
+
+
+% \paragraph{Isotopy}
+Consider an elastic isotropic material with constants $E$,$G$, and $\nu$:
+\begin{equation}
+\StressTensor = 2G\,\StrainTensor + \lambda\,(\operatorname{tr}\StrainTensor)\,\one,
+\qquad
+\lambda=\frac{E\nu}{(1+\nu)(1-2\nu)}=\frac{2G\nu}{1-2\nu},
+\label{eq:linear-isotropy}
+\end{equation}
+Decompose the infinitesimal strain tensor $\StrainTensor$ as 
+\begin{SaveEquation}{eq:strain-tensor-decomp}
+\StrainTensor = \FrameBasis\stackrel{s}{\otimes}(\PointAxialStrain\,\FrameBasis 
++ \PointShearStrain) + \PlaneStrainTensor_{\alpha\beta}\FrameBasis_{\alpha}\otimes\FrameBasis_{\beta} 
+% \label{eq:strain-tensor-decomp}
+\end{SaveEquation}
+with $\PointShearStrain$ a vector with zero projection on $\FrameBasis$. 
+Similarly decompose the stress as 
+\[
+\StressTensor = \AxialStress \FrameBasis\otimes\FrameBasis
++ \ShearStress\otimes\FrameBasis
++ \FrameBasis\otimes\ShearStress
++ \PlaneStressTensor
+\]
+with $\ShearStress$ a vector satisfying $\FrameBasis\cdot\ShearStress = 0$ and $\PlaneStressTensor = \PlaneStressTensor_{\alpha\beta}\FrameBasis_{\alpha}\otimes\FrameBasis_{\beta}$. 
+Under isotropy, the shear stress \(\ShearStress\) is coupled only to the shear strain \(\bm{\varepsilon}_{\gamma}\):
+\[
+\bm{\tau} = G\bm{\varepsilon}_{\gamma}
+\]
+However, the axial \(\AxialStress\) and section \(\hat{\StressTensor}\) stresses are coupled:
+\[
+\begin{aligned}
+\hat{\StressTensor}
+% &=2 G \hat{\bm{E}}+\lambda(\varepsilon+\operatorname{tr} \hat{\bm{E}})\left(\mathrm{i}_y \otimes \FrameBasis_y+\FrameBasis_z \otimes \mathrm{i}_z\right)\\
+% &=\frac{E}{1+\nu} \hat{\bm{E}}+\frac{E \nu}{(1+\nu)(1-2 \nu)}(\varepsilon+\operatorname{tr} \hat{\bm{E}}) \; \mathrm{i}_{\alpha} \otimes \mathrm{i}_{\alpha}\\
+&= 2G \hat{\bm{E}}+\lambda (\PointAxialStrain + \operatorname{tr} \hat{\bm{E}}) \; \FrameBasis_{\alpha} \otimes \FrameBasis_{\alpha} \\
+% \end{aligned}
+% \]
+% \[
+% \begin{aligned}
+\AxialStress
+&=(2 G+\lambda) \PointAxialStrain+\lambda \operatorname{tr} \PlaneStrainTensor \\
+% &=2 G \frac{1-\nu}{1-2 \nu} \varepsilon+\frac{2 G \nu}{1-2 \nu} \operatorname{tr} \hat{\bm{E}} \\
+% &=\frac{E(1-\nu)}{(1+\nu)(1-2 \nu)} \varepsilon+\frac{E \nu}{(1+\nu)(1-2 \nu)} \operatorname{tr} \hat{\bm{E}} \\
+% &= M\varepsilon + \lambda \operatorname{tr}\hat{\StrainTensor}
+\end{aligned}
+\]
+% with \(M=\frac{E(1-\nu)}{(1+\nu)(1-2 \nu)}\) the \emph{P-wave modulus}. 
+Thus, if the orthogonal strain \(\PlaneStrainTensor\) satisfies:
+\begin{equation*}
+\operatorname{tr}\PlaneStrainTensor = -2\nu\,\PointAxialStrain
+\quad\text{then}\quad 
+\AxialStress = E\,\PointAxialStrain
+\end{equation*}
+
+
+This furnishes the inner product equalities
+\begin{equation*}
+\left<\TraceTotalEnergyStress,\,\delta\FrameStrain\right>
+\equiv \left<\StressVector,\, \delta \hat{\StrainVector}\right>
+\equiv \left<\StressTensor ,\,\delta\StrainTensor\right>
+\end{equation*}
+
+For Saint–Venant-type stresses with the form \eqref{eq:saint-venant-stress} one has
+\begin{equation}
+\left<\StressTensor,\,\delta\hat{\bm{E}}\right>
+=\left<\StressVector,\,\delta\hat{\bm{\varepsilon}}\right>,
+\quad\text{since}\quad
+\left<\StressTensor,\,\stackrel{\rm s}{\nabla}\PlaneWarp\,\right>=0,
+\label{eq:sv-orthogonality}
+\end{equation}
+
+\iffalse
+\begin{Quote}
+Recall
+\(
+\FrameBasis\cdot\PlaneWarp=0.
+\)
+hence
+\[
+\FrameBasis\cdot\partial_{\beta}\PlaneWarp=\partial_{\beta}(\FrameBasis\cdot\PlaneWarp)=0
+\quad\Rightarrow\quad
+\big(\nabla\PlaneWarp\big)\FrameBasis=\mathbf{0},
+\qquad
+\FrameBasis\cdot\big(\nabla\PlaneWarp\big)=\mathbf{0}^{\top}.
+\]
+where \(\nabla(\cdot)\) acts on section coordinates \(\bm{r}=(y,z)\) only.
+Therefore \(\stackrel{\rm s}{\nabla}\PlaneWarp\,\) has \emph{only} in–plane components \(\FrameBasis_\alpha\otimes\FrameBasis_\beta\), with
+\[
+\big[\sym (\nabla\PlaneWarp)\big]_{\alpha i}
+=\tfrac12\big((\pi_{\alpha,i}+\pi_{i,\alpha}\big)
+=\tfrac12\big(0+0\big)=0,
+\qquad
+\big[\stackrel{\rm s}{\nabla}\PlaneWarp\,\big]_{ii}=0.
+\]
+
+Now assume the Saint–Venant stress structure \eqref{eq:saint-venant-stress} so that \(\StressTensor_{\alpha\beta}=0\). 
+Then, pointwise,
+\[
+\StressTensor:\stackrel{\rm s}{\nabla}\PlaneWarp\,
+=\underbrace{\sigma\,\FrameBasis\otimes\FrameBasis:\stackrel{\rm s}{\nabla}\PlaneWarp\,}_{\displaystyle \sigma\,\FrameBasis\cdot\stackrel{\rm s}{\nabla}\PlaneWarp\,\,\FrameBasis=0}
++\underbrace{\bm{\tau}\otimes\FrameBasis \cdot \stackrel{\rm s}{\nabla}\PlaneWarp\,}_{\displaystyle \bm{\tau}\cdot\stackrel{\rm s}{\nabla}\PlaneWarp\,\,\FrameBasis=0}
++\underbrace{\FrameBasis\otimes\bm{\tau} \cdot \stackrel{\rm s}{\nabla}\PlaneWarp\,}_{\displaystyle \FrameBasis\cdot\stackrel{\rm s}{\nabla}\PlaneWarp\,\,\bm{\tau}=0}
+=0,
+\]
+because \(\stackrel{\rm s}{\nabla}\PlaneWarp\,\,\FrameBasis=\mathbf{0}\) and \(\FrameBasis \cdot\stackrel{\rm s}{\nabla}\PlaneWarp\,=\mathbf{0}\). Consequently,
+\[
+\left<\StressTensor,\,\stackrel{\rm s}{\nabla}\PlaneWarp\right>=\SectionIntegral{\StressTensor \cdot \stackrel{\rm s}{\nabla}\PlaneWarp\,}=0,
+\]
+and the term is orthogonal to the Saint–Venant stress subspace \(\{\sigma\,\FrameBasis\otimes\FrameBasis+\bm{\tau}\otimes\FrameBasis+\FrameBasis\otimes\bm{\tau}\}\).
+
+The rod shear components are the mixed \(\FrameBasis_\alpha\otimes\FrameBasis\) entries of \(\hat{\bm{E}}\), i.e.\ those generated by
+\[
+\hat{\bm{\varepsilon}}
+=\bm{\gamma}
++\bm{\kappa}\times\bm{r}
++ \bm{\kappa}\times\bm{\Phi}\bm{\alpha}
++ \bm{\Phi}\,\bm{\alpha}'
++ \nabla\omega,
+\qquad
+\omega\triangleq \FrameBasis\cdot(\bm{\Phi}\bm{\alpha}),
+\]
+since \(\hat{\bm{E}}=(\hat{\bm{\varepsilon}}\stackrel{s}{\otimes}\FrameBasis)+\underbrace{\stackrel{\rm s}{\nabla}\PlaneWarp\,}_{\alpha\beta\text{ only}}+\mathrm{h.o.t.}\).
+Only \(\hat{\bm{\varepsilon}}\) carries \(\FrameBasis_\alpha\otimes\FrameBasis\) (rod shear) and axial \(\FrameBasis\otimes\FrameBasis\)  components and hence couples to \(\StressVector=\StressTensor\,\FrameBasis\).
+
+Thus \(\stackrel{\rm s}{\nabla}\PlaneWarp\,\) may create in–plane (membrane) strain/shear \(\alpha\beta\), but not the mixed \(\alpha i\) rod shear, and it therefore produces no virtual work against \(\StressTensor\) of Saint–Venant form.
+\end{Quote}
+\fi
+
+
+\subsection{Kinematics}
+To this end, introduce material points $\hat{{\rho}}$ in the cross section through an extended three-dimensional displacement field $\hat{\TraceLocation}(\reflenx, \hat{{\rho}})$ which is assumed to depend only on the configuration variables \(\bigl(\TraceLocation(\reflenx), \FrameRotation (\reflenx), \bm{\alpha}(\reflenx)\bigr)\)  of the Cosserat curve at the 1D material point \(\reflenx\). 
+The spatial placement of a point in the cross section in the reference configuration thus has the representation:
+\begin{equation*}
+    \reflenx\,\FrameBasis + \SectionCoordinate(\hat{\rho})
+\end{equation*}
+where $\PlanePosition$ %$\colon \Section \to \mathbb{R}^2$ 
+is a position vector in the section \(\Section\) that identifies a section material point $\hat{\rho}$ with respect to the reference line of the beam. 
+Thus, \(\SectionCoordinate\) satisfies
+\begin{equation*}
+\SectionCoordinate \cdot \FrameBasis = 0
+\end{equation*}
+%
+The extended displacement field for the newly introduced section material points $\hat{\rho}$  is:
+\begin{SaveEquation}{eq:finite-alignment-field}
+\hat{\bm{x}}(\reflenx, \PlanePosition) 
+= \bm{x}(\reflenx) + \FrameRotation \bigl(\PlanePosition 
++ \WarpTotalShapes(\PlanePosition)\bm{\alpha}(\reflenx)\bigr)
+% \label{eq:finite-alignment-field}
+\end{SaveEquation}
+%
+where the \emph{vector-valued} warping field
+\(\bm{\Phi}(\bm{r})\,\bm{\alpha}(\reflenx)\in\mathbb{R}^3\) allows transverse warping components.
+%
+\begin{remark}
+This generalizes the kinematic model of \cite{simo1991geometricallyexact} by allowing \(n_w \ge 1\) warping shapes \(\bm{\varphi}\) and aligns with the work by \cite{klinkel2003anisotropic} (also \cite{elfatmi2007nonuniform} who only considered linearized beam theory).
+\end{remark}
+\begin{remark}
+The linearization of \eqref{eq:finite-alignment-field} is:
+%
+\begin{equation}
+\hat{\bm x}(\reflenx, \bm{r})=(\reflenx\FrameBasis+\bm{r})+\bm\theta(\reflenx)\times\bm{r}+\bm\Phi(\bm{r})\,\bm\alpha(\reflenx)
+\label{eq:linear-alignment-field}
+\end{equation}
+and the linearized displacement \(\hat{\bm{u}} = \hat{\bm{x}} - (x\FrameBasis + \bm{r})\) is
+\begin{SaveEquation}{eq:trace-lift-linear}
+\hat{\bm u}(\reflenx, \bm{r})=\bm{u}(x)
++\bm\theta(x)\times\bm{r}+\bm\Phi(\bm{r})\,\bm{\alpha}(x)
+% \label{eq:trace-lift-linear}
+\end{SaveEquation}
+In terms of \(\bm{u}\triangleq\bm{x}- \reflenx\,\FrameBasis\) the linearized alignment strains are:
+\begin{SaveEquation}{eq:gam-kap-linear}
+\bm{\gamma}=\bm{u}'+\FrameBasis\times\bm\theta,\qquad
+\bm{\kappa}=\bm\theta'.
+\end{SaveEquation}
+\end{remark}
+
+
+
+\paragraph{Finite Strain.}
+The tangent map \(\bm{F}\triangleq T\,\hat{\chi}\) of the finite configuration \eqref{eq:finite-alignment-field} takes the form
+\begin{equation}
+\bm{F}
+=\FrameRotation\!\left(\mathbf{1}+\bm{\mu}\otimes\FrameBasis
+~+~\FrameBasis\otimes\nabla\omega
+~+~\nabla\PlaneWarp\right),
+\qquad\text{with}\qquad
+\bm{\mu}(\bm{r})
+=\bm{\gamma}+\bm{\kappa}\times\bigl(\bm{r}+\bm{\Phi}\bm{\alpha}\bigr)
++\bm{\Phi}\,\bm{\alpha}'
+\label{eq:F-Phi}
+\end{equation}
+where $\ShearStrain $ and $\CurveStrain $ are the beam strain variables defined by \eqref{eq:def-gam-kap}, and the warping is decomposed into axial and transverse parts
+\begin{equation*}
+\AxialWarp\triangleq \FrameBasis\cdot\bm{\Phi}\bm{\alpha}\in\mathbb{R}, 
+\qquad\text{and}\qquad
+% \PlaneWarp\triangleq \mathbf{1}_{\Section}\,\bm{\omega}
+\PlaneWarp\triangleq \mathbf{1}_{\Section}\,\bm{\Phi}\bm{\alpha}
+,
+\end{equation*}
+% \paragraph{Exact Green--Lagrange strain}
+With \(\StrainTensor\triangleq\tfrac12(\bm{F}^{\top}\bm{F}-\mathbf{1})\) one obtains, by direct expansion of \eqref{eq:F-Phi},
+\begin{equation}
+\begin{aligned}
+\StrainTensor
+&=~\bm{\mu}\stackrel{\mathrm{s}}{\otimes}\FrameBasis
+~+~\nabla\AxialWarp\stackrel{\mathrm{s}}{\otimes}\FrameBasis
+~+\stackrel{\rm s}{\nabla}\PlaneWarp
+\\
+&\quad
++~(\bm{\mu}\cdot\FrameBasis)\,\nabla\AxialWarp\stackrel{\mathrm{s}}{\otimes}\FrameBasis
+~+~\tfrac12\Big(
+\bm{\mu}\cdot\bm{\mu}\,\FrameBasis\otimes\FrameBasis
++ \nabla\AxialWarp\otimes\nabla\AxialWarp
++ (\nabla\PlaneWarp)^{\top}\nabla\PlaneWarp
+\Big).
+\end{aligned}
+\label{eq:exact-gl-strain-Phi}
+\end{equation}
+where the symmetric bun product \(\bm{a}\stackrel{\mathrm{s}}{\otimes}\bm{b}\) is defined for vectors \(\bm{a}\), \(\bm{b}\), and \(\bm{c}\) by
+\begin{equation*}
+    (\bm{a}\stackrel{\mathrm{s}}{\otimes}\bm{b} )\bm{c} \triangleq \tfrac{1}{2} \bigl(
+      \bm{a}\,(\bm{b}\cdot\bm{c}) + \bm{b}\,(\bm{a}\cdot\bm{c})
+    \bigr)
+\end{equation*}
+
+\begin{Old}
+The exact deformation gradient for the extended material field $\hat{\bm{x}}$ given by \eqref{eq:finite-alignment-field} is:
+%
+$$
+\begin{aligned}
+\bm{F} 
+&= \FrameRotation\left[\mathbf{1} + \bm{u}\otimes\FrameBasis + \nabla (\bm{\alpha}\cdot \bm{\varphi})\right]
+\end{aligned}
+\qquad\text{ where }\qquad
+\bm{u}(\hat{\rho}) \triangleq\ShearStrain  + \CurveStrain  \times (\PlanePosition  + \bm{\alpha}\cdot\bm{\varphi} \, \FrameBasis)
+% \bm{\omega} \triangleq (\bm{\alpha}\cdot\bm{\varphi})\, \FrameBasis
+$$
+% Note that in the presence of warping $\bm{u}$ is nonlinear in the strain variables $\FrameStrain$.
+% and may be written as the sum of linear $\bar{\bm{u}}$ and quadratic $\CurveStrain \times\bm{\omega}$ terms:
+% \begin{equation*}
+% \bm{u} = \bar{\bm{u}} + \CurveStrain \times\bm{\omega}
+% \qquad\text{ with }\qquad
+% \bar{\bm{u}} \triangleq \ShearStrain  + \CurveStrain \times\PlanePosition 
+% \end{equation*}
+%
+The corresponding Green-Lagrange strain tensor may be expressed as:
+\begin{equation}
+\StrainTensor = \bm{u}
+\stackrel{\mathrm{s}}{\otimes}
+\FrameBasis 
++\nabla w  \stackrel{\mathrm{s}}{\otimes} \FrameBasis
++({\bm{u}}\cdot\FrameBasis)\,\nabla w  \stackrel{\mathrm{s}}{\otimes} \FrameBasis
++ \tfrac{1}{2}\left(
+  \bm{u}\cdot\bm{u}\,\FrameBasis\otimes\FrameBasis
++ \nabla w \otimes\nabla w 
+\right)
+\label{eq:exact-gl-strain}
+\end{equation}
+%
+\end{Old}
+
+\paragraph{Wagner Strain.}
+\begin{SaveEquation}{eq:wagner-gl-strain-pi}
+\StrainTensor
+~=~\StrainVector\stackrel{\mathrm{s}}{\otimes}\FrameBasis
+~+~\stackrel{\rm s}{\nabla}\PlaneWarp
+~+~\mathrm{h.o.t.},
+\qquad
+%
+\StrainVector\triangleq
+\bm{\gamma}
++\bm{\kappa}\times\bm{r}
++\bm{\Phi}\,\bm{\alpha}'
++\nabla\AxialWarp
++\tfrac{1}{2}\Twist^2\,
+\bm{r}\cdot\bm{r}\,\FrameBasis
+% \label{eq:wagner-gl-strain-pi}
+\end{SaveEquation}
+Let the generalized strain-direction be
+\(
+\delta\bm{e}\triangleq(\delta\bm{\gamma},~\delta\bm{\kappa},~\delta\bm{\alpha}',~\delta\bm{\alpha})
+\) and introduce the decomposition:
+\begin{equation}
+\WarpTotalShapes = \FrameBasis\otimes\WarpAxialShapes + \WarpPlaneShapes
+\label{eq:decom-warp-shapes}
+\end{equation}
+From \eqref{eq:wagner-gl-strain-pi} one computes the \emph{effective} variation
+\(
+\delta\StrainVector=(\TotalStrainMatrix\,\delta\bm{e})
+\)
+that interacts with \(\StressVector\):
+\begin{equation}
+\TotalStrainMatrix
+=\left[
+\;\mathbf{1}
+~~~-\,\left(\bm{r}+\bm{\Phi}\bm{\alpha}\right)^{\times}
+~~~\bm{\Phi}
+~~~\Big(\,\bm{\kappa}^{\times}\WarpTotalShapes~+~\nabla\WarpAxialShapes\,\Big)
+\right],
+\qquad
+\quad
+\WarpAxialShapes\triangleq \FrameBasis\cdot\bm{\Phi}\in\mathbb{R}^{1\times n_w}.
+\label{eq:def-section-kinematic-matrix-wagner}
+\end{equation}
+where 
+\(
+(\nabla\WarpAxialShapes)\,\delta\bm{\alpha}
+=\nabla\big((\FrameBasis^{\top} \bm{\Phi})\,\delta\bm{\alpha}\big)
+=\nabla\omega\big|_{\delta\bm{\alpha}}
+\),
+and \(\gradS\) acts with respect to the section coordinates \(\bm{r}\).
+Thus, for any virtual increment,
+\begin{equation}
+\delta\hat{\bm{\varepsilon}}
+=\delta\bm{\gamma}
+-\big(\bm{r}
++\bm{\Phi}\bm{\alpha}\big)\times\delta\bm{\kappa}
++\bm{\Phi}\,\delta\bm{\alpha}'
++\bm{\kappa}\times\bm{\Phi}\,\delta\bm{\alpha}
++\nabla\big(\FrameBasis\cdot\bm{\Phi}\,\delta\bm{\alpha}\big),
+\label{eq:delta-strain-vector-wagner}
+\end{equation}
+and the remainder
+\(
+\delta\hat{\bm{E}}_{\perp}=\sym\big(\nabla(\mathbf{1}_{\Section}\bm{\Phi}\,\delta\bm{\alpha})\big)
+\)
+is orthogonal to \(\StressTensor\) under \eqref{eq:sv-orthogonality}.
+
+\paragraph{Linear Strain.}
+The first order truncation of \eqref{eq:exact-gl-strain-Phi} furnishes:
+\begin{SaveEquation}{eq:linear-gl-strain-pi}
+\StrainTensor
+~=~\StrainVector\stackrel{\mathrm{s}}{\otimes}\FrameBasis
+~+~\stackrel{\rm s}{\nabla}\PlaneWarp
+~+~\mathrm{h.o.t.},
+\qquad
+%
+\StrainVector\triangleq
+\bm{\gamma}
++\bm{\kappa}\times\bm{r}
++\WarpTotalShapes\,\bm{\alpha}'
++\gradS (\WarpAxialShapes\cdot\bm{\alpha})
+% \label{eq:linear-gl-strain-pi}
+\end{SaveEquation}
+
+\subparagraph{Section kinematic operator}
+From \eqref{eq:linear-gl-strain-pi} one computes the effective variation
+\(
+\delta\hat{\bm{\varepsilon}}=(\TotalStrainMatrix\,\delta\bm{e})
+\)
+that interacts with \(\StressVector\):
+\begin{equation}
+\TotalStrainMatrix
+=\left[
+\;\mathbf{1}
+~~~-\bm{r}^{\times}
+~~~\WarpTotalShapes
+~~~~\FrameBasis_{\beta}\otimes\nabla_{\beta}\WarpAxialShapes
+\right],
+\label{eq:def-section-kinematic-matrix-Phi}
+\end{equation}
+Thus, for any virtual increment,
+\begin{equation}
+\delta\StrainVector
+=\delta\bm{\gamma}
+-\big(\bm{r}
++\WarpTotalShapes\bm{\alpha}\big)\times\delta\bm{\kappa}
++\WarpTotalShapes\,\delta\bm{\alpha}'
++\bm{\kappa}\times\WarpTotalShapes\,\delta\bm{\alpha}
++\gradS\big(\FrameBasis\cdot\bm{\Phi}\,\delta\bm{\alpha}\big),
+\label{eq:delta-epsilon-Phi}
+\end{equation}
+and the remainder
+\(
+\delta\hat{\bm{E}}_{\perp}=\sym\big(\nabla(\oneS\bm{\Phi}\,\delta\bm{\alpha})\big)
+\)
+is orthogonal to \(\StressTensor\) under \eqref{eq:sv-orthogonality}.
+
+
+% \begin{Aside}
+% \begin{remark}
+% The operator \(\TotalStrainMatrix\) in \eqref{eq:def-section-kinematic-matrix-Phi} is a \(3\times(6+2n_w)\) matrix. 
+% In the special case \(\bm{\Phi}=\FrameBasis\otimes\bm{\varphi}\) one has \(\WarpTotalShapes\bm{\alpha}=(\WarpAxialShapes\cdot\bm{\alpha})\,\FrameBasis\), and \(\oneS\WarpTotalShapes=\mathbf{0}\); \eqref{eq:def-section-kinematic-matrix-Phi} reduces to the expression
+% \[
+% \TotalStrainMatrix=\left[\mathbf{1}\;
+% \;-\PlanePosition^{\times}\;
+% \;\FrameBasis\otimes\WarpAxialShapes\;
+% \;\FrameBasis_{\beta}\otimes\nabla_{\!\beta}\WarpAxialShapes
+% \right].
+% \]
+% Salient changes introduced by \(\bm{\Phi}\) include:
+% \begin{enumerate}
+% \item \emph{Curvature--warping coupling:} \(\bm{\kappa}\times\bm{\Phi}\bm{\alpha}\) augments the effective strain vector, yielding the additional blocks \(-\,\warpdisp\times\) (inside \(-(\bm{r}+\warpdisp)^{\times}\)) and \(\bm{\kappa}^{\times}\bm{\Phi}\) in \(\TotalStrainMatrix\).
+% \item \emph{Axial-gradient channel:} only the \emph{axial} component \(\omega\) contributes via \(\nabla\omega\) to the resultants at the truncated level; this appears as \(\nabla\bm{\Phi}_{\parallel}\) in the last block of \(\TotalStrainMatrix\).
+% \item \emph{Transverse-gradient remainder:} \(\stackrel{\rm s}{\nabla}\PlaneWarp\,\) enriches \(\hat{\bm{E}}\) but is orthogonal to Saint–Venant stress resultants, cf. \eqref{eq:sv-orthogonality}. 
+% Consequently, when \(\bm{\Phi}_{\parallel}\equiv\mathbf{0}\) (purely transverse warping), the gradient term drops from \(\TotalStrainMatrix\) and warping influences the section response only through \(\bm{\kappa}\times\bm{\Phi}\bm{\alpha}\) and \(\bm{\Phi}\,\bm{\alpha}'\).
+% \end{enumerate}
+% \end{remark}
+% \end{Aside}
+
+\begin{Details}
+Note that for $\bm{\omega} \triangleq (\bm{\alpha}(\reflenx)\cdot\bm{\varphi}(y,z))\FrameBasis$
+$$
+\nabla \bm{\omega} = \nabla (\bm{\alpha}\cdot\bm{\varphi}\FrameBasis) = \FrameBasis\otimes\nabla(\bm{\alpha}\cdot\bm{\varphi}) = \FrameBasis\otimes\nabla\omega
+$$
+
+$$
+\nabla \omega = (\nabla\bm{\alpha})^{\top}\bm{\varphi}  +(\nabla\bm{\varphi})^{\top}\bm{\alpha} 
+$$
+Using $\nabla \bm{\alpha} = \bm{\alpha}'\otimes\FrameBasis$
+$$
+\nabla \omega = (\bm{\alpha}^{\prime}\cdot\bm{\varphi}) \FrameBasis +(\nabla\bm{\varphi})^{\top}\bm{\alpha}
+$$
+and rearranging
+$$
+\nabla \omega = (\FrameBasis\otimes\bm{\varphi}) \bm{\alpha}' + (\nabla\bm{\varphi})^{\top}\bm{\alpha}
+$$
+
+$$
+(\mathbf{a}\stackrel{\mathrm{s}}{\otimes}\FrameBasis)\FrameBasis
+=\frac{1}{2} \left(\mathbf{a} + (\mathbf{a}\cdot\FrameBasis)\FrameBasis\right)
+$$
+
+$$
+\delta \left((\mathbf{a}\stackrel{\mathrm{s}}{\otimes}\FrameBasis)\FrameBasis\right) = \frac{1}{2}\left(\delta \mathbf{a} + \delta a_1 \FrameBasis\right)
+$$
+\end{Details}
+
+\subsection{Resultants}
+
+The standard formalisms (virtual work, stationary variational principles, and Galerkin weighted residuals) all equivalently furnish a requirement with the form:
+\begin{equation}
+\left<\TraceTotalEnergyStress,\,\delta\FrameStrain\right>_{\FrameBody}=\left<\StressTensor ,\,\delta\StrainTensor\right>_{\hat{\FrameBody}}
+\label{eq:seSE}
+\end{equation}
+where \(\delta \bm{e}\) and \(\delta \StrainTensor\) are arbitrary variations of the strain variables.
+
+Recall the Frobenius inner product 
+\(
+    \left.\bm{A} \cdot \bm{B}\right. \triangleq \operatorname{tr} \bm{A}\bm{B}^{\top}
+\)
+for two second order tensors \(\bm{A}\) and \(\bm{B}\). 
+%
+If \(\delta \StrainTensor\) has the representation \(\left(\TotalStrainMatrix \delta\FrameStrain\right) \stackrel{s}{\otimes}\FrameBasis\) for some second-order tensor \(\TotalStrainMatrix\), then
+\begin{equation*}
+    \left<\StressTensor ,\,\delta\StrainTensor\right> = \SectionIntegral{ 
+    \operatorname{tr} \left[\StressTensor\, \tfrac{1}{2}\left(\TotalStrainMatrix\delta \FrameStrain \otimes \FrameBasis + \FrameBasis\otimes \TotalStrainMatrix\delta \FrameStrain \right)
+    \right]
+    }
+\end{equation*}
+%
+Exploiting linearity of the trace together with the identity \(\operatorname{tr} (\bm{a}\otimes\bm{b}) = \bm{a}\cdot \bm{b}\) for arbitrary vectors \(\bm{a}\) and \(\bm{b}\) yields
+\begin{equation*}
+    \left<\StressTensor ,\,\delta\StrainTensor\right> = \delta \FrameStrain\cdot \SectionIntegral{
+        \TotalStrainMatrix^{\top}\tfrac{1}{2}\left(\StressTensor \,\FrameBasis + \StressTensor^{\top}\FrameBasis\right)
+    }
+\end{equation*}
+and consequently by requiring \eqref{eq:seSE} we obtain the generalized resultants \(\TraceTotalEnergyStress\) 
+\begin{equation*}
+\TraceTotalEnergyStress \equiv \SectionIntegral{\TotalStrainMatrix^{\top}\tfrac{1}{2}\left(\StressTensor\,\FrameBasis + \StressTensor^{\top}\FrameBasis\right)}
+\end{equation*}
+For a symmetric stress tensor \(\StressTensor\) one further has
+\begin{equation}
+\TraceTotalEnergyStress = \SectionIntegral{
+  \TotalStrainMatrix^{\top} \StressVector
+}
+\label{eq:stress-resultants}
+\end{equation}
+where recall the stress vector \(\StressVector\) is defined by \eqref{eq:def-stress-vector}.
+
+
+
+\subsection{Summary}
+Three compatibility relations have been derived relating the trace strains \(\bm{e}\) to a material strain tensor \(\StrainTensor\): the exact form \eqref{eq:exact-gl-strain-Phi}, the partial truncation \eqref{eq:wagner-gl-strain-pi}, and the total linearization \eqref{eq:linear-gl-strain-pi}. 
+All three representations of the material strains may be employed in connection with a finite deformation trace model \eqref{eq:linear-gl-strain-pi}, or the linearization \eqref{eq:trace-lift-linear}.
+These results specialize to several notable works in the literature:
+\begin{itemize}
+    \item \cite{simo1991geometricallyexact} employed the linearized material kinematics \eqref{eq:linear-gl-strain-pi} in connection with the geometrically exact \eqref{eq:finite-alignment-field} with one warping mode associated to Saint-Venant torsion function. \cite{gruttmann2000theory} generalized \cite{simo1991geometricallyexact} to consider sections in arbitrary coordinate systems and elasto-plastic material response.
+\end{itemize}
+

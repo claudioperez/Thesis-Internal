@@ -1,0 +1,96 @@
+
+
+\begin{proof}
+The section-rigid motion \(\bar{\bm u}+\bar{\bm\theta}\times\bm{r}\) that best fits \(\hat{\bm u}\) in the least‑squares sense minimizes the functional:
+\[
+\mathcal J(\bar{\bm u},\bar{\bm\theta})
+:=
+\int_{\Section}\big\| \hat{\bm u}(\bm{r})-(\bar{\bm u}+\bar{\bm\theta}\times\bm{r})\big\|^{2} \dA.
+\]
+
+Stationarity of \(\mathcal{J}\) with respect to \(\bar{\bm u}\) gives 
+\begin{equation}
+\int_{\Section}\!\big(\hat{\bm u}-\bar{\bm u}-\bar{\bm\theta}\times\bm{r}\big)\dA
+=\mathbf{0}
+\quad\implies\quad
+\bar{\bm u}(\reflenx)
+=\SectionAverage{\hat{\bm u}} - \bar{\bm\theta}(\reflenx)\times\SectionAverage{\bm{r}}
+% =\SectionAverage{\hat{\bm u}}-\bar{\bm\theta}\times\CentroidLocation.
+\label{eq:def-avg-ubar}
+\end{equation}
+
+Stationarity in \(\bar{\bm\theta}\) requires,
+\[
+\int_{\Section}\bm{r}\times\big(\hat{\bm u}-\bar{\bm u}-\bar{\bm\theta}\times\bm{r}\big)\dA=\mathbf{0}.
+\]
+where the identity \(\bm a\cdot(\delta\bar{\bm\theta}\times\bm{r})=(\bm{r}\times\bm a)\cdot\delta\bar{\bm\theta}\) was used.
+Insert \(\bar{\bm u}\) from \eqref{eq:def-avg-ubar} and set \(\CoordinateCentroid:=\bm{r}-\CentroidLocation\) so \(\SectionAverage{\CoordinateCentroid}=\mathbf{0}\):
+\[
+\int_{\Section}\bm{r}\times\big(\hat{\bm u}-\SectionAverage{\hat{\bm u}}\big)\dA
+\;-\;
+\int_{\Section}\bm{r}\times\big(\bar{\bm\theta}\times(\bm{r}-\CentroidLocation)\big)\dA=\mathbf{0}.
+\]
+The first term equals \(\int_{\Section}(\bm{r} - \CentroidLocation)\times\hat{\bm u}\dA\).
+In the second term, \(\int_{\Section}\bm{r}\times(\bar{\bm\theta}\times\CoordinateCentroid)\dA
+=\int_{\Section}\CoordinateCentroid\times(\bar{\bm\theta}\times\CoordinateCentroid)\dA\), and using the vector identity
+%$\bm{a} \times(\bm{b} \times \bm{a})=|\bm{a}|^2 \bm{b}-(\bm{a} \cdot \bm{b}) \bm{a}$, 
+\(\CentroidLocation \times(\bar{\bm{\theta}} \times \CentroidLocation)=\left(\|\CentroidLocation\|^2 \mathbf{1}-\CentroidLocation \otimes \CentroidLocation\right) \bar{\bm{\theta}}\) we can write:
+\[
+\int_{\Section}\CoordinateCentroid\times(\bar{\bm\theta}\times\CoordinateCentroid)\dA
+=\CentroidStaticInertia\,\bar{\bm\theta},
+\]
+Hence
+\[
+\CentroidStaticInertia\,\bar{\bm\theta}
+=\int_{\Section}(\bm{r}-\CentroidLocation)\times\hat{\bm u}\dA,\qquad
+\bar{\bm\theta}
+=\CentroidStaticInertia^{-1}\int_{\Section}(\bm{r}-\CentroidLocation)\times\hat{\bm u} \dA.
+\]
+where the linear functional \(\bar{\Theta}\) is:
+\begin{equation*}
+\bar{\Theta}[\bm{u}] := \CentroidStaticInertia^{-1} \int (\bm{r}-\CentroidLocation)\times\bm{u}\dA ,
+\qquad 
+\CentroidStaticInertia :=\int_{\Omega}\Big(|\bm{r}-\CentroidLocation|^{2}\mathbf{1}-(\bm{r}-\CentroidLocation)\otimes(\bm{r}-\CentroidLocation)\Big)\dA
+\end{equation*}
+and \(\CentroidStaticInertia\) is the centroidal moment of inertia tensor. 
+\end{proof}
+Note the properties: 
+\begin{subequations}
+\begin{align}
+\bar{\Theta}[\bm{a}] &= \mathbf{0} 
+\qquad \forall \bm{a}\text{ constant in }\bm{r} \label{eq:barTheta-vanish}\\
+\bar{\Theta}[\bm{r}] &= \mathbf{0} \\
+\bar{\Theta}[\bm{a}\times\bm{r}] &= \bm{a} \label{eq:barTheta-cross-r} \\
+\bar{\Theta}\circ\bar{\Theta}[\bm{v}] &= \bar{\Theta}[\bm{v}]
+\end{align}
+\label{eq:rotavg-identities}
+\end{subequations}
+\begin{Details}
+Furthermore, for any \(\bm v:\Omega\to V\),
+\[
+\FrameBasis\times\bar\Theta[\FrameBasis\otimes\bm v]
+=\IntRGoRG^{-1} \int_{\Omega}(\bm{r}-\CentroidLocation)\otimes\bm v(\bm{r})\dA,
+\]
+so that
+\begin{equation}
+\FrameBasis\times\bar\Theta\Big[\FrameBasis\otimes(\bar\Theta[\bm{\WarpShearIesan}]\times(\bm{r}-\CentroidLocation))\Big]
+=-\,\bar\Theta[\bm{\WarpShearIesan}]^{\times},
+\qquad
+\FrameBasis\times\bar\Theta[\FrameBasis\otimes\Section[\bm{\WarpShearIesan}]]
+=\Section[\bm{\WarpShearIesan}].
+\label{eq:theta-rank-1}
+\end{equation}
+\[
+\RotationAverage{\bm{W}(\bm{r})\bm{a}}
+= \CentroidStaticInertia^{-1}\int_\Section \bm{\rho}\times\bm{u}\dA
+= \frac{M_\gamma a_\gamma}{J_3}\FrameBasis,
+\]
+or, more compactly,
+\[
+\RotationAverage{\bm{W}(\bm{r})\bm{a}}
+= \left[\frac{1}{\Io}
+\int\big((\bm{r}-\CentroidLocation)\times (\bm{W}(\bm{r})\bm{a})\big)\cdot\mathbf{i} \dA
+\right]\FrameBasis
+\]
+with \(\Io := \operatorname{tr}\CentroidLocation\).
+\end{Details}

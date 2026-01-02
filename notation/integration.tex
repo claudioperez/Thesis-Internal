@@ -1,0 +1,46 @@
+
+\newcommand{\starG}{\star}     % Hodge star in the Euclidean plane
+\newcommand{\qvec}{\mathbf w}  % = \kvec\times\rvec
+
+\newcommand{\astar}{\!*\,}             % 2-D Hodge star (acts as 90° rotation)
+
+
+\newcommand{\dd}{\mathrm d}
+\newcommand{\ii}{\iota}
+\newcommand{\x}{\mathbf x}
+\newcommand{\kvec}{\mathbf i}      % = \FrameBasis
+\newcommand{\starE}{\star} % Euclidean Hodge star in 2-D
+
+% \newcommand{\interior}[2]{#1\, \mathbin{\lrcorner}\, #2}
+\newcommand{\interior}[2]{{\iota}_{#1} {#2}}
+
+\newcommand{\IntegrationNotationTable}{
+
+\begin{table}[H]
+\centering 
+\begin{tabular}{rlll}
+$\WarpSV$ & $\in \Omega^{0}(\PlaneManifold)$ & A scalar field over \(\PlaneManifold\) \\
+$\dd\WarpSV$
+  & $\in \Omega^1(\PlaneManifold)$
+  & the exterior derivative of the scalar field $\WarpSV$ \\
+$\interior{\bm{\nu}}{\dd \WarpSV}$ 
+  & $\in\Omega^{0}(\PlaneManifold)$ 
+  & \\
+$\mu$
+  & $\in \Omega^2(\PlaneManifold)$
+  & A volume form \\
+$\omega \triangleq \interior{\FrameBasis\times \PlanePosition}{\dd A}$
+  & $\in \Omega^1(\PlaneManifold)$
+  & \\
+$\dd \omega$
+  & $\in \Omega^2(\PlaneManifold)$
+  & \\
+$\varrho$ 
+  & $\in \Omega^1(\PlaneManifold)$ 
+  & \\
+\end{tabular}
+\end{table}
+
+where \(\Omega^k(\PlaneManifold)\) is the space of \(k\)-forms on \(\PlaneManifold\).
+
+}

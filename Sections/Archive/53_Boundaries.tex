@@ -1,0 +1,166 @@
+
+\medskip
+\hrule 
+
+\subsubsection{Dirichlet Conditions}
+
+% \begin{Quote}
+Consider a linear operator $L$ acting on the displacement field $\hat{\bm{u}}(x,\bm{r})$ at a point or set of points. The complete solution with rigid body motion takes the form:
+\begin{equation}
+\hat{\bm{u}} = \bm{u}(x) + \bm{\theta}(x) \times \bm{r} + \bm{\Phi}(\bm{r}) \bm{\alpha}(x) + \bm{\delta}_u + \bm{\delta}_\theta \times (\mathbf{x} - \mathbf{x}_0)
+\end{equation}
+where $\mathbf{x} = x\FrameBasis + \bm{r}$ denotes the full position vector and $\mathbf{x}_0$ is an arbitrary reference point.
+
+The prescription $L[\hat{\bm{u}}] = \mathbf{f}$ yields a linear system for the rigid parameters:
+\begin{equation}
+L[\bm{\delta}_u + \bm{\delta}_\theta \times (\mathbf{x} - \mathbf{x}_0)] = \mathbf{f} - L[\bm{u}(x) + \bm{\theta}(x) \times \bm{r} + \bm{\Phi}(\bm{r}) \cdot \bm{\alpha}(x)]
+\end{equation}
+
+The solvability depends on the rank of the linear operator acting on the six-dimensional space of rigid motions.
+
+\subparagraph{Pointwise Prescriptions}
+
+The simplest case involves prescribing the beam fields at distinct points. For $\bm{u}(x_1) = \bm{u}_1$ and $\bm{\theta}(x_2) = \bm{\theta}_2$, the system becomes:
+\begin{equation}
+\begin{bmatrix}
+\mathbf{1} & -x_1\FrameBasis^{\times} \\
+\mathbf{0} & \mathbf{1}
+\end{bmatrix}
+\begin{pmatrix}
+\bm{\delta}_u \\
+\bm{\delta}_\theta
+\end{pmatrix} = 
+\begin{pmatrix}
+\bm{u}_1 - \bm{u}(x_1) \\
+\bm{\theta}_2 - \bm{\theta}(x_2)
+\end{pmatrix}
+\end{equation}
+
+This system has full rank and admits a unique solution. The block triangular structure allows sequential solution: first $\bm{\delta}_\theta$ from the second equation, then $\bm{\delta}_u$ from the first. 
+
+
+\subparagraph{Derivative Constraints}
+
+Consider the prescription $\hat{\bm{u}}'(x_0, \bm{r}_0) = \mathbf{g}$. The derivative of the complete field is:
+\begin{equation}
+\hat{\bm{u}}' = \bm{u}'(x) + \bm{\theta}'(x) \times \bm{r} + \bm{\Phi}(\bm{r}) \bm{\alpha}'(x) + \bm{\delta}_\theta \times \FrameBasis
+\end{equation}
+
+The rigid translation $\bm{\delta}_u$ does not appear in the derivative. 
+At a point $(x_0, \bm{r}_0)$, the constraint becomes:
+\begin{equation}
+\bm{\delta}_\theta \times \FrameBasis = \mathbf{g} - \bm{u}'(x_0) - \bm{\theta}'(x_0) \times \bm{r}_0 - \bm{\Phi}(\bm{r}_0) \bm{\alpha}'(x_0)
+\end{equation}
+
+This provides three constraints on $\bm{\delta}_\theta$, leaving three translational DOFs unconstrained.
+
+\subparagraph{Curl Constraints}
+
+The curl of the displacement field at $\bm{r} = \mathbf{0}$ yields the infinitesimal rotation:
+\begin{equation}
+\nabla \times \hat{\bm{u}}|_{\bm{r}=\mathbf{0}} = \tfrac{1}{2}\nabla \times [\bm{u}(x) + \bm{\delta}_u + \bm{\delta}_\theta \times x\FrameBasis] = \tfrac{1}{2}\bm{\theta}(x) + \tfrac{1}{2}\bm{\delta}_\theta
+\end{equation}
+
+Prescribing this quantity constrains only the rotational rigid parameters. The prescription $\nabla \times \hat{\bm{u}}(x_0,\mathbf{0}) = \bm{\omega}_0$ requires:
+\begin{equation}
+\bm{\delta}_\theta = 2\bm{\omega}_0 - \bm{\theta}(x_0)
+\end{equation}
+
+This uniquely determines $\bm{\delta}_\theta$ while leaving $\bm{\delta}_u$ free.
+
+\paragraph{Integral Constraints}
+
+Consider the average displacement over a cross-section:
+\begin{equation}
+\bm{u}_{\text{avg}}(x_0) = \frac{1}{A}\int_{\Section} \hat{\bm{u}}(x_0, \bm{r}) \, dA
+\end{equation}
+
+Expanding the integrand yields:
+\begin{equation}
+\bm{u}_{\text{avg}} = \bm{u}(x_0) + \bm{\theta}(x_0) \times \CentroidLocation + \frac{1}{A}\int_{\Section} \bm{\Phi}(\bm{r}) \bm{\alpha}(x_0) \dA 
++ \bm{\delta}_u + \bm{\delta}_\theta \times (x_0\FrameBasis + \CentroidLocation)
+\end{equation}
+where $\CentroidLocation = \frac{1}{A}\int_{\Section} \bm{r} \, dA$ is the centroid location.
+
+The prescription $\bm{u}_{\text{avg}}(x_0) = \mathbf{d}$ yields:
+\begin{equation}
+\begin{bmatrix}
+\mathbf{1} & -(x_0\FrameBasis + \CentroidLocation)^{\times}
+\end{bmatrix}
+\begin{pmatrix}
+\bm{\delta}_u \\
+\bm{\delta}_\theta
+\end{pmatrix}
+= \mathbf{d} - \bm{u}(x_0) - \bm{\theta}(x_0) \times \CentroidLocation
+- \text{warping}
+\end{equation}
+
+This provides three constraints on six parameters, admitting a three-parameter family of solutions. The coupling between translation and rotation depends on the centroid location $\CentroidLocation$.
+
+\paragraph{Rank Deficiency for Multiple Constraints}
+
+When prescribing the same field at multiple points, compatibility conditions arise. For $\bm{\theta}(x_1) = \bm{\theta}_1$ and $\bm{\theta}(x_2) = \bm{\theta}_2$, both constraints require the same $\bm{\delta}_\theta$:
+\begin{equation}
+\bm{\theta}_2 - \bm{\theta}_1 = \bm{\theta}(x_2) - \bm{\theta}(x_1)
+\end{equation}
+
+The right-hand side depends on loading parameters through terms like $(x_2 - x_1)(a_\vartheta + c_\vartheta)\FrameBasis$. Unless the prescribed values satisfy this compatibility condition, no rigid motion can accommodate both constraints simultaneously.
+% \end{Quote}
+
+The choice of splitting parameters directly affects the strain measures. 
+For instance, the shear strain $\bm{\gamma} = \bm{u}' + \FrameBasis \times \bm{\theta}$ will depend on how the $x^1$ section-rigid terms are split. If we choose $\Xi_{1,2}^{(1)}$ (the splitting for transverse components at linear order) appropriately, we can achieve constant shear strain under pure flexure.
+
+Similarly, the curvature $\bm{\kappa} = \bm{\theta}'$ depends on the splitting of rotational components. Different choices lead to different definitions of what constitutes "pure bending" versus "warping-induced deformation."
+
+% \subsubsection{The Complete Decomposition}
+
+Applying this framework systematically to the Saint-Venant solution, we obtain a family of valid beam theory representations parameterized by the collection $\{\Xi_j^{(m)}\}$. 
+Each choice within this family exactly represents the three-dimensional solution but differs in:
+\begin{itemize}
+\item The definition of strain measures
+\item The relationship between loading and deformation
+\item The structure of the warping basis
+\item The interpretation of beam kinematic variables
+\end{itemize}
+
+This framework thus provides a rational basis for understanding the non-uniqueness in beam theory formulations while maintaining exactness with respect to the parent three-dimensional solution. The specific choice of splitting parameters becomes a modeling decision guided by the intended application and desired properties of the resulting beam theory.
+
+
+\begin{Prompt}
+Now lets look at the particular implications of boundary conditions on u/theta and any restrictions they may impose on $\bm\eta$ to maintain exactness. 
+i am attaching a breakdown of the SV solution. 
+Its a particular solution $\hat{\bm u}(x,\bm{r}; \bm{p})$ plus a rigid field $\hat{\bm u}_{\rm R}(x,\bm{r};\, \bm{\delta}(\bm{p})) = \bm{\delta}_u + \bm{\delta}_{\theta}\times (x\FrameBasis + \bm{r})$ where $\bm{\delta} = (\bm{\delta}_u,\,\bm{\delta}_{\theta})$ are 6 parameters of the rigid motion and \(\bm{p}\) collects the 6 load parameters $a_\varepsilon$, $\bm{b}_{\Section}$, etc. 
+Say this has a canonical representation:
+$$
+\hat{\bm u}_{\rm P}(x,\bm{r};\, \bm{p}) = \hat{\bm U}(x)\bm{p} - \bm{r}\times\hat{\bm Z}(x)\bm{p} + \hat{\bm{W}}(x,\bm{r})\bm{p}
+$$
+our trace aims to represent this exactly through \(\bm{u}(x),\bm{\theta}(x),\bm{\eta}(x),\bm{\alpha}(x)\) with the reconstruction:
+ $$
+\hat{\bm u}_T 
+= \underbrace{{\bm U}_T(x)\bm{p}}_{\bm{u}(x)} - \bm{r}\times\underbrace{{\bm Z}_T(x)\bm{p}}_{\bm{\theta}(x)} 
++ \underbrace{\tilde{\bm U}_T(x)\bm{p} - \bm{r}\times\tilde{\bm Z}_T(x)\bm{p}}_{\bm{\Psi}(\bm{r})\bm{\eta}(x)}
++ \bm{\Phi}(\bm{r})\underbrace{\ShapeShift\mathbb{B}^*[\bm{U}_T(x)\; \bm{Z}_T(x)]}_{\bm{\alpha}(x)}
+ $$
+ where the strain operator \(\mathbb{B}^*\) is
+ \[
+\mathbb{B}^* = \begin{bmatrix}
+    \mathbf{1}\partial_x & \FrameBasis^{\times}  \\
+    \mathbf{0} & \mathbf{1} \partial_x 
+\end{bmatrix}
+\]
+so \(\bm{e}(x) = (\bm{\gamma}(x),\bm{\kappa}(x)) = \mathbb{B}^*\begin{pmatrix}\bm{u}(x) \\ \bm{\theta}(x)\end{pmatrix}\).
+We want to restrict the gauge \(\bm{\eta}(x)\) so that when Dirichlet conditions are imposed on \(\bm{u},\bm{\theta}\) (say, $\bm{u}(x_u) = \bm{u}_x$ and $\bm{\theta}(x_{\theta}) = \bm{\theta}_{x}$), our trace reconstruction stays exactly in the SV class, with the slack picked up by the rigid freedom \(\hat{\bm u}_{\rm R}\). 
+Thus, it would be nice if we can do two things:
+\begin{enumerate}
+    \item Derive an appropriate restriction on \(\bm{U}_T,\bm{Z}_T\) and/or \(\tilde{\bm U}_{T},\tilde{\bm Z}_T\) in terms of the canonical "hat" operators.
+    \item obtain an explicit expression that computes the rigid parameters $\bm{\delta}$ in terms of \(\bm{U}_T\) and/or \(\tilde{\bm U}_{T}\). ie, ideally something like:
+    $$
+    \bm{\delta} = \mathbf{D}\bm{p}
+    $$
+    with an explicit expression for the 6x6 matrix $\mathbf{D}$ in terms of \(\bm{U}_T,\bm{Z}_T\) and/or \(\tilde{\bm U}_{T},\tilde{\bm Z}_T\) evaluated at \(x_u\) and \(x_{\theta}\)
+\end{enumerate}
+how's this sound?
+
+My objective is to compare results of my finite element simulation using beams to the closed form saint-venant field. 
+My beam element will be configured with some 6x6 $T_0$, and in order to appropriately check it against SV, i need the corresponding rigid parameters $\delta$.
+\end{Prompt}

@@ -1,0 +1,14 @@
+% \usepackage{tabularx}
+\usepackage{tablefootnote}
+\usepackage{booktabs}
+\usepackage{tabularray}
+
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+
+\usepackage{longtable}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother

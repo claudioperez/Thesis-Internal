@@ -1,0 +1,596 @@
+\input{notation/integration}
+\subsection{Preliminaries}
+
+We recall the following results on a Riemanian manifold \(\PlaneManifold\) with oriented volume form \(\mu\) \citep{marsden1994mathematical,abraham1988manifolds}.
+
+\begin{ambox}[Calculus on Manifolds]{box:recall}
+Definitions:
+\begin{enumerate}
+\item \textbf{Interior product} 
+$\interior{\bm{X}}{}\colon \Omega^p(\PlaneManifold) \rightarrow \Omega^{p-1}(\PlaneManifold)$ with a vector field \(\bm{X}\)  is 
+the {unique graded derivation of degree \(-1\)} satisfying  
+\begin{equation}
+\interior{\bm{X}}{f} = 0,
+\qquad
+\interior{\bm{X}}{\omega} = \omega(\bm{X})
+\qquad
+f\in\Omega^{0}(\PlaneManifold),
+\;\omega\in\Omega^{1}(\PlaneManifold)
+\label{eq:def-interior-base}
+\end{equation}
+and the graded-Leibniz rule 
+\[
+\interior{\bm {X}}{(\alpha\wedge \eta)}
+      = (\interior{\bm X}{\alpha})\wedge \eta
+      + (-1)^{k}\,\alpha\wedge\interior{\bm X}{ \eta},
+\qquad
+\alpha\in\Omega^{k} (\PlaneManifold)
+\]
+
+% \begin{itemize}
+%     \item \(\interior{\bm{X}}{f} = 0\) for a scalar (0-form) field \(f\)
+%     \item \(\interior{\bm{X}}{\omega} = \omega(\bm{X})\) for a $1$-form \(\omega\)
+% \end{itemize}
+\item \textbf{Exterior product}
+$\displaystyle 
+\wedge : \Omega^{k} (\PlaneManifold)\times\Omega^{\ell} (\PlaneManifold)\;\longrightarrow\;\Omega^{k+\ell} (\PlaneManifold)
+$
+is a bilinear, associative product defined by % the graded-anticommutativity
+\[
+\alpha\wedge \eta \;=\; (-1)^{k\ell}\, \eta\wedge\alpha,
+\qquad
+\alpha\in\Omega^{k} (\PlaneManifold),\; \eta\in\Omega^{\ell} (\PlaneManifold),
+\]
+with \(f\wedge\alpha = f\,\alpha\) for functions \(f\in\Omega^{0} (\PlaneManifold)\).
+\item \textbf{Hodge operator} 
+$\displaystyle 
+\star \;:\;\Omega^{k} (\PlaneManifold)\longrightarrow\Omega^{n-k} (\PlaneManifold)
+$
+is the unique map satisfying  
+\begin{equation}
+\alpha\wedge\star \eta \;=\;
+\langle\alpha, \eta\rangle\,\mu,
+\qquad\forall\,\alpha, \eta\in\Omega^{k} (\PlaneManifold)
+\label{eq:hodge-defn}
+\end{equation}
+Consequences include (with the musical isomorphism  ``\(\flat\)'' lowering indices):
+\[
+\interior{\bm{X}}{\star \omega} = (-1)^k \star (\bm{X}^{\flat} \wedge \omega)
+\qquad\text{for}\qquad \omega \in \Omega^k(\PlaneManifold)
+\]
+and the special case when \(\alpha=1\), \(\star \alpha = \mu\)
+\begin{equation}
+\interior{\bm{X}}{\mu} = \star \bm{X}^{\flat}
+\label{eq:hodge-zero}
+\end{equation}
+% \[
+% \iota_X\mu=\star X^{\flat},
+% \qquad
+% \iota_X\star\omega
+%    =(-1)^{k}\;\star\!\bigl(X^{\flat}\wedge\omega\bigr).
+% \]
+
+
+% \item \textbf{Hodge star} $\star: \bigwedge^k V \rightarrow \bigwedge^{n-k} V$
+% $$
+% (\alpha \wedge \star  \eta)_p=\left\langle\alpha_p,  \eta_p\right\rangle \mu_p, \quad \forall p \in M,
+% $$
+% for any pair of smooth $k$-forms $\alpha,  \eta \in \Omega^k (\PlaneManifold)$.
+% We have the identity:
+% \[
+% \interior{\bm{X}}{\star \omega} = (-1)^k \star (\bm{X}^{\flat} \wedge \omega)
+% \qquad\text{for}\qquad \omega \in \Omega^k(\PlaneManifold)
+% \]
+% and the special case when \(\alpha=1\), \(\star \alpha = \mu\)
+% \[
+% \interior{\bm{X}}{\mu} = \star \bm{X}^{\flat}
+% \]
+\item \textbf{Exterior derivative} 
+$\displaystyle 
+\dd : \Omega^{k} (\PlaneManifold)\longrightarrow\Omega^{k+1} (\PlaneManifold)
+$
+is the unique linear operator of degree \(+1\) satisfying  
+\[
+\begin{aligned}
+\dd f\,(X)                &= X[f], && f\in\Omega^{0} (\PlaneManifold), \\[2pt]
+\dd(\alpha\wedge \eta)    &= \dd\alpha\wedge \eta + (-1)^{k}\,\alpha\wedge\dd \eta,
+&& \alpha\in\Omega^{k} (\PlaneManifold),\; \eta\in\Omega^{\ell} (\PlaneManifold), \\[2pt]
+\dd\!\circ\dd             &= 0.
+\end{aligned}
+\]
+Useful relations include 
+\begin{equation}
+    \dd f = (\nabla f)^{\flat}
+    \label{eq:ident-ext-d}
+\end{equation}
+%
+%
+\item \textbf{Lie derivative} is defined on forms as the operator:
+\begin{equation}
+\mathcal{L}_{\bm{X}} \;=\;\interior{\bm{X}}{\dd} + \dd\interior{\bm{X}}{}
+\label{eq:def-lie-form}
+\end{equation}
+\item \textbf{Divergence} 
+\(\operatorname{div}_{\mu}\bm{X}\)
+of a vector field \(\bm{X}\) with respect to a volume form \(\mu\)
+\begin{equation}
+(\operatorname{div}_{\mu}\bm{X})\mu \triangleq \mathcal{L}_{\bm{X}}\mu
+\label{eq:def-div}
+%\equiv \dd (\interior{\bm{X}}{\mu})
+\end{equation}
+This furnishes the identities (for a \emph{positive} scalar field \(\alpha\))
+\[
+(\operatorname{div}_{\mu}\bm{X})\mu = \dd (\interior{\bm{X}}{\mu})
+\qquad\text{and}\qquad
+\alpha \operatorname{div}_{\alpha \mu} \bm{X} = \operatorname{div}_{\mu}(\alpha \bm{X})
+\]
+\end{enumerate}
+% Identities:
+% \begin{enumerate}
+%     \item $\nabla_\nu \varphi=\nu(\varphi) = \dd \varphi(\nu)=\iota_\nu \dd \varphi$
+% \end{enumerate}
+
+Theorems:
+\begin{enumerate}
+\item \textbf{Stokes-Cartan Theorem}
+and the \textbf{Divergence Theorem} as a special case:
+\begin{equation}
+\int_{\PlaneManifold} \dd \alpha = \int_{\PlaneBoundary} \alpha
+\qquad\text{and}\qquad
+\int_{\PlaneManifold} (\operatorname{div}_{\mu} \bm{X}) \, \mu = \int_{\PlaneBoundary} \interior{\bm{X}}{\mu}
+= \int_{\PlaneBoundary}\langle \bm{X}, \bm{\nu}\rangle \eta_{\mu}
+\label{eq:gauss-div-thm}
+\end{equation}
+where $\bm{\nu}$ is the unit vector normal to $\PlaneBoundary$. 
+Here we have the identities:
+$$
+\interior{\bm{X}}{\mu} = \langle \bm{X},\, \bm{\nu}\rangle \underbrace{\interior{\bm{\nu}}{\mu}}_{:= \eta_{\mu}}
+$$
+\end{enumerate}
+\end{ambox}
+
+
+% \iffalse
+Define the 2-forms:
+\[
+\begin{aligned}
+    \varrho &:= \interior{\nabla\WarpFA}{\volG}
+            = G\,\starE \dd\WarpFA \;\in\Omega^{1}\PlaneManifold
+    &\qquad
+    \omega &:= \ii_{\qvec}\dd A
+            = \qvec^{\flat},
+\end{aligned}
+\]
+where ``\(\flat\)'' lowers indices \citep{abraham1988manifolds}
+The Saint–Venant relation
+\(
+   \operatorname{div}\bigl(\WeightG(\nabla\WarpSV+\qvec)\bigr)=0
+\)
+is
+\begin{equation}
+   \dd \,\Bigl(\ii_{\nabla\WarpSV+\qvec}\volG\Bigr)=0
+   \quad\text{in }\PlaneManifold,
+   \qquad
+   \ii_{\nu}(\dd\WarpSV+\omega)=0
+   \quad\text{on }\PlaneBoundary
+   % \tag{2}
+   \label{eq:warp-sv-bvp}
+\end{equation}
+
+\[
+% \boxed{\;
+   \dd\bigl(\starE(G(\dd\WarpSV+\omega))\bigr)=0
+   \quad\text{in }\Omega,
+   \qquad
+   \ii_{\nu}(\dd\WarpSV+\omega)=0
+   \quad\text{on }\partial\Omega.
+% \;}
+% \tag{2}
+\]
+% \fi
+%
+%
+%
+
+\subsubsection{Poisson Scaling}
+Fix a normalization $\int_{\mathscr D} u_c=0$ for each $c$, and write the solution family as
+
+$$
+u_c = u_0 + c\,w,
+$$
+
+where
+
+$$
+-\Delta u_0=f,\ \ \partial_n u_0=0,\qquad
+-\Delta w=0,\ \ \partial_n w=v\!\cdot n,
+$$
+
+all on the same domain $\mathscr D$.
+
+\begin{enumerate}
+
+\item $\displaystyle \mathtt{cnv} \approx \int_{\mathscr D}\nabla u_c\,dx$
+
+Use Green’s first identity with the coordinate test functions $\phi=y$ and $\phi=z$:
+
+$$
+\int_{\mathscr D}\nabla u_c\cdot \nabla \phi\,dx
+= \int_{\partial\mathscr D}\phi\,\partial_n u_c\,ds
+  - \int_{\mathscr D}\phi\,\Delta u_c\,dx.
+$$
+
+Since $\nabla \phi=e_y$ or $e_z$, this gives 
+% componentwise
+
+% $$
+% \int_{\mathscr D}\partial_y u_c\,dx
+% = c\int_{\partial\mathscr D} y\,(v\!\cdot n)\,ds\;+\;\int_{\mathscr D} y\,f\,dx,
+% $$
+
+% $$
+% \int_{\mathscr D}\partial_z u_c\,dx
+% = c\int_{\partial\mathscr D} z\,(v\!\cdot n)\,ds\;+\;\int_{\mathscr D} z\,f\,dx.
+% $$
+
+% Vectorially,
+
+$$
+\boxed{\ \int_{\mathscr D}\nabla u_c\,dx
+= c\int_{\partial\mathscr D} \bm{r}\,(\bm{v}\!\cdot \bm{n})\,ds\;+\;\int_{\mathscr D} \bm{r}\,f\,dx\ ,}
+$$
+
+Hence this integral depends \emph{affinely} on $c$ (linear slope plus a constant offset from $f$).
+
+\item $\displaystyle \int_{\mathscr D}\nabla u_c\otimes \nabla u_c\,dx$
+
+Expand using $u_c=u_0+c w$:
+
+$$
+\int_{\mathscr D}\nabla u_c\otimes \nabla u_c\,dx
+= A \;+\; c\,S \;+\; c^2\,C,
+$$
+
+where
+
+$$
+A:=\int_{\mathscr D}\nabla u_0\otimes\nabla u_0\,dx,\quad
+C:=\int_{\mathscr D}\nabla w\otimes\nabla w\,dx\ \ (\text{sym.\ \& psd}),
+$$
+
+$$
+S:=\int_{\mathscr D}\!\big(\nabla u_0\otimes\nabla w+\nabla w\otimes\nabla u_0\big)\,dx\ \ (\text{sym.}).
+$$
+\end{enumerate}
+
+
+So this matrix-valued integral is a \emph{quadratic polynomial in $c$}. 
+In particular, its trace (the Dirichlet energy) satisfies
+
+$$
+\int_{\mathscr D}|\nabla u_c|^2\,dx
+= \int_{\mathscr D}|\nabla u_0|^2\,dx
++ 2c\int_{\mathscr D}\nabla u_0\cdot \nabla w\,dx
++ c^2\int_{\mathscr D}|\nabla w|^2\,dx,
+$$
+
+and the mixed/curvature coefficients admit boundary representations via Green’s identity:
+
+$$
+\int_{\mathscr D}\nabla u_0\cdot \nabla w\,dx
+= \int_{\partial\mathscr D} u_0\,(v\!\cdot n)\,ds,\qquad
+\int_{\mathscr D}|\nabla w|^2\,dx
+= \int_{\partial\mathscr D} w\,(v\!\cdot n)\,ds.
+$$
+
+\paragraph{Summary}
+With mean-zero normalization and free $c$:
+\begin{itemize}
+\item $\displaystyle \int_{\mathscr D}\nabla u_c$ is \emph{affine} in $c$ with slope $ \int_{\partial\mathscr D} r\,(v\!\cdot n)\,ds$.
+\item $\displaystyle \int_{\mathscr D}\nabla u_c\otimes\nabla u_c$ is \emph{quadratic} in $c$ with coefficients determined by $u_0$ and the harmonic response $w$ to the unit flux $v\!\cdot n$.
+\end{itemize}
+
+\subsection{Identities}
+
+
+%
+% \cite{armero2021modeling}
+% \begin{equation*}
+% \SectionIntegral{\nabla \WarpSV + \FrameBasis \times (\PlanePosition - \tilde{\bm{\SectionLocation}}) \volG} = 0 \\
+% \quad\implies\quad
+%     \SectionIntegral{\nabla \WarpSV \volG} = \SectionIntegral{\PlanePosition\times\FrameBasis \volG}
+% \end{equation*}
+% \cite{armero2021modeling} Equation~(102) and (103)
+% \begin{equation*}
+%     \Jv = \SectionIntegral{\nabla \WarpSV \cdot \nabla \WarpSV \, \volG} 
+%     = - \SectionIntegral{ [\nabla \WarpSV, \FrameBasis, \PlanePosition ] \, \volG} 
+%     > 0
+% \end{equation*}
+
+\begin{proposition}
+\label{prop:div-skew}
+Let $(\PlaneManifold,\mu)$ be a compact oriented manifold with (possibly non-empty) boundary $\PlaneBoundary$.  
+If a vector field $\bm{X}$ is $\mu$-divergence free in the sense:
+\[
+\operatorname{div}_{\mu} \bm{X} = 0
+\quad\text{and}\quad
+\bm{X}\cdot\bm{\nu} = 0 \;\; \text{on } \PlaneBoundary,
+\]
+then $\bm{X}$ acts as a skew–symmetric operator on $\mathcal{F}(\PlaneManifold)$:
+\[
+% \int_{\PlaneManifold} \bm{X}[f]\,g\,\mu \;=\; - \int_{\PlaneManifold} f\,\bm{X}[g]\,\mu ,
+\left< \bm{X}[f],\,g\right>_\mu \;=\; - \left<f,\,\bm{X}[g]\right>_{\mu} ,
+\qquad\forall\,f,g\in\mathcal F(\PlaneManifold).
+\]
+with the operation \(\bm{X}[f] \triangleq \nabla_{\bm{X}} f\) .
+\end{proposition}
+
+\begin{proof}
+This is an extension of \cite[Corollary 7.2.11]{abraham1988manifolds}. 
+Because $\operatorname{div}_{\mu}\bm{X}=0$, for any $h\in\mathcal F(\PlaneManifold)$ we have
+\[
+\mathcal{L}_{\bm{X}}(h\,\mu)=\bm{X}[h]\,\mu.
+\]
+Taking $h=fg$ gives
+\[
+\bm{X}[fg]\,\mu
+= \mathcal{L}_{\bm{X}}(fg\,\mu).
+\]
+Integrating over $\PlaneManifold$ and applying the divergence theorem yields
+\[
+\int_{\PlaneManifold} \bm{X}[fg]\,\mu
+   \;=\;
+\int_{\PlaneBoundary} (fg)\,(\bm{X}\cdot\bm{\nu})\,\eta
+\]
+Since $\bm{X} \cdot \bm{\nu}=0$ on $\PlaneBoundary$, the integrals vanish and
+\[
+0
+=\int_{\PlaneManifold} \bm{X}[fg]\,\mu
+  =\int_{\PlaneManifold} \bigl(\bm{X}[f]\,g + f\,\bm{X}[g]\bigr)\mu.
+\]
+\end{proof}
+
+\begin{proposition}
+\label{prop:7212}
+\citep[Corollary 7.2.12]{abraham1988manifolds}
+If \(\PlaneManifold\) is compact without boundary, $\bm{X} \in \mathfrak{X}(\PlaneManifold), \alpha \in \Omega^{\mathrm{k}}(\PlaneManifold)$ and $\beta \in \Omega^{\mathrm{n}-\mathrm{k}}(\PlaneManifold)$, then
+
+$$
+\int_{\PlaneManifold} \mathcal{L}_{\bm{X}} \alpha \wedge \beta=-\int_{\PlaneManifold} \alpha \wedge \mathcal{L}_{\bm{X}} \beta
+$$
+
+\end{proposition}
+\begin{proof}
+Since $\alpha \wedge \beta \in \Omega^n(M)$, the formula follows by integrating both sides of the relation 
+\[
+\dd \interior{\bm{X}}{(\alpha \wedge \beta)}=\mathcal{L}_X(\alpha \wedge \beta)=\mathcal{L}_X \alpha \wedge \beta+\alpha \wedge \mathcal{L}_X \beta
+\]
+and using \cref{eq:gauss-div-thm} (Stoke's Theorem).
+\end{proof}
+
+\iffalse
+\subsubsection*{Riesz I (81b)}
+\fi
+
+% $$
+% \int_{\PlaneManifold} \nabla \WarpFA \cdot \nabla \WarpSV \; \volG
+% =
+% \int_{\PlaneManifold} \iota_{\nabla \WarpFA}( \dd \WarpSV) \wedge \mu
+% $$
+
+\subsection{Classical}
+
+\begin{enumerate}
+\item For any vector field \(\bm w\) on \(\Section\), Green’s identity applied componentwise yields
+\begin{equation}
+\int_{\Section}\nabla\bm w\,(\nabla\bm w)^{\!\top}\,\mathrm dA
+= -\int_{\Section}\bm w\otimes \Delta\bm w\,\mathrm dA
+\;+\;\int_{\SectionBoundary}\bm w\otimes \partial_{\bm\nu}\bm w\,\mathrm ds.
+\label{eq:thm-green-vec}
+\end{equation}
+\item Also, by the divergence theorem,
+\begin{equation}
+\int_{\Section}\nabla\bm w\,\mathrm dA
+=\int_{\SectionBoundary}\bm\nu\otimes\bm w\,\mathrm ds.
+\label{eq:div-thm-vec}
+\end{equation}
+\item Rotated-gradient integration by parts (Stokes/Green in 2-D). For any vector field \(\bm a\) and scalar \(g\),
+\begin{equation}
+\int_{\Section}\bm a\otimes\FrameBasis\times\nabla g\,\mathrm{d}A
+=\oint_{\partial\Section} g\,\bm a\otimes(\bm\nu\times\FrameBasis)\,\mathrm ds
+-\int_{\Section} g\,(\nabla\bm a)\,J^{\top}\,\mathrm{d}A.
+\label{eq:thm-stokes-green}
+\end{equation}
+\end{enumerate}
+
+\subsection{Torsion}
+\begin{proposition}
+\label{prop:armero-81}
+The solution \(\WarpSV\) to the boundary value problem \cref{eq:warp-sv-bvp} is the Riesz vector:
+\begin{equation}
+    (\WarpSV,\, \phi)_G =  \frac{1}{2} \left\{\PlanePosition \cdot \PlanePosition,\, \phi\right\}_G %= - [\nabla \phi,\, \FrameBasis, \PlanePosition]_G =
+    \qquad \forall \phi \in \mathcal{F}(\PlaneManifold)
+\end{equation}
+where \(\{\,\cdot,\,\cdot\,\}_G\) is the integrated Poisson bracket \citep{arnold1978mathematical} given by 
+\[
+\left\{\psi,\, \phi\right\}_G = \int_{\PlaneManifold} \nabla \psi \cdot \mathbb{J} \nabla \phi \, \mu_G
+\]
+and the symplectic operator is \(\mathbb{J} = \FrameBasis^{\times}\).
+This gives the special cases 
+%
+\begin{equation}
+\int [ \nabla \WarpFA,\; \FrameBasis,\; \PlanePosition - \tilde{\bm{\SectionLocation}} ] \, \volG
+= \int_{\PlaneManifold} \WarpSV^2 \, \volE % = \Jw
+\label{eq:FA81b}
+\end{equation}
+and
+\begin{equation}
+% \Jv := 
+\int_{\PlaneManifold} \nabla \WarpSV \cdot \nabla \WarpSV \; \volG 
+= - \int_{\PlaneManifold} [\nabla \WarpSV, \FrameBasis, \PlanePosition] \; \volG > 0
+\label{eq:FA103}
+\end{equation}
+\end{proposition}
+\begin{proof}
+By \cref{prop:div-skew}, taking \(\bm{X} = \nabla \WarpSV + \FrameBasis \times \PlanePosition\), \(f = \phi\) and \(g = 1\).
+\end{proof}
+
+\iffalse
+\subsubsection*{Riesz II (88/81a)}
+\fi 
+
+\begin{proposition}
+\label{prop:FA88}
+\cite{armero2021modeling} Equation~(88)
+\begin{equation}
+(\WarpFA,\, \phi)_G = - \left<\WarpSV,\, \phi\right>_E
+\qquad \forall \phi \in \mathcal{F}(\PlaneManifold)
+\label{eq:FA88}
+\end{equation}
+\end{proposition}
+% \begin{equation}
+%    \int_{\PlaneManifold}
+%       (\nabla\WarpFA\cdot\nabla\WarpSV)\,G\,\dd A
+%    =\int_{\PlaneManifold} \WarpSV^{2}\,E\,\dd A.
+% \label{eq:FA-SV2}
+% \end{equation}
+\begin{proof}
+Multiply the PDE for $\WarpFA$ by $\phi$, and integrate over $\PlaneManifold$
+
+$$
+\int_{\PlaneManifold} \phi \, (\operatorname{div}_{G}\nabla \WarpFA)  \volG 
+= \int_{\PlaneManifold} \phi \, \WarpSV \volE
+% = \int_{\PlaneManifold} \WarpSV \, \frac{n_E}{n_G} \WarpSV  \mu
+$$
+We thus aim to show that the left hand side is equivalent to the (negative) $G$-energy inner product:
+$$
+\int_{\PlaneManifold} \phi\, (\operatorname{div}_{G} \nabla \WarpFA) \volG
+=- \int_{\PlaneManifold} \nabla \WarpFA \cdot \nabla \phi \, \volG 
+$$
+This is equivalent to showing:
+\begin{equation}
+\int_{\PlaneManifold} \phi\, (\operatorname{div}_{G} \nabla \WarpFA) \volG
++ \int_{\PlaneManifold} \dd \phi \wedge \interior{\nabla \WarpFA}{\volG} = 0
+\tag{$\dagger$}
+\end{equation}
+where we have used 
+\[
+\begin{array}{rlr}
+\dd \phi \wedge \interior{\nabla \WarpFA}{\volG} 
+&= \dd \phi \wedge \star (\nabla \WarpFA)^{\flat}  & \qquad \text{\cref{eq:hodge-zero}}\\
+&= \dd \phi \wedge \star     \dd \WarpFA &  \qquad \text{\cref{eq:ident-ext-d}} \\
+&= \left<\dd \WarpFA,\, \dd \phi \right> \volG & \qquad \text{\cref{eq:hodge-defn}} \\
+\end{array}
+\]
+Thus (\(\dagger\)) is exactly an integration (by parts) of the product rule for \cref{eq:def-lie-form}
+\[
+\mathcal{L}_{(\WarpSV \nabla \WarpFA)} \volG = \WarpSV \mathcal{L}_{\nabla \WarpFA}\volG + \dd \WarpSV \wedge \interior{\nabla \WarpFA}{\volG}
+\]
+where by the divergence theorem (\cref{eq:gauss-div-thm})
+\[
+\int_{\PlaneManifold} \mathcal{L}_{(\WarpSV \nabla \WarpFA)} \volG =
+\int_{\PlaneBoundary} \WarpSV  \nabla \WarpFA \cdot \bm{\nu} \; \eta_G
+\]
+which vanishes due to the boundary condition \(\nabla_{\bm{\nu}} \WarpFA = 0\). 
+Therefore:
+
+$$
+-\int_{\PlaneManifold} \nabla \WarpFA \cdot \nabla \WarpSV \, \volG
+= \int_{\PlaneManifold} \WarpSV^2 \volE
+$$
+and also
+$$
+\int_{\PlaneManifold} \interior{\nabla\WarpFA}{\dd \WarpSV}\,\volG
+=
+- \int_{\PlaneManifold} \WarpSV^2 \; \volE
+$$
+
+\end{proof}
+\begin{proof}[Alternative Proof]
+Multipling the PDE for $\WarpFA$ by $\phi$, and integrating over $\PlaneManifold$ yields
+
+$$
+\int_{\PlaneManifold} \phi \, (\operatorname{div}_{G}\nabla \WarpFA)  \volG 
+= \left<\phi,\, \WarpSV\right>_E
+% = \int_{\PlaneManifold} \WarpSV \, \frac{n_E}{n_G} \WarpSV  \mu
+$$
+We thus aim to show that the left hand side is equivalent to the (negative) $G$-energy inner product:
+$$
+\int_{\PlaneManifold} \phi\, (\operatorname{div}_{G} \nabla \WarpFA) \volG
+=- \int_{\PlaneManifold} \nabla \WarpFA \cdot \nabla \phi \, \volG 
+$$
+Applying \cref{prop:7212} with \(\alpha = \phi \in \Omega^0(\PlaneManifold)\), \(\beta = \volG \in \Omega^2(\PlaneManifold)\), and \(\bm{X} = \nabla \WarpFA\) furnishes
+\[
+\int_{\PlaneManifold} \phi \wedge \underbrace{(
+\operatorname{div}_G \nabla \WarpFA
+)\volG}_{\mathcal{L}_{\bm{X}}\volG}  = -\int_{\PlaneManifold} (\mathcal{L}_{\nabla \WarpFA} \phi ) \wedge \volG 
+\]
+Recall that the definitions for the Lie derivative \(\mathcal{L}_{\bm{X}} \phi\), exterior derivative \(\dd \phi\), and directional derivative \(\bm{X}[\phi] = \nabla_{\bm{X}} \phi\) on a 0-form \(\phi \in \Omega^0(\PlaneManifold)\) all coincide, so the left side of the equality is rewritten as:
+\[
+\int_{\PlaneManifold} (\underbrace{\nabla_{\nabla \WarpFA} \phi}_{\equiv \nabla \WarpFA \cdot \nabla \phi}) \wedge \volG 
+= - \int_{\PlaneManifold} \phi \wedge (\operatorname{div}_G \nabla \WarpFA)\volG 
+\]
+Recall also that the wedge product on scalar fields degenerates into scalar multiplication.
+\end{proof}
+
+\iffalse
+\begin{remark}
+Using integration by parts via Generalized Stokes to move one derivative off of $\dd \WarpSV$, using the \emph{codifferential} $\delta$, the adjoint of $\dd$, defined by:
+
+$$
+\int_{\PlaneManifold} \langle \dd\WarpFA, \dd\WarpSV \rangle \, \volG = \int_{\PlaneManifold} \WarpFA \cdot \delta \dd\WarpSV \, \volG + \int_{\PlaneBoundary} \WarpFA \cdot \interior{\bm{\nu}}{} \dd\WarpSV \, \mu_{\partial}
+$$
+
+% Let $\phi = \WarpFA$, $\phi = \WarpSV$ and $\delta \dd \WarpSV = \operatorname{div}_\mu(\nabla \WarpSV)$
+% so
+% $$
+% \int_{\PlaneManifold} \langle \dd\WarpFA, \dd\WarpSV \rangle \, \mu
+% = -\int_{\PlaneManifold} \WarpFA \cdot \delta d\WarpSV \, \mu
+% + \int_{\PlaneBoundary} \WarpFA \cdot \iota_\nu \dd\WarpSV \, \sigma_G
+% $$
+
+Now, since $\delta \dd\WarpSV = \operatorname{div}_{G} (\nabla \WarpSV)$, and assuming regularity, we have:
+
+$$
+\int_{\PlaneManifold} \nabla \WarpFA \cdot \nabla \WarpSV \; \volG
+=
+- \int_{\PlaneManifold} \WarpFA  \operatorname{div}_\mu (\nabla \WarpSV) \; \volG
++ \int_{\PlaneBoundary} \WarpFA  \nabla \WarpSV \cdot \bm{\nu} \; \sigma_G
+$$
+or
+
+$$
+\int_{\PlaneManifold} \nabla \WarpFA \cdot \nabla \WarpSV \; \volG
++ \WarpFA  \operatorname{div}_\mu (\nabla \WarpSV) \; \volG 
+=
+\int_{\PlaneBoundary} \WarpFA  \nabla \WarpSV \cdot \bm{\nu} \; \sigma_G
+$$
+where $\sigma_G = n_G \, \dd s$:
+\end{remark}
+\fi
+
+
+\begin{proposition}[Relocation]
+    Consider the BVP:
+    \begin{equation}
+    \begin{array}{rll}
+    \Delta \varphi_{\SectionLocation} &=0 & \mathrm{in }\ \PlaneManifold, \\
+    \nabla_{\mathbf{n}} \varphi_{\SectionLocation}  &=-\FrameBasis \times (\bm{r}-\bm{\SectionLocation}) \cdot \mathbf{n} & \mathrm{ on }\ \partial \PlaneManifold  \\
+    \SectionIntegral{\varphi_{\SectionLocation}} &= 0
+    \end{array}
+    \label{eq:torsion-neumann}
+    \end{equation}
+
+    If \(\varphi_a\) is the solution to \cref{eq:torsion-neumann} with \(\bm{\pi} = \bm{\SectionLocation}_a\), then 
+    \[
+    \varphi_{b} \triangleq \varphi_a + [\FrameBasis, \bm{\SectionLocation}_{ab}, \bm{\SectionCoordinate}] - [\FrameBasis, \bm{\SectionLocation}_{ab},  \bar{\bm{\SectionLocation}}] % TODO: A?
+    \]
+    is the solution for \(\bm{\SectionLocation}_{b} \triangleq \bm{\SectionLocation}_a + \bm{\SectionLocation}_{ab}\)
+\end{proposition}
+\begin{proof}
+Our objective is to show that the function \(\varphi_b\) (i) is harmonic, (ii) satisfies the the boundary condition \cref{eq:torsion-neumann}$_2$, and (iii) satisfies the normalizing condition.
+\begin{equation*}
+\nabla_{\mathbf{n}}\varphi_b = \nabla_{\mathbf{n}}\varphi_a + \nabla_{\mathbf{n}}\left[\FrameBasis,\, \bm{\SectionLocation}_{ab},\, \SectionCoordinate \right]
+\end{equation*}
+
+\end{proof}

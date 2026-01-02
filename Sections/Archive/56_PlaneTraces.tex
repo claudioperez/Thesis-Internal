@@ -1,0 +1,729 @@
+\subsection{Plane Traces}
+
+The trace center $\CenterTrace$ represents the point 
+whose motion defines the translational component; for centroidal traces, 
+$\CenterTrace = \CentroidLocation$.
+
+\begin{proposition}[Polynomial structure of traced strains]
+\label{prop:strain-polynomial}
+For any trace operator $\mathcal{T}$ satisfying the plane section property \eqref{eq:trace-rigid-property}, 
+the strains extracted from a Saint-Venant field are at most linear in $\reflenx$:
+\begin{equation}
+\bm{\gamma}(\reflenx) = \bm{\gamma}_0 + \reflenx \, \bm{\gamma}_1, 
+\qquad 
+\bm{\kappa}(\reflenx) = \bm{\kappa}_0 + \reflenx \, \bm{\kappa}_1
+\label{eq:strain-polynomial}
+\end{equation}
+Moreover, the coefficients depend linearly on the Ieşan parameters and are 
+independent of the rigid body modes:
+\begin{equation}
+\begin{pmatrix} \bm{\gamma}_0 \\ \bm{\kappa}_0 \\ \bm{\gamma}_1 \\ \bm{\kappa}_1 \end{pmatrix}
+= \mathbf{E}_{\mathcal{T}} \, \IesanVector
+\label{eq:strain-coefficients}
+\end{equation}
+for some matrix $\mathbf{E}_{\mathcal{T}} \in \mathbb{R}^{12 \times 6}$.
+\end{proposition}
+
+\begin{proof}
+The Saint-Venant displacement \eqref{eq:iesan-general-solution} is polynomial 
+in $\reflenx$ with degree at most three, where the cubic terms arise solely from 
+the flexural contribution $-\tfrac{1}{6}\reflenx^3 \bm{b}_\Section$. 
+Any trace satisfying \eqref{eq:trace-rigid-property} preserves the polynomial 
+structure, yielding $\bm{u}(\reflenx)$ cubic and $\bm{\theta}(\reflenx)$ quadratic. 
+Differentiation reduces the degree by one, giving the linear structure 
+\eqref{eq:strain-polynomial}.
+
+For the independence from rigid modes, observe that a rigid displacement 
+$\hat{\bm{u}}_{\rm R} = \bm{\delta}_u + \bm{\delta}_\theta \times (\reflenx \FrameBasis + \bm{r})$ 
+traces to
+\begin{equation*}
+\bm{u}_R(\reflenx) = \bm{\delta}_u + \reflenx (\bm{\delta}_\theta \times \FrameBasis) 
++ \bm{\delta}_\theta \times \CenterTrace, 
+\qquad 
+\bm{\theta}_R(\reflenx) = \bm{\delta}_\theta
+\end{equation*}
+The resulting strains are
+\begin{equation*}
+\bm{\gamma}_R = \bm{\delta}_\theta \times \FrameBasis + \FrameBasis \times \bm{\delta}_\theta 
+= \mathbf{0}, 
+\qquad 
+\bm{\kappa}_R = \mathbf{0}
+\end{equation*}
+Thus the rigid modes contribute nothing to the extracted strains.
+\end{proof}
+
+\begin{proposition}[Universality of strain gradients]
+\label{prop:universal-gradients}
+The linear coefficients $(\bm{\gamma}_1, \bm{\kappa}_1)$ are independent of the 
+choice of trace operator:
+\begin{equation}
+\bm{\gamma}_1 = -(\CentroidLocation \cdot \bm{b}_\Section) \FrameBasis, 
+\qquad 
+\bm{\kappa}_1 = -\FrameBasis \times \bm{b}_\Section
+\label{eq:universal-gradients}
+\end{equation}
+The trace dependence resides entirely in the constant coefficients 
+$(\bm{\gamma}_0, \bm{\kappa}_0)$.
+\end{proposition}
+
+\begin{proof}
+From the Saint-Venant kinematics, the highest-order terms in $\reflenx$ are 
+uniquely determined by the flexural loading parameter $\bm{b}_\Section$. 
+Specifically, the $\reflenx^2$ contribution to $\bm{\theta}(\reflenx)$ is 
+$-\tfrac{1}{2}\reflenx^2 (\FrameBasis \times \bm{b}_\Section)$ for any trace, 
+being the only quadratic term in the Saint-Venant rotation field. 
+Differentiation yields $\bm{\kappa}_1 = -\FrameBasis \times \bm{b}_\Section$. 
+Similarly, the axial strain gradient follows from the flexure-induced 
+axial displacement.
+\end{proof}
+
+\begin{Quote}
+\begin{proposition}[Plane trace matrix and gauge transformations]
+Let $\mathcal{S}_{\mathrm{SV}}$ denote the six-dimensional space of 
+Saint-Venant particular solutions modulo rigid body motions, parameterized 
+by the Ieşan parameter vector $\IesanVector \in \mathbb{R}^6$ as in 
+\eqref{eq:def-iesan-params}. Let 
+\[
+\mathcal{E}_0 \cong \mathbb{R}^6
+\]
+denote the space of constant strain coefficients
+\[
+\bm{e}_0 \triangleq \begin{pmatrix} \bm{\gamma}_0 \\ \bm{\kappa}_0 \end{pmatrix}.
+\]
+
+Any trace operator $\mathcal{T}$ satisfying the plane section property 
+\eqref{eq:trace-rigid-property} induces a unique linear map
+\[
+E_0 : \mathcal{S}_{\mathrm{SV}} \to \mathcal{E}_0,
+\qquad
+\hat{\bm{u}}_{\mathrm{P}}(\,\cdot\,;\IesanVector) \mapsto \bm{e}_0(\IesanVector),
+\]
+and with respect to the chosen bases of $\mathcal{S}_{\mathrm{SV}}$ and 
+$\mathcal{E}_0$ this map is represented by a matrix 
+$\mathbf{T}_{\mathcal{T}} \in \mathbb{R}^{6\times 6}$ defined by
+\begin{equation}
+\bm{e}_0 = \mathbf{T}_{\mathcal{T}}\,\IesanVector.
+\label{eq:def-trace-matrix-general}
+\end{equation}
+
+If the restriction of $\mathcal{T}$ to the Saint-Venant class is 
+non-degenerate in the sense that $\bm{e}_0(\IesanVector) = \mathbf{0}$ implies 
+$\IesanVector = \mathbf{0}$, then $\mathbf{T}_{\mathcal{T}}$ is invertible.
+
+Moreover, if we change coordinates in the parameter space and the strain 
+space by invertible matrices
+\[
+\widetilde{\IesanVector} = \mathbf{P}\,\IesanVector,
+\qquad
+\widetilde{\bm{e}}_0 = \mathbf{Q}\,\bm{e}_0,
+\]
+then the trace matrix transforms as
+\begin{equation}
+\widetilde{\mathbf{T}}_{\mathcal{T}} 
+= \mathbf{Q}\,\mathbf{T}_{\mathcal{T}}\,\mathbf{P}^{-1}.
+\label{eq:trace-matrix-change-of-basis}
+\end{equation}
+In particular, for two traces $\mathcal{T}_1$ and $\mathcal{T}_2$ with 
+invertible trace matrices $\TraceDeDpOne$ and $\mathbf{T}_2$ in the same 
+parameter basis, the corresponding constant strain coefficients are related by
+\begin{equation}
+\bm{e}_0^{(2)} = \mathbf{G}_{12}\,\bm{e}_0^{(1)},
+\qquad
+\mathbf{G}_{12} \triangleq \mathbf{T}_2\,\TraceDeDpOne^{-1}.
+\label{eq:gauge-transform-general}
+\end{equation}
+\end{proposition}
+
+\end{Quote}
+
+\subsubsection{The Trace Matrix}
+
+In view of Propositions~\ref{prop:strain-polynomial} and \ref{prop:universal-gradients}, 
+the gauge-dependent content of a trace is captured by a $6 \times 6$ matrix 
+relating the constant strain coefficients to the Ieşan parameters.
+
+\begin{definition}[Trace matrix]
+The \emph{trace matrix} $\mathbf{T}_{\mathcal{T}} \in \mathbb{R}^{6 \times 6}$ 
+associated with a trace operator $\mathcal{T}$ is defined by
+\begin{equation}
+\bm{e}_0 \triangleq \begin{pmatrix} \bm{\gamma}_0 \\ \bm{\kappa}_0 \end{pmatrix} 
+= \mathbf{T}_{\mathcal{T}} \, \IesanVector
+\label{eq:def-trace-matrix}
+\end{equation}
+\end{definition}
+
+\begin{Old}
+\begin{proposition}[Structure of the trace matrix]
+\label{prop:trace-matrix-structure}
+For any trace operator $\mathcal{T}$ satisfying the plane section property 
+\eqref{eq:trace-rigid-property} with trace center at the centroid, the trace 
+matrix has the block structure
+\begin{equation}
+\mathbf{T}_{\mathcal{T}} = \begin{pmatrix}
+1 & \mathbf{0}^\top & 0 & \TraceNF^\top \\[4pt]
+\mathbf{0} & \mathbf{0} & \mathbf{0} & \TraceFF \\[4pt]
+0 & \mathbf{0}^\top & 1 & \TraceTF^\top \\[4pt]
+\mathbf{0} & -\FrameBasis^{\times} & \mathbf{0} & \TraceMF
+\end{pmatrix}
+\label{eq:trace-matrix-structure}
+\end{equation}
+where the blocks have dimensions consistent with the decomposition 
+$\IesanVector \in \mathbb{R}^{1+2+1+2}$ and $\bm{e}_0 \in \mathbb{R}^{1+2+1+2}$:
+\begin{itemize}
+\item $\TraceFF \in \mathbb{R}^{2 \times 2}$: the \emph{shear-flexure coupling tensor}, 
+relating transverse shear strain $\bm{\gamma}_{\perp,0}$ to the flexure parameter $\bm{b}_{\Section}$
+\item $\TraceMF \in \mathbb{R}^{2 \times 2}$: captures curvature modifications 
+from Poisson and warping effects
+\item $\TraceNF \in \mathbb{R}^{2}$: trace-dependent axial strain shift from flexure
+\item $\TraceTF \in \mathbb{R}^{2}$: twist-flexure coupling arising from $c_\vartheta(\bm{b}_{\Section})$
+\end{itemize}
+The notation $-\FrameBasis^{\times}$ denotes the $2 \times 2$ restriction of 
+the cross-product operator to the section plane, acting as 
+$-\FrameBasis^{\times}\bm{a}_{\Section} = -\FrameBasis \times (\FrameBasis_\alpha a_{\Section,\alpha}) 
+= \FrameBasis_\beta \epsilon_{\alpha\beta} a_{\Section,\alpha}$.
+\end{proposition}
+
+\begin{proof}
+We establish the structure by examining how each Ieşan parameter contributes 
+to the constant strain coefficients $\bm{e}_0 = (\epsilon_{0}, \bm{\gamma}_{\perp,0}, 
+\varkappa_0, \bm{\kappa}_{\perp,0})$.
+
+\paragraph{Row 1: Axial strain $\epsilon_{0}$.}
+The axial component of the shear strain is $\epsilon = \bm{u}' \cdot \FrameBasis$. 
+From the Saint-Venant kinematics, the axial displacement has the form
+\begin{equation*}
+\FrameBasis \cdot \hat{\bm{u}}(\reflenx, \bm{r}) = \reflenx \, a_\varepsilon 
++ \tfrac{1}{2}\reflenx^2 (\bm{r} - \CentroidLocation) \cdot \bm{b}_{\Section} 
++ \text{(warping terms independent of $\reflenx$)}
+\end{equation*}
+Any trace satisfying the plane section property extracts $\bm{u}(\reflenx)$ such that 
+$\FrameBasis \cdot \bm{u}'(0) = a_\varepsilon + \bm{\eta}_\gamma \cdot \bm{b}_{\Section}$ 
+where $\bm{\eta}_\gamma$ depends on how the trace weights the $\reflenx^2$ term 
+(which vanishes at $\reflenx = 0$ but contributes through derivatives of warping). 
+For centroidal traces, $\bm{\eta}_\gamma = \mathbf{0}$. 
+Thus:
+\begin{equation*}
+\epsilon_{0} = a_\varepsilon + \bm{\eta}_\gamma \cdot \bm{b}_{\Section}
+\end{equation*}
+This establishes the first row: $(1, \mathbf{0}^\top, 0, \bm{\eta}_\gamma^\top)$.
+
+\paragraph{Row 2: Transverse shear strain $\bm{\gamma}_{\perp,0}$.}
+The transverse shear strain is $\bm{\gamma}_\perp = \mathbf{1}_{\Section}(\bm{u}' + \FrameBasis \times \bm{\theta})$. 
+The only Ieşan parameter that produces nonzero transverse shear at $\reflenx = 0$ 
+is $\bm{b}_{\Section}$, through the interaction of the flexural displacement with 
+the traced rotation. Specifically:
+\begin{itemize}
+\item The parameter $a_\varepsilon$ produces purely axial displacement: no contribution.
+\item The parameter $\bm{a}_{\Section}$ produces rotation $\bm{\theta} \sim -\reflenx(\FrameBasis \times \bm{a}_{\Section})$ 
+and displacement $\bm{u} \sim -\tfrac{1}{2}\reflenx^2 \bm{a}_{\Section}$, giving 
+$\bm{\gamma}_\perp = -\reflenx \bm{a}_{\Section} + \reflenx \bm{a}_{\Section} = \mathbf{0}$ 
+(the Euler-Bernoulli cancellation).
+\item The parameter $a_\vartheta + c_\vartheta$ produces torsional rotation with 
+no transverse shear contribution.
+\item The parameter $\bm{b}_{\Section}$ produces the flexural field with nonzero 
+shear strain at $\reflenx = 0$ through warping contributions.
+\end{itemize}
+The precise form depends on the trace. Define $\TraceFF$ by 
+$\bm{\gamma}_{\perp,0} = \TraceFF \bm{b}_{\Section}$. 
+This establishes 
+the second row: $(\mathbf{0}, \mathbf{0}, \mathbf{0}, \TraceFF)$.
+
+\paragraph{Row 3: Twist $\varkappa_0$.}
+The twist is $\varkappa = \bm{\theta}' \cdot \FrameBasis$. From the Saint-Venant solution:
+\begin{itemize}
+\item The parameter $a_\varepsilon$ produces no rotation: no contribution.
+\item The parameter $\bm{a}_{\Section}$ produces rotation perpendicular to $\FrameBasis$: no contribution.
+\item The parameter $a_\vartheta + c_\vartheta$ produces uniform twist: 
+$\varkappa_0 = a_\vartheta + c_\vartheta$.
+\item The parameter $\bm{b}_{\Section}$ affects twist through the flexure-induced 
+torsion $c_\vartheta = c_\vartheta(\bm{b}_{\Section})$, which is linear in $\bm{b}_{\Section}$ 
+by \eqref{eq:iesan-2-22}.
+\end{itemize}
+Define $\bm{\eta}_\vartheta \in \mathbb{R}^2$ by $c_\vartheta = \bm{\eta}_\vartheta \cdot \bm{b}_{\Section}$ 
+(absorbing the dependence into the third Ieşan parameter gives the stated form). 
+Thus: $\varkappa_0 = (a_\vartheta + c_\vartheta) + \bm{\eta}_\vartheta \cdot \bm{b}_{\Section}$, 
+but since $c_\vartheta$ is already included in the third component of $\IesanVector$, 
+we write $\varkappa_0 = 1 \cdot (a_\vartheta + c_\vartheta) + \bm{\eta}_\vartheta \cdot \bm{b}_{\Section}$ 
+where $\bm{\eta}_\vartheta$ captures any additional trace-dependent twist-shear coupling. 
+This establishes the third row: $(0, \mathbf{0}^\top, 1, \bm{\eta}_\vartheta^\top)$.
+
+\paragraph{Row 4: Transverse curvature $\bm{\kappa}_{\perp,0}$.}
+The transverse curvature is $\bm{\kappa}_\perp = \mathbf{1}_{\Section} \bm{\theta}'$. 
+From the Saint-Venant solution:
+\begin{itemize}
+\item The parameter $a_\varepsilon$ produces no rotation: no contribution.
+\item The parameter $\bm{a}_{\Section}$ produces $\bm{\theta} = -\reflenx(\FrameBasis \times \bm{a}_{\Section}) + \ldots$, 
+giving $\bm{\kappa}_{\perp,0} = -\FrameBasis \times \bm{a}_{\Section} = -\FrameBasis^\times \bm{a}_{\Section}$.
+\item The parameter $a_\vartheta + c_\vartheta$ produces axial rotation only: no contribution.
+\item The parameter $\bm{b}_{\Section}$ produces rotation modifications through Poisson 
+and warping effects, captured by $\TraceMF \bm{b}_{\Section}$.
+\end{itemize}
+This establishes the fourth row: $(\mathbf{0}, -\FrameBasis^\times, \mathbf{0}, \TraceMF)$.
+
+\paragraph{Conclusion.}
+Assembling the four rows yields the stated block structure \eqref{eq:trace-matrix-structure}.
+\end{proof}
+\end{Old}
+
+\begin{remark}[Non-centroidal traces]
+For a trace with center $\CenterTrace \neq \CentroidLocation$, 
+additional couplings appear. In particular, the bending parameter $\bm{a}_{\Section}$ 
+can contribute to $\epsilon_{0}$ through the term 
+$(\CenterTrace - \CentroidLocation) \cdot \bm{a}_{\Section}$, 
+modifying the $(1,2)$ block from $\mathbf{0}^\top$ to a nonzero $1 \times 2$ matrix.
+\end{remark}
+
+\begin{proposition}[Structure of the trace matrix: general case]
+Let $\mathcal{T}$ be a trace operator satisfying the plane section property 
+\eqref{eq:trace-rigid-property} with trace center $\CenterTrace \in \Section$. 
+Let the coordinate origin be arbitrary, with centroid at $\CentroidLocation$, 
+shear center at $\CenterShearLocation$, and twist center at $\CenterTwistLocation$. 
+The trace matrix has the block structure
+\begin{equation}
+\mathbf{T}_{\mathcal{T}} = \begin{pmatrix}
+1 & (\CenterTrace - \CentroidLocation)^\top & 0 & \TraceNF^\top \\[4pt]
+\mathbf{0} & \TraceNM & \bm{\xi}_{\vartheta} & \TraceFF \\[4pt]
+0 & \mathbf{0} %\TraceTM^\top 
+& 1 & \TraceTF^\top \\[4pt]
+\mathbf{0} & -\FrameBasis^{\times} %+ \TraceMM 
+& \TraceMT & \TraceMF
+\end{pmatrix}
+% \label{eq:trace-matrix-general}
+\end{equation}
+where the blocks have dimensions consistent with 
+$\IesanVector \in \mathbb{R}^{1+2+1+2}$ and $\bm{e}_0 \in \mathbb{R}^{1+2+1+2}$:
+
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{c|c|c|l}
+Block & Size & Units & Physical origin \\ \hline
+$(\bm{r} - \CentroidLocation)^\top$ & $1 \times 2$ & L &
+Axial-bending coupling from non-centroidal trace \\
+$\TraceNF$ & $2 \times 1$ & L$^{2}$ &
+Axial strain shift from flexure \\
+$\bm{\Xi}^{(a)}$ & $2 \times 2$ & &
+Shear-bending coupling (vanishes for Euler-Bernoulli) \\
+$\bm{\xi}_{\vartheta}$ & $2 \times 1$ & &
+Shear-twist coupling from non-coincident twist/shear centers \\
+$\TraceFF$ & $2 \times 2$ & L$^2$ &
+Shear-flexure coupling (encoding the classical shear correction) \\
+% $\TraceTM$ & $2 \times 1$ & &
+% Twist-bending coupling from asymmetric sections \\
+$\TraceTF$ & $2 \times 1$ & L &
+Twist-flexure coupling from $c_\vartheta(\bm{b}_{\Section})$ \\
+% $\TraceMM$ & $2 \times 2$ & &
+% Curvature-bending modification from trace \\
+$\TraceMT$ & $2 \times 1$ & &
+Curvature-twist coupling \\
+$\TraceMF$ & $2 \times 2$ & L &
+Curvature-flexure coupling from Poisson/warping
+\end{tabular}
+\end{center}
+\end{proposition}
+
+\begin{proof}
+We systematically determine each block by computing the constant strain 
+coefficients $\bm{e}_0 = (\epsilon_{0}, \bm{\gamma}_{\perp,0}, \varkappa_0, \bm{\kappa}_{\perp,0})$ 
+as functions of the Ieşan parameters $\IesanVector = (a_\varepsilon, \bm{a}_{\Section}, a_\vartheta + c_\vartheta, \bm{b}_{\Section})$.
+
+\paragraph{Step 1: General form of traced fields.}
+For a trace operator $\mathcal{T}$ with center $\CenterTrace$, 
+the traced displacement and rotation extracted from a field $\hat{\bm{u}}$ are
+\begin{equation}
+\bm{u}(\reflenx) = \mathcal{T}[\hat{\bm{u}}]_{\rm trans} - \mathcal{T}[\hat{\bm{u}}]_{\rm rot} \times \CenterTrace, 
+\qquad 
+\bm{\theta}(\reflenx) = \mathcal{T}[\hat{\bm{u}}]_{\rm rot}
+\label{eq:traced-fields-general}
+\end{equation}
+where the subtraction of $\bm{\theta} \times \CenterTrace$ ensures that 
+$\bm{u}$ represents the displacement of the trace center.
+
+\paragraph{Step 2: Contribution from $a_\varepsilon$ (extension).}
+The extension mode from \eqref{eq:iesan-displacement-1} is
+\begin{equation*}
+\hat{\bm{u}}^{(\varepsilon)} = (\reflenx \FrameBasis - \nu \bm{r}) a_\varepsilon
+\end{equation*}
+This field is linear in $\bm{r}$ with no $\reflenx$-dependent rotation. 
+For any trace satisfying the plane section property:
+\begin{equation*}
+\bm{u}^{(\varepsilon)}(\reflenx) = \reflenx \FrameBasis \, a_\varepsilon - \nu \CenterTrace a_\varepsilon, 
+\qquad 
+\bm{\theta}^{(\varepsilon)}(\reflenx) = \mathbf{0}
+\end{equation*}
+The Poisson contraction $-\nu \bm{r}$ is a rigid translation when averaged, 
+contributing only to $\bm{u}(0)$, not to strains. Thus:
+\begin{equation*}
+\bm{\gamma}^{(\varepsilon)} = (\bm{u}^{(\varepsilon)})' + \FrameBasis \times \bm{\theta}^{(\varepsilon)} 
+= \FrameBasis \, a_\varepsilon, 
+\qquad 
+\bm{\kappa}^{(\varepsilon)} = \mathbf{0}
+\end{equation*}
+This gives the first column of $\mathbf{T}_{\mathcal{T}}$: $(1, \mathbf{0}, 0, \mathbf{0})^\top$.
+
+\paragraph{Step 3: Contribution from $\bm{a}_{\Section}$ (bending).}
+The bending mode from \eqref{eq:iesan-displacement-1} is
+\begin{equation*}
+\hat{\bm{u}}^{(a)} = \Big( -\tfrac{1}{2}\reflenx^2 \mathbf{1} - \nu \operatorname{dev}(\bm{r} \otimes \bm{r}) 
++ \reflenx \FrameBasis \otimes \bm{r} \Big) \bm{a}_{\Section}
+\end{equation*}
+The rotation extracted by the trace is (using the plane section property on 
+the $\reflenx$-linear term):
+\begin{equation*}
+\bm{\theta}^{(a)}(\reflenx) = -\reflenx (\FrameBasis \times \bm{a}_{\Section}) 
++ \bm{\theta}^{(a)}_{\rm warp}
+\end{equation*}
+where $\bm{\theta}^{(a)}_{\rm warp}$ arises from the trace applied to the 
+Poisson term $-\nu \operatorname{dev}(\bm{r} \otimes \bm{r}) \bm{a}_{\Section}$, 
+which is quadratic in $\bm{r}$ and hence not purely rigid.
+
+The displacement, accounting for the trace center offset, is
+\begin{equation*}
+\bm{u}^{(a)}(\reflenx) = -\tfrac{1}{2}\reflenx^2 \bm{a}_{\Section} 
++ \reflenx (\CenterTrace \cdot \bm{a}_{\Section}) \FrameBasis 
++ \reflenx (\FrameBasis \times \bm{a}_{\Section}) \times \CenterTrace 
++ \bm{u}^{(a)}_{\rm Poisson}
+\end{equation*}
+where $\bm{u}^{(a)}_{\rm Poisson}$ is the trace of the Poisson term.
+
+Computing the strains at $\reflenx = 0$:
+\begin{align*}
+\epsilon_{0}^{(a)} &= \FrameBasis \cdot (\bm{u}^{(a)})'|_{\reflenx=0} 
+= (\CenterTrace \cdot \bm{a}_{\Section}) 
+= (\CenterTrace - \CentroidLocation) \cdot \bm{a}_{\Section} + \CentroidLocation \cdot \bm{a}_{\Section}
+\end{align*}
+However, from the Ieşan resultant equations \eqref{eq:2-15}, the centroidal 
+contribution $\CentroidLocation \cdot \bm{a}_{\Section}$ is absorbed into the 
+relationship between $\bm{a}_{\Section}$ and the bending moment. 
+The axial strain is:
+\begin{equation*}
+\epsilon_{0}^{(a)} = (\CenterTrace - \CentroidLocation) \cdot \bm{a}_{\Section}
+\end{equation*}
+
+For the transverse shear:
+\begin{align*}
+\bm{\gamma}_{\perp,0}^{(a)} &= \mathbf{1}_{\Section} \big[ (\bm{u}^{(a)})' + \FrameBasis \times \bm{\theta}^{(a)} \big]_{\reflenx=0} \\
+&= \mathbf{1}_{\Section} \big[ -\reflenx \bm{a}_{\Section} + (\FrameBasis \times \bm{a}_{\Section}) \times \CenterTrace 
++ \reflenx (\FrameBasis \times \bm{a}_{\Section}) + \FrameBasis \times \bm{\theta}^{(a)}_{\rm warp} \big]_{\reflenx=0} \\
+&= (\FrameBasis \times \bm{a}_{\Section}) \times \CenterTrace + \FrameBasis \times \bm{\theta}^{(a)}_{\rm warp}
+\end{align*}
+Using the vector identity $(\FrameBasis \times \bm{a}_{\Section}) \times \CenterTrace 
+= (\FrameBasis \cdot \CenterTrace) \bm{a}_{\Section} - (\bm{a}_{\Section} \cdot \CenterTrace) \FrameBasis 
+= -(\bm{a}_{\Section} \cdot \CenterTrace) \FrameBasis$, the first term is axial only. 
+Thus:
+\begin{equation*}
+\bm{\gamma}_{\perp,0}^{(a)} = \TraceNM \bm{a}_{\Section}
+\end{equation*}
+where $\TraceNM$ encodes the trace-dependent contribution 
+from $\bm{\theta}^{(a)}_{\rm warp}$. 
+
+
+For the curvatures:
+\begin{equation*}
+\varkappa_0^{(a)} = \FrameBasis \cdot (\bm{\theta}^{(a)})'|_{\reflenx=0} = 0 + \bm{\eta}_\kappa \cdot \bm{a}_{\Section}
+\end{equation*}
+where $\bm{\eta}_\kappa$ arises from any $\reflenx$-dependence in $\bm{\theta}^{(a)}_{\rm warp}$ 
+(typically zero for standard traces).
+
+\begin{equation*}
+\bm{\kappa}_{\perp,0}^{(a)} = \mathbf{1}_{\Section} (\bm{\theta}^{(a)})'|_{\reflenx=0} 
+= -\FrameBasis \times \bm{a}_{\Section} + \TraceMM \bm{a}_{\Section}
+\end{equation*}
+where $\TraceMM$ captures trace-dependent modifications.
+
+This establishes the second column: 
+$((\CenterTrace - \CentroidLocation)^\top, \TraceNM, \bm{\eta}_\kappa^\top, -\FrameBasis^\times + \TraceMM)^\top$.
+
+\paragraph{Step 4: Contribution from $a_\vartheta + c_\vartheta$ (torsion).}
+The torsion mode from \eqref{eq:iesan-displacement-1} is
+\begin{equation*}
+\hat{\bm{u}}^{(\vartheta)} = \big( \reflenx (\FrameBasis \times \bm{r}) + \WarpTwistIesan \FrameBasis \big) (a_\vartheta + c_\vartheta)
+\end{equation*}
+The traced fields are:
+\begin{align*}
+\bm{\theta}^{(\vartheta)}(\reflenx) &= \reflenx \FrameBasis (a_\vartheta + c_\vartheta) 
++ \RotationAverage{\WarpTwistIesan \FrameBasis} (a_\vartheta + c_\vartheta) \\
+&= \big( \reflenx \FrameBasis + \CenterTwistLocation \big) (a_\vartheta + c_\vartheta)
+\end{align*}
+where $\CenterTwistLocation = \RotationAverage{\WarpTwistIesan \FrameBasis}$ is the 
+twist center (a vector in the section plane).
+
+\begin{align*}
+\bm{u}^{(\vartheta)}(\reflenx) &= \reflenx (\FrameBasis \times \CenterTrace) (a_\vartheta + c_\vartheta) 
++ \SectionAverage{\WarpTwistIesan} \FrameBasis (a_\vartheta + c_\vartheta)  - \big( \reflenx \FrameBasis + \CenterTwistLocation \big) \times \CenterTrace (a_\vartheta + c_\vartheta) \\
+&= \reflenx (\FrameBasis \times \CenterTrace) (a_\vartheta + c_\vartheta) 
+- \CenterTwistLocation \times \CenterTrace (a_\vartheta + c_\vartheta)
+\end{align*}
+using $\SectionAverage{\WarpTwistIesan} = 0$ (Saint-Venant normalization) 
+and $\FrameBasis \times \CenterTrace = -\CenterTrace \times \FrameBasis$.
+
+Computing strains:
+\begin{align*}
+\epsilon_{0}^{(\vartheta)} &= 0 \\
+\bm{\gamma}_{\perp,0}^{(\vartheta)} &= \mathbf{1}_{\Section} \big[ (\FrameBasis \times \CenterTrace) 
++ \FrameBasis \times (\FrameBasis + \tfrac{1}{\reflenx}\CenterTwistLocation) \big]_{\reflenx \to 0} (a_\vartheta + c_\vartheta)
+\end{align*}
+The term $\FrameBasis \times \FrameBasis = \mathbf{0}$, and 
+$\FrameBasis \times \CenterTrace + \FrameBasis \times \CenterTwistLocation/\reflenx$ 
+requires careful analysis. At $\reflenx = 0$:
+\begin{equation*}
+\bm{\gamma}_{\perp,0}^{(\vartheta)} = \FrameBasis \times (\CenterTrace - \CenterTwistLocation) (a_\vartheta + c_\vartheta) 
+\triangleq \bm{\xi}_\vartheta (a_\vartheta + c_\vartheta)
+\end{equation*}
+where $\bm{\xi}_\vartheta = \FrameBasis \times (\CenterTrace - \CenterTwistLocation) \in \mathbb{R}^2$.
+
+This coupling vanishes when $\CenterTrace = \CenterTwistLocation$ 
+(trace center coincides with twist center).
+
+For curvatures:
+\begin{align*}
+\varkappa_0^{(\vartheta)} &= \FrameBasis \cdot (\bm{\theta}^{(\vartheta)})' = a_\vartheta + c_\vartheta \\
+\bm{\kappa}_{\perp,0}^{(\vartheta)} &= \mathbf{1}_{\Section} (\bm{\theta}^{(\vartheta)})' 
+= \bm{\xi}_\vartheta^{(\kappa)} (a_\vartheta + c_\vartheta)
+\end{align*}
+where $\bm{\xi}_\vartheta^{(\kappa)}$ arises from any transverse component of 
+$(\CenterTwistLocation)' = \mathbf{0}$, so typically $\bm{\xi}_\vartheta^{(\kappa)} = \mathbf{0}$.
+
+This establishes the third column: $(0, \bm{\xi}_\vartheta, 1, \bm{\xi}_\vartheta^{(\kappa)})^\top$.
+
+\paragraph{Step 5: Contribution from $\bm{b}_{\Section}$ (flexure).}
+The flexure mode from \eqref{eq:iesan-displacement-2} is
+\begin{align*}
+\hat{\bm{u}}^{(b)} &= \Big( -\tfrac{1}{6}\reflenx^3 \mathbf{1}_{\Section} 
++ \reflenx \bm{\Pi}_{(b)} 
++ \tfrac{1}{2}\reflenx^2 \FrameBasis \otimes (\bm{r} - \CentroidLocation) 
++ \FrameBasis \otimes \bm{\WarpShearIesan} \Big) \bm{b}_{\Section} \\
+&\quad + \big( \reflenx (\FrameBasis \times \bm{r}) + \WarpTwistIesan \FrameBasis \big) c_\vartheta(\bm{b}_{\Section})
+\end{align*}
+
+This is the most complex mode. The traced rotation is:
+\begin{align*}
+\bm{\theta}^{(b)}(\reflenx) &= -\tfrac{1}{2}\reflenx^2 (\FrameBasis \times \bm{b}_{\Section}) 
++ \reflenx \RotationAverage{\bm{\Pi}_{(b)} \bm{b}_{\Section}} 
++ \RotationAverage{\FrameBasis \otimes \bm{\WarpShearIesan}} \bm{b}_{\Section} + \big( \reflenx \FrameBasis + \CenterTwistLocation \big) c_\vartheta(\bm{b}_{\Section})
+\end{align*}
+
+The traced displacement (after subtracting $\bm{\theta}^{(b)} \times \CenterTrace$) is:
+\begin{align*}
+\bm{u}^{(b)}(\reflenx) &= -\tfrac{1}{6}\reflenx^3 \bm{b}_{\Section} 
++ \reflenx \SectionAverage{\bm{\Pi}_{(b)}} \bm{b}_{\Section} 
++ \tfrac{1}{2}\reflenx^2 (\CenterTrace - \CentroidLocation) \cdot \bm{b}_{\Section} \FrameBasis \\
+&\quad + \text{(terms from $\bm{\theta}^{(b)} \times \CenterTrace$)} 
++ \text{($c_\vartheta$ contributions)}
+\end{align*}
+
+Computing strains at $\reflenx = 0$:
+
+\textit{Axial strain:}
+\begin{equation*}
+\epsilon_{0}^{(b)} = \bm{\eta}_\gamma \cdot \bm{b}_{\Section}
+\end{equation*}
+where $\bm{\eta}_\gamma$ collects contributions from evaluating $(\bm{u}^{(b)})'$ 
+at $\reflenx = 0$, including trace-dependent warping effects.
+
+\textit{Transverse shear:}
+\begin{equation*}
+\bm{\gamma}_{\perp,0}^{(b)} = \TraceFF \bm{b}_{\Section}
+\end{equation*}
+where the shear-flexure tensor is
+\begin{equation}
+\TraceFF = \SectionAverage{\bm{\Pi}_{(b)}} 
++ \FrameBasis \times \RotationAverage{\FrameBasis \otimes \bm{\WarpShearIesan}} 
++ \FrameBasis \times (\CenterTrace - \CenterTwistLocation) \otimes \bm{\eta}_\vartheta 
++ \text{(trace-dependent terms)}
+\label{eq:xi-general}
+\end{equation}
+The third term arises from the $c_\vartheta$ contribution to shear.
+
+\textit{Twist:}
+\begin{equation*}
+\varkappa_0^{(b)} = \bm{\eta}_\vartheta \cdot \bm{b}_{\Section}
+\end{equation*}
+where, from \eqref{eq:iesan-2-22}:
+\begin{equation}
+\bm{\eta}_\vartheta = -\frac{1}{\Jo} \FrameBasis \cdot \int_{\Section} \bm{r} \times 
+\big( \nabla\bm{\WarpShearIesan} + \bm{\Pi}_{(b)} \big) \mathrm{d}A
+\label{eq:eta-vartheta-general}
+\end{equation}
+
+\textit{Transverse curvature:}
+\begin{equation*}
+\bm{\kappa}_{\perp,0}^{(b)} = \TraceMF \bm{b}_{\Section}
+\end{equation*}
+where $\TraceMF$ collects the $\reflenx$-independent 
+contributions to $(\bm{\theta}^{(b)})'$.
+
+This establishes the fourth column: 
+$(\bm{\eta}_\gamma^\top, \TraceFF, \bm{\eta}_\vartheta^\top, \TraceMF)^\top$.
+
+\paragraph{Step 6: Assembly.}
+Collecting the four columns yields the stated block structure \eqref{eq:trace-matrix-general}.
+\end{proof}
+
+\begin{corollary}[Simplifications under geometric coincidences]
+\label{cor:simplifications}
+The trace matrix simplifies under the following geometric conditions:
+\begin{enumerate}
+\item \textbf{Centroidal trace} ($\CenterTrace = \CentroidLocation$): 
+The $(1,2)$ block vanishes: $(\CenterTrace - \CentroidLocation)^\top = \mathbf{0}^\top$.
+
+\item \textbf{Trace at twist center} ($\CenterTrace = \CenterTwistLocation$): 
+The shear-twist coupling vanishes: $\bm{\xi}_\vartheta = \mathbf{0}$.
+
+\item \textbf{Doubly-symmetric section}: 
+The twist-flexure coupling vanishes: $\bm{\eta}_\vartheta = \mathbf{0}$, 
+and $\TraceNM = \TraceMM = \mathbf{0}$.
+
+\item \textbf{Pointwise trace at centroid} (Euler-Bernoulli): 
+Additionally $\TraceFF = \mathbf{0}$, giving a block-diagonal structure.
+
+\item \textbf{All centers coincident} 
+($\CentroidLocation = \CenterShearLocation = \CenterTwistLocation = \CenterTrace$): 
+The matrix reduces to
+\begin{equation}
+\mathbf{T}_{\mathcal{T}} = \begin{pmatrix}
+1 & \mathbf{0} & 0 & \TraceNF^\top \\
+\mathbf{0} & \mathbf{0} & \mathbf{0} & \TraceFF \\
+0 & \mathbf{0} & 1 & \mathbf{0} \\
+\mathbf{0} & -\FrameBasis^{\times} & \mathbf{0} & \TraceMF
+\end{pmatrix}
+\label{eq:trace-matrix-symmetric}
+\end{equation}
+\end{enumerate}
+\end{corollary}
+
+\begin{remark}[Physical interpretation of off-diagonal blocks]
+The off-diagonal blocks in \eqref{eq:trace-matrix-general} encode the 
+various couplings that arise in asymmetric sections:
+\begin{itemize}
+\item $(\CenterTrace - \CentroidLocation)^\top$: Bending of a non-centroidal 
+fiber produces axial strain (the parallel axis effect).
+
+\item $\TraceNM$: Pure bending produces apparent shear strain 
+when the trace does not coincide with the neutral axis of warping.
+
+\item $\bm{\xi}_\vartheta$: Pure twist produces apparent shear when the trace 
+center differs from the twist center.
+
+\item $\bm{\eta}_\kappa$: Bending produces apparent twist for sections where 
+the principal bending and torsion axes are coupled.
+
+\item $\bm{\eta}_\vartheta$: Flexure produces twist through the Ieşan coupling 
+$c_\vartheta(\bm{b}_{\Section})$, present whenever the shear center does not 
+coincide with the centroid.
+\end{itemize}
+These couplings are not artifacts of the beam theory but reflect genuine 
+features of the three-dimensional Saint-Venant solution.
+\end{remark}
+
+\begin{remark}[Invertibility]
+The trace matrix $\mathbf{T}_{\mathcal{T}}$ is invertible provided that 
+$\TraceFF$ is invertible. 
+This fails for the pointwise trace, 
+where $\TraceFF = \mathbf{0}$, reflecting the fact that 
+Euler-Bernoulli theory cannot independently prescribe shear strain. 
+For shear-deformable theories (Timoshenko and its variants), 
+$\TraceFF$ is generically invertible.
+\end{remark}
+
+The gauge parameters $(\bm{\eta}_\gamma, \eta_\vartheta, \TraceFF)$ 
+of \S\ref{sec:sv} are now recognized as components of the trace matrix. 
+Different trace choices correspond to different specifications of these components.
+
+\subsubsection{Gauge Transformations}
+
+The transformation between traces admits a simple algebraic characterization.
+
+\begin{proposition}[Gauge transformation]
+\label{prop:gauge-transform}
+Let $\mathcal{T}_1$ and $\mathcal{T}_2$ be two trace operators with associated 
+matrices $\TraceDeDpOne$ and $\mathbf{T}_2$. The constant strain coefficients 
+transform as
+\begin{equation}
+\bm{e}_0^{(2)} = \mathbf{T}_2 \TraceDeDpOne^{-1} \, \bm{e}_0^{(1)} 
+\triangleq \mathbf{G}_{12} \, \bm{e}_0^{(1)}
+\label{eq:gauge-transform}
+\end{equation}
+where $\mathbf{G}_{12} = \mathbf{T}_2 \TraceDeDpOne^{-1}$ is the \emph{gauge transformation matrix}.
+\end{proposition}
+
+\begin{proof}
+From $\bm{e}_0^{(1)} = \TraceDeDpOne \IesanVector$ and $\bm{e}_0^{(2)} = \mathbf{T}_2 \IesanVector$, 
+eliminate $\IesanVector = \TraceDeDpOne^{-1} \bm{e}_0^{(1)}$.
+\end{proof}
+
+\subsubsection{The Section Constitutive Law}
+
+The trace matrix provides a direct route to the section constitutive law.
+
+\begin{proposition}[Trace-dependent constitutive law]
+\label{thm:constitutive-law}
+For a trace operator $\mathcal{T}$ with \emph{nonsingular} trace matrix $\mathbf{T}_{\mathcal{T}}$, 
+the section constitutive law relating resultants to constant strain coefficients is
+\begin{equation}
+\begin{pmatrix} N \\ T \\ \bm{F} \\ \FrameBasis \times \bm{M} \end{pmatrix}
+= \mathbf{C}_{\mathcal{T}} \, \bm{e}_0, 
+\qquad 
+\mathbf{C}_{\mathcal{T}} = \mathbf{R} \, \mathbf{T}_{\mathcal{T}}^{-1}
+\label{eq:constitutive-law}
+\end{equation}
+where $\mathbf{R}$ is the resultant matrix \eqref{eq:def-R-matrix}.
+\end{proposition}
+
+\begin{proof}
+Combining \eqref{eq:resultant-map} and \eqref{eq:def-trace-matrix}:
+\begin{equation*}
+\bm{s} = \mathbf{R} \IesanVector = \mathbf{R} \mathbf{T}_{\mathcal{T}}^{-1} \bm{e}_0
+\end{equation*}
+\end{proof}
+
+\begin{corollary}[Transformation of constitutive matrices]
+\label{cor:constitutive-transform}
+The constitutive matrices for two traces are related by
+\begin{equation}
+\mathbf{C}_{\mathcal{T}_2} = \mathbf{C}_{\mathcal{T}_1} \, \mathbf{G}_{12}^{-1} 
+= \mathbf{C}_{\mathcal{T}_1} \, \TraceDeDpOne \, \mathbf{T}_2^{-1}
+\label{eq:constitutive-transform}
+\end{equation}
+\end{corollary}
+
+This formula makes explicit the relationship between different beam theories: 
+they share the same underlying Saint-Venant solution but extract different 
+strain measures, leading to constitutive matrices related by a change of variables.
+
+\begin{remark}[Symmetry of the constitutive matrix]
+The constitutive matrix $\mathbf{C}_{\mathcal{T}}$ is symmetric if and only if 
+$\mathbf{R} \mathbf{T}_{\mathcal{T}}^{-1}$ is symmetric. Since $\mathbf{R}$ 
+encodes the Saint-Venant energy, which is symmetric, the symmetry of 
+$\mathbf{C}_{\mathcal{T}}$ depends on the trace choice:
+\begin{itemize}
+\item The energy-conjugate trace $\mathcal{T}^{\rm conj}$ yields a symmetric 
+$\mathbf{C}$ by construction.
+\item The section-average trace $\mathcal{T}^{\rm avg}$ yields a symmetric 
+$\mathbf{C}$ only for sections with sufficient symmetry.
+\item The pointwise trace $\mathcal{T}^{\rm pt}$ typically yields a symmetric 
+$\mathbf{C}$ but with singular shear blocks.
+\end{itemize}
+\end{remark}
+
+
+
+\subsection{Summary}
+
+The trace operator framework provides a unified view of shear-deformable beam theories:
+
+\begin{enumerate}
+\item A trace operator $\mathcal{T}$ extracts one-dimensional kinematic fields 
+$(\bm{u}, \bm{\theta})$ from the three-dimensional field. 
+The resulting strains  are linear in $\reflenx$, with universal gradients and trace-dependent constants.
+
+\item The trace matrix $\mathbf{T}_{\mathcal{T}} \in \mathbb{R}^{6\times 6}$ 
+encodes the relationship $\bm{e}_0 = \mathbf{T}_{\mathcal{T}} \IesanVector$.
+
+\item The section constitutive law is $\mathbf{C}_{\mathcal{T}} = \mathbf{R} \mathbf{T}_{\mathcal{T}}^{-1}$.
+
+\item Different traces yield constitutive matrices related by 
+$\mathbf{C}_2 = \mathbf{C}_1 \TraceDeDpOne \mathbf{T}_2^{-1}$.
+
+\item The trace choice determines which three-dimensional boundary conditions 
+are representable by the one-dimensional model.
+\end{enumerate}

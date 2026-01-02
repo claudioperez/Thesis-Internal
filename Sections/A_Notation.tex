@@ -1,0 +1,69 @@
+
+\subsection*{Element Formulation} 
+\begin{table}[H]
+    \centering
+    \caption{Table of notation}
+    \begin{tabular}{lcl}
+        \toprule
+        Symbol & & Description \\ \midrule 
+        $\{\FrameBasis,\FrameBasis_{\beta}\}$ &  & Beam directors in the reference configuration \\
+        $\{\frameBasis,\frameBasis_{\beta}\}$ &  & Beam directors in the deformed configuration \\
+        $\TraceLocation$ & & Position of a cross section \\
+        $\FrameRotation$ & & Rotation of a cross section \\
+        $\bm{\alpha}$ & & Warping amplitude \\
+        $\reflenx$ & & Beam coordinate normalized by reference arc length \\
+        $\deflenx$ & & Beam coordinate normalized by deformed arc length \\
+        
+        \midrule 
+        \multicolumn{3}{c}{Section} \\ 
+        \LightRule
+        $\bm\gamma$ & \eqref{eq:def-gam-kap} or \eqref{eq:gam-kap-linear} & \\
+        $\bm\kappa$ & \eqref{eq:def-gam-kap} or \eqref{eq:gam-kap-linear} & \\
+        
+        $\Twist$ & \eqref{eq:def-gam-kap} & \Length{-1}, Rate of twist, defined as \(\FrameBasis\cdot \CurveStrain\) under finite rotations. \\
+        \midrule 
+        \multicolumn{3}{c}{Material} \\
+        \LightRule
+        $\StrainVector$ &  \eqref{eq:strain-tensor-decomp} & \\
+        $\StressVector \in \mathbb{R}^3$ &  \eqref{eq:def-stress-vector} &  \\ 
+        $\WarpTotalShapes$ & \eqref{eq:finite-alignment-field} \\
+        $\WarpAxialShapes$ & \eqref{eq:decom-warp-shapes} \\
+        $\WarpPlaneShapes$ & \eqref{eq:decom-warp-shapes} \\
+        \midrule
+        \multicolumn{3}{c}{Resultants} \\ 
+        \LightRule
+        $\TraceTotalEnergyStress$ & \eqref{eq:stress-resultants} & Total conjugate resultant vector \\
+        $\TotalStrainMatrix$ & \eqref{eq:def-section-kinematic-matrix-wagner} or \eqref{eq:def-section-kinematic-matrix-Phi} \\
+        $\snm$ & \eqref{eq:equilibrium-ode} & \\
+        
+        \bottomrule
+    \end{tabular}
+    % \label{tab:my_label}
+\end{table}
+
+
+\subsection*{Saint Venant} 
+\begin{table}[H]
+    \centering
+    \caption{Summary of cross section constants.}
+    \begin{tabular}{clcl}
+        \toprule
+        Symbol & Units & Equation & Description \\ \midrule
+        \(\WarpTwistIesan\)      & L$^2$ & \eqref{eq:bvp-warp-twist-iesan} & Torsion warping function \\
+        \(\bm{\WarpShearIesan}\) & L$^3$ & \eqref{eq:bvp-warp-shear-iesan} & Flexural warping function \\
+        \midrule 
+        \(\CentroidLocation\) & L & \eqref{eq:def-centroid} & Location of the centroid. \\
+        \(\CenterShearLocation\) & L & \eqref{eq:def-shear-center} & Shear center location \\
+        \(\IntRoR\) & L$^4$ & \eqref{eq:def-j-origin} & Plane moment of inertia tensor \\
+        \(\Io\)     & \Length{4} & & Polar moment of inertia, \(\Io = \operatorname{tr}\IntRoR\) \\
+        \(\Jo\) & L$^4$ & \eqref{eq:def-j-origin} & Saint Venant torsion constant \\
+        $\Jv$ & L$^4$ & & \\
+        \midrule
+        $\WarpFA$     & & & Armero warping function \\
+        $\Jw$ & \Length{6} & & Vlasov warping constant \\
+        $\Ja$ & \Length{8} \\
+    \bottomrule
+    \end{tabular}
+    % \caption{Summary of isotropic cross section constants.}
+    \label{tab:constants}
+\end{table}

@@ -1,0 +1,67 @@
+
+\subsection{Identification}
+
+For a beam formulation combining both problems, the complete rigid
+body freedom can be parametrized as:
+
+\[
+\hat{\bm{u}} = \underbrace{\bm{\beta}_u + c_\vartheta(\FrameBasis \times \bm{r}) + (\FrameBasis \times \bm{\beta}_\kappa) \times \bm{r}}_{\text{rigid at } x=0} + x\underbrace{[a_\varepsilon \FrameBasis + \bm{\beta}_\gamma + (a_\vartheta \FrameBasis - \FrameBasis \times \bm{a}_\Omega) \times \bm{r}]}_{\text{rate terms}} + \text{(higher order terms)}
+\tag{V1}
+\]
+
+Your choice of reference curve determines the relationship:
+\[
+\begin{aligned}
+\bm{u}(\reflenx) &= \bm{\beta}_u + x(a_\varepsilon \FrameBasis + \bm{\beta}_\gamma) + \text{(higher order)} \\
+\bm{\theta}(\reflenx) &= \bm{\beta}_\theta + \reflenx\, (a_\vartheta \FrameBasis - \FrameBasis \times \bm{a}_\Omega) + \text{(higher order)}
+\end{aligned}
+\tag{V1}
+\]
+
+(V3) If we write the general solution as:
+\[
+\hat{\bm{u}} = \bm{u}(\reflenx) + \bm{\theta}(\reflenx) \times \bm{r} + \text{(warping)}
+\tag{V3}
+\]
+
+Then choosing \(\bm{u}(\reflenx)\) to include
+\(x\bm{\beta}_\gamma\) and \(\bm{\theta}(\reflenx)\) to include
+\(-\FrameBasis \times \bm{\beta}_\gamma\) 
+produces the constant shear strain
+\[
+\bm{\gamma} = \bm{u}' + \FrameBasis \times \bm{\theta} = \bm{\beta}_\gamma
+\tag{V3}
+\]
+Set:
+\begin{equation}
+\begin{aligned}
+\bm{u}(\reflenx) &= \bm{\beta}_u + x(a_\varepsilon \FrameBasis + \bm{\beta}_\gamma) - \tfrac{1}{2}x^2 \bm{a}_\Omega - \tfrac{1}{6}x^3 \bm{b}_{\Section} - \tfrac{1}{2}x^2(\FrameBasis \otimes \bar{\bm{r}})\bm{b}_{\Section} \\
+\bm{\theta}(\reflenx) &= \bm{\beta}_\theta + x(a_\vartheta + c_\vartheta)\FrameBasis - x(\FrameBasis \times \bm{a}_\Omega) - \tfrac{1}{2}x^2(\FrameBasis \times \bm{b}_{\Section}) - \FrameBasis \times \bm{\beta}_\gamma
+\end{aligned}
+\tag{V2/3}
+\end{equation}
+
+
+where \(\bm{\beta}_\gamma\) is determined by a suitable fitting
+criterion (energy conjugacy), and this determines how the transverse
+components of \(\bm{\beta}_\theta\) are split between the
+reference curve displacement and rotation.
+%
+Note that \(\bm{\beta}_\gamma\) appears in both
+\(\bm{u}'\) and \(\FrameBasis \times \bm{\theta}\), producing the
+constant shear strain
+\(\bm{\gamma} = \bm{\beta}_\gamma\) that you use as your
+fitting parameter to relate
+\(\bm{b}_{\Section} = \bm{\Xi} \bm{\gamma}\).
+
+\subsection{Key Insights: (V1)}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  \textbf{The \(\reflenx\)-independence} in Problem I refers to fields that
+  don't vary with the axial coordinate within each term's coefficient.
+  This carries to Problem II for the coefficients of each power of
+  \(\reflenx\).
+\end{enumerate}
+

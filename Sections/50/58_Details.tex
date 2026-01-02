@@ -1,0 +1,193 @@
+
+%------------------------------------------------------------
+\subsubsection{Polynomial representation of $Z_T$ in terms of $\TraceDeDpRoot,\TraceDeDpOne$}
+
+Recall that for Class~I traces (P1+D1+E1+C1), the section strain is of the form
+\[
+  \TraceDeDpX(\reflenx) := \partial_{\bm{p}} \bm{e}(x;\bm{p})
+  = \TraceDeDpRoot + x\,\TraceDeDpOne,
+  \qquad
+  \TraceDeDpOne = \TraceDeDpRoot\mathbf{G}.
+\]
+For the Saint~Venant particular solution we write
+\[
+  \bm{u}_{\mathrm{T}}^{\mathrm{P}}(x;\bm{p}) = \bm{U}_T(\reflenx)\bm{p},
+  \qquad
+  \bm{\theta}_{\mathrm{T}}^{\mathrm{P}}(x;\bm{p}) = \bm{Q}_T(\reflenx)\bm{p},
+\]
+and, by definition of the trace strains,
+\[
+  \bm{e}(x) =
+  \begin{pmatrix}
+    \bm{\gamma}(x) \\ \bm{\kappa}(x)
+  \end{pmatrix}
+  =
+  \mathbb{B}^*\bm{z}(x)
+  =
+  \begin{pmatrix}
+    \bm{u}'(x)+\FrameBasis\times\bm{\theta}(x)\\[2pt]
+    \bm{\theta}'(x)
+  \end{pmatrix}.
+\]
+\begin{Aside}
+Applying this columnwise to $(\bm{U}_T,\bm{Q}_T)$ gives the matrix ODE
+\begin{align}
+  \bm{Q}_T'(x) &= T_\kappa(x) = T_{\kappa 0}+xT_{\kappa 1}, \label{eq:QT-ODE}\\
+  \bm{U}_T'(x) + \FrameBasis\times\bm{Q}_T(\reflenx) &= T_\gamma(x) = T_{\gamma 0}+xT_{\gamma 1}. \label{eq:UT-ODE}
+\end{align}
+We now impose the natural normalization for the Saint~Venant trace: at $x=0$ the SV part carries no rigid component,
+\[
+  \bm{U}_T(0) = \mathbf{0},
+  \qquad
+  \bm{Q}_T(0) = \mathbf{0}.
+\]
+All rigid content at the root is therefore carried by $\bm{\delta}$ via $(U_{\mathrm{R}},Q_{\mathrm{R}})$. 
+% \paragraph{Rotation trace $\bm{Q}_T(\reflenx)$.}
+Integrating \eqref{eq:QT-ODE} with $\bm{Q}_T(0)=0$ gives
+\[
+\bm{Q}_T(\reflenx)
+  = x T_{\kappa 0} + \frac{x^2}{2}T_{\kappa 1}.
+\]
+\iffalse
+If we expand
+\[
+  \bm{Q}_T(\reflenx) = \sum_{m\ge 0}\frac{x^m}{m!} \bm{Q}_m,
+\]
+then
+\[
+  \bm{Q}_0 = \mathbf{0},
+  \qquad
+  \bm{Q}_1 = T_{\kappa 0},
+  \qquad
+  \bm{Q}_2 = T_{\kappa 1},
+  \qquad
+  \bm{Q}_m = \mathbf{0}\quad\text{for }m\ge 3.
+\]
+\fi 
+% \paragraph{Displacement trace $\bm{U}_T(\reflenx)$.}
+Using $\bm{Q}_T(\reflenx)$ in \eqref{eq:UT-ODE} yields
+\[
+  \bm{U}_T'(x)
+  = T_{\gamma 0} + xT_{\gamma 1}
+    - \FrameBasis\times\bigl(x T_{\kappa 0} + \tfrac{x^2}{2}T_{\kappa 1}\bigr)
+  = T_{\gamma 0} + xT_{\gamma 1}
+    - x\,\FrameBasis\times T_{\kappa 0}
+    - \frac{x^2}{2}\,\FrameBasis\times T_{\kappa 1}.
+\]
+Integrating from $0$ to $x$ with $\bm{U}_T(0)=0$ gives
+\[
+  \bm{U}_T(\reflenx)
+  = x T_{\gamma 0}
+    + \frac{x^2}{2}T_{\gamma 1}
+    - \frac{x^2}{2}\,\FrameBasis\times T_{\kappa 0}
+    - \frac{x^3}{6}\,\FrameBasis\times T_{\kappa 1}.
+\]
+with $T_{\gamma 0},T_{\kappa 0},T_{\gamma 1},T_{\kappa 1}$ determined by $\TraceDeDpRoot$ and $\IesanEvolveSP$ as above.
+The exact algebraic relations between the polynomial coefficients $(\bm{U}_m,\bm{Q}_m)$ and the strain operators $(\TraceDeDpRoot,\TraceDeDpOne)$ are therefore
+\[
+  \begin{aligned}
+    \TraceDeDpRoot &=
+    \begin{bmatrix}
+      \bm{U}_1 + \FrameBasis\times \bm{Q}_0 \\ \bm{Q}_1
+    \end{bmatrix}
+    =
+    \begin{bmatrix}
+      \bm{U}_1 \\ \bm{Q}_1
+    \end{bmatrix},
+    \\[4pt]
+    \TraceDeDpOne &=
+    \begin{bmatrix}
+      \bm{U}_2 + \FrameBasis\times \bm{Q}_1 \\ \bm{Q}_2
+    \end{bmatrix}
+    =
+    \begin{bmatrix}
+      \bm{U}_2 + \FrameBasis\times T_{\kappa 0} \\ T_{\kappa 1}
+    \end{bmatrix},
+    \\[4pt]
+    T_k &= \mathbf{0}
+    \quad\text{for }k\ge 2
+    \quad\Longleftrightarrow\quad
+    \begin{cases}
+      \bm{Q}_3 = \mathbf{0},\\
+      \bm{U}_3 = -\FrameBasis\times \bm{Q}_2 = -\FrameBasis\times T_{\kappa 1},\\
+      \bm{U}_m = \bm{Q}_m = \mathbf{0}\quad \text{for }m\ge 4.
+    \end{cases}
+  \end{aligned}
+\]
+\end{Aside}
+
+
+\begin{equation}
+\begin{aligned}
+\bm{Z}_T(x)
+  &=
+  \begin{pmatrix}
+    x_u T_{\gamma 0}
+      + \dfrac{x_u^2}{2}T_{\gamma 1}
+      - \dfrac{x_u^2}{2}\,\FrameBasis\times T_{\kappa 0}
+      - \dfrac{x_u^3}{6}\,\FrameBasis\times T_{\kappa 1}
+    \\[6pt]
+    x_\theta T_{\kappa 0}
+      + \dfrac{x_\theta^2}{2}T_{\kappa 1}
+  \end{pmatrix}\\
+\end{aligned}
+  % \label{eq:trace-Z-of-T}
+\end{equation}
+
+\begin{Aside}
+Therefore
+\begin{equation*}
+  \mathbf{D}(x_u,x_\theta)
+  =
+  \bm{Z}_{\delta}(x_u)^{-1}\bm{Z}_T(x_u,x_\theta)
+  =
+  \begin{pmatrix}
+    \bm{U}_T(x_u) - \bm{x}_T^{\times}(x_u)\,\bm{Q}_T(x_\theta) \\
+    \bm{Q}_T(x_\theta)
+  \end{pmatrix},
+\end{equation*}
+and the rescaled boundary data become
+\begin{equation*}
+  \bm{z}_x^*
+  =
+  \bm{Z}_{\delta}(x_u)^{-1}\bm{z}_*
+  =
+  \begin{pmatrix}
+    \bm{u}_* - \bm{x}_T^{\times}(x_u)\,\bm{\theta}_* \\
+    \bm{\theta}_*
+  \end{pmatrix}.
+\end{equation*}
+Substituting these expressions into \eqref{eq:delta-Dp-zx} yields the explicit
+dependence of the rigid parameters \(\bm{\delta}\) on the Saint~Venant
+amplitudes \(\bm{p}\) and the prescribed boundary values \(\bm{u}_*\),
+\(\bm{\theta}_*\), for any trace satisfying P1.
+
+Using the polynomial expressions above, $\bm{Z}_T(x_u,x_\theta)$ can be written explicitly in terms of the trace matrix $\TraceDeDpRoot$ and the universal matrix $\IesanEvolveSP$. 
+Indeed,
+\[
+\begin{aligned}
+  \bm{Q}_T(x_\theta)
+  &= x_\theta T_{\kappa 0} + \frac{x_\theta^2}{2}T_{\kappa 1},
+\\
+  \bm{U}_T(x_u)
+  &= x_u T_{\gamma 0}
+    + \frac{x_u^2}{2}T_{\gamma 1}
+    - \frac{x_u^2}{2}\,\FrameBasis\times T_{\kappa 0}
+    - \frac{x_u^3}{6}\,\FrameBasis\times T_{\kappa 1},
+\end{aligned}
+\]
+
+In summary:
+\begin{itemize}
+  \item The redundant field $\eta$ must satisfy $\eta\in\ker\mathbb{B}^*$ if it is to be purely kinematic slack, but this condition does not apply to $Z_T$.
+  \item Once $\bm{U}_T(0)=\bm{Q}_T(0)=0$ is fixed, the coefficients $(\bm{U}_m,\bm{Q}_m)$ of $(\bm{U}_T,\bm{Q}_T)$ are uniquely determined by $\TraceDeDpRoot$ and $\IesanEvolveSP$ via the relations above.
+  \item With the $1/m!$ convention, the correct third-order relation is
+  \[
+    \bm{U}_3 = -\FrameBasis\times \bm{Q}_2,
+  \]
+  with no factor $1/2$; without the $1/m!$ convention one would instead obtain
+  $\bm{U}_3 = -\tfrac{1}{3}\FrameBasis\times \bm{Q}_2$. 
+  A factor $-1/2$ corresponds to a mixed convention.
+\end{itemize}
+
+\end{Aside}

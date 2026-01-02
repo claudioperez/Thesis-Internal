@@ -1,0 +1,93 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+
+% \RequirePackage{pdfmanagement-testphase}
+% \DeclareDocumentMetadata{%
+% % tagging=on,%
+% % lang=en,%
+% % tagging-setup={math/setup=mathml-SE}
+% }
+
+\documentclass{article}
+
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \usepackage{sectsty}
+  \sectionfont{\centering}
+
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+
+\usepackage{xcolor}
+
+% \input{Style/TagPDF}
+\input{Style/Draft}
+\input{Style/Math}
+\input{Style/Lists}
+\input{Style/Cite}
+\input{Style/Hover}
+
+% add URL line breaks if available
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} 
+
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{pdftitle={},colorlinks,citecolor=blue}
+\urlstyle{same} % disable monospaced font for URLs
+\usepackage[margin=18mm]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\usepackage{xparse}
+
+\usepackage[capitalize,noabbrev]{cleveref}
+% \usepackage[capitalise, noabbrev]{cleveref}
+\input{Style/Syntax.tex}
+
+\usepackage{calc}
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\input{Style/Table}
+
+
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\ifluatex
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+
+
+
+
+\usepackage{float}
+% \let\origfigure\figure
+% \let\endorigfigure\endfigure
+% \renewenvironment{figure}[1][2] {
+% \expandafter\origfigure\expandafter[H]
+% } {
+% \endorigfigure
+% }
+
+
+\input{Style/Figures}
+\input{Style/Page}
+
+\usepackage{tikz}
+
+\usepackage{appendix}
+
+% ----------------------
+
+\input{Style/Boxes}
+
+\renewcommand{\abstractname}{Abstract}
+\thesisfalse

@@ -1,0 +1,510 @@
+\cite{iesan1987saintvenants}.  \cite{synge1945problem}. 
+
+
+
+\section{Less Less Old}
+
+\subsection*{Synopsis}
+
+We consider torsion–free flexure of a straight prismatic cylinder in 3D linearized elastostatics. The axis is the unit vector $\mathbf{i}$; the cross–section is $\Omega\subset \mathbf{i}^\perp$ with outward unit normal $\bm{\nu}$; points are $x\,\mathbf{i}+\bm{r}$ with $\bm{r}=(0,y,z)$. 
+The material is homogeneous, isotropic, with Lamé moduli $(\lambda,G)$.
+
+\emph{Saint–Venant class.} On a prismatic cylinder with traction–free lateral surface and loads prescribed only by end \emph{resultants}, the stress admits the representation
+\begin{equation}
+\bm{T}=\sigma\,\mathbf{i}\otimes\mathbf{i}\;+\;\bm{\tau}\otimes\mathbf{i}\;+\;\mathbf{i}\otimes\bm{\tau},
+\qquad
+\sigma:=\mathbf{i}\cdot\bm{T}\mathbf{i},\quad
+\bm{\tau}:=(\mathbf{i}_\beta\otimes \mathbf{i}_\beta)\bm{T}\mathbf{i}\in \mathbf{i}^\perp,
+\label{eq:frame-stress-tensor}
+\end{equation}
+and the side condition $\bm{T}\bm{n}=\mathbf{0}$ (with $\bm{n}=\bm{\nu}\in\mathbf{i}^\perp$) reduces to $\bm{\tau}\cdot\bm{\nu}=0$ on $\partial\Omega$. Symmetry of $\bm{T}$ and the vanishing in–plane block justify \eqref{eq:frame-stress-tensor}.
+
+\emph{Canonical selection.} The relaxed formulation (resultants only) is not unique \emph{a priori}. 
+We select the canonical Saint–Venant flexure (Ieşan): stresses depend at most linearly on $x$ (axial coordinate), torsional amplitude vanishes, and the cross–sectional problem reduces to a single scalar warping function with Neumann data.
+
+\subsection*{Problem}
+
+\paragraph{Body and fields.}
+Prismatic cylinder $\mathcal{C}=\{\,x\,\mathbf{i}+\bm{r}\ :\ x\in(0,L),\ \bm{r}\in\Omega\subset\mathbf{i}^\perp\,\}$, with unknown single–valued displacement $\bm{u}$ and stress $\bm{T}$ satisfying
+\[
+\operatorname{div}\bm{T}=\mathbf{0},\qquad
+\bm{T}=\lambda(\operatorname{tr}\bm{\varepsilon})\mathbf{I}+2G\,\bm{\varepsilon},\qquad
+\bm{\varepsilon}=\tfrac12(\nabla \bm{u}+\nabla \bm{u}^{\!\top}).
+\]
+
+\paragraph{Boundary and loading.}
+Lateral surface $(0,L)\times\partial\Omega$ is traction–free: $\bm{T}\bm{n}=\mathbf{0}$. At $x=L$ prescribe a transverse resultant force $\bm{F}=F\,\bm{f}$ with $\bm{f}\in\mathbf{i}^\perp$ and zero resultant couple (torsion–free). The end $x=0$ is clamped. No body forces.
+
+\paragraph{Saint–Venant stress hypothesis.}
+Restrict to the class \eqref{eq:frame-stress-tensor} with $\bm{\tau}\cdot\bm{\nu}=0$ on $\partial\Omega$.
+
+\paragraph{Canonical flexure postulate (Ieşan).}
+Among relaxed solutions, select the Saint–Venant flexure whose stresses depend at most linearly on $x$; equivalently, the torsional amplitude is zero and the cross–sectional remainder is governed by a scalar warping function.
+
+These postulates determine a unique solution up to rigid motions.
+
+\subsection*{Solution}
+
+\subsubsection*{Resultants and axial reduction}
+
+With \eqref{eq:frame-stress-tensor}, equilibrium splits as
+\[
+\partial_x \bm{\tau}=\mathbf{0},\qquad
+\partial_x \sigma+\operatorname{div}_{\bm{r}}\bm{\tau}=0.
+\]
+Hence $\bm{\tau}=\bm{\tau}(\bm{r})$ and
+\begin{equation}
+\sigma(x,\bm{r})=(L-x)\,q(\bm{r}),
+\qquad
+q(\bm{r}):=\operatorname{div}_{\bm{r}}\bm{\tau}(\bm{r}).
+\label{eq:sigma-q}
+\end{equation}
+The shear and bending resultants are
+\[
+\bm{V}=\int_\Omega \bm{\tau}\,dA=\bm{F},\qquad
+\bm{M}(x)=\int_\Omega \bm{r}\times\big(\sigma\,\mathbf{i}\big)\,dA=(L-x)\,\mathbf{i}\times\bm{F}.
+\]
+
+\subsubsection*{Section inertias and load amplitudes}
+
+Let the (planar) second–moment operator $\bm{\mathsf{I}}:\mathbf{i}^\perp\to \mathbf{i}^\perp$ be defined in the basis $\{\mathbf{i}_y,\mathbf{i}_z\}$ by the symmetric matrix
+\[
+[\bm{\mathsf{I}}]=
+\begin{pmatrix}
+I_y & -I_{yz}\\
+-I_{yz} & I_z
+\end{pmatrix},
+\qquad
+I_y=\int_\Omega z^2\,dA,\ \ I_z=\int_\Omega y^2\,dA,\ \ I_{yz}=\int_\Omega y z\,dA,
+\]
+with the origin at the area centroid (so $\int_\Omega \bm{r}\,dA=\mathbf{0}$). The canonical flexure amplitude $\bm{b}\in\mathbf{i}^\perp$ is fixed by the resultant relation
+\begin{equation}
+\bm{F}=E\,\bm{\mathsf{I}}\,\bm{b},
+\label{eq:F-EIb}
+\end{equation}
+and a scalar $b_3\in\mathbb{R}$ (axial-shift amplitude) determined by $\int_\Omega q\,dA=0$; with centroidal origin one has $b_3=0$.
+
+\subsubsection*{Warping problem and stresses}
+
+Introduce a scalar warping function $\varphi:\Omega\to\mathbb{R}$ and the quadratic, divergence–free polynomial field
+\begin{equation}
+\bm{\Pi}(\bm{r};\bm{b})
+=
+\Big[-(\mathbf{i}_y\cdot\bm{b})\,y z-\tfrac12(\mathbf{i}_z\cdot\bm{b})\,(y^2-z^2)\Big]\mathbf{i}_y
++\Big[\tfrac12(\mathbf{i}_y\cdot\bm{b})\,(y^2-z^2)+(\mathbf{i}_z\cdot\bm{b})\,y z\Big]\mathbf{i}_z,
+\qquad \operatorname{div}_{\!\bm{r}}\bm{\Pi}\equiv 0.
+\label{eq:Pidef}
+\end{equation}
+The canonical Saint–Venant flexure is obtained by solving the \emph{scalar} Poisson–Neumann problem
+\begin{equation}
+\Delta_{\!\bm{r}}\varphi = -\,2\big(\bm{b}\cdot\bm{r}+b_3\big)\quad\text{in }\Omega,
+\qquad
+\partial_{\bm{\nu}}\varphi = -\,\nu\,\bm{\Pi}(\bm{r};\bm{b})\cdot\bm{\nu}\quad\text{on }\partial\Omega,
+\qquad
+\int_\Omega \varphi\,dA=0,
+\label{eq:phiBVP}
+\end{equation}
+and setting the shear and axial stresses to
+\begin{equation}
+\boxed{\ \bm{\tau}(\bm{r})=2G\Big[\nabla_{\!\bm{r}}\varphi(\bm{r})+\nu\,\bm{\Pi}(\bm{r};\bm{b})\Big]\ },
+\qquad
+\boxed{\ \sigma(x,\bm{r})=(L-x)\,\operatorname{div}_{\!\bm{r}}\bm{\tau}(\bm{r})\ }.
+\label{eq:stress-final}
+\end{equation}
+By construction, $\bm{\tau}\cdot\bm{\nu}=0$ on $\partial\Omega$ and \eqref{eq:sigma-q} holds with
+\[
+\operatorname{div}_{\!\bm{r}}\bm{\tau}=2G\,\Delta_{\!\bm{r}}\varphi=-\,4G\big(\bm{b}\cdot\bm{r}+b_3\big),
+\]
+so that $\int_\Omega \sigma(x,\bm{r})\,dA=0$ for all $x$. The resultants $\bm{V}=\bm{F}$ and $\bm{M}(x)=(L-x)\,\FrameBasis\times\bm{F}$ are satisfied.
+
+\paragraph{Displacement representation.}
+A representative displacement generating \eqref{eq:stress-final} under Hooke’s law is
+\begin{equation}
+\bm{u}(x,\bm{r})=\bm{a}_0+\bm{a}_1\,x+(\bm{\theta}_0+\bm{\theta}_1 x)\times \bm{r}\;+\;\alpha\,\mathbf{i}\,\varphi(\bm{r}),
+\label{eq:svf-disp}
+\end{equation}
+where $\bm{a}_0,\bm{a}_1,\bm{\theta}_0,\bm{\theta}_1$ are determined (up to an inessential rigid motion) by the clamp and end–resultant conditions, and $\alpha$ is a warping amplitude (absorbed into $\bm{b}$ by \eqref{eq:F-EIb} if desired). In the canonical family the $x$–dependence is at most linear.
+
+\subsection*{Observations}
+
+\paragraph{Helmholtz content on the section.}
+With \eqref{eq:stress-final},
+\[
+\bm{\tau} = 2G\,\gradS \varphi + 2G\,\nu\,\bm{\Pi}(\bm{r};\bm{b}),
+\]
+is the orthogonal sum of an irrotational part and a divergence–free quadratic ``Poisson correction." Hence $\operatorname{curl}_{\!\bm{r}}\bm{\tau}=\mathbf{0}$ iff $\nu=0$; for general $\nu$ the shear is not curl–free. There is no harmonic component (origin at the centroid; displacement formulation).
+
+\paragraph{Alternative flexure fields.}
+Any self–equilibrated sectional field $\widehat{\bm{\tau}}$ with
+$\operatorname{div}_{\!\bm{r}}\widehat{\bm{\tau}}=0$, $\widehat{\bm{\tau}}\cdot\bm{\nu}=0$, and vanishing force and moment resultants may be superposed without altering the end resultants; the canonical Saint–Venant selection discards such additions (minimum data, linear in $x$).
+
+\paragraph{Summary.}
+Given $\bm{F}$ and $\Omega$ (centroidal axes):
+(i) solve \eqref{eq:F-EIb} for $\bm{b}$ (take $b_3=0$);
+(ii) solve \eqref{eq:phiBVP} for $\varphi$ (unique up to mean zero);
+(iii) form $\bm{\tau},\sigma$ from \eqref{eq:stress-final};
+(iv) recover a displacement using \eqref{eq:svf-disp}.
+
+\section{Less Old}
+\subsection*{Synopsis}
+
+We consider the flexure (transverse tip load, torsion–free) of a straight prismatic cylinder in 3D linearized elastostatics. 
+Let the axis be the unit vector $\mathbf{i}$ and the cross–section be $\Omega\subset\mathbf{i}^\perp$ with outward unit normal $\bm{\nu}$; points are $x\,\mathbf{i}+\bm{r}$ with $\bm{r}=(0,y,z)$. The Cauchy stress is everywhere symmetric and the material is isotropic with Lamé moduli $(\lambda,G)$.
+
+We work in the relaxed Saint–Venant setting: end tractions are prescribed only through their resultants, the lateral boundary is traction–free, and we seek the canonical Saint–Venant solution within this class. 
+Two key facts due to Ieşan guide the formulation \citep{iesan1986saintvenants}: (i) the relaxed problem is not unique \emph{a priori}, but the canonical Saint–Venant solutions (extension, bending, torsion, flexure) can be picked out by an axial–derivative criterion; in particular, for flexure the canonical field is obtained by Ieşan’s representation (his Eq.\ 2.16) and is unique up to rigid motions, and 
+(ii) the ``minimum–energy selects Saint–Venant" characterization that holds for torsion fails for flexure except at $\nu=0$—hence the need for the canonical construction. 
+
+\smallskip
+\noindent\textit{Salient observations.}
+\begin{itemize}
+\item Canonical flexure is characterized by Ieşan’s integral–plus–sectional representation; in particular, the torsional amplitude vanishes ($b_4=0$), and a scalar cross–sectional function solves a plane Neumann problem. 
+\item Stresses in the canonical flexure depend at most \emph{linearly} on the axial coordinate. (Via the ``primary solution of Saint–Venant type" whose axial derivative is rigid.)
+\item The energy–minimizer characterization that is decisive for torsion applies to flexure only if $\nu=0$; otherwise one uses the canonical representation to remove ambiguity.
+\end{itemize}
+
+\subsection*{Problem}
+
+Let $\mathcal{C}=\{\,x\,\mathbf{i}+\bm{r}:\ x\in(0,L),\ \bm{r}\in\Omega\subset\mathbf{i}^\perp\,\}$, with $\Omega$ simply connected and of class $C^{1}$. The lateral boundary $(0,L)\times\partial\Omega$ is traction–free. At $x=L$ a resultant force $\bm{F}=F\,\bm{f}$ with $\bm{f}\in\mathbf{i}^\perp$ acts, with \emph{zero resultant couple} (torsion–free flexure). The end $x=0$ is clamped. Body forces vanish.
+
+\paragraph{Field equations.}
+\[
+\operatorname{div}\bm{T}=\mathbf{0},\qquad
+\bm{T}=\lambda(\operatorname{tr}\bm{\varepsilon})\mathbf{I}+2G\bm{\varepsilon},\qquad
+\bm{\varepsilon}=\tfrac12(\nabla\bm{u}+\nabla\bm{u}^{\!\top}).
+\]
+
+\paragraph{Saint–Venant class and stress form.}
+In the Saint–Venant class for a prismatic cylinder with free sides, all nonzero stress components have one index along $\mathbf{i}$. With the orthonormal frame $\{\mathbf{i},\mathbf{i}_y,\mathbf{i}_z\}$ spanning $\mathbb{R}^3$ and $\mathbf{i}_y,\mathbf{i}_z\in\mathbf{i}^\perp$, write
+\begin{equation}
+\bm{T}=\sigma\,\mathbf{i}\otimes\mathbf{i}+\bm{\tau}\otimes\mathbf{i}+\mathbf{i}\otimes\bm{\tau},
+\qquad
+\sigma:=\mathbf{i}\cdot\bm{T}\mathbf{i},\quad
+\bm{\tau}:=(\mathbf{i}_\beta\otimes\mathbf{i}_\beta)\bm{T}\mathbf{i}\in\mathbf{i}^\perp.
+\label{eq:SVform}
+\end{equation}
+Symmetry of $\bm{T}$ and the vanishing in–plane block, together with $\bm{T}\bm{n}=\mathbf{0}$ on the side (where $\bm{n}=\bm{\nu}\in\mathbf{i}^\perp$), justify \eqref{eq:SVform} and reduce the side traction to the scalar condition $\bm{\tau}\cdot\bm{\nu}=0$ on $\partial\Omega$.
+
+\paragraph{Relaxed Boundary}
+At $x=L$ the end traction $\bm{t}=\bm{T}\mathbf{i}$ satisfies
+\[
+\int_\Omega \bm{t}\,dA=\bm{F},\qquad
+\int_\Omega \bm{r}\times\bm{t}\,dA=\mathbf{0}\quad\text{(torsion–free)}.
+\]
+We impose the \emph{canonical} Saint–Venant selection for flexure: the solution belongs to Ieşan’s class generated by his representation (Eq.\ 2.16), which fixes the amplitudes uniquely (up to rigid motions) and enforces the ``linear–in–axis" character \citep{iesan1987saintvenants}.
+
+\subsection*{Solution}
+
+\subsubsection*{Resultants and axial reduction}
+With \eqref{eq:SVform}, equilibrium splits into
+\[
+\partial_x\bm{\tau}=\mathbf{0},\qquad
+\partial_x\sigma+\operatorname{div}_{\!\bm{r}}\bm{\tau}=0,
+\]
+so $\bm{\tau}=\bm{\tau}(\bm{r})$ is sectional and
+\begin{equation}
+\sigma(x,\bm{r})=(L-x)\,q(\bm{r}),\qquad
+q(\bm{r}):=\operatorname{div}_{\!\bm{r}}\bm{\tau}(\bm{r}).
+\label{eq:sigmaq}
+\end{equation}
+The bending moment is $\bm{M}(x)=\displaystyle\int_\Omega \bm{r}\times(\sigma\,\mathbf{i})\,dA=(L-x)\,\mathbf{i}\times\bm{F}$, and the shear resultant is $\bm{V}=\displaystyle\int_\Omega\bm{\tau}\,dA=\bm{F}$.
+
+\subsubsection*{Canonical cross–sectional fields (Ieşan)}
+Ieşan’s construction shows that the plane elastic remainder vanishes (modulo a 2D rigid motion) and that the sectional scalar $\varphi:\Omega\to\mathbb{R}$ must solve a Poisson–Neumann problem driven by a constant vector $\bm{b}\in\mathbf{i}^\perp$ and a constant $b_3\in\mathbb{R}$:
+\begin{equation}
+\Delta_{\!\bm{r}}\varphi=-2(\bm{b}\cdot\bm{r}+b_3)\quad\text{in }\Omega,
+\qquad
+\partial_{\bm{\nu}}\varphi=\text{(linear form in $(\bm{b},\bm{r},\bm{\nu},\nu)$) on }\partial\Omega,
+\label{eq:phiBVP}
+\end{equation}
+with the boundary datum the standard ``Poisson correction" from the free–side condition (explicit component form given in his (2.21)). The torsional amplitude vanishes, $b_4=0$. 
+
+In principal centroidal axes, the Saint–Venant relation fixes $\bm{b}$ from the force resultant,
+\begin{equation}
+\bm{F}=E\,\bm{\mathsf{I}}\,\bm{b},\qquad
+\bm{\mathsf{I}}:\mathbf{i}^\perp\!\to\!\mathbf{i}^\perp\ \text{the second–moment operator about }\mathbf{i},
+\label{eq:SV-FI}
+\end{equation}
+i.e.\ the diagonal form $F_y=E I_y b_y,\ F_z=E I_z b_z$ (and the coupling $I_{yz}$ if axes are not principal).
+
+\subsubsection*{Shear and axial stress}
+The canonical Saint–Venant flexure shear decomposes as
+\begin{equation}
+\boxed{\ \bm{\tau}(\bm{r})=2G\,\nabla_{\!\bm{r}}\varphi(\bm{r})\;+\;2G\,\nu\,\bm{\tau}^{\!(p)}(\bm{r};\bm{b})\ },
+\label{eq:tau-decomp}
+\end{equation}
+where $\bm{\tau}^{\!(p)}(\cdot;\bm{b})$ is a \emph{fixed polynomial} vector field on $\Omega$ (quadratic in $\bm{r}$, linear in $\bm{b}$) determined by the Poisson effect; it has zero divergence in $\Omega$ and supplies the nonzero Neumann datum in \eqref{eq:phiBVP} so that $\bm{\tau}\cdot\bm{\nu}=0$ on $\partial\Omega$. In particular,
+\[
+\operatorname{div}_{\!\bm{r}}\bm{\tau}=2G\,\Delta_{\!\bm{r}}\varphi=-4G\,(\bm{b}\cdot\bm{r}+b_3),
+\]
+and therefore, from \eqref{eq:sigmaq},
+\begin{equation}
+\boxed{\ \sigma(x,\bm{r})=-4G\,(L-x)\,(\bm{b}\cdot\bm{r}+b_3)\ }.
+\label{eq:sigma-final}
+\end{equation}
+Equations \eqref{eq:phiBVP}–\eqref{eq:sigma-final} are exactly Ieşan’s canonical flexure fields, phrased in vector form; compare his (2.18)–(2.22).
+
+\subsubsection*{Displacement with axial warping amplitude}
+Let $\alpha$ be the (scalar) \emph{warping amplitude} (constant along $x$ in the canonical family; its value is absorbed by the choice of $\bm{b}$ via \eqref{eq:SV-FI}). A representative displacement that generates \eqref{eq:tau-decomp}–\eqref{eq:sigma-final} under Hooke’s law is
+\begin{equation}
+\bm{u}(x,\bm{r})=\bm{a}(x)+\bm{\theta}(x)\times\bm{r}\;+\;\alpha\,\mathbf{i}\,\varphi(\bm{r}),
+\label{eq:svf-disp}
+\end{equation}
+where $\bm{a},\bm{\theta}$ are the rigid motions of the cross–section (determined up to inessential constants by the end data) and $\varphi$ solves \eqref{eq:phiBVP}. In Ieşan’s construction the ``plane elastic remainder" is null (modulo a 2D rigid motion), and the torsional amplitude is zero; the remaining $x$–dependence is at most linear and is carried by $\bm{a},\bm{\theta}$.
+
+\subsection*{Observations}
+
+\paragraph{Helmholtz content of $\bm{\tau}$.}
+On the section $\Omega$ (simply connected), the canonical Saint–Venant shear \eqref{eq:tau-decomp} has the Helmholtz–Hodge decomposition
+\[
+\bm{\tau}= \underbrace{2G\,\nabla_{\!\bm{r}}\varphi}_{\text{irrotational}} \;+\; \underbrace{2G\,\nu\,\bm{\tau}^{\!(p)}(\cdot;\bm{b})}_{\text{solenoidal (divergence-free)}},
+\]
+with no harmonic component. Thus, \emph{in general} ($\nu\neq 0$) the shear is \emph{not} curl–free; the solenoidal piece is the familiar quadratic ``Poisson correction" that appears in classical component formulas (Love; Pilkey–Romano). When $\nu=0$, $\bm{\tau}$ collapses to a pure gradient and the energy–minimizer characterization holds.
+
+\paragraph{Vector form vs. classical components.}
+Writing \eqref{eq:tau-decomp} in the principal basis $\{\mathbf{i}_y,\mathbf{i}_z\}$ reproduces the standard expressions
+\[
+\bm{\tau}\cdot\mathbf{i}_y=\frac{2G}{1+\nu}\Big(\partial_y\Phi+\nu\,\Pi_y(y,z)\Big),\quad
+\bm{\tau}\cdot\mathbf{i}_z=\frac{2G}{1+\nu}\Big(\partial_z\Phi+\nu\,\Pi_z(y,z)\Big),
+\]
+where $\Phi$ is a scaled version of $\varphi$ and $(\Pi_y,\Pi_z)$ are the quadratic polynomials in $(y,z)$ fixed by $\bm{b}$ and the section inertias (the textbook forms you quoted). The vector presentation \eqref{eq:tau-decomp} simply collects these into ``gradient $+$ solenoidal polynomial" with $\Delta\varphi$ and the Neumann datum given by \eqref{eq:phiBVP} (Ieşan’s (2.21)).
+
+\paragraph{What makes the solution canonical.}
+Ieşan’s representation (his Eq.\ 2.16) together with the axial–derivative characterization of ``primary solutions of Saint–Venant type" picks out \emph{exactly} the classical Saint–Venant flexure field (no residual ambiguity, up to rigid motions). 
+This is the precise replacement for an energy–minimizer principle in flexure when $\nu\neq 0$. 
+
+\bigskip
+\noindent\textbf{Minimal recipe.}
+\begin{enumerate}
+\item From $\bm{F}$ and the section inertias (in principal axes), solve \eqref{eq:SV-FI} for $\bm{b}$ (and set $b_4=0$).
+\item Solve the plane problem \eqref{eq:phiBVP} for $\varphi$ (Neumann data as in Ieşan (2.21)); fix $\varphi$ up to an additive constant by $\int_\Omega\varphi\,dA=0$.
+\item Form $\bm{\tau}$ and $\sigma$ from \eqref{eq:tau-decomp}–\eqref{eq:sigma-final}; the side condition $\bm{\tau}\cdot\bm{\nu}=0$ holds by construction; resultants satisfy $\int_\Omega\bm{\tau}=\bm{F}$ and $\int_\Omega \bm{r}\times\bm{\tau}=\mathbf{0}$.
+\item (Optional) Recover a displacement using \eqref{eq:svf-disp} (choose $\bm{a},\bm{\theta}$ to meet the clamp and end conditions; $\alpha$ can be absorbed in $\bm{b}$).
+\end{enumerate}
+
+SaintVenant's the a \emph{relaxed} statement in which the pointwise assignment of the terminal tractions 1s replaced by prescribing the corresponding resultant for ce and resultant moment.
+The relaxed statement of the problem fails to characterize the solution uniquely.
+
+Saint Venant's flexure solution is obtained if the stress field depends on tbe axial coordinate at most linearly.
+Great catch — I slipped in that ``simply connected" caveat because it matters for the Hodge/Helmholtz split, and (importantly) because **Ieşan’s paper itself assumes a simply connected section** for the canonical construction. That’s explicit in his setup for the cylinder: the cross-section is taken ``a simply connected regular region." 
+
+
+On a **multiply connected** section $\Omega\subset\mathbf{i}^\perp$ with boundary consisting of several components, the 2-D Hodge/Helmholtz decomposition (with the Saint-Venant side condition $\bm\tau\cdot\bm\nu=0$ on each boundary component) is
+\[
+\bm\tau = \nabla\phi+\nabla^{!\perp}\psi+\bm h,
+\]
+where
+
+* $\nabla\phi$ is the irrotational (curl-free) part;
+* $\nabla^{!\perp}\psi$ is the solenoidal (divergence-free) part;
+* $\bm{h}$ is a harmonic Neumann field: $\operatorname{div}\bm h=0$, $\operatorname{curl}\bm h=0$, $\bm h\cdot\bm\nu=0$ on $\partial\Omega$.
+
+For simply connected $\Omega$, $\bm h\equiv \mathbf{0}$. 
+For multiply connected $\Omega$ with $g$ holes, $\dim{\bm h}=g$: you can add independent ``circulation loops" tangent to the boundaries without changing $\operatorname{div}\bm\tau$ or the side traction. 
+This is exactly the finite-dimensional ambiguity that disappears when $\Omega$ is simply connected.
+
+A harmonic Neumann field $\bm h$ has $\operatorname{div}\bm h=0$ and $\bm h\cdot\bm\nu=0$; by adjusting $\nabla\phi$ one can still meet the force/moment resultants. 
+So $\bm h$ is *not* eliminated by the standard relaxed constraints; it remains undetermined unless you add more information.
+
+
+For a simply connected section there is no harmonic subspace, so the canonical solution is unique (up to rigid motions) and has the structure we wrote (gradient warping (+) Poisson-correction polynomial).
+
+* If you truly want **arbitrary** sections (holes allowed) and still want a *canonical* SV flexure field, you need one extra, natural condition to kill the $g$-dimensional harmonic freedom. 
+Two equivalent ways that practitioners use:
+\begin{enumerate}
+\item **Zero circulation constraints**: for each hole boundary component $\Gamma_k$, impose
+     \[
+     \oint_{\Gamma_k} \bm\tau\cdot\bm t,ds = 0,\qquad k=1,\dots,g,
+     \]
+     where $\bm t$ is the positively oriented tangent. This sets $\bm h\equiv 0$.
+\item **Minimum complementary energy within the sectional class**: minimize $\int_\Omega \tfrac{1}{4G}\lvert \bm\tau\rvert^2 \,dA$ subject to the Saint-Venant constraints (resultants, equilibrium with $\sigma$, $\bm\tau\cdot\bm\nu=0$). Because the harmonic space is orthogonal in the $L^2$ inner product, the minimizer drops $\bm{h}$.
+     (This is distinct from the global 3-D energy characterization that fails for flexure at $\nu\neq 0$; here we’re only selecting among **sectional** fields $\bm\tau$ consistent with the SV class.)
+\end{enumerate}
+
+Either way, you recover exactly the same ``gradient (+) fixed polynomial Poisson-correction" structure we wrote — with **no** extra harmonic term — even when $\Omega$ has holes.
+
+For multiply connected $\Omega$, we additionally require zero tangential circulation of $\bm\tau$ on each boundary component (equivalently, we select the minimum-complementary-energy representative).
+With that single add-on, the **Helmholtz content** of the canonical SV flexure shear stays:
+\[
+\bm\tau = 2G\,\nabla_{\!\bm{r}}\varphi + 2G\,\nu\,\bm\tau^{(p)}(\bm{r};\bm b),
+\]
+
+
+\section{Old}
+
+
+
+\subsection*{Problem}
+
+Let $\mathcal{C}=\{\,x\,\mathbf{i}+\bm{r}\;:\;x\in(0,L),\ \bm{r}\in\Omega\subset\mathbf{i}^\perp\,\}$ be a straight prismatic cylinder with axis unit vector $\mathbf{i}$, cross‐section $\Omega$ (bounded, Lipschitz), and outward unit normal $\bm{\nu}$ on $\partial\Omega$. A constant transverse force $\bm{F}=F\,\bm{f}$ ($\bm{f}\in\mathbf{i}^\perp$) is applied on the free end $\{L\}\times\Omega$ with no end couple; the clamped end $\{0\}\times\Omega$ is kinematically fixed; the lateral surface $(0,L)\times\partial\Omega$ is traction–free. Body forces vanish. The material is linear, isotropic, with Lamé moduli $(\lambda,G)$.
+
+We seek a static solution $(\bm{u},\bm{T})$ of 3D linearized elastostatics on $\mathcal{C}$ satisfying
+\[
+\operatorname{div}\bm{T}=\mathbf{0},
+\qquad 
+\bm{T}=\lambda(\operatorname{tr}\bm{\varepsilon})\mathbf{1}+2G\bm{\varepsilon},
+\qquad 
+\bm{\varepsilon}=\tfrac12(\nabla\bm{u}+\nabla\bm{u}^{\!\top}),
+\]
+with boundary conditions
+\[
+\bm{u}=\mathbf{0}\ \text{on }\{0\}\times\Omega,\qquad
+\bm{T}\bm{n}=\mathbf{0}\ \text{on }(0,L)\times\partial\Omega,
+\]
+and end traction $\bm{t}=\bm{T}\mathbf{i}$ on $\{L\}\times\Omega$ satisfying the Saint‐Venant resultants
+\[
+\int_\Omega \bm{t}\,dA=\bm{F},\qquad 
+\int_\Omega \bm{r}\times\bm{t}\,dA=\mathbf{0}\quad\text{(torsion free)}.
+\]
+
+\subsection*{Saint–Venant class and stress representation}
+
+Introduce the orthonormal frame $\{\mathbf{i},\mathbf{i}_y,\mathbf{i}_z\}$ with $\mathbf{i}_y,\mathbf{i}_z\in\mathbf{i}^\perp$ and write $\bm{r}=(0,y,z)$. 
+The Saint–Venant elastostatic class for prismatic cylinders assumes that, away from the ends, in‐plane normal and in‐plane shear stresses vanish, so every nonzero stress component has one index along $\mathbf{i}$. 
+Equivalently,
+\begin{equation}
+\bm{T}
+=\sigma\,\mathbf{i}\otimes\mathbf{i}\;+\;\bm{\tau}\otimes\mathbf{i}\;+\;\mathbf{i}\otimes\bm{\tau},
+\qquad
+\sigma:=\mathbf{i}\cdot\bm{T}\mathbf{i},\quad
+\bm{\tau}:=(\mathbf{i}_\beta\otimes\mathbf{i}_\beta)\bm{T}\mathbf{i}\in\mathbf{i}^\perp,
+\label{eq:frame-stress-tensor}
+\end{equation}
+where $\{\mathbf{i}_\beta\}$ spans $\mathbf{i}^\perp$. 
+This form is \emph{justified} as follows:
+(i) symmetry of $\bm{T}$ permits only three independent blocks; 
+(ii) traction on the lateral surface has normal $\bm{n}=\bm{\nu}\in\mathbf{i}^\perp$, so $\bm{T}\bm{n}=(\bm{\tau}\cdot\bm{n})\,\mathbf{i}$; imposing $\bm{T}\bm{n}=\mathbf{0}$ on $(0,L)\times\partial\Omega$ forces $\bm{T}$ to have no purely in‐plane block (else $\bm{T}\bm{n}$ would have in‐plane parts), and reduces the boundary condition to
+\begin{equation}
+\bm{\tau}\cdot\bm{\nu}=0\quad\text{on }\partial\Omega.
+\label{eq:side-BC}
+\end{equation}
+
+% \subsection*{Equations reduced on the cross–section}
+
+With the ansatz \eqref{eq:frame-stress-tensor} and $\bm{\tau}=\bm{\tau}(\bm{r})$ (independent of $x$), equilibrium $\operatorname{div}\bm{T}=\mathbf{0}$ splits orthogonally into
+\begin{equation}
+\partial_x\bm{\tau}=\mathbf{0},\qquad 
+\partial_x\sigma+\operatorname{div}_{\bm{r}}\bm{\tau}=0.
+\label{eq:equil-split}
+\end{equation}
+Hence $\bm{\tau}$ is a section field, and axial stress \(\sigma\) takes the form $\sigma(x,\bm{r})=\sigma(L,\bm{r})-(x-L)\,q(\bm{r})$ with
+\begin{equation}
+q(\bm{r}):=\operatorname{div}_{\bm{r}}\bm{\tau}(\bm{r}).
+\label{eq:q-def}
+\end{equation}
+Choosing the tip to carry no axial stress ($\sigma(L,\bm{r})=0$) enforces the Saint–Venant ``force without couple" end condition; all axial stress is then induced by the sectional divergence of $\bm{\tau}$ as $x$ decreases from $L$.
+
+\subsection*{Resultants and torsion–free constraint}
+
+Define the sectional shear resultant and bending moment (about the axis through the origin of $\Omega$) by
+\[
+\bm{V}:=\int_\Omega \bm{\tau}\,dA\in\mathbf{i}^\perp,\qquad
+\bm{M}(x):=\int_\Omega \bm{r}\times\big(\sigma(x,\bm{r})\,\mathbf{i}\big)\,dA\in\mathbf{i}^\perp.
+\]
+The end conditions impose
+\begin{equation}
+\bm{V}=\bm{F},\qquad 
+\int_\Omega \bm{r}\times\bm{\tau}\,dA=\mathbf{0}\quad(\text{torsion free}).
+\label{eq:resultants}
+\end{equation}
+Differentiating $\bm{M}$ in $x$ and using \eqref{eq:equil-split} with a cross–sectional integration by parts yields the Saint–Venant balance of resultants
+\begin{equation}
+\bm{M}'(x)=\mathbf{i}\times\bm{V}=\mathbf{i}\times\bm{F},\qquad \bm{M}(L)=\mathbf{0}\ \Rightarrow\ \bm{M}(x)=(L-x)\,\mathbf{i}\times\bm{F}.
+\label{eq:moment-balance}
+\end{equation}
+
+\subsection*{Shear field as a plane problem}
+
+The shear field $\bm{\tau}:\Omega\to\mathbf{i}^\perp$ is determined solely on $\Omega$ by
+\begin{equation}
+\begin{aligned}
+\bm{\tau}\in H(\mathrm{div};\Omega;\mathbf{i}^\perp),\\ 
+\bm{\tau}\cdot\bm{\nu}&=0\ \text{on }\partial\Omega,\\
+\int_\Omega \bm{\tau}\,dA&=\bm{F},\\
+\int_\Omega \bm{r}\times\bm{\tau}\,dA&=\mathbf{0}.
+\end{aligned}
+\label{eq:tau-constraints}
+\end{equation}
+Among all such fields, the Saint–Venant solution is the (unique) minimizer of complementary energy
+\begin{equation}
+\bm{\tau}=\underset{\tilde{\bm{\tau}}\ \text{satisfying }\eqref{eq:tau-constraints}}{\arg\min}\;
+\frac{1}{4G}\int_\Omega |\tilde{\bm{\tau}}|^2\,dA.
+\label{eq:SV-variational}
+\end{equation}
+The Euler–Lagrange equations for \eqref{eq:SV-variational} yield a \emph{divergence–form} plane boundary value problem:
+\begin{equation}
+-\operatorname{div}_{\bm{r}}\big(\bm{\tau}\big)=q\ \text{in }\Omega,\qquad 
+\bm{\tau}\cdot\bm{\nu}=0\ \text{on }\partial\Omega,
+\label{eq:tau-strong}
+\end{equation}
+with the scalar source $q$ fixed implicitly by the two global constraints in \eqref{eq:tau-constraints} (force and zero torsional moment). 
+
+\subsection*{Axial stress reconstruction}
+
+With $\bm{\tau}$ known, the axial stress follows from \eqref{eq:equil-split}–\eqref{eq:q-def} as
+\begin{equation}
+\sigma(x,\bm{r})=(L-x)\,q(\bm{r}),\qquad 
+q(\bm{r})=\operatorname{div}_{\bm{r}}\bm{\tau}(\bm{r}),
+\label{eq:sigma-from-tau}
+\end{equation}
+and the moment balance \eqref{eq:moment-balance} is satisfied identically. By construction $\int_\Omega \sigma(x,\bm{r})\,dA=0$ for all $x$ (no axial force), because $\int_\Omega q\,dA=\int_{\partial\Omega}\bm{\tau}\cdot\bm{\nu}\,ds=0$.
+
+\subsection*{Displacement and warping}
+
+Let $\bm{u}$ be any displacement field whose strain produces \eqref{eq:frame-stress-tensor} under Hooke's law. 
+Decompose $\bm{u}$ into a rigid cross–sectional motion and an axial warping:
+\[
+\bm{u}(x,\bm{r})=\bm{a}(x)+\bm{\theta}(x)\times\bm{r}\;+\;\big(\mathbf{i}\,\varphi(\bm{r})\big)\,\kappa(x),
+\]
+where $\bm{a},\bm{\theta}$ are $x$–dependent translations/rotations and $\varphi:\Omega\to\mathbb{R}$ is a \emph{warping displacement} along $\mathbf{i}$ with scalar amplitude $\kappa(x)$. 
+The Saint–Venant class implies that the sectional shear strain vector equals the in–plane gradient of the axial warping:
+\[
+\bm{\gamma}(\bm{r})=2\,\bm{\varepsilon}(\bm{u})\,\mathbf{i}\ -\ \big(\mathbf{i}\cdot 2\,\bm{\varepsilon}(\bm{u})\,\mathbf{i}\big)\,\mathbf{i}
+\;\;=\;\nabla_{\bm{r}}\big(\kappa(x)\,\varphi(\bm{r})\big).
+\]
+Since $\bm{\tau}=2G\,\bm{\varepsilon}\,\mathbf{i}-\sigma\,\mathbf{i}$ projects in the section to $\bm{\tau}=2G\,\bm{\gamma}$, we obtain the kinematic identification
+\begin{equation}
+\bm{\tau}(\bm{r})=2G\,\nabla_{\bm{r}}\big(\kappa\,\varphi(\bm{r})\big),
+\qquad 
+\bm{\tau}\cdot\bm{\nu}=0\ \Rightarrow\ \partial_{\bm{\nu}}\big(\kappa\,\varphi\big)=0\ \text{on }\partial\Omega.
+\label{eq:tau-from-warp}
+\end{equation}
+Eliminating $\kappa$ into the global force constraint in \eqref{eq:resultants} fixes the amplitude (up to rigid motions of $\bm{u}$), while $\varphi$ is determined (up to an additive constant) by the plane Neumann problem that is \emph{equivalent} to \eqref{eq:SV-variational}:
+\begin{equation}
+\text{find }\varphi\in H^1(\Omega)/\mathbb{R}\ \text{s.t.}\quad
+\int_\Omega \nabla_{\bm{r}}\varphi\cdot\nabla_{\bm{r}}\eta\,dA
+=\frac{1}{2G\,\kappa}\,\bm{F}\cdot\int_{\partial\Omega}\eta\,\bm{\nu}\,ds,
+\quad\forall\eta\in H^1(\Omega),
+\label{eq:phi-weak}
+\end{equation}
+together with the torsion–free side constraint
+\begin{equation}
+\int_\Omega \bm{r}\times\nabla_{\bm{r}}\big(\kappa\,\varphi\big)\,dA=\mathbf{0}.
+\label{eq:phi-tf}
+\end{equation}
+Equations \eqref{eq:tau-from-warp}–\eqref{eq:phi-weak} \emph{define} the warping formulation without recourse to a stress potential; the resulting $\bm{\tau}$ then generates $\sigma$ by \eqref{eq:sigma-from-tau}.
+
+\subsection*{Solution summary}
+
+Given $\bm{F}=F\,\bm{f}\in\mathbf{i}^\perp$:
+
+\begin{enumerate}
+\item Solve the plane constrained problem \eqref{eq:SV-variational} (or, equivalently, \eqref{eq:phi-weak}–\eqref{eq:phi-tf}) on $\Omega$ to obtain the unique shear field $\bm{\tau}(\bm{r})$ with $\bm{\tau}\cdot\bm{\nu}=0$ on $\partial\Omega$, $\int_\Omega\bm{\tau}=\bm{F}$, and $\int_\Omega\bm{r}\times\bm{\tau}=\mathbf{0}$.
+
+\item Reconstruct axial stress by $\sigma(x,\bm{r})=(L-x)\,\operatorname{div}_{\bm{r}}\bm{\tau}(\bm{r})$.
+
+\item The full Cauchy stress is
+\[
+\bm{T}(x,\bm{r})=\sigma(x,\bm{r})\,\mathbf{i}\otimes\mathbf{i}
++\bm{\tau}(\bm{r})\otimes\mathbf{i}
++\mathbf{i}\otimes\bm{\tau}(\bm{r}),
+\]
+which satisfies equilibrium, traction–free sides, the end resultants, and the torsion–free condition.
+
+\item The bending moment vector satisfies $\bm{M}(x)=(L-x)\,\mathbf{i}\times\bm{F}$ and $\bm{V}=\bm{F}$, cf. \eqref{eq:moment-balance}.
+\end{enumerate}
+
+\paragraph{Remarks.}
+(i) The representation \eqref{eq:frame-stress-tensor} is the most general symmetric tensor compatible with traction–free lateral boundary under the Saint–Venant class; \eqref{eq:side-BC} is necessary and sufficient for side tractions to vanish.
+(ii) The formulation does not assume any special cross–section; all section dependence is carried by the plane problem for $\bm{\tau}$ (or, kinematically, by $\varphi$).
+(iii) Uniqueness holds up to the usual self‐equilibrated rigid modes: adding a self‐equilibrated $(\sigma,\bm{\tau})$ with vanishing resultants leaves the solution class invariant; \eqref{eq:SV-variational} singles out the Saint–Venant solution by minimum complementary energy.

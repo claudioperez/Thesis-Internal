@@ -1,0 +1,393 @@
+
+\begin{table}[H]
+  \centering
+  \caption{Existence, definitions, and key equalities.}
+  \renewcommand{\arraystretch}{1.2}
+  \begin{tabular}{@{}llll|llll@{}}
+  \toprule
+  Sym. & Req. & Definition & & S1 & D1 & C1 & S2 \\ \midrule
+  \multicolumn{7}{@{}c}{\textit{Saint–Venant Class}}\\
+
+  $\bm{s}(x)$ 
+    % Exists
+    & -%always 
+    % Definition
+    & $(N,\bm{F},T,\bm{M})$ 
+    &
+    % S1
+    & $\,\bm{s}' = \mathbb{J}\bm{s}$  %%= 
+    & % $(\mathbf{1}+x\mathbb{J})\bm{s}_0$ 
+    & 
+    \\
+
+  $\mathbb{J}$ 
+    % Exists
+    & %always (model S1) 
+    % Def.
+    &
+    & \eqref{eq:J-matrix} 
+    % S1
+    & $\bm{s}(x) =\exp \left(x\mathbb{J}\right)\bm{s}_0$ %
+    % D1
+    & 
+    % C1
+    & 
+    % S2
+    \\
+
+  $\IesanEvolveSP$ 
+    & %$\IesanStiff$ invertible 
+    % Def.
+    & $\IesanEvolveSP \coloneq \IesanStiff^{-1}\mathbb{J}\IesanStiff$
+    & \eqref{eq:A-matrix-neg} 
+    % S1
+    & $~\bm{s}(x)=\IesanStiff\exp\left(x\IesanEvolveSP\right)\bm{p}$ 
+     % $\bm{s}(x)=\IesanStiff(\mathbf{1} + x\IesanEvolveSP)\bm{p}$ 
+    & 
+    & \\
+
+  % $\IesanStiff$ 
+  %   & %SV basis chosen (P) 
+  %   & $\,\bm{s}_0 = \IesanStiff\,\bm{p}$ 
+  %   & 
+  %   & 
+  %   & \\
+
+  \hline
+  \multicolumn{7}{@{}c}{\textit{Trace Kinematics}}\\
+
+  $\bm{e}(x)$ 
+    & $\exists\,\mathcal{T}$ 
+    % Def.
+    & \( (\bm\gamma, \bm\kappa) \)
+    &
+    % S1
+    & 
+    % D1
+    & $\bm{e}(x)=(\mathbf{1}+x\TraceEvolveEE)\bm{e}(0)$
+    & 
+    \\
+    %
+    & % Exist
+    & % Def
+    &
+    & % [S1]
+    & \(\bm{e}(x) = \TraceDeDpRoot(\mathbf{1} + x\TraceEvolveEP)\bm{p}\)
+    \\
+
+  % $\TraceEvolveEE$ 
+  %   & [D1]$^*$ 
+  %   & %$\,\bm{e}' = \TraceEvolveEE \bm{e}$ % Definition 
+  %   %$\TraceEvolveEE \coloneq \TraceDpDeRoot\TraceDeDpOne$ 
+  %   & $\TraceEvolveEE = \IesanEvolveSP$ ?
+  %   & 
+  %   & \\
+
+  $\TraceDeDpX(x)$ 
+    & [T1] % linear SV trace 
+    % Def
+    & $\bm{e}(x) = \TraceDeDpX(x)\,\bm{p}$ 
+    &
+    & 
+    & $\TraceDeDpX(x)=\TraceDeDpRoot(\mathbf{1}+x\TraceEvolveEP)$ % D1
+    & \\
+
+  $\TraceDeDpRoot$ 
+    & [T1] % linear SV trace 
+    % Def.
+    & $\TraceDeDpRoot \coloneq \TraceDeDpX(0)$
+    & \eqref{eq:def-T0} 
+    % S1
+    & 
+    & 
+    & \\
+
+  $\TraceEvolveEP$
+    & [D1]
+    % Def.
+    & $\TraceEvolveEP \coloneq\TraceDpDeRoot\TraceDeDpOne$
+    &
+    &
+    & $\TraceEvolveEP = \IesanEvolveSP$
+    \\
+
+  $\TraceEvolveEE$
+    & [D1]
+    % Def.
+    & $\TraceEvolveEE \coloneq \TraceDeDpOne\TraceDpDeRoot$ 
+    %$\bm{e}'(x) = \TraceEvolveEE\bm{e}(x)$
+    &
+    % S1
+    &
+    % D1
+    & $\TraceEvolveEE = \TraceDeDpRoot\IesanEvolveSP\TraceDpDeRoot\;$\eqref{eq:e1-j} 
+    \\
+
+  $\TraceDeDpOne$ 
+    & [D1]
+    % Def.
+    & $\TraceDeDpOne=\TraceDeDpX(1)$ 
+    &
+    % S1
+    & 
+    & $\TraceDeDpOne = \TraceEvolveEE\TraceDeDpRoot$ 
+    & \\
+
+  \hline
+  \multicolumn{7}{@{}c}{\textit{Trace Equilibrium}}\\
+
+  $\mathbf{C}(x)$ 
+    & -
+    % Def
+    & $\partial_{e}\bm{s}(x)$ %$$\bm{s}(x)=\mathbf{C}(x)\bm{e}(x)$ 
+    &
+    % S1
+    & 
+    % D1
+    &
+    % C1
+    & C1: $\mathbf{C}(x)\equiv \IesanStiff\TraceDpDeRoot$ 
+    & 
+    \\
+
+  $\bar{\mathbf{C}}(x)$ 
+    & 
+    % Def
+    & $\partial_e\bar{\bm s}(x)$ %$\bar{\bm{s}}(x)=\bar{\mathbf{C}}(x)\bm{e}(x)$ 
+    &
+    % S1
+    & 
+    % D1
+    &
+    & C2: $\bar{\mathbf{C}}(x)\equiv\bar{\mathbf{C}}$ 
+    & \\
+
+  $\bar{\bm{s}}(x)$ 
+    & % $\bar{\mathbf{C}}_T$ invertible 
+    % Def
+    &  
+    &
+    % S1
+    & 
+    & 
+    &
+    & $\bar{\bm{s}}'=\mathbb{J}\bar{\bm{s}}$ \\
+
+  $\bar{\mathbf{G}}(x)$ 
+    & %$\mathbf{C},\bar{\mathbf{C}}$ invertible 
+    % Def.
+    & $\bar{\mathbf{G}}(x) \coloneq \bar{\mathbf{C}}\mathbf{C}^{-1}$ 
+    &
+    % S1.
+    & 
+    & 
+    &
+    & $[\bar{\mathbf{G}},\,\mathbb{J}] = \mathbf{0}$ \\
+  \bottomrule
+  \end{tabular}
+\end{table}
+
+\begin{tikzpicture}[
+  node distance = 1.7cm and 2.4cm,
+  >=Latex,
+  every node/.style = {font=\small},
+  primary/.style   = {rectangle, draw, rounded corners=2pt, thick,
+                      align=center, minimum height=7mm, inner sep=2pt},
+  implied/.style   = {rectangle, draw, rounded corners=2pt, dashed,
+                      align=center, minimum height=7mm, inner sep=2pt},
+  pathlabel/.style = {font=\footnotesize, anchor=east}
+]
+
+% Global equilibrium (always assumed)
+\node[primary] (S1) at (12,4.2) {S1\\Equilibrium exact\\$\bm{s}'=\mathbb{J}\bm{s}$};
+\node[font=\footnotesize, anchor=south] at (S1.north) {Class I};
+
+% --------------------------------------------------------------------
+% Path A: kinematics-first (T1 + D1 primary)
+% --------------------------------------------------------------------
+\node[pathlabel] (A0) at (0,2) {Path A:};
+\node[primary, right=0.5cm of A0]   (A_T1) {T1\\$\bm{e}(x)=\TraceDeDpRoot(\mathbf{1}+x\TraceEvolveEP)\bm{p}$};
+\node[primary, right=1.5cm of A_T1] (A_D1) {D1\\strain-exact\\$\TraceEvolveEP=\IesanStiff^{-1}\mathbb{J}\IesanStiff$};
+\node[implied, right=2.0cm of A_D1, yshift=-0.5cm] (A_C1) {C1\\prismatic\\$\mathbf{C}_T=\IesanStiff\,\TraceDpDeRoot$};
+\node[primary, right=2.0cm of A_C1] (A_P1) {P1\\plane-rigid};
+
+\draw[->, thick] (A_T1) -- (A_D1); %node[above]{fixes affine form of $\bm{e}(x)$}
+\draw[->]        (A_D1) -- (A_C1); %node[above]{implies}
+\draw[->, thick] (A_D1) to[bend left=15] (A_P1); % node[above]{specialize geometry}
+
+% link S1 to this path (via equilibrium generator in D1/C1)
+\draw[->] (S1.south west) to[bend right=15] (A_D1.north); % node[left,pos=0.3]{uses $\mathbb{J}$}
+
+% --------------------------------------------------------------------
+% Path B: resultants-first (T1 + C1 primary)
+% --------------------------------------------------------------------
+\node[pathlabel] (B0) at (0,0) {Path B:};
+\node[primary, right=0.5cm of B0]   (B_T1) {T1\\strain-affine};
+\node[primary, right=1.5cm of B_T1] (B_C1) {C1\\prismatic resultants};
+\node[implied, right=2.0cm of B_C1, yshift=-0.5cm] (B_D1) {D1\\strain-exact\\$\TraceEvolveEP=\IesanEvolveSP$};
+\node[primary, right=2.0cm of B_D1, yshift=0.5cm] (B_P1) {P1\\plane-rigid};
+
+\draw[->, thick] (B_T1) -- (B_C1); %node[above]{assume affine $\bm{e}(x)$}
+\draw[->]        (B_C1) -- node[above]{$\mathbb{J}\mathbf{C}_T=\mathbf{C}_T\TraceEvolveEE$} (B_D1);
+\draw[->, thick] (B_D1) -- (B_P1); % node[above]{restrict $\TraceDeDpRoot$}
+
+\draw[->] (S1) to[bend left=10] (B_C1.north); %node[right,pos=0.4]{equilibrium of $\bm{s}$}
+
+% --------------------------------------------------------------------
+% Path C: plane-trace-first (P1 primary)
+% --------------------------------------------------------------------
+\node[pathlabel] (C0) at (0,-2) {Path C:};
+\node[primary, right=0.5cm of C0]   (C_P1) {P1\\plane-rigid};
+\node[primary, right=1.5cm of C_P1] (C_T1) {T1\\strain-affine};
+\node[primary, right=2.0cm of C_T1] (C_D1) {D1\\strain-exact};
+\node[implied, right=2.0cm of C_D1] (C_C1) {C1\\prismatic};
+
+\draw[->, thick] (C_P1) -- (C_T1); % node[above]{}
+\draw[->, thick] (C_T1) -- (C_D1); % node[above]{match SV strains}
+\draw[->, dashed] (C_D1) -- (C_C1); % node[above]{gives $\mathbf{C}_T$ constant}
+
+\draw[->, dashed] (S1.south) to[bend left=15] (C_C1.north); %node[right,pos=0.4]{same $\mathbb{J}$} 
+
+% --------------------------------------------------------------------
+% Legend
+% --------------------------------------------------------------------
+\node[primary, anchor=west]  (Lprim) at (0,-4.0) {imposed};
+\node[implied, right=1.6cm of Lprim] (Lsec) {implied};
+\draw[->, thick] (Lprim.east) -- ++(1.0,0) node[midway,below]{primary chain};
+\draw[->, dashed] (Lsec.east) -- ++(1.0,0) node[midway,below]{logical consequence};
+
+\end{tikzpicture}
+
+
+\begin{figure}[H]
+    \centering
+\begin{tikzpicture}[
+    % Node styles
+    condition/.style={
+        rectangle,
+        rounded corners=1pt,
+        draw=black,
+        thick,
+        minimum width=2.2cm,
+        minimum height=0.9cm,
+        % font=\sffamily\small,
+        font=\small,
+        align=center
+    },
+    baseline/.style={
+        condition,
+        fill=blue!15,
+        draw=blue!60!black
+    },
+    classI/.style={
+        condition,
+        fill=green!15,
+        draw=green!50!black
+    },
+    classII/.style={
+        condition,
+        fill=orange!20,
+        draw=orange!70!black
+    },
+    derived/.style={
+        condition,
+        fill=gray!15,
+        draw=gray!60
+    },
+    % Arrow styles
+    implies/.style={
+        ->,
+        >=Stealth,
+        thick,
+        shorten >=2pt,
+        shorten <=2pt
+    },
+    requires/.style={
+        ->,
+        >=Stealth,
+        thick,
+        dashed,
+        shorten >=2pt,
+        shorten <=2pt
+    },
+    % Label style
+    edgelabel/.style={
+        font=\footnotesize\itshape,
+        fill=white,
+        inner sep=1pt
+    }
+]
+
+% ===== NODES =====
+
+% Baseline
+\node[baseline] (S1) at (0,0) {{S1}\\Equilibrium\\Exact};
+
+% Class I conditions
+\node[classI] (C1) at (0,-2.5) {{C1}\\Resultant\\Prismatic};
+
+% Derived from C1
+\node[derived] (C2) at (3.5,-2.5) {{C2}\\Conjugate\\Prismatic};
+
+\node[derived] (D1) at (-3.5,-2.5) {{D1}\\Strain~Affine};
+
+% Class II
+\node[classII] (S2) at (0,-5) {{S2}\\Equilibrium\\Conjugate};
+
+% Constraint box
+\node[draw, dashed, rounded corners, inner sep=6pt, 
+      font=\footnotesize, text width=2.8cm, align=center] 
+    (constraint) at (4,-5) {$[\mathbf{G},\mathbb{J}]=\mathbf{0}$\\[2pt]Centralizer\\constraint};
+
+% ===== EDGES =====
+
+% S1 -> C1
+\draw[implies] (S1) -- (C1) 
+    node[midway, right=2pt, edgelabel] {assume};
+
+% C1 -> C2
+\draw[implies] (C1) -- (C2) 
+    node[midway, above, edgelabel] {automatic};
+
+% C1 -> D1
+\draw[implies] (C1) -- (D1) 
+    node[midway, above, edgelabel] {$\mathbf{J}_{\mathrm{p}}=\IesanEvolveSP$};
+
+% C1 -> S2 (requires constraint)
+\draw[requires] (C1) -- (S2);
+
+% Constraint to S2
+\draw[requires, <->] (S2) -- (constraint)
+    node[midway, above, edgelabel] {iff};
+
+% ===== CLASS BOXES =====
+
+% Class I box
+\begin{scope}[on background layer]
+    \node[draw=green!50!black, dashed, rounded corners=8pt,
+          fit=(C1)(C2)(D1), 
+          inner sep=12pt,
+          label={[font=\small, green!40!black]above right:Class I}] 
+        (classIbox) {};
+\end{scope}
+
+% Class II box  
+\begin{scope}[on background layer]
+    \node[draw=orange!70!black, dashed, rounded corners=8pt,
+          fit=(S2)(constraint),
+          inner sep=10pt,
+          label={[font=\small, orange!60!black]below:Class II}]
+        (classIIbox) {};
+\end{scope}
+
+% ===== LEGEND =====
+\node[anchor=north west, font=\sffamily\footnotesize] at (-5.5, 1) {
+    \begin{tabular}{@{}l@{}}
+    \tikz\draw[implies] (0,0) -- (0.7,0); Automatic\\[3pt]
+    \tikz\draw[requires] (0,0) -- (0.7,0); Requires constraint
+    \end{tabular}
+};
+
+\end{tikzpicture}
+% \caption{Caption}
+\end{figure}

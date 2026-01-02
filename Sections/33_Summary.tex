@@ -1,0 +1,373 @@
+
+\subsection{General solution}
+
+Combining \eqref{eq:iesan-displacement-1} and \eqref{eq:iesan-displacement-2} furnishes the particular solution for the complete Saint-Venant class:
+\begin{equation}
+\begin{aligned}
+\hat{\bm u}_{\rm P}%\{\bm a,\bm{b}_{\Section}\}
+&=\Big(-\tfrac12 \reflenx^2\,\mathbf{1}-\nu\,\operatorname{dev}\bm{r}\otimes\bm{r}+\reflenx\,\FrameBasis\otimes\bm{r}\Big)\bm{a}_{\Section}
++(\reflenx\,\FrameBasis-\nu\,\bm{r})\,a_{\varepsilon}
++\big(\reflenx\,\FrameBasis\times\bm{r}+\WarpTwistIesan\,\FrameBasis\big)a_\vartheta\\
+&\quad-\tfrac16\,\reflenx^3\,\bm{b}_{\Section}
+-\reflenx\,\nu\Big(\operatorname{dev}\bm{r}\otimes\bm{r}-\bm{r}\otimes\CentroidLocation\Big)\bm{b}_{\Section}
++\tfrac12 \reflenx^2\,\FrameBasis\otimes(\bm{r}-\CentroidLocation)\,\bm{b}_{\Section}
++\FrameBasis\otimes\bm{\WarpShearIesan}(\bm{r})\,\bm{b}_{\Section}\\
+&\quad+\big(\reflenx\,\FrameBasis\times\bm{r}+\WarpTwistIesan\,\FrameBasis\big)c_\vartheta, 
+\end{aligned}
+\label{eq:iesan-general-solution}
+\end{equation}
+%
+\begin{Details}
+\begin{equation*}
+\begin{aligned}
+\hat{\bm u}_{\rm P}%\{\bm a,\bm{b}_{\Section}\}
+&=
+ \reflenx\,\FrameBasis\,a_{\varepsilon} \\
+&\quad-\tfrac12\,\reflenx^2\,\bm{a}_{\Section} \\
+&\quad-\tfrac16\,\reflenx^3\,\bm{b}_{\Section} \\
+&\quad+\reflenx\,\FrameBasis\otimes\bm{r}\,\bm{a}_{\Section} \\
+&\quad+\tfrac12 \reflenx^2\,\FrameBasis\otimes\bm{r}\,\bm{b}_{\Section} \\
+&\quad+\reflenx\,\FrameBasis\times\bm{r}\,(a_\vartheta+c_{\vartheta}) \\
+&\quad-\tfrac12 \reflenx^2\,\FrameBasis\otimes\CentroidLocation\,\bm{b}_{\Section} \\
+% \hline
+&\quad+\bm{W}_{(\varepsilon)}\,a_{\varepsilon}
++ \bm{W}_{(a)}\,\bm{a}_{\Section} \\
+&\quad+\WarpTwistIesan\,\FrameBasis\,(a_\vartheta+c_{\vartheta}) \\
+&\quad+\FrameBasis\otimes\bm{\WarpShearIesan}(\bm{r})\,\bm{b}_{\Section}
++\reflenx\,\bm{\Pi}_{(b)}\bm{b}_{\Section} \\
+%
+&=
+ \reflenx\,\FrameBasis\,a_{\varepsilon}
+-\tfrac12\,\reflenx^2\,\bm{a}_{\Section} 
+-\tfrac16\,\reflenx^3\,\bm{b}_{\Section} \\
+&\quad+\reflenx\,\FrameBasis\times\bm{r}\,(a_\vartheta+c_{\vartheta}) \\
+&\quad+\reflenx\quad\bm{r}\times\,(\FrameBasis\times\bm{a}_{\Section}) \\
+&\quad+\tfrac12 \reflenx^2\,\bm{r}\times\,(\FrameBasis\times\bm{b}_{\Section}) \\
+&\quad-\tfrac12 \reflenx^2\,\FrameBasis\otimes\CentroidLocation\,\bm{b}_{\Section} \\
+&\quad+\bm{w}(x,\bm{r})
+\end{aligned}
+\end{equation*}
+\end{Details}
+with \(\bm a\) fixed by \eqref{eq:2-15}, \(\bm b\) by \eqref{eq:2-18}, \(\WarpTwistIesan\) by \eqref{eq:bvp-warp-twist-iesan},
+\(\bm{\WarpShearIesan}\) by \eqref{eq:bvp-warp-shear-iesan},  \(c_\vartheta\) by \eqref{eq:iesan-2-22}. 
+% and $\hat{\bm u}_{\rm R}$ is an arbitrary infinitesimal rigid body displacement field. 
+%
+The complete Saint-Venant solution consists of the particular solution \eqref{eq:iesan-general-solution} plus an arbitrary rigid body displacement:
+
+\begin{equation}
+\hat{\bm{u}}(x,\bm{r}) = \hat{\bm{u}}_{\rm P}(x,\bm{r}) + \hat{\bm{u}}_{\rm R}(x,\bm{r})
+\label{eq:general-solution}
+\end{equation}
+
+where the rigid body field \(\hat{\bm{u}}_{\rm R}\) contains six arbitrary parameters. 
+\begin{equation}
+\begin{aligned}
+\hat{\bm u}_{\rm R}\{\bm{q}\} 
+&= \bm{q}_u + \bm{q}_\theta \times \hat{\bm{x}}(\reflenx,\bm{r}) \\
+% &= \bm{q}_u + \bm{q}_\theta \times (\reflenx \FrameBasis + \bm{r})
+\end{aligned}
+\label{eq:rigid-field}
+\end{equation}
+where
+\(\bm{q}_u\in \mathbb{R}^3\)
+represents translation and
+\(\bm{q}_\theta\in \mathbb{R}^3\)
+represents rotation. 
+%
+The infinitesimal strain tensor is
+\[
+\StrainTensor
+= \PointAxialStrain\,\FrameBasis\otimes\FrameBasis
+\;+\;\FrameBasis\stackrel{\rm s}{\otimes} \bm{\varepsilon}_{\gamma}
+\;-\;\nu\,\PointAxialStrain\,\oneS,
+\]
+where recall \(\bm{a}\stackrel{\rm s}{\otimes}\bm{b} = \tfrac{1}{2} (\bm{a}\otimes\bm{b} + \bm{b}\otimes\bm{a})\) is the symmetrized bun product and:
+\begin{subequations}
+\begin{align}
+\PointAxialStrain
+&= a_{\varepsilon} + \bm{r}\cdot\bm{a}_{\Section}
++ x\,(\bm{r}-\CentroidLocation)\cdot\bm{b}_{\Section},
+ \label{eq:iesan-point-axial-strain} \\
+%
+\PointShearStrain 
+&= (a_{\vartheta} + c_{\vartheta})(\FrameBasis\times \bm{r} + \nabla\WarpTwistIesan) 
++\bm{\Pi}_{(b)}\bm{b}_{\Section}
++ (\nabla \bm{\WarpShearIesan})^{\top} \bm{b}_{\Section} 
+\label{eq:iesan-point-shear-strain}
+\end{align}
+\label{eq:iesan-point-strain}
+\end{subequations}
+
+\begin{Details}
+Decompose $\nabla \hat{\bm{u}} = \FrameBasis\otimes\hat{\bm{u}}' + \gradS\hat{\bm{u}}$.
+
+\begin{equation}
+\begin{aligned}
+\hat{\bm{u}}'
+&=\; \Big(-x\,\one + \FrameBasis\otimes\bm{r}\Big)\bm{a}_{\Section}
+\;+\; \FrameBasis\,a_{\varepsilon}
+\;+\; (\FrameBasis\times\bm{r})\,(a_\vartheta+c_\vartheta)
+\\&\quad
+-\tfrac12 x^2\,\bm{b}_{\Section}
+\;-\;\nu\bigl(\dev(\bm{r}\otimes\bm{r}) - \bm{r}\otimes\CentroidLocation\bigr)\bm{b}_{\Section}
+\;+\; x\,\FrameBasis\otimes(\bm{r}-\CentroidLocation)\bm{b}_{\Section} \\
+\gradS\hat{\bm{u}}
+&=\; \left(-\nu\,(\bm{r}\cdot\bm{a}_{\Section})\,\oneS \;+\; x\,\FrameBasis\otimes \bm{a}_{\Section}\right)
+ - \nu\,a_{\varepsilon}\,\oneS
+\\&\quad
++ x\,( \FrameBasis\times \oneS)\,a_\vartheta
+\;+\; \FrameBasis\otimes(\nabla\WarpTwistIesan)\,a_\vartheta
+\;+\; x\,( \FrameBasis\times \oneS)\,c_\vartheta
+\\&\quad
+-\; x\nu\,\bigl[(\bm{r}-\CentroidLocation)\cdot\bm{b}_{\Section}\bigr]\oneS
+\;+\; \tfrac12 x^2\,\FrameBasis\otimes \bm{b}_{\Section}
+\;+\; \FrameBasis\otimes\bigl(c_\vartheta\,\gradS\WarpTwistIesan\bigr)
+\\&\quad
++\; \FrameBasis\otimes \nabla\big(\bm{\WarpShearIesan}\cdot \bm{b}_{\Section}\big).
+\end{aligned}
+\label{eq:grad-uhat-iesan}
+\end{equation}
+
+
+Combine these to write
+\[
+\begin{aligned}
+\nabla \hat{\bm{u}}
+&= \FrameBasis\otimes\FrameBasis\,\Big(a_{\varepsilon}+(\bm{r}\cdot\bm{a}_{\Section})
++ \reflenx \,\big((\bm{r}-\CentroidLocation)\cdot\bm{b}_{\Section}\big)\Big)
+\\&\quad
++\FrameBasis\otimes\Big\{
+-\reflenx\,\bm{a}_{\Section}
++ (\FrameBasis\times\bm{r})\,(a_\vartheta+c_\vartheta)
+-\tfrac12 \reflenx^2\,\bm{b}_{\Section}
+% \\&\qquad\qquad
+-\nu\bigl(\dev(\bm{r}\otimes\bm{r})-\bm{r}\otimes\CentroidLocation\bigr)\bm{b}_{\Section}
+\Big\}
+\\&\quad
++ \FrameBasis\otimes\Big\{
+~\reflenx \,\bm{a}_{\Section} + \tfrac12 \reflenx ^2\,\bm{b}_{\Section}
++ (\nabla\varphi)\,a_\vartheta
++ c_\vartheta\,\nabla\WarpTwistIesan
++ \nabla \big(\bm{\WarpShearIesan}\cdot\bm{b}_{\Section}\big)
+\Big\}
+\\&\quad
+-\nu\Big[a_{\varepsilon}+(\bm{r}\cdot\bm{a}_{\Section})
++ \reflenx\, (\bm{r}-\CentroidLocation)\cdot\bm{b}_{\Section}\Big]\oneS
+\\&\quad
++ \reflenx\,(\FrameBasis\times \oneS)\,(a_\vartheta+c_\vartheta),
+\end{aligned}
+\]
+where the last line is planar-skew (pure infinitesimal rotation).
+
+\[
+\StrainTensor \;\equiv\; \sym\nabla\hat{\bm{u}}
+\;=\; \tfrac12\big(\nabla\hat{\bm{u}}+(\nabla\hat{\bm{u}})^{\mathrm t}\big).
+\]
+Using that $\sym(\FrameBasis\times\oneS)=\mathbf{0}$  and collecting symmetric parts furnishes the infinitesimal strain tensor. 
+\end{Details}
+% \bm V_\Sigma
+% &= (\FrameBasis\times\bm{r} + \gradS \WarpTwistIesan)\,(a_\vartheta+c_\vartheta)
+% \;+\; \gradS \big(\bm{\WarpShearIesan}\cdot\bm{b}_{\Section}\big)
+% \;-\;\nu\bigl(\dev(\bm{r}\otimes\bm{r})-\bm{r}\otimes\CentroidLocation\bigr)\bm{b}_{\Section}\\
+
+% \[
+% \begin{aligned}
+% \StrainTensor
+% &= \underbrace{\Big[a_{\varepsilon}+(\bm{r}\cdot\bm{a}_{\Section})
+% + x\,\big((\bm{r}-\CentroidLocation)\cdot\bm{b}_{\Section}\big)\Big]}_{\displaystyle \varepsilon}
+% \,(\FrameBasis\otimes\FrameBasis)
+% \\[2pt]
+% &\quad
+% +\;\sym\Big\{\FrameBasis\otimes \bm V_\Sigma\Big\}
+% \;-\;
+% \nu\,\underbrace{\Big[a_{\varepsilon}+(\bm{r}\cdot\bm{a}_{\Section})
+% + x\,\big((\bm{r}-\CentroidLocation)\cdot\bm{b}_{\Section}\big)\Big]}_{\displaystyle \varepsilon}
+% \,\oneS ,
+% \end{aligned}
+% \]
+% with the mixed (axial–transverse) vector
+% \[
+% \bm V_\Sigma
+% = (\FrameBasis\times\bm{r})\,(a_\vartheta+c_\vartheta)
+% \;-\;\nu\bigl(\dev(\bm{r}\otimes\bm{r})-\bm{r}\otimes\CentroidLocation\bigr)\bm{b}_{\Section}
+% \;+\; (\nabla\WarpTwistIesan)\,a_\vartheta
+% \;+\; c_\vartheta\,\gradS\WarpTwistIesan
+% \;+\; \nabla\!\big(\bm{\WarpShearIesan}\cdot\bm{b}_{\Section}\big) .
+% \]
+
+% \subsubsection{Equilibrium}
+For any superposition satisfying \(\StressTensor\,\bm n=\mathbf{0}\) on \(\BodyLateralSurface\) and \eqref{eq:saint-venant-stress},
+the field equations reduce on each section to
+\begin{subequations}
+\label{eq:sv-equilibrium}
+\begin{align}
+\bm{\tau}'&=\mathbf{0} && \text{in }\Section,\\
+\DivS\bm{\tau}+\AxialStress'&=0 && \text{in }\Section,\\
+\bm{\tau}\cdot\bm\nu&=0 && \text{on }\SectionBoundary,
+\end{align}
+\end{subequations}
+where the prime denotes derivative with respect to \(\reflenx\).
+\subparagraph{S1}
+The Saint-Venant equilibrium equations for stress resultants 
+$\snm$ form a first-order initial value problem:
+\begin{equation}
+\left\{
+\begin{aligned}
+\snm'(x) & = \mathbb{J}\,\snm(x), \\
+\snm(0) &= \bm{s}_0
+\end{aligned}\right.
+\qquad\text{with}\qquad 
+\snm := (N,\ShearForce,T,\bm{M})
+\label{eq:equilibrium-ode}
+\end{equation}
+where \(\mathbb{J}\) is the equilibrium generator:
+\begin{equation}
+\mathbb{J} \coloneq \begin{bmatrix}
+ \mathbf{0} & \mathbf{0}\\
+ -\FrameBasis^\times & \mathbf{0}
+\end{bmatrix}
+\label{eq:J-matrix}
+\end{equation}
+\begin{Details}
+\[
+\mathbb{J}^{\top}\mathbb{J} = \begin{bmatrix}
+    \oneS & \mathbf{0} \\
+    \mathbf{0} & \mathbf{0}
+\end{bmatrix},
+\quad\text{and}\quad 
+\mathbb{J}\mathbb{J}^{\top} = \begin{bmatrix}
+    \mathbf{0} & \mathbf{0} \\
+    \mathbf{0} & \oneS
+\end{bmatrix},
+\]
+\end{Details}
+Integrating \eqref{eq:equilibrium-ode} in view of the nilpotency property \(\mathbb{J}^2 = \mathbf{0}\) furnishes:
+\begin{equation*}
+\snm(x) = (\mathbf{1} + \reflenx\mathbb{J})\,\snm(0).
+\end{equation*}
+
+The resultants \(\snm\) at \(x=0\) thus depend linearly on the parameters \((a_{\varepsilon},\, \bm{a}_{\Section},\, a_{\vartheta},\, \bm{b}_{\Section})\):
+\begin{equation}
+\snm(0) = \IesanStiff\bm{p}
+\label{eq:snm0-in-p}
+\end{equation}
+where \(\bm{p}\in\mathbb{R}^6\) collects the six independent parameters of the Saint-Venant class: 
+\begin{equation}
+\bm{p} \coloneq (a_{\varepsilon},\, \bm{a}_{\Section},\, a_{\vartheta},\, \bm{b}_{\Section})
+\label{eq:def-iesan-vector}
+\end{equation}
+In view of \eqref{eq:2-15} and \eqref{eq:2-18}:
+\begin{equation}
+\IesanStiff = \begin{bmatrix}
+EA & EA\CentroidLocation^\top & 0 & \mathbf{0} \\[4pt]
+\mathbf{0} & \mathbf{0} & \mathbf{0} & E\IntRGoRG \\[4pt]
+0 & \mathbf{0} & G\Jsv & \mathbf{0} \\[4pt]
+-EA\FrameBasis\times\CentroidLocation & -\FrameBasis^\times E\IntRoR & \mathbf{0} & \mathbf{0}
+\end{bmatrix}.
+\label{eq:G0-neg-m}
+\end{equation}
+where the centroidal inertia tensor \(\IntRGoRG\) is defined: 
+\begin{equation}
+    \IntRGoRG = \IntRoR - A\CentroidLocation\otimes\CentroidLocation
+\label{eq:def-intRGoRG}
+\end{equation}
+\begin{Details}
+Thus
+\begin{equation}
+\IesanStiff^{-1} =
+\begin{bmatrix}
+\displaystyle \frac{1}{EA} + \CentroidLocation\cdot (E\IntRGoRG)^{-1}\,\CentroidLocation
+& \mathbf{0}
+& 0
+& -\CentroidLocation^\top (E\IntRGoRG)^{-1}\,\FrameBasis^\times
+\\[6pt]
+-(E\IntRGoRG)^{-1}\,\CentroidLocation
+& \mathbf{0}
+& \mathbf{0}
+& (E\IntRGoRG)^{-1}\,\FrameBasis^\times
+\\[6pt]
+0
+& \mathbf{0}
+& \displaystyle \frac{1}{G\Jsv}
+& \mathbf{0}
+\\[6pt]
+\mathbf{0}
+& (E\IntRGoRG)^{-1}
+& \mathbf{0}
+& \mathbf{0}
+\end{bmatrix}
+\label{eq:G0-inv-neg-m}
+\end{equation}
+\end{Details}
+Further, introduce the evolution operator \(\IesanEvolveSP\):
+\begin{equation}
+\IesanEvolveSP
+:=\IesanStiff^{-1}\mathbb{J}\IesanStiff 
+=\begin{bmatrix}
+\mathbf{0} & \oneS - \FrameBasis\otimes\CentroidLocation \\[4pt]
+\mathbf{0} & \mathbf{0}
+\end{bmatrix}
+= \begin{bmatrix}
+0 & \mathbf{0} & 0 & -\CentroidLocation^{\top} \\[4pt]
+\mathbf{0} & \mathbf{0} & \mathbf{0} & \oneS \\[4pt]
+0 & \mathbf{0} & 0 & \mathbf{0} \\[4pt]
+\mathbf{0} & \mathbf{0} & \mathbf{0} & \mathbf{0} \\
+\end{bmatrix}
+\label{eq:A-matrix-neg}
+\end{equation}
+
+\begin{Details}
+Using $\IesanEvolveSP^2=\mathbf 0$:
+\begin{equation*}
+\snm(x)=\IesanStiff\exp\left(x\IesanEvolveSP\right)\bm{p} 
+=\IesanStiff(\mathbf 1+x\IesanEvolveSP)\bm p,
+% \label{eq:snm-in-p}
+\end{equation*}
+\end{Details}
+\begin{Details}
+Note:
+\begin{equation*}
+\mathbb{J}\IesanStiff = 
+\begin{pmatrix}
+    \mathbf{0} & \mathbf{0} \\
+    \mathbf{0} & -\FrameBasis\times(E\IntRGoRG)
+\end{pmatrix}
+\end{equation*}
+\end{Details}
+
+
+\subsection{Summary}
+
+\begin{table}[H]
+    \centering
+    \caption{Symbols}
+    \label{tab:iesan-constants}
+    \begin{tabular}{clcl}
+    \toprule
+    Symbol & Units & & Description \\ \midrule
+        \(a_{\varepsilon}\in\mathbb{R}\) & ---  & & Axial strain parameter \\
+        \(a_{\vartheta}\in\mathbb{R}\)   & \Length{-1} & \\
+        \(\bm{a}_{\Section}\in\Section\) & \Length{-1} & & Bending parameters for \(\mathrm{P}_{\rm I}\) \\
+        \LightRule
+        \(c_{\vartheta}\in\mathbb{R}\)   & \Length{-1} & & Torsion coupling under flexure \\ 
+        \(b_{\varepsilon}\in\mathbb{R}\) & \\ %\Length{-1} & & \\
+        \(\bm{b}_{\Section}\in\Section\) & \Length{-2} & \\
+        \LightRule
+        \(\bm{q}_u\in\mathbb{R}^3\) & & & Rigid translation at \(x=0\) \\
+        \(\bm{q}_{\theta}\in\mathbb{R}^3\) & & & Rigid rotation at \(x=0\), or constant transverse displacement rate   \\
+        \LightRule
+        \(\WarpTwistIesan\)   & \Length{2}  & \eqref{eq:bvp-warp-twist-iesan} \\
+        \(\bm{\WarpShearIesan}\) & \Length{3}   & \eqref{eq:bvp-warp-shear-iesan} & \\
+        \LightRule 
+        \(\CentroidLocation\) & L & \eqref{eq:def-centroid} & Location of the centroid. \\
+        \(\IntRoR\) & \Length{4} & \eqref{eq:def-j-origin} & \\
+        \(\Jsv\) & \Length{4} & \eqref{eq:def-j-origin} & Torsion constant \\
+        \(\CenterShearLocation\) & L & \eqref{eq:def-shear-center} & Torsion-flexure center \\
+        \(\IntRGoRG\) & \Length{4} & \eqref{eq:def-intRGoRG} & Centroidal plane inertia tensor\\
+        \LightRule 
+        \(\snm\) & & \eqref{eq:equilibrium-ode} \\
+        \(\IesanVector\) & & \eqref{eq:def-iesan-vector}\\
+        \(\IesanStiff\) & & \\
+    \bottomrule
+    \end{tabular}
+\end{table}

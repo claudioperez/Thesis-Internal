@@ -1,0 +1,459 @@
+
+\clearpage 
+
+\subsection{Discussion}
+
+
+\subsubsection{Boundary Conditions}
+
+A one-dimensional boundary condition of the form
+\begin{equation}
+\bm{u}(x_0) = \bm{u}_0, \qquad \bm{\theta}(x_0) = \bm{\theta}_0
+\label{eq:1d-bc}
+\end{equation}
+corresponds to the three-dimensional constraint
+\begin{equation}
+\hat{\bm{u}}(x_0, \bm{r}) = \bm{u}_0 + \bm{\theta}_0 \times \bm{r} + \Phi(\bm{r})\,\bm{\alpha}(x_0)
+\label{eq:3d-bc}
+\end{equation}
+where $\bm{\alpha}(x_0)$ is determined by the trace applied to the particular 
+Saint~Venant solution. 
+That is, the three-dimensional field at $x_0$ is 
+constrained to have prescribed section-rigid components $(\bm{u}_0, \bm{\theta}_0)$ 
+in the sense defined by $\mathcal{T}$, while the warping component $\Phi\,\bm{\alpha}(x_0)$ 
+remains dictated by compatibility with the Saint~Venant solution class.
+
+
+
+
+\begin{remark}[Trace-dependence of ``clamped'' conditions]
+Consider a clamped condition $\bm{u}(0) = \bm{\theta}(0) = \mathbf{0}$. 
+The corresponding three-dimensional constraint is
+\begin{equation}
+\hat{\bm{u}}(0, \bm{r}) = \Phi(\bm{r})\,\bm{\alpha}(0),
+\label{eq:clamped-3d}
+\end{equation}
+which asserts that the section at $x = 0$ undergoes pure warping with no 
+section-rigid motion, as measured by the trace $\mathcal{T}$. Different traces 
+yield different physical interpretations:
+\begin{itemize}
+\item Under a \emph{pointwise trace} at the centroid, \eqref{eq:clamped-3d} 
+enforces $\hat{\bm{u}}(0, \mathbf{0}) = \mathbf{0}$ and 
+$(\nabla \times \hat{\bm{u}})|_{(0,\mathbf{0})} = \mathbf{0}$: the centroid is fixed 
+and the infinitesimal rotation at the centroid vanishes.
+
+\item Under a \emph{section-average trace}, \eqref{eq:clamped-3d} enforces 
+$\SectionAverage{\hat{\bm{u}}(0,\cdot)} = \mathbf{0}$ and 
+$\RotationAverage{\hat{\bm{u}}(0,\cdot)} = \mathbf{0}$: the mean translation 
+and mean rotation of the section vanish.
+
+\item Under an \emph{energy-conjugate trace}, the condition 
+$\bm{u}(0) = \bm{\theta}(0) = \mathbf{0}$ constrains the three-dimensional field 
+such that the work-conjugate displacement and rotation measures vanish, 
+which need not coincide with either pointwise or averaged quantities.
+
+\item Under a trace that does not satisfy the plane-section property, the 
+quantities $\bm{u}$ and $\bm{\theta}$ may not correspond to any conventional 
+notion of translation and rotation; nevertheless, \eqref{eq:clamped-3d} 
+still defines a precise constraint on $\hat{\bm{u}}(0, \bm{r})$.
+\end{itemize}
+\end{remark}
+
+\begin{remark}[Warping at constrained sections]
+The constraint \eqref{eq:clamped-3d} does not eliminate warping at $x = 0$; 
+it only prescribes the section-rigid part. The warping amplitude 
+$\bm{\alpha}(0)$ is determined by the global Saint-Venant solution, which 
+depends on both boundary conditions and loading. For certain loadings 
+(e.g., pure extension or pure bending), $\bm{\alpha}(0)$ may vanish; for 
+others (e.g., flexure or torsion), it will generally be nonzero.
+
+This observation is significant for comparing beam solutions to 
+three-dimensional analyses: even a ``clamped'' beam permits warping at the 
+support unless additional constraints are imposed on the warping degrees 
+of freedom.
+\end{remark}
+
+\begin{remark}[Guidance for trace selection]
+The correspondence \eqref{eq:3d-bc} reveals that different traces implicitly 
+assume different physical boundary conditions, even when the mathematical 
+form of the one-dimensional constraint \eqref{eq:1d-bc} is identical. 
+
+This observation suggests that the choice of trace should be informed by 
+the physical nature of the support conditions in the problem at hand. 
+A  support that physically clamps the centroid (e.g., a rigid pin through the 
+center) is better modeled by a pointwise trace; a support that restrains 
+the section in an average sense (e.g., a rigid diaphragm bonded to the 
+entire cross-section) is better modeled by a section-average trace.
+
+However, boundary condition fidelity is only one consideration among several. 
+Other factors---such as constitutive symmetry, warping index, energy 
+concentration, and compatibility with existing finite element 
+formulations---may also influence the choice of trace. 
+The framework 
+developed here allows these trade-offs to be made explicit.
+\end{remark}
+
+\begin{remark}[Exact Representation]
+The full solution is 
+$$
+\hat{\bm u} = \hat{\bm u}_{\rm P}\{\bm{a},\bm{b}\} + \hat{\bm u}_{\rm R}\{\bm{\delta}\}
+$$
+where $\bm{\delta}$ are 6 free rigid body parameters which are determined by imposing boundary values on $\hat{\bm u}$. 
+The field $\hat{\bm u}_{\rm T}\{\bm{\StrainGauge}\} := \bm{u} + \bm{\theta}\times \bm{r} + \bm{\Phi} \bm{\alpha}$ is an alternative, but \emph{exact}, representation of the particular solution $\hat{\bm u}_{\rm P}$, and is unchanged by the gauge parameters $\bm{\StrainGauge}$. 
+However, a crucial distinction appears when one sets $\bm{\theta}$ to vanish at a point $x_0$, which is representative of a typical boundary condition in 1D finite element analysis. 
+In this case, $\hat{\bm u}_{\rm T}$ is no longer exactly the Iesan particular solution $\hat{\bm u}_{\rm P}$, but still belongs to the solution space $\mathrm{P}(\AxialRxn,\ShearRxn,\TwistRxn,\MomentRxn) = \mathrm{P}_{\rm I}(\AxialRxn,\TwistRxn,\MomentRxn) \oplus \mathrm{P}_{\rm II}(\ShearRxn)$.
+In the presence of such conditions on $\bm{\theta}$, the  free rigid parameters $\bm{\delta}$ are determined by $\bm{\StrainGauge}$ (TODO: Is this right?). 
+\end{remark}
+
+\begin{remark}[Gauge Rigidity]
+The gauge parameters $\bm{\StrainGauge}_{\Section}$ could not possibly belong to a rigid field, or else it would fail to enter the shear strain measure $\bm{\gamma}$; in order for it to truly be a rigid rotation parameter, a true rigid rotation would have to figure with the form $\bm{\StrainGauge}_{\Section}\times(\reflenx\, \FrameBasis + \bm{r})$, which would partition into u and theta as $\bm{u} + \reflenx\, \bm{\StrainGauge}_{\Section}\times \FrameBasis$ and $\bm{\theta} + \bm{\StrainGauge}_{\Section}\times\bm{r}$. 
+Here the contribution in $\bm{u}$ would annilate  $\bm{\StrainGauge}_{\Section}$ in the shear strain $\bm{\gamma}$. 
+
+However, this seems to give rise to an anomoly or paradox or sorts. 
+With $\bm{\StrainGauge}_{\Section}$ selected appropriately, this 1D field will replicate the classical shear-corrected Timoshenko beam theory deflection. 
+This identification selects $\bm{\StrainGauge}_{\Section}$ to ensure that the work conjugate resultant to $\bm{u}$ is exactly the shear force resultant $\int \bm{\tau}$. 
+However, this classical deflection *does not* agree with the continuum field. 
+In order to obtain the Timoshenko deflection with the standard-form continuum field, I find that a rigid rotation $\bm{\delta}_{\Section}$ must be imposed which scales with the integration constant $\bm{b}_{\Section}$. 
+This is a true rigid rotation, however, in the sense that it enters as $\bm{\delta}_{\Section}\times (\reflenx\, \FrameBasis + \bm{r})$. 
+This rigid rotation $\bm{\delta}_{\Section}$ is very peculiar, as it essentially acts as a rotational spring. 
+\end{remark}
+
+\begin{remark}[Torsion and Springs]
+lets look at the symptoms of the ambiguity in shear. due to the effect that the trace has on the boundary conditions and the inability to truly restrain displacement of the root in the SV class, a boundary with fixed rotation essentially becomes equivalent a rotational spring with stiffness directly affected by the trace. This "spring" behavior (hypothesis, need to verify) is due to the work expended on the root which undergoes warping (and thus performs work), despite the rotation having been fixed. in torsion about the center of twist this vanishes because $\int \nabla \tilde{\varphi}\bm{\tau}\dA=0$, where $\tilde\varphi$ solves the BVP wrt the center of twist. in an arbitrary coordinate system i think this wouldnt vanish (i need to verify) and we find the same spring like behavior, but the fact that the center of twist provides a "cannonical" resolution is enough to put the question to hand. i dont think shear offers such a cannonical trace. or if it does, maybe its terribly inconvenient. Does there exist a trace for which warping does no work when $\theta(x_0) = 0$?
+\end{remark}
+
+\begin{remark}[Root Boundary]
+By construction, the 1D field exactly represents the 3D particular solution $\hat{\bm u}$ under arbitrary assignment of the integration parameters \(\bm{a},\bm{b},c\). 
+However, it may not necessarily hold under arbitrary assignment of pointwise values for the deflection or rotation fields. 
+\end{remark}
+\begin{remark}[Ambiguity in Torsion]
+The asymmetry between torsion and shear-flexure is striking. 
+Textbooks present the torsional constant $\Jo$ as if it were uniquely defined by nature, while 
+shear correction factors spawn endless debate. 
+But the underlying ambiguity is the same—it simply hides better in torsion.
+
+Moreover, the energy-conjugacy calculation for torsion is remarkably clean: 
+the integral $\int \nabla\WarpTwistIesan \cdot \bm{\tau} \, \mathrm{d}A$ vanishes by 
+the traction-free boundary condition, so the virtual work reduces to 
+$\delta a_\vartheta \cdot T$ with no residual warping terms. The ``natural'' 
+twist strain and the ``energy-conjugate'' twist strain coincide.
+
+Shear-flexure enjoys no such luck. 
+The integral 
+$\int \nabla\bm{\WarpShearIesan} \cdot \bm{\tau} \, \mathrm{d}A$ vanishes by the same 
+boundary argument, but $\int \bm{\Pi}_{(b)}^\top \bm{\tau} \, \mathrm{d}A$ does not. 
+This Poisson-shear coupling has no analog in torsion (where Poisson effects are absent), and it forces the energy-conjugate shear strain to differ from any kinematically-defined average.
+
+There is another subtlety that is often elided. 
+The classical treatment of 
+torsion assumes, almost without comment, that we work in coordinates centered 
+at the \emph{shear center}—the unique point about which torsion and flexure decouple. 
+This is itself a choice of trace, one that happens to 
+diagonalize certain couplings. 
+For asymmetric sections where the shear center, 
+centroid, and twist center are all distinct, the question ``what is the twist?'' has no canonical answer until we specify our reference point.
+
+The torsion problem appears unambiguous because (i) the warping is axial and 
+$x$-independent, so trace differences don't propagate to twist strain; (ii) 
+there is no Poisson coupling to create energy-conjugacy discrepancies; and 
+(iii) the convention of working at the shear center is so universal that it 
+feels like physics rather than convention. 
+Shear-flexure strips away all three 
+of these accidents, exposing the trace ambiguity in full generality.
+\end{remark}
+
+\begin{Quote}
+    \cite{schramm1994shear} considered the conjugate approach to determine shear correction factors for asymmetric sections. 
+    They found principal shear axes that were not coincident with the principal bending axes in their formulation. 
+    An examination of the Saint-Venant flexure solution will dissuade this concept. 
+    It shows deflection of the centroidal axis lying in the same plane as the transverse load; there is no displacement normal to this plane. 
+    If Timoshenko beam constitutive relations are based on non-coincident principal bending and shear axes, then a lateral or sidesway displacement will be admitted.
+    
+    \cite{schramm1994shear} demonstrated that for non-symmetrical cross sections the computation of shear coefficients based on average displacement values can result in a non-symmetrical matrix of shear coefficients. 
+    This problem does not occur if the shear strain energy is used as a matching criterion. 
+  \end{Quote}
+
+
+\begin{Quote}
+
+\subsubsection{Solution Structure}
+
+The general Saint-Venant solution consists of a particular solution and arbitrary rigid body motion:
+\begin{equation*}
+\hat{\bm{u}} = \hat{\bm{u}}_{\mathrm{P}}\{\bm{a},\bm{b}\} + \hat{\bm{u}}_{\mathrm{R}}\{\bm{\delta}\}
+\end{equation*}
+where $\bm{\delta} \in \mathbb{R}^6$ parameterizes the rigid motion. 
+The beam kinematic representation
+\begin{equation*}
+\hat{\bm{u}}_{\mathrm{T}}\{\bm{a},\bm{b},\bm{\StrainGauge}\} = \bm{u}(\reflenx) + \bm{\theta}(\reflenx) \times \bm{r} + \bm{\Phi}(\bm{r}) \bm{\alpha}(\reflenx)
+\end{equation*}
+provides an exact representation of $\hat{\bm{u}}_{\mathrm{P}}$ for \emph{any} choice of gauge parameters $\bm{\StrainGauge} = (\StrainGauge_\varepsilon, \bm{\StrainGauge}_{\Section}, \StrainGauge_\vartheta)$.
+
+\subsubsection{Gauge Dependence of Boundary Conditions}
+
+Consider the rotation field with gauge parameters:
+\begin{equation*}
+\bm{\theta}(\reflenx) = \StrainGauge_\vartheta \FrameBasis - \FrameBasis \times \bm{\StrainGauge}_{\Section} + x(a_\vartheta + c_\vartheta)\FrameBasis - x(\FrameBasis \times \IesanLoadM) - \tfrac{1}{2}x^2(\FrameBasis \times \bm{b}_{\Section})
+\end{equation*}
+
+The boundary condition $\bm{\theta}(0) = \mathbf{0}$ requires:
+\begin{equation*}
+\StrainGauge_\vartheta \FrameBasis - \FrameBasis \times \bm{\StrainGauge}_{\Section} = \mathbf{0}
+\end{equation*}
+
+This constraint cannot be satisfied by the gauge parameters alone unless $\bm{\StrainGauge} = \mathbf{0}$. For non-zero gauge parameters, the complete solution satisfying this boundary condition must include rigid body rotation:
+\begin{equation*}
+\hat{\bm{u}} = \hat{\bm{u}}_{\mathrm{T}}\{a,b,\bm{\StrainGauge}\} + \hat{\bm{u}}_{\mathrm{R}}\{\bm{\delta}(\bm{\StrainGauge})\}
+\end{equation*}
+where $\bm{\delta}(\bm{\StrainGauge})$ depends affinely on the gauge parameters.
+
+\subsubsection{Observable Consequences}
+
+For a cantilever beam with $\bm{\theta}(0) = \mathbf{0}$, different gauge choices yield different tip deflections. Setting $\bm{\StrainGauge}_{\Section} = \bm{\Xi}^{-1}\bm{b}_{\Section}$ with appropriate $\bm{\Xi}$ produces the Timoshenko deflection:
+\begin{equation*}
+u_{\mathrm{tip}} = \frac{PL^3}{3EI} + \frac{PL}{GA_s}
+\end{equation*}
+while $\bm{\StrainGauge}_{\Section} = \mathbf{0}$ yields the Euler-Bernoulli deflection:
+\begin{equation*}
+u_{\mathrm{tip}} = \frac{PL^3}{3EI}
+\end{equation*}
+
+Both solutions belong to the same solution space $\mathcal{P}(N,\mathbf{F},T,\mathbf{M})$ but correspond to different rigid body resolutions. 
+The difference $PL/(GA_s)$ represents not a "shear correction" but the effect of gauge-induced rigid rotation.
+\end{Quote}
+
+\begin{Quote}
+\textbf{Poisson Ratio Dependence}
+
+The warping functions depend on Poisson's ratio through the boundary conditions:
+\begin{equation*}
+(\bm{\psi} \otimes \nabla) \cdot \mathbf{n}_{\partial} = -\mathbf{A}^p(\nu) \cdot \mathbf{n}_{\partial}
+\end{equation*}
+where $\mathbf{A}^p$ contains $\bar{\nu} = \nu/(1+\nu)$. Additionally, explicit Poisson contraction terms appear:
+\begin{equation*}
+-\nu x\left(\mathrm{dev}(\bm{r}\otimes\bm{r}) - \bm{r}\otimes\bar{\bm{r}}\right)\bm{b}_{\Section}
+\end{equation*}
+
+At the centroid ($\bm{r} = \mathbf{0}$), these terms vanish, explaining why the Euler-Bernoulli deflection is independent of $\nu$. 
+However, boundary conditions involving warping introduce $\nu$-dependence through both the warping functions and the determination of rigid
+\end{Quote}
+
+\subsubsection{Summary}
+
+A key observation is that the Saint-Venant solution structure forces the 
+one-dimensional strains to be at most linear in the axial coordinate $\reflenx$, 
+with the linear coefficients being \emph{universal} (independent of trace choice) while the constant coefficients carry the trace-dependent freedom. 
+This furnishes a finite-dimensional space of traces satisfying a practical structure which are spanned by 18 free parameters. 
+Among these free parameters emerge the classical shear correction coefficients.
+
+\begin{table}[H]
+\caption{Summary of conditions; [Result] guarantees [Property] if [Given].}
+\label{tab:trace-conditions}
+\centering
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{@{}rl|ll|llll@{}}
+    \toprule
+    & Description & Property & & Result & & \multicolumn{2}{c}{Given} \\ 
+    & & & & & & A & B \\
+    \midrule
+    T1.
+    & Affine Deformation
+    & $\bm{e}(x) = \TraceDeDpRoot(\mathbf{1} + x\TraceEvolveEP)\bm{p}$
+    %$\bm{e}'(x) = \TraceEvolveEE\bm{e}(x)$ 
+    & \eqref{eq:def-T0}
+    & $\mathbf{E}_{\rm p}(x)\in\mathbb{R}^{72}$
+    & % eqref NA
+    & - & -
+    \\
+    S1.  
+    & Exact Equilibrium 
+    & $\bm{s}' = \mathbb{J}\bm{s}$
+    & \eqref{eq:equilibrium-ode} 
+    & $\bm{s}(x) = \exp\left(x\mathbb{J}\right)\bm{s}_0$ 
+    & % eqref NA
+    & \textbf{S1} & \textbf{S1}
+    \\
+    D1.
+    & Exact Deformation
+    &
+    &
+    & \(\mathbb{J}\IesanStiff = \IesanStiff\TraceEvolveEP\) 
+    & \eqref{eq:e1-g} 
+    \\
+    % D1
+    & 
+    &
+    &
+    & \(\TraceDeDpRoot\IesanEvolveSP = \TraceEvolveEE\,\TraceDeDpRoot\) 
+    & \eqref{eq:e1-j}
+    \\
+    E1.
+    & Local Strain
+    & $\bm{\varepsilon}(x) = \mathbf{B}(\bm{r})\bm{e}(x)$ 
+    & % \eqref{}
+    &
+    & % \eqref
+    \\
+    C1.  
+    & Prismatic Resultants
+    & 
+    & %\eqref{}
+    &\(\mathbb{J}\mathbf{C}_T = \mathbf{C}_T\TraceEvolveEE\) 
+    & \eqref{eq:cj-cj} 
+    & S1→T1→D1
+    & T1→S1→\textbf{C1}
+    \\
+    P1.
+    & Plane Preservation 
+    &
+    & \eqref{eq:plane-section-property} 
+    & $\mathbf{E}_{\rm p}(x) \in\mathbb{R}^{18}$
+    & \eqref{eq:T0-plane-structure}
+    & D1→\textbf{P1}
+    & D1→\textbf{P1}
+    \\
+    \hline
+    C2. 
+    & Conjugate-Prismatic 
+    & $\bar{\bm{s}} \sim x$
+    &
+    &
+    \\ 
+    S2.
+    & Equilibrium-Conjugate 
+    & $\bar{\bm{s}}' = \mathbb{J}\bar{\bm{s}}$
+    & \eqref{eq:sbar-equilibrium} 
+    & % $C T_1 = \mathbb{J} C T_0,\qquad \TraceDeDpOne = \bar{\mathbf{G}} \TraceDeDpRoot\quad$ 
+    & \eqref{eq:commutator-condition}
+    \\ 
+    \hline
+    S3.
+    & Resultant-Conjugate 
+    & $\bar{\bm{s}} \equiv {\bm{s}}$ 
+    & \eqref{eq:def-s3}
+    & $\TraceDeDpRoot = \IesanStiff^{-\top} \IesanEnergy$
+    %&  $C T_1 = \mathbb{J} C T_0,\qquad \TraceDeDpOne = \bar{\mathbf{G}} \TraceDeDpRoot\quad$ 
+    & \eqref{eq:T0-formula}
+    \\
+    \bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[H]
+    \centering
+    \caption{Conditions; \(\bullet\): by class definition, \(\times\) uncharted but in class, \(\circ\): in class, partial chart.}
+    % \label{tab:placeholder}
+    \begin{tabular}{c|c|cc|cc|ccc}
+             & Dim & S1 & S2(20) & C1 & C2 & P1 & D1 & E1 \\ \hline
+             & 72 & \\
+    GL(6)    & 36 & $\bullet$ & $\times$ & $\times$ & C1 & $\circ$ \\
+    Class I  & 18 & $\bullet$ & $\times$ & $\bullet$ & C1 & $\bullet$ & S1+C1 & S1+C1 \\
+    Class II(E) &  4 & $\bullet$ & $\circ$ & $\bullet$ & C1 & S1+C1 & S1+C1
+    \end{tabular}
+\end{table}
+
+72 (T1) → 36 (D1/C1) → 18 (P1) → 4 (S2/C2) → 0
+% Requires: \usepackage{tikz}
+% Recommended libraries: \usetikzlibrary{arrows.meta,positioning}
+
+\inputdetail{Sections/Figures/TraceConditions}
+
+
+\subsection{Specializations}
+
+
+\subsection{Observations}
+
+The ambiguity in strain identification has several concrete manifestations:
+
+\paragraph{Boundary conditions.}
+Since a trace defines the correspondence \eqref{eq:trace-lift-linear}, a one-dimensional 
+boundary condition $\bm{u}(x_0) = \bm{u}_0$, $\bm{\theta}(x_0) = \bm{\theta}_0$ 
+implicitly constrains the three-dimensional field to satisfy
+\begin{equation}
+\hat{\bm{u}}(x_0, \bm{r}) = \bm{u}_0 + \bm{\theta}_0 \times \bm{r} 
++ \bm{\Phi}(\bm{r})\,\bm{\alpha}(x_0).
+\label{eq:bc-3d}
+\end{equation}
+Different traces interpret ``clamped'' or ``pinned'' conditions differently: 
+a pointwise trace at the centroid fixes $\hat{\bm{u}}(x_0, \mathbf{0}) = \bm{u}_0$, 
+while a section-average trace fixes $\langle\hat{\bm{u}}(x_0, \cdot)\rangle = \bm{u}_0$. 
+Neither eliminates warping at the boundary; both merely prescribe the section-rigid component in their respective senses.
+
+\paragraph{Constitutive symmetry.}
+If the strains $(\bm{\gamma}, \bm{\kappa})$ are not work-conjugate to the 
+classical resultants $(\bm{n}, \bm{m})$, the section stiffness matrix relating 
+them will be asymmetric. 
+While this poses no fundamental obstacle---the 
+underlying energy is still well-defined---it complicates finite element 
+implementation and can obscure physical interpretation. The energy-conjugate trace is designed precisely to ensure symmetry.
+
+\paragraph{Coupling structure.}
+The off-diagonal blocks of the trace matrices encode couplings between 
+loading modes and strain measures. For asymmetric sections, flexure induces 
+twist through the shear center offset, and this coupling appears differently 
+in different traces. The section-average trace exhibits explicit geometric 
+couplings through terms like $\RotationAverage{\PoissonFlexure}$ and 
+$\RotationAverage{\FrameBasis \otimes \bm{\WarpShearIesan}}$, while the 
+energy-conjugate trace absorbs these into a modified shear stiffness.
+
+
+\begin{Aside}
+\begin{remark}
+The matrix $\IesanEvolveSP$ generates translation along the beam axis. 
+The strain transport group:
+\begin{equation*}
+\mathsf{G}(x) \coloneq \exp\left(x\IesanEvolveSP\right) = \mathbf{1} + x\IesanEvolveSP
+\end{equation*}
+satisfies $\mathsf{G}(x_1)\mathsf{G}(x_2) = \mathsf{G}(x_1 + x_2)$, and encapsulates   
+how flexure generates bending ($\bm{a}_\Omega \mapsto \bm{a}_\Omega + x\bm{b}_{\Section}$) 
+and shifts axial strain 
+($a_\varepsilon \mapsto a_\varepsilon - x\CentroidLocation \cdot \bm{b}_{\Section}$).
+The nilpotency $\IesanEvolveSP^2 = 0$ reflects that flexure is the highest-derivative 
+mode, bending, generates no further evolution at the strain level.
+\end{remark}
+\end{Aside}
+
+\begin{remark}
+The operator \(\mathbf{B}_{(b)}\) in \eqref{eq:tau-psi} is comparable to the shear stress interpolation \(\phi(y)\) employed in the two-dimensional formulation of \cite{saritas2009inelastic}.
+\end{remark}
+\begin{Old}
+In view of \eqref{eq:T0-inv} with \(\IesanStiff\) given by \eqref{eq:}, the section stiffness \(\mathbf{C}_T\) takes the general form:
+\begin{equation}
+\mathbf{C}_T = \IesanStiff\TraceDpDeRoot
+=
+\left[\begin{array}{cc|cc}
+EA 
+& EA\left(\bm{\varsigma}_{11}^{\mathrm{N}} 
++ \ShiftA\CentroidLocation\right)^{\top} 
+& EA\left(\ShiftScaleN + \CentroidLocation\cdot \bm{\varsigma}_{12}^{\mathrm{F}}\right) 
+& EA\left(\ShiftNK^\top + \CentroidLocation^\top\FrameBasis^\times\right)
+\\ %[8pt]
+\mathbf{0} &
+E\IntRGoRG\,\ShiftB &
+-\,E\IntRGoRG\,\ShiftB\TraceFT &
+\mathbf{0}
+\\ \hline %\\[8pt] \hline
+0 &
+G\Jsv\,(\bm{\varsigma}_{21}^{\mathrm{N}})^\top
+& G\Jsv\,\ShiftScaleT &
+\mathbf{0}^\top
+\\ %[8pt]
+EA\FrameBasis\times\CentroidLocation 
+& EA(\FrameBasis\times\CentroidLocation)\otimes\bm{\varsigma}_{12}
++ E\FrameBasis^\times\IntRoR\,\ShiftA 
+&
+EA\FrameBasis\times\CentroidLocation\,\ShiftScaleN
++ \FrameBasis\times E\IntRoR\,\bm{\varsigma}_{12}^{\mathrm{F}} 
+&
+EA(\FrameBasis\times\CentroidLocation)\otimes\ShiftNK + \FrameBasis^\times E\IntRoR\,\FrameBasis^\times
+\end{array}\right].
+\label{eq:C-C1}
+\end{equation}
+The (2,2) block reveals the generalized shear correction coefficients:
+\begin{equation*}
+\bm{K} = \frac{1}{GA}E\IntRGoRG\ShiftB
+\end{equation*}
+% \end{remark}
+\end{Old}
+

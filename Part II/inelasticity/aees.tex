@@ -1,0 +1,94 @@
+\subsection{Algebraic Evolution Equations}\label{sec:aees}
+For simple models, AEEs tend to be more computationally efficient
+and conceptually easier to implement than models formulated in terms of ODEs
+or DAEs. AEEs that aim to capture complex behaviors can quickly become
+cumbersome to formulate and implement, but generally they do not incur
+a truncation error like ODEs and DAEs and at their worst only may require an iterative root-finding procedure.
+Because of the empirical nature of most AEEs, they tend to offer parameters that are more intuitive to practitioners and easier to identify from experimental data.
+%
+An AEE model is typically comprised of three components:
+\begin{description}
+    \item[Envelope] is specified as a functional relation between $\sigma$ and $\varepsilon$ which describes the monotonic behavior of the model.
+    \item[Unloading] is specified as a set of rules which describe the hysteretic
+    behavior of the model.
+    \item[Degradation] is a rule for changing the shape of the envelope
+    as energy is dissipated in the response.
+\end{description}
+%
+An advantage of the AEE models is that they are generally parameterized by characteristic points on an envelope curve, which is associated with simple monotonic tension and compression tests.
+Some standard envelopes are presented in the remainder of this section.
+
+\subsubsection{Concrete}\label{sec:concrete}
+Concrete envelope curves are formulated in terms of the following parameters (see also \cref{fig:confined-curve}):
+\begin{table}[h]
+\begin{tabular}{ll}
+\toprule
+\(f_{cp}\) & peak compressive stress \\
+\(\varepsilon_{cp}\) & peak compressive strain \\
+\(f_{cu}\) & compressive crushing strength \\
+\(\varepsilon_{cu}\) & strain at crushing strength \\
+\(\lambda\) & ratio between unloading slope at $\varepsilon_{cu}$ and
+initial slope \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{description}
+\item[Hognestad]
+  Hognestad's (\citet{hognestad1951study}, \citet{kent1973cyclic}, \textcite{scott1982stressstrain}) monotonic
+  compression envelope is simply the piecewise union of an initially parabolic response, followed by a linear loss of strength: 
+  \begin{equation}
+  %\boxed{
+  \sigma(\varepsilon)=\left\{\begin{aligned}
+  K f_{cp}\left[2\left(\frac{\varepsilon}{\varepsilon_{cp}}\right)-\left(\frac{\varepsilon}{\varepsilon_{cp}}\right)^{2}\right], &\quad \varepsilon \leq \varepsilon_{cp} \\
+  K f_{cp}\left[1-Z\left(\varepsilon-\varepsilon_{cp}\right)\right], &\quad \varepsilon_{cp}<\varepsilon \leq \varepsilon_{cu} \\
+  0.2 K f_{cu}, &\quad \varepsilon > \varepsilon_{cu}
+  \end{aligned}\right.
+  %}
+  \label{eq:hognestad}
+  \end{equation}
+  where $K$ (a scaling for strength) and $Z$ (strain softening slope) are model parameters. A hysteretic loading-reloading algorithm for this curve was proposed by \citet{yassin1994nonlinear}, which has been implemented in the widely used \texttt{Concrete02} material model of OpenSees \cite{mckenna_nonlinear_2010}.
+%
+\item[Popovics] The curve used by \cite{popov1978cyclic} is commonly known as the Mander curve and is given by the nonlinear expression: 
+  \begin{equation}
+%\boxed{
+\begin{aligned}
+\sigma_c(\varepsilon) &= f_{cp}\frac{(\varepsilon/\varepsilon_{cp})r}{r-1+(\varepsilon/\varepsilon_{cp})^r},
+\end{aligned}
+%}
+  \label{eq:popovics}
+\end{equation}
+where $r$ is a parameter often computed from:
+\begin{equation}
+r =\frac{E_{c}}{E_{c}-\left(f_{c p} / \epsilon_{c p}\right)},
+\label{eq:popovics1}
+\end{equation}
+where $E_c$ is the Young's modulus of the concrete material. 
+
+% \item[Exponential] (see Concrete04)
+% $$
+% \begin{aligned}
+% \sigma = f_{t}\beta^{\frac{\varepsilon      - e_{ct}}
+%                           {\varepsilon_{tu} - e_{ct}}} \\
+% e_{ct} = \frac{f_{t}}{E_{0}}
+% \end{aligned}
+% $$
+\end{description}
+
+
+\subsubsection{Steel}\label{sec:steel}
+\begin{description}
+    \item[Ramberg-Osgood] A popular envelope model for metalic materials was developed by \citep{ramberg1943description} who proposed the following equation:
+    \begin{equation}
+    \varepsilon=\frac{\sigma}{E}+a\left(\frac{\sigma}{\sigma_y}\right)^n,
+    \label{eq:RO}
+    \end{equation}
+    where $E$ is the elastic modulus, $\sigma_y$ is the yield stress, assumed to be at the 0.2\% offset strain, $n$ is a parameter controlling the transition to yield, and $a$ is a yield offset parameter, typically taken as 0.002. Note that the stress \(\sigma\) is defined implicitly in terms of strain \(\varepsilon\) in this model and must be solved for numerically.
+    \item[Goldberg-Richard] \cite{goldberg1963analysis} proposed a curve which furnishes the stress explicitly in terms of strain, as expressed below:
+    \begin{equation}
+    \bar{\sigma}(\bar{\varepsilon}) = \left[b{\bar{\varepsilon}} + \frac{(1-b){\bar{\varepsilon}}}{\left(1 + |{\bar{\varepsilon}}|^r\right)^\frac{1}{r}}\right],
+    \label{eq:goldberg-richard}
+    \end{equation}
+    where $\bar{\sigma}=\sigma/\sigma_y$, $\bar{\varepsilon}=\varepsilon/\varepsilon_y$, $(\sigma_y, \varepsilon_y)$ is the yield point on the curve, $b$ is the strain hardening parameter, and the parameter $r$ influences the shape of the transition curve and takes account of the Bauschinger effect{\footnote{A property of materials where the material's stress/strain characteristics change as a result of the microscopic stress distribution of the material. For example, an increase in tensile yield strength occurs at the expense of the compressive yield strength in steel material.}}. A hysteretic loading-reloading algorithm for this curve was proposed by \cite{giuffre1970comportamento}, which was extended by \cite{filippou1983effects} to include isotropic hardening.
+\end{description}
+

@@ -1,0 +1,36 @@
+
+% \input{Part II/discretization}
+
+\section{Appendix 4.B: Inelasticity}\label{ch:inelasticity}
+In order to simulate hysteresis, one must consider a stress response $\boldsymbol{\sigma}(\boldsymbol{\varepsilon})$ %
+\footnote{
+In this appendix, constitutive response is discussed in terms of 
+the more familiar spatial notation (\(\boldsymbol{\sigma}, \boldsymbol{\varepsilon}\)) as opposed to the material notation (\(\boldsymbol{s}, \boldsymbol{e}\)) from \cref{ch:discretization}.
+Note that in the context of small deformations the material and  spatial representations approximately coincide and one has $\boldsymbol{\varepsilon} \approx \boldsymbol{e}$ and $\boldsymbol{\sigma}(\boldsymbol{\varepsilon}) \approx \boldsymbol{s}(\boldsymbol{\varepsilon})$.}
+that is not just a function of $\boldsymbol{\varepsilon}$ and $\dot{\boldsymbol{\varepsilon}}$ at a fixed point in time{\footnote{A superposed dot indicates a time derivative.}}, but additionally depends on the \emph{history} of these quantities. Such a functional relationship is expressed with the notation $\boldsymbol{\sigma}\{\boldsymbol{\varepsilon}, \dot{\boldsymbol{\varepsilon}}\}$ and extends to the nodal internal 
+force vector $\intern$ %(as defined by \cref{eq:def-pa} of \cref{ch:discretization}) 
+as follows:
+\begin{equation}
+ \intern_a \{u, \dot{u}\} = \left<\mathbf{e}_k,\, \bm{B}_a \bm{\sigma} \{\varepsilon,\dot{\varepsilon}\}\right> \mathbf{e}_k.
+ \label{eq:f_int_inelasticity}
+\end{equation}
+The objective of this appendix is to develop the most common
+approaches that are used to formulate such hysteretic functional relationships for 1D response. These can generally be divided into the following three categories:
+\begin{description}
+    \item[Algebraic evolution equations] (AEEs) dictate an evolving response in terms of algebraic relations and rules for switching between them. These models can be very intuitive to formulate and implement but do not generalize well to multiaxial response. AEEs are particularly useful for modeling the uniaxial response of steel and concrete.
+    \item[Ordinary differential equations] (ODEs)
+    specify the evolution of a response in terms of a function of the response and its rate. It is often more difficult to incorporate nuanced physical behaviors into these models, such as the L\"uders plateau of steel{\footnote{L\"uders plateau is observed on the stress-strain curve just after the elastic regime. Moreover, L\"uders banding, a material instability, is reported to be associated with unpinning of dislocations from nitrogen and carbon atmospheres. The existence of L\"uders plateau on the stress-strain curves may influence the bending behavior of steel structures and their ductile fracture response.}}, and they are also known to violate certain ideal physical principles. Despite these drawbacks, these models still tend to perform reasonably well. ODE models like those in \cref{sec:odes} are particularly useful for modeling elastomeric elements like bearings.
+    ODEs have had more success than AEEs in modeling multiaxial responses.
+    \item[Differential algebraic equations] (DAEs) are formulated in terms of \emph{both} differential and algebraic relationships. These tend to be the most difficult formulations to solve. However, DAEs generalize elegantly to multiaxial material response and generally form the basis for the sophisticated theories of plasticity. DAEs are particularly useful for modeling multiaxial plasticity. DAEs are not discussed further in this report since they are not currently used in the \BRACE{} project.
+\end{description}
+
+% Softening: Slope of hysteresis loop decreases with displacement
+% Hardening: Slope of hysteresis loop increases with displacement
+% Pinched hysteresis loops: Thinner loops in the middle than at the ends. Pinching is a sudden loss of stiffness, primarily caused by damage and interaction of structural components under a large deformation. It is caused by closing (or unclosed) cracks and yielding of compression reinforcement before closing the cracks in reinforced concrete members, slipping at bolted joints (in steel construction) and loosening and slipping of the joints caused by previous cyclic loadings in timber structures with dowel-type fasteners (e.g. nails and bolts).
+% Stiffness degradation: Progressive loss of stiffness in each loading cycle
+% Strength degradation: Degradation of strength when cyclically loaded to the same displacement level.
+
+\input{Part II/inelasticity/aees}
+\input{Part II/inelasticity/odes}
+\input{Part II/inelasticity/daes}
+ 

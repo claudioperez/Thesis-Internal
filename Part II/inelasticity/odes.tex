@@ -1,0 +1,188 @@
+\hypertarget{ordinary-differential-equations}{%
+\subsection{Ordinary Differential
+Equations}\label{sec:odes}}
+
+Ordinary differential equations offer a powerful framework for
+formulating hysteretic models.
+For example, one-dimensional perfect plasticity can be formulated as the following ODE:
+% \[
+% \begin{aligned}
+% \dot{\sigma} &=E\left(1-\frac{1+\operatorname{sgn}(\sigma \dot{\varepsilon})}{2}\left\{U\left(\sigma_{y}^{+}-\sigma\right) U(\sigma)
+% +U\left(-\sigma_{y}^{-}+\sigma\right) U(-\sigma)\right\}\right) \dot{\varepsilon}
+% \end{aligned}
+% \]
+\begin{equation}
+\begin{aligned}
+\dot{\bar{\sigma}} &= \phi(\bar{\sigma}, \dot{\varepsilon}) \, \dot{\varepsilon}\\
+\phi(\bar{\sigma}, \dot{\varepsilon})&=\left\{\begin{array}{lll}
+E & \text { if } | \bar{\sigma}|<1 & \text { or } \, \, \, \, \, \, \, \bar{\sigma} \operatorname{sgn}(\dot{\varepsilon}) \leq 0 \\
+bE & \text { if }|\bar{\sigma}|\geq 1 & \text { and } \, \, \, \, \bar{\sigma} \operatorname{sgn}(\dot{\varepsilon})>0
+\end{array}\right.
+\end{aligned}
+\label{eq:ode_general}
+\end{equation}
+where $\bar{\sigma}=\sigma/\sigma_y$, $\sigma_y$ is the yield stress, $E$ is the elastic modulus, $b$ is the strain hardening parameter, $\operatorname{sgn}$ is the signum function{\footnote{The signum function of a real number $x$ is a piecewise function which is defined as follows:
+\[
+\operatorname{sgn}(x) \triangleq \left\{\begin{array}{cl}
+-1 & \text { if } x<0, \\
+0 & \text { if } x=0, \\
+1 & \text{ if } x>0.
+\end{array}
+\right.
+\]}}. 
+An important family of hysteretic models (with various forms of the function \(\phi\)) that generalizes this formulation are known as Bouc-Wen models and are generally given by a relation of the following form:
+\begin{equation}
+\begin{aligned}
+\sigma(\varepsilon) &= b E \varepsilon+(1-b) E z(\varepsilon),
+\\
+\dot{z}&=\frac{\partial z}{\partial \varepsilon} \frac{\partial \varepsilon}{\partial t} = \phi(z,\varepsilon,\dot \varepsilon) \, \dot{\varepsilon}.
+\end{aligned}
+\label{eq:bouc-family}
+\end{equation}
+
+\begin{description}
+\tightlist
+\item[Bouc's Hysteresis (1967)]
+The original model presented by \cite{bouc1967forced} can be given in the form of \cref{eq:bouc-family} with \(\phi\) given by: 
+\begin{equation}
+\phi(z,\dot{\varepsilon})=A-\alpha \operatorname{sgn}(\dot{\varepsilon}) \, z,
+%\dot{z}=(A-\alpha \operatorname{sgn}(\dot{\varepsilon}) z) \dot{\varepsilon} \\
+\label{eq:bouc-family1}
+\end{equation}
+where $A$ scales the hysteretic loop and  $\alpha$ controls the 
+shape of the hysteresis loop.
+Bouc's model yields a separable initial-value problem for \(\alpha \ne 0\) with solutions:
+\begin{equation}
+  z(\varepsilon) = \begin{cases}-\frac{1}{\alpha}\left(C_1 e^{-\alpha \varepsilon}-A\right), & \text { if } \dot{\varepsilon}>0 \\ \frac{1}{\alpha}\left(C_2 e^{\alpha \varepsilon}-A\right), & \text { if } \dot{\varepsilon}<0\end{cases}
+\label{eq:bouc-family2}
+\end{equation}
+where \(C_1\) and \(C_2\) must be calculated piecewise by using the
+final state of the previous branch as the initial condition.
+
+\item[Wen's Hysteresis (1976)]
+Wen \cite{wen1976method} extended the original model by Bouc to control the sharpness of the hysteresis in transition from elastic to inelastic region:
+\begin{equation}
+%\dot{z}=\left(A-(\alpha \operatorname{sgn}(\dot{\varepsilon} z)-\beta) \, |z|^{n}\right) \dot{\varepsilon} \\
+\phi(z,\dot{\varepsilon}) = A-\left(\alpha \operatorname{sgn}(z \dot{\varepsilon})-\beta\right)|z|^{n},
+\label{eq:bouc-family3}
+\end{equation}
+where $n$ is a parameter that controls the sharpness.
+
+\item[Baber-Wen Degradation (1981)]
+Baber and Wen (1981) \cite{baber1981random} further extended the model to 
+include strength and stiffness deterioration:
+\begin{equation}
+\begin{aligned}
+\phi(z,\dot{\varepsilon})&=\frac{1}{\eta}\left(A- \nu |z|^{n} \left(\alpha \operatorname{sgn}(\dot{\varepsilon} z)+\beta\right) \right),
+\\
+A &=A_{o}-\delta_{A} \psi,   \\
+\nu &=1+\delta_{\nu} \psi,   \\
+\eta &=1+\delta_{\eta} \psi, \\
+\dot{\psi} & =(1-b) E \dot{\varepsilon} z, 
+\end{aligned}
+\label{eq:bouc-family4}
+\end{equation}
+where $A_{o}$, $\delta_{A}$, $\delta_{\nu}$, and $\delta_{\eta}$ are degradation parameters and $\psi$ is the absorbed hysteretic energy, defined as follows:
+\begin{equation}
+\psi = (1-b) \omega^2 \int_0^t \dot{\varepsilon}(\tau) z(\tau) \mathrm{d} \tau,
+\label{eq:bouc-family5}
+\end{equation}
+where $\rho$ is the material density and $\omega^2:={E}/{\rho}$ is the squared pseudo-natural frequency of the nonlinear system.
+% \item[Noori]
+% \[
+% \phi =\frac{h(z)}{\eta} \bigl(A-\nu\left(\beta \operatorname{sign}(\dot{u})|z|^{n-1} z+\gamma |z|^n\right)\bigr)
+% \]
+% \item[Wang and Wen (1998)] suggested the following expression to account for the asymmetric peak restoring force:
+% \[
+% \phi(z, \dot{u}) = A - |z|^n \left(\gamma+\beta \operatorname{sgn}(z \dot{u})+\varphi(\operatorname{sgn}(\dot{u})+\operatorname{sgn}(z))\right)
+% \]
+\end{description}
+
+\hypertarget{implementation}{%
+\subsection{Implementations}\label{implementations}}
+When such models are employed within a finite element simulation,
+the governing ODE for the internal variables must be integrated numerically. For example, applying the implicit \emph{Backward-Euler} discretization to the variables \(\dot{\psi}\) and \(\dot z\) from Bouc-Wen-Baber (1981) \cite{baber1981random} furnishes the
+following implicit problem for \(z_{n+1}\) and \(\psi_{n+1}\):
+
+\begin{quote}
+\[
+\begin{aligned}
+z_{n+1}&=z_{n}+\Delta t \frac{A_{n+1}-\left|z_{n+1}\right|^{n}\left\{\gamma+\beta \operatorname{sgn}\left(\frac{\epsilon_{n+1}-\epsilon_{n}}{\Delta t} z_{n+1}\right)\right\} \nu_{n+1}}{\eta_{n+1}} \, \frac{\epsilon_{n+1}-\epsilon_{n}}{\Delta t}, \\
+\psi_{n+1}
+&=\psi_{n}+\Delta t(1-\alpha) k_{o} \frac{\epsilon_{n+1}-\epsilon_{n}}{\Delta t} z_{n+1}, \\
+A_{n+1} &=A_{o}-\delta_{A} \, \psi_{n+1}, \\
+\nu_{n+1} &=1+\delta_{\nu} \, \psi_{n+1}, \\
+\eta_{n+1} &=1+\delta_{\eta} \, \psi_{n+1},
+\end{aligned}
+\]
+\end{quote}
+which is generally solved with Newton-Raphson iterations.
+
+\begin{comment}
+%%%%%%%%%%%%%%%%%%%%%%% I commented this table unless we need to discuss it.
+\begin{table}[hb]
+% \begin{tabular}{@{}lllll@{}}
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.2921}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.0225}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.0225}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.0225}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.6180}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Reference
+\end{minipage} & %\begin{minipage}[b]{\linewidth}\raggedright
+\tnote{1}
+%\end{minipage} 
+& %\begin{minipage}[b]{\linewidth}\raggedright
+\tnote{1}
+%\end{minipage} 
+& %\begin{minipage}[b]{\linewidth}\raggedright
+\tnote{2}
+%\end{minipage} 
+& \begin{minipage}[b]{\linewidth}\raggedright
+Notes
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\noalign{}
+% \endlastfoot
+\citet{bouc1967forced} & - & - & - &  \\
+\citet{wen1976method} & - & - & - & \\
+\citet{baber1981random} & - & a & - & Introduction of degradation to
+\citet{wen1976method} \\
+\citet{baber1985random} & - & a & a & Addition of pinching to
+\citet{baber1981random} using series composition with a Gaussian. \\
+\citet{baber1986modeling} & - & a & b & \\
+\citet{sues1988systems} & - & b & - & New degradation function proposed for RC,
+similar to Clough's \\
+\citet{foliente1995hysteresis} & - & a & c & Proposed modification to
+pinching function of \cite{baber1986modeling} \\
+% \citet{reinhorn1995modeling} & & & & \\
+% \citet{sivaselvan2000hysteretic} & & & & \\
+% \citet{charalampakis2009bouc} & & & & \\
+% \citet{kottari2014consistent} & & & & \\
+% \citet{pelliciari2020degrading} & & & & \\
+% \citet{liberatore2019enriched} & & & & \\
+% \citet{amir2022statespace} & & & & \\
+\bottomrule
+\end{longtable}
+\begin{tablenotes}
+    \item[1] Slip models
+    \item[2] Degradation models
+\end{tablenotes}
+\end{table}
+
+% \hypertarget{observations}{%
+% \paragraph{Observations}\label{observations}}
+
+% \begin{itemize}
+% \tightlist
+% \item
+%   Asymmetric load cycles never form a stable closed loop; ie,
+%   asymmetric load cycles always cause drift.
+% \item
+%   Stiffness at unloading is always greater than stiffness at loading.
+% \end{itemize}
+
+\end{comment}

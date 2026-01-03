@@ -1,0 +1,299 @@
+\hypertarget{differntial-algebraic-equations}{%
+\subsection{Differential-Algebraic
+Equations}\label{sec:daes}}
+
+% \input{style/uniaxial.tikzstyles}
+% \begin{figure}
+%     \centering
+%     \scalebox{0.75}{\input{figures/plasticity.tikz}}
+%     \caption{The structure of plasticity theories.}
+%     \label{fig:plasticity}
+% \end{figure}
+
+
+% Five key concepts form the basis of almost all classical theories of
+% plasticity. They are
+
+% \begin{enumerate}
+% \def\labelenumi{\arabic{enumi}.}
+% \tightlist
+% \item
+%   The decomposition of strain into elastic and plastic parts;
+% \item
+%   Yield criteria, which predict whether the solid responds elastically
+%   or plastically;
+% \item
+%   Strain hardening rules, which control the way in which resistance to
+%   plastic flow increases with plastic straining;
+% \item
+%   The plastic flow rule, which determines the relationship between
+%   stress and plastic strain under multi-axial loading;
+% \item
+%   The elastic unloading criterion, which models the irreversible
+%   behavior of the solid.
+% \end{enumerate}
+
+\[
+\dot{\bar{\epsilon}}^p \triangleq \left|\dot{\epsilon}^p\right|
+\qquad\text{ so }\qquad
+\bar{\epsilon}^p(t) = \int_0^t \dot{\bar{\epsilon}}^p(\zeta) d \zeta
+\]
+\begin{marsdenbox}
+    \begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item Kinematic decomposition
+\[
+\boldsymbol{\varepsilon} = \boldsymbol{\varepsilon}^e + \boldsymbol{\varepsilon}^p
+\]
+\item
+  Elastic stress-strain relationships \[
+    \begin{aligned}
+    \boldsymbol{\sigma} &=\frac{\partial W\left(\varepsilon-\varepsilon^{p}\right)}{\partial \varepsilon}=\mathbf{C}\left[\varepsilon-\varepsilon^{p}\right] \\
+    %\mathbf{C}: &=\frac{\partial^{2} W\left(\varepsilon-\varepsilon^{p}\right)}{\partial \varepsilon^{2}}=\text { constant (elastic moduli). }
+    \end{aligned}
+    \]
+\item
+  Elastic domain in stress space (single surface) \[
+  \mathbb{E}_{\sigma}=\left\{(\boldsymbol{\sigma}, \boldsymbol{q}) \in \mathbb{S} \times \mathbb{R}^{m} \mid f(\boldsymbol{\sigma}, \boldsymbol{q}) \leq 0\right\}
+  \]
+  where $f$ is such that:
+  $$
+  \text { if } f=0 \text {, then } \dot{f} \leq 0
+  $$
+\item
+  Flow rule and hardening law
+
+  \[
+  \begin{aligned}
+  & \text{General}  & \text{Associative} \\
+  \dot{\varepsilon}^{p} &=\lambda \boldsymbol{r}(\boldsymbol{\sigma}, \boldsymbol{q}) &=\lambda \frac{\partial f}{\partial \boldsymbol{\sigma}}  \\
+  \dot{\boldsymbol{q}} &=-\lambda \boldsymbol{h}(\boldsymbol{\sigma}, \boldsymbol{q}) &= -\lambda \mathbf{D} \frac{\partial f}{\partial \boldsymbol{q}}
+  \end{aligned}
+  \]
+  where \(\mathbf{D}\) is a matrix of generalized plastic moduli.
+\item
+  Kuhn-Tucker complementarity (loading/unloading)
+  
+\[
+  \lambda \geq 0, \quad f(\boldsymbol{\sigma}, \boldsymbol{q}) \leq 0, \quad \lambda f(\boldsymbol{\sigma}, \boldsymbol{q})=0 .
+\]
+
+\item
+  Consistency condition: plastic flow ($\dot{\bar{\epsilon}}^p>0$) can only occur if the state of stress persists in the yield set (ie,  remains an elastic-plastic state)
+    $$
+    \text { if } \dot{\epsilon}^{\mathrm{p}} \neq 0 \text {, then } f=0 \text { and } \dot{f}=0
+    $$ 
+% or
+%   \[
+%   \lambda \dot{f}(\boldsymbol{\sigma}, \boldsymbol{q})=0 .
+%   \]
+\end{enumerate}
+\end{marsdenbox}
+
+
+\iffalse
+\[
+H\left(\bar{\epsilon}^p\right) \triangleq \frac{d Y\left(\bar{\epsilon}^p\right)}{d \bar{\epsilon}^p}
+\]
+
+\[\dot{\epsilon}^p=\left\{\begin{array}{llll}0 & \text { if } & |\sigma|<Y\left(\bar{\epsilon}^p\right) & \text { (behavior in the elastic state), } \\ 0 & \text { if } & |\sigma|=Y\left(\bar{\epsilon}^p\right) & \text { and } \quad \sigma \dot{\epsilon}<0 \quad \text { (elastic unloading), } \\ \beta \dot{\epsilon} & \text { if } & |\sigma|=Y\left(\bar{\epsilon}^p\right) & \text { and } \quad \sigma \dot{\epsilon}>0 \quad \text { (plastic loading), }\end{array}\right.
+\]
+\fi
+
+\begin{longtable}[]{@{}lll@{}}
+\toprule\noalign{}
+& Govindjee & Simo \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\(\sigma_\text{yield}\) & \(Y\) & \(K\) \\
+\(H_\text{iso}\) & \(H_\text{iso}\) & \(K^\prime\) \\
+\(H_\text{kin}\) & & \(H^\prime\) \\
+\(\dot{\sigma}_y\) & \(\dot{Y}\) & \(K^\prime\dot{\alpha}\) \\
+\(\|\epsilon^p\|\) & \(\bar{\epsilon}^p\) & \(\alpha\) \\
+& \(\sigma_\text{eff}\) & \(\eta\) \\
+\(\sigma_\text{back}\) & & \\
+\(\sigma_\text{back}\) & & \\
+\end{longtable}
+
+% \hypertarget{yield-criteria}{%
+% \paragraph{Yield Criteria}\label{yield-criteria}}
+
+% \begin{description}
+% \tightlist
+% \item[Huber Von-Mises (\(J_2\))]
+% \end{description}
+
+% \begin{quote}
+% \[
+% \begin{aligned}
+% \boldsymbol{\eta} &\triangleq \operatorname{dev}[\boldsymbol{\sigma}]-\overline{\boldsymbol{\beta}} \\
+% \operatorname{tr}[\overline{\boldsymbol{\beta}}] &\triangleq 0 \\
+% f(\boldsymbol{\sigma}, \boldsymbol{q}) &=\|\boldsymbol{\eta}\|-\sqrt{\frac{2}{3}} K(\alpha) \\
+% \dot{\varepsilon}^{p} &=\lambda \frac{\boldsymbol{\eta}}{\|\boldsymbol{\eta}\|}, \\
+% \lambda &= \left\|\dot{\varepsilon}^{p}\right\|=\frac{\left<\frac{\boldsymbol{\eta}}{\|\boldsymbol{\eta}\|}: \dot{\boldsymbol{\varepsilon}}\right>}{1+\frac{H^{\prime}+K^{\prime}}{3 \mu}}, \\
+% \dot{\overline{\boldsymbol{\beta}}} &=\lambda \frac{2}{3} H^{\prime}(\alpha) \frac{\boldsymbol{\eta}}{\|\boldsymbol{\eta}\|} \\
+% \dot{\alpha} &=\lambda \sqrt{\frac{2}{3}} \\
+% % \boldsymbol{n}&:=\frac{\boldsymbol{\eta}}{\|\boldsymbol{\eta}\|}
+% \end{aligned}
+% \]
+% \end{quote}
+
+\hypertarget{isotropic-hardening}{%
+\subsection{Isotropic Hardening}\label{isotropic-hardening}}
+\begin{description}
+\item[Prager]
+
+
+
+\item[Voce] (Voce 1948). 
+  \[
+  \boxed{
+  \dot{\sigma}_\text{y} = \dot{\lambda} H_\text{iso}\left(1-\frac{\sigma_\text{y}}{f_{\text{y}, \infty}}\right)
+  }
+  \] 
+
+% \begin{quote}
+\[
+\sigma_{y} = f_{y} + f_{\infty}\left(1-e^{-b \varepsilon_{e q}^{p}}\right)
+%Y\left(\bar{\varepsilon}^{\mathrm{p}}\right)=f_{s}-\left(Y_{s}-Y_{0}\right) \exp \left(-\frac{H_{0}}{Y_{s}} \bar{\varepsilon}^{\mathrm{p}}\right)
+\]
+
+\begin{longtable}[]{@{}ll@{}}
+\toprule\noalign{}
+Symbol & Description \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\(f_y\) & Initial yield stress. \\
+\(f_\infty\) & Saturated yield stress \\
+\end{longtable}
+% \end{quote}
+
+
+% \hypertarget{power-law-hardening-govindjee-2020}{%
+% \subparagraph{Power-Law Hardening (Govindjee
+% 2020)}\label{power-law-hardening-govindjee-2020}}
+\item[Power-Law Hardening] The aforementioned hardening law can be considered a specialization of the more general rule:
+\[
+\boxed{
+\dot{\sigma}_y(\bar{{\varepsilon}}^\mathrm{p})=\dot{\bar{\epsilon}}^p H_\text{iso}\left(1-\frac{\sigma_y}{f_{y,s}}\right)^{r}, \\
+\quad \sigma_y(0) = Y_0
+}
+\]
+Note that this IVP can be integrated in closed form, furnishing the solution: \[
+\sigma_y\left(\bar{{\varepsilon}}^{\mathrm{p}}\right)
+= \begin{cases}
+f_{s}-\left[\left(f_{y,s}-f_{y}\right)^{(1-r)}+(r-1)\left(\frac{H_{0}}{\left(f_{s}\right)^{r}}\right) \bar{\varepsilon}^{\mathrm{p}}\right]^{\frac{1}{1-r}} & r \ne 1 \\
+f_{s}-\left(f_{y,s}-f_y\right) \exp \left(-\frac{H_\text{iso}}{f_{s}} \bar{{\varepsilon}}^{\mathrm{p}}\right) & r = 1
+\end{cases}
+\]
+\end{description}
+
+\hypertarget{kinematic-hardening}{%
+\subsection{Kinematic Hardening}\label{kinematic-hardening}}
+
+\begin{description}
+\item[Prager] Melan (1938), Ishlinskii (1954), and Prager (1956).
+  % \begin{framed}
+    \[
+    \sigma_{\mathrm{b}} = H_\mathrm{k} \, \varepsilon^p
+    \]
+    \begin{longtable}[]{@{}ll@{}}
+    \toprule\noalign{}
+    Symbol & Description \\
+    \midrule\noalign{}
+    \endhead
+    \bottomrule\noalign{}
+    \endlastfoot
+    \({H}_{\text{k}}\) & Kinematic hardening modulus \\
+    \end{longtable}
+  % \end{framed}
+\item[Ziegler]
+    \[
+    d \alpha_{i j}=d a\left(\varepsilon_{i j}^p\right)\left(\sigma_{i j}-\alpha_{i j}\right)
+    \]
+    
+    for some scalar function \(a\). or
+    
+    \[
+    \dot{\boldsymbol{\alpha}}=C \dot{\bar{\varepsilon}}^{p l} \frac{1}{\sigma^0}(\boldsymbol{\sigma}-\boldsymbol{\alpha})+\frac{1}{C} \boldsymbol{\alpha} \dot{C}
+    \] 
+    This form of evolution law for
+    \(\alpha\) defines the rate of \(\alpha\) due to plastic straining to be
+    in the direction of the current radius vector from the center of the
+    yield surface, \(\sigma-\alpha\), and the rate due to temperature
+    changes to be toward the origin of stress space. Rice
+    (1975) writes this concept quite generally as 
+    \[
+    \dot{\boldsymbol{\alpha}}=\dot{\mu}(\boldsymbol{\sigma}-\boldsymbol{\alpha})+h \boldsymbol{\alpha} \dot{\theta} .
+    \]
+    
+    % \begin{quote}
+    \[
+    \dot{\boldsymbol{\sigma}}_\text{back}
+    =\frac{2}{3} H \dot{\varepsilon}^{p}
+    =\dot{\lambda} \sqrt{\frac{2}{3}} H \frac{\boldsymbol{\eta}}{\|\eta\|}
+    \]
+    \begin{longtable}[]{@{}ll@{}}
+    \toprule\noalign{}
+    Symbol & Description \\
+    \midrule\noalign{}
+    \endhead
+    \bottomrule\noalign{}
+    \endlastfoot
+    \(\bar{H}_{\text{kin}}\) & Kinematic hardening modulus \\
+    \end{longtable}
+    % \end{quote}
+
+\item[Armstrong--Frederick]
+
+\begin{quote}
+\[
+\begin{aligned}
+\dot{\boldsymbol{\sigma}}_\text{back} &=\frac{2}{3} H_\text{k} \dot{\boldsymbol{\varepsilon}}^{\text{p}}-\dot{\bar{\varepsilon}}^{\text{p}} \gamma \boldsymbol{\sigma_\text{back}} \\
+%&=\dot{\lambda}\left(\frac{2}{3} \bar{H}_\text{k} \frac{\partial \Phi}{\partial \boldsymbol{\sigma}}-b \boldsymbol{\sigma_\text{back}}\right)
+\end{aligned}
+\]
+
+\begin{longtable}[]{@{}ll@{}}
+\toprule\noalign{}
+Symbol & Description \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\(H_{\text{k}}\) & Back stress modulus \\
+\(\gamma\) & Kinematic saturation parameter \\
+\end{longtable}
+\end{quote}
+
+% \item[Chaboche]
+
+% % \hypertarget{chaboche-chaboche-et-al.-1979}{%
+% % \subparagraph{Chaboche (Chaboche et al.~1979)}\label{chaboche-chaboche-et-al.-1979}}
+
+% \[
+% \boxed{
+% \begin{gathered}
+% \dot{\boldsymbol{\sigma}}_{\text{back},k}=\sqrt{2 / 3} C_{k} \dot{\boldsymbol{\varepsilon}}^{p} -\gamma_{k} \dot{\bar{\varepsilon}}^{p} \boldsymbol{\sigma}_{\text{back},k}\\
+% \mathbf{\sigma}_\text{back}=\sum_{k=1}^{n B a c k} \sigma_{\text{back},k}
+% \end{gathered}
+% }
+% \]
+% \[
+% \dot{\boldsymbol{\alpha}}=C \dot{\bar{\varepsilon}}^{p l} \frac{1}{\sigma^0}(\boldsymbol{\sigma}-\boldsymbol{\alpha})-\gamma \boldsymbol{\alpha} \dot{\bar{\varepsilon}}^{p l}+\frac{1}{C} \boldsymbol{\alpha} \dot{C}
+% \] where \(C\) and \(\gamma\) are material parameters,
+
+\end{description}
+
+Ziegler hardening is typically implemented with isotropic hardening as:
+
+\[
+\begin{aligned}
+H^{\prime}(\alpha) &=(1-\theta) \bar{H} \\
+K(\alpha) &=\left[\sigma_{y}+\theta \bar{H} \alpha\right], \quad \theta \in[0,1]
+\end{aligned}
+\]

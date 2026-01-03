@@ -26,9 +26,8 @@ The constraints are expressed through linear maps \(\mathbf{L}_{\rm vp}, \mathbf
 \label{eq:linear-warp-constraints}
 \end{equation}
 %
-where the constraint maps satisfy the compatibility conditions \(\mathbf{L}_{\rm vv}\mathbf{L}_{\rm vp} = \mathbf{L}_{\rm vp}\) and \(\mathbf{L}_{\rm ww}\mathbf{L}_{\rm wp} = \mathbf{L}_{\rm wp}\).
-
-
+where the constraint maps satisfy the compatibility conditions \(\mathbf{L}_{\rm vv}\mathbf{L}_{\rm vp} = \mathbf{L}_{\rm vp}\) and \(\mathbf{L}_{\rm ww}\mathbf{L}_{\rm wp} = \mathbf{L}_{\rm wp}\). 
+%
 The warping amplitude vector is decomposed as:
 \begin{equation}
 \bm{\alpha} = \bar{\bm{\alpha}} + \mathbf{L}_{\rm vv}\bm{\alpha} + \mathbf{L}_{\rm ww}\bm{\alpha}
@@ -39,15 +38,15 @@ where the reduced warping vector \(\bar{\bm{\alpha}} \triangleq (\mathbf{I} - \m
 % \subsubsection{Algebraic Constraints}
 
 \paragraph{Kinematics}
-Using the constraints \cref{eq:linear-warp-constraints}, the full strain vector under only algebraic constraints (\(\mathbf{L}_{\rm wp} = \mathbf{0}\) can be expressed through the transformation:
+Using the constraints \cref{eq:linear-warp-constraints}, the full strain vector can be expressed through the transformation:
 
 \begin{equation}
 \bm{e}=\begin{pmatrix}
 \bm{\gamma} \\ \bm{\kappa} \\ \bm{\alpha}' \\\bm{\alpha}
 \end{pmatrix}=\underbrace{\begin{bmatrix}
 \mathbf{1} & \mathbf{0} & \mathbf{0} & \mathbf{0} \\ 
-\mathbf{0} & \mathbf{1}  & \mathbf{0} & \mathbf{0} \\ 
-\mathbf{0} &\mathbf{0} & \mathbf{1} & \mathbf{0} \\
+\mathbf{0} & \mathbf{1} & \mathbf{0} & \mathbf{0} \\ 
+\mathbf{0} & \mathbf{0} & \mathbf{1} & \mathbf{0} \\
 \mathbf{L}_{\rm vn} & \mathbf{L}_{\rm vm} & \mathbf{0} & \mathbf{1}-\mathbf{L}_{\rm vv}
 \end{bmatrix}}_{\mathbf{L}}
 \begin{pmatrix}

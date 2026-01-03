@@ -20,10 +20,10 @@
 %
 The cantilever beam 
 in Figure \ref{fig:cantilever} is subjected to \emph{either} a point moment \(\boldsymbol{M}\) 
-or a point force \(F \, \mathbf{E}_3\) at its free end \(\xi=L\).
+or a point force \(F \, \mathbf{E}_3\) at its free end \(\reflenx=L\).
 %
 The centerline of the reference configuration 
-is given by \(\boldsymbol{x}_0(\xi) = \xi\,\mathbf{E}_1\).
+is given by \(\boldsymbol{x}_0(\reflenx) = \reflenx\,\mathbf{E}_1\).
 This example is selected to demonstrate the ability of the proposed formulations to accurately reproduce available analytical solutions.
 %
 \subsubsection{End Moment}\label{sec:circle}
@@ -47,7 +47,7 @@ This simplification has two important consequences:
     %This is because the plane constraint has rendered the configuration manifold for \(\boldsymbol{\Lambda}\) vectorial.
 \end{itemize}
 %
-In this case, the moment loading can be treated identically for all analyses by simply scaling a constant \emph{reference} force vector for the node at \(\xi=L\):
+In this case, the moment loading can be treated identically for all analyses by simply scaling a constant \emph{reference} force vector for the node at \(\reflenx=L\):
 %
 \begin{equation}
   \mathbf{f}_{M,\text{ref}} = \begin{pmatrix}
@@ -80,14 +80,14 @@ the analytic solution of the governing boundary value problem in Equation~(\ref{
 \begin{equation*}
   \left\{
   \begin{aligned}
-  \boldsymbol{x}(\xi)&=\frac{EI}{M} \sin \vartheta(\xi) \, \mathbf{E}_1
-                      + \frac{EI}{M}\left(\cos \vartheta(\xi)-1\right) \, \mathbf{E}_2 \\
-    \vartheta(\xi)   &=  \xi \frac{M}{EI}
+  \bm{x}(\reflenx)&=\frac{EI}{M} \sin \vartheta(\reflenx) \, \mathbf{E}_1
+                      + \frac{EI}{M}\left(\cos \vartheta(\reflenx)-1\right) \, \mathbf{E}_2 \\
+    \vartheta(\xi)   &=  \reflenx \frac{M}{EI}
   \end{aligned}
   \right.
 \end{equation*}
 %
-where \(\vartheta\) parameterizes the rotation \(\boldsymbol{\Lambda}(\xi) = \operatorname{Exp} \vartheta(\xi) \, \mathbf{E}_3\). This result is derived in Appendix~\ref{sec:closed-solution}. 
+where \(\vartheta\) parameterizes the rotation \(\boldsymbol{\Lambda}(\reflenx) = \operatorname{Exp} \vartheta(\reflenx) \, \mathbf{E}_3\). This result is derived in Appendix~\ref{sec:closed-solution}. 
 The displacements for \(n=2\)-node elements match exactly those reported by \cite{ibrahimbegović1995computational} for both the natural \texttt{None}, and the logarithmic \texttt{Init}/\texttt{Incr} variants.
 For \(n=3\)-node elements, the results match the analytic solution up to the reported precision.
 %

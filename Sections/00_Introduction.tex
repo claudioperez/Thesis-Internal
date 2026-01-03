@@ -71,7 +71,7 @@ thin-walled cross-sections, with the classical thin-walled results
 
 \subsection{Outline}
 
-The remainder of this work is organized as follows.
+The remainder of this work is organized as follows:
 
 \Cref{sec:genwarp} develops the governing equations for a geometrically exact 
 beam enriched with an arbitrary number of warping modes. 
@@ -82,11 +82,6 @@ is identified as the target for standard six-DOF finite elements.
 \Cref{sec:gensec} develops the section-level constitutive theory that connects 
 the one-dimensional beam model to the three-dimensional continuum. 
 We introduce material points in the cross-section through an extended displacement field and derive strain measures consistent with the beam kinematics.
-
-\Cref{sec:sv} presents a systematic treatment of Saint~Venant's solutions following the representation of \cite{iesan1986saintvenants}. 
-The complete Saint~Venant displacement field is decomposed into five rigid-body patterns 
-and eight warping patterns, establishing the minimal warping content required 
-for exact representation of the class.
 
 \Cref{sec:timo} introduces the trace formalism and characterizes the family 
 of traces satisfying our admissibility criteria. We derive explicit expressions 
@@ -99,7 +94,6 @@ the behavior under inelastic material response.
 % \end{Details}
 
 \subsection{Overview}
-The objective of this work is to develop a model of slender bodies that reduces the 3D elastostatic boundary value problem to a problem with one spatial dimension. 
 
 The draft first lays out the nonlinear governing equations of equilibrium for general lines in space in \cref{sec:genwarp}. 
 These equations are determined solely from the geometric nature of a line embedded in space, and make no reference to material points that are not contained on this line. 
@@ -107,9 +101,9 @@ The general model is geometrically exact and allows an arbitrary number of auxil
 
 Next a section-level constitutive theory is developed in \cref{sec:gensec} which allows for the consideration of material points that do not lie on the reference line.
 
-The next two sections are centered on identifying a minimal set of warping shapes which allow for the exact reconstruction of Saint Venant's classical continuum solutions through the reduced model of \cref{sec:genwarp}. 
-This begins with a brief recapitulation of Saint Venant's solution in \cref{sec:sv}. 
-Then in \cref{sec:timo}, we proceed to fit a curve through the Saint Venant solution. 
+\cref{sec:timo} is centered on identifying a minimal set of warping shapes which allow for the exact reconstruction of Saint~Venant's classical continuum solutions through the reduced model of \cref{sec:genwarp}. 
+A brief recapitulation of Saint Venant's solution is presented in \cref{sec:sv}. 
+
 \begin{Aside}
 This draft develops a general family of beam theories enriched by an arbitrary number of warping modes. 
 The work begins in the most general setting where we allow for inelasticity and finite deformation. 
@@ -120,7 +114,7 @@ We present Iesan's representation of the class, and break the 3D solution into 5
 Next we must determine an association of these patterns with strains arising from the configuration manifold we investigated earlier; ie, 
 $$\left\{\bm{u}: [0,L]\rightarrow \mathbb{R}^3, \FrameRotation: [0,L]\rightarrow \mathrm{SO}(3), \bm{\alpha}: [0,L]\rightarrow \mathbb{R}^{n_w}\right\}$$ 
 At this point we are confronted with the fundamental ambiguity in associating these fields to full 3D deformation fields. 
-So then we introduce the abstraction of traces, $T: \hat{u} \rightarrow (u, \theta)$ which formalize this ambiguity. 
+So then we introduce the abstraction of traces, $T: \hat{\bm u} \rightarrow (\bm{u}, \bm\theta)$ which formalize this ambiguity. 
 There are three natural restrictions we impose on the class of traces we'll investigate: 1) they generate at-most-linear strain measures under the SV class, 2) they preserve plane-section-preserving deformations, and 3) they are capable of exactly reconstructing the exact strain field for any problem in the SV class.
 \end{Aside}
 
@@ -199,16 +193,8 @@ We seek a kinematic model for a beam finite element with fully integrated materi
 Our ultimate goal is to obtain a resultant model that can be used with standard beam finite elements. 
 These elements work in terms of the primary equilibrium operator $\mathbb{B}_p$, so if we can return from the section with the quantity that figures in this operator, the element needs no modification. 
 It is worth noting that this breaks down under \emph{nonuniform torsion}, because the bishear rate that is picked up by $\mathbf{L}_{\rm vp}\bm{w}'$ is not exactly proportional to any of the 1D strain measures ($\bm\gamma$ and $\bm\kappa$). 
-However, this approach will be sufficient to exactly capture the Saint Venant class which only includes \emph{uniform} torsion.
+However, this approach will be sufficient to exactly capture the Saint~Venant class which only includes \emph{uniform} torsion.
 
-For example, a classical linear inelastic Timoshenko element takes trial nodal displacements, computes $\bm\gamma,\bm\kappa$, sends these to the section, and interpolates the returned resultants against $\mathbb{B}_p$ given by
-\[
-\mathbb{B}_{\rm p} = -\begin{bmatrix}
-    \mathbf{1}\partial_x & \mathbf{0}  \\
-    \FrameBasis^{\times}& \mathbf{1} \partial_x 
-\end{bmatrix}
-\]
-Our objective is to ``trick" these elements into modeling a more complex problem by returning \emph{effective} resultants. 
 
 
 \subsection{Literature}
@@ -224,8 +210,7 @@ Our objective is to ``trick" these elements into modeling a more complex problem
 \end{Details}
 
 \paragraph{Shear Correction}
-\cite{nicholson1977timoshenko}
-Typically matching criteria are \parencite{steinboeck2013energyconsistent}
+Typically matching criteria are \parencite{nicholson1977timoshenko,steinboeck2013energyconsistent}
 \begin{itemize}
 \item Equal average displacement values.
 \cite{cowper1966shear} derived a shear coefficient by matching shear rotation angles from displacement averages with shear rotation angles from beam theory. 

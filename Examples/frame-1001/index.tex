@@ -19,10 +19,10 @@
 %
 The cantilever beam 
 in Figure~\ref{fig:cantilever-1001} is subjected to \emph{either} a point moment \(\bm{M}\) 
-or a point force \(F \, \mathbf{E}_3\) at its free end \(\xi=L\).
+or a point force \(F \, \mathbf{E}_3\) at its free end \(\reflenx=L\).
 %
 The centerline of the reference configuration 
-is given by \(\bm{x}_0(\xi) = \xi\,\mathbf{E}_1\).
+is given by \(\bm{x}_0(\reflenx) = \reflenx\,\mathbf{E}_1\).
 This example is selected to demonstrate the ability of the proposed formulations to accurately reproduce available analytical solutions.
 %
 \subsubsection{End Moment (1001)}\label{sec:frame-1001}
@@ -46,7 +46,7 @@ This simplification has two important consequences:
     %This is because the plane constraint has rendered the configuration manifold for \(\boldsymbol{\Lambda}\) vectorial.
 \end{itemize}
 %
-In this case, the moment loading can be treated identically for all analyses by simply scaling a constant \emph{reference} force vector for the node at \(\xi=L\):
+In this case, the moment loading can be treated identically for all analyses by simply scaling a constant \emph{reference} force vector for the node at \(\reflenx=L\):
 %
 \begin{equation}
   \mathbf{f}_{M,\text{ref}} = \begin{pmatrix}

@@ -3,7 +3,7 @@
 %
 The cantilever beam 
 from Section~\ref{sec:frame-1002} is now subjected to a \emph{combined} point moment \(\bm{M}\) 
-and a point force \(F \, \mathbf{E}_3\) at its free end \(\xi=L\).
+and a point force \(F \, \mathbf{E}_3\) at its free end \(\reflenx=L\).
 %
 This example is selected to demonstrate the ability of the proposed formulations 
 to naturally accommodate applied moments in various reference frames.
@@ -33,10 +33,10 @@ have been performed with the parameters of the present study.
 %
 %
 \subsubsection{Simple Perturbation}\label{sec:frame-1006}
-Following \cite{ibrahimbegović1995computational}, the problem of plane flexure from Section~\ref{sec:frame-1001} is now altered by introducing the point load
-\(\boldsymbol{F} = 1/16 \, \mathbf{E}_3\) in addition to the moment \(\boldsymbol{M}\) so as to induce
+Following \cite{ibrahimbegović1995computational}, the problem of plane flexure from \cref{sec:frame-1001} is now altered by introducing the point load
+\(\bm{F} = 1/16 \, \mathbf{E}_3\) in addition to the moment \(\bm{M}\) so as to induce
 a three-dimensional response. 
-A uniform mesh of 10, 2-node elements is used, and the reference moment in Equation~(\ref{eq:fref}) for \(\lambda = 1/8\) is applied in a single load step. 
+A uniform mesh of 10, 2-node \ExactFrame{} elements is used, and the reference moment in \eqref{eq:fref} for \(\lambda = 1/8\) is applied in a single load step. 
 Because the deformation is no longer plane, each choice of nodal parameterization essentially equilibriates the moment in a different coordinate system. %solves a different problem.
 Results are reported in Table~\ref{tab:helical-perturb01}, where the \texttt{None/None/None} and \texttt{Incr/None/Incr} 
 variants match the values reported by \cite{ibrahimbegović1995computational} for the formulations by 
@@ -47,7 +47,7 @@ Once again, the application of external isometry or parameter transformations do
 
 \subsubsection{Consistent Perturbation}
 The problem is simulated again, but now the moment is consistently applied with a spatial orientation.
-Formulations whose final residual moment vector is conjugate to the spatial variations \(\boldsymbol{u}_{\scriptscriptstyle{\Lambda}}\) of the rotation \(\boldsymbol{\Lambda}\) do not need to be treated differently.
+Formulations whose final residual moment vector is conjugate to the spatial variations \(\bm{u}_{\scriptscriptstyle{\Lambda}}\) of the rotation \(\FrameRotation\) do not need to be treated differently.
 This includes both elements with the \texttt{None} parameter transformation and transformed elements with the Petrov-Galerkin formulation.
 For the simulations with all other elements, a transformation of the nodal force is necessary, as described in \cite{ritto-corrêa2002differentiation,ritto-corrêa2003workconjugacy}.
 Table~\ref{tab:helical-perturb02} lists the tip displacements for the solution. 
@@ -71,7 +71,7 @@ Table~\ref{tab:helical-perturb02} lists the tip displacements for the solution.
 \end{figure}
 %
 To demonstrate the behavior of the
-proposed formulations under large rotations, the reference moment value $M$ in Equation~(\ref{eq:fref}) is now increased to \(\lambda=10\) with a large out-of-plane force of \(F=5 \lambda\).
+proposed formulations under large rotations, the reference moment value $M$ in \eqref{eq:fref} is now increased to \(\lambda=10\) with a large out-of-plane force of \(F=5 \lambda\).
 The model discretization uses 100 2-node \ExactFrame finite elements, and the loading is applied in 200 steps under load factor control.
 Figure~\ref{fig:helix} shows the final deformed shape alongside a plot of the tip displacement in the direction of the concentrated force.
 These results are in perfect agreement with %values in 

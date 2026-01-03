@@ -6,15 +6,15 @@ on geometrically nonlinear rods.
 This example is selected to demonstrate the path-independence of the \texttt{Init} interpolation.
 The undeformed centerline of the cantilever follows a \(45^\circ\) arc with radius \(R\) given by:
 \[
-\boldsymbol{x}_0(\xi) = R \sin \xi \frac{\pi}{4L}\, \mathbf{E}_1 
-                      + R \left(1 - \cos \xi \frac{\pi}{4L}\right)\, \mathbf{E}_3.
+\bm{x}_0(\reflenx) = R \sin \reflenx \frac{\pi}{4L}\, \mathbf{E}_1 
+                      + R \left(1 - \cos \reflenx \frac{\pi}{4L}\right)\, \mathbf{E}_3.
 \]
-A point load \(\boldsymbol{F} = 600 \, \mathbf{E}_2\) is applied
-at the tip, i.e.\ at \(\xi = R\).
+A point load \(\bm{F} = 600 \, \mathbf{E}_2\) is applied
+at the tip, i.e.\ at \(\reflenx = R\).
 There is no closed-form solution to the problem, and it is customary
 to present the final displacements at the tip:
 \[
-\Delta x_i \triangleq \mathbf{E}_i \cdot \left(\boldsymbol{x}(L) - \boldsymbol{x}_0(L)\right).
+\Delta x_i \triangleq \mathbf{E}_i \cdot \left(\bm{x}(L) - \bm{x}_0(L)\right).
 \]
 %
 The following parameters are used for the simulations:
@@ -33,7 +33,7 @@ The following parameters are used for the simulations:
     J  =& 10^4/6  \\
 \end{array}
 \]
-The analysis uses a discretization with 8 linear (2-node) elements.
+The analysis uses a discretization with 8 2-node elements.
 The analysis is performed twice for each formulation under consideration,
 first with 8 equal load increments and then with 10.
 The results are presented in Table~\ref{tab:bathe}.
@@ -44,13 +44,13 @@ an artificial path dependence for all other variants.
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.6\textwidth]{Figures/Figure_3}
+    \includegraphics[width=0.6\textwidth]{Examples/frame-1001/Figures/Figure_3}
     \caption{Deformed shape of curved cantilever by \cite{bathe1979large}.}
     \label{fig:bathe}
 \end{figure}
 %
 
-\input{Tables/CantileverCurved.tex}
+\input{Examples/frame-1001/Tables/CantileverCurved.tex}
 
 % \begin{center}
 %\begin{table*}[!h]%

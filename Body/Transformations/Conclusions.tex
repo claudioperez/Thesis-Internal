@@ -1,0 +1,50 @@
+
+\subsection{Conclusions}
+
+The work shows that an important class of configuration-dependent coordinate transformations are naturally \emph{element-independent} and can be implemented more efficiently in modular fashion %modularly
+with an \emph{element wrapper}.
+With this approach the transformation equations of \cite{nour-omid1991finite}
+arise almost unchanged in the context of finite deformations on a nonlinear manifold.
+Part I concludes with the condensation of the proposed transformations in an algorithm for the state determination of the element wrapper.
+%The theoretical investigation of the first part concluded with the presentation of an algorithm.
+
+Part II 
+starts with
+the finite element formulation of 
+the %the static
+Cosserat rod for static problems
+and uses the framework of Part I %was investigated. 
+%The framework proposed by Part I was used
+to first identify the transformations underlying the formulation of
+the elements by  \cite{simo1986threedimensional}, \cite{ibrahimbegović1995computational} 
+and \cite{jelenić1998interpolation}.
+The proposed element wrapper of Part I is used to 
+%\FCF{and then investigate the use the proposed element wrapper to }
+introduce the transformation from \cite{crisfield1999objectivity} 
+in a novel Bubnov-Galerkin formulation.
+This novel formulation for the static analysis of a geometrically exact rod element exhibits the strain objectivity of \cite{jelenić1999geometrically} while also maintaining the symmetry of the tangent stiffness matrix at equilibrium under conservative loading.
+This study also shows that the proposed element wrapper allows for
+the arbitrary reparameterization of the nodal variables.
+Finally, the proposed framework readily accommodates the Petrov-Galerkin formulation.
+Even though this formulation results in an asymmetric tangent stiffness, Petrov-Galerkin methods are useful for dynamic analysis.
+
+\subsubsection{Verification}
+Five examples from the literature are used to confirm that the proposed geometric transformation framework
+reproduces exactly the results of two seminal studies on geometrically exact formulations \cite{simo1986threedimensional}, \cite{ibrahimbegović1995computational}.
+%
+The examples go on to showcase the effect of enhancing these formulations with strain-objectivity.
+
+For the planar flexural response of a cantilever beam in  Example~\ref{sec:plane} the enhanced formulations with strain objectivity demonstrate excellent agreement with available analytical solutions and equivalent accuracy and convergence characteristics to existing formulations.
+
+The spatial response of the cantilever beam in Example~\ref{sec:frame-1008}
+shows that the proposed formulation with objectivity and a symmetric stiffness matrix maintains the accuracy and convergence properties of the wrapped element under spatial loading and very demanding deformation states.  
+
+The curved cantilever of Example~\ref{sec:frame-1007} illustrates the utility of the modular framework for path-independent problems allowing for various reparameterizations of the nodal variables in connection with the invariance isometry \texttt{SFIN}, while preserving the path-independence with the \texttt{Init} interpolation.
+
+The buckling analysis of a flexible rod under torsion in Example~\ref{sec:frame-1010} shows that the proposed formulation with objectivity and a symmetric stiffness matrix maintains the accuracy and 
+convergence properties of the wrapped element even for a deformation history with instability.
+
+
+The proposed framework leverages the mathematical structure of the finite element method to delegate the computational cost of logarithmic parameterizations to external procedures, which can be included or excluded from an analysis depending on the problem characteristics.
+Because these computations are performed within the element integration loop in the literature, this consolidation optimizes the implementation.
+The paper reveals similar optimizations for the implementation of geodesic interpolations, where in addition to relegating certain operations outside the state determination process some operations are dropped altogether due to the cancellation of rigid body mode terms.

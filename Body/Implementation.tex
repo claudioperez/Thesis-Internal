@@ -137,9 +137,7 @@ transformation \\
 model \\
 \texttt{kinematics} & Flag & Optional variable specifying the kinematic
 formulation of the element. \\
-\texttt{mass\_type} & Flag & Optional flag variable specifying the mass
-formulation. Options include \texttt{Rigid}, \texttt{Prism} and
-\texttt{Taper} for non-prismatic elements. \\
+\texttt{shear} & Flag & Optional flag variable specifying the shear formulation. \\
 \bottomrule
 \end{longtable}
 
@@ -255,8 +253,12 @@ Elements are grouped into three types based on their geometric nature:
 \subsection{Section Library}
 
 
-\subsubsection{Elastic}
-\inputdraft{Sections/A_Constants}
+\subsubsection*{Elastic}
+\input{Body/Section/A_Constants}
+
+\subsubsection*{AxialFiber}
+
+\subsubsection*{ShearFiber}
 
 
 \subsection{Sensitivity}

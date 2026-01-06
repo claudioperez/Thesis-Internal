@@ -18,7 +18,7 @@
     & \multicolumn{2}{c}{Kinematics} 
     & \multicolumn{2}{c}{Warping}
     & \multicolumn{2}{c}{Loading} 
-    & Novelty 
+    & Chapter 
     \\
     \LightRule
     & & & Config. & Strain & Shear & Twist & Force &  Couple \\
@@ -38,10 +38,13 @@
      & % Span 
      & -\footnote{Analytic solution coincides under exact and linear geometry.}
      & Wagner
+     % Warping
      & - 
      & -
+     % Loading
      &
      &
+     & \ref{sec:gensec}
      \\
      \ExRef{frame-0021}
      & F. Sol.
@@ -69,6 +72,12 @@
      & 
      & Exact
      & Linear
+     % Warping
+     & - 
+     & - 
+     % Loading
+     & &
+     & \ref{sec:transform}
      \\
      \ExRef{frame-1002}
      & Ana.
@@ -93,8 +102,11 @@
     & Linear
     & -
     & -
+    % Loading
     & $\delta\frameBasis$
     & -
+    % Chapter
+    & \ref{sec:transform},\ref{sec:loading}
     \\
     \ExRef{frame-1035}
     & F. Sol.
@@ -118,6 +130,9 @@
 \input{Examples/frame-0012/index}
 \clearpage
 
+\subsection{Nonuniform torsion (0021)}\label{sec:frame-0021}
+\input{Examples/frame-0021/index}
+
 \subsection{Nonlinear torsion (0015)}\label{sec:frame-0015}
 \input{Examples/frame-0015/index}
 \clearpage
@@ -126,18 +141,16 @@
 \input{Examples/frame-1030/index}
 \clearpage
 
-\subsection{Curvature Invariance Under Imposed Finite Rotations}\label{sec:frame-1000}
+\subsection{Curvature Invariance Under Imposed Finite Rotations (1000)}\label{sec:frame-1000}
 \input{Examples/frame-1001/71_Invariance}
 
 \subsection{Corotational Drift (1009)}\label{sec:frame-1009}
 \input{Examples/frame-1009/index}
 \clearpage
 
-\subsection{Curved Cantilever (1007)}\label{sec:frame-1007}
+\subsection{Curved Cantilever Beam Under Point Force (1007)}\label{sec:frame-1007}
 \input{Examples/frame-1001/74_BatheCantilever}
 
-\subsection{Nonuniform torsion (0021)}\label{sec:frame-0021}
-\input{Examples/frame-0021/index}
 
 \subsection{Analytic Solutions with Finite Rotations (100[12])}\label{sec:plane}
 \input{Examples/frame-1001/index}
@@ -145,10 +158,10 @@
 \subsection{Applied Moments under Finite Rotations (100[68])}
 \input{Examples/frame-1001/73_SpaceCantilever}
 
-\subsection{Hockling}\label{sec:frame-1010}
+\subsection{Hockling (1010)}\label{sec:frame-1010}
 \input{Examples/frame-1001/75_Hockling}
 
-\subsection{Conservative distributed loads}\label{sec:frame-1003}
+\subsection{Conservative distributed loads (1003)}\label{sec:frame-1003}
 \input{Examples/frame-1003/index}
 
 \subsubsection{Follower nodal loads}\label{sec:frame-1020}

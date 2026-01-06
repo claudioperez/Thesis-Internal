@@ -29,13 +29,85 @@ OpenSees offerings:
   Idiosyncrasies and inefficiencies in the corotational transformation
 \end{itemize}
 
+\clearpage
+\subsection{Key Equations}
+\RepeatEquation{eq:trace-map}
 
-\hypertarget{elements}{%
-\subsection{Element Library}\label{elements}}
+\begin{itemize}
+    % \item \textbf{Trace State}
+    %     Trace Strains:
+    %     \RepeatEquation{eq:def-gam-kap}
+    \item Element
+        \begin{description}
+            \item[$\circ$ Exact] \RepeatEquation{eq:finite-alignment-field}
+            \item[$\circ$ Linear]
+            \RepeatEquation{eq:trace-lift-linear}
+        \end{description}
+    \item Transform 
+        \begin{equation}
+        \overset{(1) \textbf{ Parameterization }}{
+        \begin{Bmatrix}
+        \mathtt{None} \\
+        \mathtt{Incr} \\
+        \mathtt{Init} \\
+        \end{Bmatrix}
+        }
+        \times
+        \overset{
+        (2) \textbf{ Isometry}}{
+        \begin{Bmatrix}
+        \mathtt{None}  \\
+        \mathtt{SFIN} \\
+        \mathtt{Axis}  \\
+        \end{Bmatrix}
+        }
+        \times
+        \overset{
+        (3) \textbf{ Interpolation }}{\begin{Bmatrix}
+        \mathtt{None} \\
+        \mathtt{Incr} \\ 
+        \mathtt{Init} \\
+        \end{Bmatrix}
+        }
+        \label{eq:chain}
+        \end{equation}
+    \item Section 
+        \RepeatEquation{eq:saint-venant-stress}
+        \RepeatEquation{eq:strain-tensor-decomp}
+        \begin{description}
+            \item[$\circ$ Wagner] \RepeatEquation{eq:wagner-gl-strain-pi}
+            \item[$\circ$ Linear] \RepeatEquation{eq:linear-gl-strain-pi}
+        \end{description}
+
+    \item Saint~Venant, with \eqref{eq:trace-lift-linear}
+     \begin{description}
+        \item[Type 3]
+          Trace Matrix:
+          \RepeatEquation{eq:T0-inv}
+          Fiber strain:
+          \RepeatEquation{eq:eps-B-e}
+          Resultants:
+          \begin{description}
+          \item[$\circ$ Petrov] 
+          \RepeatEquation{eq:petrov-section}
+          \item[$\circ$ Bubnov]
+          \RepeatEquation{eq:bubnov-section}
+          \end{description}
+     \end{description}
+\end{itemize}
+
+
+\subsection{Element Library}\label{elements}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\linewidth]{Body/ForceFrame.png}
+    \caption{Distributed-inelasticity frame element.}
+    \label{fig:force-frame}
+\end{figure}
 
 There are six elements in the library, each supporting various options
-for element kinematics. The element kinematic formulations are
-summarized in \cref{ch:frame-hierarchy} and are identified as
+for element kinematics. 
+The element kinematic formulations are summarized in \cref{ch:frame-hierarchy} and are identified as
 \gls{frame:exact}, \gls{frame:delta}, \gls{frame:axial} or \gls{frame:basic}. Each
 of these kinematic formulations has a \gls{frame:shear} and \gls{frame:euler}
 variant.
@@ -95,7 +167,7 @@ The \texttt{Prism} element is a standard linearly elastic prismatic
 
 
 \paragraph{2. ForceFrame}
-  The \texttt{Force} element is ideal for modeling inelasticity in
+  The \ForceFrame{} element is ideal for modeling inelasticity in
   frames. Both \gls{frame:shear} and \gls{frame:euler} formulations are
   supported with \gls{frame:basic} and \gls{frame:axial} (\(P-\delta\)) element kinematics. 
   
@@ -159,8 +231,7 @@ The \texttt{Prism} element is a standard linearly elastic prismatic
 %   is required in order to adequately capture inelasticity.
 
 
-\hypertarget{transformation-classes}{%
-\subsection{Transformation Library}\label{sec:transformation-types}}
+\subsection{Transformation Library}\label{sec:transformation-types}
 
 Elements are grouped into three types based on their geometric nature:
 
@@ -217,7 +288,7 @@ Interpolation
 \midrule
 \endhead
 \texttt{Prism} & Basic, Axial & Basic, Axial & Type I & - & - \\
-\texttt{Force} & Basic, Axial & Basic, Axial & Type I & Section & - \\
+\ForceFrame & Basic, Axial & Basic, Axial & Type I & Section & - \\
 \texttt{Cubic} (Displ.) & Basic & Basic & Type I & Section &
 Cubic/Quadratic \\
 \texttt{Mixed} & Basic, Axial & Basic, Axial & Type I & Section & - \\

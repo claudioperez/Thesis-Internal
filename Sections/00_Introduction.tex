@@ -142,7 +142,7 @@ Introductory treatments of beam theory typically assume a restricted three-dimen
 \end{equation}
 %
 where \(\reflenx\) is the coordinate along the beam axis, and \((y,z)\) are the coordinates in the section plane normal to it with \((\symbfit{x}(\reflenx),\,\symbfit{R}(\reflenx))\) the primary kinematic variables describing the position \(\symbfit{x}\) of the reference line in space, and the rotation \(\symbfit{R}\) of a cross section. 
-\cref{eq:finite-plane-kinematics} implies that plane sections remain plane. 
+\eqref{eq:finite-plane-kinematics} implies that plane sections remain plane. 
 Under infinitesimal displacements it reduces to
 %
 \begin{equation}
@@ -150,14 +150,14 @@ Under infinitesimal displacements it reduces to
 \label{eq:linear-plane-kinematics}
 \end{equation}
 %
-For a linear isotropic material with shear modulus \(G\), \cref{eq:finite-plane-kinematics} leads to the resultant torque \(T\) and the shears \(V_y,\,V_z\) in terms of the twist rate \(\vartheta'\) and the shear deformations \(\gamma_y,\, \gamma_z\) in the form: %\citep{hjelmstad2005fundamentals}:
+For a linear isotropic material with shear modulus \(G\), \eqref{eq:finite-plane-kinematics} leads to the resultant torque \(T\) and the shears \(V_y,\,V_z\) in terms of the twist rate \(\vartheta'\) and the shear deformations \(\gamma_y,\, \gamma_z\) in the form: %\citep{hjelmstad2005fundamentals}:
 \begin{equation*}
 T = G \Io \,\vartheta', \qquad V_y = G A\,\gamma_y, \qquad V_z = G A\,\gamma_z,
 \end{equation*}
 where \(\Io\) is the polar moment of inertia and \(A\) the cross sectional area. 
 These constitutive relations are generally unsatisfactory and are seldom used in practice. 
 Rather, the Saint~Venant torsion constant \(\Jo\) and the shear-corrected areas \(A_y\) and \(A_z\) 
-are introduced so as to match the exact solutions from the theory of elasticity in which the plane section hypothesis of \cref{eq:finite-plane-kinematics} is violated. 
+are introduced so as to match the exact solutions from the theory of elasticity in which the plane section hypothesis of \eqref{eq:finite-plane-kinematics} is violated. 
 This leads to the standard relations:
 \begin{equation}
 T = G \Jo\,\vartheta', \qquad V_y = G A_y\,\gamma_y, \qquad V_z = G A_z\,\gamma_z.
@@ -167,7 +167,7 @@ under elastic conditions following the procedure in well known references \citep
 Difficulty arises when applying a similar methodology to inelastic response.
 
 \paragraph{Complete Kinematics}
-An alternative displacement field to \cref{eq:finite-plane-kinematics} which naturally produces the resultants from \cref{eq:correct-resultants} takes the form \citep{hjelmstad1987warping}:
+An alternative displacement field to \eqref{eq:finite-plane-kinematics} which naturally produces the resultants from \eqref{eq:correct-resultants} takes the form \citep{hjelmstad1987warping}:
 \begin{equation}
 \hat{\symbfit{x}}(\reflenx,y,z) = \symbfit{x}(\reflenx) + \FrameRotation(\reflenx)\left(\symbfit{r} + \big(\symbfit{\varphi}(y,z)\cdot\symbfit{\alpha}(\reflenx)\big)\,\FrameBasis\right),
 \label{eq:finite-warping-kinematics}

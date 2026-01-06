@@ -97,23 +97,3 @@ where $\rho$ is the material density and $\omega^2:={E}/{\rho}$ is the squared p
 % \phi(z, \dot{u}) = A - |z|^n \left(\gamma+\beta \operatorname{sgn}(z \dot{u})+\varphi(\operatorname{sgn}(\dot{u})+\operatorname{sgn}(z))\right)
 % \]
 \end{description}
-
-\hypertarget{implementation}{%
-\subsection{Implementations}\label{implementations}}
-When such models are employed within a finite element simulation,
-the governing ODE for the internal variables must be integrated numerically. For example, applying the implicit \emph{Backward-Euler} discretization to the variables \(\dot{\psi}\) and \(\dot z\) from Bouc-Wen-Baber (1981) \cite{baber1981random} furnishes the
-following implicit problem for \(z_{n+1}\) and \(\psi_{n+1}\):
-
-\begin{quote}
-\[
-\begin{aligned}
-z_{n+1}&=z_{n}+\Delta t \frac{A_{n+1}-\left|z_{n+1}\right|^{n}\left\{\gamma+\beta \operatorname{sgn}\left(\frac{\epsilon_{n+1}-\epsilon_{n}}{\Delta t} z_{n+1}\right)\right\} \nu_{n+1}}{\eta_{n+1}} \, \frac{\epsilon_{n+1}-\epsilon_{n}}{\Delta t}, \\
-\psi_{n+1}
-&=\psi_{n}+\Delta t(1-\alpha) k_{o} \frac{\epsilon_{n+1}-\epsilon_{n}}{\Delta t} z_{n+1}, \\
-A_{n+1} &=A_{o}-\delta_{A} \, \psi_{n+1}, \\
-\nu_{n+1} &=1+\delta_{\nu} \, \psi_{n+1}, \\
-\eta_{n+1} &=1+\delta_{\eta} \, \psi_{n+1},
-\end{aligned}
-\]
-\end{quote}
-which is generally solved with Newton-Raphson iterations.

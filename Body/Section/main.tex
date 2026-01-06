@@ -1,4 +1,4 @@
-\section{Section Formulation}\label{sec:gensec}
+
 
 \begin{Quote}
 In this section we introduce material points that are not contained on the reference line of the beam model. 
@@ -88,7 +88,8 @@ Consider an elastic isotropic material with constants $E$,$G$, and $\nu$:
 \begin{equation}
 \StressTensor = 2G\,\StrainTensor + \lambda\,(\operatorname{tr}\StrainTensor)\,\one,
 \qquad
-\lambda=\frac{E\nu}{(1+\nu)(1-2\nu)}=\frac{2G\nu}{1-2\nu},
+\lambda%=\frac{E\nu}{(1+\nu)(1-2\nu)}
+=\frac{2G\nu}{1-2\nu},
 \label{eq:linear-isotropy}
 \end{equation}
 Decompose the infinitesimal strain tensor $\StrainTensor$ as 
@@ -552,13 +553,4 @@ For a symmetric stress tensor \(\StressTensor\) one further has
 \end{equation}
 where recall the stress vector \(\StressVector\) is defined by \eqref{eq:def-stress-vector}.
 
-
-
-\subsection{Summary}
-Three compatibility relations have been derived relating the trace strains \(\bm{e}\) to a material strain tensor \(\StrainTensor\): the exact form \eqref{eq:exact-gl-strain-Phi}, the partial truncation \eqref{eq:wagner-gl-strain-pi}, and the total linearization \eqref{eq:linear-gl-strain-pi}. 
-All three representations of the material strains may be employed in connection with a finite deformation trace model \eqref{eq:linear-gl-strain-pi}, or the linearization \eqref{eq:trace-lift-linear}.
-These results specialize to several notable works in the literature:
-\begin{itemize}
-    \item \cite{simo1991geometricallyexact} employed the linearized material kinematics \eqref{eq:linear-gl-strain-pi} in connection with the geometrically exact \eqref{eq:finite-alignment-field} with one warping mode associated to Saint-Venant torsion function. \cite{gruttmann2000theory} generalized \cite{simo1991geometricallyexact} to consider sections in arbitrary coordinate systems and elasto-plastic material response.
-\end{itemize}
 

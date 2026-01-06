@@ -27,7 +27,7 @@ can be represented with only a single parameter, say \(\vartheta\), so that:
 \end{equation}
 from which we identify \(\Twist = \vartheta'\). 
 Note that under this motion the deformed (spatial) axial director \(\frameBasis\) remains equivalent to the reference axial director \(\FrameBasis\) (that is, \(\frameBasis = \FrameRotation \FrameBasis \equiv \FrameBasis\)). 
-The compatible linearized strain tensor \(\hat{\StrainTensor}\) is characterized by the strain vector \(\hat{\bm{\varepsilon}}\) of \cref{eq:wagner-gl-strain-pi} which takes the form:
+The compatible linearized strain tensor \(\hat{\StrainTensor}\) is characterized by the strain vector \(\hat{\bm{\varepsilon}}\) of \eqref{eq:wagner-gl-strain-pi} which takes the form:
 %
 \begin{equation}
 \begin{aligned}
@@ -46,17 +46,12 @@ The compatible linearized strain tensor \(\hat{\StrainTensor}\) is characterized
 \paragraph{Constitution}
 Consider a cross section satisfying \(\tilde{\bm{\SectionLocation}} \equiv \bar{\bm{\SectionLocation}}\). 
 Align this point with the origin of the plane coordinate system, \(\PlanePosition = \bm{0}\). 
-For \(\bm{\gamma} = \bm{0}\) we have \(\bm{n} = N \, \FrameBasis\)
+For \(\bm{\gamma} = \bm{0}\) we have \(\bm{n} = N \, \FrameBasis\). 
 The moment has only a torsional component
 $$
 \begin{aligned}
 \bm{m}\cdot \FrameBasis 
 &= \, \bar{G}I \Twist - \bar{G}\Jv \alpha - \bar{G}(\Jv - \EnhanConstFA \, \Jw) \EnhanParam
-\end{aligned}
-\qquad\text{with}\qquad 
-\begin{aligned}
-\Io &\triangleq \FrameBasis \cdot \LinearMM \FrameBasis \\
-\tilde{J} &\triangleq (\WarpSV,\, \WarpSV + \EnhanConstFA \WarpFA)_G = \Jv - \EnhanConstFA \Jw
 \end{aligned}
 $$
 The bi-moment is
@@ -81,7 +76,7 @@ However, for the rotation field \eqref{eq:rotation-field}, \(\FrameRotation\Fram
 Note that \(\bm{x}' = \FrameBasis\) so that \(\FrameBasis\cdot \bm{x}' \times (\FrameRotation \bm{n})= \bm{0}\).
 
 \paragraph{Enhancement}
-Solving \(\EnhanParam\) for Condition~(ii) by \cref{eq:def-enhan-residual} 
+Solving \(\EnhanParam\) for Condition~(ii) by \eqref{eq:def-enhan-residual} 
 furnishes:
 \begin{equation}
 \begin{aligned}
@@ -90,7 +85,13 @@ furnishes:
 % &= \Twist - \alpha 
 \end{aligned}
 \quad\text{with}\quad 
-\bar{\eta} \triangleq \frac{\Jv - \EnhanConstFA \Jw}{\Jv - \EnhanConstFA (2 \Jw - \EnhanConstFA \Js)}
+\begin{aligned}
+\Io &\triangleq \FrameBasis \cdot \LinearMM \FrameBasis \\
+\bar{\eta} &\triangleq \frac{\Jv - \EnhanConstFA \Jw}{\Jv - \EnhanConstFA (2 \Jw - \EnhanConstFA \Js)} \\
+\tilde{J} &\triangleq (\WarpSV,\, \WarpSV + \EnhanConstFA \WarpFA)_G = \Jv - \EnhanConstFA \Jw \\
+\eta &= \frac{\Io - \tilde{J}\tilde{\eta}}{\Jv - \tilde{J}} = \frac{\Io - \tilde{J}\tilde{\eta}}{\beta \Jw} \\
+J_{\eta} &= \Jv - \bar{\eta}\tilde{J}
+\end{aligned}
 \label{eq:enhan-param}
 \end{equation}
 %
@@ -115,8 +116,6 @@ The moment equilibrium equation allows one to write:
 \begin{equation*}
     \alpha (\reflenx)= \eta \bigl(
      \vartheta^{\prime}(\reflenx) - C\bigr)
-     \quad\text{with}\quad 
-     \eta = \frac{I - \tilde{J}\tilde{\eta}}{\Jv - \tilde{J}} = \frac{I - \tilde{J}\tilde{\eta}}{\beta \Jw}
 \end{equation*}
 This allows the bimoment and bishear to be expressed in terms of the twist rate \(\Twist\):
 \begin{equation*}
@@ -135,7 +134,6 @@ In standard form:
 \qquad\text{with}\quad
 \lambda \triangleq \sqrt{\frac{\bar{G}J_{\eta}}{\bar{E}\Jw}\frac{1 - \eta}{\eta}}
 \end{equation*}
-and \(J_{\eta} = \Jv - \bar{\eta}\tilde{J}\). 
 %
 % and the solution is \citep{chen2008theory,elfatmi2007nonuniform}.
 % \begin{equation*}
@@ -238,7 +236,7 @@ $$
     \centering
     \includegraphics[width=0.45\linewidth]{Examples/frame-0021/img/Force-Shear-w-b-kinematics.png}
     \includegraphics[width=0.45\linewidth]{Examples/frame-0021/img/e0011-resultants-b.png}
-    \caption{Case B: Warping amplitude \(\alpha\) and twist \(\vartheta\).}
+    \caption{Warping amplitude \(\alpha\) and twist \(\vartheta\) for Example~\ref{sec:frame-0021} case B.}
     \label{fig:enter-label}
 \end{figure}
 
@@ -288,16 +286,10 @@ C_3& =-\frac{1}{2}
     \centering
     \includegraphics[width=0.48\linewidth]{Examples/frame-0021/img/e0011-kinematics-c.png}
     \includegraphics[width=0.48\linewidth]{Examples/frame-0021/img/e0011-resultants-c.png}
-    \caption{Case C: Warping amplitude \(\alpha\) and twist \(\vartheta\).}
+    \caption{Warping amplitude \(\alpha\) and twist \(\vartheta\) for Example~\ref{frame-0021} case C.}
     \label{fig:0021c-kinematics}
 \end{figure}
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.5\linewidth]{Examples/frame-0021/img/e0011-convergence-c.png}
-    \caption{Convergence for Example~\ref{sec:frame-0021} Case C.}
-    \label{fig:0021c-convergence}
-\end{figure}
 
 \paragraph{Case D}
 

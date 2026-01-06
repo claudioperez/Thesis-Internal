@@ -38,7 +38,7 @@ where the reduced warping vector \(\bar{\bm{\alpha}} \triangleq (\mathbf{I} - \m
 % \subsubsection{Algebraic Constraints}
 
 \paragraph{Kinematics}
-Using the constraints \cref{eq:linear-warp-constraints}, the full strain vector can be expressed through the transformation:
+Using the constraints \eqref{eq:linear-warp-constraints}, the full strain vector can be expressed through the transformation:
 
 \begin{equation}
 \bm{e}=\begin{pmatrix}
@@ -91,7 +91,7 @@ To derive the equilibrium equations for the constrained system, we consider the 
 -\left< \bm{w}'-\bm{v},\, \delta\bm{\alpha} \right>
 \end{equation*}
 
-Using the decomposition \cref{eq:decompose-alpha} and the constraint equations, the test functions \(\delta\bm{\alpha}\) can be expressed in terms of the reduced variables. 
+Using the decomposition \eqref{eq:decompose-alpha} and the constraint equations, the test functions \(\delta\bm{\alpha}\) can be expressed in terms of the reduced variables. 
 After exploiting the linearity of the inner product and the transpose property of the constraint operators, we obtain:
 \begin{equation*}
 \mathcal{G}_{\chi}[\bm{\eta}] = 
@@ -127,7 +127,7 @@ and the corresponding resultant transformation \(\mathbf{L}^*\):
 %
 \vspace{1ex}
 \begin{ambox}[Type 2: Constrained Warping]{box:warp2}
-For linear constraints on warping with the form of \cref{eq:linear-warp-constraints}, the Type 1 constitutive response is transformed through:
+For linear constraints on warping with the form of \eqref{eq:linear-warp-constraints}, the Type 1 constitutive response is transformed through:
 \[
 \bar{\bm{s}} = \mathbf{L}^{\top}\mathcal{S}(\mathbf{L}\bar{\bm{e}})
 \]
@@ -151,7 +151,7 @@ The momentum balance becomes:
 \end{ambox}
 
 \begin{remark}
-The treatment of the $\mathbf{L}_{\rm vp}^{\top}\bm{w}'$ term in \cref{eq:type2-equilibrium} reveals a fundamental distinction between section-level and element-level operations. The constitutive evaluation at a section operates pointwise and cannot access spatial derivatives. Therefore:
+The treatment of the $\mathbf{L}_{\rm vp}^{\top}\bm{w}'$ term in \eqref{eq:type2-equilibrium} reveals a fundamental distinction between section-level and element-level operations. The constitutive evaluation at a section operates pointwise and cannot access spatial derivatives. Therefore:
 \begin{itemize}
 \item The \textbf{section wrapper} receives $(\bm{\gamma}, \bm{\kappa}, \bar{\bm{\alpha}}', \bar{\bm{\alpha}})$, expands them via $\mathbf{L}$ to obtain the full strain $\bm{e}$, evaluates the Type 1 constitutive response $\mathcal{S}(\bm{e})$, and returns the partially augmented resultants:
 \[
@@ -180,7 +180,7 @@ The first enforces uniform constrained warping amplitudes, while the second ensu
 
 \vspace{1ex}
 \begin{ambox}[Type 3: Uniform Warping]{box:warp3}
-Under conditions \cref{eq:type3-conditions}, the constitutive response and equilibrium simplify to:
+Under conditions \eqref{eq:type3-conditions}, the constitutive response and equilibrium simplify to:
 \begin{equation*}
 [\bm{n}, \bm{m}] = \mathcal{S}_{\rm wrapped}(\bm{\gamma}, \bm{\kappa}, \bar{\bm{\alpha}}', \mathbf{L}_{\rm vp}\bm{e}_{\rm p} + \bar{\bm{\alpha}})
 \end{equation*}

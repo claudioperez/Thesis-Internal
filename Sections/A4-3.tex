@@ -64,17 +64,20 @@ where shear-torsion coupling terms are:
 \mathbf{H}_{\WarpShearIesan} &:= \int_\Section \mathbf{B}_{(b)}^\top \mathbf{B}_{(b)} \dA, 
 \label{eq:def-H-bb} \\[4pt]
 \mathbf{h}_{\WarpTwistIesan} &:= \int_\Section \mathbf{B}_{(b)}^\top \mathbf{b}_{(\varphi)} \dA 
-= -\Jsv\CenterShearLocation + \tfrac{\nu}{2}\bm{\zeta} - \nu\bm{\lambda},
+% = -\Jsv\CenterShearLocation + \tfrac{\nu}{2}\bm{\zeta} - \nu\bm{\lambda},
 \label{eq:h-coupling}
 \end{align}
 \end{subequations}
-with \(\mathbf{B}_{(b)}\) and \(\mathbf{b}_{(\varphi)}\) give by \eqref{eq:tau-psi} and \eqref{eq:tau-phi}, respectively, 
+with \(\mathbf{B}_{(b)}\) and \(\mathbf{b}_{(\varphi)}\) give by \eqref{eq:tau-psi} and \eqref{eq:tau-phi}, respectively.
+\begin{Details}
+, 
 and $\bm{\zeta}$ and $\bm{\lambda}$ capture Poisson-torsion interactions:
 \begin{equation}
 \bm{\zeta} := \int_\Section r^2 \nabla\WarpTwistIesan \dA, \qquad 
 \bm{\lambda} := \int_\Section (\bm{r} - \CentroidLocation)(\bm{r} \cdot \nabla\WarpTwistIesan) \dA.
 \label{eq:def-zeta-lambda}
 \end{equation}
+\end{Details}
 
 \subsubsection{Trace Matrix}
 

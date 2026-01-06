@@ -24,7 +24,6 @@ On the \gls{platform}, this is realized by prescribing the domain and range of $
         \textbf{Name} & \textbf{Abbreviation} & \textbf{Classification} \\ \hline
         Observer Kalman ID-Eigensystem Realization Algorithm & OKID-ERA & State-Space \\
         System Realization using Information Matrix & SRIM & State-Space \\
-        % Subspace Identification & SSI
         Response Spectrum Transfer Function & RSTF & Input/Output\\
         Fourier amplitude Spectrum Transfer Function & FSTF & Input/Output\\
         Power Spectrum Transfer Function & PSTF & Input/Output\\
@@ -35,13 +34,13 @@ On the \gls{platform}, this is realized by prescribing the domain and range of $
 \end{table}
 \begin{figure}[h!]
     \centering
-    \includegraphics[width=0.7\linewidth]{figures/predictors/stabilization.png}
+    \includegraphics[width=0.7\linewidth]{Part II/figures/predictors/stabilization.png}
     \caption{Stabilization diagram, commonly used to interpret state-space model results.}
     \label{fig:stabilization}
 \end{figure}
 \begin{figure}[h!]
     \centering
-    \includegraphics[width=0.7\linewidth]{figures/predictors/transfer_plot.png}
+    \includegraphics[width=0.7\linewidth]{Part II/figures/predictors/transfer_plot.png}
     \caption{Frequency response function, commonly used to interpret input/output model results.}
     \label{fig:transfer_plot}
 \end{figure}
@@ -82,7 +81,7 @@ The following notes and figures describe the workflow for interested users to bu
 \centering
   \begin{tikzpicture}
     \node [above right, inner sep=0] (image) at (0,0) {
-        \includegraphics[width=\linewidth]{figures/predictors/config_button_3.png}
+        \includegraphics[width=\linewidth]{Part II/figures/predictors/config_button_3.png}
     };
     % Create scope with normalized axes
     \begin{scope}[
@@ -100,7 +99,7 @@ The following notes and figures describe the workflow for interested users to bu
 \centering
   \begin{tikzpicture}
     \node [above right, inner sep=0] (image) at (0,0) {
-        \includegraphics[width=\linewidth]{figures/predictors/predictors_2.png}
+        \includegraphics[width=\linewidth]{Part II/figures/predictors/predictors_2.png}
     };
     % Create scope with normalized axes
     \begin{scope}[
@@ -120,7 +119,7 @@ The following notes and figures describe the workflow for interested users to bu
 \centering
   \begin{tikzpicture}
     \node [above right, inner sep=0] (image) at (0,0) {
-        \includegraphics[width=\linewidth]{figures/predictors/config_form.png}
+        \includegraphics[width=\linewidth]{Part II/figures/predictors/config_form.png}
     };
     % Create scope with normalized axes
     \begin{scope}[
@@ -189,13 +188,13 @@ To give an idea of the effect of system identification model parameters on compu
 An example set of system identification prediction results is shown in \cref{fig:sysid_example_freq_content,fig:sysid_example_results}, mainly for illustrations only and to demonstrate the capabilities available in the \BRACE{} platform with respect to \glspl{predictor-t2}. Therefore, no attempt was made in this example to make the results of the different predictors match by calibrating the default parameters of the different predictors. In the frequency content plot (\cref{fig:sysid_example_freq_content}), the results are shown for all \glspl{predictor-t2} at once; to isolate the view of one predictor at a time, the user can select the predictor from the legend. The horizontal axis corresponds to the different periods of vibration and the vertical axis corresponds to their corresponding spectral amplitude. In this example plot, the predictors named ``Transverse'' and ``Longitudinal'' are state space, i.e., time-domain method, predictors (\cref{sec:mdof_theory}) and their configured channels correspond to transverse and longitudinal recorded motions, respectively. The spectral amplitudes are not tracked for the \BRACE{} implementations of the state space models. Therefore, their plot traces are vertical (dashed) lines at the identified fundamental periods. The predictors corresponding to frequency domain methods are named ``R1'' and ``R2'' for the response spectrum predictors with two different channel configurations, and ``F1'' and ``F2'' for the Fourier spectrum, also with two different channel configurations. The full spectra showing the relationship between period and amplitude are shown for these frequency domain predictors. The tabulated results in \cref{fig:sysid_example_results} are currently shown for the predictor named ``Transverse''; other predictors can be selected from the listed options at the bottom to view their results. Each row of the prediction results table represents one computed mode and includes estimated natural period, natural frequency, damping ratio, and mode shape. The prediction results also include the modal indicators, Extended Modal Amplitude Coherence (EMAC) and Modal Phase Collinearity (MPC), which are measures of trustworthiness of modal parameter prediction (low values of EMAC and MPC correspond to identified modes that are not trustworthy) and are discussed further in \cref{sec:modal}. The modes are listed in order of expected contribution. 
 \begin{figure}[h!]
 \centering
-\includegraphics[width=.7\linewidth]{figures/predictors/freq_content2.png}
+\includegraphics[width=.7\linewidth]{Part II/figures/predictors/freq_content2.png}
 \caption{Example system identification prediction frequency content plot.}
 \label{fig:sysid_example_freq_content}
 \end{figure}
 \begin{figure}[h!]
 \centering
-\includegraphics[width=.7\linewidth]{figures/predictors/sysid_example_results2.png}
+\includegraphics[width=.7\linewidth]{Part II/figures/predictors/sysid_example_results2.png}
 \caption{Example system identification prediction results table.}
 \label{fig:sysid_example_results}
 \end{figure}

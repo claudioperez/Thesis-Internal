@@ -1,17 +1,18 @@
 \section{Appendix 4.A: Discretization}\label{ch:discretization}
-This appendix presents a general approach for discretizing a large class of continuum equilibrium problems that are governed by partial differential equations to formulate a representative discrete internal force vector $\intern$, as required by the \glspl{predictor-t1} of this chapter. The procedure generalizes the classical finite element method which is typically formulated on Sobolev vector spaces \citep{hughes1987finite} to the setting of nonlinear manifolds{\footnote{A manifold is a mathematical representation of a curved surface. Manifolds naturally arise as solution sets of constrained systems of equations and as graphs of functions.}}, which are encountered in the geometrically nonlinear analysis of plates, rods, and shells.
+This appendix presents a general approach for discretizing a large class of continuum equilibrium problems that are governed by partial differential equations to formulate a representative discrete internal force vector $\intern$, as required by the \glspl{predictor-t1} of this chapter. 
+The procedure generalizes the classical finite element method which is typically formulated on Sobolev vector spaces \citep{hughes1987finite} to the setting of nonlinear manifolds{\footnote{A manifold is a mathematical representation of a curved surface. Manifolds naturally arise as solution sets of constrained systems of equations and as graphs of functions.}}, which are encountered in the geometrically nonlinear analysis of plates, rods, and shells.
 In all such problems, equilibrium can be stated in terms of nonlinear partial differential equations of the form:
 \begin{equation}
-\rho \ddot{\boldsymbol{u}} = \boldsymbol{f} -  \mathbb{B}_\chi\boldsymbol{\sigma},
+\rho \ddot{\bm{u}} = \bm{f} -  \mathbb{B}_\chi\bm{\sigma},
 \label{eq:strong}
 \end{equation}
 where \(\mathbb{B}_\chi\) is a nonlinear
-differential operator and both the generalized stress \(\boldsymbol{\sigma}\) and the body force \(\boldsymbol{f}\) are \emph{continuous} functions defined over a body \(\mathcal{B}\) placed in space by a
+differential operator and both the generalized stress \(\bm{\sigma}\) and the body force \(\bm{f}\) are \emph{continuous} functions defined over a body \(\mathcal{B}\) placed in space by a
 map \(\chi\). In general \(\mathbb{B}\) may depend nonlinearly on \(\chi\),
-but always acts linearly on \(\boldsymbol{\sigma}\). 
+but always acts linearly on \(\bm{\sigma}\). 
 % This class of problems is formally summarized in Box 1.
 % Problems with the form of
-% \cref{eq:strong} describe the equilibrium of continuua, rods, and shells, whose
+% \eqref{eq:strong} describe the equilibrium of continuua, rods, and shells, whose
 % configurations \(\chi\) may comprise a \emph{nonlinear} space
 % \(\mathscr{C}\).
 % Additional resources for this material are contained in
@@ -21,19 +22,19 @@ but always acts linearly on \(\boldsymbol{\sigma}\).
 \subsection{Approximation}\label{sec:discretization}}
 
 The structure outlined in Box 1 implies a weak statement
-of \cref{eq:strong} that is centered around the Galerkin \emph{residual functional}:
+of \eqref{eq:strong} that is centered around the Galerkin \emph{residual functional}:
 %
 \begin{equation}
-\mathcal{G}\left[\boldsymbol{\eta}\right] \triangleq \left< \boldsymbol{\eta}, \, \boldsymbol{f}\right>_\chi - \left< \boldsymbol{\eta}, \, \mathbb{B}_\chi \boldsymbol{\sigma}\right>_\chi.
+\mathcal{G}\left[\bm{\eta}\right] \triangleq \left< \bm{\eta}, \, \bm{f}\right>_\chi - \left< \bm{\eta}, \, \mathbb{B}_\chi \bm{\sigma}\right>_\chi.
 \label{eq:galerkin}
 \end{equation}
 %
 When specialized to classical continuum mechanics, this is equivalent to the classical virtual work functional (before integration by parts):
 \begin{equation}
-\int \delta\boldsymbol{u} \cdot \operatorname{div} \boldsymbol{\sigma}\, d\Omega +  \int \delta \boldsymbol{u} \cdot \boldsymbol{f}\, d\Omega, 
+\int \delta\bm{u} \cdot \operatorname{div} \bm{\sigma}\, d\Omega +  \int \delta \bm{u} \cdot \bm{f}\, d\Omega, 
 \label{eq:VW}
 \end{equation}
-where the virtual displacements \(\delta \boldsymbol{u}\) represent the test basis \(\boldsymbol{\eta}\) and the equilibrium operator $\mathbb{B}$ is represented by the (negative) divergence $-\operatorname{div}$. Note that the divergence always acts linearly on \(\boldsymbol{\sigma}\), but \(\boldsymbol{\sigma}\) may depend nonlinearly on the displacement \(\boldsymbol{u}\), resulting in a nonlinear problem.
+where the virtual displacements \(\delta \bm{u}\) represent the test basis \(\bm{\eta}\) and the equilibrium operator $\mathbb{B}$ is represented by the (negative) divergence $-\operatorname{div}$. Note that the divergence always acts linearly on \(\bm{\sigma}\), but \(\bm{\sigma}\) may depend nonlinearly on the displacement \(\bm{u}\), resulting in a nonlinear problem.
 The developments that follow
 are kept applicable to a much wider class of mechanics models by retaining 
 the inner product \(\left<\cdot,\,\cdot\right>\) and operator \(\mathbb{B}\) notations.
@@ -41,31 +42,31 @@ Note that in the following,
 the subscript \(\chi\) on \(\mathbb{B}_\chi\) and
 \(\left<\cdot,\,\cdot\right>_\chi\) are dropped 
 for brevity % {of notation}
-and the body force \(\boldsymbol{f}\)
+and the body force \(\bm{f}\)
 is not considered.
 \iftrue
 \begin{marsdenbox}[BOX 1\quad Continuous Mechanics]
 \begin{description}
 % \tightlist
 \item[Body]
-A body \(\mathcal{B}\) is a set of points \(\boldsymbol{\xi}\), and a placement
+A body \(\mathcal{B}\) is a set of points \(\bm{\xi}\), and a placement
 \(\mathcal{B}_\chi\) of \(\mathcal{B}\) is a Riemannian manifold
 \(\mathcal{B}_\chi\) with boundary \(\partial \mathcal{B}\) and tangent
 bundle \(T\mathcal{B}_\chi\) embedded in an ambient Euclidean space
 \(\mathcal{E}\). The map
 \(\chi\colon \mathcal{B}\rightarrow \mathcal{B}_\chi\) associates the
-state of a material point \(\boldsymbol{\xi}\) to the placement
+state of a material point \(\bm{\xi}\) to the placement
 \(\mathcal{B}_\chi\). A reference configuration
 \(\chi_0\colon \mathcal{B}\rightarrow \mathcal{B}_{\chi_0}\) is often
 implied and the pull-back by the composition \(\chi\circ\chi_0^{-1}\) is
-denoted by \(\boldsymbol{A}\).
+denoted by \(\bm{A}\).
 % \tightlist
 \item[Energy]
 The set \(\mathscr{C}\) of configurations \(\chi\) forms a smooth
  manifold. A configuration \(\chi\) is identified by a couple
-\((\boldsymbol{x}, \boldsymbol{\Lambda})\) where \(\boldsymbol{x}\in\mathscr{C}_x\) is a
+\((\bm{x}, \bm{\Lambda})\) where \(\bm{x}\in\mathscr{C}_x\) is a
 vectorial configuration variable and
-\(\boldsymbol{\Lambda}\in\mathscr{C}_{\scriptscriptstyle{\Lambda}}\) a
+\(\bm{\Lambda}\in\mathscr{C}_{\scriptscriptstyle{\Lambda}}\) a
 non-vectorial variable. These enter independently in a Riemannian metric
 on the tangent space \(T_\chi\mathscr{C}\) to \(\mathscr{C}\) at
 \(\chi\), which takes the assumed form: 
@@ -75,43 +76,43 @@ on the tangent space \(T_\chi\mathscr{C}\) to \(\mathscr{C}\) at
 \end{equation}
 %
 \item[Stress]
-The spatial stress \(\boldsymbol{\sigma}\) in \cref{eq:strong} is related to a
-material stress \(\boldsymbol{s}\) which is defined with respect to inner products 
+The spatial stress \(\bm{\sigma}\) in \eqref{eq:strong} is related to a
+material stress \(\bm{s}\) which is defined with respect to inner products 
 in \(\mathscr{C}\) at the current \(\chi\) and reference
 \(\chi_0\) configurations:
 \begin{equation}
-  \left<\boldsymbol{c},\, \boldsymbol{\sigma}\right>_{\chi}
-  =\left< \boldsymbol{A}\boldsymbol{c},\, \boldsymbol{s}\right>_{\chi_0}
-  = \left<\boldsymbol{c},\, \boldsymbol{A}_*\boldsymbol{s}\right>_{\chi}
-  %=\left< \boldsymbol{A}\boldsymbol{c},\, \boldsymbol{s}\right>_{\chi_0}\qquad\text{ for any }\boldsymbol{c},
+  \left<\bm{c},\, \bm{\sigma}\right>_{\chi}
+  =\left< \bm{A}\bm{c},\, \bm{s}\right>_{\chi_0}
+  = \left<\bm{c},\, \bm{A}_*\bm{s}\right>_{\chi}
+  %=\left< \bm{A}\bm{c},\, \bm{s}\right>_{\chi_0}\qquad\text{ for any }\bm{c},
   \label{eq:def-Astar}
 \end{equation}
-for any \(\boldsymbol{c}\).
-% with \(\boldsymbol{A}_*\) denoting the Piola transformation. 
+for any \(\bm{c}\).
+% with \(\bm{A}_*\) denoting the Piola transformation. 
 Similarly, a dual
 \(\mathbb{B}^*\) to the equilibrium operator \(\mathbb{B}\) in
-\cref{eq:strong} is defined with respect to \cref{eq:conf-pair}:
+\eqref{eq:strong} is defined with respect to \eqref{eq:conf-pair}:
 \begin{equation}
-  \left<\boldsymbol{\eta},\, \mathbb{B}_\chi\boldsymbol{\sigma}\right>_\chi = \left<\mathbb{B}_\chi^*\boldsymbol{\eta},\, \boldsymbol{\sigma}\right>_\chi.
+  \left<\bm{\eta},\, \mathbb{B}_\chi\bm{\sigma}\right>_\chi = \left<\mathbb{B}_\chi^*\bm{\eta},\, \bm{\sigma}\right>_\chi.
   \label{eq:def-adjoint}
 \end{equation}
 % \tightlist
 \item[Strain]
-The material strain \(\boldsymbol{e}\) is compatible with
+The material strain \(\bm{e}\) is compatible with
 \(\mathbb{B}^*_\chi\) through the differential relation: 
 \begin{equation}
-  D\boldsymbol{e}\cdot\boldsymbol{u} \equiv \boldsymbol{A}\mathbb{B}^*_\chi \boldsymbol{u}.
+  D\bm{e}\cdot\bm{u} \equiv \bm{A}\mathbb{B}^*_\chi \bm{u}.
   \label{eq:vstrain}
 \end{equation}
 %
 \item[Constitution]
 The constitutive response is defined between the material stress
-\(\boldsymbol{s}\) and the material strain \(\boldsymbol{e}\) with material \(\boldsymbol{C}_s\) and
-spatial \(\boldsymbol{C}_\sigma\) moduli defined by:
+\(\bm{s}\) and the material strain \(\bm{e}\) with material \(\bm{C}_s\) and
+spatial \(\bm{C}_\sigma\) moduli defined by:
 \begin{equation}
-  D \boldsymbol{s}\cdot \boldsymbol{u} = \boldsymbol{C}_s \, D \boldsymbol{e}\cdot {\boldsymbol{u}}
+  D \bm{s}\cdot \bm{u} = \bm{C}_s \, D \bm{e}\cdot {\bm{u}}
   \qquad\text{ and }\qquad
-  \boldsymbol{C}_\sigma \triangleq \boldsymbol{A}_*\boldsymbol{C}_s\boldsymbol{A}.
+  \bm{C}_\sigma \triangleq \bm{A}_*\bm{C}_s\bm{A}.
   \label{eq:def-moduli}
 \end{equation}
 \end{description}
@@ -121,20 +122,20 @@ spatial \(\boldsymbol{C}_\sigma\) moduli defined by:
 In nonlinear finite element analysis,
 the solution algorithm searches for a configuration \(\chi\) in the space \(\mathscr{C}\) that satisfies the
 equilibrium relations in
-\cref{eq:strong} by applying a sequence of small
-perturbations \(\{\boldsymbol{u}^{(i)}\}\) to an initial guess \(\chi^{(0)}\).
-Each perturbation \(\boldsymbol{u}^{(i)}\) is determined by the linearization of
-\cref{eq:galerkin} at %around
+\eqref{eq:strong} by applying a sequence of small
+perturbations \(\{\bm{u}^{(i)}\}\) to an initial guess \(\chi^{(0)}\).
+Each perturbation \(\bm{u}^{(i)}\) is determined by the linearization of
+\eqref{eq:galerkin} at %around
 the last trial configuration \(\chi^{(i)}\) of the iterative process.
 At each iteration, the tangent space \(T_{\chi^{(i)}}\mathscr{C}\) contains infinitely many modes
-for representing \(\boldsymbol{u}^{(i)}\) in %for
+for representing \(\bm{u}^{(i)}\) in %for
 updating the configuration \(\chi^{(i)}\).
 %which might be represented in.
 % These modes represent \PFF{the} available directions for the
 % next trial configuration in the space \(\mathscr{C}\).
 This appendix develops the general equations for % this procedure
 the procedure of updating the trial configuration \(\chi^{(i)}\)
-by first linearizing \cref{eq:galerkin} in Section~\ref{sec:linearization} and then developing a
+by first linearizing \eqref{eq:galerkin} in Section~\ref{sec:linearization} and then developing a
 finite-dimensional representation of the linearized residual in
 Section~\ref{sec:galerkin-discretization}.
 
@@ -142,30 +143,30 @@ Section~\ref{sec:galerkin-discretization}.
 \subsection{Linearization}\label{sec:linearization}}
 
 The linearization of the residual functional \(\mathcal{G}\)
-in \cref{eq:galerkin} is akin to a first-order Taylor series expansion
+in \eqref{eq:galerkin} is akin to a first-order Taylor series expansion
 given by:
 %
 \begin{equation}
-\mathscr{L} \mathcal{G}\left[\boldsymbol{\eta} \right]
-=\mathcal{G}\left[\boldsymbol{\eta}\right] + \nabla_{\boldsymbol{u}} \mathcal{G}\left[\boldsymbol{\eta}\right],
+\mathscr{L} \mathcal{G}\left[\bm{\eta} \right]
+=\mathcal{G}\left[\bm{\eta}\right] + \nabla_{\bm{u}} \mathcal{G}\left[\bm{\eta}\right],
 \label{eq:galerkin-linearized}
 \end{equation}
 where
-\(\nabla_{\boldsymbol{u}}\mathcal{G}[\boldsymbol{\eta}]\) is the covariant derivative of
+\(\nabla_{\bm{u}}\mathcal{G}[\bm{\eta}]\) is the covariant derivative of
 the functional \(\mathcal{G}\).
 This is given by the formula for the covariant differentiation of co-vectors: % \citep{romano2005tangentb, simo1992symmetric}:
 \begin{equation}
-\nabla_{\boldsymbol{u}}\mathcal{G}\left[\boldsymbol{\eta}\right] =
-D_{}\mathcal{G}\left[\boldsymbol{\eta}\right]\cdot \boldsymbol{u}-\mathcal{G}\left[\nabla_{\boldsymbol{u}} \boldsymbol{\eta}\right],
+\nabla_{\bm{u}}\mathcal{G}\left[\bm{\eta}\right] =
+D_{}\mathcal{G}\left[\bm{\eta}\right]\cdot \bm{u}-\mathcal{G}\left[\nabla_{\bm{u}} \bm{\eta}\right],
 \label{eq:galerkin-linearized1}
 \end{equation}
-where \(D\mathcal{G}\left[\boldsymbol{\eta}\right]\cdot\boldsymbol{u}\) is the
+where \(D\mathcal{G}\left[\bm{\eta}\right]\cdot\bm{u}\) is the
 Gateaux differential of the residual component
-\(\mathcal{G}\left[\boldsymbol{\eta}\right]\) in the direction
-\(\boldsymbol{u} \in T_\chi \mathscr{C}\) and
-\(\mathcal{G}\left[\nabla_{\boldsymbol{u}}\boldsymbol{\eta}\right]\) accounts for the
+\(\mathcal{G}\left[\bm{\eta}\right]\) in the direction
+\(\bm{u} \in T_\chi \mathscr{C}\) and
+\(\mathcal{G}\left[\nabla_{\bm{u}}\bm{\eta}\right]\) accounts for the
 nonlinearity of the manifold.
-The covariant term \(\mathcal{G}\left[\nabla_{\boldsymbol{u}}\boldsymbol{\eta}\right]\) is commonly
+The covariant term \(\mathcal{G}\left[\nabla_{\bm{u}}\bm{\eta}\right]\) is commonly
 neglected in the literature, which amounts to selecting an implicit connection, and often produces an asymmetric tangent stiffness matrix.
 
 At the \(i^{\text{ th}}\) iteration, the differential is
@@ -177,83 +178,83 @@ the properties:
 \chi_{\tau}(0) = \chi^{(i)} \in \mathscr{C}
 \qquad\text{ and }\qquad
   \dot{\chi}_\tau(0) %\biggr|_{\tau=0} 
-  = \boldsymbol{u}^{(i)} \in T_\chi\mathscr{C}.
+  = \bm{u}^{(i)} \in T_\chi\mathscr{C}.
 \label{eq:chi-curve}
 \end{equation} 
 To produce distinct material and geometric tangents,
-\cref{eq:galerkin} is 
+\eqref{eq:galerkin} is 
 separated into terms with %first represented as a product of
 purely material and geometric quantities.
 This is achieved by % successively
-transposing the operators \(\mathbb{B}\) and \(\boldsymbol{A}_*\)
+transposing the operators \(\mathbb{B}\) and \(\bm{A}_*\)
 with the help of %by
-\cref{eq:def-Astar} and  \cref{eq:def-adjoint}
+\eqref{eq:def-Astar} and  \eqref{eq:def-adjoint}
 to shift the %, which shifts these
 non-material terms %quantities
-in \cref{eq:galerkin} to the first argument of the inner product, leaving only the material stress \(\boldsymbol{s}\) as the second argument:
+in \eqref{eq:galerkin} to the first argument of the inner product, leaving only the material stress \(\bm{s}\) as the second argument:
 %
 \begin{equation}
 \begin{aligned}
-\mathcal{G} [\boldsymbol{\eta}]
-&= \left< \boldsymbol{\eta},\,  \mathbb{B} \boldsymbol{\sigma}\right>  = \left< \mathbb{B}^*_{} \boldsymbol{\eta}, \, \boldsymbol{\sigma}\right> = \left< \boldsymbol{A}\mathbb{B}^*_{} \boldsymbol{\eta}, \, \boldsymbol{s}\right>.
+\mathcal{G} [\bm{\eta}]
+&= \left< \bm{\eta},\,  \mathbb{B} \bm{\sigma}\right>  = \left< \mathbb{B}^*_{} \bm{\eta}, \, \bm{\sigma}\right> = \left< \bm{A}\mathbb{B}^*_{} \bm{\eta}, \, \bm{s}\right>.
 \end{aligned}
 \label{eq:galerkin-material}
 \end{equation}
-Linearization now proceeds in the standard fashion with the application of the product rule to the last expression of \cref{eq:galerkin-material}:
+Linearization now proceeds in the standard fashion with the application of the product rule to the last expression of \eqref{eq:galerkin-material}:
 
 \begin{equation}
 \begin{array}{rccc}
-D\mathcal{G}[\boldsymbol{\eta}]\cdot \boldsymbol{u}
-=& \frac{\mathrm{d}}{\mathrm{d}\tau} \mathcal{G}_\tau [\boldsymbol{\eta}] ~\biggr|_{\tau=0} \\[0.3cm]
-  % =& \frac{\mathrm{d}}{\mathrm{d}\eta} \left.\left< \boldsymbol{A}^\mathrm{t}\mathbb{B}^*_{} \boldsymbol{\eta} , \, \boldsymbol{s}\right> \right|_{\eta=0} \\[0.3cm]
-  =&  \left< \boldsymbol{A}\mathbb{B}^*_{} \boldsymbol{\eta} , \, D\boldsymbol{s}\cdot \boldsymbol{u}\right> &+& \left< D_{}[ \boldsymbol{A} \mathbb{B}^*_{}\boldsymbol{\eta}]\cdot \boldsymbol{u}, \, \boldsymbol{s}\right>. \\[0.3cm]
-  \triangleq& \mathcal{K}_{M}\left[\boldsymbol{\eta}, \boldsymbol{u}\right] &+& \mathcal{K}_{G}\left[\boldsymbol{\eta}, \boldsymbol{u}\right], \\
-  % \triangleq& &\mathcal{K}\left[\boldsymbol{\eta}, \boldsymbol{u}\right]
+D\mathcal{G}[\bm{\eta}]\cdot \bm{u}
+=& \frac{\mathrm{d}}{\mathrm{d}\tau} \mathcal{G}_\tau [\bm{\eta}] ~\biggr|_{\tau=0} \\[0.3cm]
+  % =& \frac{\mathrm{d}}{\mathrm{d}\eta} \left.\left< \bm{A}^\mathrm{t}\mathbb{B}^*_{} \bm{\eta} , \, \bm{s}\right> \right|_{\eta=0} \\[0.3cm]
+  =&  \left< \bm{A}\mathbb{B}^*_{} \bm{\eta} , \, D\bm{s}\cdot \bm{u}\right> &+& \left< D_{}[ \bm{A} \mathbb{B}^*_{}\bm{\eta}]\cdot \bm{u}, \, \bm{s}\right>. \\[0.3cm]
+  \triangleq& \mathcal{K}_{M}\left[\bm{\eta}, \bm{u}\right] &+& \mathcal{K}_{G}\left[\bm{\eta}, \bm{u}\right], \\
+  % \triangleq& &\mathcal{K}\left[\bm{\eta}, \bm{u}\right]
 \end{array}
 \label{eq:def-K}
 \end{equation} 
 where \(\mathcal{K}_{M}\) and \(\mathcal{K}_{G}\) are referred to as the \emph{material} and \emph{geometric} stiffness \emph{operators} of the problem. 
-The stress derivative \(D\boldsymbol{s}\cdot \boldsymbol{u} \) that appears 
+The stress derivative \(D\bm{s}\cdot \bm{u} \) that appears 
 in \(\mathcal{K}_{M}\) above 
 is taken fixed in the reference configuration
 and expanded by the chain rule to give:
 \begin{equation}
 \begin{aligned}
-D\boldsymbol{s}(\boldsymbol{e}) \cdot \boldsymbol{u} &= \left.\frac{\mathrm{d}}{\mathrm{d} \tau} \left. \boldsymbol{s}\circ \boldsymbol{e} \right. ~\right|_{\tau=0} \\
-&= \boldsymbol{C}_s \, D \boldsymbol{e} \cdot \boldsymbol{u} \\
-&= \boldsymbol{C}_s \, \boldsymbol{A}\mathbb{B}^*_{} \boldsymbol{u},
+D\bm{s}(\bm{e}) \cdot \bm{u} &= \left.\frac{\mathrm{d}}{\mathrm{d} \tau} \left. \bm{s}\circ \bm{e} \right. ~\right|_{\tau=0} \\
+&= \bm{C}_s \, D \bm{e} \cdot \bm{u} \\
+&= \bm{C}_s \, \bm{A}\mathbb{B}^*_{} \bm{u},
 \end{aligned}
 \end{equation}
-where \cref{eq:def-moduli}
+where \eqref{eq:def-moduli}
 supplies %has supplied
-the modulus \(\boldsymbol{C}_s\) and
-\cref{eq:vstrain} the strain linearization
-\(\boldsymbol{A}\mathbb{B}^*_{} \boldsymbol{u}\).
-Substitution back into \cref{eq:def-K} furnishes the final expression for the material stiffness
+the modulus \(\bm{C}_s\) and
+\eqref{eq:vstrain} the strain linearization
+\(\bm{A}\mathbb{B}^*_{} \bm{u}\).
+Substitution back into \eqref{eq:def-K} furnishes the final expression for the material stiffness
 \(\mathcal{K}_M\) operator:
 
 \begin{equation}
 \begin{aligned}
-\mathcal{K}_{M}\left[\boldsymbol{\eta}, \boldsymbol{u} \right]
-%&= \left< \boldsymbol{A}^\mathrm{t}\mathbb{B}^*_{} \boldsymbol{\eta} , \, D\boldsymbol{s}\cdot \boldsymbol{u}\right> \\
-&= \left< \boldsymbol{A}\mathbb{B}^*_{} \boldsymbol{\eta} , \, \boldsymbol{C}_s \, \boldsymbol{A}\mathbb{B}^*_{} \boldsymbol{u}\right> %\\
-= \left<\mathbb{B}^*_{} \boldsymbol{\eta} , \, \boldsymbol{C}_\sigma \, \mathbb{B}^*_{} \boldsymbol{u}\right>, \\
+\mathcal{K}_{M}\left[\bm{\eta}, \bm{u} \right]
+%&= \left< \bm{A}^\mathrm{t}\mathbb{B}^*_{} \bm{\eta} , \, D\bm{s}\cdot \bm{u}\right> \\
+&= \left< \bm{A}\mathbb{B}^*_{} \bm{\eta} , \, \bm{C}_s \, \bm{A}\mathbb{B}^*_{} \bm{u}\right> %\\
+= \left<\mathbb{B}^*_{} \bm{\eta} , \, \bm{C}_\sigma \, \mathbb{B}^*_{} \bm{u}\right>, \\
 \end{aligned}
 \label{eq:Km}
 \end{equation}
-where \cref{eq:def-moduli} is used to replace \(\boldsymbol{C}_s\) by \(\boldsymbol{C}_{\sigma}\)
-after transferring \(\boldsymbol{A}\) in the first inner product argument to the second argument
-with \cref{eq:def-Astar}.
+where \eqref{eq:def-moduli} is used to replace \(\bm{C}_s\) by \(\bm{C}_{\sigma}\)
+after transferring \(\bm{A}\) in the first inner product argument to the second argument
+with \eqref{eq:def-Astar}.
 
 \iftrue
 The geometric stiffness \(\mathcal{K}_{G}\) is characterized by the directional derivative
-\(D[\boldsymbol{A}\mathbb{B}^*\boldsymbol{\eta}]\cdot \boldsymbol{u}\). Application of the
+\(D[\bm{A}\mathbb{B}^*\bm{\eta}]\cdot \bm{u}\). Application of the
 product rule furnishes:
 
 \begin{equation}
 \begin{aligned}
-\mathcal{K}_{G}\left[\boldsymbol{\eta},\boldsymbol{u}\right]
-&= \left<\partial_{\boldsymbol{u}}\left[\boldsymbol{A}\right]\mathbb{B}^*\boldsymbol{\eta} ,\, \boldsymbol{s}\right> +  \left<\boldsymbol{A}\partial_{\boldsymbol{u}}\left[\mathbb{B}^*\boldsymbol{\eta}\right] ,\, \boldsymbol{s}\right>.
+\mathcal{K}_{G}\left[\bm{\eta},\bm{u}\right]
+&= \left<\partial_{\bm{u}}\left[\bm{A}\right]\mathbb{B}^*\bm{\eta} ,\, \bm{s}\right> +  \left<\bm{A}\partial_{\bm{u}}\left[\mathbb{B}^*\bm{\eta}\right] ,\, \bm{s}\right>.
 \end{aligned}
 \label{eq:def-Kg}
 \end{equation}
@@ -267,45 +268,45 @@ both terms will naturally vanish. %both of these terms naturally vanish.
 \hypertarget{sec:galerkin-discretization}{%
 \subsection{Discretization}\label{sec:galerkin-discretization}}
 
-Because \cref{eq:galerkin-linearized} and \cref{eq:def-K} are linear in both
-\(\boldsymbol{\eta}\) and \(\boldsymbol{u}\), a discrete algebraic problem
+Because \eqref{eq:galerkin-linearized} and \eqref{eq:def-K} are linear in both
+\(\bm{\eta}\) and \(\bm{u}\), a discrete algebraic problem
 %follows %immediately for
-arises directly when the discretized vectors \(\boldsymbol{\eta}^h\) and \(\boldsymbol{u}^h\)
+arises directly when the discretized vectors \(\bm{\eta}^h\) and \(\bm{u}^h\)
 %that are 
 are represented as a linear combination of \emph{simple} basis functions
 that only depend
-on the coordinate \(\boldsymbol{\xi}\).
+on the coordinate \(\bm{\xi}\).
 %This is the case when the basis functions only depend
 However, for problems formulated on manifolds,
 a simple interpolation is often inappropriate.
 Instead it is often desirable to apply a \emph{configuration-dependent} interpolation, where
-\(\boldsymbol{\eta}^h\) and \(\boldsymbol{u}^h\)
+\(\bm{\eta}^h\) and \(\bm{u}^h\)
 depend nonlinearly on the nodal values 
 \citep{romero2004interpolation, cardona1988beam, simo1990stress}.
-In this case, discrete expressions for \cref{eq:galerkin-linearized} and
-\cref{eq:def-K} follow by constructing
-the curve \(\chi_\tau\) in \cref{eq:chi-curve}
-in terms of discrete nodal parameters \(\{\boldsymbol{u}_b\}\)
+In this case, discrete expressions for \eqref{eq:galerkin-linearized} and
+\eqref{eq:def-K} follow by constructing
+the curve \(\chi_\tau\) in \eqref{eq:chi-curve}
+in terms of discrete nodal parameters \(\{\bm{u}_b\}\)
 furnishing the discrete tangent space \(T_\chi\mathscr{C}^h\) 
 where elements take the form:
 \begin{equation*}
 %\begin{aligned}
-%\left.\frac{\mathrm{d}}{\mathrm{d}\tau} \chi_\tau \right|_{\tau=0} &= \sum_a \partial_a\boldsymbol{\eta}^h \cdot \boldsymbol{\eta}_a \\
-%&\triangleq \boldsymbol{\eta}^\ell
+%\left.\frac{\mathrm{d}}{\mathrm{d}\tau} \chi_\tau \right|_{\tau=0} &= \sum_a \partial_a\bm{\eta}^h \cdot \bm{\eta}_a \\
+%&\triangleq \bm{\eta}^\ell
 %\end{aligned}
 %\qquad\text{ and }\qquad
 \begin{aligned}
-\boldsymbol{u}^\ell \triangleq \left.\frac{\mathrm{d}}{\mathrm{d}\tau} \chi_\tau \right|_{\tau=0} 
-  &= \sum_b \left.\frac{\mathrm{d}}{\mathrm{d}\tau}\boldsymbol{u}^h(\tau \boldsymbol{u}_b)\right|_{\tau=0}. \\
+\bm{u}^\ell \triangleq \left.\frac{\mathrm{d}}{\mathrm{d}\tau} \chi_\tau \right|_{\tau=0} 
+  &= \sum_b \left.\frac{\mathrm{d}}{\mathrm{d}\tau}\bm{u}^h(\tau \bm{u}_b)\right|_{\tau=0}. \\
 \end{aligned}
 \end{equation*}
 This motivates the definition of \emph{effective interpolation bases}
-\(\left\{\boldsymbol{\varphi}^{}_{\eta a}\right\}\) and
-\(\left\{\boldsymbol{\varphi}^{}_{u b}\right\}\):
+\(\left\{\bm{\varphi}^{}_{\eta a}\right\}\) and
+\(\left\{\bm{\varphi}^{}_{u b}\right\}\):
 \begin{equation}
-  \boldsymbol{\varphi}^{}_{\eta a}(\boldsymbol{\xi}) \triangleq \left.\frac{\mathrm{d}}{\mathrm{d}\tau}\boldsymbol{\eta}^h (\boldsymbol{\xi}; \tau\boldsymbol{u}_a)\right|_{\tau=0}
+  \bm{\varphi}^{}_{\eta a}(\bm{\xi}) \triangleq \left.\frac{\mathrm{d}}{\mathrm{d}\tau}\bm{\eta}^h (\bm{\xi}; \tau\bm{u}_a)\right|_{\tau=0}
 \qquad\text{ and }\qquad
-  \boldsymbol{\varphi}^{}_{u b}(\boldsymbol{\xi}) \triangleq \left.\frac{\mathrm{d}}{\mathrm{d}\tau}\boldsymbol{u}^h(\boldsymbol{\xi}; \tau  \boldsymbol{u}^{}_b)\right|_{\tau=0}.
+  \bm{\varphi}^{}_{u b}(\bm{\xi}) \triangleq \left.\frac{\mathrm{d}}{\mathrm{d}\tau}\bm{u}^h(\bm{\xi}; \tau  \bm{u}^{}_b)\right|_{\tau=0}.
 \label{eq:interp}
 \end{equation}
 
@@ -313,16 +314,16 @@ This motivates the definition of \emph{effective interpolation bases}
 \subsubsection{Resisting forces}\label{resisting-forces}}
 
 %The coordinate expression of on the basis
-The evaluation of \cref{eq:galerkin}
-on the linearized variation \(\boldsymbol{\eta}^\ell\)
+The evaluation of \eqref{eq:galerkin}
+on the linearized variation \(\bm{\eta}^\ell\)
 furnishes a representation on the basis 
-\(\boldsymbol{\varphi}_{\eta a}\) which
+\(\bm{\varphi}_{\eta a}\) which
 follows 
 from the linearity of the inner product:
 \begin{equation}
   \begin{aligned}
-  \mathcal{G}\left[\boldsymbol{\eta}^\ell\right] &= \left< \boldsymbol{\eta}^h ,\, \mathbb{B}\boldsymbol{\sigma} \right> %\\ & 
-  = \sum_a \left< \boldsymbol{\varphi}^{}_{\eta a} \boldsymbol{\eta}_a ,\, \mathbb{B}\boldsymbol{\sigma} \right>. \\
+  \mathcal{G}\left[\bm{\eta}^\ell\right] &= \left< \bm{\eta}^h ,\, \mathbb{B}\bm{\sigma} \right> %\\ & 
+  = \sum_a \left< \bm{\varphi}^{}_{\eta a} \bm{\eta}_a ,\, \mathbb{B}\bm{\sigma} \right>. \\
   \end{aligned}
 \end{equation}
 Integration by parts is once again expressed by shifting
@@ -331,81 +332,81 @@ from the operator \(\mathbb{B}\) in the second argument to
 %integrating by parts furnishes:
 \begin{equation}
   \begin{aligned}
-  \mathcal{G}\left[\boldsymbol{\eta}^\ell\right]&= \sum_a \left<\mathbb{B}^*_{} \left[\boldsymbol{\varphi}^{}_{\eta a} \boldsymbol{\eta}_a\right] ,\, \boldsymbol{\sigma} \right>   \\
-  %&= \sum_a \left<\mathbb{B}^*_{} \left[\boldsymbol{\varphi}^{}_{\eta a} \boldsymbol{\eta}_a\right] ,\, \boldsymbol{\sigma} \right>  + \mathcal{G}_{\partial} \\
-  &= \sum_a \left< \boldsymbol{B}_a^{\mathrm{t}}\boldsymbol{\eta}_a ,\,   \boldsymbol{\sigma} \right>  \\
-  &= \sum_a \left< \boldsymbol{\eta}_a ,\,  \boldsymbol{B}_a \boldsymbol{\sigma} \right>, \\
-  %&= \sum_a \left< \boldsymbol{\eta}_a ,\, \left[\mathbb{B}^*_{} \boldsymbol{\varphi}^{}_{\eta a}\right]^{\mathrm{t}}  \boldsymbol{\sigma} \right> + \mathcal{G}_{\partial}. \\
+  \mathcal{G}\left[\bm{\eta}^\ell\right]&= \sum_a \left<\mathbb{B}^*_{} \left[\bm{\varphi}^{}_{\eta a} \bm{\eta}_a\right] ,\, \bm{\sigma} \right>   \\
+  %&= \sum_a \left<\mathbb{B}^*_{} \left[\bm{\varphi}^{}_{\eta a} \bm{\eta}_a\right] ,\, \bm{\sigma} \right>  + \mathcal{G}_{\partial} \\
+  &= \sum_a \left< \bm{B}_a^{\mathrm{t}}\bm{\eta}_a ,\,   \bm{\sigma} \right>  \\
+  &= \sum_a \left< \bm{\eta}_a ,\,  \bm{B}_a \bm{\sigma} \right>, \\
+  %&= \sum_a \left< \bm{\eta}_a ,\, \left[\mathbb{B}^*_{} \bm{\varphi}^{}_{\eta a}\right]^{\mathrm{t}}  \bm{\sigma} \right> + \mathcal{G}_{\partial}. \\
   \end{aligned}
   \quad\text{ with }\quad
-  \boldsymbol{B}_a^{\mathrm{t}} \triangleq \mathbb{B}^*\boldsymbol{\varphi}^{}_{\eta a}
+  \bm{B}_a^{\mathrm{t}} \triangleq \mathbb{B}^*\bm{\varphi}^{}_{\eta a}
 \label{eq:galerkin-ibp}
 \end{equation}
-where \(\boldsymbol{B}_a^{\mathrm{t}}\) is
+where \(\bm{B}_a^{\mathrm{t}}\) is
 the linear operator that results
 from the application of 
-\(\mathbb{B}^*\) to \(\boldsymbol{\varphi}^{}_{\eta a}\).
+\(\mathbb{B}^*\) to \(\bm{\varphi}^{}_{\eta a}\).
 Finally, recall that for any orthonormal
 basis \(\{\mathbf{e}_k\}\) spanning the degrees of freedom in
 \(T\mathcal{B}_{\chi}\), an identity
 is furnished by 
 the summation \(\mathbf{e}_k \otimes \mathbf{e}_k\).
-This is used in \cref{eq:galerkin-ibp} to give:
+This is used in \eqref{eq:galerkin-ibp} to give:
 
 \begin{equation}
 \begin{aligned}
-\mathcal{G}\left[\boldsymbol{\eta}^\ell\right]
-&= \sum_{a,k} \left<\left(\mathbf{e}_k\otimes\mathbf{e}_k\right) \boldsymbol{\eta}_a,\, \boldsymbol{B}_a  \boldsymbol{\sigma} \right> \\
-&= \sum_{a,k} \boldsymbol{\eta}_a \cdot \mathbf{e}_k  \left<\mathbf{e}_k ,\, \boldsymbol{B}_a  \boldsymbol{\sigma} \right>, \\
-%&= \sum_a \boldsymbol{\eta}_a\cdot \int \left[\mathbb{B}^*_{} \phi_a \boldsymbol{1}\right]^{\mathrm{t}} \boldsymbol{\sigma} \, d\boldsymbol{\xi} \\
-%&= \sum_a \boldsymbol{\eta}_a\cdot \intern_a
+\mathcal{G}\left[\bm{\eta}^\ell\right]
+&= \sum_{a,k} \left<\left(\mathbf{e}_k\otimes\mathbf{e}_k\right) \bm{\eta}_a,\, \bm{B}_a  \bm{\sigma} \right> \\
+&= \sum_{a,k} \bm{\eta}_a \cdot \mathbf{e}_k  \left<\mathbf{e}_k ,\, \bm{B}_a  \bm{\sigma} \right>, \\
+%&= \sum_a \bm{\eta}_a\cdot \int \left[\mathbb{B}^*_{} \phi_a \bm{1}\right]^{\mathrm{t}} \bm{\sigma} \, d\bm{\xi} \\
+%&= \sum_a \bm{\eta}_a\cdot \intern_a
 \end{aligned}
 \label{eq:global-work-dot}
 \end{equation}
-where the summation \(\left<\mathbf{e}_k ,\,\boldsymbol{B}_a  \boldsymbol{\sigma} \right> \mathbf{e}_k\) 
+where the summation \(\left<\mathbf{e}_k ,\,\bm{B}_a  \bm{\sigma} \right> \mathbf{e}_k\) 
 represents the residual element nodal forces \(\{\intern_a\}\).
 % \begin{equation}
-% \intern_a \triangleq  \left<\mathbf{e}_k ,\,\boldsymbol{B}_a  \boldsymbol{\sigma} \right> \mathbf{e}_k .
+% \intern_a \triangleq  \left<\mathbf{e}_k ,\,\bm{B}_a  \bm{\sigma} \right> \mathbf{e}_k .
 % \label{eq:def-pa}
 % \end{equation}
 
 \hypertarget{tangent-stiffness}{%
 \subsubsection{Tangent Stiffness}\label{tangent-stiffness}}
 
-The material tangent \(\mathcal{K}_M\left[\boldsymbol{\eta}^\ell, \boldsymbol{u}^\ell\right]\)
-depends on \(\boldsymbol{u}^\ell\) %under
+The material tangent \(\mathcal{K}_M\left[\bm{\eta}^\ell, \bm{u}^\ell\right]\)
+depends on \(\bm{u}^\ell\) %under
 {via} the operator \(\mathbb{B}^*\).
 {On account of linearity}, % which by linearity
 {the operation has} %furnishes 
 the following representation:
 \begin{equation}
-\mathbb{B}^*_{} \boldsymbol{u}^\ell = \sum_b \boldsymbol{B}^\star_{b} {\boldsymbol{u}}_b
+\mathbb{B}^*_{} \bm{u}^\ell = \sum_b \bm{B}^\star_{b} {\bm{u}}_b
 \qquad\text{ with }\qquad
-\boldsymbol{B}^\star_b \triangleq \mathbb{B}^*\boldsymbol{\varphi}_{u b}.
+\bm{B}^\star_b \triangleq \mathbb{B}^*\bm{\varphi}_{u b}.
 \label{eq:def-Bb}
 \end{equation} 
 Similarly, %define
-a discrete geometric operator \(\boldsymbol{G}_{ab}[\boldsymbol{s}]\)
+a discrete geometric operator \(\bm{G}_{ab}[\bm{s}]\)
 is defined
-as the partial derivatives of the product \(\boldsymbol{B}_a\boldsymbol{A}_*\boldsymbol{s}\)
-with respect to the nodal parameters \(\boldsymbol{u}_b\),
-with \(\boldsymbol{s}\) held constant:
+as the partial derivatives of the product \(\bm{B}_a\bm{A}_*\bm{s}\)
+with respect to the nodal parameters \(\bm{u}_b\),
+with \(\bm{s}\) held constant:
 %
 \begin{equation}
-\boldsymbol{G}_{ab}[\boldsymbol{s}] = \partial_b[\boldsymbol{B}_a\boldsymbol{A}_*\mid\boldsymbol{s}],
-%\boldsymbol{G}_{ab}[\mathbf{e}_i]\triangleq \partial_b \left[\boldsymbol{A}\mathbb{B}^*\boldsymbol{\varphi}_{\eta a}\mathbf{e}_i\right]\boldsymbol{\varphi}_{u b}.
+\bm{G}_{ab}[\bm{s}] = \partial_b[\bm{B}_a\bm{A}_*\mid\bm{s}],
+%\bm{G}_{ab}[\mathbf{e}_i]\triangleq \partial_b \left[\bm{A}\mathbb{B}^*\bm{\varphi}_{\eta a}\mathbf{e}_i\right]\bm{\varphi}_{u b}.
 \label{eq:def-Gab}
 \end{equation}
 where the vertical bar indicates that the terms that follow are held constant under differentiation.
 %
-In terms of \(\boldsymbol{B}_a\)%(\cref{eq:galerkin-ibp})
-,     \(\boldsymbol{B}^\star_b\)%(\cref{eq:def-Bb})
-, and \(\boldsymbol{G}_{ab}\),   %(\cref{eq:def-Gab}) 
+In terms of \(\bm{B}_a\)%(\eqref{eq:galerkin-ibp})
+,     \(\bm{B}^\star_b\)%(\eqref{eq:def-Bb})
+, and \(\bm{G}_{ab}\),   %(\eqref{eq:def-Gab}) 
 the Galerkin 
-differential \(D\mathcal{G}\left[\boldsymbol{u}^\ell\right]\cdot\boldsymbol{\eta}^\ell\) of Equation (\ref{eq:def-K}) then has the representation:
+differential \(D\mathcal{G}\left[\bm{u}^\ell\right]\cdot\bm{\eta}^\ell\) of Equation (\ref{eq:def-K}) then has the representation:
 \begin{equation} 
 \begin{aligned}
-\mathcal{K}_M\left[\boldsymbol{\eta}^\ell, \boldsymbol{u}^\ell\right] + \mathcal{K}_G\left[\boldsymbol{\eta}^\ell, \boldsymbol{u}^\ell\right] = \sum_{a,b} \boldsymbol{\eta}_a\cdot\mathbf{K}_{ab} \, \boldsymbol{u}_b,
+\mathcal{K}_M\left[\bm{\eta}^\ell, \bm{u}^\ell\right] + \mathcal{K}_G\left[\bm{\eta}^\ell, \bm{u}^\ell\right] = \sum_{a,b} \bm{\eta}_a\cdot\mathbf{K}_{ab} \, \bm{u}_b,
 \end{aligned}
 \end{equation}
 where the nodal stiffness matrices \(\{\mathbf{K}_{a b}\}\)
@@ -414,12 +415,12 @@ are furnished by summation on \(i\) and \(j\):
 \begin{aligned}
 \mathbf{K}_{ab} 
   &\triangleq 
-  \left<\mathbf{e}_i ,\,\boldsymbol{B}^{}_a \boldsymbol{C}_{\sigma}\boldsymbol{B}^{\star}_b \mathbf{e}_j\right> \mathbf{e}_i\otimes\mathbf{e}_j
-  +\left<\mathbf{e}_i ,\, \boldsymbol{G}_{ab}[\boldsymbol{s}]\mathbf{e}_j\right> \mathbf{e}_i\otimes\mathbf{e}_j .
-%&\triangleq %\mathcal{K}_M\left[\boldsymbol{\varphi}_{\eta a}\mathbf{e}_k, \boldsymbol{\varphi}_{u b}\mathbf{e}_\ell\right]\\
-%\left<\mathbf{e}_i ,\,\boldsymbol{B}^{}_a \boldsymbol{C}^{}_{\sigma}\boldsymbol{B}^{\star}_b \mathbf{e}_j\right> \mathbf{e}_i\otimes\mathbf{e}_j
-%+\left<\boldsymbol{G}_{ab}[\mathbf{e}_i]\mathbf{e}_j
-%,\, \boldsymbol{s}\right> \mathbf{e}_i\otimes\mathbf{e}_j .
+  \left<\mathbf{e}_i ,\,\bm{B}^{}_a \bm{C}_{\sigma}\bm{B}^{\star}_b \mathbf{e}_j\right> \mathbf{e}_i\otimes\mathbf{e}_j
+  +\left<\mathbf{e}_i ,\, \bm{G}_{ab}[\bm{s}]\mathbf{e}_j\right> \mathbf{e}_i\otimes\mathbf{e}_j .
+%&\triangleq %\mathcal{K}_M\left[\bm{\varphi}_{\eta a}\mathbf{e}_k, \bm{\varphi}_{u b}\mathbf{e}_\ell\right]\\
+%\left<\mathbf{e}_i ,\,\bm{B}^{}_a \bm{C}^{}_{\sigma}\bm{B}^{\star}_b \mathbf{e}_j\right> \mathbf{e}_i\otimes\mathbf{e}_j
+%+\left<\bm{G}_{ab}[\mathbf{e}_i]\mathbf{e}_j
+%,\, \bm{s}\right> \mathbf{e}_i\otimes\mathbf{e}_j .
 \end{aligned}
 \label{eq:def-kab}
 \end{equation}
@@ -429,20 +430,20 @@ are furnished by summation on \(i\) and \(j\):
 \subsection{Summary}\label{remarks03}}
 
   The results of this appendix are collected in Box 2.
-  The operators \(\boldsymbol{B}_a\),     \(\boldsymbol{B}^\star_b\), and \(\boldsymbol{G}_{ab}\) 
+  The operators \(\bm{B}_a\),     \(\bm{B}^\star_b\), and \(\bm{G}_{ab}\) 
   in Box 2 are the essential components that define a finite element and furnish the element internal forces \(\intern\) and stiffness \(\mathbf{K}\).
-  If \(\boldsymbol{\varphi}_{\eta a}\) and \(\boldsymbol{\varphi}_{u b}\) are
-  equivalent, the discrete equilibrium operator \(\boldsymbol{B}_a\) 
+  If \(\bm{\varphi}_{\eta a}\) and \(\bm{\varphi}_{u b}\) are
+  equivalent, the discrete equilibrium operator \(\bm{B}_a\) 
   will be the transpose of the
-  discrete strain operator \(\boldsymbol{B}^\star_a\)
+  discrete strain operator \(\bm{B}^\star_a\)
   and the discrete material stiffness will be 
   symmetric.
 % \item
 
   In a \emph{Bubnov-Galerkin} formulation, the iterative solution procedure
-  converges to a configuration where the residual of \cref{eq:strong}
+  converges to a configuration where the residual of \eqref{eq:strong}
   is orthogonal to the chosen modes of perturbation, which may be represented in
-  \(\boldsymbol{u}\).
+  \(\bm{u}\).
   This variant is
   commonly referred to simply as \emph{the Galerkin} method and shares
   an intimate link with problems that can be derived as energy
@@ -450,9 +451,9 @@ are furnished by summation on \(i\) and \(j\):
 % \item
 
   Alternatively, a \emph{Petrov-Galerkin} formulation arises when
-  variations \(\boldsymbol{u}^h\) and \(\boldsymbol{\eta}^h\) are permitted distinct
+  variations \(\bm{u}^h\) and \(\bm{\eta}^h\) are permitted distinct
   representations. This can become preferable when a complicated basis
-  is chosen for \(\boldsymbol{u}\), as it can greatly simplify the derivation of
+  is chosen for \(\bm{u}\), as it can greatly simplify the derivation of
   a consistent tangent stiffness.
 % \end{itemize}
 
@@ -462,23 +463,23 @@ are furnished by summation on \(i\) and \(j\):
 \begin{itemize}
 \item
   A Galerkin approximation of %to
-  \cref{eq:galerkin-linearized} is defined by effective interpolation bases 
-  \(\left\{\boldsymbol{\varphi}^{}_{\eta a}\right\}\) and \(\left\{\boldsymbol{\varphi}^{}_{u b}\right\}\) where:
+  \eqref{eq:galerkin-linearized} is defined by effective interpolation bases 
+  \(\left\{\bm{\varphi}^{}_{\eta a}\right\}\) and \(\left\{\bm{\varphi}^{}_{u b}\right\}\) where:
   \begin{equation*}
-    \boldsymbol{\eta}^\ell(\boldsymbol{\xi}) = \sum_a \boldsymbol{\varphi}^{}_{\eta a}(\boldsymbol{\xi})\boldsymbol{\eta}^{}_a
+    \bm{\eta}^\ell(\bm{\xi}) = \sum_a \bm{\varphi}^{}_{\eta a}(\bm{\xi})\bm{\eta}^{}_a
     \qquad\text{ and }\qquad
-    \boldsymbol{u}^\ell(\boldsymbol{\xi}) = \sum_b \boldsymbol{\varphi}^{}_{u b}(\boldsymbol{\xi}) \boldsymbol{u}^{}_b.
+    \bm{u}^\ell(\bm{\xi}) = \sum_b \bm{\varphi}^{}_{u b}(\bm{\xi}) \bm{u}^{}_b.
   \end{equation*}
 
 \item
-  Application to the linearized residual of \cref{eq:galerkin-linearized} furnishes \emph{three} characteristic operators:
+  Application to the linearized residual of \eqref{eq:galerkin-linearized} furnishes \emph{three} characteristic operators:
   \begin{equation*}
   \begin{array}{lrll}
     %&\textbf{Symbol} &\textbf{Expression} & \textbf{Description} \\[1ex] %\hline
-    \text{(i)}  &\boldsymbol{B}_a^{\mathrm{t}}     & = \mathbb{B}^*\boldsymbol{\varphi}^{}_{\eta a} & \text{Discrete equilibrium operator} \\[2ex]
-    \text{(ii)} &\boldsymbol{B}^{\star}_b          & = \mathbb{B}^*\boldsymbol{\varphi}^{}_{u b}         & \text{Discrete strain operator} \\[2ex]
-    \text{(iii)}&\boldsymbol{G}_{ab}[\boldsymbol{s}] & = \partial_b\left[\boldsymbol{B}_a\boldsymbol{A}_*\mid\boldsymbol{s}\right]%\boldsymbol{\varphi}_{u b}
-    %\partial_b \left[\boldsymbol{A}\mathbb{B}^*\boldsymbol{\varphi}_{\eta a}\mathbf{e}_i\right]\boldsymbol{\varphi}_{u b} & 
+    \text{(i)}  &\bm{B}_a^{\mathrm{t}}     & = \mathbb{B}^*\bm{\varphi}^{}_{\eta a} & \text{Discrete equilibrium operator} \\[2ex]
+    \text{(ii)} &\bm{B}^{\star}_b          & = \mathbb{B}^*\bm{\varphi}^{}_{u b}         & \text{Discrete strain operator} \\[2ex]
+    \text{(iii)}&\bm{G}_{ab}[\bm{s}] & = \partial_b\left[\bm{B}_a\bm{A}_*\mid\bm{s}\right]%\bm{\varphi}_{u b}
+    %\partial_b \left[\bm{A}\mathbb{B}^*\bm{\varphi}_{\eta a}\mathbf{e}_i\right]\bm{\varphi}_{u b} & 
     & \text{Discrete geometric operator} \\[2ex]
   \end{array}
   \end{equation*}
@@ -489,10 +490,10 @@ are furnished by summation on \(i\) and \(j\):
 \toprule
  & \textbf{Expression} & \textbf{Description} \\
 \midrule
-1. &  \(\boldsymbol{B}_a^{\mathrm{t}} \triangleq \mathbb{B}^*\boldsymbol{\varphi}^{}_{\eta a}\) & Discrete equilibrium operator \\
-2. &  \(\boldsymbol{B}^{\star}_b \triangleq \mathbb{B}^*\boldsymbol{\varphi}^{}_{u b}\)       & Discrete strain operator \\
-3. &  \(\boldsymbol{G}_{ab}[\mathbf{e}_i] \triangleq \partial_b \left[\boldsymbol{A}\mathbb{B}^*\boldsymbol{\varphi}_{\eta a}\mathbf{e}_i\right]\boldsymbol{\varphi}_{u b}\) & Discrete geometric tangent operator\\
-%4. &  \(\boldsymbol{H}_{ab} \triangleq \boldsymbol{A}D\left[\mathbb{B}^*[\boldsymbol{\varphi}_{ub}\mathbf{e}_{k}]\right]\cdot\boldsymbol{\varphi}^{}_{u b}\mathbf{e}_{\ell}\) & Second geometric tangent \\
+1. &  \(\bm{B}_a^{\mathrm{t}} \triangleq \mathbb{B}^*\bm{\varphi}^{}_{\eta a}\) & Discrete equilibrium operator \\
+2. &  \(\bm{B}^{\star}_b \triangleq \mathbb{B}^*\bm{\varphi}^{}_{u b}\)       & Discrete strain operator \\
+3. &  \(\bm{G}_{ab}[\mathbf{e}_i] \triangleq \partial_b \left[\bm{A}\mathbb{B}^*\bm{\varphi}_{\eta a}\mathbf{e}_i\right]\bm{\varphi}_{u b}\) & Discrete geometric tangent operator\\
+%4. &  \(\bm{H}_{ab} \triangleq \bm{A}D\left[\mathbb{B}^*[\bm{\varphi}_{ub}\mathbf{e}_{k}]\right]\cdot\bm{\varphi}^{}_{u b}\mathbf{e}_{\ell}\) & Second geometric tangent \\
 \bottomrule
 \end{tabular*}
 \end{center}
@@ -502,8 +503,8 @@ are furnished by summation on \(i\) and \(j\):
   These operators determine the \emph{nodal residual forces} and the \emph{tangent stiffness}, which  in terms of an orthonormal basis \(\left\{\mathbf{e}_k\right\}\) spanning the degrees of freedom in \(T\mathcal{B}_{\chi}\) are furnished by:
   \begin{equation}
     \begin{aligned}
-    \intern_a =& \left<\mathbf{e}_i ,\, \boldsymbol{B}_a\boldsymbol{\sigma}\right>\mathbf{e}_i, \\
-    \extern_a =& \left<\boldsymbol{\varphi}_{\eta a} \mathbf{e}_k,\, \boldsymbol{f}\right>\mathbf{e}_k,
+    \intern_a =& \left<\mathbf{e}_i ,\, \bm{B}_a\bm{\sigma}\right>\mathbf{e}_i, \\
+    \extern_a =& \left<\bm{\varphi}_{\eta a} \mathbf{e}_k,\, \bm{f}\right>\mathbf{e}_k,
     \end{aligned}
     \label{eq:def-pa}
   \end{equation}
@@ -511,8 +512,8 @@ are furnished by summation on \(i\) and \(j\):
   \begin{equation*}
     \begin{aligned}
     \mathbf{K}_{ab} 
-     =& \left<\mathbf{e}_i ,\,\boldsymbol{B}^{}_a \boldsymbol{C}_{\sigma}\boldsymbol{B}^{\star}_b \mathbf{e}_j\right> \mathbf{e}_i\otimes\mathbf{e}_j
-      +\left<\mathbf{e}_i ,\, \boldsymbol{G}_{ab}[\boldsymbol{s}]\mathbf{e}_j\right> \mathbf{e}_i\otimes\mathbf{e}_j. 
+     =& \left<\mathbf{e}_i ,\,\bm{B}^{}_a \bm{C}_{\sigma}\bm{B}^{\star}_b \mathbf{e}_j\right> \mathbf{e}_i\otimes\mathbf{e}_j
+      +\left<\mathbf{e}_i ,\, \bm{G}_{ab}[\bm{s}]\mathbf{e}_j\right> \mathbf{e}_i\otimes\mathbf{e}_j. 
     \end{aligned}
   \end{equation*}
 \end{itemize}

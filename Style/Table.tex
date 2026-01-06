@@ -12,3 +12,11 @@
 \makeatletter
 \patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
 \makeatother
+
+
+\usepackage{multirow}
+\usepackage{adjustbox}
+\newcolumntype{L}{>{\centering\arraybackslash}m{3cm}}
+\newcolumntype{M}{>{\centering\arraybackslash}m{7cm}}
+\newcolumntype{N}{>{\centering\arraybackslash}m{5cm}}
+\newcolumntype{O}{>{\centering\arraybackslash}m{9.5cm}}

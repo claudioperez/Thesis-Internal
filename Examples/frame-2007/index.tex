@@ -13,24 +13,24 @@
   \begin{subfigure}[c]{0.55\linewidth}
     \centering
     \includegraphics[width=\linewidth]{Figures/frame-2007.png}
-    % \caption{Shear link model.}
-    \label{fig:A}
+    \caption{Finite element model.}
+    \label{fig:2007-A}
   \end{subfigure}
   % \hfill
   \begin{subfigure}[c]{0.4\linewidth}
     \centering
     % \includegraphics[width=\linewidth,trim={12cm 0 12cm 0},clip]{Figures/w18x40-warp.png}
     \includegraphics[width=\linewidth]{Figures/shear-link-response.png}
-    % \caption{Shear force \(V_y\) vs. displacement \(u_y\) at \(\reflenx=L\).}
-    \label{fig:C}
+    \caption{Shear force \(V_y\) vs. displacement \(u_y\) at \(\reflenx=L\).}
+    \label{fig:2007-C}
   \end{subfigure}
   
     \caption{Model of the steel shear link from Example~\ref{sec:frame-2021}.}
     \label{fig:shear-link}
 \end{figure}
 
-The built-in span in \cref{fig:shear-link} represents a shear link with a steel W18x40 section. 
-Three formulations are considered: (1) a standard shear-free force formulation \citep{taucer1991fiber}, (2) the shear-deformable formulation of \cite{taylor2003mixed} with a section that neglects cross sectional warping (i.e., \(\WarpShearIesan_y =0\)), and (3) the same shear-deformable force formulation with a section that includes the warping mode \(\WarpShearIesan_y\) in \cref{fig:shear-link}. 
+The built-in span in \cref{fig:2007-A} represents a shear link with a steel W18x40 section. 
+Three formulations are considered: (1) a standard shear-free force formulation \citep{taucer1991fiber}, (2) the shear-deformable formulation of \cite{taylor2003mixed} with a section that neglects cross sectional warping (i.e., \(\WarpShearIesan_y =0\)), and (3) the same shear-deformable force formulation with a section that includes the warping mode \(\WarpShearIesan_y\) in \cref{fig:2007-A}. 
 %
 All cases use the multiaxial \(J_2\) plasticity model with yield stress \(f_y = 35\) ksi, and linear isotropic and kinematic hardening with moduli \(H_{\rm iso} = H_{\rm kin} = 0.002E\). 
 The shear correction factor for this section is \(A/A_y = 0.46\) according to \cite{cowper1966shear}. 
@@ -49,7 +49,7 @@ The enriched section matches the elastic stiffness exactly.
     \end{subfigure}
 \end{figure}
 
-\cref{fig:shear-link} reports the transverse \((y)\) shear force -- displacement response at the point of imposed displacement \(\reflenx=L\). The significant impact of shear and warping deformations is evident. 
+\cref{fig:2007-C} reports the transverse \((y)\) shear force -- displacement response at the point of imposed displacement \(\reflenx=L\). The significant impact of shear and warping deformations is evident. 
 A section that incorporates shear deformations without warping fails to reproduce the elastic stiffness and overestimates both the strength and the energy dissipation.
 
 }

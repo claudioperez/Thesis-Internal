@@ -1,0 +1,181 @@
+\chapter{Section Formulation \Paper{5/6}}\label{ch:section-theory}
+
+\section{Introduction}
+
+
+\paragraph{Literature}
+% Exact rotations plus warping
+\cite{simo1991geometricallyexact} introduced a geometrically exact formulation which incorporates one cross-sectional warping mode in a Type 1 formulation. 
+This was investigated further by \cite{gruttmann2000theory} who emphasized the use of sections intersecting the reference curve at an arbitrary point. 
+This theory has also been investigated by \cite{rong2020geometrically} in the context of isogeometric analysis who considered the nonlinear Wagner term. However, in this work the reference curve is restricted to intersect sections at the centroid. 
+
+\section{Kinematics}
+
+The extended displacement field for the newly introduced section material points $\hat{\rho}$  is given by:
+\begin{equation}
+\hat{\bm{x}}(\reflenx, \hat{\rho}) 
+= \bm{x}(\reflenx) + \FrameRotation \bigl(\PlanePosition (\hat{\rho}) + (\bm{\alpha}\cdot\bm{\varphi})\, \FrameBasis\bigr)
+\label{eq:section-displacement}
+\end{equation}
+%
+where the 2D vector $\PlanePosition$ with coordinates $y\FrameBasis_{2} + z\FrameBasis_3$ identifies a section material point $\hat{\rho}$ with respect to the reference line of the beam. 
+This generalizes the kinematic assumption of \cite{simo1991geometricallyexact} and aligns with the work by \cite{klinkel2003anisotropic} and \cite{elfatmi2007nonuniform}.
+
+For shear-bending, in $(x-z)$-plane, for example, the warping function is often represented by an odd cubic function of $z$ (Reddy et al., 1997; Wang et al., 2000; Eisenberger, 2003), and the warping parameter $\alpha$ may be either independent (Martinez et al., 1999; Tsai and Kelly, 2005) or taken as the shear strain $\gamma$ (Dufort et al., 2001).
+
+Note that the origin of this coordinate system is not assumed to coincide with special point in the section. In what follows, variants of the symbol \(\bm{\SectionLocation}\) are used to designate a fixed point in the cross section with respect to the section coordinate system. 
+%
+
+
+\subsection{Deformation}
+
+For \(\hat{\FramePosition} = \hat{\chi}(\xi,\rho)\), consider the tangent map \(\bm{F} \triangleq T\hat{\chi}\) which is commonly known as the \emph{deformation gradient}.
+% \subsection{Exact Kinematics}
+%
+% It will be convenient to introduce the relative displacement \(\hat{\bm{r}}\) given by the expression:
+% $$
+% \hat{\bm{r}} \triangleq \FrameRotation^{\mathrm{t}} (\hat{\bm{x}} - \bm{x}) = \PlanePosition  + (\bm{\alpha}\cdot\bm{\varphi})\,\FrameBasis
+% $$
+The \emph{exact} deformation gradient for the extended material field $\hat{\bm{x}}$ given by \cref{eq:section-displacement} is:
+$$
+\bm{F}(\xi, \hat{\rho}) 
+% = \nabla \hat{\bm{x}} 
+= \FrameRotation\left[\bm{1} + \bm{\varepsilon}\otimes\FrameBasis\right] + \FrameRotation\nabla \bm{\omega}
+$$
+where
+$$
+\bm{\varepsilon}(\hat{\rho}) \triangleq\ShearStrain  + \CurveStrain  \times (\PlanePosition  + \bm{\omega})
+\qquad\text{ and }\qquad
+\bm{\omega} \triangleq (\bm{\alpha}\cdot\bm{\varphi})\, \FrameBasis
+$$
+and $\ShearStrain $ and $\CurveStrain $ are the primary beam strain variables.
+Note that in the presence of warping $\bm{\varepsilon}$ is nonlinear in
+the strain variables $\FrameStrain$ and may be written as the sum of linear $\bar{\bm{\varepsilon}}$ and quadratic $\CurveStrain \times\bm{\omega}$ terms:
+$$
+\bm{\varepsilon} = \bar{\bm{\varepsilon}} + \CurveStrain \times\bm{\omega}
+\qquad\text{ with }\qquad
+\bar{\bm{\varepsilon}} \triangleq \ShearStrain  + \CurveStrain \times\PlanePosition 
+$$
+%
+The exact Green-Lagrange strain tensor may be expressed as:
+\begin{equation}
+\SolidStrain = \bm{\varepsilon}
+\stackrel{\mathrm{s}}{\otimes}
+\FrameBasis 
++\nabla\omega \stackrel{\mathrm{s}}{\otimes} \FrameBasis
++({\bm{\varepsilon}}\cdot\FrameBasis)\,\nabla\omega \stackrel{\mathrm{s}}{\otimes} \FrameBasis
++ \frac{1}{2}\left(
+  \bm{\varepsilon}\cdot\bm{\varepsilon}\,\FrameBasis\otimes\FrameBasis
++ \nabla\omega\otimes\nabla\omega
+\right)
+\label{eq:exact-gl-strain}
+\end{equation}
+where the symmetric bun product \(\bm{a}\stackrel{\mathrm{s}}{\otimes}\bm{b}\) is defined for vectors \(\bm{a}\), \(\bm{b}\), and \(\bm{c}\) by
+\begin{equation*}
+    (\bm{a}\stackrel{\mathrm{s}}{\otimes}\bm{b} )\bm{c} \triangleq \frac{1}{2} \bigl(\bm{a}\,(\bm{b}\cdot\bm{c}) + \bm{b}\,(\bm{a}\cdot\bm{c})\bigr)
+\end{equation*}
+%
+In the absence of warping one has $\bm{\omega}=\bm{0}$ and $\bm{\varepsilon}\equiv \bar{\bm{\varepsilon}}$:
+$$
+\SolidStrain = \bar{\bm{\varepsilon}}
+\stackrel{\mathrm{s}}{\otimes}
+\FrameBasis 
++ \frac{1}{2}\left.
+\bar{\bm{\varepsilon}}\cdot\bar{\bm{\varepsilon}}\,\FrameBasis\otimes\FrameBasis\right. \\
+$$
+
+\subsection{Truncation}
+Even for geometrically exact models, it is common to assume linear section kinematics (see, e.g., \cite{simo1991geometricallyexact}). A common approach is to assume \(\bm{\varepsilon} \approx \bar{\bm{\varepsilon}}\) and 
+\(\bm{\varepsilon}\cdot\bm{\varepsilon} \approx
+  \tau^2 (\bm{r}\cdot\bm{r})\). 
+This reduces \cref{eq:exact-gl-strain} to
+%
+\begin{equation}
+\SolidStrain \approx \bar{\bm{\varepsilon}}
+\stackrel{\mathrm{s}}{\otimes}
+\FrameBasis 
++\nabla\omega \stackrel{\mathrm{s}}{\otimes} \FrameBasis
++ \tfrac{1}{2}\left.\varkappa^2\,
+\bm{r}\cdot\bm{r}\,\FrameBasis\otimes\FrameBasis
+\right.
+\label{eq:wagner-gl-strain}
+\end{equation}
+which is similar to that used by \cite{hsiao2000corotational,battini2002corotational,jonker2021threedimensional} and \cite{rong2020geometrically}. 
+Linearizing \cref{eq:wagner-gl-strain} furnishes
+\[
+\delta \bm{E} = \delta \ShearStrain - \bm{r}\times\delta \CurveStrain + (\FrameBasis\otimes \bm{\varphi})\delta \bm{\alpha} + (\nabla \bm{\varphi})^{\mathrm{t}} \delta \bm{\alpha}' + \varkappa r^2\, \FrameBasis\otimes\FrameBasis\delta \varkappa 
+\]
+where \(r^2 \triangleq \bm{r}\cdot\bm{r}\). Rearranging
+\begin{equation*}
+    \delta \bm{E} = \hat{\bm{B}}_{\mathrm{L}}\delta \bm{e} +  \hat{\bm{B}}_{\mathrm{W}}(\varkappa) \delta \bm{e}
+\end{equation*}
+with
+\begin{equation}
+\hat{\bm{B}}_{\mathrm{L}}  = 
+\left[\bm{1} 
+~~~ -\PlanePosition^{\times}
+~~~ \FrameBasis\otimes\bm{\varphi}
+~~~ \FrameBasis_{\beta} \otimes \nabla_{\beta} \bm{\varphi}
+\right]
+\quad
+\text{and}
+\quad
+\hat{\bm{B}}_{\mathrm{W}} = \left[\bm{0} 
+~~~ \varkappa r^2\,\FrameBasis\otimes\FrameBasis  
+~~~ \bm{0}
+~~~ \bm{0}
+\right]
+\end{equation}
+%
+\paragraph{Remark}
+\(\hat{\bm{B}}_{\mathrm{L}}\) is equivalent to \cite[Eq. 2.59]{lecorvec2012nonlinear}, who uses the notation
+\[
+\bm{a}_{x}^w = \FrameBasis \otimes \bm{\varphi},
+\qquad\text{ and }\qquad 
+\bm{a}_{yz}^w = \FrameBasis_{\beta} \otimes \nabla_{\beta} \bm{\varphi}
+\]
+
+
+\section{Resultants}
+\input{Part I/Sections/Response}
+
+\vspace{1ex}
+\begin{ambox}[Section]{box:section-type1}
+Let a section be specified with point-wise data \(\mathcal{A}, \mathcal{M}, \bm{\varphi}\), and \(\nabla \bm{\varphi}\), and a selection of either \textbf{Linear}, \textbf{Wagner}, or \textbf{Finite} kinematics. 
+\begin{itemize}
+    \item Kinematics: At each point \(\hat{\rho}\) the strain \(\bm{E}\) is evaluated from \cref{eq:exact-gl-strain}, \cref{eq:wagner-gl-strain}, or \cref{eq:} and \(\hat{\bm{B}}\) from \cref{eq:}, \cref{eq:} or \cref{eq:}
+
+    \item Constraints: With \(\mathbb{P}\) from \cref{eq:warping-projection}, augment \(\hat{\bm{B}}\)
+
+    \item Response: \(\bm{s}\)
+    \[
+    \FrameResult= \SectionIntegral{\hat{\bm{B}}^{\mathrm{t}} \bm{S}\FrameBasis}
+    \]
+
+    \item Tangent: Integrate \(\hat{\bm{K}}\) using \cref{eq:section-tangent}
+    \begin{equation*}
+    \hat{\bm{K}} = \SectionIntegral{
+        \hat{\bm{B}}^{\mathrm{t}} \mathbb{C}\hat{\bm{B}} + \hat{\bm{G}}}
+    \end{equation*}
+    where \(\hat{\bm{G}}\) vanishes under \textbf{Linear} kinematics, and is given by \cref{eq:section-wagner-geometric} for \textbf{Wagner} kinematics.
+
+\end{itemize}
+\end{ambox}
+
+\section{Example: Isotropic Elasticity}
+\input{Part I/Sections/Isotropy}
+
+\section{Summary and Remarks}
+
+\input{Part I/Sections/remarks}
+
+\newpage
+\section{A: Constraints}
+\input{Part I/Sections/A_MaterialConstraint}
+\newpage
+\input{Part I/Sections/A_Torsion}
+\newpage
+\section{A: Condensation}
+\input{Part I/Sections/A_Condensation}
+\newpage
+\input{Part I/Sections/A_Projections}

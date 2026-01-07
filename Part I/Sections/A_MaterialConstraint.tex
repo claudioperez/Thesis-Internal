@@ -1,0 +1,123 @@
+\newcommand{\ThreeTensor}[1]{\mathsf{#1}}
+
+The ramification of the rigid cross section assumption is that the normal and shear strain components in the plane of a cross section vanish; in our coordinate system that means
+\(E_{yy}=E_{zz}=0\) and \(E_{yz}=E_{zy}=0\). 
+For isotropy, this
+constraint is not a problem in the shear strain components because the
+shear stresses and strains are uncoupled under isotropy (for example,
+\(S_{yz}=2 \mu E_{yz}\) ). Therefore, vanishing shear strains simply
+implies vanishing shear stress.
+
+The constitutive equations for isotropic hyperelasticity have an
+inherent coupling of the normal strains and stresses. The stresses are
+given by \[
+\mathbf{S}=\lambda \operatorname{tr}(\bm{E}) \bm{1}+2 \mu \mathbf{E}
+\] Since under the strain hypothesis
+\(\operatorname{tr}(\bm{E})=E_{xx}\), we have
+\(S_{yy}=S_{zz}=\lambda E_{xx}\). Now, from the constitutive law
+\(S_{xx}=(\lambda+2 \mu) E_{xx}\) so \(S_{yy}=S_{zz}=\nu S_{xx}\), where
+\(\nu\) is Poisson's ratio. Thus, the constraint induces normal stresses
+in the plane of the cross section owing to Poisson's effect (tension in
+one direction causes lateral contraction of the dimensions perpendicular
+to the direction of tension). Observational evidence on the behavior of
+beams would indicate that these stresses tend to be rather small. In
+fact, it is possible that the presence of these stresses will violate
+the traction boundary conditions on the lateral surface of the beam. For
+a beam with a traction-free lateral surface, we can argue that the
+normal stresses \(S_{yy}\) and \(S_{zz}\) are very small because the
+cross-sectional dimensions are small compared with the length of the
+beam. We would like to make the assumption that \(S_{yy}=S_{zz}=0\).
+
+Let us examine what would have happened if we had made the assumption of
+vanishing normal stress and not the assumption of vanishing normal
+strain. We made exactly that assumption for the uniaxial tension test in
+order to recast the constitutive equations in terms of Young's modulus
+and Poisson's ratio. When we made the assumption that
+\(S_{yy}=S_{zz}=0\), we got the constitutive relationship
+\(S_{xx}=C E_{xx}\), rather than \(S_{xx}=(\lambda+2 \mu) E_{xx}\),
+which results for the vanishing strain assumption. This gives us a way
+to partially recover from our difficulties. In the constitutive
+relationships for beams, the quantity \(E=\lambda+2 \mu\) appears
+repeatedly. If we simply substitute the value of Young's modulus \(E=C\)
+instead, then the results of beam theory accord well with observation.
+
+\subsection{Stress Space}\label{stress-space}
+
+Consider \(\mathbb{S}_{\mathrm{rod}}\subset \mathbb{S}\) 
+\[
+\operatorname{dim}\mathbb{S}_{\mathrm{rod}} = 6 - 3 = 3
+\]
+
+\subsubsection{Coordinates}\label{coordinates}
+
+Let \(\bm{\sigma} \triangleq \bm{S}\FrameBasis\) and define
+\(\bm{\varepsilon}\) so that
+\(\FourTensor{P}_{\mathrm{rod}}\bm{E} = \FourTensor{P}_{\mathrm{sym}}[\FrameBasis \otimes\bm{\varepsilon}]\).
+Note that the shear components of \(\bm{\varepsilon}\) and \(\bm{E}\)
+are related by 
+\[
+\FrameBasis_{\beta}\cdot\bm{\varepsilon} = \FrameBasis_{\beta} \cdot 2\bm{E}\FrameBasis
+\] 
+which reads, in matrix notation,
+\((\varepsilon_2, \varepsilon_3) = (2E_{21},\, 2E_{31})\).
+
+The components \(\sigma_k\) of \(\bm{\sigma}\) on the frame basis
+\(\{\FrameBasis_k\}\) are equivalent to the components of
+\(\bm{S}\in\mathbb{S}_{\mathrm{rod}}\) on a basis \(\{\bm{I}_k\}\)
+defined by \[
+\bm{I}_k \triangleq \FrameBasis\otimes\FrameBasis_k
+\]
+%
+An alternative basis for \(\mathbb{S}_{\mathrm{rod}}\) is furnished by
+the three tensors 
+\[
+\hat{\bm{I}} = \FrameBasis \otimes \FrameBasis,\, 
+\quad\text{ and }\quad 
+\hat{\bm{I}}_{\beta} = \tfrac{1}{2}\left(\FrameBasis \otimes\FrameBasis_{\beta} + \FrameBasis_{\beta}\otimes\FrameBasis\right)
+\]
+
+\subsubsection{Projections}\label{projections}
+
+The \emph{frame stress} condition is defined by three constraints 
+\[
+\FrameBasis_{\alpha}\cdot\bm{S}\FrameBasis_{\beta} = 0
+\]
+\[
+\FourTensor{P}_{\mathrm{sec}} = \FrameBasis_{\alpha}\otimes\FrameBasis_{\beta}\otimes\FrameBasis_{\alpha}\otimes\FrameBasis_{\beta}
+\quad\text{ and }\quad
+\FourTensor{P}_{\mathrm{rod}} = \mathbb{I} - \FourTensor{P}_{\mathrm{sec}}
+\]
+where 
+\[
+\mathbb{I} = \FrameBasis_j\otimes\FrameBasis_k \otimes \FrameBasis_j \otimes \FrameBasis_k 
+\]
+also let 
+\[
+\FourTensor{P}_{\mathrm{rod}} = \FourTensor{P}_{\mathrm{eul}} + \FourTensor{P}_{\mathrm{cos}}
+\]
+where 
+\[
+\FourTensor{P}_{\mathrm{eul}}\triangleq \FrameBasis\otimes\FrameBasis\otimes\FrameBasis\otimes\FrameBasis
+\quad\text{ and }\quad 
+\FourTensor{P}_{\mathrm{cos}} \triangleq \mathbb{I} - \FourTensor{P}_{\mathrm{eul}}
+\]
+
+\subsubsection{Moduli Components}\label{moduli-components}
+
+Introduce a third order tensor
+\(\ThreeTensor{P}_{\mathrm{sym}}^{\FrameBasis}\) defined so that 
+\[
+\ThreeTensor{P}_{\mathrm{sym}}^{\FrameBasis} \bm{\varepsilon} = \FourTensor{P}_{\mathrm{sym}}[\FrameBasis \otimes\bm{\varepsilon}] = \FourTensor{P}_{\mathrm{rod}}\bm{E}
+\] 
+We can find a representation of
+\(\ThreeTensor{P}_{\mathrm{sym}}^{\FrameBasis}\) by appropriately
+contracting \(\FourTensor{P}_{\mathrm{sym}}\) with \(\FrameBasis\). 
+\[
+\ThreeTensor{P}_{\mathrm{sym}}^{\FrameBasis} = \frac{1}{2} \left(\FrameBasis\otimes \FrameBasis_k\otimes\FrameBasis_k + \FrameBasis_k \otimes \FrameBasis\otimes\FrameBasis_k\right)
+\] 
+we should verify
+\(\FourTensor{P}_{\mathrm{sec}}:\ThreeTensor{P}_{\mathrm{sym}}^{\FrameBasis} = \ThreeTensor{0}\).
+Then we can write 
+\[
+\bm{S}\FrameBasis = \ThreeTensor{C}_{\mathrm{rod}}^{\FrameBasis}:\ThreeTensor{P}_{\mathrm{sym}}^{\FrameBasis} \bm{\varepsilon}
+\]

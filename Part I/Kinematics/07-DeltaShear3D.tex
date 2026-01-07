@@ -1,0 +1,184 @@
+\subsubsection{Kinematics}
+
+\begin{equation}
+\begin{aligned}
+\ShearStrain &= \bm{u}^{\prime} - \bm{\theta}\times(\FrameBasis  + \bm{u}^{\prime})+ \frac{1}{2}(\bm{\theta}^{\times})^{2}\FrameBasis 
+ + O(\delta^3)\\
+\CurveStrain &= 
+\left(\bm{1} - \frac{1}{2}\bm{\theta}^\times\right)\bm{\theta}^{\prime}
+\end{aligned}
+\label{eq:delta-shear-strain}
+\end{equation}
+
+\begin{equation*}
+\bm{e} =
+\begin{pmatrix}
+u_{x}^{\prime}+\theta_z u_{y}^{\prime}-\theta_y u_{z}^{\prime}-\frac{1}{2}(\theta_y^2+\theta_z^2) \\
+u_{y}^{\prime}-\theta_z\left(1+u_{x}^{\prime}\right)+\vartheta u_{z}^{\prime}+\frac{1}{2}\vartheta \theta_y \\
+u_{z}^{\prime}+\theta_y\left(1+u_{x}^{\prime}\right)-\vartheta u_{y}^{\prime}+\frac{1}{2}\vartheta \theta_z \\
+\vartheta^{\prime}+\frac{1}{2}\left(\theta_y^{\prime} \theta_z-\theta_y \theta_z^{\prime}\right) \\
+\theta_y^{\prime}+\frac{1}{2}\left(\theta_z^{\prime} \vartheta-\theta_z \vartheta^{\prime}\right) \\
+\theta_z^{\prime}+\frac{1}{2}\left(\vartheta^{\prime} \theta_y-\vartheta \theta_y^{\prime}\right) \\
+\end{pmatrix}
+\end{equation*}
+
+
+\subsubsection{Variations}
+
+\iffalse
+\begin{equation*}
+\delta \ShearStrain = \begin{pmatrix}
+\delta u_x^{\prime} + \delta \theta_z u_y^{\prime} + \theta_z \delta u_y^{\prime} - \delta\theta_y u_z^{\prime} - \theta_y \delta u_z^{\prime} - \theta_y \delta \theta_y - \theta_z \delta \theta_z \\
+\delta u_y^{\prime} - \delta \theta_z (1 + u_x^{\prime}) - \theta_z \delta u_x^{\prime} + \delta \vartheta u_z^{\prime} + \vartheta \delta u_z^{\prime} + \frac{1}{2}(\delta\vartheta \theta_y + \vartheta \delta \theta_y) \\
+\delta u_z^{\prime} + \delta \theta_y (1 + u_x^{\prime}) + \theta_y \delta u_x^{\prime} - \delta \vartheta u_y^{\prime} - \vartheta \delta u_y^{\prime} + \frac{1}{2}(\delta\vartheta \theta_z + \vartheta \delta \theta_z) \\
+\end{pmatrix}
+\end{equation*}
+\fi
+
+\begin{equation*}
+\begin{pmatrix}
+\delta u_x^{\prime} \\
+\delta u_y^{\prime} \\
+\delta u_z^{\prime} \\ \hline
+\delta \vartheta^{\prime} \\ 
+\delta \theta_y^{\prime} \\
+\delta \theta_z^{\prime} \\ \hline
+\delta \vartheta \\ 
+\delta \theta_y \\
+\delta \theta_z \\
+\end{pmatrix}
+= \left[\begin{array}{ccc|ccc}
+\partial \\
+         & \partial &          &           &    &    \\
+         &          & \partial &           &    &  \\ \hline
+         &          &          & \partial  \\
+         &          &          &           & \partial \\
+         &          &          &           &          & \partial \\ \hline
+& & & 1 \\
+& & & & 1 \\
+& & & & & 1 \\         
+\end{array}\right]\begin{pmatrix}
+\delta u_x \\
+\delta u_y \\
+\delta u_z \\ \hline
+\delta \vartheta \\ 
+\delta \theta_y \\
+\delta \theta_z \\
+\end{pmatrix}
+\end{equation*}
+or, more compactly
+\begin{equation}
+\qquad\text{with}\qquad
+\mathbb{B}^* = \begin{bmatrix}
+   \bm{1} \partial & \\ %\mathbf{D}^\times  \\
+ & \bm{1} \partial  \\
+ & \bm{1}
+\end{bmatrix}
+\label{eq:delta-shear-Bstar}
+\end{equation}
+
+\begin{equation*}
+\begin{aligned}
+\bm{A} &= 
+\left[\begin{array}{ccc}
+\bm{1} - \bm{\theta}^{\times}& \bm{0} & \bm{x}^{\prime~\times} - \frac{1}{2}\left.\bm{\theta}^{\times}\,\FrameBasis^{\times}\right.\\
+\bm{0} & \bm{1} -\frac{1}{2}\bm{\theta}^{\times} & \frac{1}{2}\bm{\theta}^{\prime \times}
+\end{array}\right] \\
+&=\left[\begin{array}{ccc|ccc|ccc}
+1 & \theta_z & -\theta_y & & & & 0 & -(u_z^{\prime}+\theta_y) & (u_y^{\prime} - \theta_z) \\
+-\theta_z & 1 & \vartheta &  &  &  &  u_z^{\prime} + \frac{1}{2}\theta_y & \frac{1}{2}\vartheta & -(1 + u_x^{\prime}) \\
+\theta_y & -\vartheta & 1 & & & & -(u_y^{\prime} - \frac{1}{2}\theta_z) & (1+u_x^{\prime}) & \frac{1}{2}\vartheta \\ \hline
+&&& 1 & \frac{1}{2}\theta_z & -\frac{1}{2}\theta_y & 0 & -\frac{1}{2}\theta_z^{\prime} & \frac{1}{2}\theta_y^{\prime} \\
+& & & -\frac{1}{2}\theta_z & 1 & \frac{1}{2}\vartheta & \frac{1}{2}\theta_z^{\prime} & 0 & -\frac{1}{2} \vartheta^{\prime} \\
+& & & \frac{1}{2}\theta_y & -\frac{1}{2}\vartheta & 1 & -\frac{1}{2}\theta_y^{\prime} & \frac{1}{2}\vartheta^{\prime} & 0
+\end{array}\right]
+\begin{pmatrix}
+\delta u_x^{\prime} \\
+\delta u_y^{\prime} \\
+\delta u_z^{\prime} \\ \hline
+\delta \vartheta^{\prime} \\ 
+\delta \theta_y^{\prime} \\
+\delta \theta_z^{\prime} \\ \hline
+\delta \vartheta \\ 
+\delta \theta_y \\
+\delta \theta_z \\
+\end{pmatrix}
+\end{aligned}
+\end{equation*}
+
+\subsubsection{Equilibrium}
+
+The adjoint of the operator \(\mathbb{B}^*\) in \cref{eq:delta-shear-Bstar} is
+\begin{equation}
+\mathbb{B} 
+= -\begin{bmatrix}
+  \bm{1}\partial & & \\
+& \bm{1}\partial & -\bm{1}
+\end{bmatrix}
+\label{eq:delta-shear-Bequi}
+\end{equation}
+The equilibrium equations then follow:
+\begin{equation*}
+\begin{aligned}
+-\mathbb{B}\bm{A}^{\mathrm{t}} \bm{s}
+&= 
+\begin{bmatrix}
+\bm{1}\partial & & \\
+ & \bm{1}\partial & -\bm{1}
+\end{bmatrix}
+\left[\begin{array}{ccc}
+\bm{1} + \bm{\theta}^{\times}& \bm{0} \\
+\bm{0} & \bm{1} + \frac{1}{2}\bm{\theta}^{\times} \\
+{\bm{x}}^{\prime~\times} - \frac{1}{2}\left.\bm{\theta}^{\times}\,\FrameBasis^{\times}\right. & -\frac{1}{2}\bm{\theta}^{\prime \times} 
+\end{array}\right] \begin{pmatrix}
+\ShearResult \\ \CurveResult
+\end{pmatrix} \\
+%
+% &= \begin{bmatrix}
+% \bm{1}\partial & & \\
+%  & \bm{1}\partial & -\bm{1}
+% \end{bmatrix}
+% \begin{pmatrix}
+% (\bm{1}+\bm{\theta}^\times)\ShearResult \\
+% (\bm{1}+\frac{1}{2}\bm{\theta}^{\times})\CurveResult \\
+% {\bm{x}}^{\prime} {\times} \ShearResult - \frac{1}{2} \bm{\theta} {\times}\,(\FrameBasis  {\times}  \ShearResult) -\frac{1}{2}\bm{\theta}^{\prime } \times \CurveResult
+% \end{pmatrix} \\
+&= \begin{array}{l}
+\ShearResult' + \bm{\theta}'\times\ShearResult \\
+\CurveResult' +  \bm{\theta}' \times \CurveResult + \bm{x}'\times\ShearResult - \frac{1}{2} \bm{\theta}\times(\FrameBasis \times\ShearResult)
+\end{array}
+\end{aligned}
+\end{equation*}
+
+\begin{ambox}[\Gls{frame:delta} Shear Frame]{box:delta-shear}
+
+\begin{equation*}
+\begin{aligned}
+-\mathbb{B} \bm{\sigma}
+&= \left\{\begin{array}{l}
+\ShearResult' + \bm{\theta}'\times\ShearResult \\
+\CurveResult' +  \bm{\theta}' \times \CurveResult + \bm{x}'\times\ShearResult - \frac{1}{2} \bm{\theta}\times(\FrameBasis \times\ShearResult)
+\end{array}
+\right.
+\end{aligned}
+\end{equation*}
+
+\paragraph{Strain}
+\begin{equation*}
+\begin{aligned}
+\ShearStrain &= \bm{u}^{\prime} - \bm{\theta}\times(\FrameBasis  + \bm{u}^{\prime})+ \frac{1}{2}(\bm{\theta}^{\times})^{2}\FrameBasis 
+ \\
+\CurveStrain &= 
+\left(\bm{1} - \frac{1}{2}\bm{\theta}^\times\right)\bm{\theta}^{\prime}
+\end{aligned}
+\end{equation*}
+
+\paragraph{Variations}
+\begin{equation*}
+\bm{A} = 
+\left[\begin{array}{ccc}
+\bm{1} - \bm{\theta}^{\times}& \bm{0} & \bm{x}^{\prime~\times} - \frac{1}{2}\left.\bm{\theta}^{\times}\,\FrameBasis^{\times}\right.\\
+\bm{0} & \bm{1} -\frac{1}{2}\bm{\theta}^{\times} & \frac{1}{2}\bm{\theta}^{\prime \times}
+\end{array}\right] \\
+\end{equation*}
+\end{ambox}

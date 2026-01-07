@@ -1,0 +1,42 @@
+
+\begin{equation}
+\dot{\bm{S}} = \FourTensor{C}\dot{\bm{E}}
+\label{eq:differential-constitution}
+\end{equation}
+We are concerned with constraints of the form
+\begin{equation}
+\FourTensor{P}_j \dot{\bm{S}} = \bm{0}
+\label{eq:linear-stress-constraint}
+\end{equation}
+where \(\FourTensor{P}_j\) is a fourth-order projection tensor, ie, it has the property \(\FourTensor{P}_j^2 \equiv\FourTensor{P}_j\). 
+Consider the decomposition
+\begin{equation}
+\bm{E} = \FourTensor{P}_i \bm{E} + \FourTensor{P}_j \bm{E}
+\label{eq:strain-projection-decomposition}
+\end{equation}
+so that the nonzero stress rate \(\FourTensor{P}_i\dot{\bm{S}}\) is expressed as 
+\begin{equation}
+\FourTensor{P}_i\dot{\bm{S}}=\FourTensor{P}_i\FourTensor{C}\FourTensor{P}_i \bm{E} + \FourTensor{P}_i\FourTensor{C} \FourTensor{P}_j \bm{E}
+\label{eq:nonzero-stress}
+\end{equation}
+Differentiating the constraint \cref{eq:linear-stress-constraint} furnishes with \cref{eq:differential-constitution}
+$$
+\bm{0} = \FourTensor{P}_j\FourTensor{C}\dot{\bm{E}} = \FourTensor{P}_j\FourTensor{C}\FourTensor{P}_i \bm{E} + \FourTensor{P}_j\FourTensor{C} \FourTensor{P}_j \bm{E}
+$$
+Moving the term with $\FourTensor{P}_j\bm{E}$ to the left produces
+$$
+\FourTensor{P}_j\FourTensor{C} \FourTensor{P}_j \FourTensor{P}_j \dot{\bm{E}} = -\FourTensor{P}_j \FourTensor{C}\FourTensor{P}_i \dot{\bm{E}}
+$$
+where $\FourTensor{P}_j$ is duplicated by exploiting the projection property $\FourTensor{P}_j^2 = \FourTensor{P}_j$. Solving the linear system furnishes
+$$
+\FourTensor{P}_j \dot{\bm{E}} = -(\FourTensor{P}_j\FourTensor{C}\FourTensor{P}_j)^{-1} \FourTensor{P}_j\FourTensor{C} \FourTensor{P}_i \dot{\bm{E}}
+$$
+Inserting this back in \cref{eq:strain-projection-decomposition} 
+$$
+\dot{\bm{E}} = \FourTensor{P}_i \dot{\bm{E}} - \FourTensor{P}_j(\FourTensor{P}_j\FourTensor{C}\FourTensor{P}_j)^{-1} \FourTensor{P}_j\FourTensor{C} \FourTensor{P}_i \dot{\bm{E}}
+$$
+Thus the unknown $\FourTensor{P}_j \dot{\bm{E}}$ can be eliminated from \cref{eq:nonzero-stress}
+$$
+\dot{\bm{S}} = \FourTensor{P}_i \dot{\bm{S}} = \left(\FourTensor{P}_i\FourTensor{C}\FourTensor{P}_i
+-\FourTensor{P}_i\FourTensor{C}\FourTensor{P}_j(\FourTensor{P}_j\FourTensor{C}\FourTensor{P}_j)^{-1} \FourTensor{P}_j\FourTensor{C}\FourTensor{P}_i\right) \dot{\bm{E}}
+$$

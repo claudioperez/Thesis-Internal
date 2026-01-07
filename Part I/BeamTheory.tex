@@ -1,0 +1,280 @@
+\chapter{Governing Equations for Frames}\label{ch:frame-equations} 
+%Theory of Frames
+
+\section{Introduction}
+The \emph{special Cosserat theory of rods} is taken as a starting point, which we regard in the \emph{intrinsic} sense \citep{antman2005nonlinear}\footnote{TODO: Elaborate on intrinsic perspective.}.
+This model incorporates the geometrically exact strain measures 
+investigated by \cite{cosserat1909theorie}, and can be reduced to
+most classical beam models after applying appropriate constraints and assumptions.
+
+In \cref{sec:warping-constraints} warping constraints are introduced in a manner that allows for several different approaches to be unified and implemented in a modular fashion.
+
+A major outcome of this chapter is a foundation for implementing constitutive (section) models that accomodate a wide variety of frame formulations.
+
+\subsection{Literature}
+
+% Differential
+%
+\begin{itemize}
+    \item \cite{euler1744curvis}, \cite{kirchhoff1859ueber}, \cite{love1906treatise}
+
+    \item \cite{cosserat1896theorie}
+
+    \item \cite{ericksen1957exact}, \cite{green1966general},  \cite{naghdi1973theory}.
+    From this period, the works of \cite{antman1973theory,antman1974kirchhoffs} were particularly influential. \cite{antman2005nonlinear} is a preeminent source for mathematical treatment of the geometrically exact three-dimensional theory. However, the focus of this work is on analytic results. 
+
+\end{itemize}
+
+% Supplements
+\cite{oreilly2017modeling} offers a perspective that is rich in historical context. 
+\cite{hjelmstad2005fundamentals} presents a comprehensive treatment of two-dimensional beam theories, with limited coverage of three-dimensional theories and the complications that arise from the non-vectorial manifold.
+Useful resources which treat beam theory with  differential geometry are \cite{landau1970theory,connor1976analysis}.
+
+\cite{zienkiewicz2014finite} provides an account of the
+necessary theory for its deployment in finite element applications,
+while \cite{meier2019geometrically} offers a comprehensive survey of the 
+state of the art for geometrically exact finite elements.
+
+
+\section{Kinematics}
+
+
+A beam theory is a mathematical model that represents a thin body as a
+line embedded in space. This means that every material point in the body
+can be identified by a single scalar coordinate \(\xi\).
+
+\subsection{Configuration}
+
+The \emph{configuration} variables for a beam include a vector
+  \(\bm{x}\) identifying the centroidal line, a rotation
+  \(\FrameRotation\) (small or large) identifying the cross section
+  orientation, and a warping amplitude vector
+  \(\bm{\alpha}\) which is used to represent deformation modes within a
+  cross section.
+  \[
+  \chi \triangleq \left(\bm{x}, \FrameRotation, \bm{\alpha}\right)
+  \]
+
+\subsubsection{Position}
+
+The \emph{position} \(\bm{x}\) is always of size \texttt{ndm} (the dimension of the embedding space).
+
+\subsubsection{Directors}
+The \textbf{rotation} variable \(\FrameRotation\) may take several different forms depending on whether small or large deformations are being accomodated, but its \emph{variations} are always a 3-vector for 3D problems and a scalar in 2D problems. 
+The rotation \(\FrameRotation\) is conveniently represented as a linear map between
+    three director vectors \(\FrameBasis_k\) in the reference
+    configuration, and three in the deformed configuration
+    \(\frameBasis_k\). The dimension of a rotation variation is denoted
+    \texttt{ndr}.
+
+\subsubsection{Warping}
+From \cite{epstein2019vlasovs}:
+\begin{quote}
+In Vlasov’s model, the cross-section can undergo a special kind of warping, whereby small out-of-plane normal displacements can take place. 
+This kind of kinematic assumption is shown by \cite{vlasov1961thinwalled} to be suitable for the treatment of the combined bending and torsion of beams of thin-walled open (i.e., simply-connected) cross-section. 
+In particular, the planes on which the bending couples act play an important role in the theory in the sense that, when moving a couple to a parallel plane, a moment-couple needs to be taken into consideration. 
+This ``moment of a moment'' is what Vlasov calls a \emph{bimoment}.
+\end{quote}
+
+\subsection{Deformations}
+
+Objectivity means strains are built from left-invariant differentials of the configuration under the $\mathrm{SE}(3)$ action.
+For $\alpha \in W$ the symmetry is translation in $W$ (an Abelian group): the Maurer-Cartan form is just d $\alpha$. Hence the only first-order objective measure is
+$$
+\alpha^{\prime}, \quad \text { and (optionally) the zero-order field } \alpha \text { itself, }
+$$
+because an energy or power functional may depend on the "position" in $W$ (hardening/relaxation, penalization, etc.), not just on its gradient.
+
+\subsection{Resultants}
+
+
+\subsection{Equilibrium}
+
+
+
+\section{Director Constraints}
+
+\gls{frame:shear} and \gls{frame:euler}.
+
+
+\section{Warping Constraints}\label{sec:warping-constraints}
+
+\subsection{Type 1: Independent Warping}
+
+The most general approach to model warping is to take the \(\nwarp\) warping amplitudes \(\bm{\alpha}\) as independent configuration variables. This follows the approach of \citep{reissner1952nonuniform} for warping torsion. Regardless of any kinematic assumptions on the primary kinematic variables \(\FramePosition\) and \(\FrameRotation\), the warping stresses \(\bimoment\) and \(\bishear\) are governed by the same equilibrium equation:
+\begin{equation*}
+    \bimoment' - \bishear + \bm{f}_{\mathrm{w}} = \bm{0}
+\end{equation*}
+This can be separated out of the total equilibrium operator \(\operatorname{B}\) of \cref{eq:strong}, so that all assumptions on and simplifications to the primary kinematic variables \(\FramePosition\) and \(\FrameRotation\) are contained within a \emph{primary} equilibrium operator \(\EquilibriumDerivative\). Further investigation of \(\EquilibriumDerivative\) is deffered to \cref{ch:frame-hierarchy}.
+
+A \textbf{Type 1} constitutive formulation is completely general in the sense that it can readily return a response for all other formulation types.
+
+\vspace{1ex}
+\begin{ambox}[Type 1: Independent Warping]{box:type1-warping}
+A Type 1 constitutive response maps \(6+2\, \nwarp\) strains \((\bm{e}_{\mathrm{p}},\, \bm{\alpha}',\, \bm{\alpha})\) to \(6+ 2\, \nwarp\) generalized stresses \((\bm{s}_{\mathrm{p}},\bm{w},\bm{v})\)
+\[
+[\bm{s}_{\mathrm{p}},\bm{w},\bm{v}] = \SectionEvaluation{\bm{e}_{\mathrm{p}},\, \bm{\alpha}',\, \bm{\alpha}}
+\]
+Equilibrium takes the form 
+\begin{equation}
+\begin{aligned}
+    \operatorname{B}_{\mathrm{p}} \bm{\sigma}_{\mathrm{p}} + \bm{f}_{\mathrm{p}} &= \dot{\bm{\mu}} \\ 
+    \bimoment' - \bishear + \bm{f}_{\mathrm{w}} &= \bm{0}
+\end{aligned}
+\end{equation}
+\end{ambox}
+
+\subsection{Type 2: Constrained Warping} 
+
+It is common to assume that the amplitudes of certain warping modes are proportional to a component of one of the primary strain variables \(\bm{e}_{\mathrm{p}} = (\ShearStrain,\,\CurveStrain)\). For example, torsional warping is often assumed to be proportional to the rate of twist \(\tau \triangleq \CurveStrain\cdot \FrameBasis\).
+Assumptions of this nature can be expressed with \(\mathtt{n_c}\) linear constraints with the form 
+\begin{equation}
+\mathbf{L}_{\mathrm{w}}\bm{\alpha} - \mathbf{L}_{\mathrm{p}}\bm{e}_{\mathrm{p}} = \bm{0}
+\label{eq:linear-warp-constraints}
+\end{equation}
+where \(\bm{e}_{\mathrm{p}} \triangleq (\ShearStrain, \CurveStrain)\) is the collection of primary strain variables and \(\mathbf{L}_{\mathrm{p}}\) and \(\mathbf{L}_{\mathrm{w}}\) are linear projection operators.
+
+\begin{equation}
+    \bm{\alpha} = \bar{\bm{\alpha}} + \mathbf{L}_{\mathrm{p}}\bm{e}_{\mathrm{p}}
+\label{eq:decompose-alpha}
+\end{equation}
+where the reduced warping vector \(\bar{\bm{\alpha}}\)
+$$
+\bar{\bm{\alpha}} \triangleq \bm{\alpha} - \mathbf{L}_{\mathrm{w}} \bm{\alpha}
+$$
+has \(\nwarp - \mathtt{n_c}\) non-zero components.
+
+
+Recall the Galerkin projection \(\mathcal{G}_{\chi}[\bm{\eta}]\) defined by \cref{eq:galerkin}
+\begin{equation*}
+\mathcal{G}_{\chi}[\bm{\eta}] = \left< \operatorname{B}_{\mathrm{p}} \bm{\sigma}_{\mathrm{p}} ,\, \bm{\eta}_{\mathrm{p}} \right>
++\left< \bm{w}'-\bm{v},\, \delta\bm{\alpha} \right>
+\end{equation*}
+Using \cref{eq:decompose-alpha} for \(\bm{\alpha}\) and exploiting linearity of the inner product furnishes
+\begin{equation*}
+\mathcal{G}_{\chi}[\bm{\eta}] = \left< \operatorname{B} \bm{\sigma}_{\mathrm{p}} ,\, \bm{\eta}_{\mathrm{p}} \right>
++\left< \bm{w}'-\bm{v} ,\, \delta \bar{\bm{\alpha}} \right>
++\left< \bm{w}'-\bm{v} ,\, \mathbf{L}_{\mathrm{p}} \delta \bm{e}_{\mathrm{p}} \right>
+\end{equation*}
+Define the transpose \(\mathbf{L}_{\mathrm{p}}^*\) of \(\mathbf{L}_{\mathrm{p}}\) by
+\begin{equation*}
+\mathcal{G}_{\chi}[\bm{\eta}] = \left< \operatorname{B} \bm{\sigma}_{\mathrm{p}} ,\, \bm{\eta}_{\mathrm{p}} \right>
++\left< \bm{w}'-\bm{v} ,\, \delta \bar{\bm{\alpha}} \right>
++\left< \mathbf{L}_{\mathrm{p}}^* [\bm{w}'-\bm{v}] ,\, \delta \bm{e}_{\mathrm{p}} \right>
+\end{equation*}
+\iffalse
+By linearity 
+$$
+\delta \bar{\bm{\alpha}} = \delta \bm{\alpha} - \mathbf{L}_{\mathrm{w}}[\delta \bm{\alpha}]% + \mathbf{L}_{\mathrm{p}}[\delta \ShearStrain, \delta \CurveStrain]
+\quad
+\text{ and }
+\quad
+\bar{\bm{\alpha}}' = \bm{\alpha}' - \mathbf{L}_{\mathrm{w}}[\bm{\alpha}']% + \mathbf{L}_{\mathrm{p}}\left[\ShearStrain',\CurveStrain'\right]
+$$
+\fi 
+%
+Using \cref{eq:vstrain} for \(\delta \bm{e}_{\mathrm{p}}\triangleq D\bm{e}\cdot \bm{\eta}\) and exploiting linearity of the inner product again furnishes
+\begin{equation*}
+\mathcal{G}_{\chi}[\bm{\eta}] = 
+\left<\bm{s}_{\mathrm{p}} - \mathbf{L}_{\mathrm{p}}^*\bishear + \mathbf{L}_{\mathrm{p}}^* \bimoment' ,\, \delta \bm{e}_{\mathrm{p}} \right>
++\mathcal{G}_{\partial}
++\left< \bm{w}'-\bm{v} ,\, \delta \bar{\bm{\alpha}} \right>
+% +\left< \mathbf{L}_{\mathrm{p}}^* [\bm{w}'-\bm{v}] ,\, \delta \bm{e}_{\mathrm{p}} \right>
+\end{equation*}
+Introduce
+\begin{equation}
+\begin{aligned}
+\bar{\bm{s}}_{\mathrm{p}} &\triangleq \bm{s}_{\mathrm{p}} - \mathbf{L}_{\mathrm{p}}^*\bishear \\
+\bar{\bimoment} &\triangleq \bimoment - \mathbf{L}_{\mathrm{w}}^* \bimoment \\
+\bar{\bishear} &\triangleq \bishear - \mathbf{L}_{\mathrm{w}}^* \bishear 
+\end{aligned}
+\label{eq:augment-stress}
+\end{equation}
+so that
+\begin{equation*}
+\mathcal{G}_{\chi}[\bm{\eta}] = 
+\left< \bar{\bm{s}}_{\mathrm{p}} + \mathbf{L}_{\mathrm{p}}^* \bimoment' ,\, \delta \bm{e}_{\mathrm{p}} \right>
++\mathcal{G}_{\partial}
++\left< \bar{\bm{w}}'-\bar{\bm{v}} ,\, \delta \bar{\bm{\alpha}} \right>
+\end{equation*}
+Use the relation \(\delta \bm{e}_{\mathrm{p}} = \bm{A}\mathrm{B}^*\bm{\eta}_{\mathrm{p}}\)
+and transpose:
+\begin{equation}
+\mathcal{G}_{\chi}[\bm{\eta}] = 
+\left< \operatorname{B}_{\mathrm{p}} \bm{A}_{*} \left[\bar{\bm{s}}_{\mathrm{p}} + \mathbf{L}_{\mathrm{p}}^* \bimoment' \right],\,  \bm{\eta}_{\mathrm{p}} \right>
++\Delta \mathcal{G}_{\partial}
++\left< \bar{\bm{w}}'-\bar{\bm{v}} ,\, \delta \bar{\bm{\alpha}} \right>
+\end{equation}
+where \(\Delta \mathcal{G}_{\partial} \triangleq\)
+
+\vspace{1ex}
+\begin{ambox}[Type 2: Constrained Warping]{box:warp2}
+For linear constraints on warping with the form of \cref{eq:linear-warp-constraints}, the material response from Type 1 is augmented with the form
+\[
+[\bar{\bm{s}}_{\mathrm{p}},\bm{w},\bar{\bm{v}}] = \SectionEvaluation{
+\bm{e}_{\mathrm{p}}, \bm{\alpha}', \bar{\bm{\alpha}}
+}
+\]
+with momentum balance given by
+\begin{equation}
+\begin{aligned}
+    \operatorname{B}_{\mathrm{p}} \bm{A}_* \left[\bar{\bm{s}}_{\mathrm{p}} + \mathbf{L}_{\mathrm{p}}^*\bm{w}'\right]+ \bm{f}_{\mathrm{p}} &= \dot{\bm{\mu}} \\ 
+    \bar{\bimoment}' - \bar{\bishear} + \bm{f}_{\mathrm{w}} &= \bm{0}
+\end{aligned}
+\label{eq:type2-equilibrium}
+\end{equation}
+\end{ambox}
+
+\paragraph{Remarks}
+\begin{itemize}
+    \item If all warping modes are constrained then the material response has the form
+\[
+[\bar{\bm{s}}_{\mathrm{p}},\bm{w}] = \SectionEvaluation{\bm{e}_{\mathrm{p}}, \bm{\alpha}'}
+\]
+
+\item This condition is well suited for implementation with \gls{frame:euler} models.
+\end{itemize}
+
+%
+
+\subsection{Type 3: Uniform Warping}
+This case adds to the previous case the condition 
+\[
+\mathbf{L}_{\mathrm{w}} \bm{\alpha}^{\prime}=\bm{0}
+\]
+which is consistent with the assumption that warping occurs with a constant amplitude along the length of the body. 
+
+\vspace{1ex}
+\begin{ambox}[Type 3: Uniform Warping]{box:warp3}
+The augmented constitutive model has the form
+\begin{equation*}
+[\bar{\bm{s}}_{\mathrm{p}}, \bar{\bimoment},\bar{\bishear}] = \SectionEvaluation{\bm{e}_{\mathrm{p}},\, \bar{\bm{\alpha}}',\, \bar{\bm{\alpha}}
+}
+\end{equation*}
+and momentum balance is prescribed by
+\begin{equation}
+\begin{aligned}
+    \operatorname{B}_{\mathrm{p}} \bm{A}_* \bar{\bm{s}}_{\mathrm{p}} + \bm{f}_{\mathrm{p}} &= \dot{\bm{\mu}}
+\end{aligned}
+\end{equation}
+\end{ambox}
+
+\subsection{Type 4: Neglected Warping}
+\[
+\mathbf{L}_{\mathrm{w}} \bm{\alpha} =\mathbf{L}_{\mathrm{w}} \bm{\alpha}^{\prime}=\bm{0}
+\]
+\begin{ambox}[Type 4: Neglected Warping]{box:warp4}
+Balance of momentum is stated purely in terms of \(\bm{s}_{\mathrm{p}}\)
+\begin{equation}
+\begin{aligned}
+    \operatorname{B}_{\mathrm{p}} \bm{A}_* \bm{s}_{\mathrm{p}}+ \bm{f}_{\mathrm{p}} &= \dot{\bm{\mu}}
+\end{aligned}
+\end{equation}
+\end{ambox}
+
+\paragraph{Remarks}
+\begin{itemize}
+    \item This formulation is commonly employed when modeling inelasticity (see, e.g., the \texttt{Fiber} section from OpenSees).
+\end{itemize}
+% \begin{enumerate}
+% \end{enumerate}

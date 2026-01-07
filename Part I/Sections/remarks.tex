@@ -1,0 +1,170 @@
+\begin{enumerate}
+\item \textbf{Torsion Warping}: In this case only a single warping mode is considered so that \(\bm{\alpha}\) is a scalar and the warping mode \(\varphi\) is St. Venant's warping function.
+\iffalse
+$$
+\nabla \omega = \bm{\Phi}\begin{pmatrix}\alpha^{\prime} \\ \alpha \end{pmatrix}
+\qquad\text{ with }\qquad
+\bm{\Phi} \triangleq \begin{bmatrix}
+\varphi & 0 \\ 0 & \varphi_{, y} \\ 0 & \varphi_{, z}
+\end{bmatrix}
+$$
+\fi
+In the absence of constraints on \(\alpha\), this corresponds to the RBV formulation described by \cite{armero2021modeling}.
+This model is well suited for implementation in \gls{frame:shear} models. Examples of finite element implementations include \cite{simo1991geometricallyexact} and \cite{gruttmann2000theory}.
+
+$$
+  \mathbf{L}_{\mathrm{n}}
+= \mathbf{L}_{\mathrm{m}}
+= \mathbf{L}_{\mathrm{w}}
+= \bm{0}
+$$
+$$
+\hat{\bm{B}}\mathbf{P} = \hat{\bm{B}} = \left[\begin{array}{ccc|ccc|ccc|ccc}
+1 & 0 & 0 & 0 & z & - y & \varphi & \psi_{y} & \psi_{z} & 0 & 0 & 0 \\
+0 & 1 & 0 & - z & 0 & 0 & 0 & 0 & 0 & \varphi_{,y} & \psi_{y,y} & \psi_{z,y}\\
+0 & 0 & 1 & y & 0 & 0 & 0 & 0 & 0 & \varphi_{,z} & \psi_{y,z} & \psi_{z,z}
+\end{array}\right]
+$$
+See Equation~(26) of \cite{dire2019mixed}
+
+\item For Type 1 torsion and uniform (Type 3) shear warping \cref{eq:ks-isotropic} reduces to:
+\begin{equation*}
+\hat{\mathbf{K}} = \left[\begin{array}{ccc|ccc|cc}
+E A & 0 & 0 & 0 & E Q_{y} & E Q_{z} & E R_{w} & 0\\
+0 & G A_{y} & 0 & G Q_{yx} & 0 & 0 & 0 & G R_{y}\\
+0 & 0 & G A_{z} & G Q_{zx} & 0 & 0 & 0 & G R_{z}\\ \hline
+0 & G Q_{yx} & G Q_{zx} & G I_{0} & 0 & 0 & 0 & G S_{a} \\
+E Q_{y} & 0 & 0 & 0 & E I_{y} & - E I_{yz} & E S_{y} & 0 \\
+E Q_{z} & 0 & 0 & 0 & - E I_{yz} & E I_{z} & E S_{z} & 0 \\ \hline
+E R_{w} & 0 & 0 & 0 & E S_{y} & E S_{z} & E C_{w} & 0 \\
+0 & G R_{y} & G R_{z} & G S_{a} & 0 & 0 & 0 & G C_{a}
+\end{array}\right]
+\end{equation*}
+
+\item T2 (constrained) torsion. Referred to as the TWKV formulation by \cite{armero2021modeling}, this formulation imposes the constraint 
+  \[
+  \alpha = \CurveStrain \cdot \FrameBasis
+  \]
+  This assumption derives from observing that, for very thin elements, uniform warping displacements can be considered across the thickness of the cross-section membratures and, thus, transverse shear strains in this direction can be neglected [20,21]. This is usually adequate for open cross-sections, but can lead to incorrect solutions for closed profiles.
+  Examples include \cite{nukala2004mixed} and \cite{zhang2011formulation} for symmetric sections, whose work is implemented in OpenSees and derives from \cite{alemdar2001distributed}.
+
+\item T2 (constrained) torsion and T2 shear, linearized
+
+$$
+\mathbf{L}_{\mathrm{n}} = \FrameBasis_{\beta} \otimes \FrameBasis_{\beta}, \quad
+\mathbf{L}_{\mathrm{m}} = \FrameBasis_{} \otimes \FrameBasis_{},
+\quad\text{ and }\quad
+\mathbf{L}_{\mathrm{w}} = \bm{1}
+$$
+% $$
+% \mathbf{L}_{\mathrm{p}} = \left[\begin{matrix}
+% 0 & 0 & 0 & 1 & 0 & 0\\
+% 0 & 1 & 0 & 0 & 0 & 0\\
+% 0 & 0 & 1 & 0 & 0 & 0
+% \end{matrix}\right]
+% \qquad\text{ and }\qquad
+% \mathbf{L}_{\mathrm{w}} = \bm{1}
+% $$
+$$
+\hat{\bm{B}}\mathbf{P} = \left[\begin{matrix}
+1 & 0 & 0 & 0 & z & - y & \varphi & \psi_{y} & \psi_{z}\\
+0 & \psi_{y,y} + 1 & \psi_{z,y} & \varphi_{,y} - z & 0 & 0 & 0 & 0 & 0\\
+0 & \psi_{y,z} & \psi_{z,z} + 1 & \varphi_{,z} + y & 0 & 0 & 0 & 0 & 0\end{matrix}\right]
+$$
+This is quivalent to Equation~(29) for the ``EVDE'' formulation of  \cite{addessi2021enriched}. 
+\item T2 (constrained) torsion and T3 (uniform) shear, linearized
+
+$$
+\mathbf{L}_{\mathrm{n}} = \FrameBasis_{\beta} \otimes \FrameBasis_{\beta}, \quad
+\mathbf{L}_{\mathrm{m}} = \FrameBasis_{} \otimes \FrameBasis_{},
+\quad\text{ and }\quad
+\mathbf{L}_{\mathrm{w}} = \bm{1}
+$$
+
+$$
+\hat{\bm{B}}\mathbf{P} = \left[\begin{matrix}
+1 & 0 & 0 & 0 & z & - y & \varphi \\
+0 & \psi_{y,y} + 1 & \psi_{z,y} & \varphi_{,y} - z & 0 & 0 & 0 \\
+0 & \psi_{y,z} & \psi_{z,z} + 1 & \varphi_{,z} + y & 0 & 0 & 0 
+\end{matrix}\right]
+$$
+Described by \cite[Section 3.1.2]{lecorvec2012nonlinear} with \(k_y \beta  \triangleq 1+\psi_{y,y}\). This model was also employed by \cite[Equation 3.51]{dire20173d}.
+For a homogeneous section with linear-elastic St.Venant-Kirchhoff material  and \textbf{Linear} section kinematics one has:
+\begin{equation*}
+\hat{\mathbf{K}} = \left[\begin{array}{ccc|ccc|c}
+E A & 0 & 0 & 0 & E Q_{y} & E Q_{z} & E R_{w}\\
+0 & G A_{y} & 0 & G (Q_{yx} + R_{y}) & 0 & 0 & 0\\
+0 & 0 & G A_{z} & G (Q_{zx} + R_{z}) & 0 & 0 & 0\\ \hline
+0 & G Q_{yx} + G R_{y} & G Q_{zx} + G R_{z} & G (C_{a} + I_{0} + 2 S_{a}) & 0 & 0 & 0\\
+E Q_{y} & 0 & 0 & 0 & E I_{y} & - E I_{yz} & E S_{y}\\
+E Q_{z} & 0 & 0 & 0 & - E I_{yz} & E I_{z} & E S_{z}\\ \hline
+E R_{w} & 0 & 0 & 0 & E S_{y} & E S_{z} & E C_{w}
+\end{array}\right]
+\end{equation*}
+%
+Note that this generalizes the work of \cite{saritas2006mixed}, as presented in Equation~3.23 of \cite{dire20173d}.
+
+\item T3 \emph{Uniform torsion} In this case warping is assumed to depend on the torsional component of the curvature $\CurveStrain $ so that $\alpha = \FrameBasis\cdot\CurveStrain $ and $\alpha^{\prime}=0$. Therefore:
+$$
+\bm{\omega} = (\varphi \FrameBasis\otimes\FrameBasis)\CurveStrain  = \tau \varphi \, \FrameBasis
+$$
+and
+$$
+\bm{\varepsilon} = \ShearStrain  + \CurveStrain \times\PlanePosition  + \tau\varphi \CurveStrain \times\FrameBasis
+$$
+
+\item Type 3 (uniform) torsion and Type 3 shear warping
+$$
+\mathbf{L}_{\mathrm{n}} = \FrameBasis_{\beta} \otimes \FrameBasis_{\beta}, \quad
+\mathbf{L}_{\mathrm{m}} = \FrameBasis_{} \otimes \FrameBasis_{},
+\quad\text{ and }\quad
+\mathbf{L}_{\mathrm{w}} = \bm{1}
+$$
+$$
+\hat{\bm{B}}\mathbf{P} = \left[\begin{matrix}
+1 & 0 & 0 & 0 & z & - y \\
+0 & \psi_{y,y} + 1 & \psi_{z,y} & \varphi_{,y} - z & 0 & 0 \\
+0 & \psi_{y,z} & \psi_{z,z} + 1 & \varphi_{,z} + y & 0 & 0
+\end{matrix}\right]
+$$
+%
+See also \citep{wackerfuss2009mixed}
+\begin{equation*}
+\left[\begin{array}{cccccc}
+E A & 0 & 0 & 0 & E A s_3 & -E A s_2 \\
+0 & \kappa_2 G A & 0 & -\kappa_2 G A m_3 & 0 & 0 \\
+0 & 0 & \kappa_3 G A & \kappa_3 G A m_2 & 0 & 0 \\
+0 & -\kappa_2 G A m_3 & \kappa_3 G A m_2 & \widetilde{I}_T & 0 & 0 \\
+E A s_3 & 0 & 0 & 0 & E \widetilde{I}_{33} & -E \widetilde{I}_{32} \\
+-E A s_2 & 0 & 0 & 0 & -E \widetilde{I}_{23} & E \widetilde{I}_{22}
+\end{array}\right]
+\end{equation*}
+
+\item Type 3 torsion and Type 4 shear  \citep{gruttmann1998geometrical} where additionally \(\psi_{y,y}  \approx \psi_{z,z} \approx 0\)
+$$
+\hat{\bm{B}}\mathbf{P} = \left[\begin{matrix}
+1 & 0 & 0 & 0 & z & - y \\
+0 & 1 & 0 & \varphi_{,y} - z & 0 & 0 \\
+0 & 0 & 1 & \varphi_{,z} + y & 0 & 0
+\end{matrix}\right]
+$$
+
+\item Type 4 torsion and Type 3 shear. Described by \cite{lecorvec2012nonlinear} as the \emph{Shear beam} model.
+$$
+\hat{\bm{B}}\mathbf{P} = \left[\begin{matrix}
+1 & 0 & 0 & 0 & z & - y \\
+0 & 1+\psi_{y,y} & 0 & - z & 0 & 0 \\
+0 & 0 & 1+\psi_{z,z} &   y & 0 & 0
+\end{matrix}\right]
+$$
+\item \textbf{Plane Section}: In the absence of warping one has $\bm{\omega}=\bm{0}$ and $\bm{\varepsilon}\equiv \bar{\bm{\varepsilon}}$:
+$$
+\SolidStrain = \bar{\bm{\varepsilon}}
+\stackrel{\mathrm{s}}{\otimes}
+\FrameBasis 
++ \frac{1}{2}\left.
+\bar{\bm{\varepsilon}}\cdot\bar{\bm{\varepsilon}}\,\FrameBasis\otimes\FrameBasis\right. \\
+$$
+
+
+\end{enumerate}

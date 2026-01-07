@@ -1,0 +1,41 @@
+
+Approximations to the exact Cosserat theory typically work in terms of the \emph{exponential} rotation parameterization. This parameterization associates a rotation $\FrameRotation $ with a vector $\bm{\theta}\in\mathbb{R}^3$ by means of the exponential map:
+\begin{equation*}
+\FrameRotation  = \exp(\bm{\theta}^{\times})
+\end{equation*}
+where \(\exp\) is the standard matrix exponential, and the notation \((\cdot)^{\times}\) indicates that the vector $\bm{\theta}$ is used to form a $3\times 3$ matrix that uniquely satisifies the identity $[\bm{\theta}^{\times}]\bm{x} = \bm{\theta}\times\bm{x}$ for any vector $\bm{x}$.
+It should become apparent through subsequent developments that the components of the vector $\bm{\theta}$ defined in this manner are equivalent to the infinitesimal rotation variables used in classical linear structural analysis.
+
+With the configuration variables defined, we can now proceed to deriving the first and second order approximations to the strain variables \(\ShearStrain\) and \(\CurveStrain\). To this end, assume that all variables $(u_i, \theta_i)$ are of a similar magnitude.
+%
+$$
+\frameBasis_\alpha=\FrameBasis_\alpha+\varepsilon \bm{\theta}^{\times} \FrameBasis_\alpha+o\left(\varepsilon^2\right)=\FrameBasis_\alpha+\varepsilon \bm{\theta} \times \FrameBasis_\alpha+o\left(\varepsilon^2\right)
+$$
+%
+The rotation is approximately \(\FrameRotation \approx \bm{1} + \bm{\theta}^\times\) :
+$$
+\begin{aligned}
+\FrameRotation  \approx &
+\FrameBasis_k\otimes\FrameBasis_k \\
+&+ \theta_1 \left(\FrameBasis_3\otimes\FrameBasis_2 - \FrameBasis_2\otimes\FrameBasis_3\right) \\
+&+ \theta_2 \left(\FrameBasis_1\otimes\FrameBasis_3 - \FrameBasis_3\otimes\FrameBasis_1\right) \\
+&+ \theta_3 \left(\FrameBasis_2\otimes\FrameBasis_1 - \FrameBasis_1\otimes\FrameBasis_2\right)
+\end{aligned}
+$$
+%
+and $\frameBasis_i \approx (\bm{1} + \bm{\theta}^\times)\FrameBasis_i$ furnishes:
+
+$$
+\begin{aligned}
+\frameBasis_i &\approx
+\FrameBasis_i + e_{jk\ell} \theta_j (\FrameBasis_k\cdot\FrameBasis_i) \FrameBasis_\ell \\
+&\approx \FrameBasis_i + e_{jk\ell} \delta_{ki} \theta_j \FrameBasis_\ell \\
+&\approx \FrameBasis_i + e_{ji\ell} \theta_j \FrameBasis_\ell \\
+\end{aligned}
+$$
+%
+$$
+\frameBasis_1 \approx \FrameBasis_1 + \theta_3 \FrameBasis_2 - \theta_2 \FrameBasis_3 \\
+\frameBasis_2 \approx \FrameBasis_2 + \theta_1 \FrameBasis_3 - \theta_3 \FrameBasis_1 \\
+\frameBasis_3 \approx \FrameBasis_3 + \theta_2 \FrameBasis_1 - \theta_1 \FrameBasis_2
+$$

@@ -1,0 +1,128 @@
+Consider a 3D Constitutive law relating the second Piola-Kirchhoff stress tensor \(\bm{S}\) to Green's Lagrangian strain tensor \(\SolidStrain\).
+
+Recall the Frobenius inner product for two second order tensors \(\bm{A}\) and \(\bm{B}\) with coordinate representations \(A^{ij} \triangleq \mathbf{G}^i\cdot \bm{A}\mathbf{G}^j\) and  \(B_{ij} \triangleq \mathbf{G}_i\cdot \bm{B}\mathbf{G}_j\) on a basis \(\{\mathbf{G}_k\}\)
+\begin{equation*}
+    \left<\bm{A},\,\bm{B}\right> = \operatorname{tr} \bm{A}\bm{B}^{\mathrm{t}} = A^{ij} B_{ij}
+\end{equation*}
+If \(\delta \SolidStrain = \left(\hat{\bm{B}} \delta\FrameStrain\right) \stackrel{s}{\otimes}\FrameBasis\) for some second-order tensor \(\hat{\bm{B}}\), then
+\begin{equation*}
+    \left<\bm{S},\,\delta\SolidStrain\right> = \SectionIntegral{ 
+    \operatorname{tr} \left[\bm{S}\frac{1}{2}\left(\hat{\bm{B}}\delta \FrameStrain \otimes \FrameBasis + \FrameBasis\otimes \hat{\bm{B}}\delta \FrameStrain \right)
+    \right]
+    }
+\end{equation*}
+Exploiting linearity of the trace together with the identity \(\operatorname{tr} (\bm{a}\otimes\bm{b}) = \bm{a}\cdot \bm{b}\) for arbitrary vectors \(\bm{a}\) and \(\bm{b}\) it follows
+\begin{equation*}
+    \left<\bm{S},\,\delta\SolidStrain\right> = \delta \FrameStrain\cdot \SectionIntegral{
+        \hat{\bm{B}}^{\mathrm{t}}\frac{1}{2}\left(\bm{S}\FrameBasis + \bm{S}^{\mathrm{t}}\FrameBasis\right)
+    }
+\end{equation*}
+and consequently by requiring \(\left<\FrameResult,\,\delta\FrameStrain\right>=\left<\bm{S},\,\delta\SolidStrain\right>\)
+\begin{equation*}
+\FrameResult \equiv \SectionIntegral{\hat{\bm{B}}^{\mathrm{t}}\frac{1}{2}\left(\bm{S}\FrameBasis + \bm{S}^{\mathrm{t}}\FrameBasis\right)}
+\end{equation*}
+For symmetric \(\bm{S}\) one further has
+\begin{equation}
+\FrameResult = \SectionIntegral{
+  \hat{\bm{B}}^{\mathrm{t}} \bm{S}\FrameBasis
+}
+\end{equation}
+This has the intuitive implication that ony the first ``column'' and/or ``row'' of the stress tensor \(\bm{S}\) should contribute to the frame stress resultants \(\ShearResult\) and \(\CurveResult\).
+
+The stress tensor can be expressed as follows
+\begin{equation}
+\bm{S}=\sigma \FrameBasis \otimes \FrameBasis+\bm{\tau} \otimes \FrameBasis+\FrameBasis \otimes \bm{\tau}
+\label{eq:saint-venant-stress}
+\end{equation}
+\paragraph{Linearization}
+\begin{equation*}
+    D {\FrameResult} [\delta \FrameStrain] = \hat{\bm{B}}^{\mathrm{t}}D \bm{S} [D \SolidStrain [\delta \FrameStrain]]
+\end{equation*}
+Using \(\mathbb{C}[\delta \SolidStrain] \triangleq D\bm{S}[\delta \SolidStrain]\) for vectors \(\delta \SolidStrain\) tangent at \(\SolidStrain\) 
+\begin{equation*}
+ D {\FrameResult} [\delta \FrameStrain] = \hat{\bm{B}}^{\mathrm{t}} \mathbb{C} D \SolidStrain [\delta \FrameStrain]
+\end{equation*}
+Now using \(D \SolidStrain [\delta \FrameStrain] = (\hat{\bm{B}}\delta \FrameStrain) \stackrel{s}{\otimes} \FrameBasis\)
+\begin{equation}
+\hat{\mathbf{K}} = \SectionIntegral{
+    \hat{\mathbf{B}}^{\mathrm{t}} \mathbb{C}\hat{\bm{B}} + \hat{\bm{G}}
+    }
+\label{eq:section-tangent}
+\end{equation}
+
+\subsection{Truncation}
+When the truncated strain \cref{eq:wagner-gl-strain} is used, it is convenient to rewrite \cref{eq:section-tangent} as the sum of explicit \textbf{Linear} \(\hat{\bm{K}}_{\mathrm{L}}\) and \textbf{Wagner} \(\hat{\bm{K}}_{\mathrm{W}}\) terms given by
+\begin{equation}
+\hat{\bm{K}}_{\mathrm{L}} = \SectionIntegral{
+\left[\begin{matrix}
+\mathbb{C} & - \mathbb{C} \bm{r}^{\times} & \mathbb{C} \FrameBasis\otimes \bm{\varphi} & \mathbb{C} \FrameBasis_{\beta} \otimes \nabla_{\beta} \bm{\varphi}\\
+%\bm{r}^{\times} \mathbb{C} 
+& - \bm{r}^{\times} \mathbb{C} \bm{r}^{\times} 
+& \bm{r}^{\times} \mathbb{C} \FrameBasis\otimes \bm{\varphi} & \bm{r}^{\times} \mathbb{C} \FrameBasis_{\beta} \otimes \nabla_{\beta} \bm{\varphi}\\
+% \bm{\varphi} \otimes \FrameBasis \mathbb{C} 
+& % - \bm{\varphi} \otimes \FrameBasis \mathbb{C} \bm{r}^{\times} 
+& \bm{\varphi} \otimes \FrameBasis \mathbb{C} \FrameBasis\otimes \bm{\varphi} 
+& \bm{\varphi} \otimes \FrameBasis \mathbb{C} \FrameBasis_{\beta} \otimes \nabla_{\beta} \bm{\varphi}\\
+\mathrm{sym.} % \nabla_{\beta} \bm{\varphi} \otimes \FrameBasis_{\beta} \mathbb{C} 
+& % - \nabla_{\beta} \bm{\varphi} \otimes \FrameBasis_{\beta} \mathbb{C} \bm{r}^{\times} 
+& % \nabla_{\beta} \bm{\varphi} \otimes \FrameBasis_{\beta} \mathbb{C} \FrameBasis\otimes \bm{\varphi} 
+& \nabla_{\beta} \bm{\varphi} \otimes \FrameBasis_{\beta} \mathbb{C} \FrameBasis_{\beta} \otimes \nabla_{\beta} \bm{\varphi}
+\end{matrix}\right]
+}
+\label{eq:section-linear-tangent}
+\end{equation}
+and using \(r^2 \triangleq \bm{r}\cdot\bm{r}\)
+\begin{equation}
+\begin{aligned}
+\hat{\bm{K}}_{\mathrm{W}} =
+\kappa_T & \SectionIntegral{
+\left[\begin{matrix}
+\bm{0} & r^{2}  \mathbb{C} \FrameBasis \otimes \FrameBasis & \bm{0} & \bm{0} \\
+r^{2}  \FrameBasis \otimes \FrameBasis \mathbb{C} 
+& r^{2}  \left(\bm{r}^{\times} \mathbb{C} \FrameBasis \otimes \FrameBasis -  \FrameBasis \otimes \FrameBasis \mathbb{C} \bm{r}^{\times}\right) & r^{2}  \FrameBasis \otimes \FrameBasis \mathbb{C} \FrameBasis\otimes \bm{\varphi} & r^{2}  \FrameBasis \otimes \FrameBasis \mathbb{C} \FrameBasis_{\beta} \otimes \nabla_{\beta} \bm{\varphi}\\
+\bm{0} & r^{2}  \bm{\varphi} \otimes \FrameBasis \mathbb{C} \FrameBasis \otimes \FrameBasis & \bm{0} & \bm{0} \\
+\bm{0} & r^{2}  \nabla_{\beta} \bm{\varphi} \otimes \FrameBasis_{\beta} \mathbb{C} \FrameBasis \otimes \FrameBasis & \bm{0} & \bm{0} 
+\end{matrix}\right]} \\
++\kappa_T^2 & \SectionIntegral{\left[\begin{matrix}
+\bm{0} & \bm{0} & \bm{0} & \bm{0} \\
+\bm{0} & r^{4} \FrameBasis \otimes \FrameBasis \mathbb{C} \FrameBasis \otimes \FrameBasis & \bm{0} & \bm{0} \\
+\bm{0} & \bm{0} & \bm{0} & \bm{0} \\
+\bm{0} & \bm{0} & \bm{0} & \bm{0}
+\end{matrix}\right]
+} \\
+&+\SectionIntegral{\left[\begin{matrix}
+\bm{0} & \bm{0} & \bm{0} & \bm{0} \\
+\bm{0} & r^2 \sigma & \bm{0} & \bm{0} \\
+\bm{0} & \bm{0} & \bm{0} & \bm{0} \\
+\bm{0} & \bm{0} & \bm{0} & \bm{0} 
+\end{matrix}\right]
+}
+\end{aligned}
+\label{eq:section-wagner-tangent}
+\end{equation}
+
+\subsection{Change of Reference}
+\begin{equation*}
+    \bm{u}_A(\bm{r}_A) = \bm{u}_A(\bm{0}) + \bm{\theta}\times\bm{r}_A + \bm{\alpha}\cdot\bm{\varphi}_A(\bm{r}_A) \,\FrameBasis
+\end{equation*}
+%
+\begin{equation*}
+\bm{u}_A(\bm{0}) = \bm{u}_B(\bm{0}) + \bm{\theta}\times \bm{\SectionLocation_{AB}}
+\end{equation*}
+%
+Thus
+\begin{equation*}
+\begin{pmatrix}
+\delta\bm{\gamma}_A \\ \delta \bm{\kappa}_A
+\end{pmatrix}
+= \begin{bmatrix}
+    \bm{1} & -\bm{\SectionLocation_{AB}^{\times}} \\
+    \bm{0} & \bm{1}
+\end{bmatrix}
+\begin{pmatrix}
+\delta \bm{\gamma}_B \\ \delta \bm{\kappa}_B
+\end{pmatrix}
+\end{equation*}
+
+
+\subsection{Summary}

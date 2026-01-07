@@ -1,0 +1,80 @@
+\begin{equation}
+\begin{aligned}
+    \mathbf{I}_{\mathrm{eul}} & \triangleq \FrameBasis \otimes \FrameBasis \\
+    \mathbf{I}_{\mathrm{cos}} & \triangleq \bm{1}-\mathbf{I}_{\mathrm{eul}} \\
+\end{aligned}
+\end{equation}
+
+\[
+\FourTensor{P}_{\mathrm{sec}} = \FrameBasis_{\alpha}\otimes\FrameBasis_{\beta}\otimes\FrameBasis_{\alpha}\otimes\FrameBasis_{\beta}
+\quad\text{ and }\quad
+\FourTensor{P}_{\mathrm{rod}} = \mathbb{I} - \FourTensor{P}_{\mathrm{sec}}
+\]
+
+$$
+\begin{aligned}
+\FourTensor{P}_{\mathrm{eul}}
+&= \FrameBasis\otimes\FrameBasis\otimes\FrameBasis\otimes\FrameBasis = \mathbf{I}_{\mathrm{eul}}\otimes \mathbf{I}_{\mathrm{eul}}
+\\
+\FourTensor{P}_{\mathrm{vs}}
+&= \frac{1}{3}\bm{1}\otimes\FrameBasis_{\alpha}\otimes\FrameBasis_{\alpha}
+ = \frac{1}{3}\FourTensor{P}_{\mathrm{eul}} + \frac{1}{3}()
+\\
+\FourTensor{P}_{\mathrm{sv}}
+&= \frac{1}{3}\FrameBasis_{\alpha}\otimes\FrameBasis_{\alpha}  \otimes \bm{1}
+\\
+\FourTensor{P}_{\mathrm{svs}} &
+= \frac{1}{3}\FrameBasis_{\gamma}\otimes\FrameBasis_{\gamma}\otimes\FrameBasis_{\delta}\otimes\FrameBasis_{\delta}
+\\
+\FourTensor{P}_{\mathrm{svsv}}
+&= \frac{2}{3} \FourTensor{P}_{\mathrm{sv}}
+\\
+\FourTensor{P}_{\mathrm{vsvs}} 
+&=\frac{2}{3} \FourTensor{P}_{\mathrm{vs}}
+%= \frac{2}{9}\FrameBasis_{k}\otimes\FrameBasis_{k}\otimes\FrameBasis_{\delta}\otimes\FrameBasis_{\delta} 
+\\
+\FourTensor{P}_{\mathrm{vsv}} 
+    &= \frac{2}{9}\FourTensor{P}_{\mathrm{vol}}
+\\
+\FourTensor{P}_{\mathrm{vsvsv}} 
+    &= \frac{4}{9}\FourTensor{P}_{\mathrm{vol}}
+\\
+\end{aligned}
+$$
+\begin{equation}
+    \begin{aligned}
+    \FourTensor{P}_{\mathrm{ds}} 
+        &= \FourTensor{P}_{\mathrm{sec}} - \FourTensor{P}_{\mathrm{vs}} \\
+    \FourTensor{P}_{\mathrm{dsv}} 
+        &= \FourTensor{P}_{\mathrm{sv}} - \frac{2}{9}\FourTensor{P}_{\mathrm{vol}} \\
+    \FourTensor{P}_{\mathrm{vsdsv}} 
+        &= \frac{7}{9}\FourTensor{P}_{\mathrm{vol}} \\
+    \FourTensor{P}_{\mathrm{dsd}} 
+        &= \FourTensor{P}_{\mathrm{sec}} - \FourTensor{P}_{\mathrm{sv}} - \FourTensor{P}_{\mathrm{vs}} + \frac{2}{9}\FourTensor{P}_{\mathrm{vol}} \\
+    \FourTensor{P}_{\mathrm{vsdsd}} 
+        &=\frac{1}{3} \FourTensor{P}_{\mathrm{vs}} 
+        - \frac{14}{81} \FourTensor{P}_{\mathrm{vol}}
+        \\
+    \FourTensor{P}_{\mathrm{dsds}} 
+        &= \FourTensor{P}_{\mathrm{sec}} - \FourTensor{P}_{\mathrm{svs}} - \frac{7}{9}\FourTensor{P}_{\mathrm{vs}} \\
+    \FourTensor{P}_{\mathrm{dsvs}} 
+        &= \FourTensor{P}_{\mathrm{svs}} - \frac{2}{3}\FourTensor{P}_{\mathrm{vs}}  \\
+    \FourTensor{P}_{\mathrm{dsvsv}}
+        &= \frac{2}{3} \FourTensor{P}_{\mathrm{sv}} 
+         - \frac{4}{27} \FourTensor{P}_{\mathrm{vol}} \\
+    \FourTensor{P}_{\mathrm{dsvsd}}
+        &= \FourTensor{P}_{\mathrm{svs}} 
+         - \frac{2}{3} \FourTensor{P}_{\mathrm{vs}} 
+         - \frac{2}{3} \FourTensor{P}_{\mathrm{sv}} 
+         + \frac{4}{27} \FourTensor{P}_{\mathrm{vol}} \\
+    \FourTensor{P}_{\mathrm{dsdsd}}
+        &= \FourTensor{P}_{\mathrm{sec}} 
+         - \frac{5}{3}\FourTensor{P}_{\mathrm{sv}}
+         - \frac{7}{9} \FourTensor{P}_{\mathrm{vs}}
+         - \FourTensor{P}_{\mathrm{svs}}
+         + \frac{14}{81} \FourTensor{P}_{\mathrm{vol}}\\
+    \FourTensor{P}_{\mathrm{dsdsv}}
+        &= \frac{1}{3}\FourTensor{P}_{\mathrm{sv}}
+         - \frac{14}{81} \FourTensor{P}_{\mathrm{vol}}
+    \end{aligned}
+\end{equation}

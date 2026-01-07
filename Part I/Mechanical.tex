@@ -1,0 +1,257 @@
+
+Much recent progress in the numerical simulation of mechanical models can be
+related to a trend known as the ``geometrization of mechanics''.
+Geometry has always played a central role in the development of
+mechanics (Euler, Lagrange, Cosserat, etc.),
+but with 
+the work of authors like Synge, Abraham and Arnold, these geometric 
+developments took a new direction as 
+% With every confirmation of the predictive power in Einstein's theory of relativity, 
+% 
+% Replace following with reference to Einstein's relativity and differential
+% geometry.
+the work of \cite{ricci1901methodes} began to be used to
+characterize the geometric structure of non-physical aspects of
+problems, like spaces of possible solutions.
+This newly found geometric structure in the abstract mathematics would
+eventually prove instrumental in the development of computational
+methods. 
+The work of Simo \citep{simo1986threedimensional,simo1990stress} marked a significant advance in this
+direction, as it directly drew from this abstract geometric structure to
+inform an enlightened computational procedure.
+
+%
+\hypertarget{sec:apparatus}{%
+\section{Mechanical Governing Equations}\label{sec:apparatus}}
+Developments are centered around static equilibrium problems %that are
+governed by nonlinear differential equations of the form:
+\begin{equation}
+\operatorname{B}_\chi \bm{\sigma} - \bm{f} = \dot{\bm{\mu}}
+\label{eq:strong}
+\end{equation}
+where \(\operatorname{B}_\chi\) is a nonlinear
+differential operator and the generalized stress \(\boldsymbol{\sigma}\), momentum rate \(\dot{\bm{\mu}}\), and body force \(\bm{f}\) are defined on a body \(\mathcal{B}\) placed in space by a
+map \(\chi\). 
+In general \(\operatorname{B}\) depends nonlinearly on \(\chi\),
+but acts linearly on \(\boldsymbol{\sigma}\). Problems with the form of
+Equation~(\ref{eq:strong}) describe the equilibrium of continuua, rods, and shells, whose
+configurations \(\chi\) may comprise a \emph{nonlinear} space
+\(\mathscr{C}\).
+
+This chapter presents the mathematical foundation for later developments. In
+\cref{box:mechanical-bvp} the mathematical structure which underpins
+\cref{eq:strong} is summarized, and in \cref{sec:derivatives} attention
+is brought to some important subtleties that arise with derivatives on manifolds. 
+This material is adapted from treatments by \cite{marsden1994mathematical,zienkiewicz2014finite,ogden1997nonlinear} and \cite{shilov1996elementary}.
+
+\begin{ambox}[The Mechanical BVP]{box:mechanical-bvp}
+{
+\begin{description}
+\item[Body]
+A body \(\mathcal{B}\) is a set of points \(\boldsymbol{\xi}\), and a placement
+\(\mathcal{B}_\chi\) of \(\mathcal{B}\) is a Riemannian manifold
+\(\mathcal{B}_\chi\) with boundary \(\partial \mathcal{B}\) and tangent
+bundle \(T\mathcal{B}_\chi\) embedded in an ambient Euclidean space
+\(\mathcal{E}\). The map
+\(\chi\colon \mathcal{B}\rightarrow \mathcal{B}_\chi\) associates the
+state of a material point \(\boldsymbol{\xi}\) to the placement
+\(\mathcal{B}_\chi\). A reference configuration
+\(\chi_0\colon \mathcal{B}\rightarrow \mathcal{B}_{\chi_0}\) is often
+implied and the pull-back by the composition \(\chi\circ\chi_0^{-1}\) is
+denoted by \(\boldsymbol{A}\).
+% \tightlist
+\item[Metric]
+The set \(\mathscr{C}\) of configurations \(\chi\) forms a smooth
+ manifold. A configuration \(\chi\) is identified by a couple
+\((\boldsymbol{x}, \boldsymbol{\Lambda})\) where \(\boldsymbol{x}\in\mathscr{C}_x\) is a
+vectorial configuration variable, and
+\(\boldsymbol{\Lambda}\in\mathscr{C}_{\scriptscriptstyle{\Lambda}}\) a
+non-vectorial variable. These enter independently in a Riemannian metric
+on the tangent space \(T_\chi\mathscr{C}\) to \(\mathscr{C}\) at
+\(\chi\), which takes the assumed form: 
+\begin{equation}
+  \left< \cdot , \, \cdot\right>_{\chi} = \left< \cdot , \, \cdot\right>_{x} + \left< \cdot , \, \cdot\right>_{\scriptscriptstyle{\Lambda}} .
+  \label{eq:conf-pair}
+\end{equation}
+%
+\item[Stress]
+The spatial stress \(\boldsymbol{\sigma}\) in Equation~(\ref{eq:strong}) is related to a
+material stress \(\boldsymbol{s}\) which is defined with respect to inner products 
+in \(\mathscr{C}\) at the current \(\chi\) and reference
+\(\chi_0\) configurations:
+\begin{equation}
+  \left<\boldsymbol{c},\, \boldsymbol{\sigma}\right>_{\chi}
+  =\left< \boldsymbol{A}\boldsymbol{c},\, \boldsymbol{s}\right>_{\chi_0}
+  = \left<\boldsymbol{c},\, \boldsymbol{A}_*\boldsymbol{s}\right>_{\chi}
+  =\left< \boldsymbol{A}\boldsymbol{c},\, \boldsymbol{s}\right>_{\chi_0}\qquad\text{ for any }\boldsymbol{c},
+  \label{eq:def-Astar}
+\end{equation}
+and where the transformation \(\boldsymbol{A}_*\) has been defined.
+% with \(\boldsymbol{A}_*\) denoting the Piola transformation. 
+Similarly, a dual
+\(\operatorname{B}^*\) to the equilibrium operator \(\operatorname{B}\) in
+Equation~(\ref{eq:strong}) is defined with respect to Equation~(\ref{eq:conf-pair}) for pure displacement boundary conditions:
+\begin{equation}
+  \left<\boldsymbol{\eta},\, \operatorname{B}_\chi\boldsymbol{\sigma}\right>_\chi = \left<\operatorname{B}_\chi^*\boldsymbol{\eta},\, \boldsymbol{\sigma}\right>_\chi
+  \qquad \text{ for any }\boldsymbol{\eta}
+  \label{eq:def-adjoint}
+\end{equation}
+%
+\item[Strain]
+The material strain \(\boldsymbol{e}\) is related to 
+\(\operatorname{B}^*_\chi\) through the differential relation: 
+\begin{equation}
+  D\boldsymbol{e}\cdot\boldsymbol{u} \equiv \boldsymbol{A}\operatorname{B}^*_\chi \boldsymbol{u}.
+  \label{eq:vstrain}
+\end{equation}
+%
+\item[Constitution]
+The constitutive response is defined between the material stress
+\(\boldsymbol{s}\) and the material strain \(\boldsymbol{e}\) with material \(\boldsymbol{C}_s\) and
+spatial \(\boldsymbol{C}_\sigma\) moduli defined by:
+\begin{equation}
+  D \boldsymbol{s}\cdot \boldsymbol{u} = \boldsymbol{C}_s \, D \boldsymbol{e}\cdot {\boldsymbol{u}}
+  \qquad\text{ and }\qquad
+  \boldsymbol{C}_\sigma \triangleq \boldsymbol{A}_*\boldsymbol{C}_s\boldsymbol{A}.
+  \label{eq:def-moduli}
+\end{equation}
+\end{description}
+}
+\end{ambox}
+
+The structure outlined in Box~\ref{box:mechanical-bvp} 
+implies a weak statement
+of \cref{eq:strong} that is centered around the Galerkin \emph{residual functional}:
+%
+\begin{equation}
+\mathcal{G}\left[\boldsymbol{\eta}\right] \triangleq \left< \boldsymbol{\eta}, \, \mathbb{B}_\chi \boldsymbol{\sigma}\right>_\chi - \left< \boldsymbol{\eta}, \, \boldsymbol{f}\right>_\chi.
+\label{eq:galerkin}
+\end{equation}
+This informs our interpretation of the \emph{principle of virtual work}: forces are by definition resistance to variations of the configuration, and thus the principle of virtual work mandates that these belong to a vector space that is dual to the tangent space of the configuration manifold.
+
+
+
+\begin{exmpl}[Elastostatics.]{ex:elastostatics}
+Consider the elastostatic problem:
+$$
+\operatorname{div}\bm{\sigma} + \bm{b} = \bm{0}
+$$
+and the tensor products:
+$$
+\begin{aligned}
+& (\mathbf{A} \otimes \mathbf{B})[ \mathbf{S}]=(\mathbf{A} \otimes \mathbf{B}): \mathbf{S} = \mathbf{A} (\mathbf{B}\cdot \mathbf{S}) \\
+& (\mathbf{A} \oslash \mathbf{B})[ \mathbf{S}]=(\mathbf{A} \oslash \mathbf{B}): \mathbf{S}=\mathbf{A} (\mathbf{S} \circ \mathbf{B}^{\mathrm{t}})=\mathbf{A} \mathbf{S} \mathbf{B}^{\mathrm{t}} \\
+%& (\mathbf{A} ? \mathbf{B}): \mathbf{S}=\mathbf{A} \cdot \mathbf{S}^{\mathrm{t}} \cdot \mathbf{B}^{\mathrm{t}} \\
+%& (\mathbf{A} \odot \mathbf{B}): \mathbf{S}=\frac{1}{2}(\mathbf{A} \oslash \mathbf{B}+\mathbf{A} \ominus \mathbf{B}): \mathbf{S}=\frac{1}{2}\left(\mathbf{A} \mathbf{S} \mathbf{B}^{\mathrm{t}}+\mathbf{A} \mathbf{S}^{\mathrm{t}}  \mathbf{B}^{\mathrm{t}}\right)
+\end{aligned}
+$$
+\begin{description}
+    \item[Body] 
+    For a continuum body with reference configuration 
+    $\mathcal{B}_0 \subset \mathbb{R}^{n_{\mathrm{dim}}}$ 
+    and prescribed deformations on
+    the part of the boundary $\Gamma_{\chi} \subset \partial \Omega$, define the configuration space as the set
+    $$
+    \mathscr{C}=\left\{\chi \in W^{1, p}(\Omega)^{n_{\mathrm{dim}}}
+    \quad|\quad
+    \det[D \chi]>0 \text{ in }\Omega\text{ and }\left.\chi\right|_{\Gamma_{\chi}}=\bar{\chi}\right\}
+    $$
+    $$
+    \mathcal{V}_{\chi}=\left\{\bm{\eta}: \bm{\chi}(\mathscr{B}) \rightarrow \mathbb{R}^{n_{\mathrm{dim}}}: \bm{\eta}(\chi (\bm{\xi}))
+    =\bm{0}\text{ for }\bm{\xi} \in \Gamma_{\chi}\right\}
+    $$
+    $$
+    \mathcal{V}_0 =
+    \left\{\bm{\eta}_0 \quad | \quad 
+    W^{1, p}(\Omega)^{n_{\mathrm{dim}}}: \bm{\eta}_0(\bm{\xi})=\bm{0} \text{ for } \bm{\xi} \in \Gamma_{\chi}\right\}
+    $$
+    
+    \item[Stress] 
+    $\bm{A}_{*} = J^{-1}\bm{F}\oslash\bm{F}$
+    $$
+    \mathbb{B} = -\operatorname{div}
+    \qquad\text{ and }\qquad
+    \mathbb{B}^* = \operatorname{grad}
+    $$
+\end{description}
+\end{exmpl}
+
+
+\iffalse
+\hypertarget{sec:statement}{%
+\subsection{Problem Statement}\label{sec:statement}}
+
+Equation~(\ref{eq:strong}) is investigated in the context of the following
+mathematical structure:
+
+\begin{description}
+% \tightlist
+\item[A0]
+The body \(\mathcal{B}\) is a set of points \(\boldsymbol{\xi}\), and a placement
+\(\mathcal{B}_\chi\) of \(\mathcal{B}\) is a Riemannian manifold
+\(\mathcal{B}_\chi\) with boundary \(\partial \mathcal{B}\) and tangent
+bundle \(T\mathcal{B}_\chi\) embedded in an ambient Euclidean space
+\(\mathcal{E}\). The map
+\(\chi\colon \mathcal{B}\rightarrow \mathcal{B}_\chi\) associates the
+state of a material point \(\boldsymbol{\xi}\) to the placement
+\(\mathcal{B}_\chi\). A reference configuration
+\(\chi_0\colon \mathcal{B}\rightarrow \mathcal{B}_{\chi_0}\) is often
+implied and the pull-back by the composition \(\chi\circ\chi_0^{-1}\) is
+denoted by \(\boldsymbol{A}\).
+% \tightlist
+\item[A1]
+The set \(\mathscr{C}\) of configurations \(\chi\) forms a smooth
+ manifold. A configuration \(\chi\) is identified by a couple
+\((\boldsymbol{x}, \boldsymbol{\Lambda})\) where \(\boldsymbol{x}\in\mathscr{C}_x\) is a
+vectorial configuration variable, and
+\(\boldsymbol{\Lambda}\in\mathscr{C}_{\scriptscriptstyle{\Lambda}}\) a
+non-vectorial variable. These enter independently in a Riemannian metric
+on the tangent space \(T_\chi\mathscr{C}\) to \(\mathscr{C}\) at
+\(\chi\) which takes the assumed form: 
+\begin{equation}
+  \left< \cdot , \, \cdot\right>_{\chi} = \left< \cdot , \, \cdot\right>_{x} + \left< \cdot , \, \cdot\right>_{\scriptscriptstyle{\Lambda}} .
+  \label{eq:conf-pair}
+\end{equation}
+%
+\item[A2]
+The spatial stress \(\boldsymbol{\sigma}\) in Equation~(\ref{eq:strong}) is related to a
+material stress \(\boldsymbol{s}\) which is defined with respect to inner products 
+in \(\mathscr{C}\) at the current \(\chi\) and reference
+\(\chi_0\) configurations:
+\begin{equation}
+  \left<\boldsymbol{c},\, \boldsymbol{\sigma}\right>_{\chi}
+  =\left< \boldsymbol{A}\boldsymbol{c},\, \boldsymbol{s}\right>_{\chi_0}
+  = \left<\boldsymbol{c},\, \boldsymbol{A}_*\boldsymbol{s}\right>_{\chi}
+  %=\left< \boldsymbol{A}\boldsymbol{c},\, \boldsymbol{s}\right>_{\chi_0}\qquad\text{ for any }\boldsymbol{c},
+  \label{eq:def-Astar}
+\end{equation}
+for any \(\boldsymbol{c}\).
+% with \(\boldsymbol{A}_*\) denoting the Piola transformation. 
+Similarly, a dual
+\(\operatorname{B}^*\) to the equilibrium operator \(\operatorname{B}\) in
+Equation~(\ref{eq:strong}) is defined with respect to Equation~(\ref{eq:conf-pair}):
+\begin{equation}
+  \left<\boldsymbol{\eta},\, \operatorname{B}_\chi\boldsymbol{\sigma}\right>_\chi = \left<\operatorname{B}_\chi^*\boldsymbol{\eta},\, \boldsymbol{\sigma}\right>_\chi.
+  \label{eq:def-adjoint}
+\end{equation}
+% \tightlist
+\item[A3]
+The material strain measure \(\boldsymbol{e}\) is compatible with
+\(\operatorname{B}^*_\chi\) through its directional derivative: 
+\begin{equation}
+  D\boldsymbol{e}\cdot\boldsymbol{u} \equiv \boldsymbol{A}\operatorname{B}^*_\chi \boldsymbol{u}.
+  \label{eq:vstrain}
+\end{equation}
+%
+\item[A4]
+The constitutive response is defined between the material stress
+\(\boldsymbol{s}\) and the material strain \(\boldsymbol{e}\) with material \(\boldsymbol{C}_s\) and
+spatial \(\boldsymbol{C}_\sigma\) moduli defined by:
+\begin{equation}
+  D \boldsymbol{s}\cdot \boldsymbol{u} = \boldsymbol{C}_s \, D \boldsymbol{e}\cdot {\boldsymbol{u}}
+  \qquad\text{ and }\qquad
+  \boldsymbol{C}_\sigma \triangleq \boldsymbol{A}_*\boldsymbol{C}_s\boldsymbol{A}.
+  \label{eq:def-moduli}
+\end{equation}
+\end{description}
+\fi 

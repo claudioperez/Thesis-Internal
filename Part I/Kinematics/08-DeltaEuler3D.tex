@@ -1,0 +1,240 @@
+
+The Euler model is obtained by enforcing $\gamma_2 = \gamma_3 = 0$. 
+Using the expressions for $\gamma_2$ and $\gamma_3$ obtained for the second-order shear theory furnishes the system of equations:
+$$
+\begin{aligned}
+\gamma_2 &= \theta_2^{\prime}+\frac{1}{2}\left(\theta_3^{\prime} \theta_1-\theta_3 \theta_1^{\prime}\right) =0 \\
+\gamma_3 &= \theta_3^{\prime}+\frac{1}{2}\left(\theta_1^{\prime} \theta_2-\theta_1 \theta_2^{\prime}\right) =0 \\
+\end{aligned}
+$$
+Using the expressions for $\gamma_2$ and $\gamma_3$ obtained for the 
+second-order shear theory furnishes a linear system of equations,
+whose solution is nonlinear in the kinematic variables. 
+%
+Linearizing this solution furnishes:
+\begin{equation}
+\bm{\theta} \approx \vartheta \FrameBasis  + (1-u_x^{\prime})\FrameBasis \times\bar{\bm{u}}^{\prime} + \frac{1}{2} (\FrameBasis \times\bar{\bm{u}}^{\prime}) \times \vartheta \FrameBasis 
+\label{eq:delta-euler-theta}
+\end{equation}
+with components on the $\FrameBasis_{\beta}$ basis:
+$$
+\begin{aligned}
+\theta_y \approx -u_{z}^{\prime}+\frac{1}{2} u_{y}^{\prime} \vartheta + u_{x}^{\prime} u_{z}^{\prime},
+\quad 
+\theta_{\FrameZi} \approx  u_{y}^{\prime}+\frac{1}{2} u_{z}^{\prime} \vartheta - u_{x}^{\prime} u_{y}^{\prime}
+\end{aligned}
+$$
+
+
+\paragraph{Strain}
+
+$$
+\bm{x}^{\prime} = \FrameBasis  + \bm{u}^{\prime} = (1+u^{\prime})\FrameBasis  + \bar{\bm{u}}^{\prime}
+$$
+
+\begin{equation}
+\begin{aligned}
+\ShearStrain &= \left(\FrameBasis \otimes\FrameBasis  + \frac{1}{2}\FrameBasis \otimes\bar{\bm{u}}^{\prime}\right)\bm{u}^{\prime} \\
+\CurveStrain &= \vartheta^{\prime} \FrameBasis  + \frac{1}{2}(\FrameBasis \times\bar{\bm{u}}^{\prime})\times(\FrameBasis \times\bar{\bm{u}}^{\prime\prime}) 
++ (1-u_x^{\prime})\FrameBasis \times\bar{\bm{u}}^{\prime\prime} + (\FrameBasis \times\bar{\bm{u}}^{\prime\prime})\times(\vartheta \FrameBasis )
+- u_x^{\prime\prime} \FrameBasis \times\bar{\bm{u}}^{\prime}
+\end{aligned}
+\label{eq:delta-euler-strains}
+\end{equation}
+and the collected strain vector \(\bm{e}\) is expressed explicitly:
+\begin{equation}
+\bm{e} =
+\begin{pmatrix}
+\varepsilon \\
+\tau \\
+\kappa_y \\
+\kappa_{\FrameZi} \\
+\end{pmatrix}
+=
+\begin{pmatrix}
+u_x^{\prime} + \frac{1}{2} \left((u_{y}^{\prime})^2+(u_{z}^{\prime})^2\right)\\
+\theta_{x}^{\prime}+\frac{1}{2}\left(u_{z}^{\prime} u_{y}^{\prime\prime}-u_{y}^{\prime} u_{z}^{\prime\prime}\right) \\
+-u_{z}^{\prime\prime}(1-u_{x}^{\prime} )+u_{x}^{\prime\prime} u_{z}^{\prime}+u_{y}^{\prime\prime} \theta_{x} \\ %-c_2 \alpha_{, 1} \\
+~~~u_{y}^{\prime\prime}(1-u_{x}^{\prime})-u_{x}^{\prime\prime} u_{y}^{\prime}+u_{z}^{\prime\prime} \vartheta \\ %-c_3 \alpha_{, 1} \\
+\end{pmatrix}
+\end{equation}
+
+
+
+\subsubsection{Variations}
+
+$$
+\begin{aligned}
+\delta\CurveStrain 
+=& 
+-\FrameBasis \times\bar{\bm{u}}^{\prime\prime} ~~~ \delta u_x^{\prime}\\
+%
+&\left(-\frac{1}{2}\left[\FrameBasis \times\bar{\bm{u}}^{\prime\prime}\right]^{\times}  - u_x^{\prime\prime}\bm{1}\right)  \FrameBasis  {\times}\delta\bar{\bm{u}}^{\prime} \\
+\\
+&+ \FrameBasis  ~~~ \delta \vartheta^{\prime} \\
+&-\FrameBasis \times\bar{\bm{u}}^{\prime} ~~~ \delta u_x^{\prime\prime} \\
+&+\left[\frac{1}{2}(\FrameBasis \times\bar{\bm{u}}^{\prime})^\times\FrameBasis^\times  +(1-u_x^{\prime})\FrameBasis^{\times} - \vartheta\FrameBasis^{\times}\FrameBasis^{\times}\right] \delta \bar{\bm{u}}^{\prime\prime} \\
+&+ (\FrameBasis \times\bar{\bm{u}}^{\prime\prime}) {\times} \FrameBasis  ~~~ \delta \vartheta
+\end{aligned}
+$$
+
+
+$$
+\begin{aligned}
+\delta\CurveStrain 
+=& 
+-\FrameBasis \times\bar{\bm{u}}^{\prime\prime} \delta u_x^{\prime}\\
+&\left(-\frac{1}{2}\left[\FrameBasis \times\bar{\bm{u}}^{\prime\prime}\right]^{\times}\FrameBasis^{\times}  - u_x^{\prime\prime}\FrameBasis^{\times}\right)  \delta\bar{\bm{u}}^{\prime} \\
+\\
+&+ \FrameBasis  ~~~ \delta \vartheta^{\prime} \\
+&-\FrameBasis \times\bar{\bm{u}}^{\prime} ~~~ \delta u_x^{\prime\prime} \\
+&+\left[\frac{1}{2}(\FrameBasis \times\bar{\bm{u}}^{\prime})^\times\FrameBasis^\times  +(1-u_x^{\prime})\FrameBasis^{\times} - \vartheta\FrameBasis^{\times}\FrameBasis^{\times}\right] \delta \bar{\bm{u}}^{\prime\prime} \\
+&+ (\FrameBasis \times\bar{\bm{u}}^{\prime\prime}) {\times} \FrameBasis  ~~~ \delta \vartheta
+\end{aligned}
+$$
+
+$$
+\begin{aligned}
+\delta\CurveStrain &= 
+\left(-(\FrameBasis \times\bar{\bm{u}}^{\prime\prime}) \otimes\FrameBasis  -\frac{1}{2}\left[\FrameBasis \times\bar{\bm{u}}^{\prime\prime}\right]^{\times}\FrameBasis^{\times}  - u_x^{\prime\prime}\FrameBasis^{\times}\right)  \delta \bm{u}^{\prime} \\
+&+ \FrameBasis  ~~~ \delta \vartheta^{\prime} \\
+&+\left[-(\FrameBasis \times\bar{\bm{u}}^{\prime})\otimes \FrameBasis  + \frac{1}{2}(\FrameBasis \times\bar{\bm{u}}^{\prime})^\times\FrameBasis^\times  +(1-u_x^{\prime})\FrameBasis^{\times} - \vartheta\FrameBasis^{\times}\FrameBasis^{\times}\right] \delta \bm{u}^{\prime\prime} \\
+&+(\FrameBasis \times\bar{\bm{u}}^{\prime\prime}) {\times} \FrameBasis  ~~~ \delta \vartheta
+\end{aligned}
+$$
+
+
+$$
+\delta\CurveStrain = \\
+-\FrameBasis \times\bar{\bm{u}}^{\prime\prime} \delta u_x^{\prime}\\
+(-[\FrameBasis \times\bar{\bm{u}}^{\prime\prime}]^{\times}\FrameBasis^{\times}  - u_x^{\prime\prime}\FrameBasis )  \delta\bar{\bm{u}}^{\prime} \\
+\\
++ \FrameBasis  ~~~ \delta \vartheta^{\prime} \\
+-\FrameBasis \times\bar{\bm{u}}^{\prime} ~~~ \delta u_x^{\prime\prime} \\
++[(\FrameBasis \times\bar{\bm{u}}^{\prime})^\times\FrameBasis^\times  +(1-u_x^{\prime\prime})\FrameBasis^{\times} - \vartheta\FrameBasis^{\times}\FrameBasis^{\times}] \delta \bar{\bm{u}}^{\prime\prime} \\
+(\FrameBasis \times\bar{\bm{u}}^{\prime\prime}) {\times} \FrameBasis  \delta \vartheta
+$$
+
+\begin{equation}
+\mathbb{B}^*= 
+\left[\begin{array}{ccc}
+~~\bm{1} \partial & \\
+& \FrameBasis  \otimes \partial \\
+\FrameBasis  \times \partial^2 &  \\ 
+\partial^2 \otimes \FrameBasis  & - \\
+& 1
+\end{array}\right]
+\end{equation}
+
+\begin{equation*}
+\mathbb{B}^*
+= \left[\begin{array}{ccc|ccc}
+u_x & u_y & u_{\FrameZi} & \theta \\ \hline \hline
+\partial & & & & \\
+ & \partial & & & \\
+ & & \partial & & \\ \hline
+ & & & \partial & & \\ \hline
+%  & & & \partial^2 & \\
+ \\
+ & &-\partial^2 & & . \\
+ & \partial^2 & & & & . \\ \hline
+\partial^2 & & & & \\
+ & & & 1 \\
+\end{array}\right]
+\end{equation*}
+
+\begin{equation*}
+\begin{aligned}
+\bm{A} &= 
+\begin{bmatrix}
+\delta u_x^{\prime} &
+\delta\bar{\bm{u}}^{\prime} & 
+\delta \vartheta^{\prime} & 
+\FrameBasis \times\delta \bar{\bm{u}}^{\prime\prime} & 
+\delta u_x^{\prime\prime} & 
+\delta \vartheta \\ 
+\hline
+\FrameBasis  & \FrameBasis \otimes\bar{\bm{u}}^{\prime} & \bm{0} & \bm{O} &\bm{0} &  \bm{0} \\
+\bar{\bm{u}}^{\prime\prime}\times\FrameBasis  
+& \frac{1}{2} (\bar{\bm{u}}^{\prime\prime}\times\FrameBasis )^{\times}\FrameBasis^{\times}-u_x^{\prime\prime}\FrameBasis^{\times} 
+& \FrameBasis  
+& \frac{1}{2}[\FrameBasis \times\bar{\bm{u}}^{\prime}]^{\times} + (1+u_x^{\prime})\bm{1} - \vartheta\FrameBasis^{\times} 
+& \bar{\bm{u}}\times\FrameBasis  
+& (\FrameBasis \times\bar{\bm{u}}^{\prime\prime}) {\times} \FrameBasis 
+\end{bmatrix} \\
+&=\left[
+\begin{array}{c|cc|c|c|cc|c}
+\delta u_x^{\prime} &             \delta u_y^{\prime} &            \delta u_{\FrameZi}^{\prime} & \delta \theta^{\prime} & \delta u_x^{\prime\prime} & \delta u_y^{\prime\prime} & \delta u_{\FrameZi}^{\prime\prime} & \delta \theta \\ 
+\hline
+                  1 &                    u_y^{\prime} &                   u_{\FrameZi}^{\prime} & 0 &             0 &                        0 &                         0 &                   0 \\
+\\
+\\ \hline
+                  0 & -\frac{1}{2} u_{\FrameZi}^{\prime\prime} & \frac{1}{2} u_y^{\prime\prime} & 1 &             0 & \frac{1}{2} u_{\FrameZi}^{\prime} & -\frac{1}{2} u_y^{\prime} &                   0 \\ \hline
+ u_{\FrameZi}^{\prime\prime} &                               0 &             u_x^{\prime\prime} & 0 &  u_{\FrameZi}^{\prime} &                   \theta &       -(1 - u_x^{\prime}) &  u_y^{\prime\prime} \\
+-u_y^{\prime\prime} &             -u_x^{\prime\prime} &                              0 & 0 & -u_y^{\prime} &        1 - u_x^{\prime}  &                    \theta &  u_{\FrameZi}^{\prime\prime} \\
+\end{array}
+\right]
+\end{aligned}
+\end{equation*}
+
+\begin{ambox}[\gls{frame:delta} \gls{frame:euler} Frame]{box:delta-euler}
+
+\paragraph{Strain}
+$$
+\begin{aligned}
+\ShearStrain &= \left(\FrameBasis \otimes\FrameBasis  + \frac{1}{2}\FrameBasis \otimes\bar{\bm{u}}^{\prime}\right)\bm{u}^{\prime} \\
+%
+\CurveStrain &= \vartheta^{\prime} \FrameBasis  
++ \left(1-u_x^{\prime}\right)\FrameBasis \times\bar{\bm{u}}^{\prime\prime}
++ \frac{1}{2}(\FrameBasis \times\bar{\bm{u}}^{\prime})\times(\FrameBasis \times\bar{\bm{u}}^{\prime\prime}) 
++ (\FrameBasis \times\bar{\bm{u}}^{\prime\prime})\times(\vartheta \FrameBasis )
+- u_x^{\prime\prime} \FrameBasis \times\bar{\bm{u}}^{\prime}
+\end{aligned}
+$$
+
+\paragraph{Operators}
+\[
+\bm{A} = 
+\begin{bmatrix}
+\delta u_x^{\prime} &
+\delta\bar{\bm{u}}^{\prime} & 
+\delta \vartheta^{\prime} & 
+\FrameBasis \times\delta \bar{\bm{u}}^{\prime\prime} & 
+\delta u_x^{\prime\prime} & 
+\delta \vartheta \\ 
+\hline
+\FrameBasis  & \FrameBasis \otimes\bar{\bm{u}}^{\prime} & \bm{0} & \bm{O} &\bm{0} &  \bm{0} \\
+\bar{\bm{u}}^{\prime\prime}\times\FrameBasis  
+& \frac{1}{2} (\bar{\bm{u}}^{\prime\prime}\times\FrameBasis )^{\times}\FrameBasis^{\times}-u_x^{\prime\prime}\FrameBasis^{\times} 
+& \FrameBasis  
+& \frac{1}{2}[\FrameBasis \times\bar{\bm{u}}^{\prime}]^{\times} + (1+u_x^{\prime})\bm{1} - \vartheta\FrameBasis^{\times} 
+& \bar{\bm{u}}\times\FrameBasis  
+& (\FrameBasis \times\bar{\bm{u}}^{\prime\prime}) {\times} \FrameBasis 
+\end{bmatrix}
+\]
+\end{ambox}
+
+
+\begin{marsdenbox}
+\noindent Consider the identity:
+$$
+(a_0 \bm{1} + a_2 \, \mathbf{e}^{\times})^{-1}=\beta_0 \mathbf{1}+\beta_1 \mathbf{e} \otimes \mathbf{e}+\beta_2 \tilde{\mathbf{\Psi}} 
+$$
+with
+$$
+\begin{aligned}
+\beta_0 &=\frac{a_0}{a_2^2+a_0^2} \\
+\beta_1 &=\frac{a_2^2}{\left(a_2^2+a_0^2\right)a_0} \\
+\beta_2 &=\frac{-a_2}{a_2^2+a_0^2} 
+\end{aligned}
+$$
+Taylor expanding around $a_0 = 0$ and $a_2 = 1$ furnishes:
+$$
+\begin{aligned}
+\beta_0(\varepsilon a_0, \varepsilon a_2) &=\frac{a_0}{a_2^2+a_0^2} 
+= a_0 - 2 a_0 (a_2-1) + O(\varepsilon^3)\\
+\beta_2 &=\frac{-a_2}{a_2^2+a_0^2} 
+= a_2 - 2 + O(\varepsilon^3)
+\end{aligned}
+$$
+\end{marsdenbox}

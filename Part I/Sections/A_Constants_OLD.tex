@@ -1,0 +1,183 @@
+
+\paragraph{n-n}\label{n-n}
+
+\[
+\begin{aligned}
+\bm{A}_{\Psi} &= \int \bm{\Psi}^{\mathrm{t}}\bm{\Psi}\,\mathrm{d}A %\\
+&= \int \begin{bmatrix}
+ 1 & 0 & 0 \\
+ 0 & \psi_{yy}^2 + \psi_{zy}^2 & \psi_{yy}\psi_{zy} + \psi_{zz}\psi_{yz} \\
+ 0 & \psi_{yy}\psi_{zy} + \psi_{zz}\psi_{yz}  & \psi_{zz}^2 + \psi_{yz}^2
+ \end{bmatrix} \, \mathrm{d} A %\\
+&= \begin{bmatrix}
+A & 0 & 0 \\
+0 & A_y & A_{yz} \\
+0 & A_{zy} & A_z
+\end{bmatrix}
+\end{aligned}
+\] The \textbf{three} independent constants \(A, A_y\) and \(A_z\) are
+of interest. If \(\bm{\Psi} = \bm{1}\) then all constants reduce to the
+cross sectional area \(A\).
+
+\paragraph{m-m}\label{m-m}
+
+\[
+\begin{aligned}
+\bm{I} &= \SectionIntegral{
+     [\bm{r}^\times][\bm{r}^\times]^{\mathrm{t}} 
+}
+= \SectionIntegral{ \left[\begin{matrix}
+y^{2} + z^{2} & 0 & 0\\
+0 & z^{2} & - z y \\
+0 & - z y & \,\,y^{2}
+\end{matrix}\right]
+}
+% &= \int (\bm{r}\cdot\bm{r})\bm{1} - \bm{r}\otimes \bm{r}\, \mathrm{d}A \\
+% &=\left[\delta_{\alpha \beta} \mathbf{1}-\FrameBasis_\alpha \otimes \FrameBasis_\beta\right]\int_{\Omega} \xi_\alpha \xi_\beta \, \mathrm{d}A  \\
+\\
+&\triangleq I_0 \FrameBasis \otimes \FrameBasis + I_{\alpha \beta} \FrameBasis_\alpha \otimes \FrameBasis_\beta  \\
+\end{aligned}
+\]
+\textbf{three} independent constants:
+\[
+\begin{aligned}
+I_0    &\triangleq  ...\\
+I_y    &\triangleq  I_{22} = \int z^2\, \mathrm{d} A \\
+I_z    &\triangleq  I_{33} = \int y^2\, \mathrm{d} A \\
+I_{zy} &\triangleq -I_{23} = \int yz \, \mathrm{d} A
+\end{aligned}
+\]
+Note
+\[
+\bm{I} = \SectionIntegral{\bm{r}\cdot\bm{r}\bm{1} - \bm{r}\otimes\bm{r}}
+\]
+
+\paragraph{w-w}\label{w-w}
+
+\[
+\bm{C} = \int \bm{\Phi}^{\mathrm{t}} \bm{\Phi} \, \mathrm{d} A
+= \int \begin{bmatrix}
+\varphi^2 & 0 \\
+0 & \varphi_{, y}^2 + \varphi_{, z}^2
+\end{bmatrix} \, \mathrm{d} A
+= \begin{bmatrix}
+C_{\varphi} & 0 \\
+0 & C_{\alpha}
+\end{bmatrix}
+\] where \textbf{two} independent constants \(C_{\varphi},C_{\alpha}\)
+are defined.
+
+\begin{itemize}
+\tightlist
+\item
+  If \(\bm{\varphi} = \tilde{\varphi} \,\FrameBasis\) then \(C_{\varphi}\) is the warping
+  constant of \cite[p39]{vlasov1961thinwalled} 
+  \[
+  C_{\varphi} = \SectionIntegral{ \tilde{\varphi}^2 }
+  \] 
+\item \textcite{gruttmann2000theory} refer to \(C_{\alpha}\) with the notation ``\(I_0 + I_T\)''
+  \[
+  C_{\alpha}  = \SectionIntegral{ \tilde{\varphi}_{, y}^2 + \tilde{\varphi}_{, z}^2} = J_S - J
+  \]
+\end{itemize}
+
+\paragraph{n-m}\label{n-m}
+
+\[
+\bm{Q}_{\Psi}
+= \SectionIntegral{ - \bm{\Psi}^{\mathrm{t}} [\bm{r}^\times] }
+= \SectionIntegral{ \begin{bmatrix}
+0 & z & -y \\
+- z\psi_{yy} + y \psi_{zy} & 0 & 0 \\
+-z \psi_{yz} + y \psi_{zz} & 0 & 0
+\end{bmatrix} \, \mathrm{d} A
+ = \begin{bmatrix}
+0 & Q_{xy} & Q_{xz} \\
+Q_{yx} & 0 & 0 \\
+Q_{zx} & 0 & 0
+\end{bmatrix}
+}
+\] 
+where \textbf{four} independent constants
+\(Q_{xy}, Q_{xz}, Q_{yx}, Q_{zx}\) have been defined.
+
+\begin{itemize}
+\item
+  If \(\bm{\Psi} = \bm{1}\) then \(\bm{Q} = A\hat{\bm{r}}^{\times}\) \[
+  Q_{yx} = \int -z\,\mathrm{d} A
+  \]
+\item
+  If, additionally, the reference curve passes through the centroid as
+  in \cite{simo1991geometricallyexact} then \(\bm{Q} = 0\)
+\end{itemize}
+
+\paragraph{n-w}\label{n-w}
+
+\[
+\bm{R} = \SectionIntegral{ \bm{\Psi}^\mathrm{t}\bm{\Phi} 
+}
+= \SectionIntegral{\begin{bmatrix}
+\tilde{\varphi} & 0 \\
+0 & \psi_{yy} \varphi_{, y} + \psi_{zy} \varphi_{, z} \\
+0 & \psi_{yz} \varphi_{, y} + \psi_{zz} \varphi_{, z}
+\end{bmatrix}
+}
+= \begin{bmatrix}
+R_{\varphi} & 0 \\
+0 & R_{y} \\
+0 & R_{z}
+\end{bmatrix}
+\] 
+where \textbf{three} independent constants have been defined.
+
+\begin{itemize}
+\item
+  If \(\bm{\Psi} = \bm{1}\) and \(\varphi\) is referred to the \emph{shear
+  center} (e.g., \cite{gruttmann1998geometrical}) 
+  \begin{equation*}
+  \begin{aligned}
+  R_{\varphi} &= 0 \\
+  R_y &= \int \tilde{\varphi}_{,y} = -(\tilde{z} - \hat{z})A \\
+  R_z &= \int \tilde{\varphi}_{,z} =  (\tilde{y} - \hat{y})A
+  \end{aligned}
+  \end{equation*}
+\item
+  If \(\bm{\Psi} = \bm{1}\) and \(\varphi\) is referred to the \emph{centroid}
+  (i.e.~\(\varphi = \hat{\varphi}\) like \cite{gruttmann2000theory}) then:
+  \[
+  R_y = \int \hat{\varphi}_{,y} =    \hat{z}A \\
+  R_z = \int \hat{\varphi}_{,z} =  - \hat{y}A
+  \] where \(\hat{z}\) and \(\hat{y}\) are the coordinates of the
+  centroid.
+\end{itemize}
+
+\paragraph{m-w}\label{m-w}
+
+\[
+\bm{S} 
+= \SectionIntegral{ \bm{r}^{\times} \bm{\Phi} } 
+= \SectionIntegral{ \begin{bmatrix}
+0 & -z \varphi_{, y} + y \varphi_{, z} \\
+ z \varphi & 0 \\
+-y \varphi & 0
+\end{bmatrix}
+}
+= \begin{bmatrix}
+0 & S_{\alpha} \\
+S_{y} & 0 \\
+S_{z} & 0
+\end{bmatrix}
+\] 
+introducing \textbf{three} constants \(S_{\alpha}, S_y\) and \(S_z\).
+
+\begin{itemize}
+\tightlist
+\item
+  If \(\varphi\) is referred to the centroid 
+  \[
+  \begin{aligned}
+  S_y &= \int z \hat{\varphi} \, \mathrm{d} A =   \hat{I}_{z} \hat{z} - \hat{I}_{yz} \hat{y} \\
+  S_z &= \int y \hat{\varphi} \, \mathrm{d} A = - \hat{I}_{y} \hat{y} + \hat{I}_{yz} \hat{z}
+  \end{aligned}
+  \]
+\end{itemize}

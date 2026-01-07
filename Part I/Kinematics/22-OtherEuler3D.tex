@@ -1,0 +1,148 @@
+
+$$
+\bm{\theta} \approx \vartheta \FrameBasis  
++ \FrameBasis \times\bar{\bm{u}}^{\prime} 
++ \frac{1}{2} (\FrameBasis \times\bar{\bm{u}}^{\prime}) \times \vartheta \FrameBasis 
+$$
+
+
+$$
+\begin{aligned}
+\bm{\gamma} &= \left(\FrameBasis \otimes\FrameBasis  + \frac{1}{2}\FrameBasis \otimes\bar{\bm{u}}^{\prime}\right)\bm{u}^{\prime} \\
+\bm{\kappa} &= \vartheta^{\prime} \FrameBasis  
+%+ \frac{1}{2}(\FrameBasis \times\bar{\bm{u}}^{\prime})\times(\FrameBasis \times\bar{\bm{u}}^{\prime\prime}) 
++ \FrameBasis \times\bar{\bm{u}}^{\prime\prime} 
++ (\FrameBasis \times\bar{\bm{u}}^{\prime\prime})\times(\vartheta \FrameBasis )
+\end{aligned}
+$$
+
+$$
+\boldsymbol{e} = \begin{pmatrix}
+\epsilon \\ 
+\tau \\
+\kappa_y \\
+\kappa_z \\ 
+\end{pmatrix}
+= \left(\begin{array}{c}
+u^{\prime}+\frac{1}{2}\left(\left(u_y^{\prime}\right)^2+\left(u_z^{\prime}\right)^2\right) \\ 
+\vartheta^{\prime} \\ %+\frac{1}{2}\left(u_{z}^{\prime} u_{y}^{\prime\prime}-u_{y}^{\prime} u_{z}^{\prime\prime}\right)\\
+-u_z^{\prime \prime}+u_y^{\prime \prime} \vartheta \\
+u_y^{\prime \prime}+u_z^{\prime \prime} \vartheta \\
+\end{array}\right)
+$$
+
+\subsubsection{Variations}
+
+$$
+\begin{aligned}
+\delta\bm{\kappa} &= 
+ \FrameBasis  ~~~ \delta \vartheta^{\prime} 
+ +\left[\bm{1} 
+- \vartheta\FrameBasis^{\times}\right]\FrameBasis^{\times} ~~ \delta \bar{\bm{u}}^{\prime\prime} +(\FrameBasis \times\bar{\bm{u}}^{\prime\prime}) {\times} \FrameBasis  ~~~ \delta \vartheta
+\end{aligned}
+$$
+
+
+$$
+\bm{A} = 
+\left[
+\begin{array}{ccc|c|ccc|c}
+\delta u_x^{\prime} &             \delta u_y^{\prime} &            \delta u_z^{\prime} & \delta \theta^{\prime} & \delta u_x^{\prime\prime} & \delta u_y^{\prime\prime} & \delta u_z^{\prime\prime} & \delta \theta \\ 
+\hline
+        1 &                    u_y^{\prime} &                   u_z^{\prime} & 0 &             0 &                        0 &                         0 &                   0 \\
+\\
+\\
+        0 & 0 & 0 & 1 &             0 & 0 & 0 &                   0 \\ \hline
+        0 &                               0 &                              0 & 0 &             0 &                   \theta &       -1 &  u_y^{\prime\prime} \\
+        0 &                               0 &                              0 & 0 &             0 &        1  &                    \theta &  u_z^{\prime\prime} \\
+\end{array}
+\right]
+$$
+
+$$
+\bm{A} = 
+\left[
+\begin{array}{ccc|c|ccc|c}
+\delta u_x^{\prime} &             \delta u_y^{\prime} &            \delta u_z^{\prime} & \delta \theta^{\prime} & &\FrameBasis \times\bm{u}^{\prime\prime} & & \delta \theta \\ 
+\hline
+        1 &                    u_y^{\prime} &                   u_z^{\prime} & 0 &             0 &                        0 &                         0 &                   0 \\
+\\
+\\
+        0 & 0 & 0 & 1 &             0 & 0 & 0 &                   0 \\ \hline
+        0 &                               0 &                              0 & 0 &             0 &                   1 &       \theta &  u_y^{\prime\prime} \\
+        0 &                               0 &                              0 & 0 &             0 &        -\theta  &                    1 &  u_z^{\prime\prime} \\
+\end{array}
+\right]
+$$
+
+\subsubsection{Equilibrium}
+
+
+$$
+-\left[\begin{array}{cccccc}
+\bm{1}\partial & 0 & \FrameBasis^\times \partial^2 & \FrameBasis \otimes\partial^2 & 0 & \\
+0 & \partial &  \bm{0}  & 0 & 1
+\end{array}\right]
+\begin{pmatrix}
+N \\
+u_y^{\prime} N \\ %- \frac{1}{2} u_z^{\prime\prime} T \\
+u_z^{\prime} N \\ %+ \frac{1}{2} u_y^{\prime\prime} T \\ \hline
+T \\ \hline
+0 \\
+ M_z+\vartheta M_y \\ %+ \frac{1}{2}u_z^{\prime} T \\
+-M_y+\vartheta M_z \\ \hline %- \frac{1}{2}u_y^{\prime} T \\
+0 \\
+M_y u_y^{\prime\prime} + M_z u_z^{\prime\prime}
+\end{pmatrix}
+$$
+
+$$
+-\left[\begin{array}{ccc|c|ccc|cc}
+\partial & 0 & 0 & 0 & 0 & 0 & 0 & \partial^2 & 0 \\
+0 & \partial & 0    & 0 & 0 & 0 & -\partial^2 & 0 & 0 \\
+0 & 0 & \partial    & 0 & 0 & \partial^2 & 0 & 0 & 0 \\ \hline
+0 & 0 & 0            & \partial & 0 & 0 & 0 & 0 & 1 \\
+\end{array}\right]
+\begin{pmatrix}
+N \\
+u_y^{\prime} N \\ %- \frac{1}{2} u_z^{\prime\prime} T \\
+u_z^{\prime} N \\ %+ \frac{1}{2} u_y^{\prime\prime} T \\ \hline
+T \\
+0 \\
+ M_z+\vartheta M_y \\ %+ \frac{1}{2}u_z^{\prime} T \\
+-M_y+\vartheta M_z \\ %- \frac{1}{2}u_y^{\prime} T \\
+0 \\
+M_y u_y^{\prime\prime} + M_z u_z^{\prime\prime}
+\end{pmatrix}
+$$
+
+$$
+\begin{array}{c}
+N^{\prime} \\
+(u_y^{\prime} N)^{\prime} \\ %- \frac{1}{2} u_z^{\prime\prime} T \\
+(u_z^{\prime} N)^{\prime} \\ %+ \frac{1}{2} u_y^{\prime\prime} T \\ \hline
+T^{\prime} \\
+\end{array}
++\begin{array}{c} 
+0 \\
+( M_y-\vartheta M_z)^{\prime\prime} \\ % u_y^
+( M_z+\vartheta M_y)^{\prime\prime} \\ % u_z^{\prime} T \\{\prime} T \\
+M_y u_y^{\prime\prime} + M_z u_z^{\prime\prime}
+\end{array}
+$$
+
+
+$$
+\begin{array}{c}
+N^{\prime} \\
+(u_y^{\prime} N)^{\prime} \\ %- \frac{1}{2} u_z^{\prime\prime} T \\
+(u_z^{\prime} N)^{\prime} \\ %+ \frac{1}{2} u_y^{\prime\prime} T \\ \hline
+T^{\prime} \\
+\end{array}
++\begin{array}{c} 
+0 \\
+( M_y-\vartheta M_z)^{\prime\prime} \\ % u_y^
+( M_z+\vartheta M_y)^{\prime\prime} \\ % u_z^{\prime} T \\{\prime} T \\
+M_y u_y^{\prime\prime} + M_z u_z^{\prime\prime}
+\end{array}
+$$

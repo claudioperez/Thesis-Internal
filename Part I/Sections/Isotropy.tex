@@ -1,0 +1,135 @@
+Consider the St. Venant-Kirchhoff material model with material parameters \(\lambda\) and \(\mu\)
+\begin{equation*}
+    \bm{S} = \lambda  \bm{1} \operatorname{tr} \bm{E} + 2 \mu \bm{E}
+\end{equation*}
+The fourth-order tangent tensors are
+\begin{equation}
+\FourTensor{C}=\kappa 3\FourTensor{P}_{\mathrm{vol}} + 2 \mu \FourTensor{P}_{\mathrm{dev}}
+\qquad\text{ and }\qquad
+\FourTensor{C}^{-1} = \left.\frac{1}{3\kappa} \FourTensor{P}_{\mathrm{vol}} + \frac{1}{2 \mu}\FourTensor{P}_{\mathrm{dev}}\right.
+\label{eq:isotropic-moduli}
+\end{equation}
+where $\kappa=\lambda+\frac{2}{3} \mu>0$ is the bulk modulus, $\mu>0$ is the shear modulus, and
+\begin{equation*}
+\FourTensor{P}_{\mathrm{vol}}=\frac{1}{3} \bm{1} \otimes \bm{1}
+,\quad 
+\FourTensor{P}_{\mathrm{dev}}=\FourTensor{P}_{\mathrm{sym}}-\FourTensor{P}_{\mathrm{vol}} 
+\quad \text { and } \quad 
+\FourTensor{P}_{\mathrm{sym}} = \frac{1}{2}\FrameBasis_{i} \otimes \FrameBasis_{j} \otimes\left( \FrameBasis_{i} \otimes \FrameBasis_{j} + \FrameBasis_{j} \otimes \FrameBasis_{i}\right)
+\end{equation*}
+%
+Using \cref{eq:isotropic-moduli} in \cref{eq:section-linear-tangent} reveals 
+the tensors \(\LinearMM\), \(\LinearWW\), \(\LinearVV\), \(\SectionNW\), \(\SectionNV\), \(\LinearMW\) and \(\LinearMV\) which encapsulate the isotropic response of a homogeneous \textbf{Linear} section 
+\begin{equation}
+\left[
+\begin{matrix}
+    A \bm{1} 
+  & A\bar{\bm{\pi}}^{\times} % nm
+  & \SectionNW  % E
+  & \SectionNV  % G
+  \\
+
+%
+  & \LinearMM
+  & \LinearMW % E
+  & \LinearMV % G
+  \\
+
+%
+  & %
+  & \LinearWW % E?
+  & \\
+
+%
+  & %
+  & %
+  & \LinearVV
+\end{matrix}
+\right]
+= \SectionIntegral{
+\hat{\bm{B}}^{\mathrm{t}}_{\mathrm{L}} \hat{\bm{B}}_{\mathrm{L}} 
+}
+= \SectionIntegral{
+\left[
+\begin{matrix}
+\bm{1} 
+  &-\bm{r}^{\times} 
+  & \FrameBasis\otimes \bm{\varphi} 
+  & \FrameBasis_{\beta} \otimes \nabla_{\beta} \bm{\varphi} \\
+
+%- \bm{r}^{\times} 
+  & - \left[\bm{r}^{\times}\right]^{2} 
+  & \bm{r} \times \FrameBasis \otimes \bm{\varphi} 
+  & \bm{r} \times \FrameBasis_{\beta} \otimes \nabla_{\beta} \bm{\varphi} \\
+
+%\bm{\varphi} \otimes \FrameBasis
+  & %[\bm{\varphi} \otimes \FrameBasis] \bm{r}^{\times} 
+  & \bm{\varphi} \otimes \bm{\varphi}
+  & \bm{0} \\
+
+%
+  & % 
+  & %
+  & \nabla_{\beta} \bm{\varphi} \otimes \nabla_{\beta} \bm{\varphi}
+\end{matrix}
+\right]
+}
+\label{eq:def-linear-isotropic-coupling-tensors}
+\end{equation}
+Similarly, for the higher-order \textbf{Wagner} kinematics one additionally has from \cref{eq:isotropic-moduli} in \cref{eq:section-wagner-tangent} the constants
+\begin{equation}
+\begin{bmatrix}
+\bm{0} & \tau \bm{A}_{r^2} & \bm{0} & \bm{0} 
+\\
+& \tau \bm{I}_{r^2} + \tau^2 \bm{I}_{r^4}
+& \tau \bm{R}_{r^2} 
+& \bm{0} \\
+& & \bm{0} & \bm{0} \\
+& & & \bm{0}
+\end{bmatrix}
+\triangleq \
+\SectionIntegral{\left[\begin{matrix}
+\bm{0} & \tau r^{2} \FrameBasis \otimes \FrameBasis & \bm{0} & \bm{0}\\
+\tau r^{2} \FrameBasis \otimes \FrameBasis 
+& \tau r^{2} (\bm{r} {\times} \FrameBasis \otimes \FrameBasis +  \FrameBasis \otimes \bm{r} {\times}\FrameBasis) + \tau^2 r^{4} \FrameBasis \otimes \FrameBasis & \tau r^{2} \FrameBasis\otimes \bm{\varphi} & \bm{0} \\
+\bm{0} & \tau r^{2}  \bm{\varphi} \otimes \FrameBasis  & \bm{0} & \bm{0} \\
+ &  &  &  \bm{0}
+\end{matrix}
+\right]}
+\end{equation}
+with 
+\(\bm{A}_{r^2} \triangleq A_{r^2} \FrameBasis \otimes \FrameBasis\),
+\(\bm{I}_{r^4} \triangleq I_{r^4} \FrameBasis \otimes \FrameBasis\).
+
+% \subsubsection{Linear Kinematics}
+
+\input{Part I/Sections/A_Constants}
+
+
+The final linear stiffness matrix for a general isotropic cross section is given explicitly by \cref{eq:ks-isotropic}.
+
+\begin{landscape}
+\topskip0pt
+\vspace*{\fill}
+\begin{equation}
+\hat{\bm{K}} = 
+\left[\begin{array}{ccc|ccc|ccc|ccc}
+EA & 0 & 0 & 0 & E Q_z & - E Q_y & E Q_{\varphi} & E Q_{y} & E Q_{z} & 0 & 0 & 0\\
+0 & GA & 0 & - G Q_z & 0 & 0 & 0 & 0 & 0 & G J_{n y} & G Q_{y y} & G Q_{z y} \\
+0 & 0 & GA & G Q_y & 0 & 0 & 0 & 0 & 0 & G J_{n z} & G Q_{y z} & G Q_{z z} \\ \hline
+0 & - G Q_z & G Q_y & G I_0 & 0 & 0 & 0 & 0 & 0 & G R_{\varphi} &  G R_y & G R_z \\
+E z & 0 & 0 & 0 & E I_{z z} & - E I_{y z} & E J_{my} & E \psi_{y} z & E \psi_{z} z & 0 & 0 & 0\\
+- E y & 0 & 0 & 0 & - E I_{y z} & E I_{y y} & E J_{m z} & - E \psi_{y} y & - E \psi_{z} y & 0 & 0 & 0\\ \hline
+E \varphi & 0 & 0 & 0 & E \varphi z & - E \varphi y & E \varphi^{2} & E \psi_{y} \varphi & E \psi_{z} \varphi & 0 & 0 & 0\\
+E \psi_{y} & 0 & 0 & 0 & E \psi_{y} z & - E \psi_{y} y & E \psi_{y} \varphi & E \psi_{y}^{2} & E \psi_{y} \psi_{z} & 0 & 0 & 0\\
+E \psi_{z} & 0 & 0 & 0 & E \psi_{z} z & - E \psi_{z} y & E \psi_{z} \varphi & E \psi_{y} \psi_{z} & E \psi_{z}^{2} & 0 & 0 & 0\\ \hline
+0 & G \varphi_{,y} & G \varphi_{,z} & G . & 0 & 0 & 0 & 0 & 0 & G S_{\varphi \varphi} & G S_{\varphi y} & G S_{\varphi z} \\
+0 & G \psi_{y,y} & G \psi_{y,z} & G . & 0 & 0 & 0 & 0 & 0 & G S_{y \varphi} & G S_{y y} & G S_{y z} \\
+0 & G \psi_{z,y} & G \psi_{z,z} & G . & 0 & 0 & 0 & 0 & 0 & G S_{z \varphi} & G S_{zy} & G S_{zz}
+\end{array}\right]
+\label{eq:ks-isotropic}
+\end{equation}
+\vspace*{\fill}
+\end{landscape}
+% \end{minipage}
+% \end{sideways}

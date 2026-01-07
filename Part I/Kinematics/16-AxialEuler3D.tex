@@ -1,0 +1,197 @@
+
+\begin{equation}
+\bm{\theta} = \vartheta \FrameBasis  + \FrameBasis \times \bar{\bm{u}}^{\prime}
+\end{equation}
+
+
+\begin{equation*}
+\begin{aligned}
+\ShearStrain &= \left(\FrameBasis \otimes\FrameBasis  + \frac{1}{2}\FrameBasis \otimes\bar{\bm{u}}^{\prime}\right)\bm{u}^{\prime} \\
+\CurveStrain &= \vartheta^{\prime} \FrameBasis  
+ + \FrameBasis \times\bar{\bm{u}}^{\prime\prime}
+\end{aligned}
+\end{equation*}
+
+
+\begin{equation}
+\bm{e}
+= \begin{pmatrix}
+    \epsilon \\
+    \tau \\
+    \kappa_y  \\
+    \kappa_z \\
+  \end{pmatrix}
+= \begin{pmatrix}
+u_x^{\prime} + \frac{1}{2}\left((u_y^{\prime})^2 + (u_z^{\prime})^2\right) \\ 
+\theta_x^{\prime} \\
+-u_z^{\prime\prime} \\
+u_y^{\prime\prime} \\
+\end{pmatrix}
+\end{equation}
+
+\subsubsection{Variations}
+
+
+$$
+\delta \bm{\varepsilon} 
+= \EquilibriumDerivative^* \delta \bm{u}
+= \left[\begin{array}{ccc|ccc}
+\partial & 0 & 0 & 0 \\
+0 & \partial & 0 & 0 \\
+0 & 0 & \partial & 0 \\ \hline
+0 & 0 & 0 & \partial & & \\
+0 & 0 & -\partial^2 & 0 & . \\
+0 & \partial^2 & 0 & 0 & & . \\
+\end{array}\right]\begin{pmatrix}
+\delta u_x \\
+\delta u_y \\
+\delta u_z \\ \hline
+\delta \theta_x \\ 
+\delta \theta_y \\
+\delta \theta_z \\
+\end{pmatrix}
+= \begin{pmatrix}
+ \delta  u_x^{\prime} \\ 
+ \delta  u_y^{\prime} \\ 
+ \delta  u_z^{\prime} \\ \hline
+ \delta  \theta_x^{\prime} \\
+-\delta  u_z^{\prime\prime} \\ 
+ \delta  u_y^{\prime\prime} \\ 
+\end{pmatrix}
+$$
+
+
+$$
+\begin{aligned}
+\delta \bm{e} 
+&= \begin{pmatrix}
+  \delta u_x^{\prime } + u_y^{\prime} \delta u_y^{\prime} + u_z^{\prime} \delta u_z^{\prime}  \\
+. \\
+. \\
+  \delta \theta_x^{\prime} \\
+- \delta u_z^{\prime\prime} \\
+  \delta u_y^{\prime\prime} \\
+\end{pmatrix} \\
+&= \left[\begin{array}{ccc|ccc}
+1 & u_y^{\prime} & u_z^{\prime}  & 0 & 0 & 0 \\
+\\
+\\ \hline
+0 & 0 & 0 & 1 & 0 & 0 \\
+0 & 0 & 0 & 0 & 1 & 0 \\
+0 & 0 & 0 & 0 & 0 & 1 
+\end{array}\right]
+\left[\begin{array}{ccc|ccc}
+\partial & \\
+0 & \partial & \\
+0 & 0 & \partial & 0 \\ \hline 
+0 & 0 & 0 & \partial \\
+0 & 0 & -\partial^2 & 0 \\
+0 & \partial^2 & 0 & 0 \\
+\end{array}\right]
+\begin{pmatrix}
+\delta u_x \\
+\delta u_y \\
+\delta u_z \\ \hline
+\delta \theta_x \\
+. \\
+.
+\end{pmatrix} \\
+&= \begin{bmatrix}
+\FrameBasis \otimes\FrameBasis  + \FrameBasis \otimes\bar{\bm{u}}^{\prime} & \bm{0} \\
+\bm{0} & \bm{1}
+\end{bmatrix}
+\begin{bmatrix}
+\bm{1}\partial & 0 \\
+\FrameBasis^{\times}~\partial^2 & \FrameBasis \otimes\partial
+\end{bmatrix}
+\delta\bm{u}
+\end{aligned}
+$$
+
+
+\subsubsection{Equilibrium}
+
+$$
+\EquilibriumDerivative 
+ = -\begin{bmatrix}
+\bm{1}~\partial  & \FrameBasis^{\times} ~\bm{\partial}^2 \\
+ & \bm{\partial} \otimes \FrameBasis 
+\end{bmatrix}
+= -\left[\begin{array}{ccc|ccc}
+\partial & 0 & 0 & 0 & 0 & 0\\
+0 & \partial & 0    & 0 & 0 & -\partial^2 \\
+0 & 0 & \partial    & 0 & \partial^2 & 0  \\ \hline
+0 & 0 & 0            & \partial & 0 & 0  \\
+\end{array}\right]
+$$
+
+\[
+\bm{\sigma}
+= \bm{A}^\mathrm{t} \begin{pmatrix}
+    N \\ 
+    . \\
+    . \\
+    T \\
+    M_y \\ 
+    M_z \\ 
+  \end{pmatrix}
+= \begin{pmatrix}
+N \\
+N u_y^{\prime} \\ 
+N u_z^{\prime} \\ \hline 
+T \\
+M_y \\
+M_z \\
+\end{pmatrix}
+\]
+
+$$
+-\EquilibriumDerivative\bm{\sigma}
+=
+\left.
+\begin{aligned}
+  \left(N\FrameBasis  + \FrameBasis \times\CurveResult^{\prime}\right)^{\prime} + (N \bar{\bm{u}}^{\prime})^{\prime} &= \bm{0} \\
+  (T\FrameBasis )^{\prime} &= \bm{0}
+\end{aligned}
+\right\}
+$$
+
+
+$$
+\left.\begin{array}{rl}
+N^{\prime} & =0 \\
+-{M_z}^{\prime\prime}+\left(N u_y^{\prime}\right)^{\prime} & =0 \\
+{M_y}^{\prime\prime} +\left(N u_z^{\prime}\right)^{\prime} & =0 \\
+T^{\prime} & =0
+\end{array}\right\}
+$$
+
+\begin{ambox}[\gls{frame:axial} \gls{frame:euler} Frame]{box:axial-euler}
+\begin{equation*}
+-\EquilibriumDerivative\bm{\sigma}
+=
+\left\{
+\begin{aligned}
+  \left(N\FrameBasis  + \FrameBasis \times\CurveResult^{\prime}\right)^{\prime} + (N \bar{\bm{u}}^{\prime})^{\prime} \\
+  (T\FrameBasis )^{\prime}
+\end{aligned}
+\right.
+\end{equation*}
+
+\paragraph{Kinematics}
+\begin{equation*}
+\begin{aligned}
+\ShearStrain &= \left(\FrameBasis \otimes\FrameBasis  + \frac{1}{2}\FrameBasis \otimes\bar{\bm{u}}^{\prime}\right)\bm{u}^{\prime} \\
+\CurveStrain &= \vartheta^{\prime} \FrameBasis  
+ + \FrameBasis \times\bar{\bm{u}}^{\prime\prime}
+\end{aligned}
+\end{equation*}
+\paragraph{Variations}
+\begin{equation*}
+\bm{A} = 
+\begin{bmatrix}
+\FrameBasis \otimes\FrameBasis  + \FrameBasis \otimes\bar{\bm{u}}^{\prime} & \bm{0} \\
+\bm{0} & \bm{1}
+\end{bmatrix}
+\end{equation*}
+\end{ambox}

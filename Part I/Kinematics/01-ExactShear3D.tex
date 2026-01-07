@@ -100,13 +100,13 @@ are represented by \(\shearResult\) and \(\curveResult\) in the director bases:
   \begin{aligned}
     \shearResult
     &= N \frameBasis + V_\alpha \frameBasis_\alpha \\
-    &= \bm{\varLambda}\left( N\FrameBasis +  V_\alpha \FrameBasis_\alpha \right) \\
+    &= \FrameRotation\left( N\FrameBasis +  V_\alpha \FrameBasis_\alpha \right) \\
   \end{aligned}
   \qquad \text{ and }\qquad
   \begin{aligned}
     \curveResult
     &= T \frameBasis + M_\alpha \frameBasis_\alpha \\
-    &= \bm{\varLambda}\left( T\FrameBasis + M_\alpha \FrameBasis_\alpha \right) \\
+    &= \FrameRotation\left( T\FrameBasis + M_\alpha \FrameBasis_\alpha \right) \\
   \end{aligned}
 \end{equation*}
 where the repeated index \(\alpha\) implies summation over the two
@@ -210,12 +210,13 @@ and curvature \(\kappa_{\alpha}\) strains in the current director basis:
 %
 where the notation \(\curveStrain^{\times}\) indicates that the quantity \(\FrameRotation^{\prime}\FrameRotation^{\mathrm{t}}\) is skew-symmetric, and the vector \(\curveStrain\) is its axial vector. % is introduced by Equation~(\ref{eq:vee}).
 Equation~(\ref{eq:cosserat-pull}) for $\bm{A}$ furnishes the material stress $\bm{s}$ and strain $\bm{e}$:
-\begin{equation} 
-  \bm{s} \triangleq \begin{pmatrix}\FrameRotation^\mathrm{t}\shearResult\\ \FrameRotation^\mathrm{t}\curveResult\end{pmatrix}
-  \quad\text{ and }\quad 
-  \bm{e} \triangleq \begin{pmatrix}\FrameRotation^\mathrm{t}\shearStrain\\ \FrameRotation^\mathrm{t}\curveStrain\end{pmatrix}.
-  \label{eq:cosserat-strain}
-\end{equation}
+\RepeatEquation{eq:cosserat-strain}
+% \begin{equation} 
+%   \bm{s} \triangleq \begin{pmatrix}\FrameRotation^\mathrm{t}\shearResult\\ \FrameRotation^\mathrm{t}\curveResult\end{pmatrix}
+%   \quad\text{ and }\quad 
+%   \bm{e} \triangleq \begin{pmatrix}\FrameRotation^\mathrm{t}\shearStrain\\ \FrameRotation^\mathrm{t}\curveStrain\end{pmatrix}.
+%   \label{eq:cosserat-strain}
+% \end{equation}
 and one has the related strain vectors in the reference configuration?
 \begin{equation*} 
   \begin{aligned}

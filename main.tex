@@ -44,14 +44,11 @@
 \newcommand{\InputDetail}[1]{\input{#1}}
 \ifthesis
 \InputDetail{Style/Thesis}
-% \renewcommand{\gls}[1]{#1} % TODO
-% \newcommand{\glspl}[1]{#1} %
 \else 
 \input{Style/Article}
-% \newcommand{\gls}[1]{#1} % TODO
-% \newcommand{\glspl}[1]{#1} %
-% \newcommand{\Glspl}[1]{#1} %
 \fi
+
+\newcommand{\ShowLabel}[1]{}
 
 %%% 
 %%% Glossaries
@@ -124,6 +121,10 @@
 \clearpage
 
 \begin{Notation}[section]
+\clearpage
+\glsaddall
+\printglossary[type=frame]
+\printglossary[type=brace]
 \clearpage
 
 
@@ -219,7 +220,7 @@
 \InputDetail{Sections/A_Notation}
 \clearpage
 
-\include{Part I/Kinematics/main}
+\InputChapter{Part I/Kinematics/main}
 \clearpage 
 
 \include{Sections/30_Iesan}

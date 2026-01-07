@@ -1,47 +1,55 @@
+\begingroup
+\newcommand{\tp}[1]{#1^{\top}}
+% \newcommand{\FrameXi}{x}
+\newcommand{\FrameYi}{y}
+\newcommand{\FrameZi}{z}
+\newcommand{\SpaceRotation}{\bm{R}}
+\newcommand{\FramePosition}{\bm{x}}
+% \newcommand{\FrameYZi}{\beta}
+
 \chapter{Primary Kinematics}\label{ch:frame-hierarchy} 
 %
 This chapter develops specific forms for the strain
 variables \(\bm{e}\) as a function of the configuration variables
-\(\chi\) for particular theories. We begin with the Special Cosserat
-theory, and progressively simplify towards the linear theories.
+\(\chi\) for particular theories. 
+We begin with the Special Cosserat theory, and progressively simplify towards the linear theories.
 
 \begin{itemize}
     \item \Gls{frame:exact}
-    \item \Gls{frame:delta} This is a second order tructation of the \gls{frame:exact} model.
+    \item \Gls{frame:delta} This is a second order truncation of the \gls{frame:exact} model.
     \item \Gls{frame:stiff} 
-    \item \Gls{frame:axial} This is the simplest model which captures flexural buckling instability under pure compression.
+    \item \Gls{frame:axial} This is the simplest model that captures flexural buckling instability under pure compression.
     \item \Gls{frame:basic}
 \end{itemize}
 
-\iftrue 
 \section{\Gls{frame:exact}: Cosserat and Kirchhoff Rods}\label{sec:cosserat}
 \subsection{Shear}
 \input{Part I/Kinematics/01-ExactShear3D.tex}
-\subsection{Euler}
-\input{Part I/Kinematics/02-ExactEuler3D.tex}
+% \subsection{Euler}
+% \input{Part I/Kinematics/02-ExactEuler3D.tex}
 
 \section{\Gls{frame:delta}: Second-order truncation}
 \input{Part I/Kinematics/07-Delta}
-\subsection{ Delta Shear (0007)}
+\subsection{ Delta Shear \ShowLabel{0007}}
 \input{Part I/Kinematics/07-DeltaShear3D.tex}
 \clearpage
-\subsection{ Delta Euler (0008)}
+\subsection{ Delta Euler \ShowLabel{0008}}
 \input{Part I/Kinematics/08-DeltaEuler3D.tex}
 \clearpage
 
 \section{\Gls{frame:stiff}: Nonlinearity characterized by axial rigidity %
 }\label{sec:stiff}
 \input{Part I/Kinematics/11-Stiff}
-\subsection{ Stiff Shear (0011)}
+\subsection{ Stiff Shear \ShowLabel{0011}}
 \input{Part I/Kinematics/11-StiffShear3D.tex}
 \clearpage 
-\subsection{ Stiff Euler (0012)}
+\subsection{ Stiff Euler \ShowLabel{0012}}
 \input{Part I/Kinematics/12-StiffEuler3D.tex}
 \clearpage 
-\subsection{ Shaft Euler (0021)}
+\subsection{ Shaft Euler \ShowLabel{0021}}
 \input{Part I/Kinematics/21-ShaftEuler3D.tex}
 \clearpage 
-\subsection{ Twist Euler (0022)}
+\subsection{ Twist Euler \ShowLabel{0022}}
 \input{Part I/Kinematics/22-OtherEuler3D.tex}
 \clearpage 
 
@@ -50,17 +58,17 @@ theory, and progressively simplify towards the linear theories.
 
 This formulation restricts higher order terms to the axial strain.
 
-\subsection{ Axial Shear (0015)}\label{sec:axial-shear}
+\subsection{ Axial Shear \ShowLabel{0015}}\label{sec:axial-shear}
 \input{Part I/Kinematics/15-AxialShear3D.tex}
 \clearpage 
-\subsection{ Axial Euler (0016)}\label{sec:axial-euler}
+\subsection{ Axial Euler \ShowLabel{0016}}\label{sec:axial-euler}
 \input{Part I/Kinematics/16-AxialEuler3D.tex}
 \clearpage 
 \section{\Gls{frame:basic}: First-order truncation}\label{sec:basic}
-\subsection{ Basic Shear (0018)}
+\subsection{ Basic Shear \ShowLabel{0018}}
 \input{Part I/Kinematics/18-BasicShear3D.tex}
 \clearpage 
-\subsection{ Basic Euler (0019)}\label{sec:basic-euler}
+\subsection{ Basic Euler \ShowLabel{0019}}\label{sec:basic-euler}
 \input{Part I/Kinematics/19-BasicEuler3D.tex}
 
-\fi 
+\endgroup

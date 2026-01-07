@@ -67,7 +67,7 @@ The developments in this work are restricted to the following setting:
 We do not treat thin-walled sections as a special case requiring separate 
 theoretical development. The formulation applies to arbitrary solid or 
 thin-walled cross-sections, with the classical thin-walled results 
-(Vlasov torsion, etc.) emerging as limiting cases.
+(Vlasov torsion, etc.) emerging as special cases.
 
 \subsection{Outline}
 
@@ -118,75 +118,6 @@ So then we introduce the abstraction of traces, $T: \hat{\bm u} \rightarrow (\bm
 There are three natural restrictions we impose on the class of traces we'll investigate: 1) they generate at-most-linear strain measures under the SV class, 2) they preserve plane-section-preserving deformations, and 3) they are capable of exactly reconstructing the exact strain field for any problem in the SV class.
 \end{Aside}
 
-\begin{Prompt}
-
-\section*{Introduction}
-
-In linear analysis, Saint~Venant torsion and shear cross-sectional constants enrich the plane-section hypothesis by incorporating the effects of cross-section warping. 
-In inelastic analysis, this treatment is more difficult and is often omitted; many nonlinear fiber-section implementations, therefore, lack the warping fields underlying the determination of the torsional constant $J$ and the effective shear areas $A_y, A_z$. 
-This paper investigates a general section formulation that augments classical kinematics with a compact set of axial warping modes whose amplitudes can be tied to the twist rate $\vartheta^{\prime}$ and the engineering shear deformations $\gamma_y, \gamma_z$. 
-The proposed section model recovers the classical elastic relations and holds under inelastic material response, while remaining compatible with standard inelastic frame element formulations.
-
-
-\section*{Section Kinematics}
-
-\paragraph{Classical Theory}
-
-Introductory treatments of beam theory typically assume a restricted three-dimensional displacement field \(\hat{\symbfit{x}}\):
-%
-\begin{equation}
-\hat{\symbfit{x}}(\reflenx,y,z) = \symbfit{x}(\reflenx) + \symbfit{R}(\reflenx)\,\symbfit{r}(y,z), 
-\qquad 
-\symbfit{r}=\begin{pmatrix} 0,\; y ,\; z\end{pmatrix},
-\label{eq:finite-plane-kinematics}
-\end{equation}
-%
-where \(\reflenx\) is the coordinate along the beam axis, and \((y,z)\) are the coordinates in the section plane normal to it with \((\symbfit{x}(\reflenx),\,\symbfit{R}(\reflenx))\) the primary kinematic variables describing the position \(\symbfit{x}\) of the reference line in space, and the rotation \(\symbfit{R}\) of a cross section. 
-\eqref{eq:finite-plane-kinematics} implies that plane sections remain plane. 
-Under infinitesimal displacements it reduces to
-%
-\begin{equation}
-\hat{\symbfit{x}}(\reflenx,y,z) = \symbfit{x}(\reflenx) + \symbfit{\theta}(\reflenx)\times\symbfit{r}(y,z).
-\label{eq:linear-plane-kinematics}
-\end{equation}
-%
-For a linear isotropic material with shear modulus \(G\), \eqref{eq:finite-plane-kinematics} leads to the resultant torque \(T\) and the shears \(V_y,\,V_z\) in terms of the twist rate \(\vartheta'\) and the shear deformations \(\gamma_y,\, \gamma_z\) in the form: %\citep{hjelmstad2005fundamentals}:
-\begin{equation*}
-T = G \Io \,\vartheta', \qquad V_y = G A\,\gamma_y, \qquad V_z = G A\,\gamma_z,
-\end{equation*}
-where \(\Io\) is the polar moment of inertia and \(A\) the cross sectional area. 
-These constitutive relations are generally unsatisfactory and are seldom used in practice. 
-Rather, the Saint~Venant torsion constant \(\Jo\) and the shear-corrected areas \(A_y\) and \(A_z\) 
-are introduced so as to match the exact solutions from the theory of elasticity in which the plane section hypothesis of \eqref{eq:finite-plane-kinematics} is violated. 
-This leads to the standard relations:
-\begin{equation}
-T = G \Jo\,\vartheta', \qquad V_y = G A_y\,\gamma_y, \qquad V_z = G A_z\,\gamma_z.
-\label{eq:correct-resultants}
-\end{equation}
-under elastic conditions following the procedure in well known references \citep{cowper1966shear,renton1991generalized}.
-Difficulty arises when applying a similar methodology to inelastic response.
-
-\paragraph{Complete Kinematics}
-An alternative displacement field to \eqref{eq:finite-plane-kinematics} which naturally produces the resultants from \eqref{eq:correct-resultants} takes the form \citep{hjelmstad1987warping}:
-\begin{equation}
-\hat{\symbfit{x}}(\reflenx,y,z) = \symbfit{x}(\reflenx) + \FrameRotation(\reflenx)\left(\symbfit{r} + \big(\symbfit{\varphi}(y,z)\cdot\symbfit{\alpha}(\reflenx)\big)\,\FrameBasis\right),
-\label{eq:finite-warping-kinematics}
-\end{equation}
-where $\FrameBasis$ is the unit vector orthogonal to the cross-section plane, $\symbfit{\varphi}$ is a vector of warping shape functions $\varphi_i(y,z)\in\mathbb{R}$ and $\symbfit{\alpha}(\reflenx)$ is a vector of auxiliary kinematic variables describing the amplitude \(\alpha_i\) of each warping shape \(\varphi_i\). 
-%
-In most practical applications, the amplitudes \(\symbfit{\alpha}\) are eliminated by associating them with natural section deformations:
-\begin{equation}
-\alpha_1 = \vartheta',\qquad 
-\alpha_2 = \gamma_y,\qquad 
-\alpha_3 = \gamma_z.
-\label{eq:amplitude-constraint}
-\end{equation}
-Thus, when the shape functions \(\varphi_i\) are chosen appropriately, linearizing \eqref{eq:finite-warping-kinematics} and integrating over the section furnishes exactly \eqref{eq:correct-resultants}:
-\begin{equation*}
-T = G J\,\vartheta',\qquad V_y = G A_y\,\gamma_y,\qquad V_z = G A_z\,\gamma_z.
-\end{equation*}
-\end{Prompt}
-
 \subsection{Details}
 We seek a kinematic model for a beam finite element with fully integrated material response, that exactly reproduces the SV solution under linear isotropy. 
 
@@ -204,7 +135,6 @@ However, this approach will be sufficient to exactly capture the Saint~Venant cl
 \subsubsection{Shear warping.}
 
 % \paragraph{Elastostatics}
-\cite{iesan1986saintvenants}, \cite{iesan2009classical}.
 
 \cite{brown1994nonuniform}
 

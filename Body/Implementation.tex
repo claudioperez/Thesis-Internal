@@ -227,7 +227,8 @@ rule.
 The \texttt{Prism} element is a standard linearly elastic prismatic
   frame. This element is ideal for modeling simple slender members that
   are not expected to exhibit inelastic response or experience
-  excessively large deformations. Nonlinear effects from moderately
+  excessively large deformations. 
+  Nonlinear effects from moderately
   large displacements can be accounted for using the \texttt{PDelta} or
   \texttt{Corotational} geometric transformations. Additionally, the
   \texttt{kinematics} option can be used to incorporate \(P-\delta\)
@@ -235,13 +236,15 @@ The \texttt{Prism} element is a standard linearly elastic prismatic
   This model is inherently elastic. 
   If an inelastic section is supplied through the \texttt{section} argument,
   resultant stresses and stiffness are obtained by linearizing about the
-  strain-free state. The implementation of 3D \gls{frame:axial} element
+  strain-free state. 
+  The implementation of 3D \gls{frame:axial} element
   kinematics is novel and supports asymmetric sections.
 
 
 \paragraph{2. ForceFrame}
   The \ForceFrame{} element is ideal for modeling inelasticity in
-  frames. Both \gls{frame:shear} and \gls{frame:euler} formulations are
+  frames. 
+  Both \gls{frame:shear} and \gls{frame:euler} formulations are
   supported with \gls{frame:basic} and \gls{frame:axial} (\(P-\delta\)) element kinematics. 
   
   This element is adapted from the \texttt{forceBeamColumn} and
@@ -264,13 +267,7 @@ The \texttt{Prism} element is a standard linearly elastic prismatic
   shear deformations. 
   The implementation of this element derives from
   the \texttt{Dinel3dFrm\_EBwDF} and \texttt{Dinel3dFrm\_TwDF*} elements
-  of FEDEASLab.
-  \begin{equation*}
-      \mathbf{u}_a = \left(u_x,\, u_y,\, u_z,\, 
-                           u_x',\, u_y',\, u_z',\, 
-                           \alpha
-                    \right)
-  \end{equation*}
+  of FEDEASLab \citep{filippou1996fedeas}.
 
 
 \paragraph{4. ExactFrame}

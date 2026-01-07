@@ -16,10 +16,10 @@
 \end{figure}
 The hockling problem in Figure \ref{fig:hockling} is a particularly complex problem that arises from practical considerations for the design of propeller shafts in large ships \citep{rosenthal1976application,oreilly2017modeling}.
 The problem is posed as a propped cantilever with
-a torque \(T\,\mathbf{E}_1\) applied at its end \(\xi = L\). 
+a torque \(T\,\mathbf{E}_1\) applied at its end \(\reflenx = L\). 
 The rod is fixed at the origin and is free
 to translate along the \(\mathbf{E}_1\) direction at its end. 
-% which is applied by fixing all degrees of freedom at \(\xi=0\), and \(2, 3, 5,\) and \(6\) at \(\xi = L\).
+% which is applied by fixing all degrees of freedom at \(\reflenx=0\), and \(2, 3, 5,\) and \(6\) at \(\reflenx = L\).
 This problem was investigated analytically by
 \cite{greenhill1883strength,ziegler1977principles} who found an \emph{approximate} minimum buckling torque \(T_{\mathrm{cr}}\) given by:
 \[
@@ -46,15 +46,16 @@ The following parameters are commonly adopted for the problem \citep{nour-omid19
 \end{array}
 \]
 To induce bifurcation, the undeformed
-centerline \(\bm{x}_0(\xi)\) is slightly rotated off the axis of the roller reaction:
+centerline \(\bm{x}_0(\reflenx)\) is slightly rotated off the axis of the roller reaction:
 %
 \begin{equation*}
-\bm{x}_0(\xi) = \xi \operatorname{Exp}\begin{pmatrix}
+\bm{x}_0(\reflenx) = \reflenx \operatorname{Exp}\begin{pmatrix}
   0 \\ 10^{-3} \\ 0
 \end{pmatrix} \mathbf{E}_1 .
 \end{equation*}
 %
-The simulation uses a discretization of 20 elements for the rod, and the torque is applied in 65 increments with iterative and incremental load factor control. The analysis uses the \texttt{SFIN} isometry with both \texttt{None} and \texttt{Incr} interpolation and parameterization variants.
+The simulation uses a discretization of 20 \ExactFrame{} elements for the rod, and the torque is applied in 65 increments with iterative and incremental load factor control. 
+The analysis uses the \texttt{SFIN} isometry with both \texttt{None} and \texttt{Incr} interpolation and parameterization variants.
 Figure~\ref{fig:hockle-plot} shows the relation between load factor \(\lambda\) and end rotation \(\vartheta = \|\operatorname{Log}\bm{\Lambda}(L)\|\).
 %
 This figure shows that the buckling load of the simulation is slightly higher than the value derived by \cite{ziegler1977principles}, but 

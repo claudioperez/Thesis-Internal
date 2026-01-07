@@ -1,15 +1,7 @@
 Consider a Timoshenko cantilever beam fixed at $x=0$ and loaded with a transverse force $\bar{F} \FrameBasis_z$ at the free end $x=L$.
 
-
-
 \subsubsection{Rectangle}
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.4\linewidth]{Examples//frame-0012//img/0012-rectangle-mesh-rotated.png}
-    \caption{Rotated rectangular section.}
-    \label{fig:0012-rect-rot}
-\end{figure}
 \paragraph{Shear correction}
 
 Consider the following cases:
@@ -18,21 +10,6 @@ Consider the following cases:
     \item[Case II: ]
 \end{description}
 
-\paragraph{Warping Functions}
-
-\begin{equation*}
-\begin{aligned}
-\LoveWarp_y = \left(-(1+\nu) a^2 +\frac{\nu}{3} b^2\right) y
-+\frac{2+\nu}{6}\left(y^3-3 y z^2\right)  
-+\frac{4 \nu b^3}{\pi^3} \sum_{n=1}^{\infty} \frac{(-)^n \sinh (n \pi y / b)}{n^3 \cosh (n \pi a / b)} \cos (n \pi z / b)
-\end{aligned}
-\end{equation*}
-\begin{equation*}
-\begin{aligned}
-\phi^{\rm R}&=\frac{V}{I}\sum_{m=0}^{\infty} \sum_{n=1}^{\infty} a_{2 n t+1, n} \cos \left(\frac{(2 m+1) \pi x}{2 a}\right) \sin \left(\frac{n \pi y}{b}\right)\\
-f^{\rm R} &= \frac{V}{I} \frac{1}{2} a^2
-\end{aligned}
-\end{equation*}
 
 
 \paragraph{Discussion}

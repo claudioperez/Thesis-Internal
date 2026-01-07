@@ -1,7 +1,4 @@
 \subsection{Introduction}
-\begin{Note}
-Look into VABS literature!
-\end{Note}
 % The purpose of this section is to establish a systematic framework for deriving 
 % six-dimensional section constitutive laws from the Saint-Venant solution class. 
 In this section we identify a minimal set of cross sectional warping shapes \(\bm{\Phi}(\bm{r})\) such that the representation \eqref{eq:trace-lift-linear}:
@@ -94,6 +91,18 @@ In a Type 1 formulation where auxiliary degrees of freedom are permitted:
     \item  \cite{klinkel2003anisotropic} employed the classical Saint~Venant warping functions defined by \eqref{eq:bvp-warp-shear-iesan}. 
 \end{itemize}
 
+
+Typically matching criteria are \parencite{nicholson1977timoshenko,steinboeck2013energyconsistent}
+\begin{itemize}
+\item Equal average displacement values.
+\cite{cowper1966shear} derived a shear coefficient by matching shear rotation angles from displacement averages with shear rotation angles from beam theory. 
+Dharmarajan and McCutchen (1973) extended \cite{cowper1966shear} method for homogeneous orthotropic beams. 
+This approach has been adopted by \cite{cowper1966shear,simo1984numericala}. 
+
+\item Equal shear strain energies (\cite{krenk1985pretwist,renton1991generalized,schramm1994shear}). \cite{gruttmann1999shear} only investigated monosymmetric sections.
+
+\item Equal natural frequencies (\cite{timoshenko1922transverse}, \cite{kaneko1975timoshenkos}, Hutchinson, 1981),
+\end{itemize}
 
 \begin{Prompt}
 We currently have two separate lines of thought: the beam kinematic postulate $\bm{u} + \bm{\theta}\times \bm{r} + \bm{\Phi} \bm{\alpha}$, which is very general, and the trace strain matrix $T_0 \bm{p}$ which pulls us inescapably into Saint Venant land. 

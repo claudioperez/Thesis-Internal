@@ -1,6 +1,24 @@
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\linewidth]{Examples/frame-1035/img/frame-1035-model.png}
+    \caption{Model for Example~\ref{sec:frame-1035}.}
+    \label{fig:1035-model}
+\end{figure}
 
+\FrameSection{
+label/problem=frame-1035,
+E=200,
+G=80,
+unit/stress={\giga\pascal}
+}
 
-A closed form analytical solution for the critical buckling moment is given by \cite{kitipornchai1986lateral}. 
+A simply supported span is subjected to constant flexure (\cref{fig:1035-model}). 
+A closed form solution for the critical buckling moment is \citep{kitipornchai1986lateral}:
+$$
+\begin{aligned}
+M_c & =\frac{\pi}{L}\sqrt{E I_y G J} \left[\left(1+\frac{\pi^2 \beta_x^2 E I_y}{4L^2 G J}\right)^{1 / 2}+\frac{\pi \beta_x}{2 L}\left(\frac{E I_y}{G J}\right)^{1 / 2}\right] .
+\end{aligned}
+$$
 
 \begin{Note}
 From \cite{du2021threedimensionala}:
@@ -16,10 +34,3 @@ In the analysis, a five-point Gauss-Lobatto integration rule is used for each el
     \caption{Stiffness eigenvalues from Example~\ref{sec:frame-1035}.}
     \label{fig:1035}
 \end{figure}
-
-\FrameSection{
-label/problem=frame-1035,
-E=200,
-G=80,
-unit/stress={\giga\pascal}
-}

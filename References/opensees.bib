@@ -69,35 +69,57 @@
 % ? Title looks like it was stored in title-case in Zotero
 % ? unused Url ("http://ieeexplore.ieee.org/document/5931487/")
 
-@software{mckenna2017uqfem,
-  title = {{{uqFEM}}},
-  author = {McKenna, Frank and Padhye, Nikhil},
-  date = {2017},
-  version = {1.0}
+
+@article{scott2008software,
+  title = {Software {{Framework}} for {{Parameter Updating}} and {{Finite-Element Response Sensitivity Analysis}}},
+  author = {Scott, Michael H. and Haukaas, Terje},
+  date = {2008-09},
+  year = {2008},
+  journaltitle = {Journal of Computing in Civil Engineering},
+  shortjournal = {J. Comput. Civ. Eng.},
+  volume = {22},
+  number = {5},
+  pages = {281--291},
+  publisher = {American Society of Civil Engineers (ASCE)},
+  issn = {0887-3801, 1943-5487},
+  doi = {10.1061/(asce)0887-3801(2008)22:5(281)},
+  url = {https://ascelibrary.org/doi/10.1061/%28ASCE%290887-3801%282008%2922%3A5%28281%29},
+  urldate = {2025-07-21},
+  abstract = {The finite-element software framework OpenSees is extended with parameter updating and response sensitivity capabilities to support client applications such as reliability, optimization, and system identification. Using software design patterns, member properties, applied loadings, and nodal coordinates can be identified and repeatedly updated in order to create customized finite-element model updating applications. Parameters are identified using a Chain of Responsibility software pattern, where objects in the finite-element model forward a parameterization request to component objects until the request is handled. All messages to identify and update parameters are passed through a Facade that decouples client applications from the finite-element domain of OpenSees. To support response sensitivity analysis, the Strategy design pattern facilitates multiple approaches to evaluate gradients of the structural response, whereas the Visitor pattern ensures that objects in the finite-element domain make the proper contributions to the equations that govern the response sensitivity. Examples demonstrate the software design and the steps taken by representative finite-element model updating and response sensitivity applications.},
+  langid = {english},
+  file = {/Users/claudio/Zotero/storage/BV2SV7CR/Scott and Haukaas - 2008 - Software Framework for Parameter Updating and Finite-Element Response Sensitivity Analysis.pdf}
 }
 
-@software{mckenna2018evw,
-  title = {Evw {{Application}}},
-  author = {McKenna, Frank},
-  date = {2018-06-30},
-  doi = {10.5281/ZENODO.1410695},
-  abstract = {The official homepage for the EVW Application is https://simcenter.designsafe-ci.org/learning-tools/evw-application/ This educational application allows the user to compare the responses of buildings subjected to earthquake and wind loading. The building is represented by a shear building model: an idealization of a structure in which the mass is lumped at the floor levels and the beams are assumed infinitely stiff in flexure and axially inextensible, and the columns are axially inextensible. The user inputs the floor weights and story properties (stiffness, yield strength, hardening ratio) of the stories, and a damping ratio for the structure. The user selects from a series of included ground motion acceleration records, or user provided motions. The user can quickly explore the effect of changing weight, height, and stiffness on the tine history response. In addition nonlinear effects due to P-Delta and soft story mechanisms can be studied. For earthquakes, the loading is applied using a uniform excitation approach in which forces are applied at floor level using inertial forces. For wind, the forces are determined at floor level using a stochastic process that takes into account gust speed, exposure category, drag coefficient and building parameters such as height and width.},
-  organization = {NHERI SimCenter}
+@article{scott2008softwarea,
+  title = {Software {{Patterns}} for {{Nonlinear Beam-Column Models}}},
+  author = {Scott, Michael H. and Fenves, Gregory L. and McKenna, Frank and Filippou, Filip C.},
+  date = {2008-04},
+  year = {2008},
+  journaltitle = {Journal of Structural Engineering},
+  shortjournal = {J. Struct. Eng.},
+  volume = {134},
+  number = {4},
+  pages = {562--571},
+  publisher = {American Society of Civil Engineers (ASCE)},
+  issn = {0733-9445, 1943-541X},
+  doi = {10.1061/(asce)0733-9445(2008)134:4(562)},
+  url = {https://ascelibrary.org/doi/10.1061/%28ASCE%290733-9445%282008%29134%3A4%28562%29},
+  langid = {english}
 }
-% == BibLateX quality report for mckenna2018evw:
-% ? Title looks like it was stored in title-case in Zotero
-% ? unused Library catalog ("DOI.org (Datacite)")
-% ? unused Url ("https://zenodo.org/record/1410695")
 
-@software{mckenna2018multiple,
-  title = {Multiple {{Degrees Of Freedom Application}}},
-  author = {McKenna, Frank},
-  date = {2018-01-02},
-  doi = {10.5281/ZENODO.1410693},
-  abstract = {The official homepage for the Multiple Degrees of Freedom Application is https://simcenter.designsafe-ci.org/learning-tools/multiple-degrees-freedom-application/ This educational application allows the user to explore the effects of different building parameters on the time-varying response of a building under earthquake, wind, or other transient loads. The building is represented by a shear building model: an idealization of a structure in which the mass is lumped at the floor levels and the beams are assumed infinitely stiff in flexure and axially inextensible, and the columns are axially inextensible. The user inputs the floor weights and story properties (stiffness, yield strength, hardening ratio) of the stories, and a damping ratio for the structure. The user selects from a series of included ground motion acceleration records, or user provided motions. The user can quickly explore the effect of changing weight, height, and stiffness on the tine history response. In addition nonlinear effects due to P-Delta and soft story mechanisms can be studied. For this application the equations of motions are set up using the uniform excitation approach, i.e. MA + CV + KU = -MAg. A consequence of this approach is that the floor displacements solved for are relative displacements. These equations are solved using the Newmark constant acceleration method and Newton-Raphson solution algorithm. New features Added: 	Ability to scale earthquake ground motion 	Allow user to input a Harmonic ground motion 	Allow user to look at all periods of structure.},
-  organization = {NHERI SimCenter}
+@article{zhu2018openseespy,
+  title = {{{OpenSeesPy}}: {{Python}} Library for the {{OpenSees}} Finite Element Framework},
+  shorttitle = {{{OpenSeesPy}}},
+  author = {Zhu, Minjie and McKenna, Frank and Scott, Michael H.},
+  date = {2018-01},
+  year = {2018},
+  journaltitle = {SoftwareX},
+  volume = {7},
+  pages = {6--11},
+  publisher = {Elsevier BV},
+  issn = {2352-7110},
+  doi = {10.1016/j.softx.2017.10.009},
+  url = {https://linkinghub.elsevier.com/retrieve/pii/S2352711017300584},
+  urldate = {2025-07-21},
+  langid = {english}
 }
-% == BibLateX quality report for mckenna2018multiple:
-% ? Title looks like it was stored in title-case in Zotero
-% ? unused Library catalog ("DOI.org (Datacite)")
-% ? unused Url ("http://doi.org/10.5281/zenodo.1410693")

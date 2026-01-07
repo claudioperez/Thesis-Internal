@@ -1,0 +1,151 @@
+
+%
+$$
+\begin{aligned}
+\left<
+  \delta \bm{u},\, \mathbb{D}\bm{s}
+\right>
+&=
+\delta \mathbf{u} \cdot \left(\left(\mathbf{A}^{\mathrm{t}}  \mathbf{q}-\overline{\mathbf{p}}_{\mathbf{w}}\right)-\mathbf{p}\right)
+\end{aligned}
+$$
+
+\begin{equation*}
+\begin{aligned}
+\bm{0}
+&=
+\frac{\partial}{\partial \mathbf{u}} \int  \mathbf{u}_s\left(x, \mathbf{u}, \mathbf{u}_w\right) \cdot \mathbb{D} \bm{s}(x) \,\mathrm{d} x
+-\left(\mathbf{p}+\int  \mathbf{N}_s^T(x) \mathbf{q}_s(x) \,\mathrm{d} x\right) \\
+\end{aligned}
+\end{equation*}
+\begin{equation*}
+\begin{aligned}
+0&=
+\int  \mathbf{u}_s\left(x, \mathbf{u}, \mathbf{u}_w\right) \cdot \mathbb{D} \bm{s}(x) \,\mathrm{d} x
+-\delta \bm{u}\cdot \left(\mathbf{p}+\int  \mathbf{N}_s^T(x) \mathbf{q}_s(x) \,\mathrm{d} x\right) \\
+\end{aligned}
+\end{equation*}
+%
+Boundary:
+%
+\begin{equation}
+\mathbf{a}_g^T \mathbf{q}-\mathbf{a}_r^T \mathbf{p}_{r p}=\mathbf{p}
+\end{equation}
+
+\subsection{Loading}
+
+In the force formulation, the consistent load stiffness is obtained by implicit differentiation of the residual:
+\begin{equation*}
+    g(\bm{u},\bm{v},\bm{q}) = \delta \bm{q} \cdot \int \mathbf{b}^{T}\mathbf{f}\bigl(\mathbf{b}\bm{q} + \bm{s}_{p}(x,\bm{u}) - \bm{s}(\bm{e})\bigr)\, \mathrm{d}x - \delta \bm{q} \cdot \bm{v} = 0
+\end{equation*}
+The total differential is
+\begin{equation*}
+\begin{aligned}
+& D_{u} g 
+=\left(
+\frac{\partial g}{\partial \bm{u}} \delta \bm{u}+\frac{\partial g}{\partial \bm{v}} \frac{\partial \bm{v}}{\partial \bm{u}} \delta \bm{u} + \frac{\partial g}{\partial \bm{q}} \frac{\partial \bm{q}}{\partial \bm{v}} \frac{\partial \bm{v}}{\partial \bm{u}}\right) \cdot \delta \bm{q}
++\frac{d \delta \bm{q}}{d u} \delta \bm{u} \, g = 0
+\end{aligned}
+\end{equation*}
+The rightmost term is dropped assuming \(g = 0\). Rearranging for \(\frac{\partial \bm{q}}{\partial \bm{v}}\) furnishes:
+\begin{equation}
+\delta \bm{q} \cdot \left(
+\frac{\partial g}{\partial \bm{q}} \frac{\partial \bm{q}}{\partial \bm{v}}\frac{\partial \bm{v}}{\partial \bm{u}}
+\right)\delta \bm{u}
+= \delta \bm{q}\cdot \left( 
+\frac{\partial \bm{v}}{\partial \bm{u}} - \frac{\partial g}{\partial \bm{u}}
+\right)\delta \bm{u}
+\label{eq:dqdv}
+\end{equation}
+where we've used \(\frac{\partial g}{\partial \bm{v}} = -\bm{1}\). 
+Next define:
+\begin{equation*}
+\begin{aligned}
+\bm{F} &\triangleq \frac{\partial g}{\partial \bm{q}} = \int \mathbf{b}^T \mathbf{f} \mathbf{b}\, \mathrm{d}x \\
+\mathbf{K}_{f} &\triangleq \frac{\partial g}{\partial \bm{u}} =\frac{\partial }{\partial \bm{u}} \int \mathbf{b}^T \mathbf{f} \bm{s}_p(x,\bm{u})\,\mathrm{d}x \\
+\mathbf{A} & \triangleq \frac{\partial \bm{v}}{\partial \bm{u}} \\
+\mathbf{K}_{q} &\triangleq \frac{\partial \bm{q}}{\partial \bm{v}} \\
+\end{aligned}
+\end{equation*}
+so \cref{eq:dqdv} becomes
+\begin{equation}
+\delta \bm{q} \cdot 
+\mathbf{F}\mathbf{K}_q \mathbf{A}
+\delta \bm{u}
+= \delta \bm{q}\cdot \left( 
+\mathbf{A} - \mathbf{K}_{f}
+\right)\delta \bm{u}
+\label{eq:dqdv-2}
+\end{equation}
+Multiplying \cref{eq:dqdv-2} by \(\bm{F}^{-1}\) furnishes:
+\begin{equation*}
+\delta \bm{q} \cdot \mathbf{K}_q \mathbf{A} \delta \bm{u}
+=
+\delta \bm{q} \cdot \bm{F}^{-T} \left(\mathbf{A} - \mathbf{K}_f\right) \delta \bm{u}
+\end{equation*}
+
+\begin{equation}
+\boxed{
+\mathbf{K}\delta\bm{u} = \mathbf{A}^T\mathbf{F}^{-1}\left( 
+\mathbf{A} - \mathbf{K}_f
+\right)
+}
+\end{equation}
+
+\subsection{Summary}
+
+$$
+\begin{aligned}
+    \bm{s}^h(x) &\triangleq \sum_{a} \mathbf{N}^{\mathrm{b}}_a(x) \bm{s}_a + \bm{s}_{f}(x) \\
+    \bm{e}^h(x) &\triangleq \sum_{\ell} \delta(x - x_{\ell}) \hat{S}^{-1}(\bm{s}^h (x_{\ell})) \\
+    \bm{u}^h(x) &\triangleq \sum_{a} ? + \bm{u}_{\mathrm{rigid}}
+\end{aligned}
+$$
+where $\mathbb{B}^*\bm{u}_{\mathrm{rigid}} = \bm{0}$ 
+
+\begin{enumerate}
+    \item 
+    $$
+    \left<\delta\bm{u},\; \mathbb{B}\bm{s} - \bm{f}\right> = 0
+    \qquad\implies\qquad 
+    (\mathbf{A}^{\mathrm{t}}_{a}\bm{s}_a - \bm{p}_w) - \bm{p} = \bm{0}
+    $$
+
+    \item 
+    $$
+    \left<\delta\bm{e},\; \bm{s}(\bm{e}^h) - \bm{s}^h\right> = 0
+    \qquad\implies\qquad
+    \bm{e}^h_{\ell} = \hat{S}^{-1}(\bm{s}^h_{\ell})
+    $$
+
+    \item 
+    $$
+    \left<\delta \bm{s},\; \bm{e}(\bm{u}^h(x)) - \bm{e}^h(x)\right> = 0
+    \qquad
+    \begin{aligned}
+    &\implies\quad 
+    d\bm{v}(\bm{e}^h(x)) - \bm{A}d\bm{u} = \bm{0} \\
+    &\implies\quad
+    d\bm{q} = \bm{F}^{-1} d\bm{v}
+    \end{aligned}
+    $$
+\end{enumerate}
+
+ 
+Maybe try 
+$$
+\mathbb{B}\sum\mathbf{N}^{\mathrm{b}}_a \bm{s}_a =\bm{0}
+\qquad\implies\qquad
+\mathbb{B}\bm{s}^h \equiv \mathbb{B}\bm{s}_{f}
+$$
+or
+$$
+\bm{s}^h(x) = \mathbf{N}^{\mathrm{b}}_a \bm{q}_a + \mathbf{N}^{\mathrm{v}}_a \bm{s}_a + \bm{s}_f(x)
+$$
+where maybe $\mathbf{A}^{\mathrm{t}}\mathbf{N}^{v}_a = \bm{0}$ and $\forall a$
+$$
+\mathbf{N}^b_a\begin{pmatrix}
+    0 \\ V_y \\ V_z \\ \hline 0 \\ 0 \\ 0 \\ \hline 0 \\ 0
+\end{pmatrix}_{a}
+=\bm{0}
+$$

@@ -1,0 +1,191 @@
+
+\begin{itemize}
+    \item Filippou, inheriting Ciampi. \cite{spacone1994flexibilitybased,taylor2003mixed}
+    \item White. \cite{nukala2004mixed}, \cite{alemdar2005displacement} (OpenSees mixed formulation)
+
+    \item Hjelmstad. See \cite{hjelmstad2002mixed}, inheriting \cite{simo1986variational}:
+    \begin{itemize}
+        \item Hellinger-Reissner
+        \item Hu-Washizu Classical
+        \item Hu-Washizu Enhanced
+        \item Mixed-Enhanced
+    \end{itemize}
+
+\end{itemize}
+
+
+\begin{enumerate}
+    \item EVDE - T2S2
+    \item SWME - T1S1
+    \item EWME - \cite{dire2018mixed,addessi2021enricheda}
+\end{enumerate}
+
+\section{Formulation}
+Consider the linear equilibrium equations:
+\begin{equation}
+    \begin{aligned}
+        \bm{n}' &=  \bm{0} \\
+        \bm{m}' + \FrameBasis \times \bm{n} &= \bm{0} \\
+        \bm{w}' - \bm{v} &= \bm{0}
+    \end{aligned}
+\end{equation}
+Let
+\begin{equation*}
+\bm{m}(x) = \phi_I(x) \bm{m}_I + \phi_J(x) \bm{m}_J + \bm{m}_{\mathrm{p}}(x)
+\qquad\text{and}\qquad
+\bm{w}(x) = \phi_I \bm{w}_I + \phi_J \bm{w}_J
+\end{equation*}
+%
+In the force-based element formulation (Spacone et al. 1996), the equilibrium relationship is stated in strong form as
+
+$$
+\bm{s}(x) = \mathbf{b}(x) \bm{q} + \bm{s}_{\mathrm{p}}(x)
+$$
+where the matrix $\mathbf{b}(x)$ contains equilibrium interpolation functions that express section forces in terms of basic forces. 
+\begin{equation}
+\begin{pmatrix}
+N(x)   \\
+V_y(x) \\
+V_z(x) \\
+T(x)   \\
+M_z(x) \\
+M_y(x) \\
+B(x) \\
+Q(x) \\
+\end{pmatrix}
+=\left[\begin{array}{ccc|ccc|c:c}
+1 &             0 &            0 & 0 & 0 & 0 & & \\
+0 &  \frac{1}{L} & \frac{1}{L} & 0 & 0 & 0 & & \\
+0 &             0 &            0 & 0 & \frac{1}{L} & \frac{1}{L} & & \\ \hline
+0 &             0 &            0 & 1 & 0 & 0 & & \\
+0 & \tfrac{1}{L}x-1 &  \tfrac{1}{L}x & 0 & 0 & 0 & & \\
+0 &             0 &            0 & 0 & \tfrac{1}{L}x-1 & \tfrac{1}{L}x & & \\ \hline
+0 &             0 &            0 & 0 & 0 & 0 & \frac{x}{L}-1 & \frac{x}{L} \\
+0 &             0 &            0 & 0 & 0 & 0 & \frac{1}{L}   & \frac{1}{L} \\
+\end{array}\right]
+\begin{pmatrix}
+N_j \\ 
+M_{zi} \\ 
+M_{zj}
+\end{pmatrix}
+\end{equation}
+In the absence of element loads, the axial force is constant, while the bending moment varies linearly along the element.
+
+From the principle of virtual forces, the compatibility relationship between section deformations and element deformations is
+
+$$
+\dd \mathbf{v}=\int_0^L \mathbf{b}^T \mathbf{e} \, \dd x
+$$
+
+Linearization of Eq. (16) with respect to basic forces gives the element flexibility matrix
+
+$$
+\mathbf{F} \triangleq \frac{\partial \mathbf{v}}{\partial \mathbf{q}}=\int_0^L \mathbf{b}^T \mathbf{f}_s \mathbf{b} \, \dd x
+$$
+where $\mathbf{f}_s=\mathbf{k}_s^{-1}$ is the section flexibility matrix. 
+
+$$
+0 =\delta \Pi=\left(\begin{array}{l}
+\delta \tilde{\mathbf{a}} \\
+\delta \tilde{\mathbf{q}} \\
+\delta \tilde{\mathbf{e}}^l
+\end{array}\right) \cdot \left(
+\\
+\begin{pmatrix}
+   \mathbf{H}^{\mathrm{t}}\tilde{\mathbf{q}} \\
+\mathbf{b}_l^{\mathrm{t}} \tilde{\mathbf{e}}^l - \mathbf{H} \tilde{\mathbf{a}} \\
+  -\mathbf{b}_l \tilde{\mathbf{q}}
+\end{pmatrix}
+-\left(\begin{array}{c}
+\mathbf{F} \\
+\mathbf{0} \\
+\mathbf{s}_l^p-\hat{\mathbf{s}}_l
+\end{array}\right)
+\right)
+$$
+
+\hrule
+
+$$
+\begin{aligned}
+\delta \Pi_{\mathrm{VHW}}
+&=\int_0^L \delta \bm{e} \cdot \left(\hat{\mathbf{s}}(\bm{e})-\left(\mathbf{B} \mathbf{q}+\overline{\mathbf{s}}_{\mathbf{w}}\right)\right) \mathrm{d} x
+  +\delta \mathbf{q} \cdot \left(\mathbf{A} \mathbf{u}-\int_0^L \mathbf{B}^{\mathrm{t}}  \bm{e} \mathrm{~d} x\right)
+  +\delta \mathbf{u} \cdot \left(\left(\mathbf{A}^{\mathrm{t}}  \mathbf{q}-\overline{\mathbf{p}}_{\mathbf{w}}\right)-\mathbf{p}\right) \\
+&=\left< \delta \bm{e} ,\; \left.\hat{\mathbf{s}}(\bm{e})-\left(\mathbf{B} \mathbf{q}+\overline{\mathbf{s}}_{\mathbf{w}}\right)\right. \right>
+  +\delta \mathbf{s}_{a} \cdot \mathbf{A}_{ab} \mathbf{u}_b  - \left< \mathbf{N}_{\mathrm{s}\, a}\delta \mathbf{s}_{a},\; \bm{e} \right>
+  +\delta \mathbf{u} \cdot \left(\left(\mathbf{A}^{\mathrm{t}}  \mathbf{q}-\bar{\mathbf{p}}_{\mathbf{w}}\right)-\mathbf{p}\right) \\
+\end{aligned}
+$$
+
+\begin{enumerate}
+%
+\item
+\begin{equation*}
+\begin{aligned}
+\frac{\partial \Pi\left(\mathbf{u}, \mathbf{e}, \mathbf{s}, \mathbf{u}_w\right)}{\partial \bm{s}(x)} 
+&=  \int  \left.\mathbf{q} \cdot\mathbf{N}_{\mathrm{s}}^T(x)\left(\mathbf{e}\left[\mathbf{u}_s\left(x, \mathbf{u}, \mathbf{u}_w\right)\right]-\bm{e}(x)\right)\,\mathrm{d} x\right. \\
+\end{aligned}
+\end{equation*}
+
+\begin{equation*}
+\begin{aligned}
+\frac{\partial \Pi\left(\mathbf{u}, \mathbf{e}, \mathbf{s}, \mathbf{u}_w\right)}{\partial \mathbf{s}(x)} 
+&= \frac{\partial}{\partial \mathbf{q}}\left(\mathbf{q} \cdot \int  \mathbf{b}^T(x)\left\{\mathbf{e}\left[\mathbf{u}_s\left(x, \mathbf{u}, \mathbf{u}_w\right)\right]-\bm{e}(x)\right\} d x\right) \\
+\end{aligned}
+\end{equation*}
+%
+$$
+\begin{aligned}
+\delta \mathbf{q} \cdot \left(\mathbf{A} \mathbf{u}-\int_0^L \mathbf{B}^{\mathrm{t}}  \bm{e} \mathrm{~d} x\right)
+% &= \delta \mathbf{s}_{a} \cdot \left(\mathbf{A}_{ab} \mathbf{u}_b  - \int_0^L \mathbf{N}_{\mathrm{s}\, a}^{\mathrm{t}}  \bm{e} \mathrm{~d} x\right)\\
+% &= \delta \mathbf{s}_{a} \cdot \mathbf{A}_{ab} \mathbf{u}_b  - \delta \mathbf{s}_{a} \cdot \int_0^L \mathbf{N}_{\mathrm{s}\, a}^{\mathrm{t}} \bm{e} \mathrm{~d} x \\
+% &= \delta \mathbf{s}_{a} \cdot \mathbf{A}_{ab} \mathbf{u}_b  - \int_0^L \mathbf{N}_{\mathrm{s}\, a}\delta \mathbf{s}_{a} \cdot \bm{e} \mathrm{~d} x \\
+&= \delta \mathbf{s}_{a} \cdot \mathbf{A}_{ab} \mathbf{u}_b  - \left< \mathbf{N}_{\mathrm{s}\, a}\delta \mathbf{s}_{a},\; \bm{e} \right> \\
+&= \left< \delta \mathbf{s}_{a},\; \mathbf{N}_{\mathrm{s}\, a}^{\mathrm{t}}\bm{e} \right> \\
+\end{aligned}
+$$
+\item 
+$$
+\begin{aligned}
+\left< \delta \bm{e} ,\; \left.\hat{\mathbf{s}}(\bm{e})-\left(\mathbf{N}_{\mathrm{s}\, a} \mathbf{s}_a+\bar{\mathbf{s}}_{\mathbf{w}}\right)\right. \right>
+&=
+\int_0^L \delta \bm{e} \cdot \left(\hat{\mathbf{s}}(\bm{e})-\left(\mathbf{B} \mathbf{q}+\overline{\mathbf{s}}_{\mathbf{w}}\right)\right) \mathrm{d} x \\
+\end{aligned}
+$$
+%
+\item
+%
+$$
+\begin{aligned}
+\left<
+  \delta \bm{u},\, \mathbb{D}\bm{s}
+\right>
+&=
+\delta \mathbf{u} \cdot \left(\left(\mathbf{A}^{\mathrm{t}}  \mathbf{q}-\overline{\mathbf{p}}_{\mathbf{w}}\right)-\mathbf{p}\right)
+\end{aligned}
+$$
+
+\begin{equation*}
+\begin{aligned}
+\bm{0}
+&=
+\frac{\partial}{\partial \mathbf{u}} \int  \mathbf{u}_s\left(x, \mathbf{u}, \mathbf{u}_w\right) \cdot \mathbb{D} \bm{s}(x) \,\mathrm{d} x
+-\left(\mathbf{p}+\int  \mathbf{N}_s^T(x) \mathbf{q}_s(x) \,\mathrm{d} x\right) \\
+\end{aligned}
+\end{equation*}
+\begin{equation*}
+\begin{aligned}
+0&=
+\int  \mathbf{u}_s\left(x, \mathbf{u}, \mathbf{u}_w\right) \cdot \mathbb{D} \bm{s}(x) \,\mathrm{d} x
+-\delta \bm{u}\cdot \left(\mathbf{p}+\int  \mathbf{N}_s^T(x) \mathbf{q}_s(x) \,\mathrm{d} x\right) \\
+\end{aligned}
+\end{equation*}
+%
+Boundary:
+%
+\begin{equation}
+\mathbf{a}_g^T \mathbf{q}-\mathbf{a}_r^T \mathbf{p}_{r p}=\mathbf{p}
+\end{equation}
+
+\end{enumerate}

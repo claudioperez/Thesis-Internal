@@ -34,6 +34,23 @@ initial slope \\
 \end{tabular}
 \end{table}
 
+\begin{table}[H]
+\begin{tabular}{lll}
+\hline
+\multicolumn{2}{l}{\textbf{Concrete Material Property}}                       & \textbf{Value} \\ \hline
+General unconfined compressive strength                  (ksi) & \gls{fce} & $5.0$   \\
+Bent 4 cap beam unconfined compressive strength          (ksi) & \gls{fce} & $5.85$  \\
+Bents 5 to 11 cap beam unconfined   compressive strength (ksi) & \gls{fce} & $5.2$   \\
+Unconfined strain at maximum strength                          & \gls{ec0} & $0.002$ \\
+Unconfined crushing (spalling) strain                          & \gls{esp} & $0.005$ \\
+Compressive elastic modulus                              (ksi) & \gls{Ec}  & $57\sqrt{f'_{ce} \text{ (psi)}}$ \\
+Poisson's ratio                                                & \gls{nuc} & $0.2$   \\
+Shear modulus                                                  & \gls{Gc}  & $E_{c}/\left(2+(1+\nu_{c})\right)$ \\ \hline
+\end{tabular}
+\caption{Hayward Bridge numerical model concrete material properties.}
+\label{tab:num:concrete}
+\end{table}
+
 \begin{description}
 \item[Hognestad]
   Hognestad's (\citet{hognestad1951study}, \citet{kent1973cyclic}, \textcite{scott1982stressstrain}) monotonic

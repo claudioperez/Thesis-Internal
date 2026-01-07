@@ -44,15 +44,29 @@
 \newcommand{\InputDetail}[1]{\input{#1}}
 \ifthesis
 \InputDetail{Style/Thesis}
-\renewcommand{\gls}[1]{#1} % TODO
-\newcommand{\glspl}[1]{#1} %
+% \renewcommand{\gls}[1]{#1} % TODO
+% \newcommand{\glspl}[1]{#1} %
 \else 
 \input{Style/Article}
-\newcommand{\gls}[1]{#1} % TODO
-\newcommand{\glspl}[1]{#1} %
-\newcommand{\Glspl}[1]{#1} %
+% \newcommand{\gls}[1]{#1} % TODO
+% \newcommand{\glspl}[1]{#1} %
+% \newcommand{\Glspl}[1]{#1} %
 \fi
 
+%%% 
+%%% Glossaries
+\usepackage[noredefwarn]{glossaries}
+\usepackage[automake]{glossaries-extra}
+\newglossary[flg]{frame}{fld}{fdn}{Frame formulations}
+\newglossary[tlg]{brace}{tld}{tdn}{General Terms}
+\newglossary[mag]{matprop}{mas}{mao}{Symbols: Material Properties}
+\newglossary[mog]{modelprop}{mos}{moo}{Symbols: Modeling Properties}
+\makeglossaries
+\input{Front/glossaries}
+\input{Glossary/platform}
+\input{Glossary/uniaxial}
+
+%% Notation
 \input{notation}
 \InputDetail{notation/armero}
 \InputDetail{Macros/FrameSection}

@@ -20,7 +20,7 @@
     \item EWME - \cite{dire2018mixed,addessi2021enricheda}
 \end{enumerate}
 
-\section{Formulation}
+\subsection{Formulation}
 Consider the linear equilibrium equations:
 \begin{equation}
     \begin{aligned}
@@ -39,9 +39,9 @@ Let
 In the force-based element formulation (Spacone et al. 1996), the equilibrium relationship is stated in strong form as
 
 $$
-\bm{s}(x) = \mathbf{b}(x) \bm{q} + \bm{s}_{\mathrm{p}}(x)
+\bm{s}_h(x) = \mathbf{b}(x) \bm{q} + \bm{s}_{\mathrm{p}}(x)
 $$
-where the matrix $\mathbf{b}(x)$ contains equilibrium interpolation functions that express section forces in terms of basic forces. 
+where the matrix $\mathbf{b}(x)$ contains resultant interpolation functions that express section forces in terms of basic forces. 
 \begin{equation}
 \begin{pmatrix}
 N(x)   \\
@@ -53,7 +53,7 @@ M_y(x) \\
 B(x) \\
 Q(x) \\
 \end{pmatrix}
-=\left[\begin{array}{ccc|ccc|c:c}
+=\left[\begin{array}{ccc|ccc|cc}
 1 &             0 &            0 & 0 & 0 & 0 & & \\
 0 &  \frac{1}{L} & \frac{1}{L} & 0 & 0 & 0 & & \\
 0 &             0 &            0 & 0 & \frac{1}{L} & \frac{1}{L} & & \\ \hline
@@ -74,13 +74,13 @@ In the absence of element loads, the axial force is constant, while the bending 
 From the principle of virtual forces, the compatibility relationship between section deformations and element deformations is
 
 $$
-\dd \mathbf{v}=\int_0^L \mathbf{b}^T \mathbf{e} \, \dd x
+\dd \mathbf{v}=\int_0^L \mathbf{b}^{\top} \mathbf{e} \, \dd x
 $$
 
 Linearization of Eq. (16) with respect to basic forces gives the element flexibility matrix
 
 $$
-\mathbf{F} \triangleq \frac{\partial \mathbf{v}}{\partial \mathbf{q}}=\int_0^L \mathbf{b}^T \mathbf{f}_s \mathbf{b} \, \dd x
+\mathbf{F} \triangleq \frac{\partial \mathbf{v}}{\partial \mathbf{q}}=\int_0^L \mathbf{b}^{\top} \mathbf{f}_s \mathbf{b} \, \dd x
 $$
 where $\mathbf{f}_s=\mathbf{k}_s^{-1}$ is the section flexibility matrix. 
 
@@ -124,14 +124,14 @@ $$
 \begin{equation*}
 \begin{aligned}
 \frac{\partial \Pi\left(\mathbf{u}, \mathbf{e}, \mathbf{s}, \mathbf{u}_w\right)}{\partial \bm{s}(x)} 
-&=  \int  \left.\mathbf{q} \cdot\mathbf{N}_{\mathrm{s}}^T(x)\left(\mathbf{e}\left[\mathbf{u}_s\left(x, \mathbf{u}, \mathbf{u}_w\right)\right]-\bm{e}(x)\right)\,\mathrm{d} x\right. \\
+&=  \int  \left.\mathbf{q} \cdot\mathbf{N}_{\mathrm{s}}^{\top}(x)\left(\mathbf{e}\left[\mathbf{u}_s\left(x, \mathbf{u}, \mathbf{u}_w\right)\right]-\bm{e}(x)\right)\,\mathrm{d} x\right. \\
 \end{aligned}
 \end{equation*}
 
 \begin{equation*}
 \begin{aligned}
 \frac{\partial \Pi\left(\mathbf{u}, \mathbf{e}, \mathbf{s}, \mathbf{u}_w\right)}{\partial \mathbf{s}(x)} 
-&= \frac{\partial}{\partial \mathbf{q}}\left(\mathbf{q} \cdot \int  \mathbf{b}^T(x)\left\{\mathbf{e}\left[\mathbf{u}_s\left(x, \mathbf{u}, \mathbf{u}_w\right)\right]-\bm{e}(x)\right\} d x\right) \\
+&= \frac{\partial}{\partial \mathbf{q}}\left(\mathbf{q} \cdot \int  \mathbf{b}^{\top}(x)\left\{\mathbf{e}\left[\mathbf{u}_s\left(x, \mathbf{u}, \mathbf{u}_w\right)\right]-\bm{e}(x)\right\} d x\right) \\
 \end{aligned}
 \end{equation*}
 %
@@ -171,21 +171,21 @@ $$
 \bm{0}
 &=
 \frac{\partial}{\partial \mathbf{u}} \int  \mathbf{u}_s\left(x, \mathbf{u}, \mathbf{u}_w\right) \cdot \mathbb{D} \bm{s}(x) \,\mathrm{d} x
--\left(\mathbf{p}+\int  \mathbf{N}_s^T(x) \mathbf{q}_s(x) \,\mathrm{d} x\right) \\
+-\left(\mathbf{p}+\int  \mathbf{N}_s^{\top}(x) \mathbf{q}_s(x) \,\mathrm{d} x\right) \\
 \end{aligned}
 \end{equation*}
 \begin{equation*}
 \begin{aligned}
 0&=
 \int  \mathbf{u}_s\left(x, \mathbf{u}, \mathbf{u}_w\right) \cdot \mathbb{D} \bm{s}(x) \,\mathrm{d} x
--\delta \bm{u}\cdot \left(\mathbf{p}+\int  \mathbf{N}_s^T(x) \mathbf{q}_s(x) \,\mathrm{d} x\right) \\
+-\delta \bm{u}\cdot \left(\mathbf{p}+\int  \mathbf{N}_s^{\top}(x) \mathbf{q}_s(x) \,\mathrm{d} x\right) \\
 \end{aligned}
 \end{equation*}
 %
 Boundary:
 %
 \begin{equation}
-\mathbf{a}_g^T \mathbf{q}-\mathbf{a}_r^T \mathbf{p}_{r p}=\mathbf{p}
+\mathbf{a}_g^{\top} \mathbf{q}-\mathbf{a}_r^{\top} \mathbf{p}_{r p}=\mathbf{p}
 \end{equation}
 
 \end{enumerate}

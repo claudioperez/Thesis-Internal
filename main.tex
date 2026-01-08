@@ -10,9 +10,6 @@
 % \notestrue
 %
 \ifthesis
-
-% \let\oldsubparagraph\subparagraph
-% \renewcommand{\subparagraph}[1]{}
 \newcommand{\InputChapter}[1]{{
   \renewcommand{\chapter}{\oldchapter}
   \renewcommand{\section}{\oldsection}
@@ -22,13 +19,8 @@
   \input{#1}
 }}
 \else
-
-% \let\oldsubparagraph\subparagraph
-% \renewcommand{\subparagraph}[1]{}
-
 \newcommand{\InputChapter}[1]{{
   % Promote headings by one level
-  % \begingroup
   % \let\oldsection\section
   % \let\oldsubsection\subsection
   % \let\oldsubsubsection\subsubsection
@@ -45,7 +37,6 @@
   % \renewcommand{\subsection}{\oldsubsection}
   % \renewcommand{\subsubsection}{\oldsubsubsection}
   % \renewcommand{\paragraph}{\oldparagraph}
-  % \endgroup
   
   % Promote headings by one level
   \let\oldsection\section
@@ -115,7 +106,7 @@
 \addbibresource{References/elements.bib}
 \addbibresource{References/rotations.bib}
 \addbibresource{References/resume.bib}
-\addbibresource{References/opensees.bib}
+% \addbibresource{References/opensees.bib}
 \addbibresource{References/stability.bib}
 \addbibresource{References/mechanics.bib}
 \addbibresource{References/manifolds.bib}
@@ -123,6 +114,9 @@
 \addbibresource{Examples/frame-1035/references.bib}
 \addbibresource{Examples/frame-1030/references.bib}
 
+
+% \let\oldsubparagraph\subparagraph
+\renewcommand{\subparagraph}[1]{}
 
 
 \begin{document}
@@ -156,6 +150,9 @@
 \printglossary[type=brace]
 \clearpage
 
+\section{Introduction}
+\input{Body/Introduction}
+\clearpage 
 
 \part{Finite Element Formulations}
 
@@ -223,8 +220,6 @@
 \clearpage
 
 
-\clearpage
-% \part{Verification}
 \input{Examples/index}
 
 \part{Application}
@@ -250,12 +245,13 @@
 \input{Sections/33_Summary}
 \clearpage
 
+\input{Body/ForceFrame/main}
+\clearpage
+
 \section{Trace Derivations}
 \input{Sections/Traces/A3_Cowper}
 \inputdraft{Sections/Traces/A3_CowperTheoremExtra}
 \clearpage
-% \input{Sections/Traces/A3_Cowper0}
-% % \inputdraft{Sections/Traces/57_Cowper}
 \clearpage
 \input{Sections/Traces/A3_Energetic}
 \clearpage 
@@ -272,7 +268,7 @@
 \end{Notation}
 
 \clearpage
-\section{References}\label{sec:references}
+\hypertarget{references}{\section{References}\label{sec:references}}
 \printbibliography[heading=none]
 
 \end{document}

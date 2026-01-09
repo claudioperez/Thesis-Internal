@@ -66,7 +66,7 @@ Following a pilot deployment covering 22 bridges, Caltrans has funded continued 
 A significant obstacle is computational.
 Uncertainty quantification, model calibration, and reliability analysis do not require one simulation but many---often thousands or millions---and each evaluation of a nonlinear finite element model carries substantial cost.
 Beyond mere repetition, many modern inference algorithms require derivatives of model outputs with respect to parameters.
-Adjoint sensitivity methods and automatic differentiation have matured considerably in recent years \citep{beck1994automatic,Martins2001}, driven largely by applications in machine learning, but these advances have not been fully absorbed into structural analysis software, which typically predates them by decades.
+Adjoint sensitivity methods and automatic differentiation have matured considerably in recent years \citep{beck1994automatic,martins2001connection}, driven largely by applications in machine learning, but these advances have not been fully absorbed into structural analysis software, which typically predates them by decades.
 The result is a gap between what is mathematically possible and what is practically available: the tools exist, in principle, to perform gradient-based optimization, Bayesian inference, and topology optimization on complex structural models, but the software infrastructure to support such workflows at scale remains underdeveloped.
 
 A second obstacle is mathematical.

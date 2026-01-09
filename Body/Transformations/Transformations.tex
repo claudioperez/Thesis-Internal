@@ -1,0 +1,804 @@
+\newcommand{\VarRigidTran}{{\dot{\bm{c}}_0}}
+\newcommand{\VarConfig}{{\bm{v}}}
+
+\subsection{Formulation}\label{sec:transformation}
+
+In many cases configuration-dependent interpolations of \(\VarConfig^h\) and
+\(\bm{\eta}^h\) can be interpreted as simple interpolations in a
+transformation of the configuration space. Transformations are typically
+used in two ways:
+
+\begin{itemize}
+\item
+  When \emph{interpolation} is performed through the transformed space,
+  derivatives of the transformation arise under \(\mathbb{B}^*\) 
+  %in the expression for the stiffness 
+  which generally cannot be removed from
+  %the integrals required by the 
+  the \emph{internal operators} of Box 2. % which are internal to the element and are identified as the \emph{internal operators}. 
+  Such a transformation is considered \emph{element-dependent},
+  because it must be accounted for in a Gauss quadrature loop when an
+  element performs state-determination.
+\item
+  When \emph{nodal values} are taken in the transformed space, the
+  transformation factors out of \(\mathbb{B}^*\) and any derivatives of
+  the transformation which arise from \(\mathcal{K}_G\) can be taken
+  outside of the integral inner product in the same way \(\bm{\eta}_a\)
+  was in deriving Equation~(\ref{eq:def-pa}). This effect is
+  \emph{element-independent} and can be performed externally through the
+  use of \emph{external operators}, which will be
+  introduced in this section.
+\end{itemize}
+
+In general, the effective natural bases \(\{\bm{\varphi}_{u b}\}\) can
+be decomposed into an element-dependent and element-independent
+contribution with the form: %
+\begin{equation*} 
+\bm{\varphi}_{u b}(\bm{\xi}, \{\VarConfig_c\}) = \sum_d \bar{\bm{\varphi}}_{u b}\left(\bm{\xi}; \{\VarConfig_c\}\right) \, \mathbf{a}_{b d}\left(\{\VarConfig_c\}\right)
+\end{equation*}
+where the contribution from operators \(\{\mathbf{a}_{b d}\}\) is
+\emph{element-independent}. This independence relies on the fact that in
+general
+\begin{equation}
+  \mathbb{B}^*\left[\bm{\varphi}^{}_{u b}\mathbf{a}\right] = \mathbb{B}^*\left[\bm{\varphi}^{}_{u b}\right]\mathbf{a}
+\label{eq:B-assoc}
+\end{equation} 
+for any linear operator \(\mathbf{a}\)
+that is constant in \(\bm{\xi}\). In this section, these ideas are
+explored for two distinct types of transformations, which are identified
+with the names \emph{parametric} and \emph{isometric}.
+
+\hypertarget{sec:parametric}{%
+\subsubsection{Parametric Transformations}\label{sec:parametric}}
+
+A \emph{parametric} transformation is characterized by a map
+\(g: \mathscr{C}\rightarrow\bar{\mathscr{C}}\) that takes one
+configuration \((\bm{x}, \bm{\Lambda})\) to a new representation
+\((\bar{\bm{x}}, \bar{\bm{\Lambda}})\) in a new configuration manifold
+\(\bar{\mathscr{C}}\) where \emph{natural} variations
+\(\VarConfig\in T_\chi\mathscr{C}\) and \emph{transformed} variations
+\(\bar{\VarConfig} \in T_{g(\chi)}\bar{\mathscr{C}}\) are smoothly related
+by the push-forward \(g_*\) and pull-back \(g^*\) at each point \(\bm{\xi}\): 
+%
+\begin{equation}
+  \bar{\VarConfig} = g_*\VarConfig
+  \qquad\text{ and }\qquad
+  \VarConfig = g^* \bar{\VarConfig}.
+\label{eq:uubar-parametric}
+\end{equation}
+In the Bubnov-Galerkin formulation, \(\bm{\eta}\) follows similarly:
+\begin{equation}
+\bar{\bm{\eta}} = g_*\bm{\eta}
+\qquad\text{ and }\qquad
+\bm{\eta} = g^* \bar{\bm{\eta}}.
+\label{eq:eta-parametric}
+\end{equation}
+%
+
+\hypertarget{internal-operators}{%
+\paragraph{Internal Operators}\label{internal-operators}}
+
+The simple interpolations
+\(\bar{\bm{\eta}}^h\), \(\bar{\VarConfig}^h\) of the transformed variations
+\(\bar{\bm{\eta}}\), \(\bar{\VarConfig}\) are represented by interpolation
+bases \(\left\{\bar{\bm{\varphi}}^{}_{\eta a}\right\}\),
+\(\left\{\bar{\bm{\varphi}}^{}_{u a}\right\}\) in the standard manner:
+%
+\begin{equation}
+  \bar{\bm{\eta}}^h = \sum_a \bar{\bm{\varphi}}^{}_{\eta a}(\bm{\xi})\bar{\bm{\eta}}^{}_a
+  \qquad\text{ and }\qquad
+  \bar{\VarConfig}^h = \sum_b \bar{\bm{\varphi}}^{}_{u b}(\bm{\xi}) \bar{\VarConfig}^{}_b.
+  \label{eq:bar-interp}
+\end{equation}
+%
+The natural linearized variations
+\(\bm{\eta}^\ell\) and \(\VarConfig^\ell\) follow immediately from
+Equation~(\ref{eq:bar-interp}) by Equation~(\ref{eq:eta-parametric}) and
+Equation~(\ref{eq:uubar-parametric}):
+%
+\begin{equation*} 
+\bm{\eta}^\ell = \left. \frac{\mathrm{d}}{\mathrm{d}\varepsilon} g^*\bar{\bm{\eta}}^h \right|_{\varepsilon=0}
+\qquad\text{ and }\qquad
+\VarConfig^\ell = \left. \frac{\mathrm{d}}{\mathrm{d}\varepsilon} g^*\bar{\VarConfig}^h  \right|_{\varepsilon=0}
+\end{equation*}
+%
+and it follows that the natural bases
+\(\left\{{\bm{\varphi}}^{}_{\eta a}\right\}\),
+\(\left\{{\bm{\varphi}}^{}_{u a}\right\}\) for Equation~(\ref{eq:interp}) are:
+%
+\begin{equation}
+\bm{\varphi}_{\eta a} = g^* \bar{\bm{\varphi}}_{\eta a}
+\qquad\text{ and }\qquad
+\bm{\varphi}_{u b} = g^* \bar{\bm{\varphi}}_{u b}.
+\label{eq:para-bases}
+\end{equation} 
+%
+Thus finite element operators for
+interpolation in a transformed configuration space follow by using
+Equation~(\ref{eq:para-bases}) in the formulas of Box 2. If the Petrov-Galerkin
+approach is taken, only the transformation of Equation~(\ref{eq:uubar-parametric})
+needs to be accounted for in order to obtain a consistent tangent
+stiffness. This furnishes the discrete strain operator:
+%\(\bm{B}^\star_b\) : %
+\begin{equation*} 
+  \bm{B}^\star_b = \mathbb{B}^* \left[g^*\bar{\bm{\varphi}}_{u b}\right].
+\end{equation*}
+The pull-back \(g^*\) in this expression will generally complicate
+the derivation of \(\bm{B}^\star_b\), but note that the discrete equilibrium operator
+\(\bm{B}_a\) is not affected by the transformation. This is a merit of the Petrov-Galerkin
+method.
+An example of such a formulation is found in
+\cite{jelenić1998interpolation}, where developments were made using a
+similar notion of ``generalized shape functions'', which served as a
+partial inspiration for the general approach developed here.
+A derivation of their
+element within the current framework is presented in
+Section~\ref{sec:element-cj2}. Note that the discrete equilibrium operator
+given by \(\mathbb{B}^*\bm{\varphi}_{\eta}\) will be identical to that
+of the simple formulation of Section~\ref{sec:element-svq}.
+Moreover, the geometric stiffness differs from 
+the simple formulation only by post-multiplication with
+\(g^*\). Consequently, formulating an element with
+such an interpolation generally incurs little effort
+over what is
+required by the simple formulation
+for forming the pull-back \(g^*\), and deriving
+the discrete strain operator
+\(\mathbb{B}^*\left[g^*\bar{\bm{\varphi}}_{u b}\right]\).
+
+On the other hand, an element that is formulated with the
+Bubnov-Galerkin methodology must represent both \(\bm{\eta}^h\) and
+\(\VarConfig^h\) identically. This is accomplished by choosing each basis
+\(\bm{\varphi}_{\eta a}\) to match the form of \(\bm{\varphi}_{u b}\) .
+In this case the consistent discrete equilibrium operator \(\bm{B}_a\)
+is exactly the transpose of the discrete strain operator
+\(\bm{B}^\star_b\). This generally results in a more involved expression for the 
+equilibrium operator, which in turn may considerably complicate the
+derivation of the geometric tangent operator \(\bm{G}_{ab}\).
+A prominent example of this approach is the tour de
+force initiated by \cite{cardona1988beam} and brought to fruition 
+by \cite{ibrahimbegović1995computational}.
+
+\hypertarget{sec:para-param}{%
+\paragraph{External Operators}\label{sec:para-param}}
+
+It is often desirable to parameterize a finite element analysis by nodal
+force values \(\{\bm{p}_a\}\) and nodal perturbations
+\(\{\VarConfig_b\}\) of the configuration  
+which are not necessarily sampled from the interpolated fields
+\(\bar{\bm{\eta}}^h\) or \(\bar{\VarConfig}^h\). An element which
+interpolates nodal unknowns
+\(\bar{\VarConfig}_b\) from the transformed tangent space \(T_\chi \bar{\mathscr{C}}\) can be adapted to any
+other nodal parameterization by post-multiplying the effective
+interpolation \(\bm{\varphi}^{}_{u b}\) with a nodal transformation
+\(\mathbf{a}_b\): 
+\begin{equation}
+{\bm{\varphi}}_{u b} = g^*\bar{\bm{\varphi}}_{u b} \mathbf{a}_b
+\label{eq:adapt-displ}
+\end{equation} 
+where each nodal transformation
+\(\mathbf{a}_b\) is constant over \(\bm{\xi}\), and depends on the
+configuration only through the nodal parameters \(\{\bar{\VarConfig}_b\}\).
+Propagating Equation~(\ref{eq:adapt-displ}) through the characteristic operators
+of Box 2 shows that the nodal operators factor out, and the effect on
+%the element forces \(\bar{\bm{p}}_a\) and 
+the stiffness \({\mathbf{k}}_{a b}\) can be applied externally with the operation:
+\begin{equation}
+\begin{aligned}
+%&\bm{p}_{a} = \bar{\bm{p}}_{a} \\
+&\mathbf{k}_{ab} = \bar{\mathbf{k}}_{ab} \mathbf{a}_{b}
+\end{aligned}
+\label{eq:adapt-petr-para}
+\end{equation}
+where $\bar{\mathbf{k}}_{ab}$ is the stiffness resulting from substitution of Equation~(\ref{eq:para-bases}) into the operators of Box 2,
+before application of the operator \(\mathbf{a}_b\).
+
+A Bubnov-Galerkin formulation will require that nodal forces are rectified in a conjugate manner by amending
+the interpolations \(\bm{\varphi}^{}_{\eta a}\) with
+the nodal transformations in Equation~(\ref{eq:adapt-displ}): 
+\begin{equation}
+{\bm{\varphi}}^{}_{\eta a} = g^*\bar{\bm{\varphi}}^{}_{\eta a} \, \mathbf{a}_a .
+\label{eq:adapt-eta}
+\end{equation}
+Using Equation~(\ref{eq:B-assoc}) and the definition of \(\bm{p}_a\) given by Equation~(\ref{eq:def-pa}),
+the operator \(\mathbf{a}_a\) is factored out of the inner product as follows: %
+\begin{equation*} 
+\begin{aligned}
+\left< g^* \bar{\bm{\varphi}}_{\eta a} \mathbf{a}_a \bm{\eta}_a,\, \mathbb{B} \bm{\sigma}\right> 
+&= \left< \mathbb{B}^*[g^* \bar{\bm{\varphi}}_{\eta a}] \mathbf{a}_a \bm{\eta}_a,\, \bm{\sigma}\right> \\
+&= \left< \mathbf{a}_a \bm{\eta}_a,\, \bm{B}_a \bm{\sigma}\right> \\
+%\bm{\eta}_a \cdot \mathrm{a}_{ij} \mathbf{e}_j \left<\mathbf{e}_i ,\, \bm{B}_a\bm{\sigma}\right>\\
+&=\bm{\eta}_a\cdot\mathbf{a}^{\mathrm{t}}_a\,\bm{p}_a .
+\end{aligned}
+\end{equation*}
+Consequently, changes to an element with the transformation 
+of Equation~(\ref{eq:adapt-eta}) are equivalent to externally-applied transformations with the form:
+\begin{equation} 
+\begin{aligned}
+\bm{p}_a    &= \mathbf{a}_a^{\mathrm{t}} \, \bar{\bm{p}}_a \\
+\mathbf{k}_{ab} &= \mathbf{a}_a^{\mathrm{t}} \, \bar{\mathbf{k}}_{ab} 
+  + \partial^{}_b \left[\mathbf{a}_a^{\mathrm{t}} \mid \bar{\bm{p}}_a \right]
+  %+ \left.\frac{\partial}{\partial \VarConfig_b}  \mathbf{a}_a^{\mathrm{t}} \, \bar{\bm{p}}_a \right|_{\bar{\bm{p}}_a}
+  %+ \partial^{}_b \left[\mathbf{a}_a^{\mathrm{t}}\right] \bar{\bm{p}}_a
+\end{aligned}
+\label{eq:adapt-para-bubn}
+\end{equation}
+where $\bar{\bm{p}}_{a}$ is the resisting force resulting from substitution of Equation~(\ref{eq:para-bases}) into the operators of Box [TODO],
+before use of the operator \(\mathbf{a}_a\)
+.%and \(\partial_b^{} [\mathbf{a}_a^{\mathrm{t}}] \bm{p}_a\) is the partial derivative of \(\mathbf{a}_a^{\mathrm{t}}\,\bm{p}_a\) with respect
+%to parameters of node \(b\) with \(\bm{p}_a\) held constant. 
+The update
+for \(\mathbf{k}_{ab}\) follows equivalently either by linearizing the new
+discrete residual
+\(\bm{\eta}_a\cdot \mathbf{a}_a^{\mathrm{t}} \, \bm{p}_a\), or by
+rederiving
+the operators in Box 2 using Equation~(\ref{eq:adapt-eta}).
+
+\hypertarget{remarks04}{%
+\paragraph{Remarks}\label{remarks04}}
+
+\begin{itemize}
+% \tightlist
+\item
+  In general, the complexity of formulations based on parametric transformations %
+  is more sensitive to the interpolation of \(\bm{\eta}^h\) than \(\VarConfig^h\).
+\item
+  When only the interpolation of the perturbation \(\VarConfig^h\) is
+  transformed and \(\bm{\eta}^h\) is still represented
+  with simple  interpolations in \(T_\chi\mathscr{C}\) only the operator
+  \(\bm{B}^{\star}_b\) is affected. 
+  Unless special attention is paid to the interpolation of $\bm{\eta}$,
+  a Petrov-Galerkin approach often furnishes nodal forces $\bm{p}_a$ that
+  are not conjugate to the field sampled by the nodal parameters.
+  This is a peculiarity of the Petrov-Galerkin approach and does not happen 
+  in a standard variational formulation that minimizes a potential.
+\end{itemize}
+
+\hypertarget{sec:isometric}{%
+\subsubsection{Isometric Transformations}\label{sec:isometric}}
+
+Isometric transformations apply a rigid body transformation on an
+element-by-element basis. In contrast to parametric transformations,
+these often \emph{introduce coupling} between the variables
+\(\bm{x}\) and \(\bm{\Lambda}\), and additionally couple parameters at
+different nodes. The transformation map \(g\) is naturally identified by
+a homogeneous translation \(\bm{c}\) and a rotation \(\bm{R}\) of the
+ambient space. The transformation takes a configuration
+\(\chi = (\bm{x},\bm{\Lambda})\) to the transformed representation
+\(\bar{\chi} = (\bar{\bm{x}},\bar{\bm{\Lambda}})\) in the standard
+fashion:
+\begin{equation}
+  \begin{aligned}
+  \bar{\bm{x}}(\bm{\xi}) &= \bm{R}^{\mathrm{t}}\left(\bm{x}(\bm{\xi}) - \bm{c} \right) \\
+  \bar{\bm{\Lambda}}(\bm{\xi})&= \bm{R}^{\mathrm{t}}\bm{\Lambda}(\bm{\xi})
+  \end{aligned}
+  \quad\text{ and }\quad
+  \begin{aligned}
+  \bm{x}(\bm{\xi}) &= \bm{R}\bar{\bm{x}}(\bm{\xi}) + \bm{c}  \\
+  \bm{\Lambda}(\bm{\xi})&= \bm{R}\bar{\bm{\Lambda}}(\bm{\xi}).
+  \end{aligned}
+  \label{eq:tether}
+\end{equation}
+{
+Although both \(\bm{c}\) and \(\bm{R}\)
+must be constant over \(\bm{\xi}\), they may depend on the value of the
+configuration variables \(\bm{x}(\bm{\xi})\) and
+\(\bm{\Lambda}(\bm{\xi})\) at multiple points
+\(\left\{\bm{\xi}_a\right\}\) within an element. 
+% A field of three orthonormal
+% directors \(\{\FrameBasis_k\}\) which will be considered stationary in
+% all subsequent developments.
+% Additionally %consider
+% the linearly independent director fields \(\left\{\bar{\FrameBasis}_k\right\}\)
+% are introduced by:
+%
+% \begin{equation}
+% \left.\begin{aligned}
+% %\FrameBasis_k &\triangleq \bm{\Lambda}\FrameBasis_k \\
+% \bar{\FrameBasis}_k &\triangleq \bm{R}\FrameBasis_k \\
+% %\bar{\FrameBasis}_k &\triangleq \bar{\bm{\Lambda}}\FrameBasis_k \\
+% \end{aligned}\right.
+% \quad\text{ implying }\qquad 
+% \begin{aligned}
+% %\bm{\Lambda} &= \FrameBasis_k\otimes\FrameBasis_k \\
+% \bm{R}       &= \bar{\FrameBasis}_k\otimes\FrameBasis_k \\
+% %\bar{\bm{\Lambda}} &= \bar{\FrameBasis}_k\otimes\FrameBasis_k \\
+% \end{aligned}
+% \label{eq:R-director}
+% \end{equation}
+% where summation is implied on repeated 
+% indices.
+The
+transformed configuration
+\(\bar{\chi}_\varepsilon = (\bar{\bm{x}}_\varepsilon, \bar{\bm{\Lambda}}_\varepsilon)\)
+is related to the integral curve
+\(\chi_\varepsilon = (\bm{x}_\varepsilon, \bm{\Lambda}_\varepsilon)\) by
+the expressions:}
+
+\begin{equation}
+%\begin{aligned}
+%\bm{x}_\varepsilon  &=  \bm{x} + \varepsilon \VarConfig_x  \\
+%\bm{\Lambda}_\varepsilon &= \operatorname{Exp}\left(\varepsilon\VarConfig_{\scriptscriptstyle{\Lambda}}\right) \bm{\Lambda}
+%\end{aligned}
+%\quad\text{ and }\quad
+\begin{aligned}
+\bar{\bm{x}}_\varepsilon  &= \bm{R}^{\mathrm{t}}_\varepsilon \left(\bm{x}_\varepsilon - \bm{c}_\varepsilon \right) \\
+\end{aligned}
+\qquad\text{ and }\qquad
+\begin{aligned}
+\bar{\bm{\Lambda}}_\varepsilon &= \bm{R}^{\mathrm{t}}_\varepsilon\bm{\Lambda}_\varepsilon .
+\end{aligned}
+\label{eq:motion}
+\end{equation}
+Because the coordinate transformation %\(g\) 
+depends on \(\chi\), 
+both \(\bm{c}\) and \(\bm{R}\) also evolve with \(\varepsilon\).
+Under this motion, the
+variation \(\bar{\VarConfig}_x\) of \(\bar{\bm{x}}\) is derived from
+Equation~(\ref{eq:motion}) as follows: 
+\begin{equation}
+\begin{aligned}
+\bar{\VarConfig}_x &= \frac{\mathrm{d}}{\mathrm{d}\varepsilon} \bar{\bm{x}}_\varepsilon \biggr|_{\varepsilon=0} %\\& 
+= \dot{\bm{R}}^{\mathrm{t}}\left(\bm{x} + \varepsilon \VarConfig_x - \bm{c}_\varepsilon \right) + \bm{R}^{\mathrm{t}}_\varepsilon\left(\VarConfig_x - \dot{\bm{c}}_\varepsilon \right) \biggr|_{\varepsilon=0}  \\
+%&= \dot{\bm{R}}^{\mathrm{t}}\left(\bm{x} - \bm{c} \right) + \bm{R}^{\mathrm{t}} \left(\VarConfig_x - \VarRigidTran \right)
+\end{aligned}
+\label{eq:isom-dxe}
+\end{equation} 
+% The initial velocity of the rotation \(\dot{\bm{R}}\) is expressed with %using
+% Equation~(\ref{eq:R-director}) by the sum \(\dot{\bar{\FrameBasis}}_k\otimes\FrameBasis_k\),
+% after recalling that the reference basis \(\{\FrameBasis_k\}\) is
+% stationary by definition. 
+It is simple to show that in order for an
+evolving rotation \(\bm{R}_\varepsilon\) to remain a rotation (see
+definition in Section~\ref{sec:rotations}), \(\dot{\bm{R}}_\varepsilon\) must
+be expressible in the form \(\bm{\Omega R}_\varepsilon\) for some
+skew-symmetric \(\bm{\Omega}\) with axial vector \(\bm{\omega}\), and it follows that 
+% the director
+% velocities \(\dot{\bar{\FrameBasis}}_k\) are expressed in terms of an
+% appropriate axial vector \(\bm{\omega}\) as follows:
+% %
+% \begin{equation*} 
+% \dot{\bar{\FrameBasis}}_k = \bm{\omega}\times\bar{\FrameBasis}_k
+% \qquad\text{ and }\qquad
+% \bm{\omega}^{\times} = \dot{\bar{\FrameBasis}}_k\otimes\bar{\FrameBasis}_k
+% \end{equation*}
+% where the notation \(\bm{\omega}^{\times}=\bm{\Omega}\) is introduced
+% by Equation~(\ref{eq:hat}). Using this in
+Equation~(\ref{eq:isom-dxe}) furnishes: %
+\begin{equation*} 
+\begin{aligned}
+\bar{\VarConfig}_x &= -\bm{R}^{\mathrm{t}} \bm{\omega} \times \left(\bm{x}-\bm{c}\right)
++ \bm{R}^{\mathrm{t}}\left(\VarConfig_x - \VarRigidTran\right) \\
+%&= -\bm{R}^{\mathrm{t}} \bm{\omega}^{\times}\bm{R}\bm{R}^{\mathrm{t}}  \left(\bm{x}-\bm{c}\right) + \bm{R}^{\mathrm{t}}\left(\VarConfig_x - \VarRigidTran\right) \\
+%&= -\bar{\bm{\omega}}^{\times} \bm{R}^{\mathrm{t}}\left(\bm{x}-\bm{c}\right)+ \bm{R}^{\mathrm{t}}\left(\VarConfig_x - \VarRigidTran\right)
+\end{aligned}
+\qquad\text{ and }\qquad
+\VarConfig_x = \bm{R}\bar{\VarConfig}_x + \VarRigidTran + \bm{\omega}\times (\bm{x}-\bm{c}).
+\end{equation*}
+with \(\VarRigidTran \triangleq \dot{\bm{c}}|_{\varepsilon=0}\). 
+Variations \(\bar{\VarConfig}_{\scriptscriptstyle{\Lambda}}\) of the nonlinear configuration variable
+\(\bar{\bm{\Lambda}}\) follow suit: %
+\begin{equation*} 
+\begin{aligned}
+\bar{\VarConfig}_{\scriptscriptstyle{\Lambda}} &\triangleq \frac{\mathrm{d}}{\mathrm{d}\varepsilon}\bar{\bm{\Lambda}}_{\varepsilon}\biggr|_{\varepsilon=0} %\\ &
+= \dot{\bm{R}}^{\mathrm{t}}_\varepsilon \bm{\Lambda} \biggr|_{\varepsilon=0} + \bm{R}^{\mathrm{t}} \VarConfig_{\scriptscriptstyle{\Lambda}} .%\dot{\bm{\Lambda}}_{\varepsilon} 
+\end{aligned}
+\end{equation*}
+If variations \(\bar{\VarConfig}_{\scriptscriptstyle{\Lambda}}\) of
+\(\bm{\Lambda}\) are identified by a right-invariant vector field (see
+Section~\ref{sec:rotations}), then the last equation above reduces to:
+\begin{equation}
+\begin{aligned}
+\bar{\VarConfig}_{\scriptscriptstyle{\Lambda}} = \bm{R}^{\mathrm{t}}\VarConfig_{\scriptscriptstyle{\Lambda}} - \bar{\bm{\omega}}
+\end{aligned}
+\quad\text{ and }\quad
+\begin{aligned}
+\VarConfig_{\scriptscriptstyle{\Lambda}} &= \bm{R} \bar{\VarConfig}_{\scriptscriptstyle{\Lambda}} + \bm{\omega} \\
+ %&= \bm{R} \left(\bar{\VarConfig}_{\scriptscriptstyle{\Lambda}}(\bm{\xi}) + \bar{\bm{\omega}}\right)\\ 
+\end{aligned}
+\label{eq:rottan}
+\end{equation} 
+where
+\(\bar{\bm{\omega}} \triangleq \bm{R}^{\mathrm{t}}\bm{\omega}\). The
+additive contributions from the transformation to these variations are
+collected into terms
+\(\bm{\psi} \triangleq (\bm{\psi}_x, \bm{\psi}_{\scriptscriptstyle{\Lambda}})\):
+
+\begin{equation}
+\begin{aligned}
+\VarConfig_x &= \bm{R}\bar{\VarConfig}_x + \bm{\psi}_x \\
+\VarConfig_{\scriptscriptstyle{\Lambda}} &= \bm{R}\bar{\VarConfig}_{\scriptscriptstyle{\Lambda}} +  \bm{\psi}_{\scriptscriptstyle{\Lambda}} \\
+\end{aligned}
+\quad\text{ with }\quad
+\begin{aligned}
+\bm{\psi}_x &\triangleq  \VarRigidTran - \bm{R}\left(\bar{\bm{x}} \times \bar{\bm{\omega}}\right) \\
+\bm{\psi}_{\scriptscriptstyle{\Lambda}} &\triangleq  \bm{\omega} \\
+\end{aligned}
+\label{eq:psi}
+\end{equation} 
+By a slight abuse of notation, this is written more compactly as:
+%
+\begin{equation}
+\bar{\VarConfig} = \bm{R}^{\mathrm{t}}(\VarConfig - \bm{\psi})
+\qquad\text{ and }\qquad
+\VarConfig = \bm{R}\bar{\VarConfig} + \bm{\psi} .
+\label{eq:global-local}
+\end{equation}
+where the application of the
+rotation \(\bm{R}\) to \(\VarConfig\) is understood to distribute over the
+couple \(\VarConfig = (\VarConfig_x , \VarConfig_{\scriptscriptstyle{\Lambda}})\) so
+that
+\(\bm{R}\VarConfig = (\bm{R}\VarConfig_x , \bm{R}\VarConfig_{\scriptscriptstyle{\Lambda}})\).
+
+\vspace{5ex}
+\begin{ambox}[Corotational Transformation]{box:corotation}
+\begin{enumerate}
+    \item 
+\[
+\bm{x}(\xi),\FrameRotation(\xi) \mapsto \begin{pmatrix}
+    \bm{R}^{\mathrm{t}}(\bm{x}(\xi) -\bm{c})\\
+    \bm{R}^{\mathrm{t}}\FrameRotation (\xi)
+\end{pmatrix}
+\]
+
+\item 
+\[
+\bm{x}(\xi),\FrameRotation(\xi) \mapsto \begin{pmatrix}
+    \bm{x}(\xi) \\
+    \operatorname{Log}(\FrameRotation (\xi))
+\end{pmatrix}
+\]
+\end{enumerate}
+\end{ambox}
+
+\hypertarget{internal-operators-1}{%
+\paragraph{Internal Operators}\label{internal-operators-1}}
+
+The split form of the inner product in Equation~(\ref{eq:conf-pair}) allows
+Equation~(\ref{eq:galerkin}) to be written in terms of components
+\(\mathcal{G}_x\) and \(\mathcal{G}_{\scriptscriptstyle{\Lambda}}\)
+defined by:
+
+\begin{equation}
+\begin{array}{rccc}
+\mathcal{G}\left[\bm{\eta}\right] =& \left< \bm{\eta}_x, \, \mathbb{B}_x \bm{\sigma}\right>_x &+& \left< \bm{\eta}_{\scriptscriptstyle{\Lambda}}, \, \mathbb{B}_{\scriptscriptstyle{\Lambda}} \bm{\sigma}\right>_{\scriptscriptstyle{\Lambda}} \\ %- \left< \bm{\eta}, \, \bm{f}\right> \\
+\triangleq& \mathcal{G}_x[\bm{\eta}_x] &+& \mathcal{G}_{\scriptscriptstyle{\Lambda}}[\bm{\eta}_{\scriptscriptstyle{\Lambda}}] \\ %- \left< \bm{\eta}, \, \bm{f}\right> \\
+\end{array}
+\label{eq:galerkin-split}
+\end{equation} 
+where body forces are once again dropped and 
+\(\bm{\eta} = (\bm{\eta}_x, \bm{\eta}_{\scriptscriptstyle{\Lambda}})\in T^{}_\chi \mathscr{C}\).
+If the Bubnov-Galerkin condition is enforced, \(\bm{\eta}\) takes the
+same form as Equation~(\ref{eq:global-local}), and \(\mathcal{G}\) follows: %
+\begin{equation*} 
+ \begin{aligned}
+ \mathcal{G}_x[\bm{\eta}] &=  \left\langle\bm{R} \bar{\bm{\eta}}_x ,\, \mathbb{B}_x \bm{\sigma} \right\rangle + \left\langle \bm{\psi}_x ,\, \mathbb{B}_x \bm{\sigma}\right\rangle \\
+\end{aligned}
+\qquad\text{ and }\qquad
+\begin{aligned}
+ \mathcal{G}_{\scriptscriptstyle{\Lambda}}[\bm{\eta}]&= \left\langle\bm{R} \bar{\bm{\eta}}_{\scriptscriptstyle{\Lambda}} ,\, \mathbb{B}_{\scriptscriptstyle{\Lambda}} \bm{\sigma} \right\rangle + \left\langle \bm{\psi}_{\scriptscriptstyle{\Lambda}} ,\, \mathbb{B}_{\scriptscriptstyle{\Lambda}} \bm{\sigma}\right\rangle .
+ \end{aligned}
+\end{equation*}
+In writing this expression, the stress divergence
+\(\mathbb{B}\bm{\sigma}\) is corresponds to evaluation on
+\(\chi\). However, in practice, it is more common that the divergence is formed locally in \(\bar{\chi}\). In this case,  
+invariance under isometry is invoked to write:
+%
+\begin{equation*} 
+\begin{aligned}
+\mathcal{G}_x[\bm{\eta}] &=  \left\langle\bm{R} \bar{\bm{\eta}}_x, \bm{R} \bar{\mathbb{B}}_{x} \bar{\bm{\sigma}} \right\rangle + \left\langle \bm{\psi}_x ,\, \bm{R}\bar{\mathbb{B}}_{x} \bar{\bm{\sigma}}\right\rangle \\
+\end{aligned}
+\qquad\text{ and }\qquad
+\begin{aligned}
+\mathcal{G}_{\scriptscriptstyle{\Lambda}}[\bm{\eta}]
+&= \left\langle\bm{R} \bar{\bm{\eta}}_{\scriptscriptstyle{\Lambda}}, \bm{R} \bar{\mathbb{B}}_{\scriptscriptstyle{\Lambda}} \bar{\bm{\sigma}} \right\rangle 
+ + \left\langle \bm{\psi}_{\scriptscriptstyle{\Lambda}} ,\, \bm{R} \bar{\mathbb{B}}_{\scriptscriptstyle{\Lambda}} \bar{\bm{\sigma}}\right\rangle .
+\end{aligned}
+\end{equation*}
+Because \(\bm{R}\) preserves inner products by definition, it can be
+removed when applied to both arguments furnishing: 
+\begin{equation}
+\begin{aligned}
+\mathcal{G}_x\left[\bm{\eta}\right] &=  \left< \bar{\bm{\eta}}_x, \bar{\mathbb{B}}_{x} \bar{\bm{\sigma}} \right> + \left< \bar{\bm{\psi}}_x ,\, \bar{\mathbb{B}}_{x} \bar{\bm{\sigma}}\right> \\
+\end{aligned}
+\qquad\text{ and }\qquad
+\begin{aligned}
+\mathcal{G}_{\scriptscriptstyle{\Lambda}}\left[\bm{\eta}\right]&= \left< \bar{\bm{\eta}}_{\scriptscriptstyle{\Lambda}}, \, \bar{\mathbb{B}}_{\scriptscriptstyle{\Lambda}} \bar{\bm{\sigma}} \right> + \left< \bar{\bm{\psi}}_{\scriptscriptstyle{\Lambda}}, \, \bar{\mathbb{B}}_{\scriptscriptstyle{\Lambda}} \bar{\bm{\sigma}}\right>
+\end{aligned}
+\label{eq:galerkin-local}
+\end{equation}
+where
+\(\bar{\bm{\psi}} \triangleq \bm{R}^{\mathrm{t}}\bm{\psi}\). The term
+\(\bm{\psi}\) takes the form of a rigid body mode, and consequently,
+many mechanical problems, including the model investigated in
+Section~\ref{sec:cosserat}, will inherently be posed such that: %
+\begin{equation*} 
+\mathbb{B}^*\bm{\psi} = \mathbf{0}.
+\end{equation*}
+This agrees with the interpretation of \(\mathbb{B}^*\) as a virtual
+strain operator as suggested by Equation~(\ref{eq:vstrain}).
+When indeed \(\mathbb{B}^*\bm{\psi} = \mathbf{0}\), Equation~(\ref{eq:galerkin-local}) implies %suggests
+that any change resulting from an isometrically transformed interpolation can
+be factored out from the internal element operators 
+of Box 2.
+%There is nothing from the transformation that lingers in the inner product that
+%has to be accounted for inside the element state-determination.
+There is no trace of the transformation in the inner product featured in the element state-determination.
+This is in sharp contrast with the parametric case, where one or more of the
+operators in Box 2 
+%operators always
+need to be re-derived because \(g_*\) either appears
+%becomes trapped
+under one of the differential operators (\(\mathbb{B}^*\) or
+\(\partial\)), or else in %or otherwise locked under 
+the inner product by dependence on \(\bm{\xi}\).
+Note, however, that the transformation nonetheless  
+changes the representation of the nodal variables and consequently needs to be accounted for by an
+external transformation to recover the original representation.
+
+\hypertarget{external-operators}{%
+\paragraph{External Operators}\label{external-operators}}
+
+The external effect of the transformation stems from the transformation
+of the nodal values \(\{\bm{\eta}_a\}\) and \(\{\VarConfig_b\}\) to
+\(\{\bar{\bm{\eta}}_a\}\) and \(\{\bar{\VarConfig}_b\}\) by
+Equation~(\ref{eq:global-local}):
+
+\begin{equation}
+\begin{aligned}
+\bar{\bm{\eta}}_a &\triangleq \bar{\bm{\eta}}^h(\bm{\xi}_a) \\
+&=  \bm{R}^{\mathrm{t}} \left(\bm{\eta}_a - \bm{\psi}^h(\bm{\xi}_a)\right)
+\end{aligned}
+\qquad\text{ and }\qquad
+\begin{aligned}
+\bar{\VarConfig}_b &\triangleq \bar{\VarConfig}^h(\bm{\xi}_b) \\
+&= \bm{R}^{\mathrm{t}} \left(\VarConfig_b - \bm{\psi}^h(\bm{\xi}_b)\right)
+\end{aligned}
+\label{eq:u-augmented}
+\end{equation} 
+Linearizing \(\psi^h\) to form linearized variations \(\VarConfig^\ell\) and \(\bm{\eta}^\ell\) requires:
+%
+\begin{equation}
+\VarRigidTran^{\ell} = \bm{R} \sum_b \bm{V}_b\bm{R}^{\mathrm{t}}\VarConfig_b
+\qquad\text{ and }\qquad
+\bar{\bm{\omega}}^{\ell} = \sum_b \bm{W}_b \bm{R}^{\mathrm{t}}\VarConfig_b
+\label{eq:dpsidu}
+\end{equation} 
+where \(\bm{V}_b\) and \(\bm{W}_b\) denote partial derivatives with respect to nodal parameters \(\VarConfig_b\): %
+\begin{equation} 
+%\bm{V}_b \triangleq \frac{\partial \VarRigidTran}{\partial \VarConfig_b}
+\bm{V}_b \triangleq \partial_b \VarRigidTran
+\qquad\text{ and }\qquad
+%\bm{W}_b \triangleq \frac{\partial \bar{\bm{\omega}}}{\partial\VarConfig_b}.
+\bm{W}_b \triangleq \partial_b \bar{\bm{\omega}}.
+\end{equation}
+Using Equation~(\ref{eq:dpsidu}) with Equation~(\ref{eq:psi}) furnishes:
+\begin{equation*} 
+\begin{aligned}
+\bm{\psi}_x^{\ell} &= \bm{R} \sum_b \bm{V}_b\bm{R}^{\mathrm{t}} \VarConfig_b - \left(\bm{x}-\bm{c}\right)\times\left(\bm{R}\sum_b \bm{W}_b \bm{R}^{\mathrm{t}}\VarConfig_b\right) \\
+\end{aligned}
+\qquad\text{ and }\qquad
+\begin{aligned}
+\bm{\psi}^{\ell}_{\scriptscriptstyle{\Lambda}} &= \bm{R}\sum_b \bm{W}_b \bm{R}^{\mathrm{t}}\VarConfig_b .
+\end{aligned}
+\end{equation*}
+Finally, the linearization of Equation~(\ref{eq:rottan}) gives for the rotation:
+%
+\begin{equation*} 
+\begin{aligned}
+\VarConfig_{\scriptscriptstyle{\Lambda}}^{\ell}(\bm{\xi})
+%&= \bm{R} \bar{\VarConfig}_{\scriptscriptstyle{\Lambda}}^{\ell} + \bm{\psi}^\ell_{\scriptscriptstyle{\Lambda}} \\
+&= \bm{R} \sum_b
+   \bar{\bm{\varphi}}_{u b}(\bm{\xi}) \bm{R}^{\mathrm{t}} (\VarConfig_b - \bm{\omega}) 
+  + \bm{R} \sum_b \bm{W}_b \bm{R}^{\mathrm{t}}\VarConfig_b .
+\end{aligned}
+\end{equation*}
+Similarly, for the translation:
+%
+\begin{equation*} 
+\begin{aligned}
+\VarConfig_x^{\ell}(\bm{\xi})
+%&= \bm{R} \bar{\VarConfig}_x^{\ell} + \VarRigidTran - \left(\bm{x} - \bm{c}\right)\times \bm{\omega} \\
+&= \bm{R} \bar{\VarConfig}_x^{\ell} + \sum_b \bm{V}_b \bm{R}^{\mathrm{t}} \VarConfig_b
+   - \left(\bm{R}\bar{\bm{x}}^h\right)\times \left(\bm{R} \sum_b \bm{W}_b \bm{R}^{\mathrm{t}}\VarConfig_b\right) .
+%&= \bm{R} \left(\Delta\bar{\bm{x}}^h 
+% + \sum_b \bar{\mathbf{V}}_b\bar{\VarConfig}_b
+% - \bar{\bm{x}}^h \times \left(\sum_b \bar{\mathbf{G}}_b \bar{\VarConfig}_b\right)\right) \\
+\end{aligned}
+\end{equation*}
+In formulations where the response is invariant under translation, the term containing
+\(\bm{V}_b\) above can be dropped with no effect. In this case, using
+Equation~(\ref{eq:global-local}), %and Equation~(\ref{eq:local-u}) 
+the linearized variations of \(\chi\) are expressed %put
+in the form:
+%
+\begin{equation}
+\VarConfig^{\ell}(\bm{\xi}) = \bm{R} \sum_b
+   \bar{\bm{\varphi}}_{u b}(\bm{\xi}) \sum_c \mathbf{a}_{b c} \VarConfig_c
+  + \bm{\psi}^{\ell}(\bm{\xi})
+\label{eq:global-u}
+\end{equation}
+with
+\begin{equation}
+\mathbf{a}_{bc} \triangleq \left(\bm{I} \delta_{b c}- \bm{\Psi}_b \bm{W}_c\right)\bm{R}^{\mathrm{t}}
+\qquad\text{ with }\quad
+\bm{\Psi}_b \triangleq \left[\begin{array}{c}
+-\bar{\bm{x}}(\bm{\xi}_b)^{\times} \\ \mathbf{1}
+\end{array}\right]
+\label{eq:projector}
+\end{equation}
+where \(\delta_{a b}\) is the Kronecker delta, \(\mathbf{1}\) is the identity in \(T \mathscr{C}_{\scriptscriptstyle{\Lambda}}\),
+and \(\bm{I}\) the identity in \(T \mathscr{C}\).
+Therefore for an isometric transformation, a consistent stiffness \(\bar{\mathbf{k}}_{a c}\) is updated as follows:
+\begin{equation}
+  \mathbf{k}_{ab} = \sum_{c} \bar{\mathbf{k}}_{a c} \mathbf{a}_{c b}.
+  \label{eq:adapt-petr-isom}
+\end{equation}
+Similarly, an update for work-conjugate nodal forces \(\bar{\bm{p}}_a\) is given by:
+\begin{equation}
+  \begin{aligned}
+  \bm{p}_a &= \sum_{b} \mathbf{a}_{b a}^{\mathrm{t}} \, \bar{\bm{p}}_{b}^{} \\
+  \mathbf{k}_{ab} 
+      &= \sum_{c} \mathbf{a}_{c a}^{\mathrm{t}} \, \bar{\mathbf{k}}_{cb}^{}
+                   + \sum_{c} \partial_b^{} \left[\mathbf{a}_{c a}^{\mathrm{t}}\mid\bar{\bm{p}}_c^{}
+                   \right]
+                   %+ \mathbf{k}_g\left[\bm{p}\right]_{a b}
+  \end{aligned}
+  \label{eq:adapt-isom-bubn}
+\end{equation}
+
+\iffalse 
+where the derivatives \(\partial_b^{} \left[\mathbf{a}_{c a}^{\mathrm{t}}\mid\bm{p}_c\right]\)
+%incurred stiffness \(\mathbf{k}_g\left[\bm{p}\right]_{a b}\) is obtained by differentiation of
+%the expression \(\mathbf{a}_{a c}^{\mathrm{t}}\,\bm{p}_c\) which 
+take the same form as those obtained by \cite{nour-omid1991finite,lecorvec2012nonlinear}:
+\begin{equation} 
+\begin{aligned}
+%\partial^{}_b\left[\mathbf{a}_{ab}^{\mathrm{t}}\right]\bm{p}_{b}
+% \bm{G}_{a b}\left[\bm{p}\right]
+\mathbf{k}_g\left[\bm{p}\right]_{a b}
+&\triangleq \sum_c \partial_b^{} \left[\mathbf{a}_{c a}^{\mathrm{t}}\mid\bm{p}_c\right]
+&=
+- \bm{R}\bar{\bm{\Sigma}}_a \bm{W}_b \bm{R}^{\mathrm{t}}
+- \bm{R} \bar{\bm{W}}^{\mathrm{t}}_a \sum_c \bar{\bm{\Sigma}}^{\bm{n}}_c \left(\bm{I}\delta_{c b} - \bm{\Psi}_c\bm{W}_b\right) \bm{R}^{\mathrm{t}} 
+%
+% -\bm{R}\begin{bmatrix}
+% \bar{\bm{n}}^{\times}_a \bm{W}_{bx} & \bar{\bm{n}}^{\times}_a \bm{W}_{b\scriptscriptstyle{\Lambda}} \\
+% \bar{\bm{m}}^{\times}_a \bm{W}_{bx} & \bar{\bm{m}}^{\times}_a \bm{W}_{b\scriptscriptstyle{\Lambda}} \\
+% \end{bmatrix}\bm{R}^{\mathrm{t}}
+\end{aligned}
+%}
+\label{eq:isom-tang}
+\end{equation}
+%
+with %
+%
+\begin{equation} 
+ \begin{pmatrix}
+ \bar{\bm{n}}_a \\ \bar{\bm{m}}_a
+ \end{pmatrix}
+ \triangleq \sum_b \left(\bm{I}\delta_{ab} - \bm{W}_b^{\mathrm{t}} \bm{\Psi}_a^{\mathrm{t}}\right) \bm{p}_b,
+%
+ \quad 
+ \bar{\bm{\Sigma}}^{\bm{n}}_a \triangleq \left[\begin{array}{cc}
+ \bar{\bm{n}}_a^{\times} &
+ \mathbf{0} \\
+ \end{array}\right],
+ \quad\text{ and }\quad
+%
+ \bar{\bm{\Sigma}}_a\triangleq\left[\begin{array}{c}
+ \bar{\bm{n}}_a^{\times} \\
+ \bar{\bm{m}}_a^{\times} \\
+ \end{array}\right].
+\end{equation}
+Note that these derivatives are derived
+without explicitly identifying a connection, and consequently, the expression 
+is asymmetric away from equilibrium. However, it is shown in \cite{nour-omid1991finite}
+that the expression is symmetric at equilibrium and when artificially symmetrized
+quadratic convergence may still be observed in Newton-Raphson iteration in the vicinity of
+a solution.
+\fi
+
+\hypertarget{sec:chain}{%
+\subsubsection{Composed Transformations}}\label{sec:chain}
+%
+Any composition of element-independent 
+transformations can be accounted for by recursive application of the appropriate
+external operators to the element stiffness and resisting forces.
+%
+This is a consequence of the chain rule.
+%$\mathbf{k}_{a b}$ % by Equation~(\ref{eq:adapt-petr-para}) or Equation~(\ref{eq:adapt-petr-isom}), and optionally Equation~(\ref{eq:adapt-para-bubn}) or Equation~(\ref{eq:adapt-isom-bubn}) when a Bubnov-Galerkin formulation is adopted. 
+The external operations of the parametric and isometric transformations
+share the general structure in Box~\ref{box:external-operators} where the operators \(\mathbf{a}_a\) and \(\mathbf{a}_{ab}\) are identified by a generic linear operator \(\mathbf{a}_g\) acting on a complete set of nodal parameters.
+% Application of Equation~(\ref{eq:adapt-petr-para})
+% is required to maintain a consistent tangent stiffness, while Equation~(\ref{eq:adapt-para-bubn})
+% is required to maintain work-conjugacy of nodal parameters.
+
+
+A sequence of transformations %described
+in Box~\ref{box:external-operators} can be implemented in 
+a \emph{wrapper element} which presents the interface of an element to
+the global solution procedure but delegates the internal state-determination to a 
+\emph{wrapped} element in the existing finite element library. 
+A modular implementation of this concept extends and generalizes the framework 
+by \cite{desouza2000forcebased} with subsequent development by \cite{lecorvec2012nonlinear}.
+%
+
+\begin{ambox}[External finite element operations]{box:external-operators}
+The element-independent effect of a transformation is identified by three operations:
+\begin{equation*}
+\begin{array}{lrl}
+  %&\textbf{Symbol} &\textbf{Expression} & \textbf{Description} \\[1ex] %\hline
+  \text{(i)}  & g                     & \text{External transformation} \\[2ex]
+  \text{(ii)} & \mathbf{a}_g          & \text{External adaptor} \\[2ex]
+  \text{(iii)}& \mathbf{k}_g\left[\bm{p}\right] 
+                                      & \text{External geometric stiffness}% acting on a vector \(\bm{p}\)} \\[2ex]
+\end{array}
+\end{equation*}
+%
+Operation (i) is performed before the wrapped element is invoked,
+and operations (ii) and (iii) are invoked after as an update to
+the forces \(\bm{p}\) and stiffness \(\mathbf{k}\)
+returned by the element:
+\begin{enumerate}
+\item \emph{Kinematic update}:
+  \begin{equation*}
+    \mathbf{k} \leftarrow {\mathbf{k}} \mathbf{a}_g
+  \end{equation*}
+  which takes the form of Equation~(\ref{eq:adapt-petr-para}) in the parametric case, and Equation~(\ref{eq:adapt-petr-isom})
+  in the isometric case.
+\item \emph{Conjugate update}: 
+  \begin{equation*}
+    \bm{p}, \mathbf{k} \;\mapsto\;
+    \begin{array}{l}
+    \mathbf{a}_g^{\mathrm{t}} \, {\bm{p}}, \\
+    \mathbf{a}_g^{\mathrm{t}} \, {\mathbf{k}}  + \mathbf{k}_g \left[\bm{p}\right]
+    \end{array}
+  \end{equation*}
+  which takes the form of Equation~(\ref{eq:adapt-para-bubn}) in the parametric case, and Equation~(\ref{eq:adapt-isom-bubn})
+  in the isometric case.
+\end{enumerate}
+\end{ambox}
+
+%
+\begin{algorithm}[!h]
+\caption{\enskip Wrapper state-determination for a sequence \(\{g_{i}\}\) of \(n_{\text{tran}}\) Box~\ref{box:external-operators} transformations.}\label{alg:push}
+\begin{algorithmic}
+  \Function{ElementWrapper}{$\chi$, $\VarConfig_a$, \{WrapData,ElemData\}}
+  \For {Transform $g = g_{i}$ with $i=1$ to $n_{\text{tran}}$} \Comment{Forward loop over transforms}
+     \State { $\left(\chi, \VarConfig_a\right)$ = \Call{$g$}{$\chi$, $\VarConfig_a$, WrapData}}
+  \EndFor
+  \\
+  \State {$\left(\bm{p}, \mathbf{k}\right)$ = \Call{Element}{$\chi$, $\VarConfig_a$, ElemData}}
+  \Comment{Invoke wrapped element}
+  \\
+  \For {Transform $g = g_{i}$ with $i=n_{\text{tran}}$ to $1$} \Comment{Reversed loop over transforms}
+    \State {$\mathbf{k} = {\mathbf{k}}\, \mathbf{a}_g$}
+    \If {Bubnov}
+       \State {$\bm{p} = \mathbf{a}_g^{\mathrm{t}} \, {\bm{p}}$}
+       \State {$\mathbf{k} = \mathbf{a}_g^{\mathrm{t}} \, {\mathbf{k}} + \mathbf{k}_g [\bm{p}]$}
+    \EndIf
+  \EndFor
+  \State {\Return \(\left(\bm{p}, \mathbf{k}\right)\)}
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+Algorithm 1 outlines an implementation that follows the \emph{decorator} design
+pattern \citep{mckenna1997object,scott2004software}.
+For this algorithm, the wrapper state-determination consists of three phases: %a forward loop and reverse loop over the transformation sequence \(\{g\}\) which are separated by a call to the element state-determination procedure.
+
+\begin{enumerate}
+
+\item
+  The sequence of transformations \(\{g_{i}\}\) is traversed in the \emph{forward} direction, where each \(g_i\) is applied
+  to the state variables \(\chi\) and \(\VarConfig_a\).
+\item
+  The state-determination procedure of the wrapped element is invoked to produce the nodal forces
+  \(\bm{p}\) and the stiffness \(\mathbf{k}\) in terms of the transformed state variables.
+\item
+  The chain is traversed in the \emph{reverse} direction
+  and the nodal forces \({\bm{p}}\) and the stiffness
+  \({\mathbf{k}}\) are transformed according to either the Petrov-Galerkin or the Bubnov-Galerkin rules.
+\end{enumerate}
+%

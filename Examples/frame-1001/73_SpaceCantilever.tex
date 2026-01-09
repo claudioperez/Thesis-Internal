@@ -36,7 +36,7 @@ have been performed with the parameters of the present study.
 Following \cite{ibrahimbegović1995computational}, the problem of plane flexure from \cref{sec:frame-1001} is now altered by introducing the point load
 \(\bm{F} = 1/16 \, \mathbf{E}_3\) in addition to the moment \(\bm{M}\) so as to induce
 a three-dimensional response. 
-A uniform mesh of 10, 2-node \ExactFrame{} elements is used, and the reference moment in \eqref{eq:fref} for \(\lambda = 1/8\) is applied in a single load step. 
+A uniform mesh of 10, 2-node \ExactFrame{I} elements is used, and the reference moment in \eqref{eq:fref} for \(\lambda = 1/8\) is applied in a single load step. 
 Because the deformation is no longer plane, each choice of nodal parameterization essentially equilibriates the moment in a different coordinate system. %solves a different problem.
 Results are reported in Table~\ref{tab:helical-perturb01}, where the \texttt{None/None/None} and \texttt{Incr/None/Incr} 
 variants match the values reported by \cite{ibrahimbegović1995computational} for the formulations by 
@@ -72,7 +72,7 @@ Table~\ref{tab:helical-perturb02} lists the tip displacements for the solution.
 %
 To demonstrate the behavior of the
 proposed formulations under large rotations, the reference moment value $M$ in \eqref{eq:fref} is now increased to \(\lambda=10\) with a large out-of-plane force of \(F=5 \lambda\).
-The model discretization uses 100 2-node \ExactFrame{} finite elements, and the loading is applied in 200 steps under load factor control.
+The model discretization uses 100 2-node \ExactFrame{I} finite elements, and the loading is applied in 200 steps under load factor control.
 Figure~\ref{fig:helix} shows the final deformed shape alongside a plot of the tip displacement in the direction of the concentrated force.
 These results are in perfect agreement with %values in 
 the literature \citep{zupan2003finiteelement,makinen2007total,ghosh2009frameinvariant,lolić2020consistent,harsch2023total}.

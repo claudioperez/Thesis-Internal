@@ -5,38 +5,21 @@
 \label{tab:helical-perturb01}
 \begin{tabular*}{\textwidth}{@{\extracolsep\fill}cccccccc@{}}
 \toprule
-\textbf{Interpolation} & \textbf{Isometry} & \textbf{Parameters} &
+\textbf{Element} & \textbf{Isometry} & \textbf{Parameters} &
 \textbf{Avg. Iter.} & \textbf{Max. Iter.} &
 \(\Delta x_1\) & \(\Delta x_2\) & \(\Delta x_3\) 
 \\
 \midrule
-\texttt{None} & \texttt{None} & \texttt{None}   &  4.0  & 4  & -0.9961871 &  3.7285453 &  0.1950713 \\
-\texttt{None} & \texttt{SFIN} & \texttt{None}   &  4.0  & 4  & -0.9961872 &  3.7285448 &  0.1950841 \\
-\texttt{Incr} & \texttt{None} & \texttt{Incr}   &  4.0  & 4  & -0.9966511 &  3.7289219 &  0.2030584 \\
-\texttt{Incr} & \texttt{SFIN} & \texttt{Incr}   &  4.0  & 4  & -0.9966518 &  3.7289216 &  0.2030853 \\
-\texttt{None} & \texttt{None} & \texttt{Incr}   &  4.0  & 4  & -0.9966509 &  3.7289319 &  0.2028719 \\
-\texttt{None} & \texttt{SFIN} & \texttt{Incr}   &  4.0  & 4  & -0.9966511 &  3.7289315 &  0.2028856 \\
-\texttt{Incr} & \texttt{SFIN} & \texttt{None}   &  4.0  & 4  & -0.9961830 &  3.7285267 &  0.1952556 \\
+\ExactFrame{I} & \texttt{None} & \texttt{None}   &  4.0  & 4  & -0.9961871 &  3.7285453 &  0.1950713 \\
+\ExactFrame{I} & \texttt{SFIN} & \texttt{None}   &  4.0  & 4  & -0.9961872 &  3.7285448 &  0.1950841 \\
+\LightRule
+% \texttt{Incr} & \texttt{None} & \texttt{Incr}   &  4.0  & 4  & -0.9966511 &  3.7289219 &  0.2030584 \\
+% \texttt{Incr} & \texttt{SFIN} & \texttt{Incr}   &  4.0  & 4  & -0.9966518 &  3.7289216 &  0.2030853 \\
+\ExactFrame{I} & \texttt{None} & \texttt{Incr}   &  4.0  & 4  & -0.9966509 &  3.7289319 &  0.2028719 \\
+\ExactFrame{I} & \texttt{SFIN} & \texttt{Incr}   &  4.0  & 4  & -0.9966511 &  3.7289315 &  0.2028856 \\
+% \texttt{Incr} & \texttt{SFIN} & \texttt{None}   &  4.0  & 4  & -0.9961830 &  3.7285267 &  0.1952556 \\
 \bottomrule
 \end{tabular*}
 \end{table}
 \end{center}
 
-\iffalse
-\begin{center}
-\begin{table*}[!h]%
-\caption{Rolled cantilever with perturbation at $F=0.001$ and $M = 2.5\pi$.}
-\label{tab:helix-perturb01}
-\begin{tabular*}{\textwidth}{@{\extracolsep\fill}lllccrrr@{}}
-%\begin{tabular*}[]{@{}lrrrrrrr@{}}
-\toprule
-   & & Isometry  & \(n\) & Num. Iter. & \(\Delta x_1\) & \(\Delta x_2\) & \(\Delta x_3\)  \\
-\midrule
-  \texttt{Incr}    & \texttt{None} & \texttt{Incr} & 2 &  3 & -0.994523 & 3.73019 & 0.00325031 \\
-  \texttt{    }    & \texttt{SFIN} & \texttt{    } & 2 &  3 & -0.994523 & 3.73019 & 0.00325074 \\
-  \texttt{    }    & \texttt{    } & \texttt{    } &   &    &  \\
-\hline
-\end{tabular*}
-\end{table*}
-\end{center}
-\fi

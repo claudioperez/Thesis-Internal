@@ -15,7 +15,7 @@ where $\TwistRxn$ is the applied torque at a distance $\reflenx$ along the membe
 \subsubsection{Uniform Twist}
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.5\linewidth]{Examples/frame-0015/img/e0010.png}
+    \includegraphics[width=0.5\linewidth]{Examples/frame-0015/img/0015-twist.png}
     \caption{Tip torque (\(\TwistRxn\)) vs. rotation (\(\vartheta\)) for Example~\ref{sec:frame-0015}.}
 \end{figure}
 This beam is in uniform torsion under a constant torque $\TwistRxn=M$, so that the twist $\vartheta'$ is constant along the member. 
@@ -40,5 +40,16 @@ G={80,000},
 unit/stress={\mega\pascal}
 }
 
+\begin{table}[H]
+    \centering
+    \begin{tabular}{ccccc}
+         & Rotations & Isometry & Element & Section & Warping \\ 
+         \midrule
+    1.   & - & \texttt{Linear} & \ForceFrame{}  & \\
+         & - & -               & \ExactFrame{I} & 
+    \end{tabular}
+    \caption{Caption}
+    \label{tab:placeholder}
+\end{table}
 Similar problems have been considered by 
 \cite{hsiao2000corotational,battini2002corotational,jonker2021threedimensional} \cite{rong2020geometrically} \cite{zhang2011formulation}.

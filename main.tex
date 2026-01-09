@@ -154,7 +154,7 @@
 % \part{Finite Element Formulations}
 \part{Structural Mechanics}
 
-\section{Introduction}\label{sec:Part-I}
+\section{Overview}\label{sec:Part-I}
 \input{Body/Part-I}
 \clearpage
 
@@ -173,8 +173,6 @@
 
 \section{Geometric Transformations}\label{sec:transform}
 \input{Body/Transformations/index}
-\subsection{Element Loading}\label{sec:loading}
-\input{Body/Loading/main}
 \input{Body/Transformations/Conclusions}
 \clearpage 
 
@@ -189,7 +187,7 @@
 % \part{Exact Linear Type 3}
 % \subsection{Condensation}
 % \input{33_Condensation}
-\section{Consistency}\label{sec:timo}
+\section{Saint-Venant Consistency}\label{sec:timo}
 \input{Sections/50_Introduction}
 \input{Sections/53_VenantShapeBasis}
 \input{Sections/Traces/56_TraceClassI}
@@ -245,6 +243,10 @@
 
 \InputChapter{Part I/Kinematics/main}
 \clearpage 
+
+\section{Corotational Transformations}\label{sec:coro-details}
+\input{Body/Library/Transform/main}
+\clearpage
 
 \include{Sections/30_Iesan}
 \input{Sections/33_Summary}

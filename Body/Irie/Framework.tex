@@ -21,7 +21,7 @@ In order to conduct a meaningful structural health assessment, the assessor must
 %
 %
 \subsection{Assets}\label{sec:assets}
-The \gls{asset} abstraction represents the primary subject of structural health monitoring. For example, the Painter St. overcrossing in \cref{fig:continuous-flare} (a) is an \gls{asset} identified with station number \texttt{CE89324} of the California Strong Motion Instrumentation Program (CSMIP) and structure number \texttt{04 0236} in the Federal Highway Administration’s National Bridge Inventory.
+The \gls{asset} abstraction represents the primary subject of structural health monitoring. For example, the Painter St. Overcrossing in \cref{fig:continuous-flare} (a) is an \gls{asset} identified with station number \texttt{CE89324} of the California Strong Motion Instrumentation Program (CSMIP) and structure number \texttt{04 0236} in the Federal Highway Administration’s National Bridge Inventory.
 Naturally, an inventory of \glspl{asset} will consist of a wide variety of structural designs, each with distinct vulnerabilities and strengths. 
 It is essential that the representation of an \gls{asset} is able to account for these contextual details.
 For example, several older bridges in the Caltrans inventory, including the Painter St. overcrossing, are designed with continuous flared columns like that shown in \cref{fig:continuous-flare} (a).  Structures with this design are particularly vulnerable to certain failure modes as shown in \cref{fig:continuous-flare} (b) \cite{sanchez1997seismic,soleimani2017seismic,caltrans2009memo-6-1}.
@@ -161,7 +161,20 @@ Second, it encourages experimentation with different training algorithms. By abs
 % Finally, the \gls{metric} abstraction also plays a vital role in facilitating collaboration and knowledge sharing. By providing a common language for expressing the outputs of different \glspl{predictor}, it allows developers to share and compare their results, learn from each other’s successes and failures, and collectively push the boundaries of what is possible.
 
 \subsection{Events and Evaluations}\label{sec:events}
+\begin{figure}[H]
+    \centering
+    \resizebox{0.25\linewidth}{!}{\input{Body/Irie/Figures/fig_layer_classes}}
+    \resizebox{0.25\linewidth}{!}{\input{Body/Irie/Figures/fig_classdiagram}}
+    % \caption{Class diagram for the Metric abstraction.}
+    \label{fig:irie-classes}
+\end{figure}
 
+\begin{figure}[H]
+    \centering
+    \resizebox{0.6\linewidth}{!}{\input{Body/Irie/Figures/fig_sequence}}
+    \caption{Sequence diagram illustrating the process of evaluating an event.}
+    \label{fig:irie-classes}
+\end{figure}
 The \gls{event} and \gls{evaluation} abstractions provide a general framework for capturing and processing data from the physical system, enabling the digital twin to reflect the state of the physical system accurately and in real time.
 In the context of bridge health monitoring, this generally corresponds to any situation that could place the health of a structure in jeopardy
 and for which an \gls{evaluation} is desired, but more generally, may also be used to represent any relaying of data from the physical structure to the digital twin. 

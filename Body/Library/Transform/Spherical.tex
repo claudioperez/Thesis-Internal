@@ -1,0 +1,85 @@
+
+\subsection{\texorpdfstring{\Spherical}{Spherical} Isometry}\label{sec:sfin}
+
+The \texttt{SFIN} transformation 
+was derived for finite element analysis %from the investigation
+%\FCF{appears in the study}
+by \cite{crisfield1999objectivity}.
+% This procedure is invariant to node-numbering. 
+For two-node elements, this transformation effects a 
+spherical linear interpolation of the rotation field
+which furnishes
+%\FCF{It turns out that} a spherical linear interpolation 
+ a geodesic on \(\mathrm{SO}(3)\) 
+and provides the most natural generalization of 
+a %classical
+linear interpolation for the rotation manifold \citep{shoemake1985animating}.
+%For two rotations \(\FrameRotation_I\) and \(\FrameRotation_J\), the interpolating rotation \(\FrameRotation^h\left(\xi\right)\)  is:
+% $$
+% \FrameRotation^h\left(\xi\right)% ; \FrameRotation_I, \FrameRotation_J\right)
+% =\FrameRotation_I \exp \left(\frac{\xi}{L} \log \left(\FrameRotation_I^\mathrm{t} \FrameRotation_J\right)\right)
+% $$
+%
+\cite{jelenić1999geometrically} use the concept 
+for a finite element formulation in the context of dynamics.
+The study used a Petrov-Galerkin methodology that resulted
+in a non-symmetric stiffness,
+ and does not distinguish between element-independent operations and element-dependent operations.
+% \FCF{without distinction of element-independent from element-dependent operations}.
+The external application of the transformation in the current study to a wrapped element
+% the elements
+%like that
+%of \cite{ibrahimbegović1995computational} and \cite{simo1986threedimensional}
+imparts %to them 
+the benefits described in \cite{crisfield1999objectivity},
+while enforcement of the Bubnov-Galerkin condition, % as proposed here,
+ensures symmetry of the tangent stiffness at equilibrium.
+
+The procedure for forming \(\bm{R}\) begins
+with the selection of two node indices \(I\) and \(J\) for an \(n\)-noded element:
+%
+\begin{equation*} 
+I=\operatorname{floor}\left(\frac{1}{2}(n+1)\right)  
+\quad \text { and } \quad  
+J=\operatorname{floor}\left(\frac{1}{2}(n+2)\right).
+\end{equation*}
+%
+The rotations \(\FrameRotation_I\) and \(\FrameRotation_J\)
+at nodes $I$ and $J$
+%, respectively,
+are used to form an intermediate vector $\bm{\vartheta}$ with the formula:
+\[\bm{\vartheta} = \operatorname{Log}\FrameRotation_I^{\mathrm{t}} \FrameRotation_J.\]
+With this vector, the coordinate rotation is given by:
+%
+\begin{equation*} 
+\left.\begin{array}{rl}
+\bm{R} &= \FrameRotation_I \operatorname{Exp} \left(\frac{1}{2} \bm{\vartheta}\right). \\
+\end{array}\right.
+\end{equation*}
+%
+The nodal spin matrices \(\bm{W}_a\) %each
+comprise two $3\times 3$ blocks each with the form:
+%
+\begin{equation*} 
+\bm{W}_a = \left[\bm{0} ~~ \bm{W}_{a\scriptscriptstyle{\Lambda}}\right]
+\end{equation*}
+%
+where \(\bm{W}_{a\scriptscriptstyle{\Lambda}} = \bm{0}\) for \(a \notin \{I,J\}\) and otherwise:
+%
+\begin{equation*} 
+\begin{aligned}
+\bm{W}_{I \Lambda} &= \frac{1}{2}\left(\bm{1} + \frac{1}{\vartheta} \tan \frac{\vartheta}{4} \, \bm{\vartheta}^{\times}\right) \\
+\end{aligned}
+\qquad\text{ and }\qquad
+\begin{aligned}
+\bm{W}_{J \Lambda} &=\frac{1}{2}\left(\bm{1} -\frac{1}{\vartheta} \tan \frac{\vartheta}{4} \, \bm{\vartheta}^{\times}\right)
+\end{aligned}
+\end{equation*}
+with \(\vartheta = \|\bm{\vartheta}\|\).
+% \begin{equation*} 
+% \operatorname{Sfin}\left(\FrameRotation_I, \FrameRotation_J, \xi\right)=\FrameRotation_I \exp \left(\frac{\xi}{L} \log \left(\FrameRotation_I^\mathrm{t} \FrameRotation_J\right)\right)
+% \end{equation*}
+
+\begin{ambox}[\texttt{Sfin} Isometry]{box:sfin}
+    
+\end{ambox}

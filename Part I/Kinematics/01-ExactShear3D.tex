@@ -257,57 +257,6 @@ associated with a given metric:
 
 
 
-\subsubsection{Remarks}
-
-\begin{enumerate}[label=(\roman*)]
-
-\item One may consider the alternative rotation \(\SpaceRotation\) defined by
-  \begin{equation*}
-    \begin{aligned}
-    \FrameRotation &\triangleq \frameBasis_k \otimes \FrameBasis_k \\
-    \SpaceRotation &\triangleq \frameBasis_k \otimes \SpaceBasis_k \\
-    \bm{R}_0 &\triangleq \FrameBasis_k \otimes \SpaceBasis_k \\
-    \end{aligned}
-    \quad\text{ so }\quad 
-    \FrameRotation = \SpaceRotation\SpaceRotation_0^{\mathrm{t}}
-\end{equation*}
-\item \label{rem:exact-shear-deriv} Note that in components one has for the derivative \((~\cdot~)'\) with respect to the reference length \(\reflenx\):
-  $$
-  \curveResult^{\prime}
-   = (M_i^\prime + e_{ijk}\kappa_j M_k)\frameBasis_i 
-  $$
-  and the moment equilibrium can be expressed correspondingly as:
-  $$
-  \frameBasis_i (M_i^\prime + e_{ijk}(\kappa_j M_k + \gamma_j N_k))
-  $$
-
-\item With respect to the current arc length \(\deflenx\)
-    \begin{equation*}
-    \frac{\mathrm{d} \curveResult}{\mathrm{d} \reflenx}
-    =\frac{\mathrm{d} \deflenx}{\mathrm{d} \reflenx}\left(\frac{\mathrm{d} M_k}{\mathrm{d} \deflenx} - \kappa^{\times}_{k j} M_j\right) \frameBasis_k
-    \end{equation*}
-    where
-    \begin{equation*}
-        \deflenx(\reflenx) \triangleq \int_0^{\reflenx} \|\bm{x}^{\prime}\| \, \mathrm{d}\reflenx
-    \end{equation*}
-    $$
-    \frac{\mathrm{d} M_{\mathrm{a}}}{\mathrm{d} \deflenx}=\check{M}_{\mathrm{a}}=-d_{\mathrm{a}}^k\left(e_{k p q} t^p S^q+L_k\right)+d_{\mathrm{a}}^m w_m^k M_k
-    $$
-    
-\iffalse
-\item 
-$$
-\bm{\kappa}/\bm{K}? = \frac{1}{2}\begin{pmatrix}
-\left. \frameBasis_2 \cdot \frameBasis_1^{\prime}-\frameBasis_1 \cdot \frameBasis_2^{\prime}-\FrameBasis_2 \cdot \FrameBasis_1^{\prime}+\FrameBasis_1 \cdot \FrameBasis_2^{\prime}\right. \\
-\left. \frameBasis \cdot \frameBasis_2^{\prime}-\frameBasis_2 \cdot \frameBasis^{\prime}-\FrameBasis \cdot \FrameBasis_2^{\prime}+\FrameBasis_2 \cdot D^{\prime}\right. \\
-\left. \frameBasis_1 \cdot \frameBasis^{\prime}-\frameBasis \cdot \frameBasis_1^{\prime}-\FrameBasis_1 \cdot \FrameBasis^{\prime}+\FrameBasis \cdot \FrameBasis_1^{\prime}\right. \\
-\end{pmatrix}
-$$
-\fi 
-
-\end{enumerate}
-
-
 \begin{ambox}[\gls{frame:exact} \gls{frame:shear} Frame (SVQ)]{box:exact-shear-svq}
 
 \begin{equation*} 

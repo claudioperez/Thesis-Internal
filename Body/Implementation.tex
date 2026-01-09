@@ -36,6 +36,7 @@ Furthermore, concentrated inelasticity elements require non-semantic information
       This distinction is illuminated by considering classical buckling modes:
       \begin{table}[H]
           \centering
+          \caption{Buckling modes.}
           \begin{tabular}{llll}
               \toprule
               Mode & Description & Type & Examples \\
@@ -70,7 +71,6 @@ Furthermore, concentrated inelasticity elements require non-semantic information
               \\
                \bottomrule
           \end{tabular}
-          \caption{Buckling modes.}
       \end{table}
     \item \label{item:shear} Boundary flexibility. \\
       Negligible when $L$ is large.
@@ -219,15 +219,9 @@ transformation \\
 model \\
 \texttt{kinematics} & Flag & Optional variable specifying the kinematic
 formulation of the element. \\
-\texttt{shear} & Flag & Optional flag variable specifying the shear formulation. \\
+% \texttt{shear} & Flag & Optional flag variable specifying the shear formulation. \\
 \bottomrule
 \end{longtable}
-
-Note that by default elements will employ an appropriate integration
-rule and the \texttt{section} field is used homogeneously. 
-However, all non-prismatic elements may alternatively be provided with an array of
-section objects to account for inhomogeneity and an explicit integration
-rule.
 
 \paragraph{1. PrismFrame}
 The \texttt{Prism} element is a standard linearly elastic prismatic
@@ -265,6 +259,8 @@ The \texttt{Prism} element is a standard linearly elastic prismatic
 %
   The CBDI technique was extended to the \gls{frame:axial}-\gls{frame:shear} theory of \cref{sec:axial-shear}  by \cite{jar}
 
+  Implementation details are discussed in \cref{sec:ForceFrame}.
+
 
 \paragraph{3. CubicFrame}
   The \texttt{Cubic} element fits displacements to a cubic polynomial
@@ -280,7 +276,8 @@ The \texttt{Prism} element is a standard linearly elastic prismatic
   The \ExactFrame{} element is a \(C^0\) displacement formulation of
   the exact shear-deformable element kinematics. 
   This element is ideal
-  for modeling large elastic deformations. Reduced integration must be
+  for modeling large elastic deformations. 
+  Reduced integration must be
   used to avoid shear locking, and consequently a combination of \(h\)
   and \(p\) refinement is required in order to adequately capture
   inelasticity.
@@ -327,8 +324,8 @@ Elements are grouped into three types based on their geometric nature:
 \begin{enumerate}
     \item[T1.]\label{lib:T1} \texttt{Linear}
     \item[T2.]\label{lib:T2} \texttt{PDelta}
-    \item[T3.]\label{lib:T3} \texttt{Corotational} \cite{nour-omid1991finite}
-    \item[T4.]\label{lib:T4} \texttt{Spherical} \cite{perez2024nonlinear}
+    \item[T3.]\label{lib:T3} \texttt{Corotational} \cref{sec:coro-details}
+    \item[T4.]\label{lib:T4} \texttt{Spherical} \cref{sec:sfin}
 \end{enumerate}
 
 Rotation parameterization is controlled by:
@@ -340,53 +337,23 @@ Rotation parameterization is controlled by:
 
 \subsection{Section Library}
 
+\begin{enumerate}
+    \item \texttt{AxialFiber}
+    \item \texttt{ShearFiber} 
+    \begin{itemize}
+        \item \texttt{ShearFiber}$_{\rm I}$:  \eqref{eq:linear-gl-strain-pi}
+        \item \texttt{ShearFiber}$_{\rm II}$: \eqref{eq:wagner-gl-strain-pi}
+    \end{itemize}
+\end{enumerate}
 
-\subsubsection*{Elastic}
-\inputdraft{Body/Section/A_Constants}
 
-\subsubsection*{AxialFiber}
-
-\subsubsection*{ShearFiber}
-
+\subsection{Element Loading}\label{sec:loading}
+\input{Body/Loading/main}
 
 \subsection{Sensitivity}
 \cite{al-aukaily2019corotational}
 
 \subsection{Summary}
 
-\begin{longtable}[]{@{}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1978}}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1538}}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1538}}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1319}}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1429}}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.2198}}@{}}
-\toprule
-\begin{minipage}[b]{\linewidth}\raggedright
-Element Name
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-Shear
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-Euler
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-Transforms
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-Material
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-Interpolation
-\end{minipage} \\
-\midrule
-\endhead
-\texttt{Prism} & Basic, Axial & Basic, Axial & Type I & - & - \\
-\ForceFrame & Basic, Axial & Basic, Axial & Type I & Section & - \\
-\texttt{Cubic} (Displ.) & Basic & Basic & Type I & Section &
-Cubic/Quadratic \\
-\texttt{Mixed} & Basic, Axial & Basic, Axial & Type I & Section & - \\
-\texttt{Euler} (Displ.) & - & Basic, Delta & Type II & Section & Hermite
-(\(C^1\)) \\
-\texttt{Shear} (Displ.) & Basic, Delta & - & Type II & Section &
-Lagrange (\(C^0\)) \\
-\ExactFrame (Displ.) & Exact & - & Type III & Section & Lagrange
-(\(C^0\)) \\
-\bottomrule
-\end{longtable}
+The modeling library developed in this chapter builds on the modular architecture that has been pioneered in work like \cite{filippou1996fedeas}, \cite{desouza2000forcebased}, \cite{scott2008softwarea}. 
+

@@ -25,7 +25,8 @@ Element loads in beam and shell finite-element formulations are fully described 
 A distributed load is generally specified by components in one of three coordinate systems:
 
 \begin{itemize}
-\item Global basis \(\{\mathbf{E}_{i}\}\) – Fixed in space.  Ideal for body forces such as self-weight, because gravity always points downward in the same global direction.  The load vector is independent of element deformation, so no geometric (load) stiffness is generated. Mathematically such a load, \(\bm{f}(\xi,t)\) satisfies
+\item Global basis \(\{\mathbf{E}_{i}\}\) – Fixed in space.  
+Ideal for body forces such as self-weight, because gravity always points downward in the same global direction.  The load vector is independent of element deformation, so no geometric (load) stiffness is generated. Mathematically such a load, \(\bm{f}(\xi,t)\) satisfies
 \begin{equation*}
     \bm{f}(\xi,t) \cdot \mathbf{E}_i = \mathrm{const.}
     \qquad\forall \mathbf{E}_i,\, t,

@@ -91,6 +91,7 @@
 \InputDetail{Style/Tikz}
 \InputDetail{Style/Units}
 \InputDetail{Style/SaveMath}
+\InputDetail{Style/Algo}
 % \InputDetail{Style/Draft/Warning}
 
 
@@ -99,6 +100,7 @@
 \addbibresource{References/references.bib}
 \addbibresource{References/warping.bib}
 \addbibresource{References/bridges.bib}
+\addbibresource{References/regional.bib}
 \addbibresource{References/elastostatics.bib}
 \addbibresource{References/filippou.bib}
 \addbibresource{References/cosserat.bib}
@@ -106,7 +108,7 @@
 \addbibresource{References/elements.bib}
 \addbibresource{References/rotations.bib}
 \addbibresource{References/resume.bib}
-% \addbibresource{References/opensees.bib}
+\addbibresource{References/opensees.bib}
 \addbibresource{References/stability.bib}
 \addbibresource{References/mechanics.bib}
 \addbibresource{References/manifolds.bib}
@@ -149,7 +151,8 @@
 \input{Body/Introduction}
 \clearpage 
 
-\part{Finite Element Formulations}
+% \part{Finite Element Formulations}
+\part{Structural Mechanics}
 
 \section{Introduction}\label{sec:Part-I}
 \input{Body/Part-I}
@@ -186,7 +189,7 @@
 % \part{Exact Linear Type 3}
 % \subsection{Condensation}
 % \input{33_Condensation}
-\section{Continuum-Exact Dimensional Reduction}\label{sec:timo}
+\section{Consistency}\label{sec:timo}
 \input{Sections/50_Introduction}
 \input{Sections/53_VenantShapeBasis}
 \input{Sections/Traces/56_TraceClassI}
@@ -209,14 +212,19 @@
 
 \input{Examples/index}
 
+\section{Conclusions}
+\input{Body/Part-I-Conclusions}
+\clearpage
+
 \part{Application}
 
 \InputChapter{Body/Xara/main}
 \clearpage 
 
-\input{Body/Irie/main}
+\section{BRACE2}
+\InputChapter{Body/Irie/main}
 
-\InputChapter{Part II/04_Type_I_Prediction}%
+\InputChapter{Part II/main}%
 % \section{Modeling Considerations}
 % \input{Body/Modeling}
 
@@ -231,6 +239,9 @@
 \printglossary[type=frame]
 \printglossary[type=brace]
 \clearpage
+\input{Part I/Rotations}
+\input{Body/Rotations/Functions}
+\clearpage 
 
 \InputChapter{Part I/Kinematics/main}
 \clearpage 

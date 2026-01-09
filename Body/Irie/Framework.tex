@@ -5,7 +5,7 @@
 
 \begin{figure}[h!]
     \centering
-    \includegraphics[width=0.9\textwidth]{Figures/abstractions.png}
+    \includegraphics[width=0.9\textwidth]{Body/Irie/Figures/abstractions.png}
     \caption{The \gls{asset}, \gls{predictor}, \gls{event}, \gls{evaluation}, and \gls{metric} represent the central abstractions of the \BRACE{} platform for bridge health monitoring.}
     \label{fig:abstractions}
 \end{figure}
@@ -29,9 +29,9 @@ For example, several older bridges in the Caltrans inventory, including the Pain
 
 \begin{figure}[h!]
     \centering
-    \includegraphics[width=\textwidth]{Figures/obsolete-flare.png}
-    % \includegraphics[width=0.5\textwidth]{Figures/Screenshot 2024-02-02 193305.png}
-    % \includegraphics[width=0.45\textwidth]{Figures/IMG0036.jpg}
+    \includegraphics[width=\textwidth]{Body/Irie/Figures/obsolete-flare.png}
+    % \includegraphics[width=0.5\textwidth]{Body/Irie/Figures/Screenshot 2024-02-02 193305.png}
+    % \includegraphics[width=0.45\textwidth]{Body/Irie/Figures/IMG0036.jpg}
     \caption{Example of an important feature included in the representation of an \gls{asset}. Left: Obsolete continuous flare detail from the Painter St. overcrossing. Right: Column failure of the Mission Gothic Bridge following the 1994 Northridge earthquake (Photo courtesy of PEER NISEE, \cite{aschheim1994mission}).}
     \label{fig:continuous-flare}
 \end{figure}
@@ -39,9 +39,9 @@ For example, several older bridges in the Caltrans inventory, including the Pain
 \subsection{Predictors}
 \begin{figure}[h!]
     \centering
-    \includegraphics[width=0.95\textwidth]{Figures/predictors.png}
-    % \includegraphics[width=0.45\textwidth]{Figures/painter-transverse2.pdf}
-    % \includegraphics[width=0.45\textwidth]{Figures/sysid_sensors.pdf}
+    \includegraphics[width=0.95\textwidth]{Body/Irie/Figures/predictors.png}
+    % \includegraphics[width=0.45\textwidth]{Body/Irie/Figures/painter-transverse2.pdf}
+    % \includegraphics[width=0.45\textwidth]{Body/Irie/Figures/sysid_sensors.pdf}
     \caption{A depiction of an Asset (left) alongside three associated Predictors (right). The depicted predictors are (from top to bottom) a nonlinear finite element model for the dynamic equilibrium problem, a linear finite element model for the plane warping problem, and a system identification model for a state-space realization of the inverse dynamic equilibrium problem.}
     \label{fig:overview-predictors}
 \end{figure}
@@ -69,14 +69,14 @@ Here $\accel$ is the acceleration associated with the state of the structure, $\
 
 \subsubsection{Type I: Forward Methods}
 
-In the context of \cref{eq:newton-discrete}, \glspl{predictor-t1} answer the problem statement:
+In the context of \eqref{eq:newton-discrete}, \glspl{predictor-t1} answer the problem statement:
 \begin{quote}
  % are premised on the idea that 
  If the form of $\intern$ is \emph{assumed} and the loading $\extern$ is \emph{given}, then $\displ$ and $\veloc$ can be approximately \emph{determined}.
 \end{quote}
 %
 \glspl{predictor-t1} are commonly realized as approximate models for boundary value problems on infinite-dimensional (Hilbert) vector spaces by employing a \emph{finite element} discretization to furnish $\Mass$ and $\intern$ and an approximation to $\extern$ is constructed from input sensor data. Highly nonlinear geometric phenomena like buckling and collapse are efficiently represented by generalizing to the setting of infinite-dimensional manifolds \cite{perez2024nonlinear}.
-Finite elements models as \glspl{predictor} have recently been considered in the context of digital twins by \cite{torzoni2024digital,ghahari2022bridge,perez2024brace2}. 
+Finite elements models as \glspl{predictor} have recently been considered in the context of digital twins by \cite{torzoni2024digital,ghahari2022bridge,chern2024brace2}. 
 These techniques are particularly
 attractive because they are readily
 accessible to the large workforce of civil engineers that routinely develops models of
@@ -91,7 +91,7 @@ Alternatively, \glspl{predictor-t1} may be realized through artificial intellige
 
 
 \subsubsection{Type II: Inverse Methods}
-In the context of \cref{eq:newton-discrete}, \glspl{predictor-t2} answer the problem statement:
+In the context of \eqref{eq:newton-discrete}, \glspl{predictor-t2} answer the problem statement:
 \begin{quote}
  %are premised on the idea that 
  If general constraints on $\Mass$ and $\intern$ are \emph{assumed} and $\extern$ and $\accel$ are \emph{given}, then the function $\intern$ can be approximately \emph{determined}.
@@ -112,7 +112,7 @@ Health monitoring then entails tracking the data-fitted identity of a structure 
 \subsection{Metrics}
 \begin{figure}
     \centering
-    \resizebox{0.8\linewidth}{!}{\input{Figures/fig_metrics}}
+    \resizebox{0.8\linewidth}{!}{\input{Body/Irie/Figures/fig_metrics}}
     \caption{Class diagram for the Metric abstraction.}
     \label{fig:metric-class}
 \end{figure}

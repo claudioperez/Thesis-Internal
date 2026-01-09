@@ -105,7 +105,7 @@ The most general approach to model warping is to take the \(\nwarp\) warping amp
 \begin{equation*}
     \bimoment' - \bishear + \bm{f}_{\mathrm{w}} = \bm{0}
 \end{equation*}
-This can be separated out of the total equilibrium operator \(\operatorname{B}\) of \cref{eq:strong}, so that all assumptions on and simplifications to the primary kinematic variables \(\FramePosition\) and \(\FrameRotation\) are contained within a \emph{primary} equilibrium operator \(\EquilibriumDerivative\). Further investigation of \(\EquilibriumDerivative\) is deffered to \cref{ch:frame-hierarchy}.
+This can be separated out of the total equilibrium operator \(\operatorname{B}\) of \eqref{eq:strong}, so that all assumptions on and simplifications to the primary kinematic variables \(\FramePosition\) and \(\FrameRotation\) are contained within a \emph{primary} equilibrium operator \(\EquilibriumDerivative\). Further investigation of \(\EquilibriumDerivative\) is defered to \cref{ch:frame-hierarchy}.
 
 A \textbf{Type 1} constitutive formulation is completely general in the sense that it can readily return a response for all other formulation types.
 
@@ -145,12 +145,12 @@ $$
 has \(\nwarp - \mathtt{n_c}\) non-zero components.
 
 
-Recall the Galerkin projection \(\mathcal{G}_{\chi}[\bm{\eta}]\) defined by \cref{eq:galerkin}
+Recall the Galerkin projection \(\mathcal{G}_{\chi}[\bm{\eta}]\) defined by \eqref{eq:galerkin}
 \begin{equation*}
 \mathcal{G}_{\chi}[\bm{\eta}] = \left< \operatorname{B}_{\mathrm{p}} \bm{\sigma}_{\mathrm{p}} ,\, \bm{\eta}_{\mathrm{p}} \right>
 +\left< \bm{w}'-\bm{v},\, \delta\bm{\alpha} \right>
 \end{equation*}
-Using \cref{eq:decompose-alpha} for \(\bm{\alpha}\) and exploiting linearity of the inner product furnishes
+Using \eqref{eq:decompose-alpha} for \(\bm{\alpha}\) and exploiting linearity of the inner product furnishes
 \begin{equation*}
 \mathcal{G}_{\chi}[\bm{\eta}] = \left< \operatorname{B} \bm{\sigma}_{\mathrm{p}} ,\, \bm{\eta}_{\mathrm{p}} \right>
 +\left< \bm{w}'-\bm{v} ,\, \delta \bar{\bm{\alpha}} \right>
@@ -173,7 +173,7 @@ $$
 $$
 \fi 
 %
-Using \cref{eq:vstrain} for \(\delta \bm{e}_{\mathrm{p}}\triangleq D\bm{e}\cdot \bm{\eta}\) and exploiting linearity of the inner product again furnishes
+Using \eqref{eq:vstrain} for \(\delta \bm{e}_{\mathrm{p}}\triangleq D\bm{e}\cdot \bm{\eta}\) and exploiting linearity of the inner product again furnishes
 \begin{equation*}
 \mathcal{G}_{\chi}[\bm{\eta}] = 
 \left<\bm{s}_{\mathrm{p}} - \mathbf{L}_{\mathrm{p}}^*\bishear + \mathbf{L}_{\mathrm{p}}^* \bimoment' ,\, \delta \bm{e}_{\mathrm{p}} \right>
@@ -209,7 +209,7 @@ where \(\Delta \mathcal{G}_{\partial} \triangleq\)
 
 \vspace{1ex}
 \begin{ambox}[Type 2: Constrained Warping]{box:warp2}
-For linear constraints on warping with the form of \cref{eq:linear-warp-constraints}, the material response from Type 1 is augmented with the form
+For linear constraints on warping with the form of \eqref{eq:linear-warp-constraints}, the material response from Type 1 is augmented with the form
 \[
 [\bar{\bm{s}}_{\mathrm{p}},\bm{w},\bar{\bm{v}}] = \SectionEvaluation{
 \bm{e}_{\mathrm{p}}, \bm{\alpha}', \bar{\bm{\alpha}}

@@ -1,34 +1,20 @@
 
-\newcommand{\accel}{\ddot{\mathbf{u}}}
-\newcommand{\veloc}{\dot{\mathbf{u}}}
-\newcommand{\displ}{\mathbf{u}}
-\newcommand{\state}{\mathbf{x}}
-\newcommand{\statedot}{\dot{\mathbf{x}}}
-
-\newcommand{\force}{\mathbf{f}^{\,\text{int}}}
-\newcommand{\intern}{\force}
-\newcommand{\extern}{\mathbf{f}^{\,\text{ext}}}
-\newcommand{\inpoot}{\mathbf{z}}
-\newcommand{\outpoot}{\mathbf{y}}
-\newcommand{\Mass}{\mathbf{m}}
-\newcommand{\Damp}{\mathbf{c}}
-\newcommand{\Stiff}{\mathbf{k}}
 
 \chapter{Type I Prediction: Structural Modeling}\label{ch:predictor_t1}
 
 \section{Introduction}
 
-\begin{quote}
-\noindent
-The state of a structure as it experiences an event is assumed to be characterized by its displacement $\displ$ and velocity $\veloc$, which is governed by Newton's laws of motion:
-\begin{equation}
-    \Mass \accel = \extern -  \intern(\displ,\veloc), %\force (\displ, \veloc, \accel) = \mathbf{f}
-    \label{eq:newton-discrete}
-\end{equation}
-where $\accel$ is the acceleration associated with the state of the structure, $\intern$ characterizes the internal resisting force produced by the structure in response to its configuration, and $\extern$ is the external loading that is imposed by the event. \glspl{predictor-t1} are premised on the idea that if the form of $\intern$ is \emph{assumed} and the loading $\extern$ is \emph{given}, then $\displ$ and $\veloc$ can be approximately \emph{determined} by methods of integration of the second order system of differential equations in \cref{eq:newton-discrete}.
-%
-On the \gls{platform}, this is realized by employing a \emph{finite element} approximation of $\Mass$ and $\intern$ and constructing an approximation to $\extern$ from the sensor data.
-\end{quote}
+% \begin{quote}
+% \noindent
+% The state of a structure as it experiences an event is assumed to be characterized by its displacement $\displ$ and velocity $\veloc$, which is governed by Newton's laws of motion:
+% \begin{equation}
+%     \Mass \accel = \extern -  \intern(\displ,\veloc), %\force (\displ, \veloc, \accel) = \mathbf{f}
+%     \label{eq:newton-discrete}
+% \end{equation}
+% where $\accel$ is the acceleration associated with the state of the structure, $\intern$ characterizes the internal resisting force produced by the structure in response to its configuration, and $\extern$ is the external loading that is imposed by the event. \glspl{predictor-t1} are premised on the idea that if the form of $\intern$ is \emph{assumed} and the loading $\extern$ is \emph{given}, then $\displ$ and $\veloc$ can be approximately \emph{determined} by methods of integration of the second order system of differential equations in \cref{eq:newton-discrete}.
+% %
+% On the \gls{platform}, this is realized by employing a \emph{finite element} approximation of $\Mass$ and $\intern$ and constructing an approximation to $\extern$ from the sensor data.
+% \end{quote}
 
 \noindent
 In the field of civil engineering, the most ubiquitous class of prediction techniques is those that leverage a structural analysis model.
@@ -52,7 +38,8 @@ used to derive the warping constant that is used by
 the elastic beam elements employed by the low-fidelity global models (\cref{sec:chap4_modeling}).
 The remainder of this chapter develops various aspects of finite element modeling, 
 which require special consideration in the context of structural health monitoring,
-as implemented on the \BRACE{} \gls{platform}. \cref{ch:discretization} discusses the formal theoretical structure that is inherent in representing continuous systems by the discrete problem of \cref{eq:newton-discrete} and \cref{ch:inelasticity} discusses the generalization of this theory to models that exhibit hysteresis.
+as implemented on the \BRACE{} \gls{platform}. 
+% \Cref{ch:discretization} discusses the formal theoretical structure that is inherent in representing continuous systems by the discrete problem of \cref{eq:newton-discrete} and \cref{ch:inelasticity} discusses the generalization of this theory to models that exhibit hysteresis.
 
 \section{Modeling}
 \label{sec:chap4_modeling}
@@ -259,9 +246,6 @@ Given that the bridge and the corresponding foundation models are decoupled and 
 In the current implementation of the platform, the soil-shaft interaction models are integrated with the structural model of the bridge itself by connecting the head node of each shaft pile to the bottom node of the corresponding column by enforcing an equal-degree-of-freedom constraint. 
 Such implementation is demonstrated in \cref{sec:painter}.
 
-\subsection{Pre-processing}
-Because the sensors are aligned with the structure, but the model degrees of freedom are aligned with global north, south, east, and west directions, the recorded motions and/or the simulated motions must be rotated to align the two. This is performed using the \texttt{quakeio} package which is documented in \cref{ch:quakeio}. 
-After performing this pre-processing, the motions at the ground level are used as input to the model.
 
 \section{Limit States}
 
@@ -321,9 +305,3 @@ When there are multiple predictors, the desired predictor can be selected from t
 \caption{Type I predictor metrics.}
 \label{fig:sam_metrics}
 \end{figure}
-
-\clearpage
-\input{Part II/discretization}
-
-\clearpage
-\input{Part II/inelasticity}

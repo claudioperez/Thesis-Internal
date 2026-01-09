@@ -7,7 +7,7 @@ An improvement to one formulation does not automatically benefit others; a corre
 The result is a maintenance burden that grows combinatorially with the phenomena one wishes to capture, and a validation effort that must be repeated for each combination.
 
 This fragmentation also obscures deficiencies.
-Certain widely-used formulations for geometrically nonlinear analysis violate strain objectivity: objective strain measures, which should be invariant under superposed rigid motions, are corrupted by the interpolation procedure \citep{crisfield1999objectivity}.
+Certain widely-used formulations for geometrically nonlinear analysis violate strain objectivity: objective strain measures, which should be invariant under superposed rigid motions, are corrupted by the interpolation procedure \citep{crisfield1999objectivity}. 
 The errors are small for moderate rotations and vanish at converged equilibrium states, so they are often tolerated in practice.
 But tolerating such errors becomes untenable when simulations must be differentiated---as required for sensitivity analysis, gradient-based inference, or optimization---because the spurious dependence on rigid motion contaminates the computed gradients.
 Fixing the problem within existing software architectures would require rewriting element-level code, with attendant re-validation, for each affected element type.
@@ -15,32 +15,46 @@ Fixing the problem within existing software architectures would require rewritin
 
 \subsection{Objectives}
 
-The situation changes 
-fundamentally when material nonlinearity is introduced. 
-Inelastic constitutive 
-evaluation requires knowledge of the actual strain distribution at material 
-points throughout the cross-section—not merely the integrated stress 
-resultants. This distribution depends on the \emph{warping shapes} employed 
-in the kinematic description, and the classical Saint-Venant warping functions 
-do not, in general, furnish the correct shapes for a given trace.
+Our ultimate goal is to obtain a resultant model that can be used with standard beam finite elements. 
+These elements work in terms of the primary equilibrium operator $\mathbb{B}_p$, so if we can return from the section with the quantity that figures in this operator, the element needs no modification. 
 
-The connection to shear correction arises because addressing this requirement 
-forces us to confront the same fundamental ambiguity that underlies the shear 
-correction debate. Different traces imply different associations between 
-beam strains and pointwise deformations, and hence different effective 
-warping shapes. The trace matrix $\TraceDeDpRoot$ encodes precisely this 
-association: it transforms the canonical Ie\c{s}an parameters of the 
-Saint-Venant solution into the strain measures of a particular beam theory, 
-and its inverse determines the warping shapes that reconstruct the continuum 
-strain field from those beam strains.
+\begin{enumerate}
+\item\label{obj:objectivity}  Objectivity
 
-A secondary objective is computational efficiency. Existing implementations 
-of inelastic beam elements with warping \citep{saritas2009inelastic,%
+\item\label{obj:expressivity} Expressivity
+
+\item Generality. 
+\begin{itemize}
+    \item Finite deformation.
+    \item Inelasticity
+    \item Nonuniform warping.
+\end{itemize}
+ 
+\item Efficiency.
+  \begin{itemize}
+      \item Minimal number of DOFs
+      \item Tangent symmetry.
+  \end{itemize}
+
+\item Consistency. 
+\begin{itemize}
+    \item 
+    \item Experimental
+\end{itemize}
+
+\item Compatibility. 
+
+\item Semantic Flexibility. 
+\end{enumerate}
+
+
+Existing implementations of inelastic beam elements with warping \citep{saritas2009inelastic,%
 lecorvec2012nonlinear,dire2018mixed} introduce auxiliary kinematic fields 
 that must be interpolated along the element length. These additional degrees 
 of freedom either inflate the global system of equations—incurring a cost 
 that scales as the cube of the DOF count for direct linear solvers—or must 
-be condensed out at the element level during each Newton iteration. We seek 
+be condensed out at the element level during each Newton iteration.
+We seek 
 a formulation in which warping effects are entirely absorbed into the 
 section-level constitutive relation, so that standard six-DOF beam elements 
 can be employed without modification.
@@ -83,16 +97,11 @@ We derive explicit expressions
 for the trace matrices corresponding to classical beam theories and introduce 
 the energy-conjugate trace, which produces symmetric section stiffness and arises naturally from variational considerations.
 
+A brief recapitulation of Saint Venant's solution is presented in \cref{sec:sv}. 
+
 % \end{Details}
 
 \subsection{Overview}
-
-The draft first lays out the nonlinear governing equations of equilibrium for general lines in space in \cref{sec:genwarp}. 
-These equations are determined solely from the geometric nature of a line embedded in space, and make no reference to material points that are not contained on this line. 
-The general model is geometrically exact and allows an arbitrary number of auxiliary ``warping amplitude" fields, and specializations are obtained that eliminate the additional fields in a general manner. 
-
-
-A brief recapitulation of Saint Venant's solution is presented in \cref{sec:sv}. 
 
 \begin{Aside}
 This draft develops a general family of beam theories enriched by an arbitrary number of warping modes. 
@@ -109,12 +118,6 @@ There are three natural restrictions we impose on the class of traces we'll inve
 \end{Aside}
 
 \subsection{Details}
-We seek a kinematic model for a beam finite element with fully integrated material response, that exactly reproduces the SV solution under linear isotropy. 
-
-Our ultimate goal is to obtain a resultant model that can be used with standard beam finite elements. 
-These elements work in terms of the primary equilibrium operator $\mathbb{B}_p$, so if we can return from the section with the quantity that figures in this operator, the element needs no modification. 
-It is worth noting that this breaks down under \emph{nonuniform torsion}, because the bishear rate that is picked up by $\mathbf{L}_{\rm vp}\bm{w}'$ is not exactly proportional to any of the 1D strain measures ($\bm\gamma$ and $\bm\kappa$). 
-However, this approach will be sufficient to exactly capture the Saint~Venant class which only includes \emph{uniform} torsion.
 
 
 

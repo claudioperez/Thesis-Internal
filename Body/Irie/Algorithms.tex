@@ -1,0 +1,58 @@
+\newcommand{\BlankLine}{}
+
+\begin{algorithm}[!h]
+\caption{\enskip Top–level evaluation routine.}\label{alg:evaluate}
+\begin{algorithmic}
+  \Function{Evaluate}{$\mathit{event},\,\mathit{evaluation}$}
+    \State $c_{\mathrm{ok}} \gets 0$
+    \State $\mathit{daemon} \gets \Call{LiveEvaluation}{\mathit{event},
+           \mathit{event.asset.predictors},\,\mathit{evaluation}}$
+    \State $\mathit{predictors} \gets \Call{AssignMetricPredictors}{\mathit{daemon},\mathit{event}}$
+    \BlankLine
+    \ForAll{$(\mathit{pName},\mathit{runID}) \in
+            \Call{RunPredictor}{\mathit{daemon},\,\mathit{predictors}}$}
+        \ForAll{$m \in \mathit{predictors}[\,\mathit{pName}\,].\textit{metrics}$}
+            \State $\mathit{data} \gets 
+                   \mathit{daemon.predictors}[\,\mathit{pName}\,]
+                   .\Call{getMetricData}{\mathit{runID},\,m}$
+            \If{$\mathit{data} \neq \varnothing$}
+               \State $c_{\mathrm{ok}} \gets c_{\mathrm{ok}} + 1$
+               \State $\Call{SetMetricData}{\mathit{daemon},\,m,\,\mathit{pName},\,\mathit{data}}$
+            \EndIf
+        \EndFor
+    \EndFor
+    \BlankLine
+    \If{$c_{\mathrm{ok}} > 0$}
+       \State $\mathit{evaluation.status} \gets \textsc{Finished}$
+    \Else
+       \State $\mathit{evaluation.status} \gets \textsc{Invalid}$
+    \EndIf
+    \State $\Call{save}{\mathit{evaluation}} \;\;|\;\;
+            \Call{save}{\mathit{daemon}}$
+    \State \Return $\mathit{evaluation}$
+  \EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+
+\begin{algorithm}[!h]
+\caption{\enskip Assigning predictors to active metrics (method of \textsc{LiveEvaluation}).}\label{alg:assign}
+\begin{algorithmic}
+  \Function{AssignMetricPredictors}{$\mathit{daemon},\,\mathit{event}$}
+    \State $\mathit{Q} \gets \varnothing$ \Comment{Map: predictor $\mapsto$ (runID, metric-list)}
+    \ForAll{$m \in \mathit{daemon.active\_metrics}$}
+        \ForAll{$(\pi, s) \in 
+                 \Call{ScorePredictors}{m,\,\mathit{daemon.predictors},\,\mathit{event}}$}
+            \If{$\pi.\textit{active} \land \pi.\textit{name} \notin \operatorname{dom}(\mathit{Q})$}
+               \State $\rho \gets \pi.\Call{newPrediction}{\mathit{event}}$
+               \State $\mathit{Q}[\pi.\textit{name}] \gets (\rho,\,[\,])$
+            \EndIf
+            \State $\pi.\Call{activateMetric}{m,\;\mathit{Q}[\pi.\textit{name}].\rho}$
+            % \State $\Call{append}{\mathit{Q}[\pi.\textit{name}].\textit{metrics}, \Call{AddMetric}{\mathit{daemon},\,m,\,\pi.\textit{name},\,s}}$
+        \EndFor
+    \EndFor
+    \State \Return $\mathit{Q}$
+  \EndFunction
+\end{algorithmic}
+\end{algorithm}
+

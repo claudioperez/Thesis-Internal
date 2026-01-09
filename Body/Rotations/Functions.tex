@@ -1,0 +1,774 @@
+\chapter{Rotation Derivatives}
+\hypertarget{the-exponential}{%
+\subsection{Derivatives}\label{the-exponential}}
+
+In this section, several formulas are presented that facilitate the use of calculus on the rotation manifold \(\mathrm{SO}(3)\). 
+Resources for this material include \cite{barfoot2017state}, \cite{hertzberg2008framework}, \cite{iserles2000liegroup}.
+
+\hypertarget{exp-the-exponential-on-mathrmso3}{%
+\subsubsection{\texorpdfstring{\(\operatorname{Exp}\): The Exponential
+on
+\(\mathrm{SO}(3)\)}{Exp: The Exponential on SO(3)}}\label{exp-the-exponential-on-mathrmso3}}
+%
+\paragraph*{Definition}
+
+The \emph{exponential} map
+\(\exp\colon \mathfrak{so}(3) \rightarrow \mathrm{SO}(3)\) associates an
+element of the Lie algebra to a rotation. 
+The exponential of \(\boldsymbol{\Omega} \in \mathfrak{so}(3)\) is defined as
+\(\exp \boldsymbol{\Omega} =\gamma(1)\) where %
+\(
+\gamma: \mathbb{R} \rightarrow \mathrm{SO}(3)
+\)
+solves the initial-value problem:
+\[
+  \left\{
+  \begin{aligned}
+    \dot{\gamma} - \boldsymbol{\Omega}\gamma &= \boldsymbol{0} \\
+    \gamma(0) &= \boldsymbol{1}
+  \end{aligned}
+  \right.
+\]
+% is the unique one-parameter subgroup of \(\mathrm{SO}(3)\) whose
+% tangent vector at the identity is equal to \(\boldsymbol{\Omega}\). 
+This definition implies the alternative \emph{functional}
+definition which requires the following identities hold:
+%
+\begin{equation*} 
+\begin{aligned}
+\exp((\xi+\varepsilon) \boldsymbol{\Omega}) & = \exp(\xi \boldsymbol{\Omega}) \, \exp(\varepsilon \boldsymbol{\Omega}), \\
+\frac{\mathrm{d}}{\mathrm{d}\varepsilon} 
+\left.\operatorname{exp}(\varepsilon \boldsymbol{\Omega})\right.\biggr|_{\varepsilon=0} & =\boldsymbol{\Omega} .
+\end{aligned}
+\end{equation*}
+  for any \(\xi, \varepsilon \in \mathbb{R}\) and
+\(\boldsymbol{\Omega} \in \mathfrak{so}(3)\).
+The following capitalized notation
+is used to express this as a function of vectors in
+\(\mathbb{R}^3\):
+%
+\begin{equation*} 
+  \operatorname{Exp} \boldsymbol{\theta} \triangleq \exp \boldsymbol{\theta}^{\times}
+%\begin{aligned}
+%\text{Exp}\colon \mathbb{R}^3  &\rightarrow \mathrm{SO}(3), \\
+%\boldsymbol{\theta} &\mapsto \exp \left(\boldsymbol{\theta}^{\times}\right)
+%\end{aligned}
+%\qquad\text{ and }\qquad
+%\begin{aligned}
+%\operatorname{Log} \colon \mathrm{SO}(3) &\rightarrow \mathbb{R}^3 ,\\
+%\boldsymbol{\Lambda} &\mapsto \log (\boldsymbol{\Lambda})^{\vee}.
+%\end{aligned}
+\end{equation*}
+ 
+
+\paragraph*{Expression}
+
+A closed-form expression for the exponential in \(\mathrm{SO}(3)\) is
+furnished by the Rodrigues formula: 
+\begin{equation*}
+\operatorname{Exp} \boldsymbol{\theta} 
+\;=\; \cos \theta \mathbf{1} +\frac{\sin \theta}{\theta} \boldsymbol{\theta}^{\times} +\frac{1-\cos \theta}{\theta^2} \boldsymbol{\theta} \otimes \boldsymbol{\theta}
+\end{equation*}
+where \(\theta \triangleq \|\boldsymbol{\theta}\|\).
+\begin{equation}
+\begin{aligned}
+\boldsymbol{\Lambda}
+&= \cos \theta \mathbf{1} +\frac{\sin \theta}{\theta} \boldsymbol{\theta}^{\times} +\frac{1-\cos \theta}{\theta^2} \boldsymbol{\theta} \otimes \boldsymbol{\theta} \\
+&=\boldsymbol{1}+a_1 \boldsymbol{\theta}^{\times} + a_2 \left(\boldsymbol{\theta}^{\times}\right)^2 \\
+&=a_0 \boldsymbol{1} + a_1 \boldsymbol{\theta}^{\times} + a_2 \boldsymbol{\theta}\otimes\boldsymbol{\theta} \\
+&\equiv \operatorname{Exp} \boldsymbol{\theta}
+\end{aligned}
+\label{eq:ExpSO3}
+\end{equation} 
+Also:
+\begin{equation*}
+\exp [\Theta]=\bm{1}+\frac{2}{1+|\overline{\hat{\Theta}}|^2}\left(\bar{\bm{\Theta}}+\bar{\bm{\Theta}}^2\right), 
+\quad \text { where } \quad 
+\bar{\bm{\Theta}}\triangleq\frac{1}{2} \frac{\tan \left(\frac{1}{2}|\Theta|\right)}{\frac{1}{2}|\Theta|} \bm{\Theta}
+\end{equation*}
+\hypertarget{LogSO3}{%
+\subsubsection{\texorpdfstring{\(\operatorname{Log}\): The Logarithm on
+\(\mathrm{SO}(3)\)}{Log: The Logarithm on SO(3)}}\label{sec:LogSO3}}
+
+\paragraph*{Definition}
+The \emph{logarithm}
+\(\log\colon\mathrm{SO}(3)\rightarrow\mathfrak{so}(3)\) associates a
+rotation to a trajectory through the identity. When restricted to the open ball
+\(\|\boldsymbol{\theta}\|<\pi\), the exponential is a bijection and the logarithm is
+its inverse. However, if one does not restrict the domain, the
+exponential becomes non-injective as every vector
+\((\|\boldsymbol{\theta}\|+2 k \pi) \boldsymbol{\theta}\) will map to the same
+\(\boldsymbol{\Lambda}\) for any integer \(k\).
+The logarithm may be defined in terms of the infinite series:
+\begin{equation*}
+\begin{aligned}
+%\log %\colon \mathrm{SO}(3) & \rightarrow T_{\boldsymbol{1}} \mathrm{SO}(3) \\
+%  = -\sum_{k=1}^{\infty} \frac{1}{k}(\boldsymbol{1}-\boldsymbol{\theta})^k
+\log \boldsymbol{\Lambda}=\sum_{k=1}^{\infty}(-1)^{k+1} \frac{(\boldsymbol{\Lambda}-\boldsymbol{1})^k}{k}
+ \end{aligned}
+\end{equation*}
+The following capitalized notation
+is used to express the logarithm as a function of vectors in
+\(\mathbb{R}^3\) representing element of \(\mathfrak{so}(3)\):
+\begin{equation*}
+  \begin{aligned}
+    \operatorname{Log}\boldsymbol{\Lambda} \triangleq \left(\log \boldsymbol{\Lambda}\right)^{\vee}
+    %\operatorname{Log} \colon \mathrm{SO}(3) &\rightarrow \mathbb{R}^3 ,\\
+    %\boldsymbol{\Lambda} &\mapsto \log (\boldsymbol{\Lambda})^{\vee}.
+  \end{aligned}
+\end{equation*}
+where the notation \((~\cdot~)^{\vee}\) of Equation (\ref{eq:vee}) is employed.
+
+\paragraph*{Expression}
+
+A common formula for the logarithm in \(\mathrm{SO}(3)\)  is: %
+\begin{equation*} 
+\log \boldsymbol{\Lambda}=\frac{\vartheta \left(\boldsymbol{\Lambda}-\boldsymbol{\Lambda}^{\mathrm{t}}\right)}{2 \sin \vartheta} 
+\qquad\text { with }\qquad
+ \vartheta=\cos ^{-1}\left(\frac{\operatorname{tr}\boldsymbol{\Lambda}-1}{2}\right) .
+\end{equation*}
+which holds for \(\vartheta \neq 0\) and \(\vartheta \in(-\pi, \pi)\).
+However, this expression is problematic when \(\vartheta\) is small and should not be used in practice. 
+An ideal 
+ procedure to compute the logarithm is the algorithm proposed by  \cite{spurrier1978comment},
+ which is summarized in Algorithm~\ref{alg:LogSO3}.
+
+\begin{algorithm}[!h]
+\caption{\enskip Algorithm from \cite{spurrier1978comment} for computing the logarithm $\operatorname{Log}$ on $\mathrm{SO}(3)$.}%
+\label{alg:LogSO3}
+\begin{algorithmic}
+  \Function{LogSO3}{$\boldsymbol{\Lambda}$}
+  \Statex{\(\triangleright\) Form quaternion $(q_0 + \boldsymbol{q})$}
+
+  \State {$a = \max\{\operatorname{tr}\boldsymbol{\Lambda},\, \Lambda_{1 1},\, \Lambda_{2 2},\, \Lambda_{3 3}\}$} 
+  \If {$a \equiv \operatorname{tr}\boldsymbol{\Lambda}$}
+    \State {$q_0 = \frac{1}{2}\sqrt{1+a}$}
+    
+    \For {i = 0:2}
+      \State {$j = (i+1)\%3$}
+      \State {$k = (i+2)\%3$}
+      \State {$q_i = (\Lambda_{k j} - \Lambda_{j k})/(4 q_0)$}
+    \EndFor 
+  \Else 
+    \State {$i = \operatorname{argmax}\{\operatorname{tr}\boldsymbol{\Lambda},\, \Lambda_{1 1},\, \Lambda_{2 2},\, \Lambda_{3 3}\}$}
+    \State {$j = (i+1)\%3$}
+    \State {$k = (i+2)\%3$} 
+
+    \State {$q_i = \sqrt{a/2 + (1 - \operatorname{tr}\boldsymbol{\Lambda})/4}$}
+    \State {$q_j = (\Lambda_{j i} + \Lambda_{i j})/(4 q_i)$}
+    \State {$q_k = (\Lambda_{k i} + \Lambda_{i k})/(4 q_i)$}
+    \State {$q_0 = (\Lambda_{k j} - \Lambda_{j k})/(4 q_i)$}
+  \EndIf
+
+  \State {$\boldsymbol{q} = q_1 \mathbf{i} + q_2 \mathbf{j} + q_3 \mathbf{k}$}
+
+  \Statex{\(\triangleright\) Form vector $\boldsymbol{\theta}$}
+    \State {$q = \|\boldsymbol{q}\|$}
+
+    \If {$q_0 < 0$}
+       \State {$q_0 = -q_0$}
+       \State {$\boldsymbol{q} = -\boldsymbol{q}$}
+    \EndIf
+
+    \If {$q \equiv 0$}
+       \State {$\boldsymbol{\theta} = \boldsymbol{0}$}
+    \ElsIf {$q < q_0$}
+       \State {$\boldsymbol{\theta} = (\boldsymbol{q}/q) 2 \sin^{-1}q$}
+    \Else
+       \State {$\boldsymbol{\theta} = (\boldsymbol{q}/q) 2 \cos^{-1}q_0$}
+    \EndIf
+  
+\Return {$\boldsymbol{\theta}$}
+  
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+
+\iffalse
+\hypertarget{identities}{%
+\subsubsection{Identities}\label{identities}}
+
+The general matrix exponential has the property that for any \FCF{matrix} \(\boldsymbol{V}\) and any invertible \FCF{matrix} \(\boldsymbol{A}\) \FCF{it holds that}  %
+\begin{equation*} 
+\operatorname{exp} \left(\boldsymbol{V}^{\mathrm{t}}\right)=(\operatorname{exp} \boldsymbol{V})^{\mathrm{t}}
+\qquad\text{ and }\qquad
+\operatorname{exp} \left(\boldsymbol{A} \boldsymbol{V} \boldsymbol{A}^{-1}\right) =\boldsymbol{A} \operatorname{exp} \left(\boldsymbol{V}\right) \boldsymbol{A}^{-1}.
+\end{equation*}
+  Furthermore, a matrix exponential is \emph{always} invertible and one
+has: %
+\begin{equation*} 
+(\operatorname{exp} \boldsymbol{V})^{-1}=\operatorname{exp} \left(-\boldsymbol{V}\right)
+\qquad\text{ and }\qquad
+\operatorname{det}\left(\operatorname{exp}\boldsymbol{V}\right)=e^{\operatorname{tr}(\boldsymbol{V})}
+\end{equation*}
+where the former is in fact a special case of the more general
+identity %
+\begin{equation*} 
+\exp \left(\boldsymbol{V}\right)^\alpha=\exp \left(\alpha \boldsymbol{V}\right).
+\end{equation*}
+ \fi
+
+ \subsubsection{Cay}
+
+ \begin{equation}
+ \operatorname{cay}[\bm{\zeta}^{\times}] = 
+\bm{1}+\frac{1}{1+\zeta^2}(\mathbf{1}+(\bm{\zeta}^\times))\bm{\zeta}^\times
+\end{equation}
+$$
+\zeta=\tan \frac{\varphi}{2} \mathbf{u}
+$$
+$$
+\left(\frac{d}{d \Omega} \text { cay } \Omega\right) H=\left(d \operatorname{cay}_{\Omega}(H)\right) \text { cay } \Omega
+$$
+where
+$$
+d \text { cay } \Omega(H)=2(I-\Omega)^{-1} H(I+\Omega)^{-1}
+$$
+For the inverse of $d$ cay ${ }_{\Omega}$ we have
+
+$$
+d \operatorname{cay}_{\Omega}^{-1}(H)=\frac{1}{2}(I-\Omega) H(I+\Omega)
+$$
+
+\subsubsection{Ham}
+
+\begin{equation}
+\bm{R}=\left(\mathbf{I}+\frac{1}{q_0}(\bm{q} \times)\right)\left(\bm{1}+\frac{1}{q_0}(\bm{q} \times)\right)^{-T}
+=\left(\bm{1}+\frac{1}{q_0}\bm{q}^\times\right)^{-T}\left(\bm{1}+\frac{1}{q_0}\bm{q}^\times\right)
+\end{equation}
+
+
+\hypertarget{sec:exponential-differentials}{%
+\subsection{Exponential Differentials}\label{sec:exponential-differentials}}
+
+The differential or push-forward
+\(\operatorname{dexp}_{\boldsymbol{\Omega}}\) of the exponential \(\exp\) at
+\(\boldsymbol{\Omega}\)
+is defined in the sense of Section~\ref{sec:push-forward}:
+%follows by the standard procedure: %
+\begin{equation*} 
+\operatorname{dexp}_{\boldsymbol{\Omega}} \boldsymbol{W} 
+  =\left.\frac{\mathrm{d}}{\mathrm{d} \varepsilon} \exp  {\gamma_{\varepsilon}}\right|_{\varepsilon=0}
+\quad\text{ with }\quad
+\begin{aligned}
+\gamma(0)&=\boldsymbol{\Omega}, \text{ and }\\
+\dot{\gamma}(0)&=\boldsymbol{W} .
+\end{aligned}
+\end{equation*}
+%
+Note that this furnishes a function with the signature: %
+\begin{equation*} 
+\operatorname{dexp}_{\boldsymbol{\Omega}} : T_{\boldsymbol{\Omega}} \mathfrak{so}(3) \rightarrow T_{\exp ({\boldsymbol{\Omega}})} \mathrm{SO}(3).
+\end{equation*}
+However, as indicated earlier, it is %will be
+preferable to identify each
+space \(T_{\exp (\boldsymbol{\Omega})} \mathrm{SO}(3)\) with the single Lie
+algebra \(\mathfrak{so}(3)\). That is, for any rotation \(\boldsymbol{\Lambda}\), we seek a systematic way to associate a tangent \(\dot{\boldsymbol{\Lambda}} \, \in \, T_{\scriptscriptstyle{\Lambda}} \mathrm{SO}(3)\) with an element \(\boldsymbol{\Omega}\) of the Lie algebra \(\mathfrak{so}(3) \equiv T_{1} \mathrm{SO}(3)\).
+There are two standard ways to make this
+association:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+% \tightlist
+\item
+  \emph{Left representation}:% Velocities \(\dot{\boldsymbol{\Lambda}}\) are associated with the unique skew operator \(\boldsymbol{\Psi}\) s%
+  \begin{equation*} 
+  %{ }_{\mathrm{mat}} 
+  T^{r}_{\scriptscriptstyle{\Lambda}} \mathrm{SO}(3) \triangleq \left\{
+  %\boldsymbol{\Psi}^{\times}_{\boldsymbol{\Lambda}} \triangleq (\boldsymbol{\Lambda}, \boldsymbol{\Psi}^{\times}) \mid \text { with } 
+  \boldsymbol{\Psi}\text{ with }\dot{\boldsymbol{\Lambda}} \triangleq \boldsymbol{\Lambda} \boldsymbol{\Psi} \mid \boldsymbol{\Lambda} \in \mathrm{SO}(3), \boldsymbol{\Psi} \in \mathfrak{so}(3)\right\}
+  \end{equation*}
+ 
+\item
+  \emph{Right representation}: %
+\begin{equation}
+    T^{\ell}_{\scriptscriptstyle{\Lambda}} \mathrm{SO}(3) \triangleq \left\{
+   %\boldsymbol{\theta}^{\times}_{\boldsymbol{\Lambda}} \triangleq (\boldsymbol{\Lambda}, \boldsymbol{\theta}^{\times}) \mid \text { with } 
+   \boldsymbol{\Theta}\text{ with }\dot{\boldsymbol{\Lambda}} \triangleq \boldsymbol{\Theta} \boldsymbol{\Lambda} \mid \boldsymbol{\Lambda} \in \mathrm{SO}(3), \boldsymbol{\Theta} \in \mathfrak{so}(3)\right\}
+   \label{eq:rTSO3}
+    \end{equation}
+ 
+\end{enumerate}
+
+For each of these representations, a \emph{trivialized} differential may
+be constructed.
+Furthermore, when \(\mathfrak{so}(3)\) is identified with \(\mathbb{R}^3\), these are denoted by
+\(\operatorname{d_{\scriptscriptstyle{R}}Exp}\) and
+\(\operatorname{d_{\scriptscriptstyle{L}}Exp}\) for the 
+right and left
+representations, respectively, and each carries the signature
+\(\mathbb{R}^3 \times \mathbb{R}^3 \rightarrow \mathbb{R}^3\). 
+For a curve \(\gamma: \mathbb{R}\rightarrow \mathfrak{so}(3)\) these are
+defined by the relations: 
+%
+\begin{equation} 
+\begin{aligned}
+\frac{\mathrm{d}}{\mathrm{d} \varepsilon}
+\operatorname{Exp} \gamma_{\varepsilon} 
+& =\operatorname{d_{\scriptscriptstyle{R}}Exp}({\gamma_{\varepsilon}})\,\dot{\gamma}(\varepsilon) \,\operatorname{Exp} \gamma_{\varepsilon} \\
+& =\operatorname{Exp} (\gamma_{\varepsilon})\, \operatorname{d_{\scriptscriptstyle{L}}Exp}({\gamma_{\varepsilon}}) \, \dot{\gamma}(\varepsilon).
+\end{aligned}
+\label{eq:def-dExpSO3}
+\end{equation}
+%
+\paragraph*{Remarks}
+\begin{itemize}
+  \item In the literature on geometrically exact rods, \cite{ibrahimbegović1995computational,ritto-corrêa2002differentiation} use the notation \(\boldsymbol{T}\) for 
+    \(\operatorname{d_{\scriptscriptstyle{R}}Exp}{\boldsymbol{\theta}}\).
+      Alternatively, \cite{simo1988dynamics,jelenić1999geometrically} used \(\boldsymbol{T}\) to refer to  \(\left(\operatorname{d_{\scriptscriptstyle{R}}Exp}\boldsymbol{\theta}\right)^{-1}\) and \cite{simo1991unconditionally} uses the symbol for \(\left(\operatorname{d_{\scriptscriptstyle{L}}Exp}\boldsymbol{\theta}\right)^{-1}\).
+    \cite{cardona1988beam} used the same symbol for \(\operatorname{d_{\scriptscriptstyle{L}}Exp}\boldsymbol{\theta}\).
+
+\item The notation \(\operatorname{dexp}\) employed in this work is consistent with \cite{rossmann2006lie} and differs slightly from of \cite{varadarajan1984lie,iserles2000liegroup}, 
+  who use the symbol to denote a \emph{trivialized} differential. 
+    That is, in the adopted notation, the expression in terms of the adjoint action \(\operatorname{ad}\)
+    is given by: 
+    \[
+      \operatorname{dexp}_X Y=\exp X \frac{1-\exp (-\operatorname{ad} X)}{\operatorname{ad} X} Y.
+    \]
+\end{itemize}
+
+Before proceeding to the expressions for these functions, some
+definitions are necessary.
+Define coefficients \(b_i\) and \(c_i\): %
+\begin{equation*} 
+\begin{array}{ccc}
+b_i \triangleq \dfrac{1}{\theta} \dfrac{\mathrm{d} a_i }{\mathrm{d} \theta}
+&\quad\text{ so }\quad
+\delta a_i =b_i \,\boldsymbol{\theta} \cdot \delta \boldsymbol{\theta},
+&\text{ and} \\[1ex]
+c_i \triangleq \dfrac{1}{\theta} \dfrac{\mathrm{d} b_i }{\mathrm{d} \theta}
+&\quad\text{ so }\quad
+\delta b_i = c_i \, \boldsymbol{\theta} \cdot \delta \boldsymbol{\theta}.
+\end{array}
+\end{equation*}
+where \(a_i\) are the the coefficients in Equation~(\ref{eq:ExpSO3}) for the
+exponential map, \(\boldsymbol{\theta}\) its argument, and \(\theta \triangleq \|\boldsymbol{\theta}\|\). In closed form the coefficients \(b_i\) and \(c_i\) are:
+
+\begin{equation}
+\begin{array}{lccc}
+i & a_i & b_i & c_i \\[1ex] \hline \\[0.1ex]
+0 & \cos \theta 
+  & -\dfrac{\sin \theta}{\theta}
+  & \dfrac{\sin \theta-\theta \cos \theta}{\theta^3}
+\\[0.3cm] 
+1 & \dfrac{\sin \theta}{\theta}
+  & \dfrac{\theta \cos \theta-\sin \theta}{\theta^3}
+  & \dfrac{3 \sin \theta-\theta^2 \sin \theta-3 \theta \cos \theta}{\theta^5}
+\\[0.3cm]
+2 & \dfrac{1-\cos \theta}{\theta^2} %= \dfrac{1}{2} \dfrac{\sin (\theta / 2)}{(\theta / 2)^2}  
+  & \dfrac{\theta \sin \theta-2+2 \cos \theta}{\theta^4}
+  & \dfrac{8-8 \cos \theta-5 \theta \sin \theta+\theta^2 \cos \theta}{\theta^6} 
+\\[0.3cm]
+3 & \dfrac{\theta-\sin \theta}{\theta^3} 
+  & \dfrac{3 \sin \theta-2 \theta-\theta \cos \theta}{\theta^5} 
+  & \dfrac{8 \theta+7 \theta \cos \theta+\theta^2 \sin \theta-15 \sin \theta}{\theta^7}
+\end{array}
+\label{eq:gib}\end{equation}
+Many of these equations are singular at \(\theta = 0\).
+Near this condition, the following series
+expression should be used \citep{ritto-corrêa2002differentiation}.
+
+\begin{equation}
+z_{j i}=\sum_{k=0}^{\infty} \frac{2^j(j+k) !(-1)^{k+j} \theta^{2 k}}{k !(i+2 j+2 k) !}= \begin{cases}a_i(\theta) & \text { if } j=0 \\ b_i(\theta) & \text { if } j=1 \\ c_i(\theta) & \text { if } j=2\end{cases}
+\label{eq:gib-series}\end{equation}
+Remarkably, this expression contains
+every coefficient in Equation~(\ref{eq:gib}).
+It is useful to define a similar table for %from
+the coefficients of the inverse exponential differential:
+
+\begin{equation}
+\begin{array}{lccc}
+i & \alpha_i & & \beta_i \\ \hline \\[0.1ex]
+0 & 1 + \dfrac{1}{2}\theta^2
+  &
+  & % 1
+\\[0.3cm]
+1 & \dfrac{\theta / 2}{\tan (\theta / 2)}
+  &
+  & 
+\\[0.3cm] 
+2 & -\dfrac{1}{2}
+  &
+  & % 0
+\\[0.3cm]
+3 & \dfrac{1}{\theta^2}\left(1 - \dfrac{\theta / 2}{\tan (\theta / 2)}\right) 
+  & %\dfrac{\sin \left(\frac{\theta}{2}\right)-\frac\theta{2} \cos \left(\frac{\theta}{2}\right)}{\theta^2 \sin{\frac{\theta}{2}}}
+  & \dfrac{\theta (\theta+\sin\theta) -8 \sin \left(\frac{\theta}{2}\right)^2}{4 \theta^4 \sin^2\frac{\theta}{2}}
+\\[0.3cm]
+\end{array}
+\label{eq:ber}
+\end{equation}
+
+\hypertarget{sec:drExpSO3}{%
+\subsubsection{\texorpdfstring{\(\operatorname{d_{\scriptscriptstyle{R}}Exp}\)
+: Right Differential of the Exponential}{drExp : Right Differential of the Exponential}}\label{sec:drExpSO3}}
+%
+
+\paragraph*{Definition}
+%
+The \emph{right-trivialized differential} of the exponential \(\operatorname{d_{\scriptscriptstyle{R}}Exp} {\boldsymbol{\theta}}\) is a function that 
+maps variations of the argument \(\boldsymbol{\theta}\)
+into right-represented vectors in the tangent space. An extensive discussion is
+provided by \cite{ibrahimbegović1995computational}. Interesting
+treatments from alternative perspectives can be found in
+\cite{pietraszkiewicz1983finite,simo1986threedimensional,pfister1998bernoulli}. Note that this function is sometimes referred to as the ``left Jacobian'' of \(\mathrm{SO}(3)\).
+%
+The right-trivialized differential is defined by Equation~(\ref{eq:def-dExpSO3}), 
+and has been expressed by the limit \citep{sola2018lie}:
+%
+\begin{equation*} 
+\begin{aligned}
+\operatorname{d_{\scriptscriptstyle{R}}Exp}({\boldsymbol{\theta}})\,
+\boldsymbol{u}
+&\triangleq \lim _{\varepsilon \rightarrow 0} \frac{\operatorname{Log} \left(\operatorname{Exp}(\boldsymbol{\theta} + \varepsilon\boldsymbol{u}) \, \operatorname{Exp}(\boldsymbol{\theta})^{-1}\right)}{\varepsilon} \\
+& =\left.\frac{\mathrm{d}}{\mathrm{d} \varepsilon}\operatorname{Exp} (\boldsymbol{\theta}+\varepsilon  \boldsymbol{u}) \operatorname{Exp} (-{\boldsymbol{\theta}})\right|_{\varepsilon=0}^{\vee}
+\end{aligned}
+\end{equation*}
+ 
+\paragraph*{Expression}
+
+In terms of the coefficients \(a_i\) in Equation~(\ref{eq:gib})
+the function has the expression:
+
+\begin{equation}
+\begin{aligned}
+\operatorname{d_{\scriptscriptstyle{R}}Exp} {\boldsymbol{\theta}}
+%&=\frac{\sin \theta}{\theta} \boldsymbol{1}+\frac{1-\cos \theta}{\theta^2} \boldsymbol{\theta}^{\times} + \frac{\theta-\sin \theta}{\theta^3} \boldsymbol{\theta} \otimes\boldsymbol{\theta}\\
+%&=\boldsymbol{1}+\frac{1-\cos \theta}{\theta^2} \boldsymbol{\theta}^{\times} + \frac{\theta-\sin \theta}{\theta^3} \left(\boldsymbol{\theta}^{\times}\right)^2 \\
+ %&=a_1 \boldsymbol{1}+a_2 \boldsymbol{\theta}^{\times} + a_3 \boldsymbol{\theta} \otimes \boldsymbol{\theta} \\
+ &=\boldsymbol{1}+a_2 \boldsymbol{\theta}^{\times} + a_3 \left(\boldsymbol{\theta}^{\times}\right)^2 \\
+ %&=\int_0^1 \boldsymbol{\Lambda}^\alpha d \alpha \\
+ %&=\sum_{n=0}^{\infty} \frac{1}{(n+1) !}\left(\phi^{\times}\right)^n \\
+ %&=\frac{\sin \theta}{\theta} \boldsymbol{1}  +\frac{1-\cos \theta}{\theta} \boldsymbol{\theta}^{\times}  +\left(1-\frac{\sin \theta}{\theta}\right) \boldsymbol{\theta} \boldsymbol{\theta}^{\mathrm{t}} \\
+\end{aligned}
+\label{eq:drExpSO3}
+\end{equation}
+In \cite{simo1986threedimensional} the notation \(\boldsymbol{\beta}=\left(
+\operatorname{d_{\scriptscriptstyle{R}}Exp} {\boldsymbol{\theta}}
+\right)
+\dot{\boldsymbol{\theta}}\) is used.
+
+\hypertarget{dlExpSO3}{%
+\subsubsection{\texorpdfstring{\(\operatorname{d_{\scriptscriptstyle{L}}Exp}\):
+Left Differential of the
+Exponential}{dlExp: Left Differential of the Exponential}}\label{sec:dlExpSO3}}
+
+% The \emph{left-trivialized differential} of the exponential \(\operatorname{d_{\scriptscriptstyle{L}}Exp} {\boldsymbol{\theta}}\) maps variations of the argument \(\boldsymbol{\theta}\)
+% into left-variations in the tangent space at
+% \(\operatorname{Exp} \boldsymbol{\theta}\). 
+
+
+\paragraph*{Definition}
+The \emph{left-trivialized differential of the exponential} is defined by Equation~(\ref{eq:def-dExpSO3}), 
+and has been expressed by the limit  \citep{sola2018lie}:
+%
+\begin{equation*} 
+\begin{aligned}
+\operatorname{d_{\scriptscriptstyle{L}}Exp} ({\boldsymbol{\theta}}) \, \boldsymbol{u}
+&\triangleq
+%{ }_{\mathrm{mat}} T_{\boldsymbol{1}} \mathrm{S O}(3) &\rightarrow{ }_{\mathrm{mat}} T_{\boldsymbol{\Lambda}} \mathrm{S O}(3) \\
+ \lim _{\varepsilon \rightarrow 0} \frac{\operatorname{Log} \left(\operatorname{Exp}(\boldsymbol{\theta})^{-1} \, \operatorname{Exp}(\boldsymbol{\theta}+\varepsilon\boldsymbol{u})\right)}{\varepsilon} \\
+& =\left.\frac{\mathrm{d}}{\mathrm{d} \varepsilon}\operatorname{Exp} (-{\boldsymbol{\theta}})\operatorname{Exp} (\boldsymbol{\theta}+\varepsilon  \boldsymbol{u})\right|_{\varepsilon=0}^{\vee}
+\end{aligned}
+\end{equation*}
+ 
+
+\paragraph*{Expression}
+
+In terms of the coefficients \(a_i\) in Equation~(\ref{eq:gib})
+the function takes the following form:
+
+\begin{equation}
+\begin{aligned}
+\operatorname{d_{\scriptscriptstyle{L}}Exp}{\boldsymbol{\theta}} &=\boldsymbol{1} - a_2 \boldsymbol{\theta}^{\times} + a_3 \left(\boldsymbol{\theta}^{\times}\right)^2 \\
+%&= a_1 \boldsymbol{1}+\left(1-\frac{\sin \phi}{\phi}\right) \boldsymbol{\theta}\otimes\boldsymbol{\theta} -\frac{1-\cos \phi}{\phi} \boldsymbol{\theta}^{\times}
+% \mathbf{T}_{\scriptscriptstyle{L}}(\boldsymbol{\theta}) & =\boldsymbol{1}-\frac{1-\cos \theta}{\theta^2}[\boldsymbol{\theta}]_{\times}+\frac{\theta-\sin \theta}{\theta^3}[\boldsymbol{\theta}]_{\times}^2 \\
+% &= \frac{\sin \phi}{\phi} \boldsymbol{1}+\left(1-\frac{\sin \phi}{\phi}\right) \boldsymbol{\theta}\otimes\boldsymbol{\theta}-\frac{1-\cos \phi}{\phi} \boldsymbol{\theta}^{\times} \\
+%&=\sum_{n=0}^{\infty}  \frac{1}{(n+1) !}\left(-\boldsymbol{\theta}^{\times}\right)^n \\
+%&=\int_0^1 \boldsymbol{\Lambda}^{-\alpha} d \alpha \\
+\end{aligned}
+\label{eq:RightTanSO3}
+\end{equation}
+This expression is well-known and may be derived from Equation~(\ref{eq:drExpSO3}) using the identity \(\operatorname{d_{\scriptscriptstyle{R}}Exp}{(\boldsymbol{\theta})} = \operatorname{d_{\scriptscriptstyle{L}}Exp}{(-\boldsymbol{\theta})}\).
+
+\hypertarget{sec:ddrExpSO3}{%
+\subsubsection{\texorpdfstring{\(\operatorname{d^2_{\scriptscriptstyle{R}}Exp}\)
+: Derivative of the Right Exponential
+Differential}{ddrExpSO3 : Derivative of the Right Exponential Differential}}\label{sec:ddrExpSO3}}
+
+\paragraph*{Definition}
+The \emph{derivative of the right exponential differential} arises by linearizing expressions containing the right differential (Equation~\ref{eq:drExpSO3}).
+It is defined in the sense of Equation~(\ref{eq:dlinear})
+as the directional derivative of the vector-valued function \(\boldsymbol{\theta}\mapsto \operatorname{d_{\scriptscriptstyle{R}}Exp}(\boldsymbol{\theta})\,\boldsymbol{p}\)
+for some constant vector \(\boldsymbol{p}\):
+%
+\begin{equation*} 
+%\boldsymbol{\Xi}_\ell(\boldsymbol{\theta},\boldsymbol{p}) 
+\operatorname{d^2_{\scriptscriptstyle{R}}Exp}(\boldsymbol{\theta}; \, \boldsymbol{p}) \, \boldsymbol{u} 
+  \triangleq \left.\frac{\mathrm{d}}{\mathrm{d} \varepsilon}\left.\operatorname{d_{\scriptscriptstyle{R}}Exp}({\gamma_{\varepsilon}})\right. \, \boldsymbol{p}\right|_{\varepsilon=0} 
+\qquad\text{ with }\qquad
+\begin{aligned}
+\gamma_{\varepsilon} &= \boldsymbol{\theta} + \varepsilon \boldsymbol{u} \\
+\dot{\gamma}(0) &= \boldsymbol{u}
+\end{aligned}
+\end{equation*}
+ 
+
+\paragraph*{Expression}
+
+In terms of the coefficients \(a_i\) and \(b_i\) in Equation~(\ref{eq:gib})
+the function takes the following form:
+
+\begin{equation}
+\begin{aligned}
+%\boldsymbol{\Xi}_\ell\left(\boldsymbol{\theta},\boldsymbol{p}\right) \boldsymbol{u} =& D [\boldsymbol{T}(\boldsymbol{\theta}) \boldsymbol{p}] \cdot \boldsymbol{u}\\
+%\boldsymbol{\Xi}_\ell(\boldsymbol{p})
+\operatorname{d^2_{\scriptscriptstyle{R}}Exp}(\boldsymbol{\theta}; \, \boldsymbol{p})
+%&= \left[b_1 \boldsymbol{p}+b_2(\boldsymbol{\theta} \times \boldsymbol{p})+b_3\left(\boldsymbol{p} \cdot \boldsymbol{\theta}\right) \boldsymbol{\theta}\right] \otimes \boldsymbol{\theta}  -a_2\boldsymbol{p}^{\times} + a_3[\boldsymbol{\theta} \otimes \boldsymbol{p}+\left(\boldsymbol{p} \cdot \boldsymbol{\theta}\right) \boldsymbol{1}] \\
+&=-a_2 \boldsymbol{p}^{\times}+a_3\left(\boldsymbol{p} \cdot \boldsymbol{\theta}\right) \boldsymbol{1}+a_3 \boldsymbol{\theta} \otimes \boldsymbol{p}
+ + b_1 \boldsymbol{p} \otimes \boldsymbol{\theta}
+ +b_2 \left(\boldsymbol{\theta}\times \boldsymbol{p}\right) \otimes \boldsymbol{\theta} 
+ +b_3\left(\boldsymbol{p} \cdot \boldsymbol{\theta}\right) \boldsymbol{\theta} \otimes \boldsymbol{\theta} \\
+\end{aligned}
+\label{eq:ddlExpSO3}
+\end{equation}
+This expression has previously been derived by \cite{cardona1988beam}.
+
+%
+%
+%
+\hypertarget{sec:ddlExpSO3}{%
+\subsubsection{\texorpdfstring{\(\operatorname{d^2_{\scriptscriptstyle{L}}Exp}\)
+: Derivative of the Left Exponential
+Differential}{ddlExpSO3 : Derivative of the Left Exponential Differential}}\label{sec:ddlExpSO3}}
+
+\paragraph*{Definition}
+
+The \emph{derivative of the left exponential differential} arises by linearizing expressions containing the left differential (Equation~\ref{eq:drExpSO3}).
+It is defined in the sense of Equation~(\ref{eq:dlinear}) 
+as the directional derivative of the vector-valued function \(\boldsymbol{\theta}\mapsto \operatorname{d_{\scriptscriptstyle{L}}Exp}(\boldsymbol{\theta})\,\boldsymbol{p}\) 
+for some constant vector \(\boldsymbol{p}\):
+%
+\begin{equation*} 
+\operatorname{d^2_{\scriptscriptstyle{L}}Exp}({\boldsymbol{\theta}}; \, \boldsymbol{p}) \, \boldsymbol{u} 
+  \triangleq \left.\frac{\mathrm{d}}{\mathrm{d} \varepsilon}\left.\operatorname{d_{\scriptscriptstyle{L}}Exp} ({\gamma_{\varepsilon}})\right. \boldsymbol{p}\,\right|_{\varepsilon=0}
+,\qquad\text{ with }\qquad
+\begin{aligned}
+\gamma_{\varepsilon} &= \boldsymbol{\theta} + \varepsilon \boldsymbol{u} \\
+\dot{\gamma}(0) &= \boldsymbol{u}
+\end{aligned}
+\end{equation*}
+ 
+\paragraph*{Expression}
+
+In terms of the coefficients \(a_i\) and \(b_i\) in Equation~(\ref{eq:gib})
+the function takes the following form:
+
+\begin{equation}
+\begin{aligned}
+\operatorname{d^2_{\scriptscriptstyle{L}}Exp}(\boldsymbol{\theta}; \boldsymbol{p})
+% &=\left[b_1 \boldsymbol{p}-c_2\left(\boldsymbol{\theta} \times \boldsymbol{p}\right)
+%  +c_3\left(\boldsymbol{\theta} \cdot \boldsymbol{p}\right) \boldsymbol{\theta}\right] \otimes \boldsymbol{\theta}
+%  +a_2 \boldsymbol{p}^{\times} + a_3\left(\left(\boldsymbol{\theta} \cdot \boldsymbol{p}\right)[\boldsymbol{1}]+\boldsymbol{\theta} \otimes \boldsymbol{p}\right) \\
+&=
+ a_2 \boldsymbol{p}^{\times}
+ +a_3\left(\boldsymbol{p} \cdot \boldsymbol{\theta}\right)\boldsymbol{1}
+ +a_3\left.\boldsymbol{\theta} \otimes \boldsymbol{p}\right.
+ +b_1 \left.\boldsymbol{p} \otimes \boldsymbol{\theta}\right.
+ -b_2 \left.(\boldsymbol{\theta} \times \boldsymbol{p}) \otimes \boldsymbol{\theta}\right.
+ +b_3 \left(\boldsymbol{p} \cdot \boldsymbol{\theta}\right)\left.\boldsymbol{\theta} \otimes \boldsymbol{\theta}\right.
+\end{aligned}
+\label{eq:ddrExpSO3}\end{equation}
+%
+This formula has been derived by \cite{jelenić1998interpolation} and
+\cite{ritto-corrêa2002differentiation}.
+
+\hypertarget{sec:dddExpSO3}{%
+\subsubsection{\texorpdfstring{\(\operatorname{d^3Exp}\): Second
+Derivative of the Left Exponential
+Differential}{dddExpSO3: Second Derivative of the Left Exponential Differential}}\label{sec:dddExpSO3}}
+
+\paragraph*{Definition}
+The \emph{second derivative of the left exponential differential} arises from the linearization
+of products with the first derivative of the left differential. 
+It is defined in the sense of Equation~(\ref{eq:dlinear}):
+
+%
+\begin{equation*} 
+\operatorname{d^3_{\scriptscriptstyle{R}}Exp}\left(\boldsymbol{\theta}; \, \boldsymbol{p}, \boldsymbol{q}\right) \, \boldsymbol{u}
+\triangleq \left.\frac{\mathrm{d}}{\mathrm{d}\varepsilon}\operatorname{d^2_{\scriptscriptstyle{R}}Exp}\left(\gamma_{\varepsilon}; \, \boldsymbol{p}\right) \, \boldsymbol{q} \,\right|_{\varepsilon=0} 
+,\qquad\text{ with }\qquad
+\begin{aligned}
+\gamma_{\varepsilon} &= \boldsymbol{\theta} + \varepsilon \boldsymbol{u} \\
+\dot{\gamma}(0) &= \boldsymbol{u}
+\end{aligned}
+\end{equation*}
+ 
+
+\paragraph*{Expression}
+
+In terms of the coefficients \(a_i, b_i\) and \(c_i\) in Equation~(\ref{eq:gib})
+the function takes the form:
+
+\begin{equation}
+\begin{aligned}
+%\boldsymbol{\Xi}_{D^2 \mathbf{T}}(\boldsymbol{p}, \boldsymbol{q})
+\operatorname{d^3_{\scriptscriptstyle{R}}Exp}\left(\boldsymbol{\theta};\boldsymbol{p}, \boldsymbol{q}\right)
+= 
+   & a_3(\boldsymbol{p} \otimes \boldsymbol{q}+\boldsymbol{q} \otimes \boldsymbol{p})
+   + b_1(\boldsymbol{p} \cdot \boldsymbol{q}) \boldsymbol{1}
+   + b_2(\boldsymbol{p}\times \boldsymbol{q} \otimes \boldsymbol{\theta}+\boldsymbol{\theta} \otimes \boldsymbol{p}\times\boldsymbol{q}+(\boldsymbol{\theta}\times \boldsymbol{p} \cdot \boldsymbol{q}) \boldsymbol{1}) \\
+& +b_3\bigl(\boldsymbol{p} \cdot \boldsymbol{\theta}(\boldsymbol{q} \otimes \boldsymbol{\theta}+\boldsymbol{\theta} \otimes \boldsymbol{q}) + \boldsymbol{q} \cdot \boldsymbol{\theta} (\boldsymbol{p} \otimes \boldsymbol{\theta}+\boldsymbol{\theta} \otimes \boldsymbol{p})+\left(\boldsymbol{p} \cdot \boldsymbol{\theta}\right)(\boldsymbol{\theta} \cdot \boldsymbol{q}) \boldsymbol{1}\bigr) \\
+& +\bigl(
+    c_1 ~ \boldsymbol{p} \cdot \boldsymbol{q}
+   +c_2(\boldsymbol{q}\times \boldsymbol{p}) \cdot \boldsymbol{\theta}
+   +c_3\left(\boldsymbol{p} \cdot \boldsymbol{\theta}\right)(\boldsymbol{\theta} \cdot \boldsymbol{q})
+  \bigr) \boldsymbol{\theta} \otimes \boldsymbol{\theta}
+\end{aligned}
+\label{eq:dddExpSO3}\end{equation}
+%
+This expression has been derived by
+\cite{ibrahimbegović1995computational} and
+\cite{ritto-corrêa2002differentiation}.
+
+\hypertarget{drLogSO3}{%
+\subsubsection{\texorpdfstring{\(\operatorname{d_{\scriptscriptstyle{R}}Log}\)
+: Right Differential of the Logarithm
+}{drLog : Right Differential of the Logarithm }}\label{sec:drLogSO3}}
+
+\paragraph*{Definition}
+The \emph{right differnetial of the logarithm} inverts the right exponential differential Equation (\ref{eq:drExpSO3}) and has been expressed as:
+%
+\begin{equation*} 
+\begin{aligned}
+\operatorname{d_{\scriptscriptstyle{R}}Log} \left({\boldsymbol{\theta}}\right) \, \boldsymbol{u}
+  &= \left.\frac{\mathrm{d}}{\mathrm{d}\varepsilon} \operatorname{Log} \bigl( \operatorname{Exp} (\varepsilon \boldsymbol{u}) \operatorname{Exp} \boldsymbol{\theta}\bigr) \right|_{\varepsilon=0}
+\end{aligned}
+\end{equation*}
+
+\paragraph*{Expression}
+%
+In terms of the coefficients \(\alpha_i\) in Equation~(\ref{eq:ber})
+the function takes the following form:
+
+\begin{equation}
+\begin{aligned}
+\operatorname{d_{\scriptscriptstyle{R}}Log} {\boldsymbol{\theta}}
+%&=\boldsymbol{1} + \alpha_2 \boldsymbol{\theta}^{\times} + \alpha_3 \left(\boldsymbol{\theta}^{\times}\right)^2 \\
+&=\alpha_1\boldsymbol{1} + \alpha_2\, \boldsymbol{\theta}^{\times} + \alpha_3\, \boldsymbol{\theta}\otimes\boldsymbol{\theta} \\
+%&= \left[\operatorname{d_{\scriptscriptstyle{R}}Exp}_{\boldsymbol{\theta}}\right]^{-1}\\
+%&=\mathbf{T}_{\scriptscriptstyle{R}}^{-1}(\boldsymbol{\theta})
+\end{aligned}
+\label{eq:drLogSO3}
+\end{equation}
+%
+Derivations of this function can be found in \cite{simo1988dynamics}, 
+\cite{nour-omid1991finite}, \cite{ibrahimbegović1995computational},
+and \cite{bauchau2003vectorial}.
+
+\hypertarget{sec:dlLog}{%
+\subsubsection{\texorpdfstring{\(\operatorname{d_{\scriptscriptstyle{L}}Log}\):
+Left Differential of the
+Logarithm}{dlLog: Left Differential of the Logarithm}}\label{sec:dlLog}}
+
+\paragraph*{Definition}
+The \emph{left differential of the logarithm} is adjoint to the right differential of the logarithm Equation (\ref{eq:drLogSO3}), and has been expressed as:
+%
+\begin{equation*} 
+\begin{aligned}
+\operatorname{d_{\scriptscriptstyle{L}}Log} \left({\boldsymbol{\theta}} \right)\, \boldsymbol{u}
+&= \left.\frac{\mathrm{d}}{\mathrm{d}\varepsilon} \operatorname{Log} \bigl(\operatorname{Exp} \boldsymbol{\theta}  \operatorname{Exp} (\varepsilon \boldsymbol{u})\bigr) \right|_{\varepsilon=0} \\
+\end{aligned}
+\end{equation*}
+ 
+
+\paragraph*{Expression}
+
+In terms of the coefficients \(\alpha_i\) in Equation~(\ref{eq:ber})
+the function takes the following form:
+\begin{equation*} 
+\begin{aligned}
+\operatorname{d_{\scriptscriptstyle{L}}Log} {\boldsymbol{\theta}}
+&= \alpha_1 \boldsymbol{1}
+  -\alpha_2 \boldsymbol{\theta}^{\times}
+  +\alpha_3 \boldsymbol{\theta} \otimes \boldsymbol{\theta} \\
+% &= \boldsymbol{1} - \alpha_2 \boldsymbol{\theta}^{\times} + \left(\frac{1}{\theta^2}-\frac{1+\cos \theta}{2 \theta \sin \theta}\right)[\boldsymbol{\theta}]_{\times}^2 \\
+% &= \boldsymbol{1} - \alpha_2 \boldsymbol{\theta}^{\times} + \alpha_3 \left(\boldsymbol{\theta}^{\times}\right)^2 \\
+% &= \left[\operatorname{d_{\scriptscriptstyle{L}}Exp}_{\boldsymbol{\theta}}\right]^{-1}\\
+\end{aligned}
+\end{equation*}
+This formula has previously been derived by \cite{cardona1988beam}.
+
+\hypertarget{ddLogSO3}{%
+  \subsubsection{\texorpdfstring{\(\operatorname{d^2_{\scriptscriptstyle{LR}}Log}\): %
+Derivative of the Left Differential of the Logarithm}{%
+ddLogSO3: Derivative of the Left Differential of the Logarithm}}\label{sec:ddLogSO3}}
+%
+\paragraph*{Definition}
+The derivative \(\operatorname{d^2_{\scriptscriptstyle{LR}}Log}\left(\boldsymbol{\theta}; \, \boldsymbol{p}\right)\) arises when a logarithmic parameterization is linearized:
+%
+\begin{equation*} 
+\begin{aligned}
+\operatorname{d^2_{\scriptscriptstyle{LR}}Log}\left(\boldsymbol{\theta}; \, \boldsymbol{p}\right)\boldsymbol{u}
+&= \left.\frac{\mathrm{d}}{\mathrm{d} \varepsilon} \operatorname{d_{\scriptscriptstyle{L}}Log} \left(\operatorname{Log}\left(\operatorname{Exp}(\varepsilon \boldsymbol{u})\operatorname{Exp}(\boldsymbol{\theta})\right) \right)  \boldsymbol{p} \,\right|_{\varepsilon=0} \\
+%
+&=\partial_{\boldsymbol{\theta}}\operatorname{d_{\scriptscriptstyle{L}}Log}\left({\boldsymbol{\theta}}; \, \boldsymbol{p}\right) 
+  \left.\frac{\mathrm{d}}{\mathrm{d}\varepsilon} \operatorname{Log} \left( \operatorname{Exp} (\varepsilon \boldsymbol{u}) \operatorname{Exp} \boldsymbol{\theta}\right) \right|_{\varepsilon=0} \\
+%
+  &= \partial_{\boldsymbol{\theta}}\operatorname{d_{\scriptscriptstyle{L}}Log}\left({\boldsymbol{\theta}}; \, \boldsymbol{p}\right)\, \operatorname{d_{\scriptscriptstyle{R}}Log}\left({\boldsymbol{\theta}}\right)  \boldsymbol{u} \\
+\end{aligned}
+\end{equation*}
+where \(\operatorname{d_{\scriptscriptstyle{R}}Log} {\boldsymbol{\theta}}\) is given by Equation~(\ref{eq:drLogSO3}) and :
+\begin{equation*}
+\partial_{\boldsymbol{\theta}} \operatorname{d_{\scriptscriptstyle{L}}Log}\left({\boldsymbol{\theta}}; \, \boldsymbol{p}\right) \, \boldsymbol{u}
+= \left.\frac{\mathrm{d}}{\mathrm{d}\varepsilon}\operatorname{d_{\scriptscriptstyle{L}}Log}\left({\boldsymbol{\theta}+\varepsilon \boldsymbol{u}};\,  \boldsymbol{p}\right)\right|_{\varepsilon=0}
+\end{equation*}
+
+%
+\paragraph*{Expression}
+%
+In terms of the coefficients \(\alpha_i\) and \(\beta_i\) in
+Equation~(\ref{eq:ber}) the function takes the following form:
+%
+\begin{equation}
+\begin{aligned}
+\operatorname{d^2_{\scriptscriptstyle{LR}}Log}(\boldsymbol{\theta}; \, \boldsymbol{p}) 
+&=\biggl(\alpha_2 {\boldsymbol{p}}^\times
+       +\alpha_3\bigl(({\boldsymbol{\theta}}\cdot  \boldsymbol{p}) \boldsymbol{1}+{\boldsymbol{\theta}} \otimes \boldsymbol{p}-2 \boldsymbol{p}\otimes \boldsymbol{\theta} \bigr)
++\beta_2 \left({\boldsymbol{\theta}}^\times\right)^2  \boldsymbol{p}\otimes \boldsymbol{\theta}\biggr) \operatorname{d_{\scriptscriptstyle{R}}Log}{\boldsymbol{\theta}}
+\end{aligned}
+\label{eq:ddLogSO3}
+\end{equation}
+%
+where \(\operatorname{d_{\scriptscriptstyle{R}}Log} {\boldsymbol{\theta}}\) is given by Equation~(\ref{eq:drLogSO3}).
+This formula has been derived in \cite{nour-omid1991finite}.
+%
+% \hypertarget{identities-1}{%
+% \subsection{Identities}\label{identities-1}}
+
+\hypertarget{rotation-tangents}{%
+\subsection{Rotation Tangents}\label{rotation-tangents}}
+
+Consider a vector function \(\boldsymbol{q}\) that follows a vector \(\boldsymbol{p}\)
+as it is rotated by a time-varying rotation
+\(\boldsymbol{\Lambda}_{\varepsilon}\): %
+\begin{equation*} 
+\boldsymbol{q} \triangleq \boldsymbol{\Lambda}_{\varepsilon}\,\boldsymbol{p}.
+\end{equation*}
+%
+% \hypertarget{left-tangent}{%
+% \subsubsection{Left Tangent}\label{left-tangent}}
+A tangent in the right representation is furnished by:
+\begin{equation}
+\begin{aligned}
+\operatorname{d_{L}}(\boldsymbol{\Lambda} \boldsymbol{p})\cdot\boldsymbol{u}&=\lim _{\varepsilon \rightarrow 0} \frac{\operatorname{Exp} \left(\varepsilon \boldsymbol{u}\right) \boldsymbol{\Lambda} \boldsymbol{p}-\boldsymbol{\Lambda} \boldsymbol{p}}{\varepsilon} \\
+%& \approx \lim _{\varepsilon \rightarrow 0} \frac{\left(\boldsymbol{1}+\varepsilon \mathbf{e}_i^{\times}\right) \boldsymbol{\Lambda} \boldsymbol{v}-\boldsymbol{\Lambda} \boldsymbol{v}}{\varepsilon}\\
+&=-(\boldsymbol{\Lambda} \boldsymbol{p})^{\times} \boldsymbol{u}.
+\end{aligned}
+\label{eq:LeftTangSO3}
+\end{equation}
+
+% \FCF{looks a bit strange with a single subsection and formula, suggesting that there is more to come, but we ran out of time; is it better to write it as a sentence? "The left tangent of the vector q is...}
+
+% \clearpage

@@ -93,54 +93,46 @@ Furthermore, concentrated inelasticity elements require non-semantic information
 \subsection{Element Library}\label{elements}
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.75\linewidth]{Body/ForceFrame.png}
+    \includegraphics[width=0.56\linewidth]{Body/ForceFrame.png}
+    \resizebox{0.34\linewidth}{!}{\input{Body/Library/element}}
     \caption{Distributed-inelasticity frame element.}
     \label{fig:force-frame}
 \end{figure}
 
-\begin{figure}
-    \centering
-    \resizebox{0.3\linewidth}{!}{\input{Body/Library/element}}
-    \resizebox{0.3\linewidth}{!}{\input{Body/Library/section}}
-    \resizebox{0.3\linewidth}{!}{\input{Body/Library/transform}}
-    \caption{Class diagram for the Metric abstraction.}
-    \label{fig:frame-class}
-\end{figure}
 
 There are six elements in the library, each supporting various options
 for element kinematics. 
-The element kinematic formulations are summarized in \cref{ch:frame-hierarchy} and are identified as
-\gls{frame:exact}, \gls{frame:delta}, \gls{frame:axial} or \gls{frame:basic}. 
+The element kinematic formulations are summarized in \cref{sec:genwarp} and are identified as
+\gls{frame:exact}, %\gls{frame:delta}, \gls{frame:axial}
+or \gls{frame:basic}. 
 
-% \hypertarget{element-data}{%
-% \subsection{Element Data}\label{element-data}}
+% All new frame elements will accept the following standard fields:
 
-All new frame elements will accept the following standard fields:
+% \begin{longtable}[]{@{}
+%   >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.1216}}
+%   >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.1622}}
+%   >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.7162}}@{}}
+% \toprule
+% \begin{minipage}[b]{\linewidth}\raggedright
+% Field
+% \end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+% Type
+% \end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+% Description
+% \end{minipage} \\
+% \midrule
+% \endhead
+% \texttt{transform} & Object & Reference to a pre-defined configuration
+% transformation \\
+% \texttt{section} & Object & Reference to a pre-defined cross section
+% model \\
+% \texttt{kinematics} & Flag & Optional variable specifying the kinematic
+% formulation of the element. \\
+% % \texttt{shear} & Flag & Optional flag variable specifying the shear formulation. \\
+% \bottomrule
+% \end{longtable}
 
-\begin{longtable}[]{@{}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.1216}}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.1622}}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.7162}}@{}}
-\toprule
-\begin{minipage}[b]{\linewidth}\raggedright
-Field
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-Type
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-Description
-\end{minipage} \\
-\midrule
-\endhead
-\texttt{transform} & Object & Reference to a pre-defined configuration
-transformation \\
-\texttt{section} & Object & Reference to a pre-defined cross section
-model \\
-\texttt{kinematics} & Flag & Optional variable specifying the kinematic
-formulation of the element. \\
-% \texttt{shear} & Flag & Optional flag variable specifying the shear formulation. \\
-\bottomrule
-\end{longtable}
-
+\iffalse
 \paragraph{1. PrismFrame}
 The \texttt{Prism} element is a standard linearly elastic prismatic
   frame. This element is ideal for modeling simple slender members that
@@ -157,13 +149,13 @@ The \texttt{Prism} element is a standard linearly elastic prismatic
   strain-free state. 
   The implementation of 3D \gls{frame:axial} element
   kinematics is novel and supports asymmetric sections.
-
+\fi
 
 \paragraph{2. ForceFrame}
   The \ForceFrame{} element is ideal for modeling inelasticity in
-  frames. 
-  Both \gls{frame:shear} and \gls{frame:euler} formulations are
-  supported with \gls{frame:basic} and \gls{frame:axial} (\(P-\delta\)) element kinematics. 
+  frames \citep{neuenhofer1997evaluation}. 
+  % Both \gls{frame:shear} and \gls{frame:euler} formulations are
+  % supported with \gls{frame:basic} and \gls{frame:axial} (\(P-\delta\)) element kinematics. 
   
   This element is adapted from the \texttt{forceBeamColumn} and
   \texttt{forceBeamColumnCBDI} elements of OpenSees and
@@ -219,6 +211,13 @@ The \texttt{Prism} element is a standard linearly elastic prismatic
 
 \subsection{Transformation Library}\label{sec:transformation-types}
 
+\begin{figure}
+    \centering
+    \resizebox{0.6\linewidth}{!}{\input{Body/Library/transform}}
+    \caption{Class diagram for the Metric abstraction.}
+    \label{fig:frame-class}
+\end{figure}
+
 Elements are grouped into three types based on their geometric nature:
 
 \begin{itemize}
@@ -254,6 +253,13 @@ Rotation parameterization is controlled by:
 \end{enumerate}
 
 \subsection{Section Library}
+
+\begin{figure}[H]
+    \centering
+    \resizebox{0.5\linewidth}{!}{\input{Body/Library/section}}
+    \caption{Class diagram for the Metric abstraction.}
+    \label{fig:section-class}
+\end{figure}
 
 \begin{enumerate}
     \item \texttt{AxialFiber}

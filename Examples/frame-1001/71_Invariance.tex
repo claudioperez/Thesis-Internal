@@ -1,7 +1,7 @@
 
 
 This problem highlights the strain invariance %that is
-exhibited by the external application of the \texttt{SFIN} transformation to the wrapped
+exhibited by the external application of the \Spherical{} transformation to the wrapped
 elements. 
 Originally presented by \cite{crisfield1999objectivity} for a 2-node element,
 the analysis involves evaluating the curvature
@@ -46,19 +46,19 @@ Because the loading consists only of nodal rotations
 imposed in a single increment 
 and only strains are evaluated, the results for all three wrapped elements
 are identical and reported only once in the table.
-The results for two-node elements under the \texttt{None} and \texttt{SFIN} 
+The results for two-node elements under the \texttt{None} and \Spherical{} 
 transformations match the values %derived
 in \cite{crisfield1999objectivity} exactly.
 The agreement between the components of \(\bm{\kappa}\) and \(\bm{\kappa}^+\)
 % \FCF{unclear what the following means} 
-for cases using the \texttt{SFIN} isometry
+for cases using the \Spherical{} isometry
 confirms that strain objectivity is restored for the wrapped elements.
 
 \begin{center}
 \begin{table}[!h]%
 \caption{%
 Curvature components of Example~\ref{sec:frame-1000} for elements with \(n\) nodes.
-All cases using the \texttt{SFIN} isometry
+All cases using the \Spherical{} isometry
 show perfect agreement between \(\bm{\kappa}\) and \(\bm{\kappa}^+\).}
 \label{tab:objective}
 \input{Examples/frame-1001/Tables/JelenicInvariance.tex}

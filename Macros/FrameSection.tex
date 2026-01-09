@@ -44,8 +44,8 @@
 \define@key{beamsec}{unit/stress}[]{\def\beamsec@unit@stress{#1}}
 
 % Helper for property row
-\newcommand{\beamsec@row}[3]{%
-  \ifx#2\empty\else$#1$ & $\!\!=\!$ & \num{#2}\ifx#3\empty\else\;\si{#3}\fi \tabularnewline \fi
+\newcommand{\beamsec@row}[4]{%
+  \ifx#2\empty\else$#1$ & $\!\!=\!$ & \num{#2}\ifx#3\empty\else\;\si{#3\ifx#4\empty\else\tothe{#4}\fi}\fi \tabularnewline \fi
 }
 
 \newtcolorbox{beamsecbox}{
@@ -127,24 +127,24 @@
             \fi
             \\[2pt]
             \begin{tabular}{@{}lcl@{}}
-                \beamsec@row{d}{\beamsec@d}{\beamsec@unit@length\squared}
-                \beamsec@row{b}{\beamsec@b}{\beamsec@unit@length\squared}
-                \beamsec@row{A}{\beamsec@A}{\beamsec@unit@length\squared}
-                \beamsec@row{A_y}{\beamsec@Ay}{\beamsec@unit@length\tothe{2}}
-                \beamsec@row{A_z}{\beamsec@Az}{\beamsec@unit@length\tothe{2}}
-                \beamsec@row{I_y}{\beamsec@Iy}{\beamsec@unit@length\tothe{4}}
-                \beamsec@row{I_z}{\beamsec@Iz}{\beamsec@unit@length\tothe{4}}
-                \beamsec@row{J}{\beamsec@J}{{\beamsec@unit@length}\tothe{4}}
+                \beamsec@row{d}{\beamsec@d}{\beamsec@unit@length}{2}
+                \beamsec@row{b}{\beamsec@b}{\beamsec@unit@length}{2}
+                \beamsec@row{A}{\beamsec@A}{\beamsec@unit@length}{2}
+                \beamsec@row{A_y}{\beamsec@Ay}{\beamsec@unit@length}{2}
+                \beamsec@row{A_z}{\beamsec@Az}{\beamsec@unit@length}{2}
+                \beamsec@row{I_y}{\beamsec@Iy}{\beamsec@unit@length}{4}
+                \beamsec@row{I_z}{\beamsec@Iz}{\beamsec@unit@length}{4}
+                  \beamsec@row{J}{\beamsec@J }{\beamsec@unit@length}{4}
             \end{tabular}
         \end{minipage}%
         \hfill
         \begin{minipage}[t]{0.3\linewidth}
             \textit{Material}\\[2pt]
             \begin{tabular}{@{}rcl@{}}
-                \beamsec@row{E}{\beamsec@E}{\beamsec@unit@stress}
-                \beamsec@row{G}{\beamsec@G}{\beamsec@unit@stress}
+                \beamsec@row{E}{\beamsec@E}{\beamsec@unit@stress}{}
+                \beamsec@row{G}{\beamsec@G}{\beamsec@unit@stress}{}
                 % \beamsec@row{\nu}{\beamsec@nu}{}
-                \beamsec@row{F_y}{\beamsec@Fy}{\beamsec@unit@stress}
+                \beamsec@row{F_y}{\beamsec@Fy}{\beamsec@unit@stress}{}
                 % \beamsec@row{\rho}{\beamsec@rho}{}
             \end{tabular}
         \end{minipage}

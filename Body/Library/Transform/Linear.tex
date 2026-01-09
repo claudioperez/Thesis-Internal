@@ -1,0 +1,1381 @@
+\newcommand{\AlignAxis}{\bm{\alpha}}
+
+\section{Framework}
+Transformation:
+\begin{enumerate}
+    \item \emph{Update} call \ref{EuclidIsom::update} to update \(\bm{c},\bm{R}\)
+\end{enumerate}
+
+Isometry:
+\begin{enumerate}
+    \item \emph{Initialize}\label{EuclidIsom::initialize} Compute \(\bm{R}_0\) and \(\bar{\bm{C}}\) from \eqref{eq:init-Cbar}
+    \item \emph{Update}\label{EuclidIsom::update} \(\bm{R}\) from nodal rotations \(\bm{R}_a\) and new chord \(\Delta\bm{x}\), then compute \(\bar{\bm{c}}\) using \eqref{eq:solve-cbar}.
+\end{enumerate}
+
+\section{Local System}
+\begin{equation}
+\begin{cases}
+\mathbf{e}_1=\dfrac{\Delta \bm{X}}{\|\Delta \bm{X}\|} \\
+\mathbf{e}_2=\dfrac{\mathbf{v} \times \frac{\Delta \bm{X}}{\|\Delta \bm{X}\|}}{\left\|\mathbf{v} \times \frac{\Delta \bm{X}}{\|\Delta \bm{X}\|}\right\|} \\
+\mathbf{e}_3 = \mathbf{e}_1 \times \mathbf{e}_2
+\end{cases}
+\end{equation}
+
+\paragraph{Sensitivity}
+
+\begin{equation}
+\begin{aligned}
+L^{\prime} & =\frac{1}{L}\left(\bm{X}_j-\bm{X}_i\right) \cdot\left(\bm{X}_2^{\prime}-\bm{X}_i^{\prime}\right) \\
+\mathbf{e}_1^{\prime} & =\frac{1}{L_1^2}\left(\Delta \bm{X}^{\prime} L-\Delta \bm{X} L^{\prime}\right) \\
+\mathbf{e}_2^{\prime} & =\frac{1}{\left(\left\|\mathbf{v}_2\right\|^{\prime}\right)^2} \left(\mathbf{v}_2^{\prime} \left\|\mathbf{v}_2\right\|-\mathbf{v}_2\left\|\mathbf{v}_2\right\|^{\prime}\right) \\
+%
+\mathbf{v}_2^{\prime} & =\mathbf{v}^{\prime} \times \mathbf{e}_1+\mathbf{v} \times \mathbf{e}_1^{\prime} \\
+\left\|\mathbf{v}_2\right\|^{\prime} & =\frac{1}{\left\|\mathbf{v}_2\right\|}  \mathbf{v}_2 \cdot \mathbf{v}_2^{\prime}
+\end{aligned}
+\end{equation}
+
+
+\section{Linear System (A1)}
+
+\subsection{Transformation}
+
+Consider a line segment in 3D defined by two endpoints \(\bm{X}_i\) and \(\bm{X}_j\). 
+After deformation, the endpoints have moved to \(\bm{X}_i + \bm{u}_i\)
+ and \(\bm{X}_j + \bm{u}_j\). 
+Let 
+\[
+\Delta \bm{X} \;\triangleq\; \bm{X}_j - \bm{X}_i
+\] 
+be the direction of the line in the reference configuration, and 
+\begin{equation}
+\Delta \bm{x} \;\triangleq\; (\bm{X}_J + \bm{u}_J)\;-\;(\bm{X}_I + \bm{u}_I)
+\end{equation}
+is the direction in the deformed configuration. 
+The line's length originally is 
+\[
+L_0 \; \triangleq \; \|\Delta \bm{X}\|
+\] 
+and after deformation the length is 
+\[
+L_n \; \triangleq \; \|\Delta \bm{x}\|
+\]
+
+\subsubsection{Translation}
+The line is represented in the ``natural'' reference configuration \(\bar{\bm{X}}\) by a Euclidean transformation of the reference placement \(\bm{X}\):
+\[
+\bar{\bm{X}} = \bm{R}_0^{\mathrm{t}}\bm{X} - \bar{\bm{C}}
+\]
+Similarly, the deformed configuration may be transformed:
+\[
+\bar{\bm{x}}(\xi) \triangleq  \bm{R}^{\mathrm{t}}\bm{x} - \bar{\bm{c}}
+\]
+The deformation from \(\bar{\bm{X}}\) to \(\bar{\bm{x}}\) is characterized by the displacement \(\bar{\bm{u}}\):
+\[
+\begin{aligned}
+\bar{\bm{u}}(\xi) &:=  \bar{\bm{x}} - \bar{\bm{X}} \\
+&= \bm{R}^{\mathrm{t}}(\bm{X}(\xi)+\bm{u}(\xi)) - \bar{\bm{c}} - (\bm{R}_0^{\mathrm{t}}\bm{X}(\xi) - \bar{\bm{C}}) \\
+&= \bm{R}^{\mathrm{t}}(\bm{X}(\xi)+\bm{u}(\xi)) - \Delta \bar{\bm{c}} - \bm{R}_0^{\mathrm{t}}\bm{X}(\xi) \\
+&= \bm{R}^{\mathrm{t}}(\bm{u}(\xi) - \Delta \bm{c}) + \Delta \bm{R}^{\mathrm{t}}\bm{X}(\xi) \\
+\end{aligned}
+\]
+with \(\Delta \bar{\bm{c}} \triangleq \bar{\bm{c}} - \bar{\bm{C}}\) and \(\Delta \bm{R} \triangleq \bm{R} - \bm{R}_0\)
+so that
+\begin{equation}
+    \bm{u}(\xi)\;\mapsto\; \bm{R}^{\mathrm{t}}\bm{u}(\xi) - \Delta \bar{\bm{c}} + \Delta \bm{R}^{\mathrm{t}}\bm{X}(\xi)
+\label{eq:iso-u}
+\end{equation}
+The translations \(\bar{\bm{C}}\) and \(\bar{\bm{c}}\) are selected to enforce \(\bar{\bm{u}}_I = \bar{\bm{x}}_I = \bm{0}\), furnishing for \(\bar{\bm{c}}\)
+%
+\begin{equation}
+\bar{\bm{x}}_I = \bm{0} = \bm{R}^{\mathrm{t}}\bm{X}_I + \bm{R}^{\mathrm{t}}(\bm{u}_I - \bm{c})
+\quad\implies\quad 
+\bar{\bm{c}} = \bm{R}^{\mathrm{t}}(\bm{X}_I + \bm{u}_I)
+\label{eq:solve-cbar}
+\end{equation}
+%
+To find \(\bar{\bm{C}}\) use \(\bar{\bm{c}}\) above in \cref{eq:iso-u}:
+\[
+\begin{aligned}
+\bar{\bm{u}}(\xi)
+&= \bm{R}^{\mathrm{t}}(\bm{X}(\xi)+\bm{u}(\xi)) - \bm{R}^{\mathrm{t}}(\bm{X}_I+\bm{u}_I) - (\bm{R}_0^{\mathrm{t}}\bm{X}(\xi) - \bar{\bm{C}}) \\
+&= \bm{R}^{\mathrm{t}}(\bm{X}(\xi)+\bm{u}(\xi)) - \bm{R}^{\mathrm{t}}(\bm{X}_I+\bm{u}_I) - \bm{R}_0^{\mathrm{t}}\bm{X}(\xi) + \bar{\bm{C}} \\
+&= \bm{R}^{\mathrm{t}}(\bm{X}(\xi)-\bm{X}_I) 
+ + \bm{R}^{\mathrm{t}}(\bm{u}(\xi)-\bm{u}_I) - \bm{R}_0^{\mathrm{t}}\bm{X}(\xi) + \bar{\bm{C}} \\
+\end{aligned}
+\]
+Enforcing \(\bm{u}_I = \bm{0}\)
+\begin{equation}
+\bar{\bm{C}} = \bm{R}_0^{\mathrm{t}}\bm{X}_I
+\label{eq:init-Cbar}
+\end{equation}
+Then we have
+\begin{equation*}
+\bar{\bm{u}}(\xi) = \bm{R}^{\mathrm{t}}(\bm{X}(\xi)-\bm{X}_I) 
+ + \bm{R}^{\mathrm{t}}(\bm{u}(\xi)-\bm{u}_I)
+ - \bm{R}_0^{\mathrm{t}}(\bm{X}(\xi) - \bm{X}_I)
+\end{equation*}
+% \[
+% \bar{\bm{u}}_J = \bar{\bm{x}} - \bar{\bm{X}} = \bm{R}^{\mathrm{t}}\bm{u}_J - \bm{c} = \bm{R}^{\mathrm{t}}\Delta \bm{u}
+% \]
+
+\subsubsection{Orientation}
+
+We want a rotation \(\bm{R}(\varepsilon)\) (with
+\(\bm{R}(0)=\bm{1}\)) that \emph{maps the original unit direction}
+\(\Delta \bm{X}^{\ast} = \tfrac{\Delta \bm{X}}{\|\Delta \bm{X}\|}\) to
+the \emph{new} unit direction
+\(\Delta \bm{x}^{\ast}(\varepsilon) = \tfrac{\Delta \bm{x}(\varepsilon)}{\|\Delta \bm{x}(\varepsilon)\|}\).
+In other words,\\
+\[
+\bm{R}(\varepsilon)\,\Delta \bm{X}^{\ast} 
+\;=\;
+\Delta \bm{x}^{\ast}(\varepsilon).
+\]
+That is, \(\bm{R}\) takes the original unit direction vector to
+the new unit direction vector.
+%
+If \(\Delta \bm{X}\) and \(\Delta \bm{x}\) are \emph{not} collinear, one
+can build \(\bm{R}\) via the axis--angle representation. 
+Define
+
+\[\Delta \bm{X}^\ast \triangleq \Delta \bm{X} / \|\Delta \bm{X}\|
+\qquad\text{ and }\qquad
+\Delta \bm{x}^\ast \triangleq \Delta \bm{x} / \|\Delta \bm{x}\|.
+\]
+%
+The rotation axis is the unit vector 
+\begin{equation}
+\AlignAxis \;=\; \frac{\Delta \bm{X}^\ast \times \Delta \bm{x}^\ast}{\|\Delta \bm{X}^\ast \times \Delta \bm{x}^\ast\|}\,,
+\label{eq:def-align-axis}
+\end{equation}
+and the rotation angle \(\theta\) is 
+\begin{equation}
+\theta \;=\; \arccos \bigl(\Delta \bm{X}^\ast \cdot \Delta \bm{x}^\ast\bigr)
+\label{eq:arccos-dX-dx}
+\end{equation}
+Then Rodrigues' formula (\cref{eq:ExpSO3}) furnishes 
+\[
+\bm{R} 
+\;=\; 
+\bm{1} 
+\;+\; [\AlignAxis]_\times \,\sin \theta 
+\;+\; [\AlignAxis]_\times^2 \,(1 - \cos \theta)
+\]
+
+\paragraph{Remarks}
+
+\begin{itemize}
+\tightlist
+\item
+  If \(\Delta \bm{x}\) is exactly parallel to \(\Delta \bm{X}\) (same
+  direction), the angle is zero, and \(\bm{R}\) is the identity.\\
+\item
+  If they are \emph{antiparallel}, then \(\theta=\pi\), and one only
+  needs an axis perpendicular to \(\Delta \bm{X}\) and \(\Delta \bm{x}\).
+\end{itemize}
+
+\subsubsection{Logarithm}
+
+\subsubsection{Summary}
+
+Define 
+\begin{equation*}
+    \bm{c} = \operatorname{Shift}(\chi_{I}, \chi_J)
+    \qquad\text{ and }\qquad
+    \bm{R} = \operatorname{Exp}\circ \operatorname{Axis}(\Delta \bm{X},\; \Delta \bm{X} + \Delta \bm{u})
+\end{equation*}
+where
+\begin{equation*}
+\begin{aligned}
+\operatorname{Axis} \colon \mathbb{R}^3\times\mathbb{R}^3 &\rightarrow \mathbb{R}^3 \\
+\Delta \bm{X},\,\Delta\bm{x}
+&\mapsto \frac{\Delta \bm{X}^\ast \times \Delta \bm{x}^\ast}{\|\Delta \bm{X}^\ast \times \Delta \bm{x}^\ast\|} \,
+\arccos \bigl(\Delta \bm{X}^\ast \cdot \Delta \bm{x}^\ast\bigr)
+\end{aligned}
+\end{equation*}
+
+
+\begin{ambox}[Axial Transform]{box:axial-transform}
+
+\small
+\begin{enumerate}
+    \item Rotation parameters
+    \[
+    \begin{pmatrix}
+    \bm{x} \\
+    \bm{\theta} 
+    \end{pmatrix}
+    \mapsto \begin{pmatrix}
+      \bm{x} \\
+      \operatorname{Exp} \bm{\theta}
+    \end{pmatrix}
+    \]
+    \item Global offsets 
+    \[
+    \begin{pmatrix}
+    \bm{u}(\xi_a) \\ \FrameRotation(\xi_a) 
+    \end{pmatrix}
+    \mapsto 
+    \begin{pmatrix}
+        \bm{u}(\xi_a) + \FrameRotation(\xi_a) \bm{r}_a^{}\\
+        \FrameRotation(\xi_a)
+    \end{pmatrix}
+    \]
+    \[
+    \begin{pmatrix}
+        \bm{v}_x\\ \bm{v}_{\Lambda}
+    \end{pmatrix}
+    \mapsto 
+    \begin{pmatrix}
+        
+    \end{pmatrix}
+    \]
+
+    \item Isometry
+    \[
+    \bm{x}(\xi),\FrameRotation(\xi) \mapsto \begin{pmatrix}
+        \bm{R}^{\mathrm{t}}(\bm{x}(\xi) -\bm{c})\\
+        \bm{R}^{\mathrm{t}}\FrameRotation (\xi)
+    \end{pmatrix}
+    \]
+    with \(\bm{c}\). Translation increments from \cref{eq:iso-u}:
+    \[
+    \begin{aligned}
+    \bm{u}(\xi)&\;\mapsto\; \bm{R}^{\mathrm{t}}(\bm{u}(\xi) - \Delta \bm{c}) + \Delta \bm{R}^{\mathrm{t}}\bm{X}(\xi) \\
+    \bm{v}_x,\bm{v}_{\Lambda} &\mapsto \begin{pmatrix}
+      \bm{R}^{\mathrm{t}}\left(\bm{v}_x - \bm{\psi}_x \right) \\
+    \end{pmatrix}
+    \end{aligned}
+    \]
+
+    \item Local logarithm
+    \[
+      \FrameRotation \mapsto \bm{\theta} \triangleq \operatorname{Log} \FrameRotation
+    \]
+    \[
+    \bm{v}_{\Lambda} \mapsto \operatorname{dLog}(\bm{\theta}) \bm{v}_{\Lambda}
+    \qquad 
+    \bm{m} \mapsto \operatorname{dLog}(\bm{\theta})^{\mathrm{t}} \bm{m}
+    \]
+\end{enumerate}
+\end{ambox}
+
+\subsection{Linearization}
+
+Consider small displacements of the endpoints, proportional to a small parameter \(\varepsilon\). 
+Specifically, let 
+\[
+\bm{u}_I(\varepsilon) \;=\; \varepsilon\,\bm{u}_I, 
+\quad
+\bm{u}_J(\varepsilon) \;=\; \varepsilon\,\bm{u}_J,
+\]
+so that the new line endpoints become 
+\[
+\bm{X}_I + \bm{u}_I(\varepsilon)
+\quad\text{and}\quad
+\bm{X}_J + \bm{u}_J(\varepsilon).
+\] 
+Then the new direction vector is 
+\begin{equation}
+    \Delta \bm{x}(\varepsilon)
+    \;=\;
+    \bigl(\bm{X}_J + \varepsilon\,\bm{u}_J\bigr)
+    \;-\;
+    \bigl(\bm{X}_I + \varepsilon\,\bm{u}_I\bigr)
+    \;=\;
+    \Delta \bm{X} \;+\; \varepsilon\,\Delta \bm{u},
+    \quad\text{ with }\quad
+    \Delta \bm{u} \triangleq \bm{u}_J - \bm{u}_I.
+\label{eq:order-Dx}
+\end{equation} 
+
+\subsubsection{Translation}
+
+\subsubsection{Orientation}
+At \(\varepsilon=0\), clearly \(\Delta \bm{x}(0) = \Delta \bm{X}\). 
+The \emph{unit} direction under the motion is 
+\[
+\Delta \bm{x}^*(\varepsilon)
+\; \triangleq \;
+\frac{\Delta \bm{x}(\varepsilon)}{\|\Delta \bm{x}(\varepsilon)\|}.
+\]
+Recall the \emph{rotation angle} \(\theta(\varepsilon)\) and \emph{rotation axis} \(\AlignAxis(\varepsilon)\) are defined via \eqref{eq:arccos-dX-dx} and \eqref{eq:def-align-axis}, respectively:
+  \[
+    \theta(\varepsilon)
+    \;=\;
+    \arccos~\Bigl(
+      \Delta \bm{X}^*\cdot \Delta \bm{x}^*(\varepsilon)
+    \Bigr),
+    \qquad
+    \AlignAxis(\varepsilon)
+    \;=\;
+    \frac{
+      \Delta \bm{X}^*\times \Delta \bm{x}^*(\varepsilon)
+    }{
+      \bigl\|\Delta \bm{X}^*\times \Delta \bm{x}^*(\varepsilon)\bigr\|
+    }.
+\] 
+At \(\varepsilon=0\), these expressions are not valid because
+\(\Delta \bm{x}^*(0) \equiv \Delta \bm{X}^*\).  
+The exponential (\cref{eq:ExpSO3}) then furnishes for \(\varepsilon\neq 0\): 
+\[
+\bm{R}(\varepsilon)
+\;=\;
+\bm{1}
+\;+\;
+\sin \theta(\varepsilon) \,
+[\,\AlignAxis(\varepsilon)\,]_{\times}
+\;+\;
+\bigl(1-\cos\theta(\varepsilon)\bigr)\,
+[\,\AlignAxis(\varepsilon)\,]_{\times}^2.
+\] 
+This \(\bm{R}(\varepsilon)\) is well‐defined for each
+\(\varepsilon\neq 0\), and it indeed takes \(\Delta \bm{X}^*\) to
+\(\Delta \bm{x}^*(\varepsilon)\). At \(\varepsilon=0\), \(\Delta \bm{x}^*(0)=\Delta \bm{X}^*\),
+so \(\theta(0) = 0\) and
+\(\|\Delta \bm{X}^*\times \Delta \bm{x}^*(0)\|=0\). 
+In that sense, \(\AlignAxis(0)\) is not defined. Nevertheless, \(\bm{R}(0)=\bm{1}\).
+%
+We now want the derivative 
+\[
+\left.\frac{\mathrm{d}}{\mathrm{d}\varepsilon}\,\bm{R}(\varepsilon)\right|_{\varepsilon=0}.
+\]
+%
+
+\paragraph{Unit Axis}
+
+We begin by obtaining the first order approximation of the unit
+direction. The norm of \(\Delta \bm{x}(\varepsilon)\) is \[
+  \|\Delta \bm{x}(\varepsilon)\|
+  \;=\;
+  \|\Delta \bm{X} + \varepsilon\,\Delta \bm{u}\|
+\] 
+For small \(\varepsilon\), expand to first order:
+\[
+  \|\Delta \bm{X} + \varepsilon\,\Delta \bm{u}\|
+  \;=\;
+  \|\Delta \bm{X}\|\;
+  \sqrt{\,1 
+           \;+\; 
+           2\,\varepsilon\,\frac{\Delta \bm{X}}{\|\Delta \bm{X}\|^2}\cdot \Delta \bm{u}
+           \;+\; O(\varepsilon^2)
+         }.
+\] 
+Hence, to first order: 
+\[
+  \|\Delta \bm{x}(\varepsilon)\| 
+  \;=\;
+  \|\Delta \bm{X}\|
+  \;+\;
+  \varepsilon\,
+  \frac{\Delta \bm{X}}{\|\Delta \bm{X}\|}\cdot \Delta \bm{u}
+  \;+\; 
+  O(\varepsilon^2).
+\]
+%
+Therefore, 
+\[
+  \Delta \bm{x}^\ast(\varepsilon)
+  \;=\;
+  \frac{\Delta \bm{x}(\varepsilon)}{\|\Delta \bm{x}(\varepsilon)\|}
+  \;=\;
+  \frac{\Delta \bm{X} + \varepsilon\,\Delta \bm{u}}
+       {\|\Delta \bm{X}\| 
+        + \varepsilon\,\frac{\Delta \bm{X}}{\|\Delta \bm{X}\|}\cdot \Delta \bm{u}
+       }
+  \;=\;
+  \bigl(\Delta \bm{X}^\ast + \varepsilon\,\tfrac{\Delta \bm{u}}{\|\Delta \bm{X}\|}\bigr)\;\left[\,
+     1 
+     \;-\;
+     \varepsilon\,\tfrac{\Delta \bm{X}^\ast}{\|\Delta \bm{X}\|}\cdot \Delta \bm{u}
+     \;+\;
+     O(\varepsilon^2)
+  \right].
+\] 
+Carrying out the product to first order in \(\varepsilon\):
+
+\[
+  \Delta \bm{x}^\ast(\varepsilon)
+  \;=\;
+  \Delta \bm{X}^\ast
+  \;+\;
+  \varepsilon
+  \biggl(
+     \tfrac{\Delta \bm{u}}{\|\Delta \bm{X}\|}
+     \;-\;
+     (\Delta \bm{X}^\ast \!\cdot \Delta \bm{u})\;\Delta \bm{X}^\ast \;\frac{1}{\|\Delta \bm{X}\|}
+  \biggr)
+  \;+\;
+  O(\varepsilon^2).
+\] 
+Collecting terms,
+\[
+  \Delta \bm{x}^\ast(\varepsilon)
+  \;=\;
+  \Delta \bm{X}^\ast
+  \;+\;
+  \varepsilon\,
+  \frac{1}{\|\Delta \bm{X}\|}\bigl[\Delta \bm{u} 
+           \;-\; 
+           (\Delta \bm{X}^\ast\!\cdot \Delta \bm{u})\,\Delta \bm{X}^\ast
+    \bigr]
+  \;+\;
+  O(\varepsilon^2).
+\]
+and
+\[
+\Delta \bm{x}^\ast(\varepsilon)
+  \;=\; ?\left(
+  \bm{1}
+  \;+\;
+  \varepsilon\,
+  \frac{1}{\|\Delta \bm{X}\|}\bigl[
+      \Delta \bm{u} \otimes \Delta\bm{X}^*
+      \;-\; 
+      (\Delta \bm{X}^\ast\!\cdot \Delta \bm{u})\,\bm{1} %\Delta \bm{X}^\ast
+    \bigr]
+  \right) \Delta \bm{X}^\ast
+  \;+\;
+  O(\varepsilon^2).
+\]
+Thus the \emph{change} in the unit direction to first order is 
+\begin{equation}
+  \Delta \mathbf{e}(\varepsilon)
+  \;\triangleq\;
+  \Delta \bm{x}^\ast(\varepsilon) \;-\; \Delta \bm{X}^\ast
+  \;=\;
+  \varepsilon\,
+  \frac{
+    \Delta \bm{u} 
+           - (\Delta \bm{X}^\ast\!\cdot \Delta \bm{u})\,\Delta \bm{X}^\ast
+  }{\|\Delta \bm{X}\|}
+  \;+\;
+  O(\varepsilon^2).
+  \label{eq:delta-basis}
+\end{equation}
+
+\begin{marsdenbox}
+We have 
+\[
+  \Delta \bm{x}(\varepsilon)
+  \;=\;
+  \Delta \bm{X}
+  \;+\;
+  \varepsilon\,\Delta \bm{u},
+  \quad
+  \|\Delta \bm{x}(\varepsilon)\|
+  \;=\;
+  \|\Delta \bm{X} + \varepsilon\,\Delta \bm{u}\|.
+\] 
+Hence \[
+  \Delta \bm{x}^*(\varepsilon)
+  \;=\;
+  \frac{\Delta \bm{X} + \varepsilon\,\Delta \bm{u}}{\|\Delta \bm{X} + \varepsilon\,\Delta \bm{u}\|}.
+\] 
+Define two scalar functions \[
+  g(\varepsilon) \;=\; \Delta \bm{X} + \varepsilon\,\Delta \bm{u}, 
+  \qquad \text{ and }\qquad 
+  h(\varepsilon) \;=\; \|g(\varepsilon)\|.
+\] 
+Then
+\(\Delta \bm{x}^*(\varepsilon) = g(\varepsilon)/h(\varepsilon)\). 
+The
+derivative with respect to \(\varepsilon\) is 
+\[
+  \frac{\mathrm{d}}{\mathrm{d}\varepsilon}\,\frac{g(\varepsilon)}{h(\varepsilon)}
+  \;=\;
+  \frac{g'(\varepsilon)}{h(\varepsilon)}
+  \;-\;
+  \frac{g(\varepsilon)\,h'(\varepsilon)}{h(\varepsilon)^2}.
+\] 
+At \(\varepsilon=0\), 
+\[
+  g(0)=\Delta \bm{X},\quad
+  g'(0)=\Delta \bm{u},
+  \quad
+  h(0)=\|\Delta \bm{X}\|,
+  \quad
+  h'(0)
+  \;=\;
+  \left.\frac{\mathrm{d}}{\mathrm{d}\varepsilon}\|g(\varepsilon)\|\right|_{\varepsilon=0}
+  \;=\;
+  \frac{\Delta \bm{X}}{\|\Delta \bm{X}\|} \cdot \Delta \bm{u}.
+\] 
+Thus 
+\[
+\left.\frac{\mathrm{d}}{\mathrm{d}\varepsilon}\Delta \bm{x}^*(\varepsilon)\right|_{\varepsilon=0}
+  \;=\;
+  \frac{\Delta \bm{u}}{\|\Delta \bm{X}\|}
+  \;-\;
+  \frac{\Delta \bm{X}}{\|\Delta \bm{X}\|}\,
+  \frac{\Delta \bm{X}}{\|\Delta \bm{X}\|^2}\cdot \Delta \bm{u}
+\]
+and upon simplification:
+\begin{equation}
+  \;=\;
+  \frac{1}{\|\Delta \bm{X}\|}
+  \Bigl[
+    \bm{1}
+    \;-\;
+    \Delta \bm{X}^* \otimes \Delta \bm{X}^*
+  \Bigr]\Delta \bm{u}.
+  \label{eq:linear-Dxstar}
+\end{equation}
+%
+\end{marsdenbox}
+
+Note that \cref{eq:linear-Dxstar} implies 
+\[
+  \Delta \bm{X}^* \,\cdot\, \Delta \bm{x}^*(\varepsilon)
+  \;=\;
+  1
+  \;+\;
+  \varepsilon
+  \underbrace{
+    \frac{
+      \Delta \bm{X}^*\!\cdot \Delta \bm{u}
+      \;-\;
+      \bigl(\Delta \bm{X}^*\!\cdot\Delta \bm{u}\bigr)\, \Delta \bm{X}^* \cdot \Delta \bm{X}^*
+    }{\|\Delta \bm{X}\|}
+  }_{=\,0}
+  \;+\;
+  O(\varepsilon^2).
+\] 
+where the first-order term \(\Delta \mathbf{e} \cdot \Delta \bm{X}^*\) is zero because 
+\[
+  \Delta \bm{X}^*\cdot \Delta \bm{u}
+  \;-\;
+  (\Delta \bm{X}^*\!\cdot\Delta \bm{u})\,(\Delta \bm{X}^*\!\cdot\Delta \bm{X}^*)
+  \;=\;
+  \Delta \bm{X}^*\!\cdot \Delta \bm{u}
+  \;-\;
+  \Delta \bm{X}^*\!\cdot\Delta \bm{u}
+  \;=\;
+  0.
+\] 
+Hence
+\begin{equation}
+  \Delta \bm{X}^* \,\cdot\, \Delta \bm{x}^*(\varepsilon)
+  \;=\;
+  1
+  \;+\;
+  O(\varepsilon^2).
+  \label{eq:order-DXDx}
+\end{equation}
+
+\paragraph{\texorpdfstring{Expand \(\theta(\varepsilon)\)}{Expand theta(e)}}
+
+Recall \eqref{eq:arccos-dX-dx}:
+\[
+  \theta(\varepsilon)
+  \;=\;
+  \arccos \bigl(
+    \Delta \bm{X}^*\cdot \Delta \bm{x}^*(\varepsilon)
+  \bigr),
+\] 
+Therefore, to first order, \cref{eq:order-DXDx} implies
+\[
+  \theta(\varepsilon)
+  \;=\;
+  \arccos \bigl(1 + O(\varepsilon^2)\bigr)
+  \;=\;
+  O(\varepsilon^2).
+\]
+That is, \textbf{there is \emph{no} first-order change} in the dot
+product---so the angle is actually \emph{second-order} small in
+\(\varepsilon\). Equivalently, the \emph{component} of \(\Delta \bm{u}\)
+parallel to \(\Delta \bm{X}\) does \emph{not} create a first-order
+\emph{rotation}; it only contributes to length changes or second-order
+tilt.
+From this one can show (by direct Taylor expansion of
+\(\Delta \bm{x}^*(\varepsilon)\) around \(\varepsilon=0\)) that \[
+  \Delta \bm{X}^*\cdot \Delta \bm{x}^*(\varepsilon)
+  \;=\;
+  1 
+  \;-\;
+  \frac{\bigl\|\Delta \bm{X}^*\times \Delta \bm{x}^*(\varepsilon)\bigr\|^2}{2}
+  \quad\text{(at small }\varepsilon\text{)},
+\] and that
+\(\bigl\|\Delta \bm{X}^*\times \Delta \bm{x}^*(\varepsilon)\bigr\|\) is
+typically \emph{proportional} to \(\varepsilon\), \emph{unless} the
+displacement \(\Delta \bm{u}\) has a purely parallel component (in which
+case the line is just stretched, so \(\theta(\varepsilon)\approx 0\) to
+second order, which still yields a well‐defined limit).
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Case (a):} If \(\Delta \bm{u}\) is \emph{not} perfectly
+  parallel to \(\Delta \bm{X}\), then \(\theta(\varepsilon)\) is
+  typically \(O(\varepsilon)\).\\
+\item
+  \textbf{Case (b):} If \(\Delta \bm{u}\) is parallel, you get no
+  first‐order rotation; \(\theta(\varepsilon)\) is \(O(\varepsilon^2)\).
+\end{itemize}
+%
+Either way, we know that as \(\varepsilon\to0\),
+\(\theta(\varepsilon)\to 0\). 
+Then 
+\begin{itemize}
+\tightlist
+\item
+  \(\sin \theta(\varepsilon)  = \theta(\varepsilon) + O(\theta^3)\).\\
+\item
+  \(1-\cos[\theta(\varepsilon)] = \tfrac12\,\theta^2(\varepsilon) + O(\theta^4)\).
+\end{itemize}
+%
+Thus
+
+\[
+  \frac{\sin \theta(\varepsilon) }{\varepsilon}
+  \;=\;
+  \frac{\theta(\varepsilon)}{\varepsilon}
+  \;+\;
+  O\!\bigl(\theta^3/\varepsilon\bigr),
+  \quad
+  \frac{1-\cos[\theta(\varepsilon)]}{\varepsilon}
+  \;=\;
+  \frac{\tfrac12\theta^2(\varepsilon)}{\varepsilon}
+  \;+\;
+  O\!\bigl(\theta^4/\varepsilon\bigr).
+\] If \(\theta(\varepsilon)\) is \emph{linear} in \(\varepsilon\) at
+small \(\varepsilon\) (the usual perpendicular‐displacement case), then
+\(\theta(\varepsilon)/\varepsilon \to \text{constant}\), and
+\(\theta^2(\varepsilon)/\varepsilon\to 0\). If \(\theta(\varepsilon)\)
+is \emph{second‐order} small, then
+\(\theta(\varepsilon)/\varepsilon \to0\) anyway. In \emph{either}
+scenario,
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \(\sin \theta(\varepsilon) /\varepsilon\) is \emph{bounded} as
+  \(\varepsilon \to 0\) and has a finite limit (which may be 0 in the
+  purely parallel case).\\
+\item
+  \((1-\cos \theta(\varepsilon))/\varepsilon \to 0\).
+\end{enumerate}
+
+\paragraph{\texorpdfstring{Expand \(\AlignAxis(\varepsilon)\)}{Expand i(e)}}
+
+On the other hand, 
+\[
+  \AlignAxis(\varepsilon)
+  \;=\;
+  \frac{\Delta \bm{X}^* \times \Delta \bm{x}^*(\varepsilon)}{
+        \|\Delta \bm{X}^* \times \Delta \bm{x}^*(\varepsilon)\|
+       }.
+\]
+Let's look at the cross product in the numerator: \[
+  \Delta \bm{X}^* \times \Delta \bm{x}^*(\varepsilon)
+  \;=\;
+  \Delta \bm{X}^* \;\times\;
+  \Bigl(\Delta \bm{X}^* + \varepsilon\,\Delta\Bigr)
+  \;=\;
+  \Delta \bm{X}^* \times \Delta \bm{X}^*
+  \;+\;
+  \varepsilon\,\Delta \bm{X}^*\times\Delta,
+\]
+where
+\(\Delta = \tfrac{1}{\|\Delta \bm{X}\|}\Bigl[\Delta \bm{u} - (\Delta \bm{X}^*\cdot\Delta \bm{u})\,\Delta \bm{X}^*\Bigr]\).
+But \(\Delta \bm{X}^* \times \Delta \bm{X}^* = \mathbf{0}\), so \[
+  \Delta \bm{X}^* \times \Delta \bm{x}^*(\varepsilon)
+  \;=\;
+  \varepsilon\,\Delta \bm{X}^*\times\Delta
+  \;=\;
+  O(\varepsilon).
+\]
+Hence the magnitude of that cross product is also \(O(\varepsilon)\).
+Dividing by its own magnitude, \(\AlignAxis(\varepsilon)\) remains a
+\emph{well-defined} unit vector for \(\varepsilon\neq 0\), but it
+basically becomes
+
+\[
+  \AlignAxis(\varepsilon)
+  \;\approx\;
+  \frac{\Delta \bm{X}^*\times \Delta}{\|\Delta \bm{X}^*\times \Delta\|}.
+\] In fact, to \emph{first} order in \(\varepsilon\), this is just the
+direction perpendicular to \(\Delta \bm{X}^*\) and \(\Delta\). 
+
+
+\subsection{Linearization (2)}
+
+%
+Below is a ``difference‐quotient'' style derivation starting with the usual axis‐angle (Rodrigues)
+definition of \(\bm{R}(\varepsilon)\) (which is ill‐defined at
+\(\varepsilon=0\)) to obtain a well‐defined derivative \(R' (0)\). 
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  The leading term
+  \(\sin \theta(\varepsilon) \,\AlignAxis(\varepsilon)^{\times}\)
+  typically goes like
+  \(\theta(\varepsilon)\, \AlignAxis(\varepsilon)\). 
+  If \(\theta(\varepsilon)\) is small,
+  \(\theta(\varepsilon)\sim \|\Delta \bm{X}^*\times \Delta \bm{x}^*\|\)
+  is typically order \(\varepsilon\) or sometimes
+  \(\varepsilon^2\), etc.
+
+\item
+  The second term \((1-\cos\theta)\,[\AlignAxis]_{\times}^2\) is
+  likewise an indeterminate form.
+\end{enumerate}
+
+% \subsubsection{\texorpdfstring{The difference quotient
+% \(\bigl(\bm{R}(\varepsilon)-1\bigr)/\varepsilon\)}{The difference quotient (R(e)-1)/e}}
+
+We will do this by explicitly taking the difference quotient and letting \(\varepsilon \to 0\).
+We want
+%
+\[
+  \lim_{\varepsilon\to 0}
+  \frac{\bm{R}(\varepsilon) - \bm{1}}{\varepsilon}.
+\]
+%
+If that limit exists, it \emph{defines} \(R'(0)\). 
+To see the limit does exist, let us rewrite the first‐order part of the exponential map in
+a more convenient way:
+%
+\[
+  \bm{R}(\varepsilon)
+  \;=\;
+  \bm{1}
+  \;+\;
+  \underbrace{
+    \sin \theta(\varepsilon)\,[\AlignAxis(\varepsilon)]_{\times}
+  }_{\displaystyle \text{(term A)}}
+  \;+\;
+  \underbrace{
+    \bigl(1-\cos[\theta(\varepsilon)]\bigr)\,[\AlignAxis(\varepsilon)]_{\times}^2
+  }_{\displaystyle \text{(term B)}}.
+\] Hence 
+\[
+  \frac{\bm{R}(\varepsilon) - \bm{1}}{\varepsilon}
+  \;=\;
+  \underbrace{
+    \frac{\sin \theta(\varepsilon)}{\varepsilon}
+    \,\AlignAxis^{\times}(\varepsilon)
+  }_{\displaystyle\text{Term A}}
+  \;+\;
+  \underbrace{
+    \frac{1-\cos \theta(\varepsilon)}{\varepsilon}
+    \,[\AlignAxis(\varepsilon)]_{\times}^{2}
+  }_{\displaystyle \text{Term B}}.
+\] 
+We will show:
+%
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \textbf{Term B} \(\to \mathbf{0}\) as \(\varepsilon\to 0\).\\
+\item
+  \textbf{Term A} \(\to \bigl[\boldsymbol{\omega}\bigr]_{\times}\), with
+  \(\boldsymbol{\omega} = \tfrac{\Delta \bm{X}\times \Delta \bm{u}}{\|\Delta \bm{X}\|^2}\).
+\end{enumerate}
+%
+and ultimately that the limit is exactly \(\boldsymbol{\omega}^{\times}\). 
+We will proceed from the axis--angle formula for \(\bm{R}(\varepsilon)\) and do a \emph{difference‐quotient
+limit} (i.e.~``differentiate first, \emph{then} evaluate at
+\(\varepsilon=0\)'').
+
+\paragraph{\texorpdfstring{Term B \(\to \mathbf{0}\)}{Term B}}
+
+Recall that \(1 - \cos\theta = O(\theta^2)\). 
+In the usual scenario
+(where \(\Delta \bm{u}\) has some component \emph{perpendicular} to
+\(\Delta \bm{X}\)), the angle \(\theta(\varepsilon)\) scales linearly
+with \(\varepsilon\), so \(\theta^2(\varepsilon)/\varepsilon\) goes to
+\(0\). Even in the degenerate case (purely parallel displacement, so
+\(\theta\) is second order in \(\varepsilon\)),
+\(\theta^2/\varepsilon\to0\) still holds. 
+Therefore 
+\[
+  \frac{1-\cos[\theta(\varepsilon)]}{\varepsilon}
+  \;=\;
+  O\!\Bigl(\frac{\theta^2}{\varepsilon}\Bigr)
+  \;\to\;
+  0,
+  \quad
+  \text{as }\varepsilon\to 0.
+\]
+Hence \textbf{Term B} vanishes in the limit, regardless of direction
+of \(\Delta \bm{u}\).
+
+\paragraph{\texorpdfstring{Term A's limit =
+\(\bigl[\boldsymbol{\omega}\bigr]_{\times}\)}{Term A's limit = \textbackslash bigl{[}\textbackslash boldsymbol\{\textbackslash omega\}\textbackslash bigr{]}\_\{\textbackslash times\}}}\label{term-as-limit-biglboldsymbolomegabigr_times}
+
+We need
+\[
+  \lim_{\varepsilon\to 0}
+  \frac{\sin \theta(\varepsilon)}{\varepsilon}
+  \,\AlignAxis(\varepsilon)^{\times}.
+\] 
+For the angle between two unit vectors \(\Delta \bm{X}^*\) and
+\(\Delta \bm{x}^*(\varepsilon)\), we know\\
+\[
+  \sin \theta(\varepsilon) 
+  \;=\;
+  \|\Delta \bm{X}^*\times \Delta \bm{x}^*(\varepsilon)\|.
+\] 
+Thus
+\[
+  \frac{\sin \theta(\varepsilon)}{\varepsilon}
+  \,\AlignAxis(\varepsilon)^{\times}
+  \;=\;
+  \frac{
+    \|\Delta \bm{X}^*\times \Delta \bm{x}^*(\varepsilon)\|
+  }{\varepsilon}
+  \;\frac{
+    \bigl[\Delta \bm{X}^*\times \Delta \bm{x}^*(\varepsilon)\bigr]^{\times}
+  }{
+    \|\Delta \bm{X}^*\times \Delta \bm{x}^*(\varepsilon)\|
+  }.
+\] 
+But the second fraction is precisely a \emph{unit} cross‐product operator in the direction of   \(\Delta \bm{X}^*\times \Delta \bm{x}^*(\varepsilon)\). 
+So overall, \emph{Term A} is 
+\[
+    \frac{1}{\varepsilon}
+    \,\bigl[\Delta \bm{X}^*\times \Delta \bm{x}^*(\varepsilon)\bigr]_{\times}.
+\]
+%
+Hence
+%
+\[
+  \lim_{\varepsilon\to 0}
+  \frac{\sin \theta(\varepsilon) }{\varepsilon}
+  \,[\AlignAxis(\varepsilon)]_{\times}
+  \;=\;
+  \lim_{\varepsilon\to 0}
+  \frac{
+    [\Delta \bm{X}^*\times \Delta \bm{x}^*(\varepsilon)]_{\times}
+  }{\varepsilon}
+  \;=\;
+  \Bigl[\,
+    \lim_{\varepsilon\to 0}
+    \frac{
+      \Delta \bm{X}^*\times \Delta \bm{x}^*(\varepsilon)
+    }{\varepsilon}
+  \Bigr]_{\times}.
+\] So we just need \[
+  \lim_{\varepsilon\to 0}
+  \frac{\Delta \bm{X}^*\times \Delta \bm{x}^*(\varepsilon)}{\varepsilon}.
+\]
+%
+From \cref{eq:linear-Dxstar} 
+\[
+  \Delta \bm{x}^*(\varepsilon)
+  \;=\;
+  \frac{\Delta \bm{x}(\varepsilon)}{\|\Delta \bm{x}(\varepsilon)\|}
+  \;=\;
+  \frac{\Delta \bm{X} + \varepsilon\,\Delta \bm{u}}{\|\Delta \bm{X}\| + O(\varepsilon)}
+  \;=\;
+  \Delta \bm{X}^*
+  \;+\;
+  \varepsilon
+  \,\frac{\Delta \bm{u} - (\Delta \bm{X}^*\cdot \Delta \bm{u})\,\Delta \bm{X}^*}{\|\Delta \bm{X}\|}
+  \;+\;
+  O(\varepsilon^2).
+\] (We subtract the parallel component from \(\Delta \bm{u}\) so that
+dividing by \(\|\Delta \bm{X}\| + O(\varepsilon)\) is accounted for
+consistently to first order.) 
+Therefore,
+
+\[
+  \Delta \bm{X}^*\times \Delta \bm{x}^*(\varepsilon)
+  \;=\;
+  \Delta \bm{X}^*\times 
+  \Bigl(
+    \Delta \bm{X}^*
+    \;+\;
+    \varepsilon\,\frac{
+      \Delta \bm{u} 
+      - (\Delta \bm{X}^*\!\cdot \Delta \bm{u})\Delta \bm{X}^*
+    }{\|\Delta \bm{X}\|}
+    + O(\varepsilon^2)
+  \Bigr).
+\] But \(\Delta \bm{X}^*\times\Delta \bm{X}^*=0\). Also
+\(\Delta \bm{X}^*\times\bigl[(\Delta \bm{X}^*\cdot \Delta \bm{u})\,\Delta \bm{X}^*\bigr]=\mathbf{0}\).
+So to first order,
+
+\[
+  \Delta \bm{X}^*\times \Delta \bm{x}^*(\varepsilon)
+  \;=\;
+  \varepsilon\,\frac{1}{\|\Delta \bm{X}\|}
+  \,\Bigl(\Delta \bm{X}^*\times \Delta \bm{u}\Bigr)
+  \;+\;
+  O(\varepsilon^2).
+\] Divide by \(\varepsilon\) and let \(\varepsilon\to 0\):
+
+\[
+  \lim_{\varepsilon\to 0}
+  \frac{\Delta \bm{X}^*\times \Delta \bm{x}^*(\varepsilon)}{\varepsilon}
+  \;=\;
+  \frac{1}{\|\Delta \bm{X}\|}\,\Bigl(\Delta \bm{X}^*\times \Delta \bm{u}\Bigr)
+  \;=\;
+  \frac{1}{\|\Delta \bm{X}\|^2}\,\Bigl(\Delta \bm{X} \times \Delta \bm{u}\Bigr).
+\] 
+Therefore
+\[
+  \lim_{\varepsilon\to 0}
+  \frac{\sin \theta(\varepsilon)}{\varepsilon}\, \AlignAxis(\varepsilon)^{\times}
+  \;=\;
+  \left[
+    \frac{\Delta \bm{X}\times \Delta \bm{u}}{\|\Delta \bm{X}\|^2}
+  \right]^{\times}.
+\]
+Recalling that the \((1-\cos\theta)/\varepsilon\) term goes to \(0\), we conclude
+\begin{equation*}
+\boxed{
+  R'(0) = \lim_{\varepsilon\to 0}\,
+  \frac{\bm{R}(\varepsilon) - \bm{1}}{\varepsilon}
+  \;=\;
+  \left[
+    \frac{\Delta \bm{X}\times \Delta \bm{u}}{\|\Delta \bm{X}\|^2}
+  \right]^{\times}.
+}
+\end{equation*}
+
+% Equivalently,
+% \[
+%   \boxed{
+%   R'(0)
+%   \;=\;
+%   [\boldsymbol{\omega}]_{\times},
+%   \quad
+%   \text{where }
+%   \boldsymbol{\omega}
+%   \;=\;
+%   \frac{\Delta \bm{X}\times \Delta \bm{u}}{\|\Delta \bm{X}\|^2}.
+%   }
+% \]
+
+
+\subsection{Linearization (3)}
+
+By construction, the rotation \(\bm{R}(\varepsilon)\) carries the
+original unit direction \(\Delta \bm{X}^*\) to the new unit direction
+\(\Delta \bm{x}^*(\varepsilon)\). So \[
+  \bm{R}(\varepsilon)\,\Delta \bm{X}^*
+  \;=\;
+  \Delta \bm{x}^*(\varepsilon).
+\] Differentiate both sides w.r.t. \(\varepsilon\). At
+\(\varepsilon=0\), \(\bm{R}(0)=\bm{1}\). 
+We get 
+\[
+  \left.\frac{\mathrm{d}}{\mathrm{d}\varepsilon}\bm{R}(\varepsilon)\right|_{\varepsilon=0}\,\Delta \bm{X}^*
+  \;+\;
+  \bm{R}(0)\;
+  \left.\frac{\mathrm{d}}{\mathrm{d}\varepsilon}\bigl[\Delta \bm{X}^*\bigr]\right|_{\varepsilon=0}
+  \;=\;
+  \left.\frac{\mathrm{d}}{\mathrm{d}\varepsilon}\Delta \bm{x}^*(\varepsilon)\right|_{\varepsilon=0}.
+\]
+But \(\Delta \bm{X}^*\) is a fixed (constant) vector, so its
+derivative is zero. Also \(\bm{R}(0)=\bm{1}\). Thus \[
+  \left.\frac{\mathrm{d}}{\mathrm{d}\varepsilon}\bm{R}(\varepsilon)\right|_{\varepsilon=0}\,\Delta \bm{X}^*
+  \;=\;
+  \left.\frac{\mathrm{d}}{\mathrm{d}\varepsilon}\Delta \bm{x}^*(\varepsilon)\right|_{\varepsilon=0}.
+\] 
+Using \cref{eq:linear-Dxstar} for 
+\(\displaystyle \bigl.\tfrac{d}{d\varepsilon}\Delta \bm{x}^*(\varepsilon)\bigr|_{\varepsilon=0}\) furnishes
+%
+\[
+  \left.\frac{\mathrm{d}}{\mathrm{d}\varepsilon}\bm{R}(\varepsilon)\right|_{\varepsilon=0}\Delta \bm{X}^*
+  \;=\;
+  \frac{1}{\|\Delta \bm{X}\|}
+  \Bigl[
+    \Delta \bm{u}
+    - (\Delta \bm{X}^*\!\cdot \Delta \bm{u})\,\Delta \bm{X}^*
+  \Bigr].
+\] Crucially, that right-hand side is \emph{orthogonal} to
+\(\Delta \bm{X}^*\), which shows that
+\(\bigl.\tfrac{d}{d\varepsilon}\bm{R}(\varepsilon)\bigr|_{\varepsilon=0}\)
+acts like a \emph{skew-symmetric} operator on \(\Delta \bm{X}^*\). 
+%
+Indeed, a rank-1 check shows there must exist some vector
+\(\boldsymbol{\omega}\) such that for \emph{all} \(\mathbf{x}\), \[
+  \left.\frac{\mathrm{d}}{\mathrm{d}\varepsilon}\bm{R}(\varepsilon)\right|_{\varepsilon=0}\mathbf{x}
+  \;=\;
+  \boldsymbol{\omega}\times \mathbf{x}.
+\] 
+Applying it to \(\Delta \bm{X}^*\) gives 
+\[
+  \boldsymbol{\omega}\times \Delta \bm{X}^*
+  \;=\;
+  \frac{1}{\|\Delta \bm{X}\|}
+  \Bigl[
+    \Delta \bm{u}
+    - (\Delta \bm{X}^*\!\cdot \Delta \bm{u})\,\Delta \bm{X}^*
+  \Bigr].
+\] 
+One can check that
+\(\boldsymbol{\omega} = \tfrac{1}{\|\Delta \bm{X}\|}\,\bigl(\Delta \bm{X}^*\times \Delta \bm{u}\bigr)\)
+satisfies exactly that. 
+Thus, finally, 
+\begin{equation}
+  \boxed{
+  \frac{\mathrm{d}}{\mathrm{d}\varepsilon}\bm{R}(\varepsilon)\Big|_{\varepsilon=0}
+  \;=\;
+  \boldsymbol{\omega}^{\times},
+  \qquad
+  \boldsymbol{\omega}
+  \;=\;
+  \frac{\Delta \bm{X}\times \Delta \bm{u}}{\|\Delta \bm{X}\|^2}.
+  }
+\end{equation}
+
+\subsection{Linearization (4)}
+
+%
+Our goal is to linearize \(\bm{R}(\varepsilon)\) about \(\varepsilon=0\); i.e.~find 
+\[
+  \bm{R}(\varepsilon)
+  \;=\;
+  \bm{1}
+  \;+\;
+  \varepsilon\,\boldsymbol{\Omega}
+  \;+\;
+  O(\varepsilon^2),
+\] where \(\boldsymbol{\Omega}\) is a skew-symmetric matrix.
+
+\subsubsection{\texorpdfstring{Rotation \(\bm{R}(\varepsilon)\)}{Rotation R(e)}}
+
+Recall that
+\[
+  \bm{R}(\varepsilon)\,\Delta \bm{X}^\ast
+  \;=\;
+  \Delta \bm{x}^\ast(\varepsilon).
+\] Suppose that \[
+  \bm{R}(\varepsilon)
+  \;=\;
+  \bm{1} 
+  \;+\;
+  \varepsilon\,\boldsymbol{\Omega}
+  \;+\;
+  O(\varepsilon^2),
+\] 
+where \(\boldsymbol{\Omega}\) is skew-symmetric. 
+Then
+\[
+  \bm{R}\,\Delta \bm{X}^\ast
+  \;=\;
+  \Delta \bm{X}^\ast
+  \;+\;
+  \varepsilon\,\boldsymbol{\Omega}\,\Delta \bm{X}^\ast
+  \;+\;
+  O(\varepsilon^2).
+\] 
+Matching this with
+\(\Delta \bm{x}^\ast(\varepsilon)\approx \Delta \bm{X}^\ast + \Delta(\varepsilon)\),
+we see that
+\[
+  \varepsilon\,\boldsymbol{\Omega}\,\Delta \bm{X}^\ast
+  \;=\;
+  \Delta(\varepsilon)
+\]
+and with \cref{eq:delta-basis}
+
+\[
+  \varepsilon\,\boldsymbol{\omega} {\times}\,\Delta \bm{X}^\ast
+  \;=\;
+  \Delta(\varepsilon)
+  \;=\;
+  \varepsilon
+  \frac{
+    \bigl(\Delta \bm{u} 
+           - (\Delta \bm{X}^\ast\!\cdot \Delta \bm{u})\,\Delta \bm{X}^\ast
+    \bigr)
+  }{\|\Delta \bm{X}\|}.
+\]
+Canceling \(\varepsilon\) on both sides gives
+\[
+  \boldsymbol{\omega} \;\times\; \Delta \bm{X}^\ast
+  \;=\;
+  \frac{1}{\|\Delta \bm{X}\|}
+  \Bigl[
+     \Delta \bm{u}
+     \;-\;
+     (\Delta \bm{X}^\ast\!\cdot \Delta \bm{u})\,\Delta \bm{X}^\ast
+  \Bigr].
+\] 
+A standard vector identity (the ``triple cross product'') shows that
+choosing \[
+  \boldsymbol{\omega}
+  \;=\;
+  \frac{1}{\|\Delta \bm{X}\|}
+  \bigl(\Delta \bm{X}^\ast \times \Delta \bm{u}\bigr)
+  \quad\Longrightarrow\quad
+  \boldsymbol{\omega} \times \Delta \bm{X}^\ast
+  \;=\;
+  \frac{1}{\|\Delta \bm{X}\|}\,
+  \Bigl[
+    \Delta \bm{u}
+    \;-\;
+    (\Delta \bm{X}^\ast\!\cdot \Delta \bm{u})\,\Delta \bm{X}^\ast
+  \Bigr].
+\] 
+Indeed, using
+\(\Delta \bm{X}^\ast \triangleq \tfrac{\Delta \bm{X}}{\|\Delta \bm{X}\|}\) we may
+rewrite
+\[\boldsymbol{\omega} = \tfrac{1}{\|\Delta \bm{X}\|^2}\,\bigl(\Delta \bm{X} \times \Delta \bm{u}\bigr)\]
+%
+Altogether, the linearized rotation is:
+
+\begin{equation}
+  \boxed{
+  \bm{R}(\varepsilon)
+  \;=\;
+  \bm{1}
+  \;+\;
+  \varepsilon\,\bigl[\boldsymbol{\omega}\bigr]_{\times}
+  \;+\;
+  O(\varepsilon^2),
+  \quad
+  \text{with}
+  \quad
+  \boldsymbol{\omega}
+  \;=\;
+  \frac{\Delta \bm{X}^\ast \times \Delta \bm{u}}{\|\Delta \bm{X} \|}
+  \;=\;
+  \frac{\Delta \bm{X} \times \Delta \bm{u}}{\|\Delta \bm{X}\|^2}.
+  }
+\end{equation}
+%
+
+
+\subsection{Summary}
+
+
+\begin{itemize}
+\tightlist
+\item \(\bm{\omega}\) represents an \emph{infinitesimal rotation} around the axis
+given by \(\Delta \bm{X} \times \Delta \bm{u}\). Geometrically, it is
+precisely the smallest rotation needed to tip \(\Delta \bm{X}\) into
+\(\Delta \bm{X} + \varepsilon \,\Delta \bm{u}\), modulo normalization.
+
+\item
+  \(\Delta \bm{X}^*\times \Delta \bm{x}^*(\varepsilon)\) is an
+  \(O(\varepsilon)\) vector (unless purely parallel, in which case it
+  stays 0 up to second order---but then \(\sin[\theta]\approx 0\) at
+  first order, so the product still can have a finite limit).\\
+\item
+  Dividing by its own norm yields a \emph{unit vector} that converges to
+  the direction of \(\Delta \bm{X}^*\times \Delta \bm{u}\) (if that is
+  nonzero).
+\end{itemize}
+%
+Stated otherwise, if \(\bm{u}_{\perp}\) is the component of \(\Delta \bm{u}\)
+perpendicular to \(\Delta \bm{X}^*\), then for small \(\varepsilon\),
+
+\[
+  \Delta \bm{X}^*\times \Delta \bm{x}^*(\varepsilon)
+  \;\approx\;
+  \varepsilon\,\Bigl[\Delta \bm{X}^*\times \bm{u}_{\perp}\Bigr]
+  \;+\;
+  O(\varepsilon^2).
+\] Hence \[
+  \AlignAxis(\varepsilon)
+  \;=\;
+  \frac{\Delta \bm{X}^*\times \Delta \bm{x}^*(\varepsilon)}{
+        \|\Delta \bm{X}^*\times \Delta \bm{x}^*(\varepsilon)\|}
+  \;\to\;
+  \frac{\Delta \bm{X}^*\times \bm{u}_{\perp}}{\|\Delta \bm{X}^*\times \bm{u}_{\perp}\|},
+  \quad\text{as }\varepsilon\to 0,
+\] if \(\bm{u}_{\perp}\neq 0\). (If \(\bm{u}_{\perp}=0\), the entire
+rotation is second‐order small and the limit for
+\(\sin \theta(\varepsilon) /\varepsilon\cdot\AlignAxis(\varepsilon)\)
+still goes to 0.)
+
+
+%
+The essence is that at small angles, 
+\(\sin\theta(\varepsilon)\approx\|\Delta \bm{X}^*\times \Delta \bm{x}^*\|\approx O(\varepsilon)\),\\
+while \(\,1-\cos\theta(\varepsilon)\approx O(\varepsilon^2)\), and the
+rotation axis becomes the direction of
+\(\Delta \bm{X}^*\times(\Delta \bm{X}^*+\dots)\). Collecting these
+expansions yields precisely
+\[
+\boldsymbol{\omega}=\tfrac{\Delta \bm{X}\times \Delta \bm{u}}{\|\Delta \bm{X}\|^2}
+\].
+
+\vspace{5ex}
+
+\begin{ambox}[Linear Transform]{box:linear-transform}
+\begin{enumerate}
+    \item Rotation Parameters
+    \item Global offset
+    \[
+    \bm{u}_a,\bm{w}_a \mapsto \begin{pmatrix}
+        \bm{u}_a - \bm{r}_a^{\mathrm{g}}\times \bm{w}_a \\
+        \bm{w}_a
+    \end{pmatrix}
+    \qquad\qquad
+    \bm{n}_a,\bm{m}_a \mapsto \begin{pmatrix}
+        \bm{n}_a \\
+        \bm{m}_a + \bm{r}_a \times\bm{n}_a
+    \end{pmatrix}
+    \]
+    \item 
+    \[
+    \bm{u}_a,\bm{w}_a \mapsto \begin{pmatrix}
+        \bm{R}^{\mathrm{t}}\bm{u}_a \\
+        \bm{R}^{\mathrm{t}}\bm{w}_a
+    \end{pmatrix}
+    \qquad\qquad
+    \bm{n}_a,\bm{m}_a \mapsto \begin{pmatrix}
+        \bm{R}\bm{n}_a \\
+        \bm{R}\bm{m}_a
+    \end{pmatrix}
+    \]
+    \item Local offset
+    \item Isometry
+    \[
+    \bm{u}_a,\FrameRotation \mapsto \begin{pmatrix}
+        \bm{u}_{a} + \bm{c} + \Delta\bm{x}_a \times \bar{\bm{\omega}} \\
+        \bm{R}^{\mathrm{t}}\FrameRotation
+    \end{pmatrix}
+    \]
+    \[
+    \bm{v}_{xa},\bm{v}_{\Lambda a} \mapsto \begin{pmatrix}
+        \bm{v}_{xa} + \bm{c} + \Delta\bm{x}_{a} \times \bar{\bm{\omega}} \\
+        \bm{v}_{\Lambda a} - \bar{\bm{\omega}}
+    \end{pmatrix}
+    \qquad\qquad
+    \bm{n}_a,\bm{m}_a \mapsto \begin{pmatrix}
+        \bm{n}_a - \frac{\delta}{L}\FrameBasis \times \bar{\bm{m}} \\
+        \bm{m}_a
+    \end{pmatrix}
+    \]
+    with \(\Delta\bm{u}\), \(\bm{c} \triangleq - \bm{u}_I\) and \(\bar{\bm{\omega}} \triangleq \frac{1}{L} \FrameBasis \times \Delta \bm{u}\)
+
+    \item Local Logarithm
+
+\end{enumerate}
+\end{ambox}
+
+\vspace{5ex}
+\begin{ambox}[Linear Transform]{box:linear-transform}
+\begin{enumerate}
+    \item[0] Node logarithm
+    \[
+    \bm{u}_a,\FrameRotation_a \mapsto \begin{pmatrix}
+        \bm{u}_a \\
+        \operatorname{Log}\FrameRotation_a
+    \end{pmatrix}
+    \qquad\qquad
+    \bm{n}_a,\bm{m}_a \mapsto \begin{pmatrix}
+        \bm{n}_a \\
+        \bm{m}_a + \bm{r}_a \times\bm{n}_a
+    \end{pmatrix}
+    \]
+    \item Global offset
+    \[
+    \bm{u}_a,\bm{w}_a \mapsto \begin{pmatrix}
+        \bm{u}_a - \bm{r}_a^{\mathrm{g}}\times \bm{w}_a \\
+        \bm{w}_a
+    \end{pmatrix}
+    \qquad\qquad
+    \bm{n}_a,\bm{m}_a \mapsto \begin{pmatrix}
+        \bm{n}_a \\
+        \bm{m}_a + \bm{r}_a \times\bm{n}_a
+    \end{pmatrix}
+    \]
+    \item 
+    \[
+    \bm{u}_a,\bm{w}_a \mapsto \begin{pmatrix}
+        \bm{R}^{\mathrm{t}}\bm{u}_a \\
+        \bm{R}^{\mathrm{t}}\bm{w}_a
+    \end{pmatrix}
+    \qquad\qquad
+    \bm{n}_a,\bm{m}_a \mapsto \begin{pmatrix}
+        \bm{R}\bm{n}_a \\
+        \bm{R}\bm{m}_a
+    \end{pmatrix}
+    \]
+    \item Local offset
+    \item 
+    \[
+    \bm{u}_a,\bm{w}_a \mapsto \begin{pmatrix}
+        (\bm{u}_{a \in [I,J]} - \bm{u}_I) 
+        - \bar{\bm{\omega}}\times (\Delta\bm{x}_a + \bm{u}_{a \notin [I,J]}) \\
+        \bm{w}_a - \bar{\bm{\omega}}
+    \end{pmatrix}
+    \]
+    with \(\Delta\bm{u}\), and \(\bar{\bm{\omega}} \triangleq \frac{1}{L} \FrameBasis \times \Delta \bm{u}\)
+\end{enumerate}
+\end{ambox}
+
+
+
+\section{Axial System C2}
+This formulation comes from \cite{crisfield1990consistent}. 
+A ``mean rotation matrix" $\bm{R}_{\mathrm{aux}}$, is first formed as follows
+
+$$
+\begin{aligned}
+\bm{R}_{\mathrm{aux}}
+&=\Delta R\left(\frac{\omega_J-\omega_I}{2}\right) \bm{\Lambda}_I(\omega_I) \\
+&=\Delta R\left(\frac{\omega_I-\omega_J}{2}\right) \bm{\Lambda}_J(\omega_J) \\
+& \simeq \operatorname{Exp}\left(\frac{\omega_I+\omega_J}{2}\right)
+\end{aligned}
+$$
+
+and
+
+$$
+\Delta \bm{R}(\omega_J-\omega_I)=\bm{\Lambda}_J \bm{\Lambda}_I^{\mathrm{t}}
+$$
+
+
+$$
+(\texttt{C2})\left\{\begin{aligned}
+\bar{\mathbf{d}}_1 &= \frac{\bm{x}_J-\bm{x}_I}{\left\|\bm{x}_J-\bm{x}_I\right\|} \\
+\bar{\mathbf{d}}_2 &=  \operatorname{Exp}(\bm{\rho}) \mathbf{t}_2 \\
+\bar{\mathbf{d}}_3 &=  \operatorname{Exp}(\bm{\rho}) \mathbf{t}_3 \\
+\end{aligned}\right.
+, \quad \bm{\rho} =\cos^{-1}\left(\mathbf{t}_1 \cdot \bar{\mathbf{d}}_1\right) \frac{\mathbf{t}_1 \times \bar{\mathbf{d}}_1}{\left\|\mathbf{t}_1 \times \bar{\mathbf{d}}_1\right\|}
+$$
+
+$$
+\boxed{
+\bm{R} \triangleq \operatorname{Exp}(\operatorname{Axis}(\bm{R}_{\mathrm{aux}}\mathbf{D}_1,\, \mathbf{D}_1)) \, \bm{R}_{\mathrm{aux}}
+}
+$$
+
+\section{Axial System C1}
+
+In order to facilitate taking variations, Crisfield suggests approximating the 
+correcting rotation $\operatorname{Exp}(\bm{\rho})$ by a ``midpoint" formula as follows:
+
+$$
+(\texttt{C1})\left\{\begin{aligned}
+\bar{\mathbf{d}}_1 &= \frac{\bm{x}_J-\bm{x}_I}{\left\|\bm{x}_J-\bm{x}_I\right\|} \\
+\bar{\mathbf{d}}_2 &= \mathbf{t}_2 - \frac{1}{2} \mathbf{t}_2 \cdot \bar{\mathbf{d}}_1  \left(\bar{\mathbf{d}}_1+\mathbf{t}_1\right), \\
+\bar{\mathbf{d}}_3 &= \mathbf{t}_3 - \frac{1}{2} \mathbf{t}_3 \cdot \bar{\mathbf{d}}_1  \left(\bar{\mathbf{d}}_1+\mathbf{t}_1\right) .
+\end{aligned}\right.
+$$
+
+
+\section{Axial System B}
+
+
+$$
+\mathbf{t}=\frac{1}{2}\left(\mathbf{t}_1+\mathbf{t}_2\right), \quad \mathbf{t}_i=\bm{\Lambda}_i \bm{R}_0 \mathbf{D}_2, \quad i=1,2
+$$
+
+$$
+\begin{cases}
+\bar{\mathbf{d}}_{1} & =\dfrac{\bm{x}_J-\bm{x}_I}{\left\|\bm{x}_J-\bm{x}_I\right\|} \\
+\bar{\mathbf{d}}_{3} & =\dfrac{\bar{\mathbf{d}}_1 \times \mathbf{t}}{\left\|\bar{\mathbf{d}}_1 \times \mathbf{t}\right\|}  \\
+\bar{\mathbf{d}}_{2} & = \bar{\mathbf{d}}_{3} \times  \bar{\mathbf{d}}_1
+\end{cases}
+$$
+
+$$
+\operatorname{Align}(\FrameBasis \mapsto \frameBasis, \, D_3 \mapsto t)
+= \operatorname{Exp}(\frameBasis\, \operatorname{Angle}(...)\, )
+\operatorname{Exp}\bigl(\operatorname{Axis}(\FrameBasis, \frameBasis) \bigr)
+$$

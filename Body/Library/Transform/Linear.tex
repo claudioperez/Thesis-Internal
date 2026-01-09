@@ -801,10 +801,6 @@ precisely the smallest rotation needed to tip \(\Delta \bm{X}\) into
   \(O(\varepsilon)\) vector (unless purely parallel, in which case it
   stays 0 up to second order---but then \(\sin[\theta]\approx 0\) at
   first order, so the product still can have a finite limit).\\
-\item
-  Dividing by its own norm yields a \emph{unit vector} that converges to
-  the direction of \(\Delta \bm{X}^*\times \Delta \bm{u}\) (if that is
-  nonzero).
 \end{itemize}
 %
 Stated otherwise, if \(\bm{u}_{\perp}\) is the component of \(\Delta \bm{u}\)
@@ -835,10 +831,10 @@ The essence is that at small angles,
 \(\sin\theta(\varepsilon)\approx\|\Delta \bm{X}^*\times \Delta \bm{x}^*\|\approx O(\varepsilon)\),\\
 while \(\,1-\cos\theta(\varepsilon)\approx O(\varepsilon^2)\), and the
 rotation axis becomes the direction of
-\(\Delta \bm{X}^*\times(\Delta \bm{X}^*+\dots)\). Collecting these
-expansions yields precisely
+\(\Delta \bm{X}^*\times(\Delta \bm{X}^*+\dots)\). 
+Collecting these expansions yields
 \[
-\bm{\omega}=\tfrac{\Delta \bm{X}\times \Delta \bm{u}}{\|\Delta \bm{X}\|^2}
+\bm{\omega}=\frac{\Delta \bm{X}\times \Delta \bm{u}}{\|\Delta \bm{X}\|^2}
 \].
 
 \vspace{5ex}

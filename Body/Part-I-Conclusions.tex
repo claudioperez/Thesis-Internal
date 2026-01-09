@@ -1,18 +1,55 @@
 
+\clearpage
+\subsection{Key Equations}
+Assumptions
+\begin{itemize}
+    \item Saint-Venant stress
+    \item For Type 3, warping-deformation relation maintains proportionality through inelastic response.
+\end{itemize}
+
+
+\begin{ambox}[Mathematical Models]{box:model-summary}
 \begin{enumerate}
-\item Objectivity.
+    \RepeatEquation{eq:trace-map}
+    % \item \textbf{Trace State}
+    %     Trace Strains:
+    %     \RepeatEquation{eq:def-gam-kap}
+    \item Kinematics
+        \begin{description}
+            \item[$\circ$ Finite] \RepeatEquation{eq:finite-alignment-field}
+            \item[$\circ$ Linear]
+            \RepeatEquation{eq:trace-lift-linear}
+        \end{description}
+    \item Deformations 
+        \RepeatEquation{eq:saint-venant-stress}
+        \RepeatEquation{eq:strain-tensor-decomp}
+        \begin{description}
+            \item[$\circ$ Wagner] \RepeatEquation{eq:wagner-gl-strain-pi}
+            \item[$\circ$ Linear] \RepeatEquation{eq:linear-gl-strain-pi}
+        \end{description}
 
-\item Expressivity.
+    \item Warping Variation
+     \begin{description}
+        \item[$\circ$ Type 1: Nonuniform]
+        \item[$\circ$ Type 3: Uniform]
+          Trace Matrix:
+          \RepeatEquation{eq:T0-inv}
+          Fiber strain:
+          \RepeatEquation{eq:eps-B-e}
+          Resultants:
+          % \begin{description}
+          % \item[$\circ$ Petrov] 
+          \RepeatEquation{eq:petrov-section}
+          % \item[$\circ$ Bubnov]
+          % \RepeatEquation{eq:bubnov-section}
+          % \end{description}
+     \end{description}
 
-\item Efficiency
-  \begin{itemize}
-      \item Minimal number of DOFs
-      \item Tangent symmetry.
-  \end{itemize}
-
-\item Consistency. 
-
-\item Compatibility. 
-
-\item Semantic Flexibility.
+     
+    \item Material:
+        \begin{itemize}
+            \item Elastic
+            \item Inelastic
+        \end{itemize}
 \end{enumerate}
+\end{ambox}

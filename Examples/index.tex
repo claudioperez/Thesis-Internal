@@ -2,7 +2,6 @@
 
 \newcommand{\OnlyExact}{**}
 
-Renderings are generated with \emph{veux} \cite{perez2023veux}.
 
 {
 \small
@@ -14,11 +13,11 @@ Renderings are generated with \emph{veux} \cite{perez2023veux}.
 
 \begin{table}[H]
 \centering
-\caption{Summary of elastic verification problems.}
+\caption{Summary of elastic verification problems in view of Box~\ref{box:model-summary}.}
 \label{tab:verification}
 \begin{tabular}{llccccccccl}
     \toprule
-    Problem & Type & Transf.
+    Problem & Type 
     & \multicolumn{2}{c}{Kinematics} 
     & \multicolumn{2}{c}{Warping}
     & \multicolumn{2}{c}{Loading} 
@@ -29,7 +28,6 @@ Renderings are generated with \emph{veux} \cite{perez2023veux}.
     \midrule
     \ExRef{frame-0012}
       & C. Sol.
-      & Linear
       & Linear %\eqref{eq:trace-lift-linear}
       & Linear %\eqref{eq:linear-gl-strain-pi}
       & Uniform
@@ -42,7 +40,6 @@ Renderings are generated with \emph{veux} \cite{perez2023veux}.
       \\
     \ExRef{frame-0015}
      & F. Sol.
-     & % Span 
      & -\footnote{Analytic solution coincides under exact and linear geometry.}
      & Wagner
      % Warping
@@ -55,7 +52,6 @@ Renderings are generated with \emph{veux} \cite{perez2023veux}.
      \\
      \ExRef{frame-0021}
      & F. Sol.
-     & % Transform
      & -
      & Linear
      % Warping
@@ -68,18 +64,15 @@ Renderings are generated with \emph{veux} \cite{perez2023veux}.
      \\
      \ExRef{frame-1030}
      & Exp.
-     & %
      & -
      & Wagner
      & 
      \\
      \ExRef{frame-1000}
      & Ana.
-     & \texttt{SFIN}\NoteNovelInvariance
      \\
      \ExRef{frame-1009}
      & Ana.\NoteNewProblem
-     & \texttt{CORO}\NoteNovelInvariance
      % Kinematics
      & &
      % Warping
@@ -91,7 +84,6 @@ Renderings are generated with \emph{veux} \cite{perez2023veux}.
      \\
      \ExRef{frame-1001}
      & C. Sol.
-     & 
      & Exact
      & Linear
      % Warping
@@ -103,12 +95,10 @@ Renderings are generated with \emph{veux} \cite{perez2023veux}.
      \\
      \ExRef{frame-1002}
      & Ana.
-     & % Span
      & Exact
      \\
      \ExRef{frame-1003}
      & Ben.
-     & % Transform
      % Kinematics
      & 
      &
@@ -124,8 +114,7 @@ Renderings are generated with \emph{veux} \cite{perez2023veux}.
      \\
      \ExRef{frame-1008}
      & Ben.
-     & % Span
-     & Exact
+     & Finite
      & Linear
      & -
      & -
@@ -134,8 +123,7 @@ Renderings are generated with \emph{veux} \cite{perez2023veux}.
      \\
     \ExRef{frame-1020}
     & Ben.
-    & 
-    & Exact
+    & Finite
     & Linear
     & -
     & -
@@ -150,7 +138,7 @@ Renderings are generated with \emph{veux} \cite{perez2023veux}.
     \\
     \ExRef{frame-1035}
     & F. Sol.
-    & 
+    &
     & Wagner
     \\
     \ExRef{frame-1041}
@@ -160,6 +148,7 @@ Renderings are generated with \emph{veux} \cite{perez2023veux}.
 \end{table}
 }
 
+Renderings are generated with \emph{veux} \citep{perez2023veux}.
 
 % \subsection{Saint-Venant bending (0001)}\label{sec:frame-0001}
 % \input{Examples/frame-0001/index}

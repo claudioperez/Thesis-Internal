@@ -1,16 +1,22 @@
 \subsection{Overview}
 
+
 This work introduces a unified 3D frame element library for OpenSees. 
 The library contains 4 frame elements, 3 cross
 section models, and 4 geometric transformations as detailed below. 
 All cross section models support shear deformations and at least one
 warping mode, and should work seamlessly with all 4 elements whether or not they take such deformations into account.
 
+
+\subparagraph{Literature}
+\cite{ngoc2017damage}
+
 \subparagraph{Context}
 The modern landscape of computational mechanics is characterized by trends like (1) the demand for parametric/sensitivity analysis and optimization, 
 and (2) advances in LLM technology that facilitate model building/definition.
 These trends favor small element libraries that are valid for a wide range structures. 
 Furthermore, it is important that salient modeling features are semantically related to the model definition data. eg, it is not good to separate features like warping or shear deformability  into separate elements. Rather, there should be only a minimal number of elements, which expose these features as toggleable options. 
+
 
 \subparagraph{Scope}
 Only shear-deformable formulations are discussed. 
@@ -218,8 +224,8 @@ formulation of the element. \\
 \end{longtable}
 
 Note that by default elements will employ an appropriate integration
-rule and the \texttt{section} field is used homogeneously. However, all
-5 non-prismatic elements may alternatively be provided with an array of
+rule and the \texttt{section} field is used homogeneously. 
+However, all non-prismatic elements may alternatively be provided with an array of
 section objects to account for inhomogeneity and an explicit integration
 rule.
 
@@ -250,7 +256,7 @@ The \texttt{Prism} element is a standard linearly elastic prismatic
   This element is adapted from the \texttt{forceBeamColumn} and
   \texttt{forceBeamColumnCBDI} elements of OpenSees and
   \texttt{Dinel3dFrm\_EBwFF} from FEDEASLab. 
-  \textcite{spacone1992beam} developed the formulation for the \gls{frame:basic}-\gls{frame:euler} model presented in \cref{sec:basic-euler} and Box~\ref{box:basic-euler}.
+  
 %
   Geometric nonlinearities were considered in 2D by \textcite{neuenhofer1997evaluation} who introduced the concept of \emph{curvature-based displacement interpolation} (CBID). 
   This was later extended to the 3D \gls{frame:axial}-\gls{frame:euler} theory (Box~\ref{box:axial-euler}) by \cite{desouza2000forcebased}.
@@ -365,7 +371,7 @@ Cubic/Quadratic \\
 (\(C^1\)) \\
 \texttt{Shear} (Displ.) & Basic, Delta & - & Type II & Section &
 Lagrange (\(C^0\)) \\
-\texttt{Exact} (Displ.) & Exact & - & Type III & Section & Lagrange
+\ExactFrame (Displ.) & Exact & - & Type III & Section & Lagrange
 (\(C^0\)) \\
 \bottomrule
 \end{longtable}

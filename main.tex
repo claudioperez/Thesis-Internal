@@ -47,7 +47,7 @@
 
   \let\chapter\section
   \renewcommand{\section}{\oldsubsection}
-  \renewcommand{\subsection}{\oldparagraph}
+  \renewcommand{\subsection}{\oldsubsubsection}
   \renewcommand{\subsubsection}{\oldsubparagraph}
   \renewcommand{\paragraph}{\oldsubparagraph}
   \input{#1}
@@ -144,11 +144,6 @@
 \clearpage
 
 \begin{Notation}[section]
-\clearpage
-\glsaddall
-\printglossary[type=frame]
-\printglossary[type=brace]
-\clearpage
 
 \section{Introduction}
 \input{Body/Introduction}
@@ -156,8 +151,8 @@
 
 \part{Finite Element Formulations}
 
-\section{Introduction}
-\input{Sections/00_Introduction}
+\section{Introduction}\label{sec:Part-I}
+\input{Body/Part-I}
 \clearpage
 
 \section{Element Formulations}\label{sec:genwarp}
@@ -196,26 +191,18 @@
 \input{Sections/53_VenantShapeBasis}
 \input{Sections/Traces/56_TraceClassI}
 \clearpage
-\inputdraft{Sections/Traces/56_TraceClassIb}
-\clearpage 
 \input{Sections/Traces/56_TraceClassII}
 \clearpage
 \inputdraft{Sections/Traces/56_TraceClasses}
 \clearpage
 \inputdraft{Sections/Traces/56_TraceSummary}
-\clearpage
-\inputdraft{Sections/58_Reconstruction}
-\inputdraft{Sections/Archive/56_Trace}
-\inputdraft{Sections/Archive/56_Trace3}
-\inputdraft{Sections/Archive/56_Trace1}
-\inputdraft{Sections/Archive/56_Trace2}
 
 \input{Sections/00_Outline}
 \clearpage
 
 
 
-\section{Modeling Library}
+\section{Modeling Library}\label{sec:library}
 \input{Body/Implementation}
 \clearpage
 
@@ -227,6 +214,8 @@
 \InputChapter{Body/Xara/main}
 \clearpage 
 
+\input{Body/Irie/main}
+
 \InputChapter{Part II/04_Type_I_Prediction}%
 % \section{Modeling Considerations}
 % \input{Body/Modeling}
@@ -236,6 +225,11 @@
 \section{Notation}\label{sec:notation}
 
 \InputDetail{Sections/A_Notation}
+\clearpage
+
+\glsaddall
+\printglossary[type=frame]
+\printglossary[type=brace]
 \clearpage
 
 \InputChapter{Part I/Kinematics/main}

@@ -1,25 +1,21 @@
 % \begin{Details}
 
 \subsection{Motivation}
+Beam finite element formulations have, over several decades, proliferated into a large and fragmented collection of special-case implementations.
+Production codes typically offer distinct element types for thin-walled sections, for asymmetric sections, for large displacements, for warping torsion, and so on---each developed and validated in relative isolation.
+An improvement to one formulation does not automatically benefit others; a correction to the handling of, say, shear-flexure interaction in a geometrically linear element may have no bearing on the corresponding geometrically nonlinear element, even within the same software package.
+The result is a maintenance burden that grows combinatorially with the phenomena one wishes to capture, and a validation effort that must be repeated for each combination.
+
+This fragmentation also obscures deficiencies.
+Certain widely-used formulations for geometrically nonlinear analysis violate strain objectivity: objective strain measures, which should be invariant under superposed rigid motions, are corrupted by the interpolation procedure \citep{crisfield1999objectivity}.
+The errors are small for moderate rotations and vanish at converged equilibrium states, so they are often tolerated in practice.
+But tolerating such errors becomes untenable when simulations must be differentiated---as required for sensitivity analysis, gradient-based inference, or optimization---because the spurious dependence on rigid motion contaminates the computed gradients.
+Fixing the problem within existing software architectures would require rewriting element-level code, with attendant re-validation, for each affected element type.
 
 
-\subsubsection{Applications}
-Shear links are used in the Richmond-San Rafel Bridge \citep{seible2000long}.
-
-The response of bearings \cite{montalto2024buckling,montalto2024effective}.
-
-Several finite element analysis products implement distinct models for special cases like thin-walled or open sections.
 \subsection{Objectives}
 
-While the trace formalism clarifies the classical shear correction debate, the 
-primary objective of this work is not the determination of shear correction 
-factors \emph{per se}. Rather, our goal is to develop a framework for obtaining 
-\emph{warping modes} suitable for inelastic beam analysis.
-
-In linear elastic analysis, the distinction between different traces is 
-largely academic: all traces that exactly represent the Saint-Venant class 
-yield equivalent global stiffness matrices, differing only in the physical 
-interpretation assigned to boundary conditions. The situation changes 
+The situation changes 
 fundamentally when material nonlinearity is introduced. 
 Inelastic constitutive 
 evaluation requires knowledge of the actual strain distribution at material 
@@ -54,9 +50,6 @@ can be employed without modification.
 The developments in this work are restricted to the following setting:
 \begin{itemize}
 \item Prismatic, initially straight beams with arbitrary cross-section geometry.
-\item Homogeneous, isotropic material response at the continuum level 
-      (though the section-level formulation accommodates inelasticity 
-      through fiber discretization).
 \item The Saint-Venant class of loadings: axial force, biaxial bending moments, 
       torque, and biaxial shear forces, all applied as end resultants.
 \item Quasi-static response; dynamic and frequency-matching considerations 
@@ -83,14 +76,13 @@ is identified as the target for standard six-DOF finite elements.
 the one-dimensional beam model to the three-dimensional continuum. 
 We introduce material points in the cross-section through an extended displacement field and derive strain measures consistent with the beam kinematics.
 
-\Cref{sec:timo} introduces the trace formalism and characterizes the family 
-of traces satisfying our admissibility criteria. We derive explicit expressions 
+\cref{sec:timo} is centered on identifying a minimal set of warping shapes which allow for the exact reconstruction of Saint~Venant's classical continuum solutions through the reduced model of \cref{sec:genwarp}. 
+To this end, the \emph{trace} formalism is introduced which characterizes the family 
+of traces satisfying our admissibility criteria. 
+We derive explicit expressions 
 for the trace matrices corresponding to classical beam theories and introduce 
 the energy-conjugate trace, which produces symmetric section stiffness and arises naturally from variational considerations.
 
-Finally, we present numerical examples demonstrating exact recovery of 
-Saint~Venant solutions through the proposed formulation and illustrating 
-the behavior under inelastic material response.
 % \end{Details}
 
 \subsection{Overview}
@@ -99,9 +91,7 @@ The draft first lays out the nonlinear governing equations of equilibrium for ge
 These equations are determined solely from the geometric nature of a line embedded in space, and make no reference to material points that are not contained on this line. 
 The general model is geometrically exact and allows an arbitrary number of auxiliary ``warping amplitude" fields, and specializations are obtained that eliminate the additional fields in a general manner. 
 
-Next a section-level constitutive theory is developed in \cref{sec:gensec} which allows for the consideration of material points that do not lie on the reference line.
 
-\cref{sec:timo} is centered on identifying a minimal set of warping shapes which allow for the exact reconstruction of Saint~Venant's classical continuum solutions through the reduced model of \cref{sec:genwarp}. 
 A brief recapitulation of Saint Venant's solution is presented in \cref{sec:sv}. 
 
 \begin{Aside}

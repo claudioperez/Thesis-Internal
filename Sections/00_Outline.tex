@@ -47,40 +47,17 @@ Future:
 \end{itemize}
 
 
-\begin{Aside}
-
-When one includes shear warping, the plane Timoshenko mode that classically scales with $\bm\gamma$ becomes parasitic. 
-
-ie, in the saint venant solution, shear strains arise like 
-$$
-\bm\varepsilon_{\gamma}(x,\bm{r}) = (\nabla\bm{\WarpShearIesan}(\bm{r}))^{\top} X \bm\gamma(x)
-$$ 
-where $X$ is some constant ``shear correction", which is not yet exactly the classical shear correction coefficient, but eventually will give rise to it. 
-This is incompatible with a naive enrichment of Timoshenko kinematics: 
-$$\hat{\bm u}(x,\bm{r}) = \bm{u}(x) + \bm{\theta}(x)\times \bm{r} + warping$$
-which would produce 
-$$
-\bm\varepsilon = \bm\gamma(x) + \bm\kappa(x)\times \bm{r} + warping-strain(x,r)
-$$
-Note the parasitic ``plane" $\bm{r}$-constant strain $\bm\gamma$. 
-We formalize this situation by introducing the kinematic ansatz:
-$$
-\hat{\bm u}(x,r) = \bm u(x) + \bm\theta(x)\times \bm{r} 
-+ \bm\Phi(\bm{r})\bm\alpha(x) + \bm\Psi(\bm{r})\bm\eta(x)
-$$
-where $\bm\Phi$ is a general matrix basis of section warping functions, $\bm\alpha(x)$ their amplitudes, and $\bm\Psi(\bm{r})$ reintroduces the section-rigid patterns that are also represented by $\bm{u}(x),\bm\theta(x)$. 
-The auxiliary fields $\bm\alpha(x)$ and $\bm\eta(x)$ will eventually be eliminated to furnish a classical 6-DOF theory in only $\bm{u}(x),\bm\theta(x)$. 
-\end{Aside}
-
-
-
 Under the energy-conjugate trace, a clamped boundary condition 
 $\bm{u}(0) = \bm{\theta}(0) = \mathbf{0}$ does not fix a direct geometric average over the section, but rather constrains the energy-conjugate kinematic measures in a way that may be difficult to realize physically. 
 An illuminating geometric derivation of this model was put forth by \cite{serpieri2014equivalence}, which reveals it's interpretation as a long-wavelength approximation to the continuum problem of a tip-loaded cantilever that is \emph{fully} restrained at it's root \cite{ladeveze1998new}. 
 This problem does not fall under the relaxed Saint~Venant class, which precludes Dirichlet conditions of this nature. 
 
 
+\subsubsection{Verification}
 
+\Cref{sec:frame-0012} presents a numerical example demonstrating exact recovery of 
+Saint~Venant solutions through the proposed formulation. 
+Behavior under inelastic material response is investigated in \Cref{sec:frame-2007} and \Cref{sec:frame-2021}.
 
 
 

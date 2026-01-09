@@ -111,7 +111,8 @@ The \texttt{Predictor} table serves as a repository for the configurations of th
 The dispatching of predictors is managed by the \texttt{prediction.predictors} submodule, which implements the abstract \texttt{PredictorDaemon} class and its subclasses. These classes abstract away the implementation details of various predictors, providing a unified interface for their dispatch.
 
 Predictors are invoked as subprocesses, and communication is performed over standard input and standard output streams \citep{silberschatz2018operating}. 
-This design ensures efficient resource utilization and allows for the concurrent execution of multiple predictors. To facilitate this communication, two protocols have been developed, one for each type of predictor (Type I and Type II). 
+This design ensures efficient resource utilization and allows for the concurrent execution of multiple predictors. 
+To facilitate this communication, two protocols have been developed, one for each type of predictor (Type I and Type II). 
 The protocols rely on JSON-encoded messaging in a manner that is compatible with frameworks like  \cite{deierlein2020cloudenabled,deierlein2021state}.  
 
 The flexibility afforded by this design has made it possible to integrate a wide variety of scientific computing tools into the platform to be used as predictors. These include the \texttt{mdof} Python library for system identification \citep{chern2024mdof}, the OpenSees Tcl interpreter for nonlinear structural analysis \citep{mckenna1997object}, and the new experimental OpenSeesRT library \citep{perez2024xara}, a redesigned and optimized frontend to the core OpenSees framework which has been redesigned to facilitate model updating and machine learning tasks.

@@ -32,65 +32,6 @@ Boundary:
 \mathbf{a}_g^T \mathbf{q}-\mathbf{a}_r^T \mathbf{p}_{r p}=\mathbf{p}
 \end{equation}
 
-\subsection{Loading}
-
-In the force formulation, the consistent load stiffness is obtained by implicit differentiation of the residual:
-\begin{equation*}
-    g(\bm{u},\bm{v},\bm{q}) = \delta \bm{q} \cdot \int \mathbf{b}^{T}\mathbf{f}\bigl(\mathbf{b}\bm{q} + \bm{s}_{p}(x,\bm{u}) - \bm{s}(\bm{e})\bigr)\, \mathrm{d}x - \delta \bm{q} \cdot \bm{v} = 0
-\end{equation*}
-The total differential is
-\begin{equation*}
-\begin{aligned}
-& D_{u} g 
-=\left(
-\frac{\partial g}{\partial \bm{u}} \delta \bm{u}+\frac{\partial g}{\partial \bm{v}} \frac{\partial \bm{v}}{\partial \bm{u}} \delta \bm{u} + \frac{\partial g}{\partial \bm{q}} \frac{\partial \bm{q}}{\partial \bm{v}} \frac{\partial \bm{v}}{\partial \bm{u}}\right) \cdot \delta \bm{q}
-+\frac{d \delta \bm{q}}{d u} \delta \bm{u} \, g = 0
-\end{aligned}
-\end{equation*}
-The rightmost term is dropped assuming \(g = 0\). Rearranging for \(\frac{\partial \bm{q}}{\partial \bm{v}}\) furnishes:
-\begin{equation}
-\delta \bm{q} \cdot \left(
-\frac{\partial g}{\partial \bm{q}} \frac{\partial \bm{q}}{\partial \bm{v}}\frac{\partial \bm{v}}{\partial \bm{u}}
-\right)\delta \bm{u}
-= \delta \bm{q}\cdot \left( 
-\frac{\partial \bm{v}}{\partial \bm{u}} - \frac{\partial g}{\partial \bm{u}}
-\right)\delta \bm{u}
-\label{eq:dqdv}
-\end{equation}
-where we've used \(\frac{\partial g}{\partial \bm{v}} = -\bm{1}\). 
-Next define:
-\begin{equation*}
-\begin{aligned}
-\bm{F} &\triangleq \frac{\partial g}{\partial \bm{q}} = \int \mathbf{b}^T \mathbf{f} \mathbf{b}\, \mathrm{d}x \\
-\mathbf{K}_{f} &\triangleq \frac{\partial g}{\partial \bm{u}} =\frac{\partial }{\partial \bm{u}} \int \mathbf{b}^T \mathbf{f} \bm{s}_p(x,\bm{u})\,\mathrm{d}x \\
-\mathbf{A} & \triangleq \frac{\partial \bm{v}}{\partial \bm{u}} \\
-\mathbf{K}_{q} &\triangleq \frac{\partial \bm{q}}{\partial \bm{v}} \\
-\end{aligned}
-\end{equation*}
-so \eqref{eq:dqdv} becomes
-\begin{equation}
-\delta \bm{q} \cdot 
-\mathbf{F}\mathbf{K}_q \mathbf{A}
-\delta \bm{u}
-= \delta \bm{q}\cdot \left( 
-\mathbf{A} - \mathbf{K}_{f}
-\right)\delta \bm{u}
-\label{eq:dqdv-2}
-\end{equation}
-Multiplying \eqref{eq:dqdv-2} by \(\bm{F}^{-1}\) furnishes:
-\begin{equation*}
-\delta \bm{q} \cdot \mathbf{K}_q \mathbf{A} \delta \bm{u}
-=
-\delta \bm{q} \cdot \bm{F}^{-T} \left(\mathbf{A} - \mathbf{K}_f\right) \delta \bm{u}
-\end{equation*}
-
-\begin{equation}
-\boxed{
-\mathbf{K}\delta\bm{u} = \mathbf{A}^T\mathbf{F}^{-1}\left( 
-\mathbf{A} - \mathbf{K}_f
-\right)\delta \bm{u}
-}
-\end{equation}
 
 \subsection{Summary}
 

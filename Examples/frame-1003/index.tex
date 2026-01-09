@@ -1,4 +1,9 @@
-A simply supported span is subjected to a uniformly distributed conservative force. 
+This problem addresses a common oversight in the implementation of 
+distributed loading under a corotational transformation. 
+Distributed loads are most commonly used to model gravitational loads on members. 
+In order to model such an effect under corotational kinematics, the loads must be applied in the inertial basis, otherwise they will act as follower loads that rotate with the corotational basis.  
+
+This phenomenon is illustrated by a simply supported span subjected to a uniformly distributed conservative force. 
 A similar problem was considered by \cite{desouza2000forcebased}.
 
 \begin{figure}[H]
@@ -15,6 +20,5 @@ A similar problem was considered by \cite{desouza2000forcebased}.
 \label{fig:1003-soln}
 \end{figure}
 
-\begin{remark}
-    This demonstrates that the current distributed loading in OpenSees is nearest in nature to a follower load.
-\end{remark}
+
+\Cref{fig:1003-soln} shows load-displacement curves for the cases under consideration. 

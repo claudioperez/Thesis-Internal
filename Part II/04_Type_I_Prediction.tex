@@ -29,17 +29,8 @@ Currently,  models of this type that are employed on the \BRACE{} platform lever
 
 
 \Glspl{predictor-t1} can be divided into
-\emph{local}, or \emph{component} models, and \emph{global}, or \emph{structure} models. The
-finite element model depicted in \cref{fig:meloland-girder-fe-mesh} is an example of
-one such local model, which can be used for carrying out specialized
-analysis procedures to determine the overall element properties, or even
-acting as a super-component in a larger global model. This model, in particular, is
-used to derive the warping constant that is used by
-the elastic beam elements employed by the low-fidelity global models (\cref{sec:chap4_modeling}).
-The remainder of this chapter develops various aspects of finite element modeling, 
-which require special consideration in the context of structural health monitoring,
-as implemented on the \BRACE{} \gls{platform}. 
-% \Cref{ch:discretization} discusses the formal theoretical structure that is inherent in representing continuous systems by the discrete problem of \cref{eq:newton-discrete} and \cref{ch:inelasticity} discusses the generalization of this theory to models that exhibit hysteresis.
+\emph{local}, or \emph{component} models, and \emph{global}, or \emph{structure} models. 
+
 
 \section{Modeling}
 \label{sec:chap4_modeling}
@@ -178,9 +169,6 @@ The GMP model is based on the basic models Goldberg-Richard, discussed in \cref{
 In-span hinges are modeled as rotational releases in the superstructure. The translational behavior of in-span hinges are modeled as nonlinear force-displacement relationships, incorporating the effects of pounding, restrainers, bearings, and shear keys. Varying levels of simplification for the hinge models can be employed to linearize or remove discontinuities in the force-displacement relationships.
 
 \subsubsection*{Abutments}
-Abutments are modeled as rigid beam elements with ends that are free to rotate. 
-The translational behaviors of the abutment ends are modeled as nonlinear force-displacement relationships, incorporating the effects of backwalls, wingwalls, soil backfill, and elastomeric bearings. 
-Varying levels of simplification for the abutment models can be employed to linearize or remove discontinuities in the force-displacement relationships.
 %
 %%%%The following equations are provided by \textcite{caltrans2019seismic} for the determination of the effective longitudinal stiffness at the abutments:
 %%%%\[
@@ -249,7 +237,7 @@ Such implementation is demonstrated in \cref{sec:painter}.
 
 \section{Limit States}
 
-In the limit state analysis, columns are modeled by a single
+In the limit state analysis, columns are modeled by a 
 distributed-inelasticity frame element with fiber discretized sections.
 The node at the base is restrained in all degrees of freedom with the
 other (top) node connected to the superstructure being free from any constraints. 

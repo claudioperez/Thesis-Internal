@@ -1,26 +1,17 @@
-The resulting formulation is standard. A great treatment is developed in Chapter~7 of \cite{hjelmstad2005fundamentals}.
 
-With general warping:
+% A great treatment is developed in Chapter~7 of \cite{hjelmstad2005fundamentals}.
+
+The linearization of \eqref{eq:finite-alignment-field} is:
 \begin{equation*}
 \hat{\bm{x}}(x,y,z)=\bm{x}(x)+\bm{\theta}(x) \times \bm{r}(y,z)
 +\bm{\Phi}(y,z)\bm{\alpha}(x)
 \end{equation*}
-With only transverse warping:
-\begin{equation*}
-\hat{\bm{x}}(x,y,z)=\bm{x}(x)+\bm{\theta}(x) \times \bm{r}(y,z)
-+\left.\bm{\alpha}(x)\cdot\bm{\varphi}(y,z)\right.\; \mathbf{i}
-\end{equation*}
 
-\begin{equation}
-\begin{aligned}
-\ShearStrain &= \bm{u}^{\prime}+\FrameBasis  \times \bm{\theta} \\ %+ O(\delta^2)
-\CurveStrain &= \bm{\theta}^{\prime}% + O(\delta^2)
- %= \theta_x^{\prime} \, \FrameBasis 
- % + \theta_y^{\prime} \FrameBasis_y 
- % + \theta_z^{\prime} \FrameBasis_z
-\end{aligned}
-\label{eq:basic-shear-strains}
-\end{equation}
+In terms of \(\bm{u}\triangleq\bm{x}- \reflenx\,\FrameBasis\) the linearized generalized strains are:
+\begin{SaveEquation}{eq:gam-kap-linear}
+\bm{\gamma}=\bm{u}'+\FrameBasis\times\bm\theta,\qquad
+\bm{\kappa}=\bm\theta'.
+\end{SaveEquation}
 
 \begin{equation}
 \bm{e}= 
@@ -28,7 +19,7 @@ With only transverse warping:
 \epsilon \\ 
 \gamma_y \\
 \gamma_z \\
-\tau \\
+\Twist \\
 \kappa_z \\ 
 \kappa_y \\ 
 \end{pmatrix} =
@@ -41,43 +32,22 @@ u_x^{\prime} \\
 \theta_z^{\prime} \\
 \end{pmatrix}
 \end{equation}
-Note that because the theory is linear one has:
-\begin{equation*}
-\bm{e}= \begin{bmatrix}
-\bm{1} \partial_{\xi} & \FrameBasis^\times \\
- & \bm{1} \partial_{\xi}  \\
-\end{bmatrix}\begin{pmatrix}
-\bm{u} \\ \bm{\theta}
-\end{pmatrix}
-\end{equation*}
 
 \subsubsection{Variations}
 
 $$
 \bm{A} = \begin{bmatrix}
-\bm{1} & \\
-& \bm{1}
+\mathbf{1} & \\
+& \mathbf{1}
 \end{bmatrix}
 $$
 
 \begin{equation}
 \EquilibriumDerivative^* = \begin{bmatrix}
-\bm{1} \partial_{\xi} & \FrameBasis^\times  \\
-& \bm{1} \partial_{\xi}  \\
+\mathbf{1} \partial_{\xi} & \FrameBasis^\times  \\
+& \mathbf{1} \partial_{\xi}  \\
 \end{bmatrix}
 \end{equation}
-where using $\FrameBasis^\times = \FrameBasis_z\otimes\FrameBasis_y - \FrameBasis_y \otimes\FrameBasis_z$ one has explicitly
-\begin{equation*}
-\EquilibriumDerivative^* 
-= \left[\begin{array}{ccc|ccc}
-\partial \\
-         & \partial &          &           &  &   -1 \\
-         &          & \partial &           &  1 &  \\ \hline
-         &          &          & \partial  \\
-         &          &          &           & \partial \\
-         &          &          &           &          & \partial \\
-\end{array}\right]
-\end{equation*}
 
 \subsubsection{Equilibrium}
 
@@ -88,8 +58,8 @@ Integration by parts is performed in the standard manner
 and one finds the adjoint \(\EquilibriumDerivative\)
 \begin{equation}
 \EquilibriumDerivative = -\begin{bmatrix}
-\bm{1} \partial_{\xi} &  \\
-\FrameBasis^\times & \bm{1} \partial_{\xi}  \\
+\mathbf{1} \partial_{\xi} &  \\
+\FrameBasis^\times & \mathbf{1} \partial_{\xi}  \\
 \end{bmatrix}
 % = -\left[\begin{array}{ccc|ccc}
 % \partial \\
@@ -108,31 +78,22 @@ and one finds the adjoint \(\EquilibriumDerivative\)
 \end{aligned}
 \right.
 \end{equation*}
-Expanding furnishes the familiar expressions
-\begin{equation*}
-\left.\begin{aligned}
-N^{\prime} \\
-V_y^{\prime} \\
-V_z^{\prime} \\
-T^{\prime} \\
-M_z^{\prime} + V_y \\
-M_y^{\prime} - V_z
-\end{aligned}
-\right\}
-\end{equation*}
 
 
 \begin{ambox}[Basic Shear Frame]{box:basic-shear}
+
+\textbf{Equilibrium}
 
 $$
 -\EquilibriumDerivative\bm{A}_* \bm{s}_{\mathrm{p}} = \left\{\begin{aligned}
 & \ShearResult^{\prime} \\
 & \CurveResult^{\prime} + \FrameBasis \times\ShearResult \\
+& \bm{w}' - \bm{v}
 \end{aligned}
 \right.
 $$
 
-\paragraph{Kinematics}
+\textbf{Kinematics}
 $$
 \begin{aligned}
 \ShearStrain &= \bm{u}^{\prime}+\FrameBasis  \times \bm{\theta} \\ %+ O(\delta^2)
@@ -143,4 +104,24 @@ $$
 \end{aligned}
 $$
 
+\textbf{Operators}
+\[
+  \mathbb{B}
+  =
+  -\begin{bmatrix}
+    \mathbf{1}\,\partial_x & 0 & 0 & 0 \\
+    \FrameBasis^{\times} & \mathbf{1}\,\partial_x & 0 & 0 \\
+    0 & 0 & \mathbf{1}\,\partial_x & -\mathbf{1}
+  \end{bmatrix},
+  \qquad
+  \mathbb{B}^*
+  =
+  \left[\begin{array}{cc|c}
+    \mathbf{1}\,\partial_x & \FrameBasis^{\times} & 0 \\
+    0 & \mathbf{1}\,\partial_x & 0 \\[0.3ex]
+    \hline
+    0 & 0 & \mathbf{1}\,\partial_x \\
+    0 & 0 & \mathbf{1}
+  \end{array}\right].
+\]
 \end{ambox}

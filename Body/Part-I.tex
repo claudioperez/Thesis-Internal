@@ -15,7 +15,7 @@ Fixing the problem within existing software architectures would require rewritin
 
 \subsection{Objectives}
 
-Our ultimate goal is to obtain a resultant model that can be used with standard beam finite elements. 
+Our goal is to obtain a resultant model that can be used with standard beam finite elements. 
 These elements work in terms of the primary equilibrium operator $\mathbb{B}_p$, so if we can return from the section with the quantity that figures in this operator, the element needs no modification. 
 
 \begin{enumerate}
@@ -47,15 +47,7 @@ These elements work in terms of the primary equilibrium operator $\mathbb{B}_p$,
 \item Semantic Flexibility. 
 \end{enumerate}
 
-
-Existing implementations of inelastic beam elements with warping \citep{saritas2009inelastic,%
-lecorvec2012nonlinear,dire2018mixed} introduce auxiliary kinematic fields 
-that must be interpolated along the element length. These additional degrees 
-of freedom either inflate the global system of equations—incurring a cost 
-that scales as the cube of the DOF count for direct linear solvers—or must 
-be condensed out at the element level during each Newton iteration.
-We seek 
-a formulation in which warping effects are entirely absorbed into the 
+We seek a formulation in which warping effects are entirely absorbed into the 
 section-level constitutive relation, so that standard six-DOF beam elements 
 can be employed without modification.
 
@@ -121,7 +113,15 @@ There are three natural restrictions we impose on the class of traces we'll inve
 
 % \cite[p39]{vlasov1961thinwalled}
 
-\subsubsection{Shear warping.}
+\subsubsection{Uniform warping.}
+
+
+Existing implementations of inelastic beam elements with warping \citep{saritas2009inelastic,%
+lecorvec2012nonlinear,dire2018mixed} introduce auxiliary kinematic fields 
+that must be interpolated along the element length. These additional degrees 
+of freedom either inflate the global system of equations—incurring a cost 
+that scales as the cube of the DOF count for direct linear solvers—or must 
+be condensed out at the element level during each Newton iteration.
 
 % \paragraph{Elastostatics}
 
@@ -140,16 +140,14 @@ See also \cite{lewinski2021incorporating} who implemented the model of \cite{elf
 See also \cite{ladeveze1998new}.
 
 
-\subsubsection{Element Kinematics}
-\paragraph{Finite Deformation}
+\subsubsection{Element Kinematics (Finite Deformation)}
 % Exact rotations plus warping
 \cite{simo1991geometricallyexact} introduced a geometrically exact formulation which incorporates one cross-sectional warping mode in a Reissner-like (unconstrained) formulation. 
 This was investigated further by \cite{gruttmann2000theory} who emphasized the use of sections intersecting the reference curve at an arbitrary point. 
 This theory has also been investigated by \cite{rong2020geometrically} in the context of isogeometric analysis who considered the nonlinear Wagner term. 
 However, in this work the reference curve is restricted to intersect sections at the centroid. 
 
-\subsubsection{Section Kinematics}
-\paragraph{Moderate Strain (Wagner)}
+\subsubsection{Section Kinematics (Moderate Strain)}
 \cite{rong2020geometrically} incorporated Wagner effects in a geometrically exact beam element with torsion warping.
 
 \cite{chadha2019comprehensive} investigate the a model that accounts for transverse warping induced through axial loading of a beam.

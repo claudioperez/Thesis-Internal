@@ -17,13 +17,13 @@
 \bm{e}
 = \begin{pmatrix}
     \epsilon \\
-    \tau \\
+    \Twist \\
     \kappa_y  \\
     \kappa_z \\
   \end{pmatrix}
 = \begin{pmatrix}
 u_x^{\prime} + \frac{1}{2}\left((u_y^{\prime})^2 + (u_z^{\prime})^2\right) \\ 
-\theta_x^{\prime} \\
+\vartheta^{\prime} \\
 -u_z^{\prime\prime} \\
 u_y^{\prime\prime} \\
 \end{pmatrix}
@@ -97,11 +97,11 @@ $$
 .
 \end{pmatrix} \\
 &= \begin{bmatrix}
-\FrameBasis \otimes\FrameBasis  + \FrameBasis \otimes\bar{\bm{u}}^{\prime} & \bm{0} \\
-\bm{0} & \bm{1}
+\FrameBasis \otimes\FrameBasis  + \FrameBasis \otimes\bar{\bm{u}}^{\prime} & \mathbf{0} \\
+\mathbf{0} & \mathbf{1}
 \end{bmatrix}
 \begin{bmatrix}
-\bm{1}\partial & 0 \\
+\mathbf{1}\partial & 0 \\
 \FrameBasis^{\times}~\partial^2 & \FrameBasis \otimes\partial
 \end{bmatrix}
 \delta\bm{u}
@@ -114,7 +114,7 @@ $$
 $$
 \EquilibriumDerivative 
  = -\begin{bmatrix}
-\bm{1}~\partial  & \FrameBasis^{\times} ~\bm{\partial}^2 \\
+\mathbf{1}~\partial  & \FrameBasis^{\times} ~\bm{\partial}^2 \\
  & \bm{\partial} \otimes \FrameBasis 
 \end{bmatrix}
 = -\left[\begin{array}{ccc|ccc}
@@ -150,8 +150,8 @@ $$
 =
 \left.
 \begin{aligned}
-  \left(N\FrameBasis  + \FrameBasis \times\CurveResult^{\prime}\right)^{\prime} + (N \bar{\bm{u}}^{\prime})^{\prime} &= \bm{0} \\
-  (T\FrameBasis )^{\prime} &= \bm{0}
+  \left(N\FrameBasis  + \FrameBasis \times\CurveResult^{\prime}\right)^{\prime} + (N \bar{\bm{u}}^{\prime})^{\prime} &= \mathbf{0} \\
+  (T\FrameBasis )^{\prime} &= \mathbf{0}
 \end{aligned}
 \right\}
 $$
@@ -178,7 +178,7 @@ $$
 \right.
 \end{equation*}
 
-\paragraph{Kinematics}
+\textbf{Kinematics}
 \begin{equation*}
 \begin{aligned}
 \ShearStrain &= \left(\FrameBasis \otimes\FrameBasis  + \frac{1}{2}\FrameBasis \otimes\bar{\bm{u}}^{\prime}\right)\bm{u}^{\prime} \\
@@ -186,12 +186,12 @@ $$
  + \FrameBasis \times\bar{\bm{u}}^{\prime\prime}
 \end{aligned}
 \end{equation*}
-\paragraph{Variations}
+\textbf{Operators}
 \begin{equation*}
 \bm{A} = 
 \begin{bmatrix}
-\FrameBasis \otimes\FrameBasis  + \FrameBasis \otimes\bar{\bm{u}}^{\prime} & \bm{0} \\
-\bm{0} & \bm{1}
+\FrameBasis \otimes\FrameBasis  + \FrameBasis \otimes\bar{\bm{u}}^{\prime} & \mathbf{0} \\
+\mathbf{0} & \mathbf{1}
 \end{bmatrix}
 \end{equation*}
 \end{ambox}

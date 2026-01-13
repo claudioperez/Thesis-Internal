@@ -41,42 +41,6 @@ A Type 1 constitutive response maps \(6+2n_w\) strains \((\bm{\gamma},\, \bm{\ka
 \end{equation}
 \end{ambox}
 
-\begin{remark}
-For later use, we record the linearization of \eqref{eq:finite-equilibrium} with respect to the configuration variables.
-Neglecting the body loads and the generalized warping load (for notational simplicity) one obtains
-\[
-  -\mathbb{B}\,\bm{\sigma} + \bm{f}
-  =
-  \left\{
-  \begin{aligned}
-    -\mathbb{B}_{\mathrm{p}}\,\bm{\sigma} + \bm{f} &= \mathbf{0}, \\
-    \bm{w}' - \bm{v} &= \mathbf{0},
-  \end{aligned}
-  \right.
-\]
-with
-\[
-  \mathbb{B}
-  =
-  -\begin{bmatrix}
-    \mathbf{1}\,\partial_x & 0 & 0 & 0 \\
-    \FrameBasis^{\times} & \mathbf{1}\,\partial_x & 0 & 0 \\
-    0 & 0 & \mathbf{1}\,\partial_x & -\mathbf{1}
-  \end{bmatrix},
-  \qquad
-  \mathbb{B}^*
-  =
-  \left[\begin{array}{cc|c}
-    \mathbf{1}\,\partial_x & \FrameBasis^{\times} & 0 \\
-    0 & \mathbf{1}\,\partial_x & 0 \\[0.3ex]
-    \hline
-    0 & 0 & \mathbf{1}\,\partial_x \\
-    0 & 0 & \mathbf{1}
-  \end{array}\right].
-\]
-Here $\mathbb{B}_{\mathrm{p}}$ denotes the restriction of $\mathbb{B}$ to the primary resultants $(\bm{n},\bm{m})$.
-\end{remark}
-
 
 \subsection{Type 1: Independent Warping}
 

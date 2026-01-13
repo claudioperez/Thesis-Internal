@@ -1,7 +1,7 @@
 % \section{Appendix 4.A: Discretization}\label{ch:discretization}
 \subsubsection{Mechanical Systems}
 
-This appendix presents a general approach for discretizing a large class of continuum equilibrium problems that are governed by partial differential equations to formulate a representative discrete internal force vector $\intern$. 
+This section presents a general approach for discretizing a large class of structural equilibrium problems that are governed by partial differential equations to formulate a representative discrete internal force vector $\intern$. 
 The procedure generalizes the classical finite element method which is typically formulated on Sobolev vector spaces \citep{hughes1987finite} to the setting of nonlinear manifolds{\footnote{A manifold is a mathematical representation of a curved surface. Manifolds naturally arise as solution sets of constrained systems of equations and as graphs of functions.}}, which are encountered in the geometrically nonlinear analysis of plates, rods, and shells.
 In all such problems, equilibrium can be stated in terms of nonlinear partial differential equations of the form:
 \begin{equation}
@@ -47,7 +47,8 @@ for brevity % {of notation}
 and the body force \(\bm{f}\)
 is not considered.
 \iftrue
-\begin{marsdenbox}[BOX 1\quad Continuous Mechanics]
+
+\begin{ambox}[Continuous Mechanics]{box:mechanical-equilibrium}
 \begin{description}
 % \tightlist
 \item[Body]
@@ -118,7 +119,7 @@ spatial \(\bm{C}_\sigma\) moduli defined by:
   \label{eq:def-moduli}
 \end{equation}
 \end{description}
-\end{marsdenbox}
+\end{ambox}
 \fi
 
 In nonlinear finite element analysis,
@@ -429,10 +430,9 @@ are furnished by summation on \(i\) and \(j\):
 \end{equation}
 
 
-\hypertarget{remarks03}{%
-\subsection{Summary}\label{remarks03}}
+\subsection{Summary}
 
-  The results of this appendix are collected in Box 2.
+  The results of this appendix are collected in Box~\ref{box:fea}.
   The operators \(\bm{B}_a\),     \(\bm{B}^\star_b\), and \(\bm{G}_{ab}\) 
   in Box 2 are the essential components that define a finite element and furnish the element internal forces \(\intern\) and stiffness \(\mathbf{K}\).
   If \(\bm{\varphi}_{\eta a}\) and \(\bm{\varphi}_{u b}\) are
@@ -460,7 +460,7 @@ are furnished by summation on \(i\) and \(j\):
   a consistent tangent stiffness.
 % \end{itemize}
 
-\begin{marsdenbox}[BOX 2\quad Finite Element Operators]
+\begin{ambox}[Finite Element Operators]{box:fea}
 {\noindent
 
 \begin{itemize}
@@ -521,5 +521,5 @@ are furnished by summation on \(i\) and \(j\):
   \end{equation*}
 \end{itemize}
 }
-\end{marsdenbox} 
+\end{ambox} 
 

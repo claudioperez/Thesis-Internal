@@ -215,7 +215,7 @@ Thus \(\stackrel{\rm s}{\nabla}\PlaneWarp\,\) may create in–plane (membrane) s
 \fi
 
 
-\subsection{Kinematics}
+\subsection{Kinematics}\label{sec:section-kinematics}
 To this end, introduce material points $\hat{{\rho}}$ in the cross section through an extended three-dimensional displacement field $\hat{\TraceLocation}(\reflenx, \hat{{\rho}})$ which is assumed to depend only on the configuration variables \(\bigl(\TraceLocation(\reflenx), \FrameRotation (\reflenx), \bm{\alpha}(\reflenx)\bigr)\)  of the Cosserat curve at the 1D material point \(\reflenx\). 
 The spatial placement of a point in the cross section in the reference configuration thus has the representation:
 \begin{equation*}
@@ -254,11 +254,6 @@ and the linearized displacement \(\hat{\bm{u}} = \hat{\bm{x}} - (x\FrameBasis + 
 \hat{\bm u}(\reflenx, \bm{r})=\bm{u}(x)
 +\bm\theta(x)\times\bm{r}+\bm\Phi(\bm{r})\,\bm{\alpha}(x)
 % \label{eq:trace-lift-linear}
-\end{SaveEquation}
-In terms of \(\bm{u}\triangleq\bm{x}- \reflenx\,\FrameBasis\) the linearized alignment strains are:
-\begin{SaveEquation}{eq:gam-kap-linear}
-\bm{\gamma}=\bm{u}'+\FrameBasis\times\bm\theta,\qquad
-\bm{\kappa}=\bm\theta'.
 \end{SaveEquation}
 \end{remark}
 
@@ -347,7 +342,7 @@ The corresponding Green-Lagrange strain tensor may be expressed as:
 %
 \end{Old}
 
-\paragraph{Wagner Strain.}
+\paragraph{Moderate (Wagner) Strain.}
 \begin{SaveEquation}{eq:wagner-gl-strain-pi}
 \StrainTensor
 ~=~\StrainVector\stackrel{\mathrm{s}}{\otimes}\FrameBasis

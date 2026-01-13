@@ -1,7 +1,12 @@
-This example demonstrates consistency with the analytic solution derived by \cite{trahair2005nonlinear} for nonlinear torsion.
+This example demonstrates consistency of the moderate strain model (\cref{sec:section-kinematics}) with the analytic solution \eqref{eq:0015-solution} derived by \cite{trahair2005nonlinear} for nonlinear torsion.
 
-A shaft is subjected to a concentrated torque $\TwistRxn$ acting at $\reflenx=L$. Rotation is prevented at the left support, $\reflenx=0$. 
-The differential equation for nonlinear elastic nonuniform torsion is
+Similar problems have been considered by 
+\cite{hsiao2000corotational,battini2002corotational,jonker2021threedimensional} \cite{rong2020geometrically} \cite{zhang2011formulation}.
+
+
+A shaft is subjected to a concentrated torque $\TwistRxn$ acting at $\reflenx=L$. 
+Rotation is prevented at the left support, $\reflenx=0$. 
+The differential equation for nonlinear elastic nonuniform torsion is \citep{trahair2005nonlinear}:
 %
 \begin{equation}
 G \Jsv \vartheta' - E \Jw \vartheta''' + \tfrac{1}{2} E I_n\left(\vartheta'\right)^3 = \TwistRxn
@@ -20,9 +25,10 @@ where $\TwistRxn$ is the applied torque at a distance $\reflenx$ along the membe
 \end{figure}
 This beam is in uniform torsion under a constant torque $\TwistRxn=M$, so that the twist $\vartheta'$ is constant along the member. 
 In this case, ($\dagger$) can be solved in closed form as
-$$
-M=G J \frac{\vartheta_L}{L}+\tfrac{1}{2} E I_n\left(\frac{\vartheta_L}{L}\right)^3
-$$
+\begin{equation}
+M=G \Jo \frac{\vartheta_L}{L}+\tfrac{1}{2} E I_n\left(\frac{\vartheta_L}{L}\right)^3
+\label{eq:0015-solution}
+\end{equation}
 The section dimensions are $200 \mathrm{~mm} \times 10 \mathrm{~mm}$ with constants $J=66.667 \times 10^3 \mathrm{~mm}^4$, 
 $\Jw=0 \mathrm{~mm}^6$, $I_n=17.778 \times 10^9 \mathrm{~mm}^6$, and length $L=1,000 \mathrm{~mm}$. 
 
@@ -49,5 +55,3 @@ unit/stress={\mega\pascal}
          & - & -               & \ExactFrame{I} & 
     \end{tabular}
 \end{table}
-Similar problems have been considered by 
-\cite{hsiao2000corotational,battini2002corotational,jonker2021threedimensional} \cite{rong2020geometrically} \cite{zhang2011formulation}.

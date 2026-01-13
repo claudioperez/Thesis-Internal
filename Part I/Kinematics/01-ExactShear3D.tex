@@ -82,8 +82,8 @@ resultants are defined at each point and the static boundary value
 problem enforces the following local momentum balance:
 \begin{equation} 
 \left\{\begin{array}{r}
-\shearResult^{\prime}+{\bm{f}}_n=\bm{0} \\
-\curveResult^{\prime}+\bm{x}^{\prime} \times \shearResult+{\bm{f}}_m=\bm{0} 
+\shearResult^{\prime}+{\bm{f}}_n=\mathbf{0} \\
+\curveResult^{\prime}+\bm{x}^{\prime} \times \shearResult+{\bm{f}}_m=\mathbf{0} 
 \end{array}\right. .
 \end{equation}
 where \(\bm{f}_n\) and \(\bm{f}_m\) denote given body force and moment loadings, respectively. 
@@ -118,8 +118,8 @@ the strong boundary value problem for static equilibrium is put in the form
 of Equation~(\ref{eq:strong}) with:
 \begin{equation} 
   \mathbb{B} \triangleq -\begin{bmatrix}
-    \frac{\mathrm{d}}{\mathrm{d}\xi}\bm{1} &  \\
-    \bm{x}^{\prime\times} & \frac{\mathrm{d}}{\mathrm{d}\xi}\bm{1}
+    \frac{\mathrm{d}}{\mathrm{d}\xi}\mathbf{1} &  \\
+    \bm{x}^{\prime\times} & \frac{\mathrm{d}}{\mathrm{d}\xi}\mathbf{1}
   \end{bmatrix}
   \qquad\text{ so that}\qquad
   \mathbb{B}\bm{\sigma} = -\begin{pmatrix}
@@ -128,7 +128,7 @@ of Equation~(\ref{eq:strong}) with:
   \end{pmatrix}
 \label{eq:cosserat-B}
 \end{equation}
-where $\bm{1}$ is the $3 \times 3$ identity and the notation $(~\cdot~)^{\times}$
+where $\mathbf{1}$ is the $3 \times 3$ identity and the notation $(~\cdot~)^{\times}$
 is introduced in Equation~(\ref{eq:hat}).
 %
 Expanding furnishes on the deformed director basis \(\{\frameBasis_i\}\):
@@ -186,8 +186,8 @@ Re-writing this in terms of the generalized stress finally reveals the adjoint \
   \end{aligned}
   \qquad\text{ where }\qquad 
   \mathbb{B}^* \triangleq \begin{bmatrix}
-  \frac{\mathrm{d}}{\mathrm{d} \xi}\bm{1} & \bm{x}^{\prime \times}  \\
-  \bm{0} & \frac{\mathrm{d}}{\mathrm{d} \xi} \bm{1}
+  \frac{\mathrm{d}}{\mathrm{d} \xi}\mathbf{1} & \bm{x}^{\prime \times}  \\
+  \mathbf{0} & \frac{\mathrm{d}}{\mathrm{d} \xi} \mathbf{1}
   \end{bmatrix}.
 \label{eq:def-Bstar}
 \end{equation}
@@ -228,7 +228,7 @@ and one has the related strain vectors in the reference configuration?
   \qquad\text{ and }\qquad
   \begin{aligned}
     \CurveStrain^{\times} &= \FrameRotation^\mathrm{t}\FrameRotation^\prime - \FrameRotation_0^\mathrm{t}\FrameRotation_0^\prime \\
-    &= \tau \FrameBasis + \kappa_\alpha \FrameBasis_{\alpha}
+    &= \Twist \FrameBasis + \kappa_\alpha \FrameBasis_{\alpha}
   \end{aligned}
 \end{equation*}
 The Levi-Civita connection on \(\mathscr{C}\) is identified by: 
@@ -259,14 +259,15 @@ associated with a given metric:
 
 \begin{ambox}[\gls{frame:exact} \gls{frame:shear} Frame (SVQ)]{box:exact-shear-svq}
 
+\textbf{Equilibrium} \eqref{eq:finite-equilibrium}
 \begin{equation*} 
 -\EquilibriumDerivative \bm{A}_* \bm{s}_{\mathrm{p}} = \left\{\begin{array}{r}
-\shearResult^{\prime}+{\bm{f}}_n=\bm{0} \\
-\curveResult^{\prime}+\bm{x}^{\prime} \times \shearResult+{\bm{f}}_m = \bm{0} \\
+\shearResult^{\prime}+{\bm{f}}_n=\mathbf{0} \\
+\curveResult^{\prime}+\bm{x}^{\prime} \times \shearResult+{\bm{f}}_m = \mathbf{0} \\
 \end{array}\right.
 \end{equation*}
 
-\paragraph{Kinematics}
+\textbf{Kinematics}
 \begin{equation*} 
   \begin{aligned}
     \ShearStrain &= \FrameRotation^\mathrm{t}\bm{x}^\prime - \FrameBasis 
@@ -277,8 +278,9 @@ associated with a given metric:
     \left(\FrameRotation^\mathrm{t}\FrameRotation^\prime\right)^{\vee}
   \end{aligned}
 \end{equation*}
-\paragraph{Variations}
-\cref{eq:cosserat-pull}:
+
+\textbf{Variations}
+\eqref{eq:cosserat-pull}:
 \begin{equation*}
 \bm{A} = \operatorname{diag}(\FrameRotation^{\mathrm{t}}, \FrameRotation^{\mathrm{t}})
 \qquad\text{ and }\qquad

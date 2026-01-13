@@ -5,7 +5,7 @@
 \ShearStrain &= \bm{u}^{\prime} - \bm{\theta}\times(\FrameBasis  + \bm{u}^{\prime})+ \frac{1}{2}(\bm{\theta}^{\times})^{2}\FrameBasis 
  + O(\delta^3)\\
 \CurveStrain &= 
-\left(\bm{1} - \frac{1}{2}\bm{\theta}^\times\right)\bm{\theta}^{\prime}
+\left(\mathbf{1} - \frac{1}{2}\bm{\theta}^\times\right)\bm{\theta}^{\prime}
 \end{aligned}
 \label{eq:delta-shear-strain}
 \end{equation}
@@ -70,9 +70,9 @@ or, more compactly
 \begin{equation}
 \qquad\text{with}\qquad
 \mathbb{B}^* = \begin{bmatrix}
-   \bm{1} \partial & \\ %\mathbf{D}^\times  \\
- & \bm{1} \partial  \\
- & \bm{1}
+   \mathbf{1} \partial & \\ %\mathbf{D}^\times  \\
+ & \mathbf{1} \partial  \\
+ & \mathbf{1}
 \end{bmatrix}
 \label{eq:delta-shear-Bstar}
 \end{equation}
@@ -81,8 +81,8 @@ or, more compactly
 \begin{aligned}
 \bm{A} &= 
 \left[\begin{array}{ccc}
-\bm{1} - \bm{\theta}^{\times}& \bm{0} & \bm{x}^{\prime~\times} - \frac{1}{2}\left.\bm{\theta}^{\times}\,\FrameBasis^{\times}\right.\\
-\bm{0} & \bm{1} -\frac{1}{2}\bm{\theta}^{\times} & \frac{1}{2}\bm{\theta}^{\prime \times}
+\mathbf{1} - \bm{\theta}^{\times}& \mathbf{0} & \bm{x}^{\prime~\times} - \frac{1}{2}\left.\bm{\theta}^{\times}\,\FrameBasis^{\times}\right.\\
+\mathbf{0} & \mathbf{1} -\frac{1}{2}\bm{\theta}^{\times} & \frac{1}{2}\bm{\theta}^{\prime \times}
 \end{array}\right] \\
 &=\left[\begin{array}{ccc|ccc|ccc}
 1 & \theta_z & -\theta_y & & & & 0 & -(u_z^{\prime}+\theta_y) & (u_y^{\prime} - \theta_z) \\
@@ -112,8 +112,8 @@ The adjoint of the operator \(\mathbb{B}^*\) in \eqref{eq:delta-shear-Bstar} is
 \begin{equation}
 \mathbb{B} 
 = -\begin{bmatrix}
-  \bm{1}\partial & & \\
-& \bm{1}\partial & -\bm{1}
+  \mathbf{1}\partial & & \\
+& \mathbf{1}\partial & -\mathbf{1}
 \end{bmatrix}
 \label{eq:delta-shear-Bequi}
 \end{equation}
@@ -123,24 +123,24 @@ The equilibrium equations then follow:
 -\mathbb{B}\bm{A}^{\mathrm{t}} \bm{s}
 &= 
 \begin{bmatrix}
-\bm{1}\partial & & \\
- & \bm{1}\partial & -\bm{1}
+\mathbf{1}\partial & & \\
+ & \mathbf{1}\partial & -\mathbf{1}
 \end{bmatrix}
 \left[\begin{array}{ccc}
-\bm{1} + \bm{\theta}^{\times}& \bm{0} \\
-\bm{0} & \bm{1} + \frac{1}{2}\bm{\theta}^{\times} \\
+\mathbf{1} + \bm{\theta}^{\times}& \mathbf{0} \\
+\mathbf{0} & \mathbf{1} + \frac{1}{2}\bm{\theta}^{\times} \\
 {\bm{x}}^{\prime~\times} - \frac{1}{2}\left.\bm{\theta}^{\times}\,\FrameBasis^{\times}\right. & -\frac{1}{2}\bm{\theta}^{\prime \times} 
 \end{array}\right] \begin{pmatrix}
 \ShearResult \\ \CurveResult
 \end{pmatrix} \\
 %
 % &= \begin{bmatrix}
-% \bm{1}\partial & & \\
-%  & \bm{1}\partial & -\bm{1}
+% \mathbf{1}\partial & & \\
+%  & \mathbf{1}\partial & -\mathbf{1}
 % \end{bmatrix}
 % \begin{pmatrix}
-% (\bm{1}+\bm{\theta}^\times)\ShearResult \\
-% (\bm{1}+\frac{1}{2}\bm{\theta}^{\times})\CurveResult \\
+% (\mathbf{1}+\bm{\theta}^\times)\ShearResult \\
+% (\mathbf{1}+\frac{1}{2}\bm{\theta}^{\times})\CurveResult \\
 % {\bm{x}}^{\prime} {\times} \ShearResult - \frac{1}{2} \bm{\theta} {\times}\,(\FrameBasis  {\times}  \ShearResult) -\frac{1}{2}\bm{\theta}^{\prime } \times \CurveResult
 % \end{pmatrix} \\
 &= \begin{array}{l}
@@ -169,7 +169,7 @@ The equilibrium equations then follow:
 \ShearStrain &= \bm{u}^{\prime} - \bm{\theta}\times(\FrameBasis  + \bm{u}^{\prime})+ \frac{1}{2}(\bm{\theta}^{\times})^{2}\FrameBasis 
  \\
 \CurveStrain &= 
-\left(\bm{1} - \frac{1}{2}\bm{\theta}^\times\right)\bm{\theta}^{\prime}
+\left(\mathbf{1} - \frac{1}{2}\bm{\theta}^\times\right)\bm{\theta}^{\prime}
 \end{aligned}
 \end{equation*}
 
@@ -177,8 +177,8 @@ The equilibrium equations then follow:
 \begin{equation*}
 \bm{A} = 
 \left[\begin{array}{ccc}
-\bm{1} - \bm{\theta}^{\times}& \bm{0} & \bm{x}^{\prime~\times} - \frac{1}{2}\left.\bm{\theta}^{\times}\,\FrameBasis^{\times}\right.\\
-\bm{0} & \bm{1} -\frac{1}{2}\bm{\theta}^{\times} & \frac{1}{2}\bm{\theta}^{\prime \times}
+\mathbf{1} - \bm{\theta}^{\times}& \mathbf{0} & \bm{x}^{\prime~\times} - \frac{1}{2}\left.\bm{\theta}^{\times}\,\FrameBasis^{\times}\right.\\
+\mathbf{0} & \mathbf{1} -\frac{1}{2}\bm{\theta}^{\times} & \frac{1}{2}\bm{\theta}^{\prime \times}
 \end{array}\right] \\
 \end{equation*}
 \end{ambox}

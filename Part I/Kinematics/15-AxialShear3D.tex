@@ -24,17 +24,17 @@ u_x^{\prime} + \frac{1}{2}\left((u_y^{\prime})^2 + (u_z^{\prime})^2\right) \\
 Consider the operator from \cref{eq:delta-shear-Bstar} of the \gls{frame:delta}-\gls{frame:shear} theory:
 \begin{equation*}
 \EquilibriumDerivative^* = \begin{bmatrix}
-\bm{1} \partial & \\
- & \bm{1} \partial  \\
-& \bm{1}
+\mathbf{1} \partial & \\
+ & \mathbf{1} \partial  \\
+& \mathbf{1}
 \end{bmatrix}
 \end{equation*}
 
 $$
 \begin{aligned}
 \bm{A} &= \begin{bmatrix}
-\bm{1} + \FrameBasis \otimes \bar{\bm{u}}^{\prime} & \bm{0} & \FrameBasis^{\times} \\
-\bm{0} & \bm{1} & \bm{0}
+\mathbf{1} + \FrameBasis \otimes \bar{\bm{u}}^{\prime} & \mathbf{0} & \FrameBasis^{\times} \\
+\mathbf{0} & \mathbf{1} & \mathbf{0}
 \end{bmatrix} \\
 &= \left[\begin{array}{ccc|ccc|ccc}
 1 & u_y^{\prime} & u_z^{\prime} & & & & 0 & 0 &  0 \\
@@ -54,9 +54,9 @@ $$
 $$
 \bm{\sigma} = \bm{A}_* \PrimeResult
 = \begin{bmatrix}
-\bm{1} + \bar{\bm{u}}^{\prime}\otimes\FrameBasis & \bm{0} \\
-\bm{0} & \bm{1} \\
--\FrameBasis^{\times} & \bm{0}
+\mathbf{1} + \bar{\bm{u}}^{\prime}\otimes\FrameBasis & \mathbf{0} \\
+\mathbf{0} & \mathbf{1} \\
+-\FrameBasis^{\times} & \mathbf{0}
 \end{bmatrix}
 =\begin{pmatrix}
 \ShearResult + (\ShearResult\cdot\FrameBasis )\bar{\bm{u}}^{\prime} \\
@@ -67,7 +67,7 @@ $$
 
 \begin{ambox}[\gls{frame:axial} \gls{frame:shear} Frame]{box:axial-shear}
 
-\paragraph{Equilibrium}
+\textbf{Equilibrium}
 $$
 - \EquilibriumDerivative \bm{A}_* \bm{s}_{\mathrm{p}} = \left\{\begin{aligned}
 \ShearResult^{\prime} + (N \bar{\bm{u}}^{\prime})^{\prime} \\
@@ -76,7 +76,7 @@ $$
 \right.
 $$
 
-\paragraph{Kinematics}
+\textbf{Kinematics}
 
 $$
 \begin{aligned}
@@ -85,11 +85,11 @@ $$
 \end{aligned}
 $$
 
-\paragraph{Variations}
+\textbf{Operators}
 \begin{equation*}
 \bm{A} = \begin{bmatrix}
-\bm{1} + \FrameBasis\otimes\bar{\bm{u}}^{\prime} & \bm{0} & \FrameBasis^{\times} \\
-\bm{0} & \bm{1} & \bm{0}
+\mathbf{1} + \FrameBasis\otimes\bar{\bm{u}}^{\prime} & \mathbf{0} & \FrameBasis^{\times} \\
+\mathbf{0} & \mathbf{1} & \mathbf{0}
 \end{bmatrix}
 \end{equation*}
 

@@ -1,6 +1,15 @@
+This example considers non-uniform torsion warping. 
+The analytic solution \eqref{eq:0028-gen-rot} to the beam governing equations (Box~\ref{box:exact-shear-svq}) is used as reference. 
+
+
 In this example a beam is subjected to nonuniform torsion. 
 Consider a cross section satisfying \(\CenterTwistLocation \equiv \CentroidLocation\). 
 Align this point with the origin of the plane coordinate system, \(\PlanePosition = \bm{0}\). 
+
+
+A similar example was considered by \cite{lecorvec2012nonlinear}, where 16 warping degrees of freedom were required. 
+Here only one warping degree of freedom is used. 
+
 
 % The beam ends can have either an imposed rotation $\vartheta=\vartheta_0$ or an imposed torque $T=\TwistRxn$. 
 % At the same time they have either an imposed warping $\vartheta'=\vartheta_0^{\prime}$ or an imposed bimoment $B=B_0$. 
@@ -166,6 +175,12 @@ $$
 \mathrm{R}[\vartheta(L)] &= -\TwistRxn
 \end{aligned}
 $$
+The constants of integration in \eqref{eq:0028-gen-rot} are 
+\begin{equation*}
+    C_1 = - C_2 = -\operatorname{tanh} (\lambda L)
+    \qquad\text{and}\qquad
+    C_3 = -1
+\end{equation*}
 
 \begin{Details}
 The bi-shear and bi-moments are:
@@ -224,7 +239,7 @@ where $\mathrm{R}[\vartheta] = \lambda^2 \vartheta' - \vartheta'''$ is the Robin
 \begin{equation}
 \begin{aligned}
 C_1& =-C_2=\frac{1 - \cosh \lambda L}{\sinh \lambda L} \\
-C_3& =-\frac{1}{2}
+C_3& =-1 %\frac{1}{2}
 \end{aligned}
 \end{equation}
 

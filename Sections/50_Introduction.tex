@@ -26,15 +26,6 @@ The auxiliary fields $\bm\alpha(x)$ and $\bm\eta(x)$ will eventually be eliminat
 \end{Aside}
 
 \begin{Prompt}
-We currently have two separate lines of thought: the beam kinematic postulate $\bm{u} + \bm{\theta}\times \bm{r} + \bm{\Phi} \bm{\alpha}$, which is very general, and the trace strain matrix $T_0 \bm{p}$ which pulls us inescapably into Saint Venant land. 
-How could we have arrived at this same point directly from the beam kinematic decomposition? what lies at the heart of what we've done? 
-By saying $\bm{u} + \bm{\theta}\times \bm{r} + \bm\Phi \bm\alpha$ is ambiguous, really what were saying is that boundary conditions on $\bm{u},\bm{\theta}$ do not have to necessarily be boundary conditions on the plane-rigid basis, if we absorb part of this basis into $\bm{\Phi}$. 
-This is the practical perspective, because specified boundary conditions in the reduced trace fields are the mechanism through which the framework produces a beam theory with different behavior. 
-So say that its now $\bm{u}(x) + \bm{\theta}(x)\times \bm{r} + \bm{\Phi} \bm{\alpha}(x) + \bm{\Psi} \bm{\eta}(x)$, where $\bm{\Psi}$ is the plane-rigid basis. 
-Recall that one of the things we're after is a general expression for the material strains that is not so dependent on the load parameters, at least not in the plane-section basis... they are inescapable in the pure-warping basis because those warping functions naturally feature them by construction.
-\end{Prompt}
-
-\begin{Prompt}
 My objective is to develop a finite element formulation which is capable of representing a wide variety of traces. my hypothesis is that many of these will be useful in practice, and could provide modelers with an additional kinematic freedom to control  boundary conditions. Typically this subject is approached with the objective of finding *one* ideal trace, which i believe could be excessively restrictive. 
 I believe such an approach is overly dogmatic, and fails to recognize the utility that other traces offer. 
 I've never seen anyone discuss the subject with my general outlook; I've also never seen anyone acknowledge the possibility there may exist multiple valid traces. 

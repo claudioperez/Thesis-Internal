@@ -6,7 +6,8 @@
 The modern landscape of computational mechanics is characterized by trends like (1) the demand for parametric/sensitivity analysis and optimization, 
 and (2) advances in LLM technology that facilitate model building/definition.
 These trends favor small element libraries that are valid for a wide range structures. 
-Furthermore, it is important that salient modeling features are semantically related to the model definition data. eg, it is not good to separate features like warping or shear deformability  into separate elements. Rather, there should be only a minimal number of elements, which expose these features as toggleable options. 
+Furthermore, it is important that salient modeling features are semantically related to the model definition data. eg, it is not good to separate features like warping or shear deformability  into separate elements. 
+Rather, there should be only a minimal number of elements, which expose these features as toggleable options. 
 
 
 This chapter introduces a unified 3D frame element library that builds on the prior developments. 
@@ -18,9 +19,10 @@ warping mode, and work seamlessly with standard frame elements whether or not th
 
 
 \paragraph{Literature}
-\cite{ngoc2017damage}
+\cite{taucer1991fiber}\cite{ngoc2017damage}. 
+
 Mixed finite element formulations tend to be desirable when inelastic response must be represented, and geometric nonlinearities are expected to be moderate \cite{neuenhofer1997evaluation}. 
-Frame elements of this lineage were pioneered by \cite{ciampi}, \cite{filippou}, \cite{hjelmstad2003mixed}, and many others. 
+Frame elements of this lineage were pioneered by \cite{kaba1984refined}, \cite{ciampi}, \cite{filippou}, \cite{hjelmstad2003mixed}, and many others. 
 The development and implementation of these methods tends to be more involved than displacement formulations, and they are typically applied to linearized governing equations. 
   Moderate geometric nonlinearities were considered in 2D by \textcite{neuenhofer1998geometrically} who introduced the concept of \emph{curvature-based displacement interpolation} (CBID), and applied it to the truncated 2D equilibrium equations which govern Euler buckling. 
   This was later extended to the 3D \gls{frame:axial}-\gls{frame:euler} model (Box~\ref{box:axial-euler}) by \cite{desouza2000forcebased}.
@@ -218,10 +220,10 @@ The \texttt{Prism} element is a standard linearly elastic prismatic
 
 \subsection{Transformation Library}\label{sec:transformation-types}
 
-\begin{figure}
+\begin{figure}[H]
     \centering
     \resizebox{0.6\linewidth}{!}{\input{Body/Library/transform}}
-    \caption{Class diagram for the Metric abstraction.}
+    \caption{Class diagram for the geometric transformation abstraction.}
     \label{fig:frame-class}
 \end{figure}
 
@@ -264,7 +266,7 @@ Rotation parameterization is controlled by:
 \begin{figure}[H]
     \centering
     \resizebox{0.5\linewidth}{!}{\input{Body/Library/section}}
-    \caption{Class diagram for the Metric abstraction.}
+    \caption{Class diagram for the \texttt{ShearFiber} section.}
     \label{fig:section-class}
 \end{figure}
 

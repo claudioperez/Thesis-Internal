@@ -92,6 +92,7 @@
 \InputDetail{Style/Units}
 \InputDetail{Style/SaveMath}
 \InputDetail{Style/Algo}
+\InputDetail{Style/Toc}
 % \InputDetail{Style/Draft/Warning}
 
 
@@ -105,6 +106,7 @@
 \addbibresource{References/filippou.bib}
 \addbibresource{References/cosserat.bib}
 \addbibresource{References/concrete.bib}
+\addbibresource{References/wagner.bib}
 \addbibresource{References/elements.bib}
 \addbibresource{References/rotations.bib}
 \addbibresource{References/resume.bib}
@@ -192,13 +194,9 @@
 \clearpage
 \input{Sections/Traces/56_TraceClassII}
 \clearpage
-\inputdraft{Sections/Traces/56_TraceClasses}
-\clearpage
-\inputdraft{Sections/Traces/56_TraceSummary}
 
 \input{Sections/00_Outline}
 \clearpage
-
 
 
 \section{Conclusions}
@@ -207,13 +205,16 @@
 
 \part{Applications}
 
+\section{Overview}\label{sec:Part-II}
+\input{Body/Part-II}
+\clearpage
 
 \section{Modeling Library}\label{sec:library}
 \input{Body/Library/main}
 \clearpage
 
 
-\InputChapter{Body/Xara/main}
+\input{Body/Xara/main}
 \clearpage 
 
 \section{BRACE2}
@@ -247,8 +248,7 @@
 \input{Body/Library/Transform/main}
 \clearpage
 
-\include{Sections/30_Iesan}
-\input{Sections/33_Summary}
+\include{Body/Iesan/main}
 \clearpage
 
 \input{Body/ForceFrame/main}

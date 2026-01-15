@@ -1,46 +1,66 @@
 % \begin{Details}
 
-\subsection{Motivation}
-Beam finite element formulations have, over several decades, proliferated into a large and fragmented collection of special-case implementations.
-Production codes typically offer distinct element types for thin-walled sections, for asymmetric sections, for large displacements, for warping torsion, and so on---each developed and validated in relative isolation.
-An improvement to one formulation does not automatically benefit others; a correction to the handling of, say, shear-flexure interaction in a geometrically linear element may have no bearing on the corresponding geometrically nonlinear element, even within the same software package.
-The result is a maintenance burden that grows combinatorially with the phenomena one wishes to capture, and a validation effort that must be repeated for each combination.
+% \begin{Aside}
+% Beam finite element formulations have, over several decades, proliferated into a large and fragmented collection of special-case implementations.
+% Production codes typically offer distinct element types for thin-walled sections, for asymmetric sections, for large displacements, for warping torsion, and so on---each developed and validated in relative isolation.
+% An improvement to one formulation does not automatically benefit others; a correction to the handling of, say, shear-flexure interaction in a geometrically linear element may have no bearing on the corresponding geometrically nonlinear element, even within the same software package.
+% The result is a maintenance burden that grows combinatorially with the phenomena one wishes to capture, and a validation effort that must be repeated for each combination.
 
-This fragmentation also obscures deficiencies.
-Certain widely-used formulations for geometrically nonlinear analysis violate strain objectivity: objective strain measures, which should be invariant under superposed rigid motions, are corrupted by the interpolation procedure \citep{crisfield1999objectivity}. 
-The errors are small for moderate rotations and vanish at converged equilibrium states, so they are often tolerated in practice.
-But tolerating such errors becomes untenable when simulations must be differentiated---as required for sensitivity analysis, gradient-based inference, or optimization---because the spurious dependence on rigid motion contaminates the computed gradients.
-Fixing the problem within existing software architectures would require rewriting element-level code, with attendant re-validation, for each affected element type.
+% This fragmentation also obscures deficiencies.
+% Certain widely-used formulations for geometrically nonlinear analysis violate strain objectivity: objective strain measures, which should be invariant under superposed rigid motions, are corrupted by the interpolation procedure \citep{crisfield1999objectivity}. 
+% The errors are small for moderate rotations and vanish at converged equilibrium states, so they are often tolerated in practice.
+% But tolerating such errors becomes untenable when simulations must be differentiated---as required for sensitivity analysis, gradient-based inference, or optimization---because the spurious dependence on rigid motion contaminates the computed gradients.
+% Fixing the problem within existing software architectures would require rewriting element-level code, with attendant re-validation, for each affected element type.
+% \end{Aside}
 
+Part~I of this dissertation presents a family of models for simulating slender members under consideration of geometric and material nonlinearities. 
+Slender members are typically represented by \emph{dimensionally reduced} \citep{kantorovich1958approximate} models of three dimensional continuua, known as beam theories, which simplify the partial differential equations of elastostatics to an ordinary differential equation in one spatial variable.
+When discretized by the finite element method, these models offer a substantial advantage in computational demand, but several complications arise in the face of geometric and material nonlinear response:
+\begin{description}
+\item[Geometric Nonlinearity]
+Dimensional reduction of the geometrically nonlinear equations of elastostatics generally leads to a problem posed over a constrained solution space that lacks a vectorial structure. 
+Such problems lie outside the domain of classical finite element methods \citep{strang1973analysis}, which can fail to preserve important features of the constrained model, like strain objectivity. 
+Formulations that restore objectivity exist, but they sacrifice the symmetric tangent stiffness that accelerates iterative solution.
 
-\subsection{Objectives}
+\item[Material Nonlinearity]
+Inelastic material response generally depends on the full continuum strain tensor, whose pointwise value in the body is lost in the process of dimensional reduction. 
+Fiber section models reconstruct this state of strain by leveraging the plane section hypothesis of Euler-Bernoulli and Timoshenko beam theories, but this fails to account for cross-sectional warping and often furnishes unrealistic response. 
+In the elastic theory of beams these effects are tacitly represented by the Saint~Venant torsion and shear-correction cross sectional constants, but these approaches do not lend themselves to inelastic analysis. 
+\end{description}
 
-Our goal is to obtain a resultant model that can be used with standard beam finite elements. 
-These elements work in terms of the primary equilibrium operator $\mathbb{B}_p$, so if we can return from the section with the quantity that figures in this operator, the element needs no modification. 
+\subsection{Objectives}\label{sec:part-i-objectives}
+
 
 \begin{enumerate}
-\item\label{obj:objectivity}  Objectivity
 
-\item\label{obj:expressivity} Expressivity
+\item Consistency. 
+  \begin{itemize}
+    \item Observer Invariance
+    \item Path Independence
+    \item Continuum Consistency
+    \item Classical Consistency
+    \item Experimental
+  \end{itemize}
 
 \item Generality. 
-\begin{itemize}
+  \begin{itemize}
     \item Finite deformation.
     \item Inelasticity
     \item Nonuniform warping.
-\end{itemize}
+  \end{itemize}
  
+\item\label{obj:expressivity} Expressivity
+  \begin{itemize}
+      \item Rotation parameterization
+      \item Boundary fixities
+  \end{itemize}
+
 \item Efficiency.
   \begin{itemize}
       \item Minimal number of DOFs
       \item Tangent symmetry.
   \end{itemize}
 
-\item Consistency. 
-\begin{itemize}
-    \item 
-    \item Experimental
-\end{itemize}
 
 \item Compatibility. 
 
@@ -51,7 +71,7 @@ We seek a formulation in which warping effects are entirely absorbed into the
 section-level constitutive relation, so that standard six-DOF beam elements 
 can be employed without modification.
 
-\subsection{Scope}
+\subsection{Scope and Methodology}
 
 The developments in this work are restricted to the following setting:
 \begin{itemize}
@@ -63,10 +83,32 @@ The developments in this work are restricted to the following setting:
 \item Small to moderate material strain.
 \end{itemize}
 
+The following assumptions are adopted:
+\begin{itemize}
+    \item Saint-Venant stress
+    \item For Type 3, warping-deformation relation maintains proportionality through inelastic response.
+    \item Prismatic members
+\end{itemize}
+
+
+\begin{Aside}
+This draft develops a general family of beam theories enriched by an arbitrary number of warping modes. 
+The work begins in the most general setting where we allow for inelasticity and finite deformation. 
+We discuss the implications of eliminating warping modes by association with classical strains measures. 
+Then we move on to selecting a minimal set of warping shapes. 
+To this end, we break the 3D solution of Saint~Venant (\cref{sec:sv}) into 5 rigid patterns and 8 warping patterns. 
+Next we must determine an association of these patterns with strains arising from the configuration manifold we investigated earlier; ie, 
+$$\left\{\bm{u}: [0,L]\rightarrow \mathbb{R}^3, \FrameRotation: [0,L]\rightarrow \mathrm{SO}(3), \bm{\alpha}: [0,L]\rightarrow \mathbb{R}^{n_w}\right\}$$ 
+At this point we are confronted with the fundamental ambiguity in associating these fields to full 3D deformation fields. 
+So then we introduce the abstraction of traces, $T: \hat{\bm u} \rightarrow (\bm{u}, \bm\theta)$ which formalize this ambiguity. 
+There are three natural restrictions we impose on the class of traces we'll investigate: 1) they generate at-most-linear strain measures under the SV class, 2) they preserve plane-section-preserving deformations, and 3) they are capable of exactly reconstructing the exact strain field for any problem in the SV class.
+\end{Aside}
+
 We do not treat thin-walled sections as a special case requiring separate 
 theoretical development. The formulation applies to arbitrary solid or 
 thin-walled cross-sections, with the classical thin-walled results 
 (Vlasov torsion, etc.) emerging as special cases.
+
 
 \subsection{Outline}
 
@@ -93,21 +135,6 @@ A brief recapitulation of Saint Venant's solution is presented in \cref{sec:sv}.
 
 % \end{Details}
 
-\subsection{Overview}
-
-\begin{Aside}
-This draft develops a general family of beam theories enriched by an arbitrary number of warping modes. 
-The work begins in the most general setting where we allow for inelasticity and finite deformation. 
-We discuss the implications of eliminating warping modes by association with classical strains measures. 
-Then we move on to selecting a minimal set of warping shapes. 
-To this end, we take a detour into the simple world of the SV class. 
-We present Iesan's representation of the class, and break the 3D solution into 5 rigid patterns and 8 warping patterns. 
-Next we must determine an association of these patterns with strains arising from the configuration manifold we investigated earlier; ie, 
-$$\left\{\bm{u}: [0,L]\rightarrow \mathbb{R}^3, \FrameRotation: [0,L]\rightarrow \mathrm{SO}(3), \bm{\alpha}: [0,L]\rightarrow \mathbb{R}^{n_w}\right\}$$ 
-At this point we are confronted with the fundamental ambiguity in associating these fields to full 3D deformation fields. 
-So then we introduce the abstraction of traces, $T: \hat{\bm u} \rightarrow (\bm{u}, \bm\theta)$ which formalize this ambiguity. 
-There are three natural restrictions we impose on the class of traces we'll investigate: 1) they generate at-most-linear strain measures under the SV class, 2) they preserve plane-section-preserving deformations, and 3) they are capable of exactly reconstructing the exact strain field for any problem in the SV class.
-\end{Aside}
 
 \subsection{Literature}
 
@@ -155,5 +182,5 @@ However, in this work the reference curve is restricted to intersect sections at
 % The asymmetric formulation of \cite{hsiao2000corotational} takes the shear-center as reference point.
 
 
-\subsection{Preliminaries: The Finite Element Method}
+\subsection{Preliminaries: Finite Elements on Manifolds}
 \input{Part II/discretization}

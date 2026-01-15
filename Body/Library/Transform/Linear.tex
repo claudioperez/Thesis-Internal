@@ -38,12 +38,10 @@ be the direction of the line in the reference configuration, and
 \Delta \bm{x} \;\triangleq\; (\bm{X}_J + \bm{u}_J)\;-\;(\bm{X}_I + \bm{u}_I)
 \end{equation}
 is the direction in the deformed configuration. 
-The line's length originally is 
+The lengths of the original and deformed line are, respectively:
 \[
 L_0 \; \triangleq \; \|\Delta \bm{X}\|
-\] 
-and after deformation the length is 
-\[
+\qquad\text{and}\qquad
 L_n \; \triangleq \; \|\Delta \bm{x}\|
 \]
 
@@ -56,12 +54,12 @@ Similarly, the deformed configuration may be transformed:
 \[
 \bar{\bm{x}}(\xi) \triangleq  \bm{R}^{\mathrm{t}}\bm{x} - \bar{\bm{c}}
 \]
-The deformation from \(\bar{\bm{X}}\) to \(\bar{\bm{x}}\) is characterized by the displacement \(\bar{\bm{u}}\):
+The deformation from \(\bar{\bm{X}}\) to \(\bar{\bm{x}}\) is characterized by the displacement \(\bar{\bm{u}} :=  \bar{\bm{x}} - \bar{\bm{X}}\):
 \[
 \begin{aligned}
-\bar{\bm{u}}(\xi) &:=  \bar{\bm{x}} - \bar{\bm{X}} \\
-&= \bm{R}^{\mathrm{t}}(\bm{X}(\xi)+\bm{u}(\xi)) - \bar{\bm{c}} - (\bm{R}_0^{\mathrm{t}}\bm{X}(\xi) - \bar{\bm{C}}) \\
-&= \bm{R}^{\mathrm{t}}(\bm{X}(\xi)+\bm{u}(\xi)) - \Delta \bar{\bm{c}} - \bm{R}_0^{\mathrm{t}}\bm{X}(\xi) \\
+\bar{\bm{u}}(\xi) 
+% &= \bm{R}^{\mathrm{t}}(\bm{X}(\xi)+\bm{u}(\xi)) - \bar{\bm{c}} - (\bm{R}_0^{\mathrm{t}}\bm{X}(\xi) - \bar{\bm{C}}) \\
+% &= \bm{R}^{\mathrm{t}}(\bm{X}(\xi)+\bm{u}(\xi)) - \Delta \bar{\bm{c}} - \bm{R}_0^{\mathrm{t}}\bm{X}(\xi) \\
 &= \bm{R}^{\mathrm{t}}(\bm{u}(\xi) - \Delta \bm{c}) + \Delta \bm{R}^{\mathrm{t}}\bm{X}(\xi) \\
 \end{aligned}
 \]
@@ -71,26 +69,26 @@ so that
     \bm{u}(\xi)\;\mapsto\; \bm{R}^{\mathrm{t}}\bm{u}(\xi) - \Delta \bar{\bm{c}} + \Delta \bm{R}^{\mathrm{t}}\bm{X}(\xi)
 \label{eq:iso-u}
 \end{equation}
-The translations \(\bar{\bm{C}}\) and \(\bar{\bm{c}}\) are selected to enforce \(\bar{\bm{u}}_I = \bar{\bm{x}}_I = \bm{0}\), furnishing for \(\bar{\bm{c}}\)
+The translations \(\bar{\bm{C}}\) and \(\bar{\bm{c}}\) are selected to enforce \(\bar{\bm{u}}_I = \bar{\bm{x}}_I = \mathbf{0}\), furnishing for \(\bar{\bm{c}}\)
 %
 \begin{equation}
-\bar{\bm{x}}_I = \bm{0} = \bm{R}^{\mathrm{t}}\bm{X}_I + \bm{R}^{\mathrm{t}}(\bm{u}_I - \bm{c})
+\bar{\bm{x}}_I = \mathbf{0} = \bm{R}^{\mathrm{t}}\bm{X}_I + \bm{R}^{\mathrm{t}}(\bm{u}_I - \bm{c})
 \quad\implies\quad 
 \bar{\bm{c}} = \bm{R}^{\mathrm{t}}(\bm{X}_I + \bm{u}_I)
 \label{eq:solve-cbar}
 \end{equation}
 %
-To find \(\bar{\bm{C}}\) use \(\bar{\bm{c}}\) above in \eqref{eq:iso-u}:
+To find \(\bar{\bm{C}}\) use \eqref{eq:solve-cbar} for \(\bar{\bm{c}}\) in \eqref{eq:iso-u}:
 \[
 \begin{aligned}
 \bar{\bm{u}}(\xi)
-&= \bm{R}^{\mathrm{t}}(\bm{X}(\xi)+\bm{u}(\xi)) - \bm{R}^{\mathrm{t}}(\bm{X}_I+\bm{u}_I) - (\bm{R}_0^{\mathrm{t}}\bm{X}(\xi) - \bar{\bm{C}}) \\
-&= \bm{R}^{\mathrm{t}}(\bm{X}(\xi)+\bm{u}(\xi)) - \bm{R}^{\mathrm{t}}(\bm{X}_I+\bm{u}_I) - \bm{R}_0^{\mathrm{t}}\bm{X}(\xi) + \bar{\bm{C}} \\
+% &= \bm{R}^{\mathrm{t}}(\bm{X}(\xi)+\bm{u}(\xi)) - \bm{R}^{\mathrm{t}}(\bm{X}_I+\bm{u}_I) - (\bm{R}_0^{\mathrm{t}}\bm{X}(\xi) - \bar{\bm{C}}) \\
+% &= \bm{R}^{\mathrm{t}}(\bm{X}(\xi)+\bm{u}(\xi)) - \bm{R}^{\mathrm{t}}(\bm{X}_I+\bm{u}_I) - \bm{R}_0^{\mathrm{t}}\bm{X}(\xi) + \bar{\bm{C}} \\
 &= \bm{R}^{\mathrm{t}}(\bm{X}(\xi)-\bm{X}_I) 
  + \bm{R}^{\mathrm{t}}(\bm{u}(\xi)-\bm{u}_I) - \bm{R}_0^{\mathrm{t}}\bm{X}(\xi) + \bar{\bm{C}} \\
 \end{aligned}
 \]
-Enforcing \(\bm{u}_I = \bm{0}\)
+Enforcing \(\bm{u}_I = \mathbf{0}\)
 \begin{equation}
 \bar{\bm{C}} = \bm{R}_0^{\mathrm{t}}\bm{X}_I
 \label{eq:init-Cbar}
@@ -108,7 +106,7 @@ Then we have
 \paragraph{Orientation}
 
 We want a rotation \(\bm{R}(\varepsilon)\) (with
-\(\bm{R}(0)=\bm{1}\)) that \emph{maps the original unit direction}
+\(\bm{R}(0)=\mathbf{1}\)) that \emph{maps the original unit direction}
 \(\Delta \bm{X}^{\ast} = \tfrac{\Delta \bm{X}}{\|\Delta \bm{X}\|}\) to
 the \emph{new} unit direction
 \(\Delta \bm{x}^{\ast}(\varepsilon) = \tfrac{\Delta \bm{x}(\varepsilon)}{\|\Delta \bm{x}(\varepsilon)\|}\).
@@ -118,10 +116,8 @@ In other words,\\
 \;=\;
 \Delta \bm{x}^{\ast}(\varepsilon).
 \]
-That is, \(\bm{R}\) takes the original unit direction vector to
-the new unit direction vector.
 %
-If \(\Delta \bm{X}\) and \(\Delta \bm{x}\) are \emph{not} collinear, one
+If \(\Delta \bm{X}\) and \(\Delta \bm{x}\) are not collinear, one
 can build \(\bm{R}\) via the axis--angle representation. 
 Define
 
@@ -140,11 +136,11 @@ and the rotation angle \(\theta\) is
 \theta \;=\; \arccos \bigl(\Delta \bm{X}^\ast \cdot \Delta \bm{x}^\ast\bigr)
 \label{eq:arccos-dX-dx}
 \end{equation}
-Then Rodrigues' formula (\eqref{eq:ExpSO3}) furnishes 
+Then Rodrigues' formula \eqref{eq:ExpSO3} furnishes 
 \[
 \bm{R} 
 \;=\; 
-\bm{1} 
+\mathbf{1} 
 \;+\; [\AlignAxis]_\times \,\sin \theta 
 \;+\; [\AlignAxis]_\times^2 \,(1 - \cos \theta)
 \]
@@ -301,13 +297,11 @@ Recall the \emph{rotation angle} \(\theta(\varepsilon)\) and \emph{rotation axis
       \bigl\|\Delta \bm{X}^*\times \Delta \bm{x}^*(\varepsilon)\bigr\|
     }.
 \] 
-At \(\varepsilon=0\), these expressions are not valid because
-\(\Delta \bm{x}^*(0) \equiv \Delta \bm{X}^*\).  
-The exponential (\eqref{eq:ExpSO3}) then furnishes for \(\varepsilon\neq 0\): 
+The exponential \eqref{eq:ExpSO3} then furnishes for \(\varepsilon\neq 0\): 
 \[
 \bm{R}(\varepsilon)
 \;=\;
-\bm{1}
+\mathbf{1}
 \;+\;
 \sin \theta(\varepsilon) \,
 [\,\AlignAxis(\varepsilon)\,]_{\times}
@@ -320,7 +314,7 @@ This \(\bm{R}(\varepsilon)\) is well‐defined for each
 At \(\varepsilon=0\), \(\Delta \bm{x}^*(0)=\Delta \bm{X}^*\),
 so \(\theta(0) = 0\) and
 \(\|\Delta \bm{X}^*\times \Delta \bm{x}^*(0)\|=0\). 
-In that sense, \(\AlignAxis(0)\) is not defined. Nevertheless, \(\bm{R}(0)=\bm{1}\).
+In that sense, \(\AlignAxis(0)\) is not defined. Nevertheless, \(\bm{R}(0)=\mathbf{1}\).
 %
 We now want the derivative 
 \[
@@ -412,13 +406,13 @@ and
 \[
 \Delta \bm{x}^\ast(\varepsilon)
   \;=\; ?\left(
-  \bm{1}
+  \mathbf{1}
   \;+\;
   \varepsilon\,
   \frac{1}{\|\Delta \bm{X}\|}\bigl[
       \Delta \bm{u} \otimes \Delta\bm{X}^*
       \;-\; 
-      (\Delta \bm{X}^\ast\!\cdot \Delta \bm{u})\,\bm{1} %\Delta \bm{X}^\ast
+      (\Delta \bm{X}^\ast\!\cdot \Delta \bm{u})\,\mathbf{1} %\Delta \bm{X}^\ast
     \bigr]
   \right) \Delta \bm{X}^\ast
   \;+\;
@@ -441,6 +435,7 @@ Thus the \emph{change} in the unit direction to first order is
 \end{equation}
 
 \begin{marsdenbox}
+\noindent
 We have 
 \[
   \Delta \bm{x}(\varepsilon)
@@ -501,7 +496,7 @@ and upon simplification:
   \;=\;
   \frac{1}{\|\Delta \bm{X}\|}
   \Bigl[
-    \bm{1}
+    \mathbf{1}
     \;-\;
     \Delta \bm{X}^* \otimes \Delta \bm{X}^*
   \Bigr]\Delta \bm{u}.
@@ -549,7 +544,7 @@ Hence
   \label{eq:order-DXDx}
 \end{equation}
 
-\paragraph{\texorpdfstring{Expand \(\theta(\varepsilon)\)}{Expand theta(e)}}
+\paragraph{Angle}
 
 Recall \eqref{eq:arccos-dX-dx}:
 \[
@@ -617,17 +612,18 @@ Thus
   \;=\;
   \frac{\theta(\varepsilon)}{\varepsilon}
   \;+\;
-  O\!\bigl(\theta^3/\varepsilon\bigr),
+  O\bigl(\theta^3/\varepsilon\bigr),
   \quad
   \frac{1-\cos[\theta(\varepsilon)]}{\varepsilon}
   \;=\;
   \frac{\tfrac12\theta^2(\varepsilon)}{\varepsilon}
   \;+\;
-  O\!\bigl(\theta^4/\varepsilon\bigr).
+  O\bigl(\theta^4/\varepsilon\bigr).
 \] If \(\theta(\varepsilon)\) is \emph{linear} in \(\varepsilon\) at
 small \(\varepsilon\) (the usual perpendicular‐displacement case), then
 \(\theta(\varepsilon)/\varepsilon \to \text{constant}\), and
-\(\theta^2(\varepsilon)/\varepsilon\to 0\). If \(\theta(\varepsilon)\)
+\(\theta^2(\varepsilon)/\varepsilon\to 0\). 
+If \(\theta(\varepsilon)\)
 is \emph{second‐order} small, then
 \(\theta(\varepsilon)/\varepsilon \to0\) anyway. In \emph{either}
 scenario,
@@ -643,16 +639,8 @@ scenario,
   \((1-\cos \theta(\varepsilon))/\varepsilon \to 0\).
 \end{enumerate}
 
-\paragraph{\texorpdfstring{Expand \(\AlignAxis(\varepsilon)\)}{Expand i(e)}}
+\paragraph{Unit Axis}
 
-On the other hand, 
-\[
-  \AlignAxis(\varepsilon)
-  \;=\;
-  \frac{\Delta \bm{X}^* \times \Delta \bm{x}^*(\varepsilon)}{
-        \|\Delta \bm{X}^* \times \Delta \bm{x}^*(\varepsilon)\|
-       }.
-\]
 Let's look at the cross product in the numerator: \[
   \Delta \bm{X}^* \times \Delta \bm{x}^*(\varepsilon)
   \;=\;
@@ -675,15 +663,13 @@ But \(\Delta \bm{X}^* \times \Delta \bm{X}^* = \mathbf{0}\), so \[
 Hence the magnitude of that cross product is also \(O(\varepsilon)\).
 Dividing by its own magnitude, \(\AlignAxis(\varepsilon)\) remains a
 \emph{well-defined} unit vector for \(\varepsilon\neq 0\), but it
-basically becomes
+ becomes
 
 \[
   \AlignAxis(\varepsilon)
   \;\approx\;
   \frac{\Delta \bm{X}^*\times \Delta}{\|\Delta \bm{X}^*\times \Delta\|}.
-\] In fact, to \emph{first} order in \(\varepsilon\), this is just the
-direction perpendicular to \(\Delta \bm{X}^*\) and \(\Delta\). 
-
+\]
 
 \subsection{Linearization (3)}
 
@@ -694,7 +680,7 @@ original unit direction \(\Delta \bm{X}^*\) to the new unit direction
   \;=\;
   \Delta \bm{x}^*(\varepsilon).
 \] Differentiate both sides w.r.t. \(\varepsilon\). At
-\(\varepsilon=0\), \(\bm{R}(0)=\bm{1}\). 
+\(\varepsilon=0\), \(\bm{R}(0)=\mathbf{1}\). 
 We get 
 \[
   \left.\frac{\mathrm{d}}{\mathrm{d}\varepsilon}\bm{R}(\varepsilon)\right|_{\varepsilon=0}\,\Delta \bm{X}^*
@@ -705,7 +691,7 @@ We get
   \left.\frac{\mathrm{d}}{\mathrm{d}\varepsilon}\Delta \bm{x}^*(\varepsilon)\right|_{\varepsilon=0}.
 \]
 But \(\Delta \bm{X}^*\) is a fixed (constant) vector, so its
-derivative is zero. Also \(\bm{R}(0)=\bm{1}\). Thus \[
+derivative is zero. Also \(\bm{R}(0)=\mathbf{1}\). Thus \[
   \left.\frac{\mathrm{d}}{\mathrm{d}\varepsilon}\bm{R}(\varepsilon)\right|_{\varepsilon=0}\,\Delta \bm{X}^*
   \;=\;
   \left.\frac{\mathrm{d}}{\mathrm{d}\varepsilon}\Delta \bm{x}^*(\varepsilon)\right|_{\varepsilon=0}.
@@ -721,7 +707,8 @@ Using \eqref{eq:linear-Dxstar} for
     \Delta \bm{u}
     - (\Delta \bm{X}^*\!\cdot \Delta \bm{u})\,\Delta \bm{X}^*
   \Bigr].
-\] Crucially, that right-hand side is \emph{orthogonal} to
+\] 
+Crucially, that right-hand side is \emph{orthogonal} to
 \(\Delta \bm{X}^*\), which shows that
 \(\bigl.\tfrac{d}{d\varepsilon}\bm{R}(\varepsilon)\bigr|_{\varepsilon=0}\)
 acts like a \emph{skew-symmetric} operator on \(\Delta \bm{X}^*\). 
@@ -763,7 +750,7 @@ Thus, finally,
 \begin{equation*}
 \boxed{
   R'(0) = \lim_{\varepsilon\to 0}\,
-  \frac{\bm{R}(\varepsilon) - \bm{1}}{\varepsilon}
+  \frac{\bm{R}(\varepsilon) - \mathbf{1}}{\varepsilon}
   \;=\;
   \left[
     \frac{\Delta \bm{X}\times \Delta \bm{u}}{\|\Delta \bm{X}\|^2}
@@ -803,28 +790,6 @@ precisely the smallest rotation needed to tip \(\Delta \bm{X}\) into
   first order, so the product still can have a finite limit).\\
 \end{itemize}
 %
-Stated otherwise, if \(\bm{u}_{\perp}\) is the component of \(\Delta \bm{u}\)
-perpendicular to \(\Delta \bm{X}^*\), then for small \(\varepsilon\),
-
-\[
-  \Delta \bm{X}^*\times \Delta \bm{x}^*(\varepsilon)
-  \;\approx\;
-  \varepsilon\,\Bigl[\Delta \bm{X}^*\times \bm{u}_{\perp}\Bigr]
-  \;+\;
-  O(\varepsilon^2).
-\] Hence \[
-  \AlignAxis(\varepsilon)
-  \;=\;
-  \frac{\Delta \bm{X}^*\times \Delta \bm{x}^*(\varepsilon)}{
-        \|\Delta \bm{X}^*\times \Delta \bm{x}^*(\varepsilon)\|}
-  \;\to\;
-  \frac{\Delta \bm{X}^*\times \bm{u}_{\perp}}{\|\Delta \bm{X}^*\times \bm{u}_{\perp}\|},
-  \quad\text{as }\varepsilon\to 0,
-\] if \(\bm{u}_{\perp}\neq 0\). (If \(\bm{u}_{\perp}=0\), the entire
-rotation is second‐order small and the limit for
-\(\sin \theta(\varepsilon) /\varepsilon\cdot\AlignAxis(\varepsilon)\)
-still goes to 0.)
-
 
 %
 The essence is that at small angles, 

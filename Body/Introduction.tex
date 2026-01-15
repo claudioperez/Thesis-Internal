@@ -59,6 +59,41 @@ This architecture permits physics-based simulation (Type~I prediction) and syste
 The developments of Part~I contribute the simulation engine for Type~I predictors on this platform.
 Following a pilot deployment covering 22 bridges, Caltrans has funded continued development to extend coverage across the California highway network.
 
+\subsection{Outline}
+
+% Part~I develops finite element formulations.
+% Chapter~2 surveys relevant literature.
+% Chapter~3 derives governing equations for beams with warping modes.
+% Chapter~4 presents the geometric transformation framework.
+% Chapter~5 develops the section constitutive theory.
+% Chapter~6 introduces the trace formalism.
+% Chapter~7 documents the modeling library.
+% Chapters~8 and~9 verify the formulations against benchmark problems.
+% Chapter~10 applies them to a Caltrans bridge model.
+
+% Part~II addresses structural health monitoring.
+% Chapter~11 describes the architecture of \textsc{OpenSeesRT}.
+% Chapter~12 presents the \BRACE{} platform.
+
+The dissertation is organized in two parts.
+
+Part~I develops finite element formulations for slender members.
+\cref{sec:Part-I} motivates the theoretical developments and surveys relevant literature.
+Chapter~3 derives governing equations for a geometrically exact beam with arbitrary warping modes, classifying theories into four types according to the treatment of warping amplitudes.
+Chapter~4 presents a framework for geometric transformations that ensures strain objectivity while preserving compatibility with standard element architectures.
+\Cref{sec:gensec} develops the section-level constitutive theory relating the one-dimensional beam model to the three-dimensional continuum.
+\Cref{sec:timo} introduces the trace formalism for dimensional reduction and characterizes admissible traces.
+\Cref{sec:library} documents the modeling library implemented in \Xara{}.
+\Cref{sec:verify-elastic} presents verification case studies.
+\Cref{sec:painter} applies the formulations to a Caltrans bridge model.
+
+Part~II addresses structural health monitoring.
+\Cref{ch:xara} describes the architecture of \Xara{}, with attention to features that support differentiable simulation.
+\Cref{sec:irie} presents the \BRACE{} platform and the design of IRiE.
+
+Appendices collect notation and provide supplementary derivations.
+
+
 
 \subsection{Motivation (Old)}
 
@@ -82,7 +117,7 @@ This dissertation is concerned with both obstacles, in the specific context of s
 Slender members constitute the primary load-carrying skeleton of most civil structures.
 Their accurate simulation is essential not only for predicting global response quantities such as displacements and natural frequencies, but also for assessing local damage indicators: plastic hinge rotations in moment frames, shear link deformations in braced systems, curvature ductility demands in bridge columns.
 
-The classical technique of dimensional reduction \citep{kantorovich1958approximate} underlies all beam theories: the three-dimensional continuum equations are projected onto a one-dimensional domain (the beam axis) by assuming that cross-sections deform according to a finite set of modes.
+The classical technique of dimensional reduction  underlies all beam theories: the three-dimensional continuum equations are projected onto a one-dimensional domain (the beam axis) by assuming that cross-sections deform according to a finite set of modes.
 The choice of these modes, and the manner in which their amplitudes are related to the primary kinematic variables of the beam, determines the character of the resulting theory.
 Saint-Venant's classical solution for prismatic members \citep{iesan1987saintvenants} provides a canonical reference: any beam theory that claims to represent linear elastic response exactly should, at minimum, reproduce Saint-Venant's results for the restricted class of loadings to which they apply.
 Whether a given formulation satisfies this requirement is not always obvious, and the literature contains competing claims regarding shear correction factors, warping constraints, and the treatment of torsion-bending coupling.
@@ -105,6 +140,7 @@ The computational backend of this platform---the Infrastructure Resilience Engin
 The beam formulations of Part~I serve as the primary analysis engine, and the demands of the platform have, in turn, informed the development of those formulations.
 The bridges under study are predominantly composed of beam and column elements whose inelastic behavior governs damage progression; accurate and efficient modeling of these members is not peripheral to the monitoring application but central to it.
 
+\iffalse
 \subsection{Contributions}
 The framework makes three types of contribution.
 
@@ -120,6 +156,7 @@ The present formulation removes these restrictions: shear deformation, torsional
 The third is unification.
 By assigning responsibility for each phenomenon to the appropriate level of abstraction---transformations handle geometric nonlinearity, elements handle interpolation and equilibrium, sections handle dimensional reduction and material response---the formulation achieves a separation of concerns that keeps the element library small.
 This is not merely a matter of software aesthetics; it determines what can be validated tractably, what can be extended without combinatorial effort, and what can be composed into larger workflows requiring automatic differentiation.
+\fi
 
 The developments of Part~I are applied, in Part~II, to structural health monitoring.
 The Bridge Rapid Assessment Center for Extreme Events (\BRACE{}) is a platform developed in collaboration with the California Department of Transportation to provide real-time post-earthquake assessments for instrumented bridges.
@@ -128,41 +165,6 @@ The bridges in the current deployment are composed predominantly of beam and col
 The beam formulations developed here serve as the primary simulation engine, and the modular structure of the framework---permitting, for instance, a transition from a coarse linear model to a refined inelastic model by changing a single component---directly supports the operational requirements of the platform.
 
 
-
-
-\subsection{Outline}
-
-% Part~I develops finite element formulations.
-% Chapter~2 surveys relevant literature.
-% Chapter~3 derives governing equations for beams with warping modes.
-% Chapter~4 presents the geometric transformation framework.
-% Chapter~5 develops the section constitutive theory.
-% Chapter~6 introduces the trace formalism.
-% Chapter~7 documents the modeling library.
-% Chapters~8 and~9 verify the formulations against benchmark problems.
-% Chapter~10 applies them to a Caltrans bridge model.
-
-% Part~II addresses structural health monitoring.
-% Chapter~11 describes the architecture of \textsc{OpenSeesRT}.
-% Chapter~12 presents the \BRACE{} platform.
-
-The dissertation is organized in two parts.
-
-Part~I develops finite element formulations for slender members.
-\cref{sec:Part-I} motivates the theoretical developments and surveys relevant literature.
-Chapter~3 derives governing equations for a geometrically exact beam with arbitrary warping modes, classifying theories into four types according to the treatment of warping amplitudes.
-Chapter~4 presents a framework for geometric transformations that ensures strain objectivity while preserving compatibility with standard element architectures.
-Chapter~5 develops the section-level constitutive theory relating the one-dimensional beam model to the three-dimensional continuum.
-\Cref{sec:timo} introduces the trace formalism for dimensional reduction and characterizes admissible traces.
-\Cref{sec:library} documents the modeling library implemented in \textsc{Xara}.
-\Cref{sec:verify-elastic} and \Cref{sec:verify-inelastic} present verification studies for elastic and inelastic problems, respectively.
-Chapter~10 applies the formulations to a Caltrans bridge model.
-
-Part~II addresses structural health monitoring.
-\Cref{ch:xara} describes the architecture of \textsc{Xara}, with attention to features that support differentiable simulation.
-Chapter~12 presents the \BRACE{} platform and the design of IRiE.
-
-Appendices collect notation and provide supplementary derivations.
 
 
 

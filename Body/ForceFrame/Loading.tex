@@ -7,10 +7,11 @@ Concentrated loading can be handled independently of the geometric transformatio
 
 
 In the force formulation, the consistent load stiffness is obtained by implicit differentiation of the residual:
-\begin{equation*}
-    g(\bm{u},\bm{v},\bm{q}) = \delta \bm{q} \cdot \int \mathbf{b}^{T}\mathbf{f}\bigl(\mathbf{b}\bm{q} + \bm{s}_{p}(x,\bm{u}) - \bm{s}(\bm{e})\bigr)\, \mathrm{d}x - \delta \bm{q} \cdot \bm{v} = 0
-\end{equation*}
-The total differential is
+\begin{equation}
+    g(\bm{u},\bm{v},\bm{q}) = \delta \bm{q} \cdot \int \mathbf{b}^{T}\mathbf{f}\,\bigl(\mathbf{b}\bm{q} + \bm{s}_{p}(x,\bm{u}) - \bm{s}(\bm{e})\bigr)\, \mathrm{d}x - \delta \bm{q} \cdot \bm{v} = 0
+    \label{eq:force-residual}
+\end{equation}
+The total differential of the residual \eqref{eq:force-residual} is
 \begin{equation*}
 \begin{aligned}
 & D_{u} g 

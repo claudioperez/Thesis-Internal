@@ -2,7 +2,7 @@
 
 \newif\ifthesis 
 \newif\iffinal 
-\thesisfalse
+\thesistrue
 \finalfalse
 
 \newif\ifnotes
@@ -15,7 +15,7 @@
   \renewcommand{\section}{\oldsection}
   \renewcommand{\subsection}{\oldsubsection}
   \renewcommand{\subsubsection}{\oldsubsubsection}
-  \renewcommand{\paragraph}{\oldparagraph}
+  % \renewcommand{\paragraph}{\oldparagraph}
   \input{#1}
 }}
 \else
@@ -66,7 +66,7 @@
 \input{Style/Article}
 \fi
 
-\newcommand{\ShowLabel}[1]{}
+\newcommand{\ShowLabel}[1]{(\texttt{#1})}
 
 %%% 
 %%% Glossaries
@@ -84,6 +84,8 @@
 %% Notation
 \input{notation}
 \InputDetail{notation/armero}
+\InputDetail{notation/irie}
+
 \InputDetail{Macros/FrameSection}
 
 % \InputDetail{Style/Syntax}
@@ -92,7 +94,7 @@
 \InputDetail{Style/Units}
 \InputDetail{Style/SaveMath}
 \InputDetail{Style/Algo}
-\InputDetail{Style/Toc}
+% \InputDetail{Style/Toc}
 % \InputDetail{Style/Draft/Warning}
 
 
@@ -100,6 +102,7 @@
 
 \addbibresource{References/references.bib}
 \addbibresource{References/warping.bib}
+\addbibresource{References/buckling.bib}
 \addbibresource{References/bridges.bib}
 \addbibresource{References/regional.bib}
 \addbibresource{References/elastostatics.bib}
@@ -152,14 +155,14 @@
 
 \section{Introduction}
 \input{Body/Introduction}
-\clearpage 
+\cleardoublepage 
 
 % \part{Finite Element Formulations}
 \part{Structural Mechanics}
 
 \section{Overview}\label{sec:Part-I}
 \input{Body/Part-I}
-\clearpage
+\cleardoublepage
 
 \section{Element Formulations}\label{sec:genwarp}
 \input{10_EquilibriumOverview}
@@ -177,31 +180,25 @@
 \section{Geometric Transformations}\label{sec:transform}
 \input{Body/Transformations/index}
 \input{Body/Transformations/Conclusions}
-\clearpage 
+\cleardoublepage 
 
 \section{Section Formulation}\label{sec:gensec}
 \input{Body/Section/main}
 \input{Body/Section/21_Literature}
-\clearpage 
+\cleardoublepage 
+
 \subsection{Conclusions}
 \input{Body/Section/Conclusions}
-\clearpage
+\cleardoublepage
 
 \section{Saint-Venant Consistency}\label{sec:timo}
-\input{Sections/50_Introduction}
-\input{Sections/53_VenantShapeBasis}
-\input{Sections/Traces/56_TraceClassI}
-\clearpage
-\input{Sections/Traces/56_TraceClassII}
-\clearpage
+\input{Body/Traces/main}
+\cleardoublepage
 
-\input{Sections/00_Outline}
-\clearpage
-
-
+\pagebreak
 \section{Conclusions}
 \input{Body/Part-I-Conclusions}
-\clearpage
+\cleardoublepage
 
 \part{Applications}
 
@@ -209,21 +206,27 @@
 \input{Body/Part-II}
 \clearpage
 
+\pagebreak
 \section{Modeling Library}\label{sec:library}
 \input{Body/Library/main}
-\clearpage
+\cleardoublepage
 
-
+\pagebreak
 \input{Body/Xara/main}
-\clearpage 
+\cleardoublepage 
 
-\section{BRACE2}
+\section{BRACE2}\label{sec:irie}
 \InputChapter{Body/Irie/main}
+\cleardoublepage
 
 % \InputChapter{Part II/main}%
 
 \input{Examples/index}
+\cleardoublepage 
 
+\section{Conclusions}
+\input{Body/Part-I-Conclusions}
+\cleardoublepage
 
 \begin{appendices}
 \clearpage
@@ -255,21 +258,13 @@
 \clearpage
 
 \section{Trace Derivations}
-\input{Sections/Traces/A3_Cowper}
-\inputdraft{Sections/Traces/A3_CowperTheoremExtra}
+\input{Body/Traces/A3_Cowper}
 \clearpage
 \clearpage
-\input{Sections/Traces/A3_Energetic}
+\input{Body/Traces/A3_Energetic}
 \clearpage 
-\input{Sections/Traces/A4_TraceODE}
+\input{Body/Traces/A3_ClassIIE}
 \clearpage
-\input{Sections/Traces/A3_ClassIIE}
-\clearpage
-\inputdraft{Sections/Shapes/A_RectangleWarping}
-\clearpage 
-\inputdraft{Sections/A_AlgebraIdentities}
-\clearpage
-\inputdraft{Sections/A_IntegralIdentities}
 \end{appendices}
 \end{Notation}
 

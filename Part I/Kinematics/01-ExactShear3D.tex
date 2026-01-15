@@ -131,6 +131,7 @@ of Equation~(\ref{eq:strong}) with:
 where $\mathbf{1}$ is the $3 \times 3$ identity and the notation $(~\cdot~)^{\times}$
 is introduced in Equation~(\ref{eq:hat}).
 %
+\iffalse
 Expanding furnishes on the deformed director basis \(\{\frameBasis_i\}\):
 $$
 \left.
@@ -153,9 +154,10 @@ $$
 & =T \frameBasis+M_1 \frameBasis_2-M_2 \frameBasis_1
 \end{aligned}
 $$
+\fi 
 
 \subsubsection{Variations}
-Applying the inner product Equation~(\ref{eq:rod-inner}) to the equilibrium Equation~(\ref{eq:cosserat-B}) furnishes
+Applying the inner product \eqref{eq:rod-inner} to the equilibrium \eqref{eq:cosserat-B} furnishes
 \begin{equation*}
   \begin{aligned}
   \left<\bm{\eta}, \mathbb{B}\bm{\sigma}\right>
@@ -231,12 +233,13 @@ and one has the related strain vectors in the reference configuration?
     &= \Twist \FrameBasis + \kappa_\alpha \FrameBasis_{\alpha}
   \end{aligned}
 \end{equation*}
+
+\iffalse
 The Levi-Civita connection on \(\mathscr{C}\) is identified by: 
 \begin{equation} 
 \nabla_{\bm{u}} \bm{\eta} = \left(\mathbf{0}, \frac{1}{2}(\bm{u}_{\scriptscriptstyle{\Lambda}} \times \bm{\eta}_{\scriptscriptstyle{\Lambda}})^{\times} \FrameRotation\right).
 \end{equation}
 
-\iffalse
 For arbitrary variations \(\bm{u}, \bm{\eta}\) and \(\bm{\zeta}\) in
 \(T_\chi \mathscr{C}\) the well known Koszul formula
 \citep{bishop1980tensor} identifies the Levi-Civita connection

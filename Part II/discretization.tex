@@ -12,7 +12,7 @@ where \(\mathbb{B}_\chi\) is a nonlinear
 differential operator and both the generalized stress \(\bm{\sigma}\) and the body force \(\bm{f}\) are \emph{continuous} functions defined over a body \(\mathcal{B}\) placed in space by a
 map \(\chi\). In general \(\mathbb{B}\) may depend nonlinearly on \(\chi\),
 but always acts linearly on \(\bm{\sigma}\). 
-% This class of problems is formally summarized in Box 1.
+% This class of problems is formally summarized in Box~\ref{box:mechanical-equilibrium}.
 % Problems with the form of
 % \eqref{eq:strong} describe the equilibrium of continuua, rods, and shells, whose
 % configurations \(\chi\) may comprise a \emph{nonlinear} space
@@ -23,7 +23,7 @@ but always acts linearly on \(\bm{\sigma}\).
 \hypertarget{sec:discretization}{%
 \subsubsection{Projection}\label{sec:discretization}}
 
-The structure outlined in Box 1 implies a weak statement
+The structure outlined in Box~\ref{box:mechanical-equilibrium} implies a weak statement
 of \eqref{eq:strong} that is centered around the Galerkin \emph{residual functional}:
 %
 \begin{equation}
@@ -36,7 +36,8 @@ When specialized to classical continuum mechanics, this is equivalent to the cla
 \int \delta\bm{u} \cdot \operatorname{div} \bm{\sigma}\, d\Omega +  \int \delta \bm{u} \cdot \bm{f}\, d\Omega, 
 \label{eq:VW}
 \end{equation}
-where the virtual displacements \(\delta \bm{u}\) represent the test basis \(\bm{\eta}\) and the equilibrium operator $\mathbb{B}$ is represented by the (negative) divergence $-\operatorname{div}$. Note that the divergence always acts linearly on \(\bm{\sigma}\), but \(\bm{\sigma}\) may depend nonlinearly on the displacement \(\bm{u}\), resulting in a nonlinear problem.
+where the virtual displacements \(\delta \bm{u}\) represent the test basis \(\bm{\eta}\) and the equilibrium operator $\mathbb{B}$ is represented by the (negative) divergence $-\operatorname{div}$. 
+Note that the divergence always acts linearly on \(\bm{\sigma}\), but \(\bm{\sigma}\) may depend nonlinearly on the displacement \(\bm{u}\), resulting in a nonlinear problem.
 The developments that follow
 are kept applicable to a much wider class of mechanics models by retaining 
 the inner product \(\left<\cdot,\,\cdot\right>\) and operator \(\mathbb{B}\) notations.
@@ -136,11 +137,11 @@ updating the configuration \(\chi^{(i)}\).
 %which might be represented in.
 % These modes represent \PFF{the} available directions for the
 % next trial configuration in the space \(\mathscr{C}\).
-This appendix develops the general equations for % this procedure
+This section develops the general equations for % this procedure
 the procedure of updating the trial configuration \(\chi^{(i)}\)
-by first linearizing \eqref{eq:galerkin} in Section~\ref{sec:linearization} and then developing a
+by first linearizing \eqref{eq:galerkin} in \cref{sec:linearization} and then developing a
 finite-dimensional representation of the linearized residual in
-Section~\ref{sec:galerkin-discretization}.
+\cref{sec:galerkin-discretization}.
 
 \hypertarget{sec:linearization}{%
 \subsubsection{Linearization}\label{sec:linearization}}
@@ -315,7 +316,7 @@ This motivates the definition of \emph{effective interpolation bases}
 \end{equation}
 
 
-\paragraph{Resisting forces}
+\paragraph{Resisting forces.}
 
 %The coordinate expression of on the basis
 The evaluation of \eqref{eq:galerkin}
@@ -375,7 +376,7 @@ represents the residual element nodal forces \(\{\intern_a\}\).
 % \end{equation}
 
 
-\paragraph{Tangent Stiffness}\label{tangent-stiffness}
+\paragraph{Tangent Stiffness.}
 
 The material tangent \(\mathcal{K}_M\left[\bm{\eta}^\ell, \bm{u}^\ell\right]\)
 depends on \(\bm{u}^\ell\) %under
@@ -434,7 +435,7 @@ are furnished by summation on \(i\) and \(j\):
 
   The results of this appendix are collected in Box~\ref{box:fea}.
   The operators \(\bm{B}_a\),     \(\bm{B}^\star_b\), and \(\bm{G}_{ab}\) 
-  in Box 2 are the essential components that define a finite element and furnish the element internal forces \(\intern\) and stiffness \(\mathbf{K}\).
+  in Box~\ref{box:fea} are the essential components that define a finite element and furnish the element internal forces \(\intern\) and stiffness \(\mathbf{K}\).
   If \(\bm{\varphi}_{\eta a}\) and \(\bm{\varphi}_{u b}\) are
   equivalent, the discrete equilibrium operator \(\bm{B}_a\) 
   will be the transpose of the

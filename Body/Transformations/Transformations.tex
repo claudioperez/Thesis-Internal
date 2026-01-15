@@ -15,7 +15,7 @@ used in two ways:
   %in the expression for the stiffness 
   which generally cannot be removed from
   %the integrals required by the 
-  the \emph{internal operators} of Box 2. % which are internal to the element and are identified as the \emph{internal operators}. 
+  the \emph{internal operators} of Box~\ref{box:fea}. 
   Such a transformation is considered \emph{element-dependent},
   because it must be accounted for in a Gauss quadrature loop when an
   element performs state-determination.
@@ -75,8 +75,8 @@ In the Bubnov-Galerkin formulation, \(\bm{\eta}\) follows similarly:
 \end{equation}
 %
 
-\hypertarget{internal-operators}{%
-\paragraph{Internal Operators}\label{internal-operators}}
+
+\paragraph{Internal Operators.}\label{internal-operators}
 
 The simple interpolations
 \(\bar{\bm{\eta}}^h\), \(\bar{\VarConfig}^h\) of the transformed variations
@@ -115,7 +115,8 @@ and it follows that the natural bases
 %
 Thus finite element operators for
 interpolation in a transformed configuration space follow by using
-Equation~(\ref{eq:para-bases}) in the formulas of Box 2. If the Petrov-Galerkin
+Equation~(\ref{eq:para-bases}) in the formulas of Box~\ref{box:fea}. 
+If the Petrov-Galerkin
 approach is taken, only the transformation of Equation~(\ref{eq:uubar-parametric})
 needs to be accounted for in order to obtain a consistent tangent
 stiffness. This furnishes the discrete strain operator:
@@ -162,8 +163,8 @@ A prominent example of this approach is the tour de
 force initiated by \cite{cardona1988beam} and brought to fruition 
 by \cite{ibrahimbegović1995computational}.
 
-\hypertarget{sec:para-param}{%
-\paragraph{External Operators}\label{sec:para-param}}
+
+\paragraph{External Operators.}\label{sec:para-param}
 
 It is often desirable to parameterize a finite element analysis by nodal
 force values \(\{\bm{p}_a\}\) and nodal perturbations
@@ -183,7 +184,7 @@ where each nodal transformation
 \(\mathbf{a}_b\) is constant over \(\bm{\xi}\), and depends on the
 configuration only through the nodal parameters \(\{\bar{\VarConfig}_b\}\).
 Propagating Equation~(\ref{eq:adapt-displ}) through the characteristic operators
-of Box 2 shows that the nodal operators factor out, and the effect on
+of Box~\ref{box:fea} shows that the nodal operators factor out, and the effect on
 %the element forces \(\bar{\bm{p}}_a\) and 
 the stiffness \({\mathbf{k}}_{a b}\) can be applied externally with the operation:
 \begin{equation}
@@ -193,7 +194,7 @@ the stiffness \({\mathbf{k}}_{a b}\) can be applied externally with the operatio
 \end{aligned}
 \label{eq:adapt-petr-para}
 \end{equation}
-where $\bar{\mathbf{k}}_{ab}$ is the stiffness resulting from substitution of Equation~(\ref{eq:para-bases}) into the operators of Box 2,
+where $\bar{\mathbf{k}}_{ab}$ is the stiffness resulting from substitution of Equation~(\ref{eq:para-bases}) into the operators of Box~\ref{box:fea},
 before application of the operator \(\mathbf{a}_b\).
 
 A Bubnov-Galerkin formulation will require that nodal forces are rectified in a conjugate manner by amending
@@ -235,7 +236,7 @@ for \(\mathbf{k}_{ab}\) follows equivalently either by linearizing the new
 discrete residual
 \(\bm{\eta}_a\cdot \mathbf{a}_a^{\mathrm{t}} \, \bm{p}_a\), or by
 rederiving
-the operators in Box 2 using Equation~(\ref{eq:adapt-eta}).
+the operators in Box~\ref{box:fea} using \eqref{eq:adapt-eta}.
 
 \hypertarget{remarks04}{%
 \paragraph{Remarks}\label{remarks04}}
@@ -433,29 +434,9 @@ couple \(\VarConfig = (\VarConfig_x , \VarConfig_{\scriptscriptstyle{\Lambda}})\
 that
 \(\bm{R}\VarConfig = (\bm{R}\VarConfig_x , \bm{R}\VarConfig_{\scriptscriptstyle{\Lambda}})\).
 
-\vspace{5ex}
-\begin{ambox}[Corotational Transformation]{box:corotation}
-\begin{enumerate}
-    \item 
-\[
-\bm{x}(\xi),\FrameRotation(\xi) \mapsto \begin{pmatrix}
-    \bm{R}^{\mathrm{t}}(\bm{x}(\xi) -\bm{c})\\
-    \bm{R}^{\mathrm{t}}\FrameRotation (\xi)
-\end{pmatrix}
-\]
-
-\item 
-\[
-\bm{x}(\xi),\FrameRotation(\xi) \mapsto \begin{pmatrix}
-    \bm{x}(\xi) \\
-    \operatorname{Log}(\FrameRotation (\xi))
-\end{pmatrix}
-\]
-\end{enumerate}
-\end{ambox}
 
 \hypertarget{internal-operators-1}{%
-\paragraph{Internal Operators}\label{internal-operators-1}}
+\paragraph{Internal Operators.}\label{internal-operators-1}}
 
 The split form of the inner product in Equation~(\ref{eq:conf-pair}) allows
 Equation~(\ref{eq:galerkin}) to be written in terms of components
@@ -523,12 +504,12 @@ strain operator as suggested by Equation~(\ref{eq:vstrain}).
 When indeed \(\mathbb{B}^*\bm{\psi} = \mathbf{0}\), Equation~(\ref{eq:galerkin-local}) implies %suggests
 that any change resulting from an isometrically transformed interpolation can
 be factored out from the internal element operators 
-of Box 2.
+of Box~\ref{box:fea}.
 %There is nothing from the transformation that lingers in the inner product that
 %has to be accounted for inside the element state-determination.
 There is no trace of the transformation in the inner product featured in the element state-determination.
 This is in sharp contrast with the parametric case, where one or more of the
-operators in Box 2 
+operators in Box~\ref{box:fea} 
 %operators always
 need to be re-derived because \(g_*\) either appears
 %becomes trapped
@@ -540,7 +521,7 @@ changes the representation of the nodal variables and consequently needs to be a
 external transformation to recover the original representation.
 
 \hypertarget{external-operators}{%
-\paragraph{External Operators}\label{external-operators}}
+\paragraph{External Operators.}\label{external-operators}}
 
 The external effect of the transformation stems from the transformation
 of the nodal values \(\{\bm{\eta}_a\}\) and \(\{\VarConfig_b\}\) to
@@ -763,6 +744,7 @@ returned by the element:
 \end{enumerate}
 \end{ambox}
 
+\iffalse
 %
 \begin{algorithm}[!h]
 \caption{\enskip Wrapper state-determination for a sequence \(\{g_{i}\}\) of \(n_{\text{tran}}\) Box~\ref{box:external-operators} transformations.}\label{alg:push}
@@ -805,3 +787,4 @@ For this algorithm, the wrapper state-determination consists of three phases: %a
   \({\mathbf{k}}\) are transformed according to either the Petrov-Galerkin or the Bubnov-Galerkin rules.
 \end{enumerate}
 %
+\fi

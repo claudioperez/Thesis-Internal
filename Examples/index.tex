@@ -1,4 +1,4 @@
-\section{Verification: Elastic Problems}\label{sec:verify-elastic}
+\section{Verification Problems}\label{sec:verify-elastic}
 
 \newcommand{\OnlyExact}{**}
 
@@ -14,7 +14,7 @@ This chapter presents verification studies of the formulations developed in Part
 
 \begin{table}[H]
 \centering
-\caption{Summary of elastic verification problems in connection with the considerations of Box~\ref{box:model-summary}.}
+\caption{Summary of verification problems in connection with the considerations of Box~\ref{box:model-summary}.}
 \label{tab:verification}
 \begin{tabular}{llccccccccl}
     \toprule
@@ -40,6 +40,19 @@ This chapter presents verification studies of the formulations developed in Part
       %
       & \ref{sec:trace}
       \\
+     \ExRef{frame-0021}
+     & F. Sol.
+     & -
+     & Linear
+     % Warping
+     & Uniform
+     & Nonuniform
+     % Loading
+     &
+     & Elastic
+     %
+     & \ref{sec:gensec}, \ref{sec:trace}
+     \\
     \ExRef{frame-0015}
      & F. Sol.
      & -\footnote{Analytic solution coincides under exact and linear geometry.}
@@ -49,20 +62,8 @@ This chapter presents verification studies of the formulations developed in Part
      & -
      % Loading
      &
-     &
+     & Elastic
      & \ref{sec:gensec}
-     \\
-     \ExRef{frame-0021}
-     & F. Sol.
-     & -
-     & Linear
-     % Warping
-     & Uniform
-     & Nonuniform
-     % Loading
-     & &
-     %
-     & \ref{sec:gensec}, \ref{sec:trace}
      \\
      \ExRef{frame-1030}
      & Exp.
@@ -86,18 +87,19 @@ This chapter presents verification studies of the formulations developed in Part
      \\
      \ExRef{frame-1001}
      & C. Sol.
-     & Exact
+     & Finite
      & Linear
      % Warping
      & - 
      & - 
      % Loading
-     & &
+     & 
+     & Elastic
      & \ref{sec:transform}
      \\
      \ExRef{frame-1002}
      & Ana.
-     & Exact
+     & Finite
      \\
      \ExRef{frame-1003}
      & Ben.
@@ -107,7 +109,8 @@ This chapter presents verification studies of the formulations developed in Part
      % Warping
      & & 
      % Loading
-     & & 
+     & 
+     & Elastic
      & \ref{sec:loading}
      % 
      \\
@@ -120,6 +123,9 @@ This chapter presents verification studies of the formulations developed in Part
      & Linear
      & -
      & -
+     &
+     & Elastic
+     & 
      \\
      \ExRef{frame-1007}
      \\
@@ -164,13 +170,22 @@ This chapter presents verification studies of the formulations developed in Part
     & 
     & Plastic
     \\
+    \ExRef{frame-3032}
+    & Ben.
+    & Finite
+    & Linear
+    & Uniform
+    & Uniform
+    & Eccentric
+    & Plastic
+    \\
      \bottomrule
 \end{tabular}
 \end{table}
 }
 
-The simulations are performed in the Matlab based framework FEDEASLab \citep{filippou2004fedeaslabb} and the \emph{Xara} simulation engine \citep{perez2024xara}.
-Renderings are generated with the \emph{veux} Python package \citep{perez2023veux}.
+The simulations are performed in the Matlab based framework FEDEASLab \citep{filippou2004fedeaslabb} and the \Xara{} simulation engine \citep{perez2024xara}.
+Renderings are generated with the \Veux{} Python package \citep{perez2023veux}.
 
 The \ExactFrame{} element uses Gauss-Legendre quadrature of order \(n-1\), where $n$ is the number of element nodes. 
 The \ForceFrame{} element uses Gauss-Lobatto quadrature with 8 integration points, unless otherwise stated. 
@@ -179,8 +194,10 @@ The source code implementing these simulations is available at \url{https://gith
 
 % \subsection{Saint-Venant bending (0001)}\label{sec:frame-0001}
 % \input{Examples/frame-0001/index}
-\subsection{Sensitivity \ShowLabel{0002}}\label{sec:frame-0002}
-\input{Examples/frame-0002/index}
+
+
+% \subsection{Sensitivity \ShowLabel{0002}}\label{sec:frame-0002}
+% \input{Examples/frame-0002/index}
 
 \subsection{Saint-Venant flexure \ShowLabel{0012}}\label{sec:frame-0012}
 \input{Examples/frame-0012/index}
@@ -211,7 +228,7 @@ The source code implementing these simulations is available at \url{https://gith
 \subsection{Conservative distributed loads \ShowLabel{1003}}\label{sec:frame-1003}
 \input{Examples/frame-1003/index}
 
-\subsection{Applied Moments under Finite Rotations (100[68])}
+\subsection{Applied Moments through large rotations (100[68])}
 \input{Examples/frame-1001/73_SpaceCantilever}
 
 \subsection{Spurious Path Dependence \ShowLabel{1007}}\label{sec:frame-1007}
@@ -220,7 +237,7 @@ The source code implementing these simulations is available at \url{https://gith
 \subsection{Hockling \ShowLabel{1010}}\label{sec:frame-1010}
 \input{Examples/frame-1001/75_Hockling}
 
-\subsection{Follower nodal loads \ShowLabel{1020}}\label{sec:frame-1020}
+\subsection{Follower point force \ShowLabel{1020}}\label{sec:frame-1020}
 \input{Examples/frame-1020/index}
 
 \subsection{Lateral-torsional buckling with warping \ShowLabel{1018}}\label{sec:frame-1018}
@@ -239,6 +256,9 @@ The source code implementing these simulations is available at \url{https://gith
 
 \subsection{Inelastic nonlinear uniform torsion \ShowLabel{3011}}\label{sec:frame-3011}
 \input{Examples/frame-3011/index}
+
+\subsection{Inelastic nonuniform torsion \ShowLabel{3032}}\label{sec:frame-3032}
+\input{Examples/frame-3032/index}
 
 \subsection{Concrete bridge column \ShowLabel{2021}}\label{sec:frame-2021}
 \input{Examples/frame-2021/index}

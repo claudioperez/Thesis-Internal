@@ -1,5 +1,5 @@
 
-\section[Xara]{Xara: A Structured Runtime for Structural Simulation}\label{ch:xara}
+\section[Xara]{\Xara{}: A Structured Runtime for Structural Simulation}\label{ch:xara}
 
 \subsection{Introduction}
 
@@ -24,7 +24,8 @@ While this design reduced the implementation burden for adding new commands, it 
 
 \subsubsection{Implicit State and Referential Opacity}
 
-The OPS API exposes functions of the form \texttt{OPS\_GetAnalysisModel()}, \texttt{OPS\_GetUniaxialMaterial(tag)}, and \texttt{OPS\_GetNDM()} that return pointers to objects held in global tables. 
+The OPS API exposes functions of the form \texttt{OPS\_GetAnalysisModel()} and \texttt{OPS\_GetUniaxialMaterial(tag)}
+that return pointers to objects held in global tables. 
 A command implementation retrieves its dependencies by calling these functions, which access ambient state rather than receiving arguments explicitly. This design violates the principle of referential transparency: the same function call may return different results depending on the order of prior commands, and the dependencies of any given function are not apparent from its signature.
 
 The user-facing consequence is that commands exhibit implicit sequential coupling. For instance, the \texttt{load} command depends on state established by a prior \texttt{pattern} command; invoking \texttt{load} without an active pattern context produces undefined behavior. Similarly, material and element definitions implicitly reference the ``current'' model, and analysis commands operate on whichever domain object was most recently constructed. These dependencies are not enforced by the type system or checked at parse time---they manifest as silent numerical corruption or segmentation faults at runtime.

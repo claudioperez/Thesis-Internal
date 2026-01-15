@@ -12,21 +12,18 @@ G=80,
 unit/stress={\giga\pascal}
 }
 
-A simply supported span is subjected to constant flexure (\cref{fig:1035-model}). 
-A closed form solution for the critical buckling moment is \citep{kitipornchai1986lateral}:
+A simply supported span of length $L = 6\unit{\meter}$ is subjected to constant flexure (\cref{fig:1035-model}). 
+A closed form solution for the critical buckling moment is \citep[(7.22)]{trahair1993flexuraltorsional}:
 $$
 \begin{aligned}
-M_c & =\frac{\pi}{L}\sqrt{E I_y G J} \left[\left(1+\frac{\pi^2 \beta_x^2 E I_y}{4L^2 G J}\right)^{1 / 2}+\frac{\pi \beta_x}{2 L}\left(\frac{E I_y}{G J}\right)^{1 / 2}\right] .
+M_{\mathrm{cr}} & =\frac{\pi}{L}\sqrt{E I_y G J} \left[\left(1+\frac{\pi^2 \beta_x^2 E I_y}{4L^2 G \Jo}\right)^{1 / 2}+\frac{\pi \beta_x}{2 L}\left(\frac{E I_y}{G \Jo}\right)^{1 / 2}\right] .
 \end{aligned}
+\qquad\text{with}\qquad 
+\beta_x = \frac{1}{I_x}\int y (x^2 + y^2)\dA - 2y_0
 $$
 
-\begin{Note}
-From \cite{du2021threedimensionala}:
-For the section properties shown in Fig. 12, buckling loads are obtained for three different beam lengths using 20 the newly developed mixed elements. 
-The comparison of the results from the present study and Kitipornchai’s theoretic equation are presented in Table 1. 
-It is shown that the lateral-torsional buckling loads are accurately predicted by the mixed elements. 
-In the analysis, a five-point Gauss-Lobatto integration rule is used for each element.
-\end{Note}
+The span is discretized by 10 elements. 
+\cite{du2021threedimensionala} obtained similar results with 20 elements and \cite{kitipornchai1986lateral} with 30 elements.
 
 \begin{figure}[H]
     \centering

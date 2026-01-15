@@ -28,23 +28,6 @@ the arbitrary reparameterization of the nodal variables.
 Finally, the proposed framework readily accommodates the Petrov-Galerkin formulation.
 Even though this formulation results in an asymmetric tangent stiffness, Petrov-Galerkin methods are useful for dynamic analysis.
 
-\subsubsection{Verification}
-Five examples from the literature are used to confirm that the proposed geometric transformation framework
-reproduces exactly the results of two seminal studies on geometrically exact formulations \cite{simo1986threedimensional}, \cite{ibrahimbegović1995computational}.
-%
-The examples go on to showcase the effect of enhancing these formulations with strain-objectivity.
-
-For the planar flexural response of a cantilever beam in  Example~\ref{sec:plane} the enhanced formulations with strain objectivity demonstrate excellent agreement with available analytical solutions and equivalent accuracy and convergence characteristics to existing formulations.
-
-The spatial response of the cantilever beam in Example~\ref{sec:frame-1008}
-shows that the proposed formulation with objectivity and a symmetric stiffness matrix maintains the accuracy and convergence properties of the wrapped element under spatial loading and very demanding deformation states.  
-
-The curved cantilever of Example~\ref{sec:frame-1007} illustrates the utility of the modular framework for path-independent problems allowing for various reparameterizations of the nodal variables in connection with the invariance isometry \texttt{SFIN}, while preserving the path-independence with the \texttt{Init} interpolation.
-
-The buckling analysis of a flexible rod under torsion in Example~\ref{sec:frame-1010} shows that the proposed formulation with objectivity and a symmetric stiffness matrix maintains the accuracy and 
-convergence properties of the wrapped element even for a deformation history with instability.
-
-
 The proposed framework leverages the mathematical structure of the finite element method to delegate the computational cost of logarithmic parameterizations to external procedures, which can be included or excluded from an analysis depending on the problem characteristics.
 Because these computations are performed within the element integration loop in the literature, this consolidation optimizes the implementation.
 The paper reveals similar optimizations for the implementation of geodesic interpolations, where in addition to relegating certain operations outside the state determination process some operations are dropped altogether due to the cancellation of rigid body mode terms.

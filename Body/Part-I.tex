@@ -23,8 +23,8 @@ Such problems lie outside the domain of classical finite element methods \citep{
 Formulations that restore objectivity exist, but they sacrifice the symmetric tangent stiffness that accelerates iterative solution.
 
 \item[Material Nonlinearity]
-Inelastic material response generally depends on the full continuum strain tensor, whose pointwise value in the body is lost in the process of dimensional reduction. 
-Fiber section models reconstruct this state of strain by leveraging the plane section hypothesis of Euler-Bernoulli and Timoshenko beam theories, but this fails to account for cross-sectional warping and often furnishes unrealistic response. 
+Inelastic material response generally depends on the full continuum strain tensor, whose pointwise value in the member is lost in the process of dimensional reduction. 
+Fiber section models \cite{taucer1991fiber} reconstruct this state of strain by leveraging the plane section hypothesis of Euler-Bernoulli and Timoshenko beam theories, but this fails to account for cross-sectional warping and often furnishes unrealistic response. 
 In the elastic theory of beams these effects are tacitly represented by the Saint~Venant torsion and shear-correction cross sectional constants, but these approaches do not lend themselves to inelastic analysis. 
 \end{description}
 
@@ -49,7 +49,7 @@ In the elastic theory of beams these effects are tacitly represented by the Sain
     \item Nonuniform warping.
   \end{itemize}
  
-\item\label{obj:expressivity} Expressivity
+\item\label{obj:expressivity} Expressivity.
   \begin{itemize}
       \item Rotation parameterization
       \item Boundary fixities
@@ -103,11 +103,6 @@ At this point we are confronted with the fundamental ambiguity in associating th
 So then we introduce the abstraction of traces, $T: \hat{\bm u} \rightarrow (\bm{u}, \bm\theta)$ which formalize this ambiguity. 
 There are three natural restrictions we impose on the class of traces we'll investigate: 1) they generate at-most-linear strain measures under the SV class, 2) they preserve plane-section-preserving deformations, and 3) they are capable of exactly reconstructing the exact strain field for any problem in the SV class.
 \end{Aside}
-
-We do not treat thin-walled sections as a special case requiring separate 
-theoretical development. The formulation applies to arbitrary solid or 
-thin-walled cross-sections, with the classical thin-walled results 
-(Vlasov torsion, etc.) emerging as special cases.
 
 
 \subsection{Outline}

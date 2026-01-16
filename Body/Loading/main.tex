@@ -1,38 +1,47 @@
 
+The \texttt{FrameLoad} class implements general element loading in frames. 
 
-Element loads in beam and shell finite-element formulations are fully described by three items:
+Element loads in frame elements are characterized by :
 \begin{enumerate}
-\item Distribution $w(x)$ – how the load intensity varies along the element length (uniform, trapezoidal, etc.).
-\item Offset $(e)$ – the perpendicular distance from the beam’s reference axis to the line of action; non-zero offsets introduce additional bending moments.
-\item Reference coordinate basis – the frame in which the load components are expressed.  This choice governs both the physical meaning of the prescribed components and whether a load term must be added to the global tangent.
+\item Distribution $w(x)$ – how the load intensity varies along the element length (point, uniform, trapezoidal, etc.).
+\item \texttt{Offset} $\bm{r}_f$ – the perpendicular distance from the beam’s reference axis to the line of action; non-zero offsets introduce additional bending moments.
+\item Reference basis $\{\mathbf{e}_i\}$ – the coordinate basis in which the load components are expressed.  This choice governs both the physical meaning of the prescribed components and whether a load term must be added to the global tangent.
 \end{enumerate}
 
-\paragraph{Reference bases}
+\paragraph{Distributions.} 
+Two distributions are implemented:
+\begin{itemize}
+    \item \texttt{Point} represents a point load, which is expressed as a Dirac delta function:
+    \[
+    \bm{f}(\reflenx,t) = \delta(x-x_0) \mathbf{f} \,  
+    \]
+\end{itemize}
 
-A distributed load is generally specified by components in one of three coordinate systems:
+\paragraph{Reference bases.}
+An element load is specified by components in one of three coordinate systems:
 
 \begin{itemize}
 \item Global basis \(\{\mathbf{E}_{i}\}\) – Fixed in space.  
-Ideal for body forces such as self-weight, because gravity always points downward in the same global direction.  The load vector is independent of element deformation, so no geometric (load) stiffness is generated. Mathematically such a load, \(\bm{f}(\xi,t)\) satisfies
+Ideal for body forces such as self-weight, because gravity always points downward in the same global direction.  The load vector is independent of element deformation, so no geometric (load) stiffness is generated. Mathematically such a load, \(\bm{f}(\reflenx,t)\) satisfies
 \begin{equation*}
-    \bm{f}(\xi,t) \cdot \mathbf{E}_i = \mathrm{const.}
+    \bm{f}(\reflenx,t) \cdot \mathbf{E}_i = \mathrm{const.}
     \qquad\forall \mathbf{E}_i,\, t,
 \end{equation*}
 An example of such a load is 
 \begin{equation*}
-    \bm{f}_{\mathrm{n}}(\xi) = -w(\xi) \, \mathbf{E}_3,
+    \bm{f}_{\mathrm{n}}(\reflenx) = -w(\reflenx) \, \mathbf{E}_3,
 \end{equation*}
-where at each point \(\xi\), \(w(\xi)\) is a constant over the duration of the analysis.
+where at each point \(\reflenx\), \(w(\reflenx)\) is a constant over the duration of the analysis.
 
-\item Local basis of the reference configuration \(\{\FrameBasis_k\}\) – Aligned with the undeformed element axis.  Useful for contact or wind loads that are applied to the member as it sits in the initial mesh.  Components remain constant in magnitude and direction relative to the undeformed axis; again, no follower effects appear.
+\item Local reference basis \(\{\FrameBasis_k\}\) – Aligned with the undeformed element axis.  Useful for contact or wind loads that are applied to the member as it sits in the initial mesh.  Components remain constant in magnitude and direction relative to the undeformed axis; again, no follower effects appear.
 % *Figure suggestion*: depict a straight cantilever with local axes sketched at one end and a uniformly distributed transverse load shown along the span.
 Mathematically such a load, \(\bm{f}(\xi,t)\) satisfies
 \begin{equation*}
-    \bm{f}(\xi,t) \cdot \FrameBasis(\xi)  \equiv \bm{f}(\xi,t) \cdot \frameBasis(\xi,0) = \mathrm{const.}
+    \bm{f}(\xi,t) \cdot \FrameBasis(\reflenx)  \equiv \bm{f}(\reflenx,t) \cdot \frameBasis(\reflenx,0) = \mathrm{const.}
     \qquad\forall\; \FrameBasis_i,\, t
 \end{equation*}
 
-\item Director basis \(\{\frameBasis_k\}\) – Oriented with the current cross-section at each integration point; as the element deforms, these axes rotate.  Loads expressed in this frame (e.g., pressure normal to the surface, axial tension that always aligns with the current axis) “follow” the deformation.  
+\item Local follower basis \(\{\frameBasis_k\}\) – Oriented with the current cross-section at each integration point; as the element deforms, these axes rotate.  Loads expressed in this frame (e.g., pressure normal to the surface, axial tension that always aligns with the current axis) “follow” the deformation.  
 Their contribution to the residual and tangent includes a non-symmetric load-stiffness (geometric stiffness) term that must be assembled to capture effects such as follower forces in stability analyses.
 Mathematically such a load, \(\bm{f}(\xi,t)\) satisfies
 \begin{equation*}

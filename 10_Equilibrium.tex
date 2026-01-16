@@ -189,14 +189,7 @@ with momentum balance:
 Standard 6-DOF beam elements can thus be used without modification, as they need only receive the primary stress resultants $(\bm{n}, \bm{m})$.
 \end{ambox}
 
-
  This model is not able to enforce equilibrium of the constrained bishears/bimoments, but rather relies on the assumption that these naturally equilibrate. 
-
- \begin{Quote}
-One major implication with Type 2 and 3 is that $\bar{\bm s}$ is not exactly the work-conjugate resultant to $\bar{\bm e}$. 
-In Type 2 this may still furnish a symmetric \emph{global} tangent stiffness (linearizatino of the galerkin residual with respect to the variations of the configuration variables $(u,\Lambda,\alpha)$), because the element provides the $L_{vp} w'$ part (THIS IS A CONJECTURE THAT WE NEED TO VERIFY), but the section-level tangent certainly need not be symmetric (ie, $d\bar{s}/d\bar{e}$). 
-In Type 3, any asymmetry in the section constitution $d\bar{s}/d\bar{e}$ goes right through to the global tangent.
-\end{Quote}
 
 
 \subsection{Type 4: Neglected Warping}
@@ -215,7 +208,7 @@ Balance of momentum is stated purely in terms of \(\bm{s}_{\mathrm{p}}\)
 
 \subsection{Summary}
 
-A library of finite elements typically contains ``Type 1/2", and ``Type 3" finite elements. 
+A library of finite elements typically contains ``Type 1/2", and ``Type 3" models. 
 Type 1/2 elements have over 6 dofs per node and are somewhat less standard. 
 Type 3 elements are classical with 6 dofs/node and expect only $(\bm{n},\bm{m})$ from the section. 
 We want one section implementation which supports all element types. 

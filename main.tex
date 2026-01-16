@@ -6,8 +6,8 @@
 \finalfalse
 
 \newif\ifnotes
-\notesfalse
-% \notestrue
+% \notesfalse
+\notestrue
 %
 \ifthesis
 \newcommand{\InputChapter}[1]{{
@@ -167,7 +167,6 @@
 \section{Element Formulations}\label{sec:genwarp}
 \input{10_EquilibriumOverview}
 \clearpage
-\iftrue
 \input{10_Equilibrium}
 \clearpage
 \inputdraft{10_Equilibrium-1}
@@ -175,7 +174,7 @@
 \inputdraft{10_Equilibrium-3}
 \clearpage
 \inputdraft{15_Examples}
-\fi
+\cleardoublepage
 
 \section{Geometric Transformations}\label{sec:transform}
 \input{Body/Transformations/index}
@@ -196,7 +195,7 @@
 \cleardoublepage
 
 \pagebreak
-\section{Conclusions}
+\section{Summary}
 \input{Body/Part-I-Conclusions}
 \cleardoublepage
 

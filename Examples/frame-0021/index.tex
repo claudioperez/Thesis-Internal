@@ -1,10 +1,11 @@
-\begin{figure}
+\begin{figure}[H]
     \centering
-    \includegraphics[width=0.5\linewidth]{Examples/frame-0021/img/frame-0021.png}
-    \caption{Caption}
-    \label{fig:placeholder}
+    \includegraphics[width=0.9\linewidth]{Examples/frame-0021/img/frame-0021.png}
+    \caption{Model for Example~\ref{sec:frame-0021}.}
+    \label{fig:0021}
 \end{figure}
 
+\subparagraph{Context}
 This example investigates non-uniform torsional warping. 
 The analytic solution \eqref{eq:0028-gen-rot} to the beam governing equations (Box~\ref{box:exact-shear-svq}) is used as reference. 
 
@@ -83,16 +84,8 @@ However, for the rotation field \eqref{eq:rotation-field}, \(\FrameRotation\Fram
 \end{equation*}
 Note that \(\bm{x}' = \FrameBasis\) so that \(\FrameBasis\cdot \bm{x}' \times (\FrameRotation \bm{n})= \bm{0}\).
 
-\paragraph{Enhancement}
-Solving \(\EnhanParam\) for Condition~(ii) by \eqref{eq:def-enhan-residual} 
-furnishes:
+where:
 \begin{equation}
-\begin{aligned}
-\EnhanParam 
-&= (\Twist - \alpha) \bar{\eta} \\
-% &= \Twist - \alpha 
-\end{aligned}
-\quad\text{with}\quad 
 \begin{aligned}
 \Io &\triangleq \FrameBasis \cdot \LinearMM \FrameBasis \\
 \bar{\eta} &\triangleq \frac{\Jv - \EnhanConstFA \Jw}{\Jv - \EnhanConstFA (2 \Jw - \EnhanConstFA \Js)} \\
@@ -103,7 +96,7 @@ J_{\eta} &= \Jv - \bar{\eta}\tilde{J}
 \label{eq:enhan-param}
 \end{equation}
 %
-Substitution of \eqref{eq:fa-lambda} into \eqref{eq:def-enhan-strain} with \(\EnhanParam\) obtained in \eqref{eq:enhan-param} furnishes
+The strain vector is:
 %
 \begin{equation}
 \begin{aligned}

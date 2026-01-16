@@ -1,9 +1,10 @@
+\subparagraph{Context}
 This example demonstrates consistency of the moderate strain model (\cref{sec:section-kinematics}) with the analytic solution \eqref{eq:0015-solution} derived by \cite{trahair2005nonlinear} for nonlinear torsion.
 
 Similar problems have been considered by 
 \cite{hsiao2000corotational,battini2002corotational,jonker2021threedimensional} \cite{rong2020geometrically} \cite{zhang2011formulation}.
 
-
+\subparagraph{Setup}
 A shaft is subjected to a concentrated torque $\TwistRxn$ acting at $\reflenx=L$. 
 Rotation is prevented at the left support, $\reflenx=0$. 
 The differential equation for nonlinear elastic nonuniform torsion is \citep{trahair2005nonlinear}:
@@ -17,16 +18,16 @@ where $\TwistRxn$ is the applied torque at a distance $\reflenx$ along the membe
 
 % The resultant torque $T$ comprises the linear uniform torque $G\Jsv \vartheta'$, the linear warping torque $-E\Jw \vartheta'''$, and the nonlinear torque $\tfrac12 E I_n \vartheta'''$ arising from the Wagner strain term \eqref{eq:wagner-gl-strain-pi}. 
 
-\subsubsection{Uniform Twist}
+% \subsubsection{Uniform Twist}
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.5\linewidth]{Examples/frame-0015/img/0015-twist.png}
-    \caption{Tip torque (\(\TwistRxn\)) vs. rotation (\(\vartheta\)) for Example~\ref{sec:frame-0015}.}
+    \caption{Tip torque \(\TwistRxn\) vs. rotation \(\vartheta\) for Example~\ref{sec:frame-0015}.}
 \end{figure}
-This beam is in uniform torsion under a constant torque $\TwistRxn=M$, so that the twist $\vartheta'$ is constant along the member. 
+This beam is in uniform torsion under a constant torque $\TwistRxn$, so that the twist $\vartheta'$ is constant along the member. 
 In this case, ($\dagger$) can be solved in closed form as
 \begin{equation}
-M=G \Jo \frac{\vartheta_L}{L}+\tfrac{1}{2} E I_n\left(\frac{\vartheta_L}{L}\right)^3
+T(x)=G \Jo \frac{\vartheta_L}{L}+\tfrac{1}{2} E I_n\left(\frac{\vartheta_L}{L}\right)^3
 \label{eq:0015-solution}
 \end{equation}
 The section dimensions are $200 \mathrm{~mm} \times 10 \mathrm{~mm}$ with constants $J=66.667 \times 10^3 \mathrm{~mm}^4$, 
@@ -46,6 +47,7 @@ G={80,000},
 unit/stress={\mega\pascal}
 }
 
+\subparagraph{Results}
 \begin{table}[H]
     \centering
     \begin{tabular}{cccccc}
@@ -55,3 +57,5 @@ unit/stress={\mega\pascal}
          & - & -               & \ExactFrame{I} & 
     \end{tabular}
 \end{table}
+
+\subparagraph{Conclusions}

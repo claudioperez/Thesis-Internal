@@ -21,20 +21,13 @@ warping mode, and work seamlessly with standard frame elements whether or not th
 \paragraph{Literature}
 \cite{taucer1991fiber}\cite{ngoc2017damage}. 
 
-Mixed finite element formulations tend to be desirable when inelastic response must be represented, and geometric nonlinearities are expected to be moderate \cite{neuenhofer1997evaluation}. 
-Frame elements of this lineage were pioneered by \cite{kaba1984refined}, \cite{ciampi}, \cite{filippou}, \cite{hjelmstad2003mixed}, and many others. 
+Mixed finite element formulations tend to be desirable when inelastic response must be represented, and geometric nonlinearities are expected to be moderate \citep{neuenhofer1997evaluation}. 
 The development and implementation of these methods tends to be more involved than displacement formulations, and they are typically applied to linearized governing equations. 
-  Moderate geometric nonlinearities were considered in 2D by \textcite{neuenhofer1998geometrically} who introduced the concept of \emph{curvature-based displacement interpolation} (CBID), and applied it to the truncated 2D equilibrium equations which govern Euler buckling. 
-  This was later extended to the 3D \gls{frame:axial}-\gls{frame:euler} model (Box~\ref{box:axial-euler}) by \cite{desouza2000forcebased}.
-%
-  The method was extended to the \gls{frame:basic}-\gls{frame:shear} theory through the work of \cite{taylor2003mixed,saritas2004modeling,saritas2009frame}.
-%
-  The CBDI technique was extended to the \gls{frame:axial}-\gls{frame:shear} theory of \cref{sec:axial-shear}  by \cite{jar}
 
 
 \paragraph{Scope}
 Only shear-deformable formulations are discussed. 
-Shear-deformable beam theories are known to converge to Euler-Bernoullii beam theory in the limit of increasing span-to-depth ratio, and therefore are valid over a larger range of structure types, making them more suitable for the demands of our context.
+Shear-deformable beam theories are known to converge to Euler-Bernoulli beam theory in the limit of increasing span-to-depth ratio, and therefore are valid over a larger range of structure types, making them more suitable for the demands of our context.
 
 For similar reasons, only distributed inelasticity formulations are considered (as opposed to concentrated inelasticity formulations). 
 Concentrated inelasticity formulations inherently carry several restrictive assumptions pertaining to things like element loading (typically assume no distributed loads) and resultant coupling. 
@@ -248,10 +241,9 @@ Elements are grouped into three types based on their geometric nature:
 \end{itemize}
 
 \begin{enumerate}
-    \item[T1.]\label{lib:T1} \texttt{Linear}
-    \item[T2.]\label{lib:T2} \texttt{PDelta}
-    \item[T3.]\label{lib:T3} \texttt{Corotational} \cref{sec:coro-details}
-    \item[T4.]\label{lib:T4} \texttt{Spherical} \cref{sec:sfin}
+    \item\label{lib:T1} \texttt{Linear}
+    \item\label{lib:T3} \texttt{Corotational} \cref{sec:coro-details}
+    \item\label{lib:T4} \texttt{Spherical} \cref{sec:sfin}
 \end{enumerate}
 
 Rotation parameterization is controlled by:
@@ -270,14 +262,12 @@ Rotation parameterization is controlled by:
     \label{fig:section-class}
 \end{figure}
 
-\begin{enumerate}
-    \item \texttt{AxialFiber}
-    \item \texttt{ShearFiber} 
-    \begin{itemize}
-        \item \texttt{ShearFiber}$_{\rm I}$:  \eqref{eq:linear-gl-strain-pi}
-        \item \texttt{ShearFiber}$_{\rm II}$: \eqref{eq:wagner-gl-strain-pi}
-    \end{itemize}
-\end{enumerate}
+The \ShearFiber{} section implements the developments of \cref{sec:gensec} and \cref{sec:timo}. 
+
+% \begin{itemize}
+%     \item \texttt{ShearFiber}$_{\rm I}$:  \eqref{eq:linear-gl-strain-pi}
+%     \item \texttt{ShearFiber}$_{\rm II}$: \eqref{eq:wagner-gl-strain-pi}
+% \end{itemize}
 
 
 \subsection{Element Loading}\label{sec:loading}
@@ -285,6 +275,32 @@ Rotation parameterization is controlled by:
 
 \subsection{Sensitivity}
 \cite{al-aukaily2019corotational}
+
+
+
+\subsection{Verification}
+\paragraph{Geometric Transformations}
+Five examples from the literature are used to confirm that the proposed geometric transformation framework
+reproduces exactly the results of two seminal studies on geometrically exact formulations \cite{simo1986threedimensional}, \cite{ibrahimbegović1995computational}.
+%
+The examples go on to showcase the effect of enhancing these formulations with strain-objectivity.
+
+For the planar flexural response of a cantilever beam in  Example~\ref{sec:plane} the enhanced formulations with strain objectivity demonstrate excellent agreement with available analytical solutions and equivalent accuracy and convergence characteristics to existing formulations.
+
+The spatial response of the cantilever beam in Example~\ref{sec:frame-1008}
+shows that the proposed formulation with objectivity and a symmetric stiffness matrix maintains the accuracy and convergence properties of the wrapped element under spatial loading and very demanding deformation states.  
+
+The curved cantilever of Example~\ref{sec:frame-1007} illustrates the utility of the modular framework for path-independent problems allowing for various reparameterizations of the nodal variables in connection with the invariance isometry \Spherical{}, while preserving the path-independence with the \texttt{Init} interpolation.
+
+The buckling analysis of a flexible rod under torsion in Example~\ref{sec:frame-1010} shows that the proposed formulation with objectivity and a symmetric stiffness matrix maintains the accuracy and 
+convergence properties of the wrapped element even for a deformation history with instability.
+
+\paragraph{Warping Consistency}
+
+\Cref{sec:frame-0012} presents a numerical example demonstrating exact recovery of 
+Saint~Venant solutions through the proposed formulation. 
+Behavior under inelastic material response is investigated in \Cref{sec:frame-2007} and \Cref{sec:frame-2021}.
+
 
 \subsection{Summary}
 
@@ -297,8 +313,8 @@ This library addresses the following shortcomings in the existing
 \tightlist
 \item
   No geometrically exact elements
-\item
-  Current elements do not handle distributed mass consistently
+% \item
+%   Current elements do not handle distributed mass consistently
 \item
   Cross section library is disjoint
 \item
@@ -310,5 +326,5 @@ This library addresses the following shortcomings in the existing
   Geometric transformations do not support shear or multi-node frame
   elements
 \item
-  Idiosyncrasies and inefficiencies in the corotational transformation
+  Objectivity violation in the corotational transformation
 \end{itemize}

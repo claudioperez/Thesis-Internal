@@ -1,23 +1,16 @@
 
 
-\begin{Quote}
+\begin{Note}
 In this section we introduce material points that are not contained on the reference line of the beam model. 
 The objective is to develop a family of constitutive relations for the material resultants \(\bm{s} = (n,m,w,v)\) and strains \(\bm{e} = (\gamma,\kappa,\alpha,\alpha')\) that represents these material points.
 
 Everything is developed under the unconstrained Type 1 equilibrium equations.
-\end{Quote}
 
-
-
-\paragraph{Objectives}
+Objectives:
 \begin{itemize}
 \item Internal Wagner nonlinearity
 \item Arbitrary Geometry 
 \begin{itemize}
-
-    \item Torsion warping: For the linear shear-free case, a closed form solution is available which has been implemented by \cite{chaudhary1982generalized}
-
-    \item Shear Warping : 
 
     \item able to detect eventual elastic coupling between the warpings associated to torsion and shear forces
     
@@ -29,9 +22,8 @@ Everything is developed under the unconstrained Type 1 equilibrium equations.
 
 \item Arbitrary Coordinates : All basic equations are formulated with respect to an arbitrary cartesian coordinate system which is not restricted to principal axes. 
 Thus the origin of this system is not necessarily a special point like the centroid. 
-
 \end{itemize}
-
+\end{Note}
 
 
 \subsection{Introduction}
@@ -42,7 +34,7 @@ the objective is to define a frame resultant model:
 \[
 \ResultMaterial : \ShearStrain,\CurveStrain,\bm{\alpha}',\bm{\alpha} \mapsto \bm{n},\bm{m},\bm{w},\bm{v}
 \]
-which may be expected, under suitable assumptions, to approach the response of a three dimensional body in the limit where a notion of \emph{slenderness} approaches infinity. 
+which may be expected, under suitable assumptions, to approach the response of a three dimensional body. % in the limit where a notion of \emph{slenderness} approaches infinity. 
 %
 %
 % We regarded the beam as a purely one-dimensional body: the state of stress $\TraceTotalEnergyStress(\xi_m)$ and strain $\FrameStrain(\xi_m)$ at a point $\xi_m$ are mathematically related only to the material points immediately to their left $\xi_m-d\xi$ and right $\xi_m+d\xi$. 
@@ -51,14 +43,53 @@ which may be expected, under suitable assumptions, to approach the response of a
 %
 
 
-Recall that up until this point we have regarded the beam as a purely one-dimensional body: the state of stress $\TraceTotalEnergyStress(\xi_m)$ and strain $\FrameStrain(\xi_m)$ at a point $\xi_m$ are mathematically related only to the material points immediately to their left $\xi_m-d\xi$ and right $\xi_m+d\xi$.
+Recall that up until this point we have regarded the beam as a purely one-dimensional body: the state of stress $\bm{s}(\xi_m)$ and strain $\FrameStrain(\xi_m)$ at a point $\xi_m$ are mathematically related only to the material points immediately to their left $\xi_m-\dd\xi$ and right $\xi_m+\dd\xi$.
 
 However, in reality, a beam always has \emph{some} material emanating from the centerline \(\TraceLocation\), and ideally the dependence of $\TraceTotalEnergyStress$ on $\FrameStrain$ should take into account the distribution and composition of this additional material. 
 To this end, we formally introduce the material points $\hat{\bm{\rho}}$ in the cross section through an extended three-dimensional displacement field $\hat{\TraceLocation}(\reflenx, \hat{\bm{\rho}})$ which is assumed to depend only on the configuration variables of the reference curve \(\chi=\bigl(\TraceLocation(\reflenx), \FrameRotation (\reflenx), \bm{\alpha}(\reflenx)\bigr)\) at the 1D material point \(\reflenx\). 
 Because the beam strains \(\FrameStrain(\reflenx) = (\ShearStrain , \CurveStrain , \bm{\alpha}^{\prime}, \bm{\alpha})\) have been formulated as unique invariant functions of the configuration variables $\chi$, it follows that an invariant strain measure for the extended deformation $\hat{\bm{x}}$ should be expressible as functions of only the beam strains $\FrameStrain$.
 
-Recall that deformations of the reduced fields \(\bm{x}\) and \(\FrameRotation\) are measured objectively by the reduced strains \eqref{eq:def-gam-kap}:
-\RepeatEquation{eq:def-gam-kap}
+To this end, introduce material points $\hat{{\rho}}$ in the cross section through an extended three-dimensional displacement field $\hat{\TraceLocation}(\reflenx, \hat{{\rho}})$ which is assumed to depend only on the configuration variables \(\bigl(\TraceLocation(\reflenx), \FrameRotation (\reflenx), \bm{\alpha}(\reflenx)\bigr)\)  of the Cosserat curve at the 1D material point \(\reflenx\). 
+The spatial placement of a point in the cross section in the reference configuration thus has the representation:
+\begin{equation*}
+    \reflenx\,\FrameBasis + \SectionCoordinate(\hat{\rho})
+\end{equation*}
+where $\PlanePosition$ %$\colon \Section \to \mathbb{R}^2$ 
+is a position vector in the section \(\Section\) that identifies a section material point $\hat{\rho}$ with respect to the reference line of the beam. 
+Thus, \(\SectionCoordinate\) satisfies
+\begin{equation*}
+\SectionCoordinate \cdot \FrameBasis = 0
+\end{equation*}
+%
+The extended displacement field for the newly introduced section material points $\hat{\rho}$  is:
+\begin{SaveEquation}{eq:finite-alignment-field}
+\hat{\bm{x}}(\reflenx, \PlanePosition) 
+= \bm{x}(\reflenx) + \FrameRotation \bigl(\PlanePosition 
++ \WarpTotalShapes(\PlanePosition)\bm{\alpha}(\reflenx)\bigr)
+% \label{eq:finite-alignment-field}
+\end{SaveEquation}
+%
+where the \emph{vector-valued} warping field
+\(\bm{\Phi}(\bm{r})\,\bm{\alpha}(\reflenx)\in\mathbb{R}^3\) allows transverse warping components.
+%
+\begin{remark}
+This generalizes the kinematic model of \cite{simo1991geometricallyexact} by allowing \(n_w \ge 1\) warping shapes \(\bm{\varphi}\) and aligns with the work by \cite{klinkel2003anisotropic} (also \cite{elfatmi2007nonuniform} who only considered linearized beam theory).
+\end{remark}
+\begin{remark}
+The linearization of \eqref{eq:finite-alignment-field} is:
+%
+\begin{equation}
+\hat{\bm x}(\reflenx, \bm{r})=(\reflenx\FrameBasis+\bm{r})+\bm\theta(\reflenx)\times\bm{r}+\bm\Phi(\bm{r})\,\bm\alpha(\reflenx)
+\label{eq:linear-alignment-field}
+\end{equation}
+and the linearized displacement \(\hat{\bm{u}} = \hat{\bm{x}} - (x\FrameBasis + \bm{r})\) is
+\begin{SaveEquation}{eq:trace-lift-linear}
+\hat{\bm u}(\reflenx, \bm{r})=\bm{u}(x)
++\bm\theta(x)\times\bm{r}+\bm\Phi(\bm{r})\,\bm{\alpha}(x)
+% \label{eq:trace-lift-linear}
+\end{SaveEquation}
+\end{remark}
+
 
 
 \subsection{Stress Constraints}
@@ -215,48 +246,6 @@ Thus \(\stackrel{\rm s}{\nabla}\PlaneWarp\,\) may create in–plane (membrane) s
 
 
 \subsection{Kinematics}\label{sec:section-kinematics}
-To this end, introduce material points $\hat{{\rho}}$ in the cross section through an extended three-dimensional displacement field $\hat{\TraceLocation}(\reflenx, \hat{{\rho}})$ which is assumed to depend only on the configuration variables \(\bigl(\TraceLocation(\reflenx), \FrameRotation (\reflenx), \bm{\alpha}(\reflenx)\bigr)\)  of the Cosserat curve at the 1D material point \(\reflenx\). 
-The spatial placement of a point in the cross section in the reference configuration thus has the representation:
-\begin{equation*}
-    \reflenx\,\FrameBasis + \SectionCoordinate(\hat{\rho})
-\end{equation*}
-where $\PlanePosition$ %$\colon \Section \to \mathbb{R}^2$ 
-is a position vector in the section \(\Section\) that identifies a section material point $\hat{\rho}$ with respect to the reference line of the beam. 
-Thus, \(\SectionCoordinate\) satisfies
-\begin{equation*}
-\SectionCoordinate \cdot \FrameBasis = 0
-\end{equation*}
-%
-The extended displacement field for the newly introduced section material points $\hat{\rho}$  is:
-\begin{SaveEquation}{eq:finite-alignment-field}
-\hat{\bm{x}}(\reflenx, \PlanePosition) 
-= \bm{x}(\reflenx) + \FrameRotation \bigl(\PlanePosition 
-+ \WarpTotalShapes(\PlanePosition)\bm{\alpha}(\reflenx)\bigr)
-% \label{eq:finite-alignment-field}
-\end{SaveEquation}
-%
-where the \emph{vector-valued} warping field
-\(\bm{\Phi}(\bm{r})\,\bm{\alpha}(\reflenx)\in\mathbb{R}^3\) allows transverse warping components.
-%
-\begin{remark}
-This generalizes the kinematic model of \cite{simo1991geometricallyexact} by allowing \(n_w \ge 1\) warping shapes \(\bm{\varphi}\) and aligns with the work by \cite{klinkel2003anisotropic} (also \cite{elfatmi2007nonuniform} who only considered linearized beam theory).
-\end{remark}
-\begin{remark}
-The linearization of \eqref{eq:finite-alignment-field} is:
-%
-\begin{equation}
-\hat{\bm x}(\reflenx, \bm{r})=(\reflenx\FrameBasis+\bm{r})+\bm\theta(\reflenx)\times\bm{r}+\bm\Phi(\bm{r})\,\bm\alpha(\reflenx)
-\label{eq:linear-alignment-field}
-\end{equation}
-and the linearized displacement \(\hat{\bm{u}} = \hat{\bm{x}} - (x\FrameBasis + \bm{r})\) is
-\begin{SaveEquation}{eq:trace-lift-linear}
-\hat{\bm u}(\reflenx, \bm{r})=\bm{u}(x)
-+\bm\theta(x)\times\bm{r}+\bm\Phi(\bm{r})\,\bm{\alpha}(x)
-% \label{eq:trace-lift-linear}
-\end{SaveEquation}
-\end{remark}
-
-
 
 \paragraph{Finite Strain.}
 The tangent map \(\bm{F}\triangleq T\,\hat{\chi}\) of the finite configuration \eqref{eq:finite-alignment-field} takes the form

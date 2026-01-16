@@ -31,29 +31,20 @@ Three issues receive attention.
 
 The first is strain objectivity.
 % TODO: Too technical. Motivate objectivity as a fundamental feature of physical processes.
-Objective strain measures are invariant under superposed rigid-body motions; this invariance is necessary for frame-indifferent constitutive response.
-Standard interpolation procedures for geometrically nonlinear beams can violate this invariance, introducing errors that depend on how rigid rotations are distributed among element nodes \citep{crisfield1999objectivity}.
-Formulations that restore objectivity exist, but they sacrifice the symmetric tangent stiffness that accelerates iterative solution.
-Chapter~4 develops a family geometric transformations that achieve both: objectivity is preserved, and the tangent remains symmetric at equilibrium. 
-The framework generalizes corotational formulations to elements with arbitrarily many nodes.
-Consistent treatment of distributed loading under such transformations is also addressed.
 
 % 
-The second issue is dimensional reduction.
+The second issue is material nonlinearity.
 Beam theories project the three-dimensional continuum equations onto a one-dimensional domain by assuming that cross-sections deform according to a finite set of warping modes.
 Saint-Venant's classical solution provides a reference: for prismatic members under certain loadings, it gives the exact linear-elastic fields.
 A beam formulation should recover this solution for the restricted class to which it applies.
 Chapter~6 introduces a \emph{trace formalism} that makes the relationship precise, identifies the family of traces that exactly reproduce Saint-Venant's solution, and provides the warping shapes required for inelastic section analysis.
 The development extends classical treatments, which are typically restricted to two-dimensional analysis or doubly-symmetric sections, to arbitrary prismatic cross-sections in three dimensions.
 
-% The third issue is the representation of cross-sectional phenomena.
-Shear deformation, torsional warping, and the Wagner strain term are often handled through specialized element formulations.
-Chapter~5 develops a section-level constitutive theory in which these effects are encapsulated within the cross-section model rather than the element. 
 
 The result is a compact element library (\cref{sec:library}) in which three frame elements---displacement-based, force-based, and geometrically exact---apply uniformly across section types.
 
-Part~II presents the structural health monitoring platform that motivated and employs these developments.
-The Bridge Rapid Assessment Center for Extreme Events (\BRACE{}) is a web-based system developed with funding from Caltrans to deliver post-earthquake assessments for instrumented highway bridges.
+Part~II presents a framework for structural health monitoring that motivated and employs the developments of Part~I. 
+This framework was implemented for the Bridge Rapid Assessment Center for Extreme Events (\BRACE{}) project with funding from Caltrans to deliver post-earthquake assessments for instrumented highway bridges.
 Its computational backend, the Infrastructure Resilience Engine (IRiE), organizes health monitoring around five abstractions: \emph{Assets} representing physical structures, \emph{Events} representing earthquakes or other triggering conditions, \emph{Predictors} implementing physics-based or data-driven analysis methods, \emph{Metrics} quantifying structural condition, and \emph{Evaluations} assembling metrics into actionable reports.
 This architecture permits physics-based simulation (Type~I prediction) and system identification (Type~II prediction) to coexist within a unified framework, with results presented through a common interface.
 The developments of Part~I contribute the simulation engine for Type~I predictors on this platform.
@@ -99,8 +90,8 @@ Appendices collect notation and provide supplementary derivations.
 
 
 A significant obstacle is computational.
-Uncertainty quantification, model calibration, and reliability analysis do not require one simulation but many---often thousands or millions---and each evaluation of a nonlinear finite element model carries substantial cost.
-Beyond mere repetition, many modern inference algorithms require derivatives of model outputs with respect to parameters.
+Uncertainty quantification, model calibration, and reliability analysis do not require one simulation but many, and each evaluation of a nonlinear finite element model carries substantial cost.
+Furthermore, many modern inference algorithms require derivatives of model outputs with respect to parameters.
 Adjoint sensitivity methods and automatic differentiation have matured considerably in recent years \citep{beck1994automatic,martins2001connection}, driven largely by applications in machine learning, but these advances have not been fully absorbed into structural analysis software, which typically predates them by decades.
 The result is a gap between what is mathematically possible and what is practically available: the tools exist, in principle, to perform gradient-based optimization, Bayesian inference, and topology optimization on complex structural models, but the software infrastructure to support such workflows at scale remains underdeveloped.
 
@@ -110,26 +101,21 @@ The rotation group $\mathrm{SO}(3)$ is not a vector space; the yield surface of 
 When techniques developed for linear problems are applied without modification to these settings, the resulting formulations may violate physical invariances, exhibit spurious path dependence, or produce non-symmetric tangent operators that complicate iterative solution.
 Much of the literature in computational mechanics over the past forty years has been devoted to formulations that respect the geometric and physical structure of these problems \citep{simo1985finite,crisfield1999objectivity}, yet this work is not always reflected in production software, and the connections between geometric consistency and the demands of modern computational workflows---particularly differentiability---have received limited attention.
 
-This dissertation is concerned with both obstacles, in the specific context of slender structural members---beams, columns, and frames---and their application to structural health monitoring.
+This dissertation is concerned with both obstacles, in the specific context of slender structural members and their application to structural health monitoring. 
 
 \subsection{Scope and Objectives}
 
 Slender members constitute the primary load-carrying skeleton of most civil structures.
 Their accurate simulation is essential not only for predicting global response quantities such as displacements and natural frequencies, but also for assessing local damage indicators: plastic hinge rotations in moment frames, shear link deformations in braced systems, curvature ductility demands in bridge columns.
 
-The classical technique of dimensional reduction  underlies all beam theories: the three-dimensional continuum equations are projected onto a one-dimensional domain (the beam axis) by assuming that cross-sections deform according to a finite set of modes.
-The choice of these modes, and the manner in which their amplitudes are related to the primary kinematic variables of the beam, determines the character of the resulting theory.
-Saint-Venant's classical solution for prismatic members \citep{iesan1987saintvenants} provides a canonical reference: any beam theory that claims to represent linear elastic response exactly should, at minimum, reproduce Saint-Venant's results for the restricted class of loadings to which they apply.
-Whether a given formulation satisfies this requirement is not always obvious, and the literature contains competing claims regarding shear correction factors, warping constraints, and the treatment of torsion-bending coupling.
 
-The situation is further complicated when material nonlinearity is introduced.
 Inelastic constitutive evaluation requires knowledge of the pointwise strain distribution throughout the cross-section---not merely the stress resultants obtained by integration.
 This distribution depends on the warping shapes assumed in the kinematic description, and these shapes must be consistent with the beam theory employed.
 Formulations that are equivalent for linear elastic analysis may yield different inelastic responses, and the choice among them has implications for predicted damage states.
 
 Part~I of this dissertation develops a family of beam finite elements that address these issues.
 The formulation admits an arbitrary number of cross-sectional warping modes and classifies beam theories according to how the associated amplitudes are constrained.
-A \emph{trace formalism} is introduced that characterizes the family of theories capable of exactly representing Saint-Venant's solution, and explicit expressions are derived for the warping shapes consistent with each.
+A \emph{trace formalism} is introduced that characterizes the family of theories capable of exactly representing Saint~Venant's solution, and explicit expressions are derived for the warping shapes consistent with each.
 For inelastic analysis, the framework permits warping effects to be condensed at the section level, so that standard six-degree-of-freedom beam elements can be employed without modification to the element formulation.
 Geometric transformations are treated separately from element kinematics, following the modular approach of \citet{nour-omid1991finite}, and extended to ensure strain objectivity in the sense of \citet{crisfield1999objectivity} while maintaining a symmetric tangent stiffness at equilibrium. 
 The resulting formulations are implemented in \textsc{OpenSeesRT}, a runtime environment for the OpenSees finite element framework that supports automatic differentiation through a hybrid adjoint approach.

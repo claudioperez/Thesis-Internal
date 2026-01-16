@@ -3,22 +3,22 @@
 
 \subsection{Introduction}
 
-The OpenSees framework \citep{mckenna1997object} is underpinned by a carefully layered C++ core that offers powerful abstractions for creating nonlinear finite-element programs. 
+The \OpenSees{} framework \citep{mckenna1997object} is underpinned by a carefully layered C++ core that offers powerful abstractions for creating nonlinear finite-element programs. 
 Among the most widely used applications built on this core are the Tcl and Python interpreters, which provide domain-specific scripting environments for structural and geotechnical modeling. 
 These interpreters have enabled a generation of researchers to perform sophisticated analyses without engaging directly with compiled code.
 
-However, the interpreter layer introduces architectural constraints that become problematic when OpenSees must function not as a standalone scripting environment but as an embedded component within a larger software system. 
+However, the interpreter layer introduces architectural constraints that become problematic when \OpenSees{} must function not as a standalone scripting environment but as an embedded component within a larger software system. 
 Contemporary applications in structural health monitoring, uncertainty quantification, and machine learning require simulation engines that are deterministic, thread-safe, and composable with external libraries.
 These properties are difficult to achieve when the interpreter maintains implicit global state that any function call may read or mutate.
 
 This chapter presents a restructured runtime that eliminates the global state underlying the existing interpreters. 
 The design replaces process-level singletons with user-owned objects whose lifetimes and interactions are explicit in the program's control flow. 
-This architectural change enables reliable embedding of OpenSees in mission-critical systems, safe concurrent evaluation of multiple models, and integration with automatic differentiation frameworks that require explicit computational graphs.
+This architectural change enables reliable embedding of \OpenSees{} in mission-critical systems, safe concurrent evaluation of multiple models, and integration with automatic differentiation frameworks that require explicit computational graphs.
 
 \subsection{The Legacy Interpreter Architecture}
 \label{sec:legacy}
 
-The OpenSees interpreters are built on an intermediary layer of stateful functions known as the OPS API \citep{zhu2018openseespy}. 
+The \OpenSees{} interpreters are built on an intermediary layer of stateful functions known as the OPS API \citep{zhu2018openseespy}. 
 This layer, introduced to simplify the creation of scripting bindings, operates on global state distributed across more than thirty variables defined in over twenty source files. 
 While this design reduced the implementation burden for adding new commands, it introduced fundamental limitations from the perspective of software architecture.
 
@@ -26,19 +26,24 @@ While this design reduced the implementation burden for adding new commands, it 
 
 The OPS API exposes functions of the form \texttt{OPS\_GetAnalysisModel()} and \texttt{OPS\_GetUniaxialMaterial(tag)}
 that return pointers to objects held in global tables. 
-A command implementation retrieves its dependencies by calling these functions, which access ambient state rather than receiving arguments explicitly. This design violates the principle of referential transparency: the same function call may return different results depending on the order of prior commands, and the dependencies of any given function are not apparent from its signature.
+A command implementation retrieves its dependencies by calling these functions, which access ambient state rather than receiving arguments explicitly. 
+This design violates the principle of referential transparency: the same function call may return different results depending on the order of prior commands, and the dependencies of any given function are not apparent from its signature.
 
-The user-facing consequence is that commands exhibit implicit sequential coupling. For instance, the \texttt{load} command depends on state established by a prior \texttt{pattern} command; invoking \texttt{load} without an active pattern context produces undefined behavior. Similarly, material and element definitions implicitly reference the ``current'' model, and analysis commands operate on whichever domain object was most recently constructed. These dependencies are not enforced by the type system or checked at parse time---they manifest as silent numerical corruption or segmentation faults at runtime.
+The user-facing consequence is that commands exhibit implicit sequential coupling. For instance, the \texttt{load} command depends on state established by a prior \texttt{pattern} command; invoking \texttt{load} without an active pattern context produces undefined behavior. 
+Similarly, material and element definitions implicitly reference the ``current'' model, and analysis commands operate on whichever domain object was most recently constructed. 
+These dependencies are not enforced by the type system or checked at parse time---they manifest as silent numerical corruption or segmentation faults at runtime.
 
 \subsubsection{Model Aliasing}
 
-Because the interpreter maintains at most one model in its global state, any command that constructs a new model overwrites the previous one. This creates an aliasing hazard: references held by user code may become dangling when a subsequent model command reinitializes the global domain. Consider a workflow in which a calibration routine constructs a model, performs an analysis, and stores a reference to the results. If a later stage of the same program constructs a second model---perhaps for validation---the stored reference now points to deallocated or reinitialized memory.
+Because the interpreter maintains at most one model in its global state, any command that constructs a new model overwrites the previous one. This creates an aliasing hazard: references held by user code may become dangling when a subsequent model command reinitializes the global domain. Consider a workflow in which a calibration routine constructs a model, performs an analysis, and stores a reference to the results. 
+If a later stage of the same program constructs a second model---perhaps for validation---the stored reference now points to deallocated or reinitialized memory.
 
 This limitation is not merely inconvenient; it renders the interpreter unsuitable for any application that requires multiple concurrent models. Monte Carlo simulations, parametric studies, and ensemble methods all require independent model instances that can be evaluated in parallel. The global singleton architecture forces such workflows to spawn separate processes, incurring the overhead of inter-process communication and precluding shared-memory parallelism.
 
 \subsubsection{Analysis State Corruption}
 
-The analysis machinery exhibits analogous issues. The integrator, algorithm, system of equations, and convergence test are held as global pointers that any command may reassign. Because these components hold internal state that evolves during the solution process, concurrent access---or even interleaved access from ostensibly independent analyses---produces race conditions and corrupted solutions. The lack of encapsulation means that a library embedding OpenSees cannot guarantee isolation from other libraries that may also embed it; two such libraries executing in the same process will silently corrupt each other's analyses.
+The analysis machinery exhibits analogous issues. The integrator, algorithm, system of equations, and convergence test are held as global pointers that any command may reassign. 
+Because these components hold internal state that evolves during the solution process, concurrent access---or even interleaved access from ostensibly independent analyses---produces race conditions and corrupted solutions. The lack of encapsulation means that a library embedding \OpenSees{} cannot guarantee isolation from other libraries that may also embed it; two such libraries executing in the same process will silently corrupt each other's analyses.
 
 \subsubsection{Architectural Characterization}
 
@@ -59,7 +64,8 @@ The architecture is guided by three principles drawn from functional programming
 \begin{description}
     \item[Explicit ownership.] Every finite-element object---node, material, element, load pattern---is owned by a specific context object. Object lifetimes are tied to context lifetimes, and no global tables exist. This eliminates aliasing hazards and makes memory management deterministic.
 
-    \item[Referential transparency.] API functions are pure in the sense that their behavior depends only on their explicit arguments. Two calls with identical arguments produce identical results, regardless of the history of prior calls. This property enables equational reasoning about program behavior and is prerequisite for integration with automatic differentiation.
+    \item[Referential transparency.] API functions are pure in the sense that their behavior depends only on their explicit arguments. 
+    Two calls with identical arguments produce identical results, regardless of the history of prior calls. This property enables equational reasoning about program behavior and is prerequisite for integration with automatic differentiation.
 
     \item[Context threading.] Rather than accessing ambient state, command implementations receive their dependencies through explicit context parameters. This pattern, sometimes called dependency injection, allows the same command implementation to operate on different models by passing different contexts.
 \end{description}
@@ -94,7 +100,7 @@ This allows existing scripts to execute unchanged while enabling new code to ado
 \subsection{Implications for Embedded Applications}
 \label{sec:implications}
 
-The architectural changes described above have immediate practical consequences for applications that embed OpenSees as a computational kernel.
+The architectural changes described above have immediate practical consequences for applications that embed \OpenSees{} as a computational kernel.
 
 \paragraph{Determinism and Reproducibility}
 
@@ -110,16 +116,19 @@ Modern machine learning frameworks construct explicit computational graphs that 
 
 \paragraph{Reliable Embedding}
 
-Perhaps most critically, explicit ownership eliminates the hazard of state corruption when multiple libraries embed OpenSees. Each library instantiates its own contexts, and no global state exists for them to share. This property is prerequisite for deploying OpenSees as a ``black-box'' dependency in production systems where robustness requirements preclude the debugging of subtle interaction effects.
+Perhaps most critically, explicit ownership eliminates the hazard of state corruption when multiple libraries embed \OpenSees{}. Each library instantiates its own contexts, and no global state exists for them to share. This property is prerequisite for deploying \OpenSees{} as a ``black-box'' dependency in production systems where robustness requirements preclude the debugging of subtle interaction effects.
 
 \subsection{Validation}\label{sec:validation}
 
-The restructured runtime is accompanied by over three hundred unit and integration tests that execute in under thirty seconds on a single CPU core. Continuous integration builds verify compatibility across Linux, macOS, and Windows with GCC, Clang, and MSVC. The test suite includes regression tests against the legacy interpreter to ensure numerical equivalence for supported features.
+The restructured runtime is accompanied by over three hundred unit and integration tests that execute in under thirty seconds on a single CPU core. Continuous integration builds verify compatibility across Linux, macOS, and Windows with GCC, Clang, and MSVC. 
+The test suite includes regression tests against the legacy interpreter to ensure numerical equivalence for supported features.
 
-The runtime entered production deployment in January 2024 as the computational kernel for a real-time seismic monitoring platform operated by a state transportation agency. Since deployment, it has processed over one hundred fifty seismic events, providing automated post-event structural assessments within minutes of ground motion. The platform's requirements for deterministic behavior, parallel scenario evaluation, and reliable embedding motivated the architectural work described in this chapter and validated its practical effectiveness.
+The runtime entered production deployment in January 2024 as the computational kernel for a real-time seismic monitoring platform operated by a state transportation agency. 
+Since deployment, it has processed over one hundred fifty seismic events, providing automated post-event structural assessments within minutes of ground motion. The platform's requirements for deterministic behavior, parallel scenario evaluation, and reliable embedding motivated the architectural work described in this chapter and validated its practical effectiveness.
 
 \subsection{Conclusion}\label{sec:conclusion}
 
-The restructured runtime restores the encapsulation envisioned in the original OpenSees design while retaining full compatibility with the underlying C++ core. 
+The restructured runtime restores the encapsulation envisioned in the original \OpenSees{} design while retaining full compatibility with the underlying C++ core. 
 By eliminating the interpreter's hidden state, it delivers an explicit, composable API that is safe to embed, parallelize, and differentiate. 
-The successful deployment in a mission-critical monitoring system confirms both its robustness and its practical value. This architectural foundation positions OpenSees to serve emerging applications in data-driven structural engineering that require tight integration with modern computational infrastructure.
+The successful deployment in a mission-critical monitoring system confirms both its robustness and its practical value. 
+This architectural foundation positions \OpenSees{} to serve emerging applications in data-driven structural engineering that require tight integration with modern computational infrastructure.

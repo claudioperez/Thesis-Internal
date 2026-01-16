@@ -114,36 +114,6 @@ For a given trace $\mathcal T$, define the induced strain map
 \]
 % \end{definition}
 
-\begin{Aside}
-\begin{definition}[Completeness of warping shapes]
-\label{def:phi-complete}
-Assume $\mathcal W(\Section)$ is a Hilbert space with inner product $\langle\cdot,\cdot\rangle_{\mathcal W}$.
-An infinite collection $\{\bm\Phi_j\}_{j\ge1}\subset\mathcal W(\Section)$ is \emph{complete} if its linear span is dense in $\mathcal W(\Section)$.
-
-Let $\bm\Phi^{(n)}$ denote the truncation to the first $n$ shapes.
-\end{definition}
-
-\begin{proposition}[Exact reconstruction in the limit $n_w\to\infty$]
-\label{prop:limit-exactness}
-Assume $\{\bm\Phi_j\}_{j\ge1}$ is complete in $\mathcal W(\Section)$.
-Then for every $\hat{\bm u}\in\CauchySpace$ whose sectionwise residual
-\[
-\bm w(x,\cdot)\;\coloneq\; \hat{\bm u}(x,\cdot)-\bm u(x)-\bm\theta(x)\times(\cdot)
-\]
-belongs to $\mathcal W(\Section)$ for each $x$, there exists a (generally nonunique) coefficient
-field $\bm\alpha(x)\in\ell^2$ such that
-\[
-\bm\Phi(\cdot)\bm\alpha(x)=\bm w(x,\cdot)\quad\text{in }\mathcal W(\Section)\ \text{for a.e. }x,
-\]
-and the truncated liftings satisfy
-\[
-\mathcal T^{-1}_{(n)}[\bm z,\bm\alpha^{(n)}]\to \hat{\bm u}
-\quad\text{in the chosen motion norm as }n\to\infty
-\]
-for a suitable choice of coefficients $\bm\alpha^{(n)}$ (e.g. $\mathcal W$-orthogonal projection).
-\end{proposition}
-\end{Aside}
-
 
 % \begin{definition}[SV local parameter reconstruction from trace strains]
 % \label{def:sv-local-reconstruction}

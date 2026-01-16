@@ -35,14 +35,6 @@ Boundary:
 
 \subsection{Summary}
 
-$$
-\begin{aligned}
-    \bm{s}^h(x) &\triangleq \sum_{a} \mathbf{N}^{\mathrm{b}}_a(x) \bm{s}_a + \bm{s}_{f}(x) \\
-    \bm{e}^h(x) &\triangleq \sum_{\ell} \delta(x - x_{\ell}) \hat{S}^{-1}(\bm{s}^h (x_{\ell})) \\
-    \bm{u}^h(x) &\triangleq \sum_{a} ? + \bm{u}_{\mathrm{rigid}}
-\end{aligned}
-$$
-where $\mathbb{B}^*\bm{u}_{\mathrm{rigid}} = \bm{0}$ 
 
 \begin{enumerate}
     \item 
@@ -71,22 +63,3 @@ where $\mathbb{B}^*\bm{u}_{\mathrm{rigid}} = \bm{0}$
     \end{aligned}
     $$
 \end{enumerate}
-
- 
-Maybe try 
-$$
-\mathbb{B}\sum\mathbf{N}^{\mathrm{b}}_a \bm{s}_a =\bm{0}
-\qquad\implies\qquad
-\mathbb{B}\bm{s}^h \equiv \mathbb{B}\bm{s}_{f}
-$$
-or
-$$
-\bm{s}^h(x) = \mathbf{N}^{\mathrm{b}}_a \bm{q}_a + \mathbf{N}^{\mathrm{v}}_a \bm{s}_a + \bm{s}_f(x)
-$$
-where maybe $\mathbf{A}^{\mathrm{t}}\mathbf{N}^{v}_a = \bm{0}$ and $\forall a$
-$$
-\mathbf{N}^b_a\begin{pmatrix}
-    0 \\ V_y \\ V_z \\ \hline 0 \\ 0 \\ 0 \\ \hline 0 \\ 0
-\end{pmatrix}_{a}
-=\bm{0}
-$$

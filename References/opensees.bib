@@ -41,7 +41,6 @@
   pages = {95--107},
   issn = {0887-3801, 1943-5487},
   doi = {10.1061/(ASCE)CP.1943-5487.0000002},
-  abstract = {Object composition offers significant advantages over class inheritance to develop a flexible software architecture for finiteelement analysis. Using this approach, separate classes encapsulate fundamental finite-element algorithms and interoperate to form and solve the governing nonlinear equations. Communication between objects in the analysis composition is established using software design patterns. Root-finding algorithms, time integration methods, constraint handlers, linear equation solvers, and degree of freedom numberers are implemented as interchangeable components using the Strategy pattern. The Bridge and Factory Method patterns allow objects of the finite-element model to vary independently from objects that implement the numerical solution procedures. The Adapter and Iterator patterns permit equations to be assembled entirely through abstract interfaces that do not expose either the storage of objects in the analysis model or the computational details of the time integration method. Sequence diagrams document the interoperability of the analysis classes for solving nonlinear finite-element equations, demonstrating that object composition with design patterns provides a general approach to developing and refactoring nonlinear finite-element software.},
   langid = {english},
   annotation = {333 citations (Crossref) [2022-06-27]}
 }
@@ -85,7 +84,6 @@
   doi = {10.1061/(asce)0887-3801(2008)22:5(281)},
   url = {https://ascelibrary.org/doi/10.1061/%28ASCE%290887-3801%282008%2922%3A5%28281%29},
   urldate = {2025-07-21},
-  abstract = {The finite-element software framework OpenSees is extended with parameter updating and response sensitivity capabilities to support client applications such as reliability, optimization, and system identification. Using software design patterns, member properties, applied loadings, and nodal coordinates can be identified and repeatedly updated in order to create customized finite-element model updating applications. Parameters are identified using a Chain of Responsibility software pattern, where objects in the finite-element model forward a parameterization request to component objects until the request is handled. All messages to identify and update parameters are passed through a Facade that decouples client applications from the finite-element domain of OpenSees. To support response sensitivity analysis, the Strategy design pattern facilitates multiple approaches to evaluate gradients of the structural response, whereas the Visitor pattern ensures that objects in the finite-element domain make the proper contributions to the equations that govern the response sensitivity. Examples demonstrate the software design and the steps taken by representative finite-element model updating and response sensitivity applications.},
   langid = {english},
   file = {/Users/claudio/Zotero/storage/BV2SV7CR/Scott and Haukaas - 2008 - Software Framework for Parameter Updating and Finite-Element Response Sensitivity Analysis.pdf}
 }

@@ -14,7 +14,7 @@ This chapter presents verification studies of the formulations developed in Part
 
 \begin{table}[H]
 \centering
-\caption{Summary of verification problems in connection with the considerations of Box~\ref{box:model-summary}.}
+\caption{Summary of verification problems in connection with Box~\ref{box:model-summary}.}
 \label{tab:verification}
 \begin{tabular}{llccccccccl}
     \toprule
@@ -36,7 +36,7 @@ This chapter presents verification studies of the formulations developed in Part
       & Uniform
       % Loading
       & % $\delta(x) N_k\FrameBasis_k$
-      & % $\delta(x) M_k\FrameBasis_k$
+      & Elastic
       %
       & \ref{sec:trace}
       \\
@@ -56,7 +56,7 @@ This chapter presents verification studies of the formulations developed in Part
     \ExRef{frame-0015}
      & F. Sol.
      & -\footnote{Analytic solution coincides under exact and linear geometry.}
-     & Wagner
+     & Moderate
      % Warping
      & - 
      & -
@@ -68,7 +68,7 @@ This chapter presents verification studies of the formulations developed in Part
      \ExRef{frame-1030}
      & Exp.
      & -
-     & Wagner
+     & Moderate
      & 
      \\
      \ExRef{frame-1000}
@@ -110,7 +110,7 @@ This chapter presents verification studies of the formulations developed in Part
      & Uniform
      & Uniform
      % Loading
-     & 
+     & Distributed
      & Elastic
      & \ref{sec:loading}
      % 
@@ -137,8 +137,8 @@ This chapter presents verification studies of the formulations developed in Part
     & -
     & -
     % Loading
-    & $\delta\frameBasis$
-    & Linear
+    & Follower
+    & Elastic
     % Chapter
     & \ref{sec:transform},\ref{sec:loading}
     \\
@@ -146,14 +146,20 @@ This chapter presents verification studies of the formulations developed in Part
     & F. Sol.
     & Finite
     & Linear
+    &
+    & 
+    & -
+    & Elastic
     
     \\
     \ExRef{frame-1035}
     & F. Sol.
     & Finite
-    & Wagner
+    & Moderate
     \\
     \ExRef{frame-1041}
+    & 
+    &
     \\
     \ExRef{frame-2007} 
     & Exp.
@@ -235,11 +241,13 @@ The source code implementing these simulations is available at \url{https://gith
 \subsection{Applied Moments through large rotations (100[68])}
 \input{Examples/frame-1001/73_SpaceCantilever}
 
-\subsection{Spurious Path Dependence \ShowLabel{1007}}\label{sec:frame-1007}
+\subsection{Spurious path dependence \ShowLabel{1007}}\label{sec:frame-1007}
 \input{Examples/frame-1001/74_BatheCantilever}
 
 \subsection{Hockling \ShowLabel{1010}}\label{sec:frame-1010}
 \input{Examples/frame-1001/75_Hockling}
+
+\subsection{Buckling of a arch in the plane \ShowLabel{1021}}
 
 \subsection{Follower point force \ShowLabel{1020}}\label{sec:frame-1020}
 \input{Examples/frame-1020/index}

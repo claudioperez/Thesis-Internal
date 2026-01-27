@@ -1,35 +1,62 @@
 
+Consider the linear equilibrium equations (Box~\ref{box:basic-shear}):
+\begin{equation}
+    \begin{aligned}
+        \bm{n}' &=  \mathbf{0} \\
+        \bm{m}' + \FrameBasis \times \bm{n} &= \mathbf{0} \\
+        \bm{w}' - \bm{v} &= \mathbf{0}
+    \end{aligned}
+\end{equation}
+Let
+\begin{equation*}
+\bm{m}(x) = \phi_I(x) \bm{m}_I + \phi_J(x) \bm{m}_J + \bm{m}_{\mathrm{p}}(x)
+\qquad\text{and}\qquad
+\bm{w}(x) = \phi_I \bm{w}_I + \phi_J \bm{w}_J
+\end{equation*}
 %
+The solution is expressed as:
+
 $$
-\begin{aligned}
-\left<
-  \delta \bm{u},\, \mathbb{D}\bm{s}
-\right>
-&=
-\delta \mathbf{u} \cdot \left(\left(\mathbf{A}^{\mathrm{t}}  \mathbf{q}-\overline{\mathbf{p}}_{\mathbf{w}}\right)-\mathbf{p}\right)
-\end{aligned}
+\bm{s}_h(x) = \ForceInterp(x) \bm{q} + \bm{s}_{\mathrm{p}}(x)
+$$
+where the matrix $\ForceInterp(x)$ contains resultant interpolation functions that express section forces in terms of basic forces. 
+\begin{equation}
+\begin{pmatrix}
+N(x)   \\
+V_y(x) \\
+V_z(x) \\
+T(x)   \\
+M_z(x) \\
+M_y(x) \\
+B(x) \\
+Q(x) \\
+\end{pmatrix}
+=\left[\begin{array}{ccc|ccc|cc}
+1 &             0 &            0 & 0 & 0 & 0 & & \\
+0 &  \frac{1}{L} & \frac{1}{L} & 0 & 0 & 0 & & \\
+0 &             0 &            0 & 0 & \frac{1}{L} & \frac{1}{L} & & \\ \hline
+0 &             0 &            0 & 1 & 0 & 0 & & \\
+0 & \tfrac{1}{L}x-1 &  \tfrac{1}{L}x & 0 & 0 & 0 & & \\
+0 &             0 &            0 & 0 & \tfrac{1}{L}x-1 & \tfrac{1}{L}x & & \\ \hline
+0 &             0 &            0 & 0 & 0 & 0 & \frac{x}{L}-1 & \frac{x}{L} \\
+0 &             0 &            0 & 0 & 0 & 0 & \frac{1}{L}   & \frac{1}{L} \\
+\end{array}\right]
+\begin{pmatrix}
+N_j \\ 
+M_{zi} \\ 
+M_{zj}
+\end{pmatrix}
+\end{equation}
+% 
+From the principle of virtual forces, the compatibility relationship between section deformations and element deformations is
+
+$$
+\dd \mathbf{v}=\int_0^L \ForceInterp^{\top} \dd \bm{e} \, \dd x
 $$
 
-\begin{equation*}
-\begin{aligned}
-\bm{0}
-&=
-\frac{\partial}{\partial \mathbf{u}} \int  \mathbf{u}_s\left(x, \mathbf{u}, \mathbf{u}_w\right) \cdot \mathbb{D} \bm{s}(x) \,\mathrm{d} x
--\left(\mathbf{p}+\int  \mathbf{N}_s^T(x) \mathbf{q}_s(x) \,\mathrm{d} x\right) \\
-\end{aligned}
-\end{equation*}
-\begin{equation*}
-\begin{aligned}
-0&=
-\int  \mathbf{u}_s\left(x, \mathbf{u}, \mathbf{u}_w\right) \cdot \mathbb{D} \bm{s}(x) \,\mathrm{d} x
--\delta \bm{u}\cdot \left(\mathbf{p}+\int  \mathbf{N}_s^T(x) \mathbf{q}_s(x) \,\mathrm{d} x\right) \\
-\end{aligned}
-\end{equation*}
-%
-Boundary:
-%
 \begin{equation}
-\mathbf{a}_g^T \mathbf{q}-\mathbf{a}_r^T \mathbf{p}_{r p}=\mathbf{p}
+    g(\bm{u},\bm{v},\bm{q}) = \delta \bm{q} \cdot \int \ForceInterp^{\top}\mathbf{F}_{s}\,\bigl(\ForceInterp\bm{q} + \bm{s}_{p}(x,\bm{u}) - \bm{s}(\bm{e})\bigr)\, \dd x - \delta \bm{q} \cdot \bm{v} = 0
+    \label{eq:force-residual}
 \end{equation}
 
 
@@ -41,7 +68,7 @@ Boundary:
     $$
     \left<\delta\bm{u},\; \mathbb{B}\bm{s} - \bm{f}\right> = 0
     \qquad\implies\qquad 
-    (\mathbf{A}^{\mathrm{t}}_{a}\bm{s}_a - \bm{p}_w) - \bm{p} = \bm{0}
+    (\mathbf{A}^{\mathrm{t}}_{a}\bm{s}_a - \bm{p}_w) - \bm{p} = \mathbf{0}
     $$
 
     \item 
@@ -57,7 +84,7 @@ Boundary:
     \qquad
     \begin{aligned}
     &\implies\quad 
-    d\bm{v}(\bm{e}^h(x)) - \bm{A}d\bm{u} = \bm{0} \\
+    d\bm{v}(\bm{e}^h(x)) - \bm{A}d\bm{u} = \mathbf{0} \\
     &\implies\quad
     d\bm{q} = \bm{F}^{-1} d\bm{v}
     \end{aligned}

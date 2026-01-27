@@ -13,7 +13,8 @@ These properties are difficult to achieve when the interpreter maintains implici
 
 This chapter presents a restructured runtime that eliminates the global state underlying the existing interpreters. 
 The design replaces process-level singletons with user-owned objects whose lifetimes and interactions are explicit in the program's control flow. 
-This architectural change enables reliable embedding of \OpenSees{} in mission-critical systems, safe concurrent evaluation of multiple models, and integration with automatic differentiation frameworks that require explicit computational graphs.
+This architectural change enables reliable embedding of \OpenSees{} in mission-critical systems, safe concurrent evaluation of multiple models, and integration with automatic differentiation frameworks that require explicit computational graphs. 
+The proposed architecture derives from \cite{filippou1996fedeas}. 
 
 \subsection{The Legacy Interpreter Architecture}
 \label{sec:legacy}
@@ -29,21 +30,25 @@ that return pointers to objects held in global tables.
 A command implementation retrieves its dependencies by calling these functions, which access ambient state rather than receiving arguments explicitly. 
 This design violates the principle of referential transparency: the same function call may return different results depending on the order of prior commands, and the dependencies of any given function are not apparent from its signature.
 
-The user-facing consequence is that commands exhibit implicit sequential coupling. For instance, the \texttt{load} command depends on state established by a prior \texttt{pattern} command; invoking \texttt{load} without an active pattern context produces undefined behavior. 
+The user-facing consequence is that commands exhibit implicit sequential coupling. 
+For instance, the \texttt{load} command depends on state established by a prior \texttt{pattern} command; invoking \texttt{load} without an active pattern context produces \textcolor{red}{undefined behavior}\NonExistentCommand{}. 
 Similarly, material and element definitions implicitly reference the ``current'' model, and analysis commands operate on whichever domain object was most recently constructed. 
-These dependencies are not enforced by the type system or checked at parse time---they manifest as silent numerical corruption or segmentation faults at runtime.
+These dependencies are not enforced by the type system or checked at parse time and thus  manifest as silent numerical corruption or segmentation faults at runtime.
 
 \subsubsection{Model Aliasing}
 
 Because the interpreter maintains at most one model in its global state, any command that constructs a new model overwrites the previous one. This creates an aliasing hazard: references held by user code may become dangling when a subsequent model command reinitializes the global domain. Consider a workflow in which a calibration routine constructs a model, performs an analysis, and stores a reference to the results. 
-If a later stage of the same program constructs a second model---perhaps for validation---the stored reference now points to deallocated or reinitialized memory.
+If a later stage of the same process constructs a second model the stored reference now points to deallocated or reinitialized memory.
 
-This limitation is not merely inconvenient; it renders the interpreter unsuitable for any application that requires multiple concurrent models. Monte Carlo simulations, parametric studies, and ensemble methods all require independent model instances that can be evaluated in parallel. The global singleton architecture forces such workflows to spawn separate processes, incurring the overhead of inter-process communication and precluding shared-memory parallelism.
+This limitation is not merely inconvenient; it renders the interpreter unsuitable for any application that requires multiple concurrent models. Monte Carlo simulations, parametric studies, and ensemble methods all require independent model instances that can be evaluated in parallel. 
+The global singleton architecture forces such workflows to spawn separate processes, incurring the overhead of inter-process communication and precluding shared-memory parallelism.
 
 \subsubsection{Analysis State Corruption}
 
-The analysis machinery exhibits analogous issues. The integrator, algorithm, system of equations, and convergence test are held as global pointers that any command may reassign. 
-Because these components hold internal state that evolves during the solution process, concurrent access---or even interleaved access from ostensibly independent analyses---produces race conditions and corrupted solutions. The lack of encapsulation means that a library embedding \OpenSees{} cannot guarantee isolation from other libraries that may also embed it; two such libraries executing in the same process will silently corrupt each other's analyses.
+The analysis machinery exhibits analogous issues. 
+The integrator, algorithm, system of equations, and convergence test are held as global pointers that any command may reassign. 
+Because these components hold internal state that evolves during the solution process, concurrent access---or even interleaved access from ostensibly independent analyses---produces race conditions and corrupted solutions. 
+The lack of encapsulation means that a library embedding \OpenSees{} cannot guarantee isolation from other libraries that may also embed it; two such libraries executing in the same process will silently corrupt each other's analyses.
 
 \subsubsection{Architectural Characterization}
 
@@ -86,7 +91,7 @@ This context represents the evolving state of a single finite-element model: the
 This context encapsulates the solution strategy: the integrator, solution algorithm, system of equations, constraint handler, and convergence test. It holds the transient state that evolves during Newton--Raphson iterations and is invalidated when the analysis completes or fails. Separating analysis state from domain state allows the same model to be analyzed under different strategies without reconstruction.
 \end{description}
 
-\subsubsection{Command Implementation Pattern}
+\subsubsection{Command Encapsulation}
 
 Command implementations follow a uniform pattern in which the context is received as an opaque handle and downcast to the appropriate type. The command retrieves its dependencies by querying the context rather than global tables, constructs the requested object, and registers it with the context for lifetime management. Because the context is local to a single model, two threads operating on different contexts cannot interfere---thread safety is a structural property rather than a synchronization discipline.
 

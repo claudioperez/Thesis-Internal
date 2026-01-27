@@ -13,18 +13,18 @@
 % Fixing the problem within existing software architectures would require rewriting element-level code, with attendant re-validation, for each affected element type.
 % \end{Aside}
 
-Part~I of this dissertation presents a family of models for simulating slender members under consideration of geometric and material nonlinearities. 
-Slender members are typically represented by \emph{dimensionally reduced} \citep{kantorovich1958approximate} models of three dimensional continuua, known as beam theories, which simplify the partial differential equations of elastostatics to an ordinary differential equation in one spatial variable.
+Part~I of this dissertation presents a family of models for simulating slender members exhibiting geometric and material nonlinearities. 
+Slender members are typically represented by dimensionally reduced \citep{kantorovich1958approximate} models of three dimensional continuua, known as beam theories, which simplify the partial differential equations of elastostatics to an ordinary differential equation in one spatial variable.
 When discretized by the finite element method, these models offer a substantial advantage in computational demand, but several complications arise in the face of geometric and material nonlinear response:
 \begin{description}
 \item[Geometric Nonlinearity.]
-Dimensional reduction of the geometrically nonlinear equations of elastostatics generally leads to a problem posed over a constrained solution space that lacks a vectorial structure. 
+Dimensional reduction of the geometrically nonlinear continuum equations generally leads to a problem posed over a constrained solution space that lacks a vectorial structure. 
 Such problems lie outside the domain of classical finite element methods \citep{strang1973analysis}, which can fail to preserve important features of the constrained model, like strain objectivity. 
 Formulations that restore objectivity exist, but they sacrifice the symmetric tangent stiffness that accelerates iterative solution.
 
 \item[Material Nonlinearity.]
 Inelastic material response generally depends on the full continuum strain tensor, whose pointwise value in the member is lost in the process of dimensional reduction. 
-Fiber section models \cite{taucer1991fiber} reconstruct this state of strain by leveraging the plane section hypothesis of Euler-Bernoulli and Timoshenko beam theories, but this fails to account for cross-sectional warping and often furnishes unrealistic response. 
+Fiber section models \citep{taucer1991fiber} reconstruct this state of strain by leveraging the plane section hypothesis of Euler-Bernoulli and Timoshenko beam theories, but this fails to account for cross-sectional warping and often furnishes unrealistic response. 
 In the elastic theory of beams these effects are tacitly represented by the Saint~Venant torsion and shear-correction cross sectional constants, but these approaches do not lend themselves to inelastic analysis. 
 
 \item[Physical Transparency.]
@@ -78,19 +78,15 @@ can be employed without modification.
 
 The developments in this work are restricted to the following setting:
 \begin{itemize}
-\item Prismatic, initially straight beams with arbitrary cross-section geometry.
-\item The Saint-Venant class of loadings: axial force, biaxial bending moments, 
-      torque, and biaxial shear forces, all applied as end resultants.
-\item Quasi-static response; dynamic and frequency-matching considerations 
-      are outside our scope.
+\item Prismatic, initially straight beams with arbitrary cross-section geometry. 
+\item Quasi-static response.
 \item Small to moderate material strain.
 \end{itemize}
 
-The following assumptions are adopted:
+The following simplifying assumptions are adopted:
 \begin{itemize}
     \item Saint-Venant stress
     \item For Type 3, warping-deformation relation maintains proportionality through inelastic response.
-    \item Prismatic members
 \end{itemize}
 
 
@@ -124,12 +120,7 @@ We introduce material points in the cross-section through an extended displaceme
 
 \cref{sec:timo} is centered on identifying a minimal set of warping shapes which allow for the exact reconstruction of Saint~Venant's classical continuum solutions through the reduced model of \cref{sec:genwarp}. 
 To this end, the \emph{trace} formalism is introduced which characterizes the family 
-of traces satisfying our admissibility criteria. 
-We derive explicit expressions 
-for the trace matrices corresponding to classical beam theories and introduce 
-the energy-conjugate trace, which produces symmetric section stiffness and arises naturally from variational considerations.
-
-A brief recapitulation of Saint Venant's solution is presented in \cref{sec:sv}. 
+of models satisfying our admissibility criteria. 
 
 % \end{Details}
 

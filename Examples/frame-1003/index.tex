@@ -2,7 +2,7 @@
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.8\linewidth]{Examples/frame-1003/img/frame-1003.png}
-    \caption{Simply supported span with a uniformly distributed load \(w(x) \FrameBasis_z\).}
+    \caption{Simply supported span with a uniformly distributed load \(w(x) \FrameBasis_z\) (Example~\ref{sec:frame-1003}).}
     \label{fig:1003-conf}
 \end{figure}
 
@@ -10,11 +10,11 @@
 This problem addresses a common oversight in the implementation of 
 distributed loading under a corotational transformation. 
 Distributed loads are most commonly used to model gravitational loads on members. 
-In order to model such an effect under corotational kinematics, the loads must be applied in the inertial basis, otherwise they will act as follower loads that rotate with the corotational basis.  
+In order to model such an effect under corotational kinematics, the loads must be applied in the global coordinate system, otherwise they will act as follower loads that rotate with the corotational basis.  
 
 \subparagraph{Setup}
-This phenomenon is illustrated by a simply supported span subjected to a uniformly distributed conservative force. 
-A similar problem was considered by \cite{desouza2000forcebased}.
+This phenomenon is illustrated by the simply supported span in \cref{fig:1003-conf} which is subjected to a uniformly distributed gravitational force. 
+A similar problem was considered by \cite{desouza2000forcebased} using a corotational formulation. 
 
 \subparagraph{Results}
 \Cref{fig:1003-soln} shows load-displacement curves for the cases under consideration. 

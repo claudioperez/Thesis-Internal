@@ -480,26 +480,3 @@ We specify them via their transposes (row vectors acting on $yz$–components):
 }
 \]
 \end{Details}
-
-\begin{table}[H]
-\begin{center}
-\caption{Inverse trace matrix blocks.}
-\label{tab:T0-inv-blocks}
-\renewcommand{\arraystretch}{1.3}
-\begin{tabular}{rllllll}
-\toprule
-\multicolumn{2}{@{}l}{Block} & Size & Units & Coupling & \\ 
-\midrule
-$\ShiftB$ & & & & $\rm vw$ & $\rm vv[w]$ & ${\rm vv}$ \\
-$\ShiftA$ & & & & $\rm vm$ & ---         & ${\rm vm}$ \\
-$\ShiftN$ & & & & $\rm vn$ & ---         & ${\rm vn}$ \\
-$\ShiftT$ & & & & ---      & $\rm nw$    & ${\rm nw}$ \\
-$\ShiftK$ & & & & $\rm ww$ & $\rm ww[v]$ & ${\rm ww}$ \\
-$\ShiftF$ & & & & $\rm wm$ & ---         & ${\rm wm}$ \\ \midrule
-$\ShiftScaleN$ &  &  &  
-  & $\rm wn$ & --- & ${\rm wn}$ \\
-$\ShiftScaleT$ &  &  &  & $\rm ww$ & $\rm ww$ & --- \\
-\bottomrule
-\end{tabular}
-\end{center}
-\end{table}

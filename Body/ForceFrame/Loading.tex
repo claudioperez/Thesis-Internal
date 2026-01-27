@@ -1,11 +1,5 @@
 \subsection{Loading}
 
-
-In the force formulation, the consistent load stiffness is obtained by implicit differentiation of the residual:
-\begin{equation}
-    g(\bm{u},\bm{v},\bm{q}) = \delta \bm{q} \cdot \int \mathbf{b}^{T}\mathbf{f}\,\bigl(\mathbf{b}\bm{q} + \bm{s}_{p}(x,\bm{u}) - \bm{s}(\bm{e})\bigr)\, \mathrm{d}x - \delta \bm{q} \cdot \bm{v} = 0
-    \label{eq:force-residual}
-\end{equation}
 The total differential of the residual \eqref{eq:force-residual} is
 \begin{equation*}
 \begin{aligned}
@@ -25,12 +19,12 @@ The rightmost term is dropped assuming \(g = 0\). Rearranging for \(\frac{\parti
 \right)\delta \bm{u}
 \label{eq:dqdv}
 \end{equation}
-where we've used \(\frac{\partial g}{\partial \bm{v}} = -\bm{1}\). 
+where the relation \(\frac{\partial g}{\partial \bm{v}} = -\mathbf{1}\) is used. 
 Next define:
 \begin{equation*}
 \begin{aligned}
-\bm{F} &\triangleq \frac{\partial g}{\partial \bm{q}} = \int \mathbf{b}^T \mathbf{f} \mathbf{b}\, \mathrm{d}x \\
-\mathbf{K}_{f} &\triangleq \frac{\partial g}{\partial \bm{u}} =\frac{\partial }{\partial \bm{u}} \int \mathbf{b}^T \mathbf{f} \bm{s}_p(x,\bm{u})\,\mathrm{d}x \\
+\mathbf{F} &\triangleq \frac{\partial g}{\partial \bm{q}} = \int \ForceInterp^{\top} \mathbf{F}_{s} \ForceInterp\, \dd x \\
+\mathbf{K}_{f} &\triangleq \frac{\partial g}{\partial \bm{u}} =\frac{\partial }{\partial \bm{u}} \int \ForceInterp^{\top} \mathbf{F}_{s} \bm{s}_p(x,\bm{u})\,\dd x \\
 \mathbf{A} & \triangleq \frac{\partial \bm{v}}{\partial \bm{u}} \\
 \mathbf{K}_{q} &\triangleq \frac{\partial \bm{q}}{\partial \bm{v}} \\
 \end{aligned}

@@ -9,7 +9,7 @@ Transformation:
 Isometry:
 \begin{enumerate}
     \item \emph{Initialize}\label{EuclidIsom::initialize} Compute \(\bm{R}_0\) and \(\bar{\bm{C}}\) from \eqref{eq:init-Cbar}
-    \item \emph{Update}\label{EuclidIsom::update} \(\bm{R}\) from nodal rotations \(\bm{R}_a\) and new chord \(\Delta\bm{x}\), then compute \(\bar{\bm{c}}\) using \eqref{eq:solve-cbar}.
+    \item \emph{Update}\label{EuclidIsom::update} \(\bm{R}\) from nodal rotations \(\bm{\Lambda}_a\) and new chord \(\Delta\bm{x}\), then compute \(\bar{\bm{c}}\) using \eqref{eq:solve-cbar}.
 \end{enumerate}
 
 \subsection{Local System}
@@ -26,55 +26,55 @@ Isometry:
 
 \subsubsection{Transformation}
 
-Consider a line segment in 3D defined by two endpoints \(\bm{X}_i\) and \(\bm{X}_j\). 
-After deformation, the endpoints have moved to \(\bm{X}_i + \bm{u}_i\)
- and \(\bm{X}_j + \bm{u}_j\). 
+Consider a line segment in 3D defined by two endpoints \(\bm{X}_I\) and \(\bm{X}_J\). 
+After deformation, the endpoints have moved to \(\bm{X}_I + \bm{u}_I\)
+ and \(\bm{X}_J + \bm{u}_J\). 
 Let 
 \[
-\Delta \bm{X} \;\triangleq\; \bm{X}_j - \bm{X}_i
+\Delta \bm{X} \;\coloneq\; \bm{X}_J - \bm{X}_I
 \] 
 be the direction of the line in the reference configuration, and 
 \begin{equation}
-\Delta \bm{x} \;\triangleq\; (\bm{X}_J + \bm{u}_J)\;-\;(\bm{X}_I + \bm{u}_I)
+\Delta \bm{x} \;\coloneq\; (\bm{X}_J + \bm{u}_J)\;-\;(\bm{X}_I + \bm{u}_I)
 \end{equation}
 is the direction in the deformed configuration. 
 The lengths of the original and deformed line are, respectively:
 \[
-L_0 \; \triangleq \; \|\Delta \bm{X}\|
+L_0 \; \coloneq \; \|\Delta \bm{X}\|
 \qquad\text{and}\qquad
-L_n \; \triangleq \; \|\Delta \bm{x}\|
+L_n \; \coloneq \; \|\Delta \bm{x}\|
 \]
 
-\paragraph{Translation}
+\paragraph{Translation.}
 The line is represented in the ``natural'' reference configuration \(\bar{\bm{X}}\) by a Euclidean transformation of the reference placement \(\bm{X}\):
 \[
-\bar{\bm{X}} = \bm{R}_0^{\mathrm{t}}\bm{X} - \bar{\bm{C}}
+\bar{\bm{X}} = \bm{R}_0^{\top}\bm{X} - \bar{\bm{C}}
 \]
 Similarly, the deformed configuration may be transformed:
 \[
-\bar{\bm{x}}(\xi) \triangleq  \bm{R}^{\mathrm{t}}\bm{x} - \bar{\bm{c}}
+\bar{\bm{x}}(\xi) \coloneq  \bm{R}^{\top}\bm{x} - \bar{\bm{c}}
 \]
 The deformation from \(\bar{\bm{X}}\) to \(\bar{\bm{x}}\) is characterized by the displacement \(\bar{\bm{u}} :=  \bar{\bm{x}} - \bar{\bm{X}}\):
 \[
 \begin{aligned}
 \bar{\bm{u}}(\xi) 
-% &= \bm{R}^{\mathrm{t}}(\bm{X}(\xi)+\bm{u}(\xi)) - \bar{\bm{c}} - (\bm{R}_0^{\mathrm{t}}\bm{X}(\xi) - \bar{\bm{C}}) \\
-% &= \bm{R}^{\mathrm{t}}(\bm{X}(\xi)+\bm{u}(\xi)) - \Delta \bar{\bm{c}} - \bm{R}_0^{\mathrm{t}}\bm{X}(\xi) \\
-&= \bm{R}^{\mathrm{t}}(\bm{u}(\xi) - \Delta \bm{c}) + \Delta \bm{R}^{\mathrm{t}}\bm{X}(\xi) \\
+% &= \bm{R}^{\top}(\bm{X}(\xi)+\bm{u}(\xi)) - \bar{\bm{c}} - (\bm{R}_0^{\top}\bm{X}(\xi) - \bar{\bm{C}}) \\
+% &= \bm{R}^{\top}(\bm{X}(\xi)+\bm{u}(\xi)) - \Delta \bar{\bm{c}} - \bm{R}_0^{\top}\bm{X}(\xi) \\
+&= \bm{R}^{\top}(\bm{u}(\xi) - \Delta \bm{c}) + \Delta \bm{R}^{\top}\bm{X}(\xi) \\
 \end{aligned}
 \]
-with \(\Delta \bar{\bm{c}} \triangleq \bar{\bm{c}} - \bar{\bm{C}}\) and \(\Delta \bm{R} \triangleq \bm{R} - \bm{R}_0\)
+with \(\Delta \bar{\bm{c}} \coloneq \bar{\bm{c}} - \bar{\bm{C}}\) and \(\Delta \bm{R} \coloneq \bm{R} - \bm{R}_0\)
 so that
 \begin{equation}
-    \bm{u}(\xi)\;\mapsto\; \bm{R}^{\mathrm{t}}\bm{u}(\xi) - \Delta \bar{\bm{c}} + \Delta \bm{R}^{\mathrm{t}}\bm{X}(\xi)
+    \bm{u}(\xi)\;\mapsto\; \bm{R}^{\top}\bm{u}(\xi) - \Delta \bar{\bm{c}} + \Delta \bm{R}^{\top}\bm{X}(\xi)
 \label{eq:iso-u}
 \end{equation}
 The translations \(\bar{\bm{C}}\) and \(\bar{\bm{c}}\) are selected to enforce \(\bar{\bm{u}}_I = \bar{\bm{x}}_I = \mathbf{0}\), furnishing for \(\bar{\bm{c}}\)
 %
 \begin{equation}
-\bar{\bm{x}}_I = \mathbf{0} = \bm{R}^{\mathrm{t}}\bm{X}_I + \bm{R}^{\mathrm{t}}(\bm{u}_I - \bm{c})
+\bar{\bm{x}}_I = \mathbf{0} = \bm{R}^{\top}\bm{X}_I + \bm{R}^{\top}(\bm{u}_I - \bm{c})
 \quad\implies\quad 
-\bar{\bm{c}} = \bm{R}^{\mathrm{t}}(\bm{X}_I + \bm{u}_I)
+\bar{\bm{c}} = \bm{R}^{\top}(\bm{X}_I + \bm{u}_I)
 \label{eq:solve-cbar}
 \end{equation}
 %
@@ -82,48 +82,46 @@ To find \(\bar{\bm{C}}\) use \eqref{eq:solve-cbar} for \(\bar{\bm{c}}\) in \eqre
 \[
 \begin{aligned}
 \bar{\bm{u}}(\xi)
-% &= \bm{R}^{\mathrm{t}}(\bm{X}(\xi)+\bm{u}(\xi)) - \bm{R}^{\mathrm{t}}(\bm{X}_I+\bm{u}_I) - (\bm{R}_0^{\mathrm{t}}\bm{X}(\xi) - \bar{\bm{C}}) \\
-% &= \bm{R}^{\mathrm{t}}(\bm{X}(\xi)+\bm{u}(\xi)) - \bm{R}^{\mathrm{t}}(\bm{X}_I+\bm{u}_I) - \bm{R}_0^{\mathrm{t}}\bm{X}(\xi) + \bar{\bm{C}} \\
-&= \bm{R}^{\mathrm{t}}(\bm{X}(\xi)-\bm{X}_I) 
- + \bm{R}^{\mathrm{t}}(\bm{u}(\xi)-\bm{u}_I) - \bm{R}_0^{\mathrm{t}}\bm{X}(\xi) + \bar{\bm{C}} \\
+% &= \bm{R}^{\top}(\bm{X}(\xi)+\bm{u}(\xi)) - \bm{R}^{\top}(\bm{X}_I+\bm{u}_I) - (\bm{R}_0^{\top}\bm{X}(\xi) - \bar{\bm{C}}) \\
+% &= \bm{R}^{\top}(\bm{X}(\xi)+\bm{u}(\xi)) - \bm{R}^{\top}(\bm{X}_I+\bm{u}_I) - \bm{R}_0^{\top}\bm{X}(\xi) + \bar{\bm{C}} \\
+&= \bm{R}^{\top}(\bm{X}(\xi)-\bm{X}_I) 
+ + \bm{R}^{\top}(\bm{u}(\xi)-\bm{u}_I) - \bm{R}_0^{\top}\bm{X}(\xi) + \bar{\bm{C}} \\
 \end{aligned}
 \]
-Enforcing \(\bm{u}_I = \mathbf{0}\)
+Enforcing \(\bm{u}_I = \mathbf{0}\) furnishes
 \begin{equation}
-\bar{\bm{C}} = \bm{R}_0^{\mathrm{t}}\bm{X}_I
+\bar{\bm{C}} = \bm{R}_0^{\top}\bm{X}_I
 \label{eq:init-Cbar}
 \end{equation}
-Then we have
+so that in turn
 \begin{equation*}
-\bar{\bm{u}}(\xi) = \bm{R}^{\mathrm{t}}(\bm{X}(\xi)-\bm{X}_I) 
- + \bm{R}^{\mathrm{t}}(\bm{u}(\xi)-\bm{u}_I)
- - \bm{R}_0^{\mathrm{t}}(\bm{X}(\xi) - \bm{X}_I)
+\bar{\bm{u}}(\xi) = \bm{R}^{\top}(\bm{X}(\xi)-\bm{X}_I) 
+ + \bm{R}^{\top}(\bm{u}(\xi)-\bm{u}_I)
+ - \bm{R}_0^{\top}(\bm{X}(\xi) - \bm{X}_I)
 \end{equation*}
 % \[
-% \bar{\bm{u}}_J = \bar{\bm{x}} - \bar{\bm{X}} = \bm{R}^{\mathrm{t}}\bm{u}_J - \bm{c} = \bm{R}^{\mathrm{t}}\Delta \bm{u}
+% \bar{\bm{u}}_J = \bar{\bm{x}} - \bar{\bm{X}} = \bm{R}^{\top}\bm{u}_J - \bm{c} = \bm{R}^{\top}\Delta \bm{u}
 % \]
 
-\paragraph{Orientation}
+\paragraph{Orientation.}
 
 We want a rotation \(\bm{R}(\varepsilon)\) (with
-\(\bm{R}(0)=\mathbf{1}\)) that \emph{maps the original unit direction}
+\(\bm{R}(0)=\mathbf{1}\)) that maps the original unit direction
 \(\Delta \bm{X}^{\ast} = \tfrac{\Delta \bm{X}}{\|\Delta \bm{X}\|}\) to
-the \emph{new} unit direction
-\(\Delta \bm{x}^{\ast}(\varepsilon) = \tfrac{\Delta \bm{x}(\varepsilon)}{\|\Delta \bm{x}(\varepsilon)\|}\).
-In other words,\\
+the new unit direction
+\(\Delta \bm{x}^{\ast}(\varepsilon) = \tfrac{\Delta \bm{x}(\varepsilon)}{\|\Delta \bm{x}(\varepsilon)\|}\):
 \[
 \bm{R}(\varepsilon)\,\Delta \bm{X}^{\ast} 
 \;=\;
 \Delta \bm{x}^{\ast}(\varepsilon).
 \]
 %
-If \(\Delta \bm{X}\) and \(\Delta \bm{x}\) are not collinear, one
-can build \(\bm{R}\) via the axis--angle representation. 
-Define
+with
 
-\[\Delta \bm{X}^\ast \triangleq \Delta \bm{X} / \|\Delta \bm{X}\|
+\[
+\Delta \bm{X}^\ast \coloneq \Delta \bm{X} / \|\Delta \bm{X}\|
 \qquad\text{ and }\qquad
-\Delta \bm{x}^\ast \triangleq \Delta \bm{x} / \|\Delta \bm{x}\|.
+\Delta \bm{x}^\ast \coloneq \Delta \bm{x} / \|\Delta \bm{x}\|.
 \]
 %
 The rotation axis is the unit vector 
@@ -144,18 +142,6 @@ Then Rodrigues' formula \eqref{eq:ExpSO3} furnishes
 \;+\; [\AlignAxis]_\times \,\sin \theta 
 \;+\; [\AlignAxis]_\times^2 \,(1 - \cos \theta)
 \]
-
-\paragraph{Remarks}
-
-\begin{itemize}
-\tightlist
-\item
-  If \(\Delta \bm{x}\) is exactly parallel to \(\Delta \bm{X}\) (same
-  direction), the angle is zero, and \(\bm{R}\) is the identity.\\
-\item
-  If they are \emph{antiparallel}, then \(\theta=\pi\), and one only
-  needs an axis perpendicular to \(\Delta \bm{X}\) and \(\Delta \bm{x}\).
-\end{itemize}
 
 
 \subsubsection{Summary}
@@ -216,36 +202,35 @@ where
     \item Isometry
     \[
     \bm{x}(\xi),\FrameRotation(\xi) \mapsto \begin{pmatrix}
-        \bm{R}^{\mathrm{t}}(\bm{x}(\xi) -\bm{c})\\
-        \bm{R}^{\mathrm{t}}\FrameRotation (\xi)
+        \bm{R}^{\top}(\bm{x}(\xi) -\bm{c})\\
+        \bm{R}^{\top}\FrameRotation (\xi)
     \end{pmatrix}
     \]
     with \(\bm{c}\). Translation increments from \eqref{eq:iso-u}:
     \[
     \begin{aligned}
-    \bm{u}(\xi)&\;\mapsto\; \bm{R}^{\mathrm{t}}(\bm{u}(\xi) - \Delta \bm{c}) + \Delta \bm{R}^{\mathrm{t}}\bm{X}(\xi) \\
+    \bm{u}(\xi)&\;\mapsto\; \bm{R}^{\top}(\bm{u}(\xi) - \Delta \bm{c}) + \Delta \bm{R}^{\top}\bm{X}(\xi) \\
     \bm{v}_x,\bm{v}_{\Lambda} &\mapsto \begin{pmatrix}
-      \bm{R}^{\mathrm{t}}\left(\bm{v}_x - \bm{\psi}_x \right) \\
+      \bm{R}^{\top}\left(\bm{v}_x - \bm{\psi}_x \right) \\
     \end{pmatrix}
     \end{aligned}
     \]
 
     \item Local logarithm
     \[
-      \FrameRotation \mapsto \bm{\theta} \triangleq \operatorname{Log} \FrameRotation
+      \FrameRotation \mapsto \bm{\theta} \coloneq \operatorname{Log} \FrameRotation
     \]
     \[
     \bm{v}_{\Lambda} \mapsto \operatorname{dLog}(\bm{\theta}) \bm{v}_{\Lambda}
     \qquad 
-    \bm{m} \mapsto \operatorname{dLog}(\bm{\theta})^{\mathrm{t}} \bm{m}
+    \bm{m} \mapsto \operatorname{dLog}(\bm{\theta})^{\top} \bm{m}
     \]
 \end{enumerate}
 \end{ambox}
 
 \subsection{Linearization}
 
-Consider small displacements of the endpoints, proportional to a small parameter \(\varepsilon\). 
-Specifically, let 
+Consider small displacements of the endpoints, proportional to a small parameter \(\varepsilon\):
 \[
 \bm{u}_I(\varepsilon) \;=\; \varepsilon\,\bm{u}_I, 
 \quad
@@ -267,7 +252,7 @@ Then the new direction vector is
     \;=\;
     \Delta \bm{X} \;+\; \varepsilon\,\Delta \bm{u},
     \quad\text{ with }\quad
-    \Delta \bm{u} \triangleq \bm{u}_J - \bm{u}_I.
+    \Delta \bm{u} \coloneq \bm{u}_J - \bm{u}_I.
 \label{eq:order-Dx}
 \end{equation} 
 
@@ -275,12 +260,6 @@ Then the new direction vector is
 
 \subsubsection{Orientation}
 At \(\varepsilon=0\), clearly \(\Delta \bm{x}(0) = \Delta \bm{X}\). 
-The \emph{unit} direction under the motion is 
-\[
-\Delta \bm{x}^*(\varepsilon)
-\; \triangleq \;
-\frac{\Delta \bm{x}(\varepsilon)}{\|\Delta \bm{x}(\varepsilon)\|}.
-\]
 Recall the \emph{rotation angle} \(\theta(\varepsilon)\) and \emph{rotation axis} \(\AlignAxis(\varepsilon)\) are defined via \eqref{eq:arccos-dX-dx} and \eqref{eq:def-align-axis}, respectively:
   \[
     \theta(\varepsilon)
@@ -322,7 +301,7 @@ We now want the derivative
 \]
 %
 
-\paragraph{Unit Axis}
+\paragraph{Unit Axis.}
 
 We begin by obtaining the first order approximation of the unit
 direction. The norm of \(\Delta \bm{x}(\varepsilon)\) is \[
@@ -421,7 +400,7 @@ and
 Thus the \emph{change} in the unit direction to first order is 
 \begin{equation}
   \Delta \mathbf{e}(\varepsilon)
-  \;\triangleq\;
+  \;\coloneq\;
   \Delta \bm{x}^\ast(\varepsilon) \;-\; \Delta \bm{X}^\ast
   \;=\;
   \varepsilon\,
@@ -544,7 +523,7 @@ Hence
   \label{eq:order-DXDx}
 \end{equation}
 
-\paragraph{Angle}
+\paragraph{Angle.}
 
 Recall \eqref{eq:arccos-dX-dx}:
 \[
@@ -562,14 +541,14 @@ Therefore, to first order, \eqref{eq:order-DXDx} implies
   \;=\;
   O(\varepsilon^2).
 \]
-That is, \textbf{there is \emph{no} first-order change} in the dot
-product---so the angle is actually \emph{second-order} small in
-\(\varepsilon\). Equivalently, the \emph{component} of \(\Delta \bm{u}\)
-parallel to \(\Delta \bm{X}\) does \emph{not} create a first-order
-\emph{rotation}; it only contributes to length changes or second-order
-tilt.
-From this one can show (by direct Taylor expansion of
-\(\Delta \bm{x}^*(\varepsilon)\) around \(\varepsilon=0\)) that \[
+Thus the angle is second-order in
+\(\varepsilon\). 
+Equivalently, the component of \(\Delta \bm{u}\)
+parallel to \(\Delta \bm{X}\) does not create a first-order
+\emph{rotation}; it only contributes to length changes or second-order tilt.
+From this one can show by direct Taylor expansion of
+\(\Delta \bm{x}^*(\varepsilon)\) around \(\varepsilon=0\) that 
+\[
   \Delta \bm{X}^*\cdot \Delta \bm{x}^*(\varepsilon)
   \;=\;
   1 
@@ -583,65 +562,10 @@ displacement \(\Delta \bm{u}\) has a purely parallel component (in which
 case the line is just stretched, so \(\theta(\varepsilon)\approx 0\) to
 second order, which still yields a well‐defined limit).
 
-\begin{itemize}
-\tightlist
-\item
-  \textbf{Case (a):} If \(\Delta \bm{u}\) is \emph{not} perfectly
-  parallel to \(\Delta \bm{X}\), then \(\theta(\varepsilon)\) is
-  typically \(O(\varepsilon)\).\\
-\item
-  \textbf{Case (b):} If \(\Delta \bm{u}\) is parallel, you get no
-  first‐order rotation; \(\theta(\varepsilon)\) is \(O(\varepsilon^2)\).
-\end{itemize}
-%
-Either way, we know that as \(\varepsilon\to0\),
-\(\theta(\varepsilon)\to 0\). 
-Then 
-\begin{itemize}
-\tightlist
-\item
-  \(\sin \theta(\varepsilon)  = \theta(\varepsilon) + O(\theta^3)\).\\
-\item
-  \(1-\cos[\theta(\varepsilon)] = \tfrac12\,\theta^2(\varepsilon) + O(\theta^4)\).
-\end{itemize}
-%
-Thus
+\paragraph{Unit Axis.}
 
+Consider the cross product in the numerator: 
 \[
-  \frac{\sin \theta(\varepsilon) }{\varepsilon}
-  \;=\;
-  \frac{\theta(\varepsilon)}{\varepsilon}
-  \;+\;
-  O\bigl(\theta^3/\varepsilon\bigr),
-  \quad
-  \frac{1-\cos[\theta(\varepsilon)]}{\varepsilon}
-  \;=\;
-  \frac{\tfrac12\theta^2(\varepsilon)}{\varepsilon}
-  \;+\;
-  O\bigl(\theta^4/\varepsilon\bigr).
-\] If \(\theta(\varepsilon)\) is \emph{linear} in \(\varepsilon\) at
-small \(\varepsilon\) (the usual perpendicular‐displacement case), then
-\(\theta(\varepsilon)/\varepsilon \to \text{constant}\), and
-\(\theta^2(\varepsilon)/\varepsilon\to 0\). 
-If \(\theta(\varepsilon)\)
-is \emph{second‐order} small, then
-\(\theta(\varepsilon)/\varepsilon \to0\) anyway. In \emph{either}
-scenario,
-
-\begin{enumerate}
-\def\labelenumi{\arabic{enumi}.}
-\tightlist
-\item
-  \(\sin \theta(\varepsilon) /\varepsilon\) is \emph{bounded} as
-  \(\varepsilon \to 0\) and has a finite limit (which may be 0 in the
-  purely parallel case).\\
-\item
-  \((1-\cos \theta(\varepsilon))/\varepsilon \to 0\).
-\end{enumerate}
-
-\paragraph{Unit Axis}
-
-Let's look at the cross product in the numerator: \[
   \Delta \bm{X}^* \times \Delta \bm{x}^*(\varepsilon)
   \;=\;
   \Delta \bm{X}^* \;\times\;
@@ -779,9 +703,8 @@ Thus, finally,
 \begin{itemize}
 \tightlist
 \item \(\bm{\omega}\) represents an \emph{infinitesimal rotation} around the axis
-given by \(\Delta \bm{X} \times \Delta \bm{u}\). Geometrically, it is
-precisely the smallest rotation needed to tip \(\Delta \bm{X}\) into
-\(\Delta \bm{X} + \varepsilon \,\Delta \bm{u}\), modulo normalization.
+given by \(\Delta \bm{X} \times \Delta \bm{u}\). Geometrically, it is the smallest rotation needed to tip \(\Delta \bm{X}\) into
+\(\Delta \bm{X} + \varepsilon \,\Delta \bm{u}\).
 
 \item
   \(\Delta \bm{X}^*\times \Delta \bm{x}^*(\varepsilon)\) is an
@@ -790,17 +713,6 @@ precisely the smallest rotation needed to tip \(\Delta \bm{X}\) into
   first order, so the product still can have a finite limit).\\
 \end{itemize}
 %
-
-%
-The essence is that at small angles, 
-\(\sin\theta(\varepsilon)\approx\|\Delta \bm{X}^*\times \Delta \bm{x}^*\|\approx O(\varepsilon)\),\\
-while \(\,1-\cos\theta(\varepsilon)\approx O(\varepsilon^2)\), and the
-rotation axis becomes the direction of
-\(\Delta \bm{X}^*\times(\Delta \bm{X}^*+\dots)\). 
-Collecting these expansions yields
-\[
-\bm{\omega}=\frac{\Delta \bm{X}\times \Delta \bm{u}}{\|\Delta \bm{X}\|^2}
-\].
 
 \vspace{5ex}
 
@@ -822,8 +734,8 @@ Collecting these expansions yields
     \item 
     \[
     \bm{u}_a,\bm{w}_a \mapsto \begin{pmatrix}
-        \bm{R}^{\mathrm{t}}\bm{u}_a \\
-        \bm{R}^{\mathrm{t}}\bm{w}_a
+        \bm{R}^{\top}\bm{u}_a \\
+        \bm{R}^{\top}\bm{w}_a
     \end{pmatrix}
     \qquad\qquad
     \bm{n}_a,\bm{m}_a \mapsto \begin{pmatrix}
@@ -836,7 +748,7 @@ Collecting these expansions yields
     \[
     \bm{u}_a,\FrameRotation \mapsto \begin{pmatrix}
         \bm{u}_{a} + \bm{c} + \Delta\bm{x}_a \times \bar{\bm{\omega}} \\
-        \bm{R}^{\mathrm{t}}\FrameRotation
+        \bm{R}^{\top}\FrameRotation
     \end{pmatrix}
     \]
     \[
@@ -850,7 +762,7 @@ Collecting these expansions yields
         \bm{m}_a
     \end{pmatrix}
     \]
-    with \(\Delta\bm{u}\), \(\bm{c} \triangleq - \bm{u}_I\) and \(\bar{\bm{\omega}} \triangleq \frac{1}{L} \FrameBasis \times \Delta \bm{u}\)
+    with \(\Delta\bm{u}\), \(\bm{c} \coloneq - \bm{u}_I\) and \(\bar{\bm{\omega}} \coloneq \frac{1}{L} \FrameBasis \times \Delta \bm{u}\)
 
     \item Local Logarithm
 
@@ -859,6 +771,30 @@ Collecting these expansions yields
 
 \vspace{5ex}
 \begin{ambox}[Linear Transform]{box:linear-transform}
+
+% \begin{table}[]
+\begin{center}
+\begin{tabular}{ccc}
+    \multicolumn{3}{c}{Node logarithm} \\
+         &  \(\displaystyle
+           \bm{u}_a,\FrameRotation_a \mapsto  
+             \begin{pmatrix}
+                \bm{u}_a \\
+                \operatorname{Log}\FrameRotation_a
+            \end{pmatrix}\)
+         & \(\displaystyle
+         \bm{n}_a,\bm{m}_a \mapsto 
+         \begin{pmatrix}
+            \bm{n}_a \\
+            \bm{m}_a + \bm{r}_a \times\bm{n}_a
+        \end{pmatrix}
+         \)
+            \\
+         & 
+\end{tabular}
+\end{center}
+
+% \end{table}
 \begin{enumerate}
     \item[0] Node logarithm
     \[
@@ -887,8 +823,8 @@ Collecting these expansions yields
     \item 
     \[
     \bm{u}_a,\bm{w}_a \mapsto \begin{pmatrix}
-        \bm{R}^{\mathrm{t}}\bm{u}_a \\
-        \bm{R}^{\mathrm{t}}\bm{w}_a
+        \bm{R}^{\top}\bm{u}_a \\
+        \bm{R}^{\top}\bm{w}_a
     \end{pmatrix}
     \qquad\qquad
     \bm{n}_a,\bm{m}_a \mapsto \begin{pmatrix}
@@ -905,7 +841,7 @@ Collecting these expansions yields
         \bm{w}_a - \bar{\bm{\omega}}
     \end{pmatrix}
     \]
-    with \(\Delta\bm{u}\), and \(\bar{\bm{\omega}} \triangleq \frac{1}{L} \FrameBasis \times \Delta \bm{u}\)
+    with \(\Delta\bm{u}\), and \(\bar{\bm{\omega}} \coloneq \frac{1}{L} \FrameBasis \times \Delta \bm{u}\)
 \end{enumerate}
 \end{ambox}
 
@@ -927,7 +863,7 @@ $$
 and
 
 $$
-\Delta \bm{R}(\omega_J-\omega_I)=\bm{\Lambda}_J \bm{\Lambda}_I^{\mathrm{t}}
+\Delta \bm{R}(\omega_J-\omega_I)=\bm{\Lambda}_J \bm{\Lambda}_I^{\top}
 $$
 
 
@@ -942,7 +878,7 @@ $$
 
 $$
 \boxed{
-\bm{R} \triangleq \operatorname{Exp}(\operatorname{Axis}(\bm{R}_{\mathrm{aux}}\mathbf{D}_1,\, \mathbf{D}_1)) \, \bm{R}_{\mathrm{aux}}
+\bm{R} \coloneq \operatorname{Exp}(\operatorname{Axis}(\bm{R}_{\mathrm{aux}}\mathbf{D}_1,\, \mathbf{D}_1)) \, \bm{R}_{\mathrm{aux}}
 }
 $$
 

@@ -1,31 +1,4 @@
 
-
-\begin{Note}
-In this section we introduce material points that are not contained on the reference line of the beam model. 
-The objective is to develop a family of constitutive relations for the material resultants \(\bm{s} = (n,m,w,v)\) and strains \(\bm{e} = (\gamma,\kappa,\alpha,\alpha')\) that represents these material points.
-
-Everything is developed under the unconstrained Type 1 equilibrium equations.
-
-Objectives:
-\begin{itemize}
-\item Internal Wagner nonlinearity
-\item Arbitrary Geometry 
-\begin{itemize}
-
-    \item able to detect eventual elastic coupling between the warpings associated to torsion and shear forces
-    
-    \item General Geometry. C- and L-sections. Torsion-flexural coupling. \cite{kim2005exact,elfatmi2007nonuniform}, and \cite{du2020threedimensional}. 
-    See also \cite{lewinski2021incorporating} who implemented the model of \cite{elfatmi2007nonuniform}.
-
-    The asymmetric formulation of \cite{hsiao2000corotational} takes the shear-center as reference point.
-\end{itemize}
-
-\item Arbitrary Coordinates : All basic equations are formulated with respect to an arbitrary cartesian coordinate system which is not restricted to principal axes. 
-Thus the origin of this system is not necessarily a special point like the centroid. 
-\end{itemize}
-\end{Note}
-
-
 \subsection{Introduction}
 In this section we motivate a family of resultant constitutive relations that establishes a connection between the one-dimensional theory outlined above and the three dimensional framework of continuum mechanics.
 %
@@ -92,7 +65,7 @@ and the linearized displacement \(\hat{\bm{u}} = \hat{\bm{x}} - (x\FrameBasis + 
 
 
 
-\subsection{Stress Constraints}
+\subsection{Assumptions} %Stress Constraints}
 
 Recall that the Saint-Venant field generates vanishing stress components \(\FrameBasis_{\alpha}\cdot\PlaneStressTensor\FrameBasis_{\beta} = 0\). 
 It is evident from \eqref{eq:stress-resultants} that the condition \eqref{eq:seSE} precludes stresses with components on \(\{\FrameBasis_y,\,\FrameBasis_z\}\) from contributing to the rod stress resultants \(\bm{s}\), which depends only on those participating in the expression \(\StressTensor\,\FrameBasis\). 

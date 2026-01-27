@@ -3,12 +3,6 @@
 \subsection{Introduction}
 
 \paragraph{Motivation}
-The modern landscape of computational mechanics is characterized by trends like (1) the demand for parametric/sensitivity analysis and optimization, 
-and (2) advances in LLM technology that facilitate model building/definition.
-These trends favor small element libraries that are valid for a wide range structures. 
-Furthermore, it is important that salient modeling features are semantically related to the model definition data. eg, it is not good to separate features like warping or shear deformability  into separate elements. 
-Rather, there should be only a minimal number of elements, which expose these features as toggleable options. 
-
 
 This chapter introduces a unified 3D frame element library that builds on the prior developments. 
 The work builds on the modular architecture that has been pioneered in work like \cite{filippou1996fedeas}, \cite{desouza2000forcebased}, \cite{scott2008softwarea}. 
@@ -25,7 +19,7 @@ Mixed finite element formulations tend to be desirable when inelastic response m
 The development and implementation of these methods tends to be more involved than displacement formulations, and they are typically applied to linearized governing equations. 
 
 
-\paragraph{Scope}
+\paragraph{Scope.}
 Only shear-deformable formulations are discussed. 
 Shear-deformable beam theories are known to converge to Euler-Bernoulli beam theory in the limit of increasing span-to-depth ratio, and therefore are valid over a larger range of structure types, making them more suitable for the demands of our context.
 
@@ -279,7 +273,7 @@ The \ShearFiber{} section implements the developments of \cref{sec:gensec} and \
 
 
 \subsection{Verification}
-\paragraph{Geometric Transformations}
+\paragraph{Geometric Transformations.}
 Five examples from the literature are used to confirm that the proposed geometric transformation framework
 reproduces exactly the results of two seminal studies on geometrically exact formulations \cite{simo1986threedimensional}, \cite{ibrahimbegović1995computational}.
 %
@@ -295,7 +289,7 @@ The curved cantilever of Example~\ref{sec:frame-1007} illustrates the utility of
 The buckling analysis of a flexible rod under torsion in Example~\ref{sec:frame-1010} shows that the proposed formulation with objectivity and a symmetric stiffness matrix maintains the accuracy and 
 convergence properties of the wrapped element even for a deformation history with instability.
 
-\paragraph{Warping Consistency}
+\paragraph{Warping Consistency.}
 
 \Cref{sec:frame-0012} presents a numerical example demonstrating exact recovery of 
 Saint~Venant solutions through the proposed formulation. 

@@ -1,47 +1,30 @@
 This work presents contributions to the field of computational mechanics that target advances in structural health monitoring. 
-
-
-When an earthquake strikes, engineers responsible for highway infrastructure face an immediate question: which bridges can safely carry traffic, and which require inspection before reopening?
 The California Department of Transportation maintains over thirteen thousand bridges, many instrumented with accelerometers that record ground and structural motions during seismic events.
 These instruments produce data within seconds of an earthquake, yet the path from recorded accelerations to an actionable assessment of structural condition remains difficult to traverse at the speed and scale that post-earthquake decision-making demands.
 
 Structural health monitoring seeks to close this gap.
-The objective is to transform sensor data into quantitative indicators of structural condition---damage states, capacity reductions, remaining service life---that can inform decisions about closures, inspections, and repairs.
+The objective is to transform sensor data into quantitative indicators of structural condition that can inform decisions about closures, inspections, and repairs.
 Two broad strategies are available.
 The first, which may be termed forward or physics-based, constructs a mathematical model of the structure and simulates its response to the recorded input motions; predicted response quantities are then compared against capacity thresholds to assess damage.
 The second, which may be termed inverse or data-driven, uses recorded input and output motions to identify parameters of a dynamic system; changes in these parameters over time, or deviations from baseline values, serve as indicators of damage.
-Both strategies have extensive literatures, and both have demonstrated value in controlled studies.
+Both strategies have been explored extensively in the literature, and both have demonstrated value in controlled studies. 
 Their integration into operational platforms capable of assessing many structures in near-real-time, however, has proceeded slowly.
 
 A central obstacle is computational.
 Physics-based assessment requires finite element models capable of representing the inelastic behavior that governs damage progression in structural members.
-For bridges, these members are predominantly beams and columns, and their accurate simulation under seismic loading involves geometric nonlinearity, cross-sectional warping, and path-dependent material response.
+For bridges, these members are predominantly beams and columns, and their accurate simulation under seismic loading involves geometric nonlinearity, cross-sectional warping, and inelastic material response.
 There is a wealth of literature addressing these phenomena, but many issues remain unresolved. 
-Furthermore, much of this literature precipitates in specialized element types whose implementations are difficult to validate in combination, difficult to embed in workflows requiring gradient information, and are not amendable to adaptive model refinement algorithms or integration with emerging standards in building information modeling like IFC.
-Data-driven methods face different but related challenges: system identification procedures must be robust to noise and model uncertainty, and their outputs must be interpretable in terms of physical damage indicators that engineers can act upon.
-
-\subsection{Scope and Objectives}
-
-This dissertation addresses both the physics-based and data-driven aspects of structural health monitoring, with particular attention to the finite element formulations required for the former. 
-This work is presented in two parts.
-
-Part~I develops a family of beam finite element formulations suitable for structural assessment of bridge structures. 
-Three issues receive attention.
-% these following paragraphs need stronger openings, and the "issues" should be characterized differently. rather than the second issue being dimensional reduction, the issue should instead be introduced as ensuring agreement with continuum theory, when such solutions are known (represented by Saint Venant's solutions)... i think thats a stronger way to characterize what the work described in that paragraph addresses. similarly, the work described under issue 3 should be explained as pertaining to the issue of ensuring 
-
-The first is strain objectivity.
-% TODO: Too technical. Motivate objectivity as a fundamental feature of physical processes.
-
-% 
-The second issue is material nonlinearity.
-Beam theories project the three-dimensional continuum equations onto a one-dimensional domain by assuming that cross-sections deform according to a finite set of warping modes.
-Saint-Venant's classical solution provides a reference: for prismatic members under certain loadings, it gives the exact linear-elastic fields.
-A beam formulation should recover this solution for the restricted class to which it applies.
-Chapter~6 introduces a \emph{trace formalism} that makes the relationship precise, identifies the family of traces that exactly reproduce Saint-Venant's solution, and provides the warping shapes required for inelastic section analysis.
-The development extends classical treatments, which are typically restricted to two-dimensional analysis or doubly-symmetric sections, to arbitrary prismatic cross-sections in three dimensions.
+Furthermore, much of this literature precipitates in specialized element types whose implementations are difficult to validate in combination, difficult to embed in workflows requiring gradient information, and are not amendable to adaptive model refinement algorithms or integration with emerging standards in building information modeling like IFC. 
 
 
-The result is a compact element library (\cref{sec:library}) in which three frame elements---displacement-based, force-based, and geometrically exact---apply uniformly across section types.
+Part~I of this dissertation develops a family of beam finite elements that address these issues.
+The formulation admits an arbitrary number of cross-sectional warping modes and classifies beam theories according to how the associated amplitudes are constrained.
+A \emph{trace formalism} is introduced that characterizes the family of theories capable of exactly representing Saint~Venant's solution. %, and explicit expressions are derived for the warping shapes consistent with each.
+For inelastic analysis, the framework permits warping effects to be condensed at the section level, so that standard six-degree-of-freedom beam elements can be employed without modification to the element formulation.
+Geometric transformations are treated separately from element kinematics, following the modular approach of \citet{scott2008software}, and extended to ensure strain objectivity in the sense of \citet{crisfield1999objectivity} while maintaining a symmetric tangent stiffness at equilibrium. 
+The resulting formulations are implemented in \Xara{}, a runtime environment for the \OpenSees{} finite element framework that supports automatic differentiation through a hybrid adjoint approach.
+
+
 
 Part~II presents a framework for structural health monitoring that motivated and employs the developments of Part~I. 
 This framework was implemented for the Bridge Rapid Assessment Center for Extreme Events (\BRACE{}) project with funding from Caltrans to deliver post-earthquake assessments for instrumented highway bridges.
@@ -49,6 +32,16 @@ Its computational backend, the Infrastructure Resilience Engine (IRiE), organize
 This architecture permits physics-based simulation (Type~I prediction) and system identification (Type~II prediction) to coexist within a unified framework, with results presented through a common interface.
 The developments of Part~I contribute the simulation engine for Type~I predictors on this platform.
 Following a pilot deployment covering 22 bridges, Caltrans has funded continued development to extend coverage across the California highway network.
+
+
+
+
+% The Bridge Rapid Assessment Center for Extreme Events (\BRACE{}) is a platform developed in collaboration with the California Department of Transportation to provide real-time post-earthquake assessments for instrumented bridges.
+% Its computational backend, the Infrastructure Resilience Engine (IRiE), requires finite element models that can be assembled from inventory data, executed rapidly, and embedded in inference workflows.
+% The bridges in the current deployment are composed predominantly of beam and column members whose inelastic behavior governs damage progression.
+% The beam formulations developed here serve as the primary simulation engine, and the modular structure of the framework---permitting, for instance, a transition from a coarse linear model to a refined inelastic model by changing a single component---directly supports the operational requirements of the platform.
+
+
 
 \subsection{Outline}
 
@@ -69,12 +62,12 @@ Following a pilot deployment covering 22 bridges, Caltrans has funded continued 
 The dissertation is organized in two parts.
 
 Part~I develops finite element formulations for slender members.
-\cref{sec:Part-I} motivates the theoretical developments and surveys relevant literature.
-Chapter~3 derives governing equations for a geometrically exact beam with arbitrary warping modes, classifying theories into four types according to the treatment of warping amplitudes.
-Chapter~4 presents a framework for geometric transformations that ensures strain objectivity while preserving compatibility with standard element architectures.
+\Cref{sec:Part-I} motivates the theoretical developments and surveys relevant literature.
+\Cref{sec:genwarp} derives governing equations for a geometrically exact beam with arbitrary warping modes, classifying theories into four types according to the treatment of warping amplitudes.
+\Cref{sec:transform} presents a framework for geometric transformations that ensures strain objectivity while preserving compatibility with standard element architectures.
 \Cref{sec:gensec} develops the section-level constitutive theory relating the one-dimensional beam model to the three-dimensional continuum.
-\Cref{sec:timo} introduces the trace formalism for dimensional reduction and characterizes admissible traces.
-\Cref{sec:library} documents the modeling library implemented in \Xara{}.
+\Cref{sec:timo} systematically investigates the optimal selection of warping modes with the objective of achieving exact representation of Saint~Veanant's continuum solutions through standard beam finite elements, without auxiliary warping fields.  
+\Cref{sec:library} summarizes the developments and describes their implementation in the \Xara{} and FEDEASLab simulation environments. 
 \Cref{sec:verify-elastic} presents verification case studies.
 \Cref{sec:painter} applies the formulations to a Caltrans bridge model.
 
@@ -84,79 +77,3 @@ Part~II addresses structural health monitoring.
 
 Appendices collect notation and provide supplementary derivations.
 
-
-
-\subsection{Motivation (Old)}
-
-
-A significant obstacle is computational.
-Uncertainty quantification, model calibration, and reliability analysis do not require one simulation but many, and each evaluation of a nonlinear finite element model carries substantial cost.
-Furthermore, many modern inference algorithms require derivatives of model outputs with respect to parameters.
-Adjoint sensitivity methods and automatic differentiation have matured considerably in recent years \citep{beck1994automatic,martins2001connection}, driven largely by applications in machine learning, but these advances have not been fully absorbed into structural analysis software, which typically predates them by decades.
-The result is a gap between what is mathematically possible and what is practically available: the tools exist, in principle, to perform gradient-based optimization, Bayesian inference, and topology optimization on complex structural models, but the software infrastructure to support such workflows at scale remains underdeveloped.
-
-A second obstacle is mathematical.
-The nonlinear phenomena that arise in structural response to extreme loads---finite rotations, inelastic material behavior, instability---involve configuration spaces that do not admit the linear structure presupposed by many numerical methods.
-The rotation group $\mathrm{SO}(3)$ is not a vector space; the yield surface of a plasticity model is not smooth; the equilibrium path of a buckling problem is not unique.
-When techniques developed for linear problems are applied without modification to these settings, the resulting formulations may violate physical invariances, exhibit spurious path dependence, or produce non-symmetric tangent operators that complicate iterative solution.
-Much of the literature in computational mechanics over the past forty years has been devoted to formulations that respect the geometric and physical structure of these problems \citep{simo1985finite,crisfield1999objectivity}, yet this work is not always reflected in production software, and the connections between geometric consistency and the demands of modern computational workflows---particularly differentiability---have received limited attention.
-
-This dissertation is concerned with both obstacles, in the specific context of slender structural members and their application to structural health monitoring. 
-
-\subsection{Scope and Objectives}
-
-Slender members constitute the primary load-carrying skeleton of most civil structures.
-Their accurate simulation is essential not only for predicting global response quantities such as displacements and natural frequencies, but also for assessing local damage indicators: plastic hinge rotations in moment frames, shear link deformations in braced systems, curvature ductility demands in bridge columns.
-
-
-Inelastic constitutive evaluation requires knowledge of the pointwise strain distribution throughout the cross-section---not merely the stress resultants obtained by integration.
-This distribution depends on the warping shapes assumed in the kinematic description, and these shapes must be consistent with the beam theory employed.
-Formulations that are equivalent for linear elastic analysis may yield different inelastic responses, and the choice among them has implications for predicted damage states.
-
-Part~I of this dissertation develops a family of beam finite elements that address these issues.
-The formulation admits an arbitrary number of cross-sectional warping modes and classifies beam theories according to how the associated amplitudes are constrained.
-A \emph{trace formalism} is introduced that characterizes the family of theories capable of exactly representing Saint~Venant's solution, and explicit expressions are derived for the warping shapes consistent with each.
-For inelastic analysis, the framework permits warping effects to be condensed at the section level, so that standard six-degree-of-freedom beam elements can be employed without modification to the element formulation.
-Geometric transformations are treated separately from element kinematics, following the modular approach of \citet{nour-omid1991finite}, and extended to ensure strain objectivity in the sense of \citet{crisfield1999objectivity} while maintaining a symmetric tangent stiffness at equilibrium. 
-The resulting formulations are implemented in \textsc{OpenSeesRT}, a runtime environment for the OpenSees finite element framework that supports automatic differentiation through a hybrid adjoint approach.
-
-Part~II applies these developments to structural health monitoring.
-The Bridge Rapid Assessment Center for Extreme Events (\BRACE{}), a platform developed in collaboration with the California Department of Transportation, provides real-time post-earthquake assessments for instrumented bridges.
-The computational backend of this platform---the Infrastructure Resilience Engine, or IRiE---requires simulation capabilities that are simultaneously fast, robust, and capable of returning gradient information for parameter inference.
-The beam formulations of Part~I serve as the primary analysis engine, and the demands of the platform have, in turn, informed the development of those formulations.
-The bridges under study are predominantly composed of beam and column elements whose inelastic behavior governs damage progression; accurate and efficient modeling of these members is not peripheral to the monitoring application but central to it.
-
-\iffalse
-\subsection{Contributions}
-The framework makes three types of contribution.
-
-The first is theoretical.
-A family of geometric transformations is developed that extends the corotational approach of \citet{nour-omid1991finite} to elements with arbitrarily many nodes and to exact finite-deformation kinematics.
-Within this family, a particular transformation is identified that preserves strain objectivity in the sense of \citet{crisfield1999objectivity} while maintaining a symmetric tangent stiffness at equilibrium---a combination not achieved by prior formulations.
-Consistent treatment of configuration-dependent distributed loads under these transformations is also addressed.
-
-The second is generalization.
-Classical treatments of shear deformation and cross-sectional warping are typically restricted to two-dimensional analysis, to doubly-symmetric sections, special coordinate systems, or elastic material response.
-The present formulation removes these restrictions: shear deformation, torsional warping, shear warping, and the Wagner effect are treated for arbitrary prismatic sections in three-dimensional analysis, with asymmetry handled by the section constitutive model rather than by specialized element code.
-
-The third is unification.
-By assigning responsibility for each phenomenon to the appropriate level of abstraction---transformations handle geometric nonlinearity, elements handle interpolation and equilibrium, sections handle dimensional reduction and material response---the formulation achieves a separation of concerns that keeps the element library small.
-This is not merely a matter of software aesthetics; it determines what can be validated tractably, what can be extended without combinatorial effort, and what can be composed into larger workflows requiring automatic differentiation.
-\fi
-
-The developments of Part~I are applied, in Part~II, to structural health monitoring.
-The Bridge Rapid Assessment Center for Extreme Events (\BRACE{}) is a platform developed in collaboration with the California Department of Transportation to provide real-time post-earthquake assessments for instrumented bridges.
-Its computational backend, the Infrastructure Resilience Engine (IRiE), requires finite element models that can be assembled from inventory data, executed rapidly, and embedded in inference workflows.
-The bridges in the current deployment are composed predominantly of beam and column members whose inelastic behavior governs damage progression.
-The beam formulations developed here serve as the primary simulation engine, and the modular structure of the framework---permitting, for instance, a transition from a coarse linear model to a refined inelastic model by changing a single component---directly supports the operational requirements of the platform.
-
-
-
-
-
-\subsubsection{Applications}
-Shear links are used in the Richmond-San Rafael Bridge \citep{seible2000long}.
-
-The response of bearings \cite{montalto2024buckling,montalto2024effective}.
-
-Several finite element analysis products implement distinct models for special cases like thin-walled or open sections.

@@ -116,14 +116,6 @@ the new unit direction
 \Delta \bm{x}^{\ast}(\varepsilon).
 \]
 %
-with
-
-\[
-\Delta \bm{X}^\ast \coloneq \Delta \bm{X} / \|\Delta \bm{X}\|
-\qquad\text{ and }\qquad
-\Delta \bm{x}^\ast \coloneq \Delta \bm{x} / \|\Delta \bm{x}\|.
-\]
-%
 The rotation axis is the unit vector 
 \begin{equation}
 \AlignAxis \;=\; \frac{\Delta \bm{X}^\ast \times \Delta \bm{x}^\ast}{\|\Delta \bm{X}^\ast \times \Delta \bm{x}^\ast\|}\,,
@@ -245,13 +237,13 @@ so that the new line endpoints become
 Then the new direction vector is 
 \begin{equation}
     \Delta \bm{x}(\varepsilon)
-    \;=\;
-    \bigl(\bm{X}_J + \varepsilon\,\bm{u}_J\bigr)
-    \;-\;
-    \bigl(\bm{X}_I + \varepsilon\,\bm{u}_I\bigr)
+    % \;=\;
+    % \bigl(\bm{X}_J + \varepsilon\,\bm{u}_J\bigr)
+    % \;-\;
+    % \bigl(\bm{X}_I + \varepsilon\,\bm{u}_I\bigr)
     \;=\;
     \Delta \bm{X} \;+\; \varepsilon\,\Delta \bm{u},
-    \quad\text{ with }\quad
+    \qquad\text{ with }\qquad
     \Delta \bm{u} \coloneq \bm{u}_J - \bm{u}_I.
 \label{eq:order-Dx}
 \end{equation} 
@@ -397,7 +389,7 @@ and
   \;+\;
   O(\varepsilon^2).
 \]
-Thus the \emph{change} in the unit direction to first order is 
+Thus the change in the unit direction to first order is 
 \begin{equation}
   \Delta \mathbf{e}(\varepsilon)
   \;\coloneq\;
@@ -461,17 +453,14 @@ At \(\varepsilon=0\),
   \;=\;
   \frac{\Delta \bm{X}}{\|\Delta \bm{X}\|} \cdot \Delta \bm{u}.
 \] 
-Thus 
-\[
+Thus:
+\begin{equation}
 \left.\frac{\mathrm{d}}{\mathrm{d}\varepsilon}\Delta \bm{x}^*(\varepsilon)\right|_{\varepsilon=0}
   \;=\;
   \frac{\Delta \bm{u}}{\|\Delta \bm{X}\|}
   \;-\;
   \frac{\Delta \bm{X}}{\|\Delta \bm{X}\|}\,
   \frac{\Delta \bm{X}}{\|\Delta \bm{X}\|^2}\cdot \Delta \bm{u}
-\]
-and upon simplification:
-\begin{equation}
   \;=\;
   \frac{1}{\|\Delta \bm{X}\|}
   \Bigl[
@@ -614,14 +603,16 @@ We get
   \;=\;
   \left.\frac{\mathrm{d}}{\mathrm{d}\varepsilon}\Delta \bm{x}^*(\varepsilon)\right|_{\varepsilon=0}.
 \]
-But \(\Delta \bm{X}^*\) is a fixed (constant) vector, so its
-derivative is zero. Also \(\bm{R}(0)=\mathbf{1}\). Thus \[
+where \(\Delta \bm{X}^*\) is a constant with vanishing derivative. 
+Also \(\bm{R}(0)=\mathbf{1}\). 
+Thus 
+\[
   \left.\frac{\mathrm{d}}{\mathrm{d}\varepsilon}\bm{R}(\varepsilon)\right|_{\varepsilon=0}\,\Delta \bm{X}^*
   \;=\;
   \left.\frac{\mathrm{d}}{\mathrm{d}\varepsilon}\Delta \bm{x}^*(\varepsilon)\right|_{\varepsilon=0}.
 \] 
 Using \eqref{eq:linear-Dxstar} for 
-\(\displaystyle \bigl.\tfrac{d}{d\varepsilon}\Delta \bm{x}^*(\varepsilon)\bigr|_{\varepsilon=0}\) furnishes
+\(\displaystyle \bigl.\tfrac{\dd}{\dd\varepsilon}\Delta \bm{x}^*(\varepsilon)\bigr|_{\varepsilon=0}\) furnishes
 %
 \[
   \left.\frac{\mathrm{d}}{\mathrm{d}\varepsilon}\bm{R}(\varepsilon)\right|_{\varepsilon=0}\Delta \bm{X}^*
@@ -632,7 +623,7 @@ Using \eqref{eq:linear-Dxstar} for
     - (\Delta \bm{X}^*\!\cdot \Delta \bm{u})\,\Delta \bm{X}^*
   \Bigr].
 \] 
-Crucially, that right-hand side is \emph{orthogonal} to
+The right-hand side is orthogonal to
 \(\Delta \bm{X}^*\), which shows that
 \(\bigl.\tfrac{d}{d\varepsilon}\bm{R}(\varepsilon)\bigr|_{\varepsilon=0}\)
 acts like a \emph{skew-symmetric} operator on \(\Delta \bm{X}^*\). 
@@ -697,22 +688,6 @@ Thus, finally,
 % \]
 
 
-\subsection{Summary}
-
-
-\begin{itemize}
-\tightlist
-\item \(\bm{\omega}\) represents an \emph{infinitesimal rotation} around the axis
-given by \(\Delta \bm{X} \times \Delta \bm{u}\). Geometrically, it is the smallest rotation needed to tip \(\Delta \bm{X}\) into
-\(\Delta \bm{X} + \varepsilon \,\Delta \bm{u}\).
-
-\item
-  \(\Delta \bm{X}^*\times \Delta \bm{x}^*(\varepsilon)\) is an
-  \(O(\varepsilon)\) vector (unless purely parallel, in which case it
-  stays 0 up to second order---but then \(\sin[\theta]\approx 0\) at
-  first order, so the product still can have a finite limit).\\
-\end{itemize}
-%
 
 \vspace{5ex}
 

@@ -24,7 +24,7 @@ used in two ways:
   transformation factors out of \(\mathbb{B}^*\) and any derivatives of
   the transformation which arise from \(\mathcal{K}_G\) can be taken
   outside of the integral inner product in the same way \(\bm{\eta}_a\)
-  was in deriving Equation~(\ref{eq:def-pa}). This effect is
+  was in deriving \eqref{eq:def-pa}. This effect is
   \emph{element-independent} and can be performed externally through the
   use of \emph{external operators}, which will be
   introduced in this section.
@@ -93,8 +93,8 @@ bases \(\left\{\bar{\bm{\varphi}}^{}_{\eta a}\right\}\),
 %
 The natural linearized variations
 \(\bm{\eta}^\ell\) and \(\VarConfig^\ell\) follow immediately from
-Equation~(\ref{eq:bar-interp}) by Equation~(\ref{eq:eta-parametric}) and
-Equation~(\ref{eq:uubar-parametric}):
+\eqref{eq:bar-interp} by \eqref{eq:eta-parametric} and
+\eqref{eq:uubar-parametric}:
 %
 \begin{equation*} 
 \bm{\eta}^\ell = \left. \frac{\mathrm{d}}{\mathrm{d}\varepsilon} g^*\bar{\bm{\eta}}^h \right|_{\varepsilon=0}
@@ -104,7 +104,7 @@ Equation~(\ref{eq:uubar-parametric}):
 %
 and it follows that the natural bases
 \(\left\{{\bm{\varphi}}^{}_{\eta a}\right\}\),
-\(\left\{{\bm{\varphi}}^{}_{u a}\right\}\) for Equation~(\ref{eq:interp}) are:
+\(\left\{{\bm{\varphi}}^{}_{u a}\right\}\) for \eqref{eq:interp} are:
 %
 \begin{equation}
 \bm{\varphi}_{\eta a} = g^* \bar{\bm{\varphi}}_{\eta a}
@@ -115,9 +115,9 @@ and it follows that the natural bases
 %
 Thus finite element operators for
 interpolation in a transformed configuration space follow by using
-Equation~(\ref{eq:para-bases}) in the formulas of Box~\ref{box:fea}. 
+\eqref{eq:para-bases} in the formulas of Box~\ref{box:fea}. 
 If the Petrov-Galerkin
-approach is taken, only the transformation of Equation~(\ref{eq:uubar-parametric})
+approach is taken, only the transformation of \eqref{eq:uubar-parametric}
 needs to be accounted for in order to obtain a consistent tangent
 stiffness. This furnishes the discrete strain operator:
 %\(\bm{B}^\star_b\) : %
@@ -183,7 +183,7 @@ interpolation \(\bm{\varphi}^{}_{u b}\) with a nodal transformation
 where each nodal transformation
 \(\mathbf{a}_b\) is constant over \(\bm{\xi}\), and depends on the
 configuration only through the nodal parameters \(\{\bar{\VarConfig}_b\}\).
-Propagating Equation~(\ref{eq:adapt-displ}) through the characteristic operators
+Propagating \eqref{eq:adapt-displ} through the characteristic operators
 of Box~\ref{box:fea} shows that the nodal operators factor out, and the effect on
 %the element forces \(\bar{\bm{p}}_a\) and 
 the stiffness \({\mathbf{k}}_{a b}\) can be applied externally with the operation:
@@ -194,17 +194,17 @@ the stiffness \({\mathbf{k}}_{a b}\) can be applied externally with the operatio
 \end{aligned}
 \label{eq:adapt-petr-para}
 \end{equation}
-where $\bar{\mathbf{k}}_{ab}$ is the stiffness resulting from substitution of Equation~(\ref{eq:para-bases}) into the operators of Box~\ref{box:fea},
+where $\bar{\mathbf{k}}_{ab}$ is the stiffness resulting from substitution of \eqref{eq:para-bases} into the operators of Box~\ref{box:fea},
 before application of the operator \(\mathbf{a}_b\).
 
 A Bubnov-Galerkin formulation will require that nodal forces are rectified in a conjugate manner by amending
 the interpolations \(\bm{\varphi}^{}_{\eta a}\) with
-the nodal transformations in Equation~(\ref{eq:adapt-displ}): 
+the nodal transformations in \eqref{eq:adapt-displ}: 
 \begin{equation}
 {\bm{\varphi}}^{}_{\eta a} = g^*\bar{\bm{\varphi}}^{}_{\eta a} \, \mathbf{a}_a .
 \label{eq:adapt-eta}
 \end{equation}
-Using Equation~(\ref{eq:B-assoc}) and the definition of \(\bm{p}_a\) given by Equation~(\ref{eq:def-pa}),
+Using \eqref{eq:B-assoc} and the definition of \(\bm{p}_a\) given by \eqref{eq:def-pa},
 the operator \(\mathbf{a}_a\) is factored out of the inner product as follows: %
 \begin{equation*} 
 \begin{aligned}
@@ -216,7 +216,7 @@ the operator \(\mathbf{a}_a\) is factored out of the inner product as follows: %
 \end{aligned}
 \end{equation*}
 Consequently, changes to an element with the transformation 
-of Equation~(\ref{eq:adapt-eta}) are equivalent to externally-applied transformations with the form:
+of \eqref{eq:adapt-eta} are equivalent to externally-applied transformations with the form:
 \begin{equation} 
 \begin{aligned}
 \bm{p}_a    &= \mathbf{a}_a^{\mathrm{t}} \, \bar{\bm{p}}_a \\
@@ -339,7 +339,7 @@ depends on \(\chi\),
 both \(\bm{c}\) and \(\bm{R}\) also evolve with \(\varepsilon\).
 Under this motion, the
 variation \(\bar{\VarConfig}_x\) of \(\bar{\bm{x}}\) is derived from
-Equation~(\ref{eq:motion}) as follows: 
+\eqref{eq:motion} as follows: 
 \begin{equation}
 \begin{aligned}
 \bar{\VarConfig}_x &= \frac{\mathrm{d}}{\mathrm{d}\varepsilon} \bar{\bm{x}}_\varepsilon \biggr|_{\varepsilon=0} %\\& 
@@ -349,7 +349,7 @@ Equation~(\ref{eq:motion}) as follows:
 \label{eq:isom-dxe}
 \end{equation} 
 % The initial velocity of the rotation \(\dot{\bm{R}}\) is expressed with %using
-% Equation~(\ref{eq:R-director}) by the sum \(\dot{\bar{\FrameBasis}}_k\otimes\FrameBasis_k\),
+% \eqref{eq:R-director} by the sum \(\dot{\bar{\FrameBasis}}_k\otimes\FrameBasis_k\),
 % after recalling that the reference basis \(\{\FrameBasis_k\}\) is
 % stationary by definition. 
 It is simple to show that in order for an
@@ -367,8 +367,8 @@ skew-symmetric \(\bm{\Omega}\) with axial vector \(\bm{\omega}\), and it follows
 % \bm{\omega}^{\times} = \dot{\bar{\FrameBasis}}_k\otimes\bar{\FrameBasis}_k
 % \end{equation*}
 % where the notation \(\bm{\omega}^{\times}=\bm{\Omega}\) is introduced
-% by Equation~(\ref{eq:hat}). Using this in
-Equation~(\ref{eq:isom-dxe}) furnishes: %
+% by \eqref{eq:hat}. Using this in
+\eqref{eq:isom-dxe} furnishes: %
 \begin{equation*} 
 \begin{aligned}
 \bar{\VarConfig}_x &= -\bm{R}^{\mathrm{t}} \bm{\omega} \times \left(\bm{x}-\bm{c}\right)
@@ -438,8 +438,8 @@ that
 \hypertarget{internal-operators-1}{%
 \paragraph{Internal Operators.}\label{internal-operators-1}}
 
-The split form of the inner product in Equation~(\ref{eq:conf-pair}) allows
-Equation~(\ref{eq:galerkin}) to be written in terms of components
+The split form of the inner product in \eqref{eq:conf-pair} allows
+\eqref{eq:galerkin} to be written in terms of components
 \(\mathcal{G}_x\) and \(\mathcal{G}_{\scriptscriptstyle{\Lambda}}\)
 defined by:
 
@@ -453,7 +453,7 @@ defined by:
 where body forces are once again dropped and 
 \(\bm{\eta} = (\bm{\eta}_x, \bm{\eta}_{\scriptscriptstyle{\Lambda}})\in T^{}_\chi \mathscr{C}\).
 If the Bubnov-Galerkin condition is enforced, \(\bm{\eta}\) takes the
-same form as Equation~(\ref{eq:global-local}), and \(\mathcal{G}\) follows: %
+same form as \eqref{eq:global-local}, and \(\mathcal{G}\) follows: %
 \begin{equation*} 
  \begin{aligned}
  \mathcal{G}_x[\bm{\eta}] &=  \left\langle\bm{R} \bar{\bm{\eta}}_x ,\, \mathbb{B}_x \bm{\sigma} \right\rangle + \left\langle \bm{\psi}_x ,\, \mathbb{B}_x \bm{\sigma}\right\rangle \\
@@ -500,8 +500,8 @@ Section~\ref{sec:cosserat}, will inherently be posed such that: %
 \mathbb{B}^*\bm{\psi} = \mathbf{0}.
 \end{equation*}
 This agrees with the interpretation of \(\mathbb{B}^*\) as a virtual
-strain operator as suggested by Equation~(\ref{eq:vstrain}).
-When indeed \(\mathbb{B}^*\bm{\psi} = \mathbf{0}\), Equation~(\ref{eq:galerkin-local}) implies %suggests
+strain operator as suggested by \eqref{eq:vstrain}.
+When indeed \(\mathbb{B}^*\bm{\psi} = \mathbf{0}\), \eqref{eq:galerkin-local} implies %suggests
 that any change resulting from an isometrically transformed interpolation can
 be factored out from the internal element operators 
 of Box~\ref{box:fea}.
@@ -526,7 +526,7 @@ external transformation to recover the original representation.
 The external effect of the transformation stems from the transformation
 of the nodal values \(\{\bm{\eta}_a\}\) and \(\{\VarConfig_b\}\) to
 \(\{\bar{\bm{\eta}}_a\}\) and \(\{\bar{\VarConfig}_b\}\) by
-Equation~(\ref{eq:global-local}):
+\eqref{eq:global-local}:
 
 \begin{equation}
 \begin{aligned}
@@ -556,7 +556,7 @@ where \(\bm{V}_b\) and \(\bm{W}_b\) denote partial derivatives with respect to n
 %\bm{W}_b \triangleq \frac{\partial \bar{\bm{\omega}}}{\partial\VarConfig_b}.
 \bm{W}_b \triangleq \partial_b \bar{\bm{\omega}}.
 \end{equation}
-Using Equation~(\ref{eq:dpsidu}) with Equation~(\ref{eq:psi}) furnishes:
+Using \eqref{eq:dpsidu} with \eqref{eq:psi} furnishes:
 \begin{equation*} 
 \begin{aligned}
 \bm{\psi}_x^{\ell} &= \bm{R} \sum_b \bm{V}_b\bm{R}^{\mathrm{t}} \VarConfig_b - \left(\bm{x}-\bm{c}\right)\times\left(\bm{R}\sum_b \bm{W}_b \bm{R}^{\mathrm{t}}\VarConfig_b\right) \\
@@ -566,7 +566,7 @@ Using Equation~(\ref{eq:dpsidu}) with Equation~(\ref{eq:psi}) furnishes:
 \bm{\psi}^{\ell}_{\scriptscriptstyle{\Lambda}} &= \bm{R}\sum_b \bm{W}_b \bm{R}^{\mathrm{t}}\VarConfig_b .
 \end{aligned}
 \end{equation*}
-Finally, the linearization of Equation~(\ref{eq:rottan}) gives for the rotation:
+Finally, the linearization of \eqref{eq:rottan} gives for the rotation:
 %
 \begin{equation*} 
 \begin{aligned}
@@ -592,7 +592,7 @@ Similarly, for the translation:
 \end{equation*}
 In formulations where the response is invariant under translation, the term containing
 \(\bm{V}_b\) above can be dropped with no effect. In this case, using
-Equation~(\ref{eq:global-local}), %and Equation~(\ref{eq:local-u}) 
+\eqref{eq:global-local}, %and \eqref{eq:local-u} 
 the linearized variations of \(\chi\) are expressed %put
 in the form:
 %
@@ -691,11 +691,11 @@ transformations can be accounted for by recursive application of the appropriate
 external operators to the element stiffness and resisting forces.
 %
 This is a consequence of the chain rule.
-%$\mathbf{k}_{a b}$ % by Equation~(\ref{eq:adapt-petr-para}) or Equation~(\ref{eq:adapt-petr-isom}), and optionally Equation~(\ref{eq:adapt-para-bubn}) or Equation~(\ref{eq:adapt-isom-bubn}) when a Bubnov-Galerkin formulation is adopted. 
+%$\mathbf{k}_{a b}$ % by \eqref{eq:adapt-petr-para} or \eqref{eq:adapt-petr-isom}, and optionally \eqref{eq:adapt-para-bubn} or \eqref{eq:adapt-isom-bubn} when a Bubnov-Galerkin formulation is adopted. 
 The external operations of the parametric and isometric transformations
 share the general structure in Box~\ref{box:external-operators} where the operators \(\mathbf{a}_a\) and \(\mathbf{a}_{ab}\) are identified by a generic linear operator \(\mathbf{a}_g\) acting on a complete set of nodal parameters.
-% Application of Equation~(\ref{eq:adapt-petr-para})
-% is required to maintain a consistent tangent stiffness, while Equation~(\ref{eq:adapt-para-bubn})
+% Application of \eqref{eq:adapt-petr-para}
+% is required to maintain a consistent tangent stiffness, while \eqref{eq:adapt-para-bubn}
 % is required to maintain work-conjugacy of nodal parameters.
 
 
@@ -729,7 +729,7 @@ returned by the element:
   \begin{equation*}
     \mathbf{k} \leftarrow {\mathbf{k}} \mathbf{a}_g
   \end{equation*}
-  which takes the form of Equation~(\ref{eq:adapt-petr-para}) in the parametric case, and Equation~(\ref{eq:adapt-petr-isom})
+  which takes the form of \eqref{eq:adapt-petr-para} in the parametric case, and \eqref{eq:adapt-petr-isom}
   in the isometric case.
 \item \emph{Conjugate update}: 
   \begin{equation*}
@@ -739,7 +739,7 @@ returned by the element:
     \mathbf{a}_g^{\mathrm{t}} \, {\mathbf{k}}  + \mathbf{k}_g \left[\bm{p}\right]
     \end{array}
   \end{equation*}
-  which takes the form of Equation~(\ref{eq:adapt-para-bubn}) in the parametric case, and Equation~(\ref{eq:adapt-isom-bubn})
+  which takes the form of \eqref{eq:adapt-para-bubn} in the parametric case, and \eqref{eq:adapt-isom-bubn}
   in the isometric case.
 \end{enumerate}
 \end{ambox}

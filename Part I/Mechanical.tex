@@ -34,13 +34,13 @@ differential operator and the generalized stress \(\boldsymbol{\sigma}\), moment
 map \(\chi\). 
 In general \(\operatorname{B}\) depends nonlinearly on \(\chi\),
 but acts linearly on \(\boldsymbol{\sigma}\). Problems with the form of
-Equation~(\ref{eq:strong}) describe the equilibrium of continuua, rods, and shells, whose
+\eqref{eq:strong} describe the equilibrium of continuua, rods, and shells, whose
 configurations \(\chi\) may comprise a \emph{nonlinear} space
 \(\mathscr{C}\).
 
 This chapter presents the mathematical foundation for later developments. In
 \cref{box:mechanical-bvp} the mathematical structure which underpins
-\cref{eq:strong} is summarized, and in \cref{sec:derivatives} attention
+\eqref{eq:strong} is summarized, and in \cref{sec:derivatives} attention
 is brought to some important subtleties that arise with derivatives on manifolds. 
 This material is adapted from treatments by \cite{marsden1994mathematical,zienkiewicz2014finite,ogden1997nonlinear} and \cite{shilov1996elementary}.
 
@@ -75,7 +75,7 @@ on the tangent space \(T_\chi\mathscr{C}\) to \(\mathscr{C}\) at
 \end{equation}
 %
 \item[Stress]
-The spatial stress \(\boldsymbol{\sigma}\) in Equation~(\ref{eq:strong}) is related to a
+The spatial stress \(\boldsymbol{\sigma}\) in \eqref{eq:strong} is related to a
 material stress \(\boldsymbol{s}\) which is defined with respect to inner products 
 in \(\mathscr{C}\) at the current \(\chi\) and reference
 \(\chi_0\) configurations:
@@ -90,7 +90,7 @@ and where the transformation \(\boldsymbol{A}_*\) has been defined.
 % with \(\boldsymbol{A}_*\) denoting the Piola transformation. 
 Similarly, a dual
 \(\operatorname{B}^*\) to the equilibrium operator \(\operatorname{B}\) in
-Equation~(\ref{eq:strong}) is defined with respect to Equation~(\ref{eq:conf-pair}) for pure displacement boundary conditions:
+\eqref{eq:strong} is defined with respect to \eqref{eq:conf-pair} for pure displacement boundary conditions:
 \begin{equation}
   \left<\boldsymbol{\eta},\, \operatorname{B}_\chi\boldsymbol{\sigma}\right>_\chi = \left<\operatorname{B}_\chi^*\boldsymbol{\eta},\, \boldsymbol{\sigma}\right>_\chi
   \qquad \text{ for any }\boldsymbol{\eta}
@@ -121,7 +121,7 @@ spatial \(\boldsymbol{C}_\sigma\) moduli defined by:
 
 The structure outlined in Box~\ref{box:mechanical-bvp} 
 implies a weak statement
-of \cref{eq:strong} that is centered around the Galerkin \emph{residual functional}:
+of \eqref{eq:strong} that is centered around the Galerkin \emph{residual functional}:
 %
 \begin{equation}
 \mathcal{G}\left[\boldsymbol{\eta}\right] \triangleq \left< \boldsymbol{\eta}, \, \mathbb{B}_\chi \boldsymbol{\sigma}\right>_\chi - \left< \boldsymbol{\eta}, \, \boldsymbol{f}\right>_\chi.
@@ -181,7 +181,7 @@ $$
 \hypertarget{sec:statement}{%
 \subsection{Problem Statement}\label{sec:statement}}
 
-Equation~(\ref{eq:strong}) is investigated in the context of the following
+\eqref{eq:strong} is investigated in the context of the following
 mathematical structure:
 
 \begin{description}
@@ -214,7 +214,7 @@ on the tangent space \(T_\chi\mathscr{C}\) to \(\mathscr{C}\) at
 \end{equation}
 %
 \item[A2]
-The spatial stress \(\boldsymbol{\sigma}\) in Equation~(\ref{eq:strong}) is related to a
+The spatial stress \(\boldsymbol{\sigma}\) in \eqref{eq:strong} is related to a
 material stress \(\boldsymbol{s}\) which is defined with respect to inner products 
 in \(\mathscr{C}\) at the current \(\chi\) and reference
 \(\chi_0\) configurations:
@@ -229,7 +229,7 @@ for any \(\boldsymbol{c}\).
 % with \(\boldsymbol{A}_*\) denoting the Piola transformation. 
 Similarly, a dual
 \(\operatorname{B}^*\) to the equilibrium operator \(\operatorname{B}\) in
-Equation~(\ref{eq:strong}) is defined with respect to Equation~(\ref{eq:conf-pair}):
+\eqref{eq:strong} is defined with respect to \eqref{eq:conf-pair}:
 \begin{equation}
   \left<\boldsymbol{\eta},\, \operatorname{B}_\chi\boldsymbol{\sigma}\right>_\chi = \left<\operatorname{B}_\chi^*\boldsymbol{\eta},\, \boldsymbol{\sigma}\right>_\chi.
   \label{eq:def-adjoint}

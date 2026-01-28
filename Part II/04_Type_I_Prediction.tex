@@ -11,7 +11,7 @@
 %     \Mass \accel = \extern -  \intern(\displ,\veloc), %\force (\displ, \veloc, \accel) = \mathbf{f}
 %     \label{eq:newton-discrete}
 % \end{equation}
-% where $\accel$ is the acceleration associated with the state of the structure, $\intern$ characterizes the internal resisting force produced by the structure in response to its configuration, and $\extern$ is the external loading that is imposed by the event. \glspl{predictor-t1} are premised on the idea that if the form of $\intern$ is \emph{assumed} and the loading $\extern$ is \emph{given}, then $\displ$ and $\veloc$ can be approximately \emph{determined} by methods of integration of the second order system of differential equations in \cref{eq:newton-discrete}.
+% where $\accel$ is the acceleration associated with the state of the structure, $\intern$ characterizes the internal resisting force produced by the structure in response to its configuration, and $\extern$ is the external loading that is imposed by the event. \glspl{predictor-t1} are premised on the idea that if the form of $\intern$ is \emph{assumed} and the loading $\extern$ is \emph{given}, then $\displ$ and $\veloc$ can be approximately \emph{determined} by methods of integration of the second order system of differential equations in \eqref{eq:newton-discrete}.
 % %
 % On the \gls{platform}, this is realized by employing a \emph{finite element} approximation of $\Mass$ and $\intern$ and constructing an approximation to $\extern$ from the sensor data.
 % \end{quote}
@@ -155,7 +155,7 @@ Three material behaviors are typically considered in reinforced concrete structu
 \item Reinforcing steel.
 \end{enumerate}
 %
-Most inelastic models developed for this \BRACE{} project adopt models based on the so-called Algebraic Evolution Equations (AEEs), described by \textcite{yassin1994nonlinear}, which employ the Hognestad envelope of \cref{eq:hognestad}, discussed in \cref{sec:concrete}, for both confined and
+Most inelastic models developed for this \BRACE{} project adopt models based on the so-called Algebraic Evolution Equations (AEEs), described by \textcite{yassin1994nonlinear}, which employ the Hognestad envelope of \eqref{eq:hognestad}, discussed in \cref{sec:concrete}, for both confined and
 unconfined concrete, \cref{fig:confined-curve}. For reinforcing bars, the steel material typically follows the constitutive relationship of Giuffr\`e-Menegotto-Pinto (GMP) model. 
 The GMP model is based on the basic models Goldberg-Richard, discussed in \cref{sec:steel}. 
 \begin{figure}[h!]

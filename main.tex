@@ -152,7 +152,9 @@
 \clearpage
 
 \begin{Notation}[section]
-
+\clearpage
+\input{readme}
+\clearpage
 \section{Introduction}
 \input{Body/Introduction}
 \clearpage 
@@ -176,10 +178,6 @@
 % \inputdraft{15_Examples}
 % \clearpage
 
-\section{Geometric Transformations}\label{sec:transform}
-\input{Body/Transformations/index}
-\input{Body/Transformations/Conclusions}
-\clearpage 
 
 \section{Section Formulation}\label{sec:gensec}
 \input{Body/Section/main}
@@ -193,6 +191,11 @@
 \section{Saint-Venant Consistency}\label{sec:timo}
 \input{Body/Traces/main}
 \clearpage
+
+\section{Geometric Transformations}\label{sec:transform}
+\input{Body/Transformations/index}
+\input{Body/Transformations/Conclusions}
+\clearpage 
 
 \section{Summary}
 \input{Body/Part-I-Conclusions}
@@ -209,12 +212,13 @@
 \input{Body/Library/main}
 \clearpage
 
-\pagebreak
-\input{Body/Xara/main}
+
+\section[Xara]{\Xara{}: A Structured Runtime for Structural Simulation}\label{ch:xara}
+% \input{Body/Xara/main}
 \clearpage 
 
 \section{BRACE2}\label{sec:irie}
-\InputChapter{Body/Irie/main}
+% \InputChapter{Body/Irie/main}
 \clearpage
 
 % \InputChapter{Part II/main}%
@@ -234,8 +238,8 @@
 \clearpage
 
 \glsaddall
-\printglossary[type=frame]
-\printglossary[type=brace]
+% \printglossary[type=frame]
+% \printglossary[type=brace]
 \clearpage
 \input{Part I/Rotations}
 % \input{Part I/Derivatives}

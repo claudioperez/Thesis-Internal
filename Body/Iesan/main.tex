@@ -1,42 +1,42 @@
 
 \section{Ie\c{s}an--Saint Venant Solution}\label{sec:sv}
 
-\begin{Quote}
+The objective of this section is to briefly recall the family of general solutions to Saint-Venant's problems \citep{iesan1987saintvenants,synge1945problem}. 
 This will be used in the following section to identify a dimensionally reduced beam model that exactly represents these solutions.
 
-The treatment follows the program of Ie\c{s}an, whereby the Saint Venant class is decomposed into two problems: that of torsion-bending-elongation, and flexure.
+\begin{Quote}
+The exposition follows the approach of \cite{iesan1986saintvenants}, whereby the Saint Venant class is decomposed into two problems: that of torsion-bending-elongation, and that of flexure.
 
-Salient features of Iesan's treatment which should be captured include:
+Salient features of Iesan's treatment include:
 \begin{itemize}
     \item The relaxed nature of Saint-Venant's class, including failure to exactly specify full boundary conditions in the continuum BVP, thus motivating the need for an additional postulate.
     \item Ie\c{s}an's postulates that uniquely specify Saint Venant's solution.
 \end{itemize}
 \end{Quote}
-The objective of this section is to briefly recall the family of general solutions to Saint-Venant's problems \citep{iesan1987saintvenants,synge1945problem}. 
-This will be used in the following section to identify a dimensionally reduced beam model that exactly represents these solutions.
 
-\subsection{Introduction}
+\subsection{Overview}
 
-Consider a prismatic, homogeneous, and isotropic linearly elastic body 
+The Saint~Venant problems concern a prismatic, homogeneous, and isotropic linearly elastic body 
 \(
 \Body=(0,L)\times\Section
 \),
-where \(\Section\subset\mathbb{R}^2\) is a bounded (possibly multiply connected) cross-section
+where \(\Section\subset\mathbb{R}^2\) is a bounded cross-section
 spanned by \(\{\FrameBasis_y,\FrameBasis_z\}\). 
-Together with the axial unit \(\FrameBasis:= \FrameBasis_y\times\FrameBasis_z\), the vectors \(\{\FrameBasis,\,\FrameBasis_y,\,\FrameBasis_z\}\) form an orthonormal basis and the 3D identity is 
+Together with the axial unit \(\FrameBasis:= \FrameBasis_y\times\FrameBasis_z\), the vectors \(\{\FrameBasis,\,\FrameBasis_y,\,\FrameBasis_z\}\) form an orthonormal basis and the 3D identity is:
 \[
 \mathbf{1}=\FrameBasis\otimes\FrameBasis+\oneS
 \qquad\text{with}\qquad
 \oneS=\FrameBasis_{\beta}\otimes\FrameBasis_{\beta}
 \]
-A point in \(\Body\) has coordinates \(\reflenx\,\FrameBasis + \bm{r}\) in the reference configuration, where \(\bm{r} \in\Section_x\) is the coordinate of a point in the section at \(\reflenx\).
-The boundary of \(\Body\) consists of the the lateral boundary \(\BodyLateralSurface=\SectionBoundary\times(0,L)\) and the surfaces \(\Section_0,\,\Section_L\) of the sections at the ends \(\reflenx \in \{0,L\}\).  The \emph{resultants} are defined as the integrals of the stress tensor \(\StressTensor\;\):
+A point in \(\Body\) has coordinates \(\reflenx\,\FrameBasis + \bm{r}\) in the reference configuration, where \(\bm{r} \in\Section_x\) is the coordinate of a point in the section at \(\reflenx\) and \(\bm{r}\cdot\FrameBasis = 0\).
+The boundary of \(\Body\) consists of the the lateral boundary \(\BodyLateralSurface=\SectionBoundary\times(0,L)\) and the surfaces \(\Section_0,\,\Section_L\) of the sections at the ends \(\reflenx \in \{0,L\}\).  
+The \emph{resultants} are the integrals of the traction \(-\StressTensor\,\FrameBasis\) on the root section \(\Section_0\):
 \begin{equation}
 \mathscr{F}(\hat{\bm u})=\int_{\Section_0}\StressTensor(\hat{\bm u})\,(-\FrameBasis)\dA,\qquad
 \mathscr{M}(\hat{\bm u})=\int_{\Section_0}\bm{r}\times\big(\StressTensor(\hat{\bm u})\,(-\FrameBasis)\big)\dA.
 \label{eq:def-resultants}
 \end{equation}
-
+where \(\StressTensor\;\) is the stress tensor. 
 Saint Venant's solutions arise from  \emph{relaxed} elastostatic problems, where end tractions are not prescribed pointwise, but rather specified through these resultants. 
 Neglecting to specify complete pointwise boundary data in this manner produces an ill-posed boundary-value problem which consequently lacks a unique solution \(\hat{\bm u}\):
 \begin{equation}
@@ -55,8 +55,8 @@ Neglecting to specify complete pointwise boundary data in this manner produces a
 \end{aligned}
 \label{eq:cauchy-space}
 \end{equation}
-The treatment by \cite{iesan1986saintvenants} resolves this indeterminacy in a systematic fashion that is well-suited to the present investigation. 
-The family of Saint Venant problems is decomposed into two classes, the extension-bending-torsion problem \(\mathrm{P}_{\rm I}(\AxialRxn, \MomentRxn)\) for prescribed axial force \(\AxialRxn\) and moment \(\MomentRxn\) resultants, and the flexure problem \(\mathrm{P}_{\rm I\!I}(\ShearRxn)\) for a prescribed transverse resultant \(\ShearRxn = \bar{F}_{\alpha} \,\FrameBasis_{\alpha}\):
+In the treatment by \cite{iesan1986saintvenants} %resolves this indeterminacy in a systematic fashion that is well-suited to the present investigation. 
+the family of Saint~Venant problems is decomposed into two classes, the extension-bending-torsion problem \(\mathrm{P}_{\rm I}(\AxialRxn, \MomentRxn)\) for prescribed axial force \(\AxialRxn\) and moment \(\MomentRxn\) resultants, and the flexure problem \(\mathrm{P}_{\rm I\!I}(\ShearRxn)\) for a prescribed transverse resultant \(\ShearRxn = \bar{F}_{\alpha} \,\FrameBasis_{\alpha}\):
 \begin{equation}
 \mathrm{P}_{\rm I}(\AxialRxn,\MomentRxn)\left\{
 \begin{aligned}
@@ -77,9 +77,10 @@ The family of Saint Venant problems is decomposed into two classes, the extensio
 \end{aligned}\right.
 \label{eq:partial-elastostatic-equilibrium}
 \end{equation}
-The problems \(\mathrm{P}_{\rm I}\) and \(\mathrm{P}_{\rm I\!I}\), introduced by \cite{iesan1986saintvenants}, decompose the Saint Venant class of problems into two uncoupled classes with a fundamental connection. 
+% The problems \(\mathrm{P}_{\rm I}\) and \(\mathrm{P}_{\rm I\!I}\), introduced by \cite{iesan1986saintvenants}, decompose the Saint Venant class of problems into two uncoupled classes with a fundamental connection. 
 \cite{iesan1986saintvenants} observes that mapping \(\hat{\bm u}\mapsto \hat{\bm u}'\) preserves lateral traction–free fields and transforms resultants as  \citep[Thm~2.1]{iesan1986saintvenants}\footnote{
-The units for these identities appear paradoxical, and may be understood as the follows. Since \(\StressTensor(\hat{\bm u}')=(\StressTensor(\hat{\bm u}))'\), the resultants computed from \(\hat{\bm u}'\) carry an extra factor \(1/\text{length}\) relative to those of \(\hat{\bm u}\). 
+The units for these identities appear paradoxical, and may be understood as the follows. 
+Since \(\StressTensor(\hat{\bm u}')=(\StressTensor(\hat{\bm u}))'\), the resultants computed from \(\hat{\bm u}'\) carry an extra factor \(1/\text{length}\) relative to those of \(\hat{\bm u}\). 
 Hence
 \[
 [\mathscr{F}(\hat{\bm u}')]=\text{force}/\text{length},\qquad
@@ -112,7 +113,7 @@ Ie\c{s}an’s construction recovers the Saint–Venant form \eqref{eq:saint-vena
 +\FrameBasis\otimes\bm{\tau}+\bm{\tau}\otimes\FrameBasis,
 % \label{eq:saint-venant-stress}
 \end{equation*}
-i.e., the in–plane block vanishes as a consequence of the solution.
+% i.e., the in–plane block vanishes as a consequence of the solution.
 \end{remark}
 
 
@@ -129,14 +130,14 @@ Problem \(\mathrm{P}_{\rm I}\) covers extension, bending, and torsion under resu
 which fixes the \(\reflenx\)-dependence of \(\hat{\bm u}\) and reduces the equilibrium equations to planar problems on \(\Section\).
 
 \subsubsection*{Statement}
-Given resultant reactions on \(\Section_{x_0}\) with prescribed reactions \(\AxialRxn\), \(\MomentRxn:=\TwistRxn\FrameBasis + \bar{M}_{\alpha}\,\FrameBasis_{\alpha}\),
+Given a resultant axial force \(\AxialRxn\) and couple \(\MomentRxn:=\TwistRxn\FrameBasis + \bar{M}_{\alpha}\,\FrameBasis_{\alpha}\) on \(\Section_{x_0}\),
 determine \((\hat{\bm u},\StressTensor)\) such that:
 \begin{equation}
 \left\{
 \begin{aligned}
 \hat{\bm u}_{\rm I} &\in \mathrm{P}_{\rm I}(\AxialRxn,\,\MomentRxn) \\
 \hat{\bm u}'_{\rm I}&= a_{\varepsilon}\,\FrameBasis
-+\big(a_{\vartheta}\,\FrameBasis-\FrameBasis\times\bm{a}_{\Section}\big)\times\bm{x},
++\big(a_{\vartheta}\,\FrameBasis-\FrameBasis\times\bm{a}_{\Section}\big)\times\bm{x}.
 \end{aligned}
 \right.
 \label{eq:iesan-problem-1}
@@ -215,8 +216,8 @@ and the torsion constant \(\Jsv\) and plane inertia tensor \(\IntRoR\) are defin
 \Jsv:=\int_\Section\Big(r^2+(\FrameBasis\times\bm{r})\cdot\nabla\WarpTwistIesan\Big)\dA .
 \label{eq:def-j-origin}
 \end{equation}
-Note that these are defined with respect to the arbitrary origin. 
-In the recovered field, \((\FrameBasis_\alpha\otimes\FrameBasis_\beta)\,\StressTensor=0\), i.e. \eqref{eq:saint-venant-stress} holds.
+Note that these are defined with respect to the unspecified coordinate origin. 
+In the recovered field, \((\FrameBasis_\alpha\otimes\FrameBasis_\beta)\,\StressTensor=0\) and  \eqref{eq:saint-venant-stress} holds.
 
 \subsection{Problem II: flexure}
 
@@ -277,8 +278,8 @@ where flexural warping \(\bm{\WarpShearIesan}\) is determined by the  Poisson–
 \right.
 \label{eq:bvp-warp-shear-iesan}
 \end{equation}
-where the deviator in the section plane is 
-\(\operatorname{dev}\bm{r}⊗\bm{r}=\bm{r}\otimes\bm{r}-\tfrac12(\bm{r}\cdot\bm{r})\,\mathbf{1}\). 
+where the deviator \(\operatorname{dev}\bm{r}\otimes\bm{r}\) is understood in the section plane  
+\(\operatorname{dev}\bm{r}\otimes\bm{r}=\bm{r}\otimes\bm{r}-\tfrac12(\bm{r}\cdot\bm{r})\,\oneS\). 
 This problem has been considered by \cite{romano2012torsion} with the symbol \(\phi^{\rm SH}\), \cite{pilkey2003analysis} with the symbols \(\Phi,\Psi\), 
 \cite{lacarbonara2007solution} with the symbol \(\omega_i\),
 and \cite{hjelmstad1983seismic} with the symbol \(\Psi\). 
@@ -310,7 +311,7 @@ and the stress is
 \end{equation}
 As with \(\mathrm{P}_{\rm I}\), the recovered field satisfies \(\PlaneStressTensor=\mathbf{0}\), and is therefore represented by  \eqref{eq:saint-venant-stress}.
 
-Differentiation in \(\reflenx\) links flexure to bending with \(\MomentRxn+\FrameBasis\times\ShearRxn=\mathbf{0}\).
+% Differentiation in \(\reflenx\) links flexure to bending with \(\MomentRxn+\FrameBasis\times\ShearRxn=\mathbf{0}\).
 The free parameters are determined from
 \begin{equation}
 \begin{aligned}
@@ -323,13 +324,14 @@ b_\vartheta&=0,
 and \(c_\vartheta\) is determined by the relaxed torsion boundary condition \(\FrameBasis\cdot\int \bm{r}\times\bm{\tau}\dA = 0\):
 \begin{equation}
 \Jsv\,c_\vartheta
-= -\FrameBasis\cdot\int_{\Section} \bm{r}\times \left(\nabla \bm{\WarpShearIesan}^{\top}
-+ \bm{\Pi}_{(b)} \right)\bm{b}_{\Section} \dA 
+= \CenterShearLocation\cdot\bm{b}_{\Section}
+% -\FrameBasis\cdot\int_{\Section} \bm{r}\times \left(\nabla \bm{\WarpShearIesan}^{\top}
+% + \bm{\Pi}_{(b)} \right)\bm{b}_{\Section} \dA 
 % =-\int_\Section\Big[(\FrameBasis\times\bm{r})\cdot\nabla\big(\bm{\WarpShearIesan}\cdot\bm{b}_{\Section}\big)
 % +\tfrac12\,\nu\,r^2\,(\FrameBasis\times\bm{r})\cdot\bm{b}_{\Section}\Big]\dA .
 \label{eq:iesan-2-22}
 \end{equation}
-where \(\Jsv\) is the torsion constant defined by \eqref{eq:def-j-origin}, and the \emph{shear center} \(\CenterShearLocation\in\Section\) is defined by:
+where \(\Jsv\) is the torsion constant defined by \eqref{eq:def-j-origin}, and the \emph{shear point} \(\CenterShearLocation\in\Section\) is defined by:
 \begin{equation}
 \CenterShearLocation := \frac{1}{\Jsv} \int_\Section (\nabla\bm{\WarpShearIesan} + \bm{\Pi}_{(b)}^\top)\,\bm{r} \times \FrameBasis \dA.
 \label{eq:def-shear-center}

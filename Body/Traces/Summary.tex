@@ -1,16 +1,16 @@
 
 
-\subsection{Summary}
+\subsection{Summary}\label{sec:trace-summary}
 
 \begin{itemize}
     \item A trace \(\mathcal{T}\) of a continuum displacement \(\hat{\bm u}\) is an operation:
     \RepeatEquation{eq:trace-map}
-    whereby
+    such that
     \RepeatEquation{eq:trace-lift-linear}
     \item Traces are physically distinguished by how they manifest in boundary fixities on the beam displacement \(\bm{u}\) and rotation \(\bm{\theta}\) fields.
     \item The geometric \citep{cowper1966shear} and energetic \citep{renton1991generalized} theories of shear  
-     both represent exact continuum solutions, and are included in the Class I family of traces. 
-    \item Any Class I trace (\cref{def:class-1}) is compatible with Type 3 beam finite elements via a Petrov-Galerkin section \eqref{eq:petrov-section}, which preserves the classical section resultants, but furnishes an asymmetric tangent stiffness.
+     both lead to exact continuum solutions in this framework, and are included in the Class I family of traces. 
+    \item Any Class I trace (\cref{def:class-1}) is compatible with Type 3 beam finite elements via a Petrov-Galerkin section \eqref{eq:petrov-section}, which preserves the classical section resultants. However, most Class I traces result in an asymmetric tangent stiffness.
     \item Class II traces (\cref{def:class-ii}) are the subset of Class I traces which may be implemented via a Bubnov-Galerkin section \eqref{eq:bubnov-section} to furnish a symmetric tangent stiffness.
     \item Class III traces (\cref{def:class-iii}) are the subset of Class II traces that produce the classical beam stress resultants \(\snm = (N,\ShearForce,T,\bm{M})\) under the symmetric Bubnov-Galerkin implementation \eqref{eq:bubnov-section}.
     \item All Class III traces are equivalent under Saint~Venant loads (\cref{def:sv-equivalence}), and their trace matrix is given by \eqref{eq:energetic-trace-blocks}.
@@ -30,20 +30,6 @@ Novelty:
     \item Classical shear correction coefficients are associated to continuum exact 3D displacements.
 \end{itemize}
 
-
-TODO:
-\begin{itemize}
-    \item How stable are Class I traces?
-    \item How useful are non-Class III traces?
-    \item Consolidate trace matrix blocks.
-    \item Investigate trace block relationships to section geometry.
-\end{itemize}
-
-Future:
-\begin{itemize}
-    \item Investigate traces incorporating material shear stress into Euler type beam elements.
-    \item Investigate Class III traces outside of Saint~Venant loading.
-\end{itemize}
 
 
 Under the energy-conjugate trace, a clamped boundary condition 

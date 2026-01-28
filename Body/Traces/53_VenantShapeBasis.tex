@@ -1,5 +1,7 @@
 \subsection{Shape Basis}\label{sec:shape-basis}
-
+\begin{Note}
+    This subsection should be moved and/or refactored.
+\end{Note}
 The complete particular solution \eqref{eq:iesan-general-solution} is represented by a polynomial in the axial coordinate:
 \begin{equation*}
 \hat{\bm{u}}_{\rm P}(x,\bm{r}) = \sum_{m =0}^3 x^m \mathbf{S}_m(\bm{r})
@@ -7,7 +9,7 @@ The complete particular solution \eqref{eq:iesan-general-solution} is represente
 where $\mathbf{S}_m(\bm{r})$ collects all sectional patterns that multiply $x^m$. 
 The kinematic fields $\bm{u}(x)$ and $\bm{\theta}(x)$ generate a subspace of patterns representing plane-section deformations:
 \begin{equation*}
-\PlaneMotions := \big\{\bm{v}(x) + \bm{\omega}(x) \times \bm{r} \mid \bm{v}, \bm{\omega} \text{ arbitrary smooth functions of } x\big\}.
+\PlaneMotions := \big\{\bm{v}(x) + \bm{\omega}(x) \times \bm{r} \mid \bm{v}, \bm{\omega} \text{ arbitrary functions of } x\big\}.
 \end{equation*}
 At each value of $\reflenx$, this subspace is spanned pointwise by the plane-section basis:
 \begin{equation}
@@ -16,25 +18,13 @@ At each value of $\reflenx$, this subspace is spanned pointwise by the plane-sec
 \FrameBasis\,\rz\,
 %\FrameBasis \otimes \bm{r}
 \}
-= \operatorname{span} \begin{bmatrix}
-    \mathbf{A}_{u} & \mathbf{A}_{\theta} 
-\end{bmatrix}\bm{\eta}(x)
+% = \operatorname{span} \begin{bmatrix}
+%     \mathbf{A}_{u} & \mathbf{A}_{\theta} 
+% \end{bmatrix}\bm{\eta}(x)
 \label{eq:rigid-span}
 \end{equation}
 with \(y = \FrameBasis_{y} \cdot\bm{r}\) and \(z = \FrameBasis_{z}\cdot\bm{r}\). 
-% \begin{Aside}
-and
-\begin{subequations}
-    \begin{align}
-        % \bm{\Psi}_{\varepsilon} &= \FrameBasis \\
-        \mathbf{A}_{u}    &= \mathbf{1} \\ % \oneS
-        \mathbf{A}_{\theta} & = -\bm{r}^{\times}
-        % \bm{\Psi}_\vartheta     &= \FrameBasis\times \bm{r} \\
-        % \bm{\Psi}_{\kappa}      &= \FrameBasis\otimes\bm{r}
-    \end{align}
-    \label{eq:rigid-basis}
-\end{subequations}
-% \end{Aside}
+% 
 These functions collectively represent all plane-section motions of the form \(\bm{u} + \bm{\theta}\times\bm{r}\). 
 % Any displacement pattern in the span \eqref{eq:rigid-span} can be absorbed into the  fields $(\bm{u}, \bm{\theta})$ and need not be counted as warping. 
 % However, we may choose to distribute these components between the beam fields \(\bm{u},\bm{\theta}\) and the warping fields \(\bm{\alpha}\), creating a redundant representation. 
@@ -48,16 +38,12 @@ The warping shapes \(\bm{\Phi}\) must contain at least the $x$-independent vecto
 % Multiple warping shapes may share the same axial variation when their amplitudes can be expressed in terms of the one-dimensional strain measures $(\epsilon, \bm{\gamma}, \bm{\kappa})$. 
 
 Let $\mathbf{Q}(x,\bm{r})$ denote the residual obtained by projecting the Saint-Venant field onto the quotient space $\mathcal{V}_r / \mathscr{R}(\Section)$, where $\mathcal{V}_r$ is the space of vector fields on the section. 
-The minimum number of warping shapes is the separation rank of this residual, defined as the smallest integer $N$ such that
-\begin{equation*}
-\mathbf{Q}(x,\bm{r}) = \sum_{j=1}^{N} \alpha_j(x) \bm{\Phi}_j(\bm{r})
-\end{equation*}
-with each $\bm{\Phi}_j$ independent of $x$. 
-% \begin{proposition}[Shape Rank]
-% \label{prop:shape-rank}
-% For a generic cross-section with no symmetry assumptions and arbitrary centroidal location $\CentroidLocation$, the Saint-Venant family can be represented minimally with $\ShapeRank = 8$ independent warping shapes of $\bm{r}$ after removing rigid modes.
-% \end{proposition}
-After removing all patterns in $\mathscr{R}(\Section)$ from the Saint-Venant solution, the residual is spanned by the following linearly independent patterns:
+% The minimum number of warping shapes is the separation rank of this residual, defined as the smallest integer $N$ such that
+% \begin{equation*}
+% \mathbf{Q}(x,\bm{r}) = \sum_{j=1}^{N} \alpha_j(x) \bm{\Phi}_j(\bm{r})
+% \end{equation*}
+% with each $\bm{\Phi}_j$ independent of $x$. 
+After removing all patterns in $\mathscr{R}(\Section)$ from the Saint-Venant solution, the residual is spanned by the following linearly independent shapes:
 \begin{Old}
 \begin{subequations}
 \begin{alignat}{8}
@@ -86,11 +72,5 @@ After removing all patterns in $\mathscr{R}(\Section)$ from the Saint-Venant sol
 % \label{eq:def-poisson-warping}
 \label{eq:def-eight-shapes}
 \end{subequations}
-where recall \(\nu\) is Poisson's ratio and the centroid location \(\CentroidLocation\) is defined by \eqref{eq:def-centroid}.
-
-Linear independence of these patterns in the quotient space $\mathcal{V}_r / \PlaneMotions$ follows from the fact that no nontrivial linear combination can be written as a rigid mode. 
-This is verified by examining the harmonic and Poisson problems \eqref{eq:bvp-warp-twist-iesan} and \eqref{eq:bvp-warp-shear-iesan} satisfied by $\WarpTwistIesan$ and $\bm{\WarpShearIesan}$, together with the polynomial structure of the Poisson modes, which ensures that no combination of these  patterns lies in the span of the section-rigid basis functions \eqref{eq:rigid-span}.
-% \end{proof}
-
-% This result establishes that any beam model endeavoring to exactly represent the complete Saint-Venant solution class must employ at least eight warping shapes beyond those generated by rigid sectional motion. 
-
+%
+where  \(\nu\) is Poisson's ratio and the centroid location \(\CentroidLocation\) is defined by \eqref{eq:def-centroid}.

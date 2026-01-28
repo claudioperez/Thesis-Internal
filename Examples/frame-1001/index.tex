@@ -17,10 +17,10 @@
 \label{fig:cantilever-1001}
 \end{figure}
 %
-This example is selected to demonstrate the ability of the proposed formulations to accurately reproduce available analytical solutions.
+This example is selected to demonstrate the ability of the proposed formulations to accurately reproduce available analytical solutions through finite rotations.
 
 The cantilever beam 
-in Figure~\ref{fig:cantilever-1001} is subjected to \emph{either} a point moment \(\bm{M}\) 
+in Figure~\ref{fig:cantilever-1001} is subjected to either a point moment \(\bm{M}\) 
 or a point force \(F \, \mathbf{E}_3\) at its free end \(\reflenx=L\). 
 %
 The centerline of the reference configuration 
@@ -33,9 +33,9 @@ When \(F = 0\) the configuration is expected
 to remain in the \(\mathbf{E}_1 - \mathbf{E}_2\) plane.
 Consequently, the out-of-plane director
 \(\FrameBasis_3\) does not change during deformation so that \(\FrameBasis_3 \equiv \frameBasis_3\).
-This simplification has two important consequences:
+This simplification has two consequences:
 \begin{itemize}
-  \item There is no distinction between a spatially applied moment \(\bm{M} = M \, \FrameBasis_3\)
+  \item There is no distinction between a spatially applied moment \(\bm{M} = M \, \frameBasis_3\)
     and a materially applied moment \(\bm{M} = M \, \FrameBasis_3\).
   \item The rotation \(\FrameRotation\) becomes
     vectorial, its variations \(\bm{u}_{\scriptscriptstyle{\Lambda}}^{(i)}\) at different configurations \(\chi^{(i)}\) can be added, and the sum of these variations over the course of global equilibrium iterations is equivalent
@@ -47,7 +47,7 @@ This simplification has two important consequences:
     %This is because the plane constraint has rendered the configuration manifold for \(\boldsymbol{\Lambda}\) vectorial.
 \end{itemize}
 %
-In this case, the moment loading can be treated identically for all analyses by simply scaling a constant \emph{reference} force vector for the node at \(\reflenx=L\):
+In this case, the moment loading can be treated identically for all analyses by simply scaling a constant reference load vector for the node at \(\reflenx=L\):
 %
 \begin{equation}
   \mathbf{f}_{M,\text{ref}} = \begin{pmatrix}
@@ -126,7 +126,7 @@ J  =&   10^7 \\
 \end{array}
 \]
 Two values for the shear modulus \(G\) are used with a shear stiffness \(GA\) of \(500\) and \(10\), respectively, the latter representing the case with significant shear deformations. 
-Table~\ref{tab:transv} presents the numerical tip displacements and the analytic solution from \cite{batista2016closedform} using Jacobi elliptic functions and accounting for flexural and shear deformations.
+Table~\ref{tab:transv} presents the simulated tip displacements and the analytic solution by \cite{batista2016closedform} using Jacobi elliptic functions and accounting for flexural and shear deformations.
 %
 The analysis uses both 2-node and 4-node elements.
 For the sake of brevity, the results are reported only for the variants using

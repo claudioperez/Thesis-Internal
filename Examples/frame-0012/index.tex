@@ -1,7 +1,11 @@
 This example verifies consistency with Saint~Venant's solutions, as developed in \cref{sec:timo}. 
-The reference continuum solution is developed in \cref{sec:sv}. 
+The reference continuum solution is derived in \cref{sec:sv}. 
 
-A similar example was considered by \cite[5.2.1]{saritas2006mixed}.
+Fiber beam models are often verified in the linear elastic range by comparing deflections against beam theory solutions \citep[5.2.1]{saritas2006mixed} and finite element simulations of a continuum problem \citep{lecorvec2012nonlinear,gruttmann2000theory}. 
+This example momentarily departs from this convention and compares directly to Saint~Venant's continuum solution as treated by \cite{iesan1986saintvenants} and summarized in \cref{sec:sv}. 
+The objective is to verify that the section formulation developed in \cref{sec:trace} maintains strain-level correspondence with the continuum solution as long as the structure remains in the Saint~Venant class.
+This class consists of the terminal loadings described in \cref{sec:sv} in the range where material and geometric nonlinearities can be neglected. 
+% Elastic shear deformations in a 2D cantilever were investigated by . 
 
 A cantilever beam fixed at $x=0$ is loaded with a transverse force $\bar{F} \FrameBasis_z$ at the free end $\reflenx=L$.
 
@@ -18,6 +22,22 @@ A cantilever beam fixed at $x=0$ is loaded with a transverse force $\bar{F} \Fra
   \includegraphics[width=0.8\linewidth]{Examples/frame-0012/img/shear_h_poisson.png}
 \end{figure}
 
+\Cref{tab:0012-result} compares the simulated deflections $\bm{u}$ and fiber strains $\varepsilon_{1k} \coloneq \FrameBasis_{k}\cdot\StrainVector(\xi_i,\,\bm{r}_i)$ against the continuum solution \eqref{eq:general-solution} and \eqref{eq:iesan-point-strain}, respectively. 
+
+\begin{table}[H]
+    \centering
+    \caption{Caption}
+    \label{tab:0012-result}
+    \begin{tabular}{c|cc|cc}
+       & \multicolumn{2}{c|}{Energetic Trace} & \multicolumn{2}{c}{Geometric Trace} \\ 
+       & Simulation & Error & Simulation & Error \\
+      \midrule
+      $u_y$ & & \\ 
+      $u_z$ \\
+      $\varepsilon_{11}$ \\
+    \end{tabular}
+\end{table}
+
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.5\linewidth]{Examples/frame-0012/img/0012-tube-soln.png}
@@ -25,26 +45,6 @@ A cantilever beam fixed at $x=0$ is loaded with a transverse force $\bar{F} \Fra
     \label{fig:0012-tube}
 \end{figure}
 
-
-\subsubsection{Wide Flange}\label{sec:frame-0012/w}
-
-\FrameSection{
-  label/problem={frame-0012/w},
-  kinematics/section={\eqref{eq:linear-gl-strain-pi}},
-  A=11.78,
-  Iy=613.8,
-  label/shape=W18x40,
-  unit/length=\inch,
-  %
-  E=29e3,
-  material=Steel,
-  unit/stress=\si{\psi}
-}
-\begin{table}[H]
-    \centering
-    \caption{Computed properties for a \emph{W18x40} wide flange section}
-    \label{tab:w18x40-properties}
-\end{table}
 
 
 \subsubsection{Channel}

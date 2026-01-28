@@ -52,14 +52,13 @@ with \(\bm a\) fixed by \eqref{eq:2-15}, \(\bm b\) by \eqref{eq:2-18}, \(\WarpTw
 \(\bm{\WarpShearIesan}\) by \eqref{eq:bvp-warp-shear-iesan},  \(c_\vartheta\) by \eqref{eq:iesan-2-22}. 
 % and $\hat{\bm u}_{\rm R}$ is an arbitrary infinitesimal rigid body displacement field. 
 %
-The complete Saint-Venant solution consists of the particular solution \eqref{eq:iesan-general-solution} plus an arbitrary rigid body displacement:
-
+The complete Saint-Venant solution is the sum of the particular solution \eqref{eq:iesan-general-solution}, 
+and a homogeneous solution \(\hat{\bm u}_{\rm R}\):
 \begin{equation}
 \hat{\bm{u}}(x,\bm{r}) = \hat{\bm{u}}_{\rm P}(x,\bm{r}) + \hat{\bm{u}}_{\rm R}(x,\bm{r})
 \label{eq:general-solution}
 \end{equation}
-
-where the rigid body field \(\hat{\bm{u}}_{\rm R}\) contains six arbitrary parameters. 
+and \(\hat{\bm{u}}_{\rm R}\) is an arbitrary the rigid body motion with six free parameters \(\bm{q}_u\in \mathbb{R}^3\) and \(\bm{q}_\theta\in \mathbb{R}^3\):
 \begin{equation}
 \begin{aligned}
 \hat{\bm u}_{\rm R}\{\bm{q}\} 
@@ -68,11 +67,6 @@ where the rigid body field \(\hat{\bm{u}}_{\rm R}\) contains six arbitrary param
 \end{aligned}
 \label{eq:rigid-field}
 \end{equation}
-where
-\(\bm{q}_u\in \mathbb{R}^3\)
-represents translation and
-\(\bm{q}_\theta\in \mathbb{R}^3\)
-represents rotation. 
 %
 The infinitesimal strain tensor is
 \[
@@ -248,12 +242,12 @@ Integrating \eqref{eq:equilibrium-ode} in view of the nilpotency property \(\mat
 
 The resultants \(\snm\) at \(x=0\) thus depend linearly on the parameters \((a_{\varepsilon},\, \bm{a}_{\Section},\, a_{\vartheta},\, \bm{b}_{\Section})\):
 \begin{equation}
-\snm(0) = \IesanStiff\bm{p}
+\snm(0) = \IesanStiff\IesanVector
 \label{eq:snm0-in-p}
 \end{equation}
-where \(\bm{p}\in\mathbb{R}^6\) collects the six independent parameters of the Saint-Venant class: 
+where \(\IesanVector\in\mathbb{R}^6\) collects the six kinematic  parameters of the particular solution: 
 \begin{equation}
-\bm{p} \coloneq (a_{\varepsilon},\, \bm{a}_{\Section},\, a_{\vartheta},\, \bm{b}_{\Section})
+\IesanVector \coloneq (a_{\varepsilon},\, \bm{a}_{\Section},\, a_{\vartheta},\, \bm{b}_{\Section})
 \label{eq:def-iesan-vector}
 \end{equation}
 In view of \eqref{eq:2-15} and \eqref{eq:2-18}:
@@ -345,7 +339,7 @@ Note:
     \begin{tabular}{clcl}
     \toprule
     Symbol & Units & & Description \\ \midrule
-        \(a_{\varepsilon}\in\mathbb{R}\) & ---  & & Axial strain parameter \\
+        \(a_{\varepsilon}\in\mathbb{R}\) & $\sim$  & & Axial strain parameter \\
         \(a_{\vartheta}\in\mathbb{R}\)   & \Length{-1} & \\
         \(\bm{a}_{\Section}\in\Section\) & \Length{-1} & & Bending parameters for \(\mathrm{P}_{\rm I}\) \\
         \LightRule
@@ -353,7 +347,7 @@ Note:
         \(b_{\varepsilon}\in\mathbb{R}\) & \\ %\Length{-1} & & \\
         \(\bm{b}_{\Section}\in\Section\) & \Length{-2} & \\
         \LightRule
-        \(\bm{q}_u\in\mathbb{R}^3\) & & & Rigid translation at \(x=0\) \\
+        \(\bm{q}_u\in\mathbb{R}^3\) & L & & Rigid translation at \(x=0\) \\
         \(\bm{q}_{\theta}\in\mathbb{R}^3\) & & & Rigid rotation at \(x=0\), or constant transverse displacement rate   \\
         \LightRule
         \(\WarpTwistIesan\)   & \Length{2}  & \eqref{eq:bvp-warp-twist-iesan} \\
@@ -365,9 +359,9 @@ Note:
         \(\CenterShearLocation\) & L & \eqref{eq:def-shear-center} & Torsion-flexure center \\
         \(\IntRGoRG\) & \Length{4} & \eqref{eq:def-intRGoRG} & Centroidal plane inertia tensor\\
         \LightRule 
-        \(\snm\) & & \eqref{eq:equilibrium-ode} \\
-        \(\IesanVector\) & & \eqref{eq:def-iesan-vector}\\
-        \(\IesanStiff\) & & \\
+        \(\snm\) & --- & \eqref{eq:equilibrium-ode} \\
+        \(\IesanVector\) & --- & \eqref{eq:def-iesan-vector}\\
+        \(\IesanStiff\) & --- & \eqref{eq:G0-neg-m} \\
     \bottomrule
     \end{tabular}
 \end{table}

@@ -31,12 +31,12 @@ of \eqref{eq:strong} that is centered around the Galerkin \emph{residual functio
 \label{eq:galerkin}
 \end{equation}
 %
-When specialized to classical continuum mechanics, this is equivalent to the classical virtual work functional (before integration by parts):
+When specialized to classical continuum mechanics, this is equivalent to the classical virtual work functional:
 \begin{equation}
-\int \delta\bm{u} \cdot \operatorname{div} \bm{\sigma}\, d\Omega +  \int \delta \bm{u} \cdot \bm{f}\, d\Omega, 
+\int \delta\bm{u} \cdot \operatorname{div} \bm{\sigma}\, \dd\Omega +  \int \delta \bm{u} \cdot \bm{f}\, \dd\Omega, 
 \label{eq:VW}
 \end{equation}
-where the virtual displacements \(\delta \bm{u}\) represent the test basis \(\bm{\eta}\) and the equilibrium operator $\mathbb{B}$ is represented by the (negative) divergence $-\operatorname{div}$. 
+where the virtual displacements \(\delta \bm{u}\) represent the test basis \(\bm{\eta}\) and the equilibrium operator $\mathbb{B}$ is represented by the negative divergence $-\operatorname{div}$. 
 Note that the divergence always acts linearly on \(\bm{\sigma}\), but \(\bm{\sigma}\) may depend nonlinearly on the displacement \(\bm{u}\), resulting in a nonlinear problem.
 The developments that follow
 are kept applicable to a much wider class of mechanics models by retaining 

@@ -10,7 +10,7 @@ to the displacement field \eqref{eq:def-section-avg-trace}:
 \end{equation*}
 % where $\SectionAverage{\cdot}$ and $\RotationAverage{\cdot}$ are the 
 % translation and rotation average functionals of \eqref{eq:def-section-averages}.
-where the linear functionals \(\SectionAverage{\cdot}\) and \(\bar{\Theta}[\cdot]\) are defined for \(\bm{v}: [0,L]\times\Section\rightarrow\EuclideanSpace\)
+where the linear functionals \(\SectionAverage{\cdot}\) and \(\bar{\Theta}[\cdot]\) are defined for \(\bm{v}: [0,L]\times\Section\rightarrow\EuclideanSpace\):
 \begin{equation}
 \SectionAverage{\bm{u}} := \frac{1}{A}\int_{\Section}\bm{u}\dA,
 \qquad
@@ -19,7 +19,7 @@ where the linear functionals \(\SectionAverage{\cdot}\) and \(\bar{\Theta}[\cdot
 \CentroidStaticInertia:=\int_{\Section}\big(|\CoordinateCentroid|^{2}\mathbf{1}-\CoordinateCentroid\otimes\CoordinateCentroid\big)\dA.
 \label{eq:def-section-averages}
 \end{equation}
-with \(\mathbf{1}\) the 3D identity in \(\mathbb{R}^3\) and \(\CentroidLocation\in\Section\) is the unique point satisfying \(\SectionAverage{\bm{r}-\CentroidLocation} = \mathbf{0}\).
+with \(\mathbf{1}\) the identity in \(\mathbb{R}^3\) and \(\CentroidLocation\in\Section\) is the centroid satisfying \(\SectionAverage{\bm{r}-\CentroidLocation} = \mathbf{0}\).
 
 \begin{proposition}[Optimal Rigid Alignment]\label{prop:align-cowper}
 The plane-rigid field \(\bar{\bm u}(x)+\bar{\bm\theta}(x)\times\bm{r} \in \PlaneMotions\) that best fits a 3D field \(\hat{\bm u}(x,\bm{r}): [0,L]\times\Section\) in the least‑squares sense is given by:
@@ -103,7 +103,7 @@ where the \emph{twist center} $\CenterTwistLocation$ is:
 \CenterTwistLocation := \RotationAverage{\WarpTwistIesan\,\FrameBasis}.
 \label{eq:def-twist-center}
 \end{equation}
-The center of twist \eqref{eq:def-twist-center} has been attributed to \cite{trefftz1935uber} by \cite{pilkey2003analysis}.
+The center of twist \eqref{eq:def-twist-center} has been attributed to \cite{trefftz1935uber} by \cite{pilkey2003analysis,romano2012torsion}.
 
 The strains are:
 \begin{equation*}
@@ -216,7 +216,7 @@ Collecting the contributions at $x = 0$, the trace matrix is:
 \end{bmatrix}
 \label{eq:T0-cowper}
 \end{equation}
-so \(\TraceBT = \TraceNF = \mathbf{0}\). 
+where \(\TraceBT = \TraceNF = \mathbf{0}\). 
 \begin{itemize}
     \item \eqref{eq:req-d1} requires \(\TraceDeDpOne = \TraceDeDpRoot\IesanEvolveSP\), which in view of \eqref{eq:res-d1-block} is satisfied by \eqref{eq:T0-cowper}
     \item \eqref{eq:req-p1} requires \(\TraceDeDpRoot\) exhibit the block form \eqref{eq:T0-plane-structure}, 

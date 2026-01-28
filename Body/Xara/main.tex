@@ -1,5 +1,4 @@
 
-\section[Xara]{\Xara{}: A Structured Runtime for Structural Simulation}\label{ch:xara}
 
 \subsection{Introduction}
 
@@ -9,18 +8,18 @@ These interpreters have enabled a generation of researchers to perform sophistic
 
 However, the interpreter layer introduces architectural constraints that become problematic when \OpenSees{} must function not as a standalone scripting environment but as an embedded component within a larger software system. 
 Contemporary applications in structural health monitoring, uncertainty quantification, and machine learning require simulation engines that are deterministic, thread-safe, and composable with external libraries.
-These properties are difficult to achieve when the interpreter maintains implicit global state that any function call may read or mutate.
+These properties are difficult to achieve when the interpreter maintains implicit global state that any function call may read or mutate. 
 
 This chapter presents a restructured runtime that eliminates the global state underlying the existing interpreters. 
 The design replaces process-level singletons with user-owned objects whose lifetimes and interactions are explicit in the program's control flow. 
 This architectural change enables reliable embedding of \OpenSees{} in mission-critical systems, safe concurrent evaluation of multiple models, and integration with automatic differentiation frameworks that require explicit computational graphs. 
-The proposed architecture derives from \cite{filippou1996fedeas}. 
+The proposed architecture derives largely from the FEDEASLab toolbox for MATLAB \citep{filippou2004fedeaslab}. 
 
 \subsection{The Legacy Interpreter Architecture}
 \label{sec:legacy}
 
 The \OpenSees{} interpreters are built on an intermediary layer of stateful functions known as the OPS API \citep{zhu2018openseespy}. 
-This layer, introduced to simplify the creation of scripting bindings, operates on global state distributed across more than thirty variables defined in over twenty source files. 
+This layer, introduced to simplify the creation of interpreter bindings, operates on global state distributed across more than thirty variables defined in over twenty source files. 
 While this design reduced the implementation burden for adding new commands, it introduced fundamental limitations from the perspective of software architecture.
 
 \subsubsection{Implicit State and Referential Opacity}
@@ -31,7 +30,7 @@ A command implementation retrieves its dependencies by calling these functions, 
 This design violates the principle of referential transparency: the same function call may return different results depending on the order of prior commands, and the dependencies of any given function are not apparent from its signature.
 
 The user-facing consequence is that commands exhibit implicit sequential coupling. 
-For instance, the \texttt{load} command depends on state established by a prior \texttt{pattern} command; invoking \texttt{load} without an active pattern context produces \textcolor{red}{undefined behavior}\NonExistentCommand{}. 
+For instance, the \texttt{load} command depends on state established by a prior \texttt{pattern} command. 
 Similarly, material and element definitions implicitly reference the ``current'' model, and analysis commands operate on whichever domain object was most recently constructed. 
 These dependencies are not enforced by the type system or checked at parse time and thus  manifest as silent numerical corruption or segmentation faults at runtime.
 
@@ -40,24 +39,17 @@ These dependencies are not enforced by the type system or checked at parse time 
 Because the interpreter maintains at most one model in its global state, any command that constructs a new model overwrites the previous one. This creates an aliasing hazard: references held by user code may become dangling when a subsequent model command reinitializes the global domain. Consider a workflow in which a calibration routine constructs a model, performs an analysis, and stores a reference to the results. 
 If a later stage of the same process constructs a second model the stored reference now points to deallocated or reinitialized memory.
 
-This limitation is not merely inconvenient; it renders the interpreter unsuitable for any application that requires multiple concurrent models. Monte Carlo simulations, parametric studies, and ensemble methods all require independent model instances that can be evaluated in parallel. 
+This limitation renders the interpreter unsuitable for any application that requires multiple concurrent models. Monte Carlo simulations, parametric studies, and ensemble methods all require independent model instances that can be evaluated in parallel. 
 The global singleton architecture forces such workflows to spawn separate processes, incurring the overhead of inter-process communication and precluding shared-memory parallelism.
-
-\subsubsection{Analysis State Corruption}
 
 The analysis machinery exhibits analogous issues. 
 The integrator, algorithm, system of equations, and convergence test are held as global pointers that any command may reassign. 
 Because these components hold internal state that evolves during the solution process, concurrent access---or even interleaved access from ostensibly independent analyses---produces race conditions and corrupted solutions. 
 The lack of encapsulation means that a library embedding \OpenSees{} cannot guarantee isolation from other libraries that may also embed it; two such libraries executing in the same process will silently corrupt each other's analyses.
 
-\subsubsection{Architectural Characterization}
-
-These issues stem from a common architectural pattern: the interpreter layer treats the C++ core as a stateful service rather than a library of composable abstractions. 
-This design is well-suited to interactive scripting, where a single user issues commands sequentially and the notion of ``the current model'' is unambiguous. 
-However, it is fundamentally incompatible with modern software engineering practices that emphasize explicit dependencies, deterministic behavior, and safe concurrency.
-
-The underlying C++ classes---\texttt{Domain}, \texttt{AnalysisModel}, \texttt{UniaxialMaterial} \citep{mckenna1997object,scott2004software}, and their peers---are themselves well-designed abstractions that support multiple instances and explicit ownership. 
-The architectural deficiency lies not in the core but in the interpreter layer that mediates access to it. The OPS API, by interposing global state between the user and the core, forfeits the composability that the core's object-oriented design was intended to provide.
+% The C++ classes developed by  \citep{mckenna1997object,scott2004software} are strong abstractions that support multiple instances and explicit ownership. 
+% The architectural deficiency lies not in the core but in the interpreter layer that mediates access to it. 
+% The OPS API, by interposing global state between the user and the core, forfeits the composability and encapsulation that the core's object-oriented design was intended to provide.
 
 \subsection{A Structured Runtime}\label{sec:runtime}
 

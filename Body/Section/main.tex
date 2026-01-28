@@ -1,40 +1,15 @@
 
 \subsection{Introduction}
-In this section we motivate a family of resultant constitutive relations that establishes a connection between the one-dimensional theory outlined above and the three dimensional framework of continuum mechanics.
+In this section we motivate a family of resultant constitutive relations that establishes a connection between the one-dimensional framework outlined above and the three dimensional framework of continuum mechanics.
 %
 That is, given a ``cross section'' \(\Section \subset \mathbb{R}^2\) where each point \(\hat{\rho}\) is assigned a tensorial stress-strain model \(\TensorMaterial: \StrainTensor \mapsto \bm{T}\), 
 the objective is to define a frame resultant model:
 \[
 \ResultMaterial : \ShearStrain,\CurveStrain,\bm{\alpha}',\bm{\alpha} \mapsto \bm{n},\bm{m},\bm{w},\bm{v}
 \]
-which may be expected, under suitable assumptions, to approach the response of a three dimensional body. % in the limit where a notion of \emph{slenderness} approaches infinity. 
+which may be expected, under suitable assumptions, to approach the response of a three dimensional body. 
 %
-%
-% We regarded the beam as a purely one-dimensional body: the state of stress $\TraceTotalEnergyStress(\xi_m)$ and strain $\FrameStrain(\xi_m)$ at a point $\xi_m$ are mathematically related only to the material points immediately to their left $\xi_m-d\xi$ and right $\xi_m+d\xi$. 
-%
-% However, in reality, a beam always has \emph{some} material emanating from the centerline \(\TraceLocation\), and ideally the dependence of $\TraceTotalEnergyStress$ on $\FrameStrain$ should take into account the distribution and composition of this additional material. 
-%
-
-
-Recall that up until this point we have regarded the beam as a purely one-dimensional body: the state of stress $\bm{s}(\xi_m)$ and strain $\FrameStrain(\xi_m)$ at a point $\xi_m$ are mathematically related only to the material points immediately to their left $\xi_m-\dd\xi$ and right $\xi_m+\dd\xi$.
-
-However, in reality, a beam always has \emph{some} material emanating from the centerline \(\TraceLocation\), and ideally the dependence of $\TraceTotalEnergyStress$ on $\FrameStrain$ should take into account the distribution and composition of this additional material. 
-To this end, we formally introduce the material points $\hat{\bm{\rho}}$ in the cross section through an extended three-dimensional displacement field $\hat{\TraceLocation}(\reflenx, \hat{\bm{\rho}})$ which is assumed to depend only on the configuration variables of the reference curve \(\chi=\bigl(\TraceLocation(\reflenx), \FrameRotation (\reflenx), \bm{\alpha}(\reflenx)\bigr)\) at the 1D material point \(\reflenx\). 
-Because the beam strains \(\FrameStrain(\reflenx) = (\ShearStrain , \CurveStrain , \bm{\alpha}^{\prime}, \bm{\alpha})\) have been formulated as unique invariant functions of the configuration variables $\chi$, it follows that an invariant strain measure for the extended deformation $\hat{\bm{x}}$ should be expressible as functions of only the beam strains $\FrameStrain$.
-
-To this end, introduce material points $\hat{{\rho}}$ in the cross section through an extended three-dimensional displacement field $\hat{\TraceLocation}(\reflenx, \hat{{\rho}})$ which is assumed to depend only on the configuration variables \(\bigl(\TraceLocation(\reflenx), \FrameRotation (\reflenx), \bm{\alpha}(\reflenx)\bigr)\)  of the Cosserat curve at the 1D material point \(\reflenx\). 
-The spatial placement of a point in the cross section in the reference configuration thus has the representation:
-\begin{equation*}
-    \reflenx\,\FrameBasis + \SectionCoordinate(\hat{\rho})
-\end{equation*}
-where $\PlanePosition$ %$\colon \Section \to \mathbb{R}^2$ 
-is a position vector in the section \(\Section\) that identifies a section material point $\hat{\rho}$ with respect to the reference line of the beam. 
-Thus, \(\SectionCoordinate\) satisfies
-\begin{equation*}
-\SectionCoordinate \cdot \FrameBasis = 0
-\end{equation*}
-%
-The extended displacement field for the newly introduced section material points $\hat{\rho}$  is:
+Consider deformations of a three dimensional body with the form:
 \begin{SaveEquation}{eq:finite-alignment-field}
 \hat{\bm{x}}(\reflenx, \PlanePosition) 
 = \bm{x}(\reflenx) + \FrameRotation \bigl(\PlanePosition 
@@ -42,7 +17,7 @@ The extended displacement field for the newly introduced section material points
 % \label{eq:finite-alignment-field}
 \end{SaveEquation}
 %
-where the \emph{vector-valued} warping field
+where the vector-valued warping field
 \(\bm{\Phi}(\bm{r})\,\bm{\alpha}(\reflenx)\in\mathbb{R}^3\) allows transverse warping components.
 %
 \begin{remark}
@@ -65,10 +40,9 @@ and the linearized displacement \(\hat{\bm{u}} = \hat{\bm{x}} - (x\FrameBasis + 
 
 
 
-\subsection{Assumptions} %Stress Constraints}
+\subsection{Stress Constraints}
 
 Recall that the Saint-Venant field generates vanishing stress components \(\FrameBasis_{\alpha}\cdot\PlaneStressTensor\FrameBasis_{\beta} = 0\). 
-It is evident from \eqref{eq:stress-resultants} that the condition \eqref{eq:seSE} precludes stresses with components on \(\{\FrameBasis_y,\,\FrameBasis_z\}\) from contributing to the rod stress resultants \(\bm{s}\), which depends only on those participating in the expression \(\StressTensor\,\FrameBasis\). 
 The stress tensor has the representation:
 %
 \begin{SaveEquation}{eq:saint-venant-stress}
@@ -76,7 +50,7 @@ The stress tensor has the representation:
 \qquad\text{with}\qquad
 \begin{aligned}
 \AxialStress    &\triangleq \FrameBasis\cdot \StressTensor\, \FrameBasis \\
-\ShearStress &\triangleq \PlaneBasis_{\beta}\otimes \PlaneBasis_{\beta} \StressTensor\,\FrameBasis
+\ShearStress &\triangleq \FrameBasis_{\beta}\otimes \FrameBasis_{\beta} \StressTensor\,\FrameBasis
 \end{aligned}
 % \label{eq:frame-stress-tensor}
 % \label{eq:saint-venant-stress}
@@ -242,7 +216,7 @@ where $\ShearStrain $ and $\CurveStrain $ are the beam strain variables defined 
 ,
 \end{equation*}
 % \paragraph{Exact Green--Lagrange strain}
-With \(\StrainTensor\triangleq\tfrac12(\bm{F}^{\top}\bm{F}-\mathbf{1})\) one obtains, by direct expansion of \eqref{eq:F-Phi},
+The Green-Lagrange strain tensor \(\StrainTensor\triangleq\tfrac12(\bm{F}^{\top}\bm{F}-\mathbf{1})\) with \eqref{eq:F-Phi} is:
 \begin{equation}
 \begin{aligned}
 \StrainTensor
@@ -267,43 +241,9 @@ where the symmetric bun product \(\bm{a}\stackrel{\mathrm{s}}{\otimes}\bm{b}\) i
     \bigr)
 \end{equation*}
 
-\begin{Old}
-The exact deformation gradient for the extended material field $\hat{\bm{x}}$ given by \eqref{eq:finite-alignment-field} is:
-%
-$$
-\begin{aligned}
-\bm{F} 
-&= \FrameRotation\left[\mathbf{1} + \bm{u}\otimes\FrameBasis + \nabla (\bm{\alpha}\cdot \bm{\varphi})\right]
-\end{aligned}
-\qquad\text{ where }\qquad
-\bm{u}(\hat{\rho}) \triangleq\ShearStrain  + \CurveStrain  \times (\PlanePosition  + \bm{\alpha}\cdot\bm{\varphi} \, \FrameBasis)
-% \bm{\omega} \triangleq (\bm{\alpha}\cdot\bm{\varphi})\, \FrameBasis
-$$
-% Note that in the presence of warping $\bm{u}$ is nonlinear in the strain variables $\FrameStrain$.
-% and may be written as the sum of linear $\bar{\bm{u}}$ and quadratic $\CurveStrain \times\bm{\omega}$ terms:
-% \begin{equation*}
-% \bm{u} = \bar{\bm{u}} + \CurveStrain \times\bm{\omega}
-% \qquad\text{ with }\qquad
-% \bar{\bm{u}} \triangleq \ShearStrain  + \CurveStrain \times\PlanePosition 
-% \end{equation*}
-%
-The corresponding Green-Lagrange strain tensor may be expressed as:
-\begin{equation}
-\StrainTensor = \bm{u}
-\stackrel{\mathrm{s}}{\otimes}
-\FrameBasis 
-+\nabla w  \stackrel{\mathrm{s}}{\otimes} \FrameBasis
-+({\bm{u}}\cdot\FrameBasis)\,\nabla w  \stackrel{\mathrm{s}}{\otimes} \FrameBasis
-+ \tfrac{1}{2}\left(
-  \bm{u}\cdot\bm{u}\,\FrameBasis\otimes\FrameBasis
-+ \nabla w \otimes\nabla w 
-\right)
-\label{eq:exact-gl-strain}
-\end{equation}
-%
-\end{Old}
 
 \paragraph{Moderate (Wagner) Strain.}
+A simplification of \eqref{eq:exact-gl-strain-Phi} which retains important nonlinearities is:
 \begin{SaveEquation}{eq:wagner-gl-strain-pi}
 \StrainTensor
 ~=~\StrainVector\stackrel{\mathrm{s}}{\otimes}\FrameBasis
@@ -323,16 +263,17 @@ The corresponding Green-Lagrange strain tensor may be expressed as:
 Let the generalized strain-direction be
 \(
 \delta\bm{e}\triangleq(\delta\bm{\gamma},~\delta\bm{\kappa},~\delta\bm{\alpha}',~\delta\bm{\alpha})
-\) and introduce the decomposition:
+\)
+Introduce the decomposition:
 \begin{equation}
 \WarpTotalShapes = \FrameBasis\otimes\WarpAxialShapes + \WarpPlaneShapes
 \label{eq:decom-warp-shapes}
 \end{equation}
-From \eqref{eq:wagner-gl-strain-pi} one computes the \emph{effective} variation
+From \eqref{eq:wagner-gl-strain-pi} the  variation
 \(
-\delta\StrainVector=(\TotalStrainMatrix\,\delta\bm{e})
+\delta\StrainVector=\TotalStrainMatrix\,\delta\bm{e}
 \)
-that interacts with \(\StressVector\):
+furnishes the section kinematic matrix:
 \begin{equation}
 \TotalStrainMatrix
 =\left[
@@ -388,11 +329,11 @@ The first order truncation of \eqref{eq:exact-gl-strain-Phi} furnishes:
 \end{SaveEquation}
 
 \subparagraph{Section kinematic operator}
-From \eqref{eq:linear-gl-strain-pi} one computes the effective variation
+From \eqref{eq:linear-gl-strain-pi} the variation
 \(
 \delta\hat{\bm{\varepsilon}}=(\TotalStrainMatrix\,\delta\bm{e})
 \)
-that interacts with \(\StressVector\):
+furnishes:
 \begin{equation}
 \TotalStrainMatrix
 =\left[
@@ -472,7 +413,7 @@ $$
 
 \subsection{Resultants}
 
-The standard formalisms (virtual work, stationary variational principles, and Galerkin weighted residuals) all equivalently furnish a requirement with the form:
+It is natural [TODO: elaborate on why; it follows equivalently from virtual work, stationary variational principles, and Galerkin weighted residuals] to impose the requirement:
 \begin{equation}
 \left<\TraceTotalEnergyStress,\,\delta\FrameStrain\right>_{\FrameBody}=\left<\StressTensor ,\,\delta\StrainTensor\right>_{\hat{\FrameBody}}
 \label{eq:seSE}

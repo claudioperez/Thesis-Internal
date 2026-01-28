@@ -7,14 +7,14 @@ Similar problems have been considered by
 \subparagraph{Setup}
 A shaft is subjected to a concentrated torque $\TwistRxn$ acting at $\reflenx=L$. 
 Rotation is prevented at the left support, $\reflenx=0$. 
-The differential equation for nonlinear elastic nonuniform torsion is \citep{trahair2005nonlinear}:
+The differential equation of torsion equilibrium becomes \citep{trahair2005nonlinear}:
 %
 \begin{equation}
 G \Jsv \vartheta' - E \Jw \vartheta''' + \tfrac{1}{2} E I_n\left(\vartheta'\right)^3 = \TwistRxn
 \tag{$\dagger$}
 \end{equation}
 %
-where $\TwistRxn$ is the applied torque at a distance $\reflenx$ along the member, $\Jsv$ is the (Saint~Venant) uniform torsion constant \eqref{eq:def-j-origin}, $\Jw$ warping section constant, and $I_n$ is the  nonlinear ``Wagner'' section constant. 
+where $\TwistRxn$ is the applied torque along the member, $\Jsv$ is the uniform torsion constant \eqref{eq:def-j-origin}, $\Jw$ is the warping torsion constant, and $I_n$ is the  nonlinear ``Wagner'' section constant. 
 
 % The resultant torque $T$ comprises the linear uniform torque $G\Jsv \vartheta'$, the linear warping torque $-E\Jw \vartheta'''$, and the nonlinear torque $\tfrac12 E I_n \vartheta'''$ arising from the Wagner strain term \eqref{eq:wagner-gl-strain-pi}. 
 
@@ -22,15 +22,14 @@ where $\TwistRxn$ is the applied torque at a distance $\reflenx$ along the membe
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.5\linewidth]{Examples/frame-0015/img/0015-twist.png}
-    \caption{Tip torque \(\TwistRxn\) vs. rotation \(\vartheta\) for Example~\ref{sec:frame-0015}.}
+    \caption{Simulated and analytical torque \(\TwistRxn\) vs. rotation \(\vartheta\) from Example~\ref{sec:frame-0015}.}
 \end{figure}
-This beam is in uniform torsion under a constant torque $\TwistRxn$, so that the twist $\vartheta'$ is constant along the member. 
-In this case, ($\dagger$) furnishes the exact solution:
+Under a constant torque $\TwistRxn$ the twist $\vartheta'$ is constant along the member and  ($\dagger$) admits the solution:
 \begin{equation}
 T(x)=G \Jo \frac{\vartheta_L}{L}+\tfrac{1}{2} E I_n\left(\frac{\vartheta_L}{L}\right)^3
 \label{eq:0015-solution}
 \end{equation}
-The section dimensions are $200 \times 10$\unit{\mili\meter} with constants $J=66.667 \times 10^3 \mathrm{~mm}^4$, 
+The section dimensions are $200 \times 10$\unit{\milli\meter} with constants $J=66.667 \times 10^3 \mathrm{~mm}^4$, 
 $\Jw=0 \mathrm{~mm}^6$, $I_n=17.778 \times 10^9 \mathrm{~mm}^6$, and length $L=1,000 \mathrm{~mm}$. 
 
 \FrameSection{

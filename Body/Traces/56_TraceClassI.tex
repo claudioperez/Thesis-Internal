@@ -1,23 +1,5 @@
 \subsection{Tracing Motions}\label{sec:trace}
 
-\begin{Quote}
-The primary motivation stems from the desire to eliminate cross sectional warping 
-modes by association with the element strains \(\bm{\gamma},\bm{\kappa}\). 
-
-An outline:
-\begin{itemize}
-    \item Introduce the \emph{trace} abstraction, which formalizes the ambiguity in representing the Saint-Venant class through classical fields \(\bm{u},\bm{\theta}\). 
-    \item Investigate the special class of traces that exhibit Type 3 locality... they can be exactly represented with \emph{only} 6-DOF.
-    \item Elaborate the effect of the trace on the boundary conditions that the beam model is capable of representing. 
-\end{itemize}
-\end{Quote}
-
-% The eight warping shapes of \eqref{eq:def-eight-shapes} provide a complete basis 
-% for representing particular solutions to Saint-Venant's continuum problems. 
-% Any section-rigid pattern $\bm{v} + \bm{\omega} \times \bm{r}$ may be freely transferred between these components without changing the continuum displacement field. 
-
-
-The ambiguity inherent in the representation \eqref{eq:trace-lift-linear}, is investigated systematically through the abstraction of a \emph{trace}. 
 A trace $\mathcal{T}$ identifies 
 a rule for associating one-dimensional fields to a given the continuum displacement \(\hat{\bm u}(x,\bm{r})\):
 \begin{SaveEquation}{eq:trace-map}
@@ -37,82 +19,38 @@ a rule for associating one-dimensional fields to a given the continuum displacem
 % holds identically. 
 
 There are infinitely many traces that may exactly represent a given solution \(\hat{\bm u}_{\rm P}\) to a Saint-Venant problem, and each imparts a distinct physical meaning to boundary conditions like \(\bm{\theta}_{\mathcal{T}}(x_0) = \mathbf{0}\) in a finite element simulation. 
-It is natural to restrict attention to the finite dimensional space of traces which exhibit the following properties:
-\begin{enumerate}
-    \item Strain measures \(\bm{e}\) generated under Saint-Venant loading are at most linear in the axial coordinate $\reflenx$. 
-    \item Any Saint-Venant strain field is exactly reconstructed from only the plane section strains \(\bm{\gamma}_{\mathcal{T}},\bm{\kappa}_{\mathcal{T}}\).
-    \item Continuum plane-section deformations are preserved, in the sense that section‑rigid fields are mapped to pure beam rigid motions.
-\end{enumerate}
-% Properties (1)–(2) are enforced by the strain–affine and strain–exact conditions (D1), together with homogeneity of the resultant stiffness (C1). 
-% Property (3) is enforced by the plane‑section condition (P1). 
-% These restrictions motivate a sequence of definitions with corresponding propositions which eventually reduce traces of interest to an 18 dimensional space. Among these free parameters emerge the classical shear correction coefficients.
 
-\begin{definition}[Axial Traces]
-\label{def:sv-trace}
-An axial \emph{trace} 
-on a continuum motion \(\hat{\bm u}\) 
-is a linear map
-\[
-\mathcal{T} :\CauchySpace\to C^1(I;\mathbb{R}^{6+n_w}),
-\qquad
-\hat{\bm{u}}(x,\bm{r}) \mapsto 
-\bm{z}(x) =
-\begin{pmatrix}
-\bm{u}(x),&
-\bm{\theta}(x),&
-\bm{\alpha}(x)
-\end{pmatrix},
-\]
-of the form
-$$[\mathcal{T}\hat{\bm{u}}](x) = \mathcal{T}_x\bigl[\hat{\bm{u}}(x, \cdot)\bigr]$$
-where $\{\mathcal{T}_x\}_{x \in I}$ is a family of bounded linear functionals on section displacements, \(\CauchySpace\) is the space of admissible motions \(\hat{\bm u}\), 
-$I \subset \mathbb{R}$ is the axial interval, and the image is interpreted 
-as a pair of centerline fields
-\[
-\bm{u} : I \to \mathbb{R}^3,
-\qquad
-\bm{\theta} : I \to \mathbb{R}^3.
-\]
-A trace $\mathcal{T}$ is linear if, for any 
-$\hat{\bm{u}}_1,\hat{\bm{u}}_2 \in \CauchySpace$ and 
-$\alpha,\beta \in \mathbb{R}$,
-\[
-\mathcal{T}[\alpha \hat{\bm{u}}_1 + \beta \hat{\bm{u}}_2]
-=
-\alpha\,\mathcal{T}[\hat{\bm{u}}_1] + \beta\,\mathcal{T}[\hat{\bm{u}}_2].
-\]
-A trace is prismatic if $\mathcal{T}_x = \mathcal{T}_0$ for all $x$. 
-\end{definition}
-
-\subsection{Lifting Motions}
-
-\begin{definition}[Trace lifting / embedding]
-\label{def:trace-lifting}
-Let $\mathcal Z\coloneq C^1(I;\mathbb R^6)$ with $\bm z=(\bm u,\bm\theta)$, and
-let $\mathcal A_{n_w}\coloneq C^1(I;\mathbb R^{n_w})$.
-
-Define the \emph{lifting} (embedding) operator
-\[
-\mathcal T^{-1}:\mathcal Z\times \mathcal A_{n_w}\to \CauchySpace
-\]
-by \eqref{eq:trace-lift-linear}:
-\begin{equation}
-\mathcal T^{-1}[\bm z,\bm\alpha](x,\bm{r})
-\;\coloneq\;
-\bm{u}(x)
-+\bm\theta(x)\times\bm{r}
-+\bm\Phi(\bm{r})\,\bm\alpha(x).
-\end{equation}
-\end{definition}
+% \begin{definition}[Axial Traces]
+% \label{def:sv-trace}
+% An axial \emph{trace} 
+% on a continuum motion \(\hat{\bm u}\) 
+% is a linear map
+% \[
+% \mathcal{T} :\CauchySpace\to C^1([0,L];\mathbb{R}^{6+n_w}),
+% \qquad
+% \hat{\bm{u}}(x,\bm{r}) \mapsto 
+% \bm{z}(x) =
+% \begin{pmatrix}
+% \bm{u}(x),&
+% \bm{\theta}(x),&
+% \bm{\alpha}(x)
+% \end{pmatrix},
+% \]
+% of the form
+% $$[\mathcal{T}\hat{\bm{u}}](x) = \mathcal{T}_x\bigl[\hat{\bm{u}}(x, \cdot)\bigr]$$
+% where $\{\mathcal{T}_x\}_{x \in I}$ is a family of linear functionals on section displacements, and \(\CauchySpace\) is the space of admissible motions \(\hat{\bm u}\). 
+% A trace $\mathcal{T}$ is linear if, for any 
+% $\hat{\bm{u}}_1,\hat{\bm{u}}_2 \in \CauchySpace$ and 
+% $\alpha,\beta \in \mathbb{R}$,
+% \[
+% \mathcal{T}[\alpha \hat{\bm{u}}_1 + \beta \hat{\bm{u}}_2]
+% =
+% \alpha\,\mathcal{T}[\hat{\bm{u}}_1] + \beta\,\mathcal{T}[\hat{\bm{u}}_2].
+% \]
+% \end{definition}
 
 % \begin{definition}[Trace-induced 1D strain map on $\mathcal U_{\rm SV}$]
-For a given trace $\mathcal T$, define the induced strain map
-\[
-  \bm e_{\mathcal T}(x)\coloneq (\bm\gamma,\bm\kappa) = \mathbb{B}^* \mathcal T[\hat{\bm u}](x),
-  \qquad\text{with}\qquad 
-  \mathbb{B}^* := \One \partial_x + \mathbb{J}^{\top}
-\]
-% \end{definition}
+
 
 
 % \begin{definition}[SV local parameter reconstruction from trace strains]
@@ -133,73 +71,20 @@ For a given trace $\mathcal T$, define the induced strain map
 % \end{equation}
 % \end{definition}
 
-\subsection{Saint-Venant Motions}
-
-\begin{definition}[Saint~Venant Family]
-\label{def:sv-family}
-Let $\IesanMotions\subset \CauchySpace$ denote the (six-parameter) linear space of
-Saint~Venant \emph{particular} displacement fields
-\[
-  \IesanVector\in\mathbb R^6 \;\longmapsto\; \hat{\bm u}_{\rm P}(\IesanVector)\in\IesanMotions,
-\]
-where $\IesanVector$ are the
-Saint~Venant load parameters used in \eqref{eq:def-iesan-vector}
-and $\hat{\bm u}_{\rm P}(\IesanVector)$ is given by \eqref{eq:iesan-general-solution}.
-
-Let $\RigidMotions\subset\CauchySpace$ be the $6$-dimensional rigid-body subspace
-\[
-  \bm q\in\mathbb R^6 \;\longmapsto\; \hat{\bm u}_{\rm R}(\bm q)
-  =\bm q_u + \bm q_\theta\times(x\FrameBasis+\bm{r}).
-\]
-The twelve-dimensional vector space of 
-Saint-Venant displacement fields solving \eqref{eq:iesan-problem-1} and \eqref{eq:iesan-problem-2} is:
-\[
-  \mathcal U_{\rm SV}\coloneq \IesanMotions\oplus \RigidMotions
-  =\{\hat{\bm u}_{\rm P}(\IesanVector)+\hat{\bm u}_{\rm R}(\bm q)\}.
-\]
-\end{definition}
+% \subsection{Saint-Venant Motions}
 
 
-\begin{definition}[SV-Compatible]
-\label{def:sv-compatible-lifting}
-A lifting $\mathcal T^{-1}$ (Def.~\ref{def:trace-lifting}) is called \emph{SV-compatible}
-with $\mathcal T$ if, for every Saint~Venant motion
-$\hat{\bm u}=\hat{\bm u}_{\rm P}(\IesanVector)+\hat{\bm u}_{\rm R}(\bm q)\in\mathcal U_{\rm SV}$,
-there exist $\bm z\in\mathcal Z$ and $\bm\alpha\in\mathcal A_{n_w}$ such that
-\[
-\hat{\bm u} \equiv \mathcal T^{-1}[\bm z,\bm\alpha]
-\quad\text{(up to a rigid field, if you only care about strain equivalence),}
-\]
-and $\bm z$ agrees with the trace:
-\[
-\big(\bm{z}(x),\bm{\alpha}(x)\big)=\mathcal T[\hat{\bm u}](x)\qquad \forall x\in I.
-\]
+\subsection{Class I: Kinematic Consistency}
 
-A warping operator $\bm\Phi:\mathbb R^{n_w}\to\mathcal W(\Section)$ is \emph{SV-compatible}
-if there exists a linear map
-\[
-\bm A:\mathbb R^6\to C^1(I;\mathbb R^{n_w}),\qquad
-\IesanVector\mapsto \bm\alpha_{\rm SV}(\cdot;\IesanVector),
-\]
-such that for every Saint~Venant particular field $\hat{\bm u}_{\rm P}(\IesanVector)$,
-\[
-\hat{\bm u}_{\rm P}(\IesanVector)\;\equiv\; \mathcal T^{-1}\big[\bm z_{\rm SV}(\IesanVector),\bm\alpha_{\rm SV}(\IesanVector)\big]
-\quad\text{(modulo a rigid field, or strain-equivalence).}
-\]
-\end{definition}
-
-\begin{definition}[Saint~Venant Equivalence]
-\label{def:sv-equivalence}
-Two traces $\mathcal T_1,\mathcal T_2$ are \emph{SV-equivalent} if
-$\mathcal T_1[\hat{\bm u}]=\mathcal T_2[\hat{\bm u}]$ for all $\hat{\bm u}\in\mathcal U_{\rm SV}$.
-All “trace matrix” objects below characterize only the SV-equivalence class.
-\end{definition}
-
-\subsubsection{Class I: Kinematic Consistency}
-
-\subparagraph{T1}
-It is useful to restrict our attention to traces generating strains \(\bm{e}(x)\) which are at most linear in $x$ for any problem in the Saint-Venant class.
-This ensures that the strains can be exactly represented by typical beam finite elements.
+It is natural to restrict attention to traces which exhibit the following properties:
+\begin{enumerate}
+    \item Strain measures \(\bm{e}\) generated under Saint-Venant loading are at most linear in the axial coordinate $\reflenx$. 
+    \item Any Saint-Venant strain field is exactly reconstructed from only the plane section strains \(\bm{\gamma}_{\mathcal{T}},\bm{\kappa}_{\mathcal{T}}\).
+    \item Continuum plane-section deformations are preserved, in the sense that section‑rigid fields are mapped to pure beam rigid motions.
+\end{enumerate}
+% It is useful to restrict attention to traces generating strains \(\bm{e}(x)\) which are at most linear in $x$ for any problem in the Saint-Venant class.
+This ensures that the strains can be exactly represented by typical beam finite elements. 
+This practical consideration is formalized as follows.
 
 \begin{definition}[Class I]\label{def:class-1} % def:e1
 A trace \(\mathcal{T}\) is called a \textbf{Class I} trace if:
@@ -230,25 +115,17 @@ A trace \(\mathcal{T}\) is called a \textbf{Class I} trace if:
 \end{enumerate}
 \end{definition}
 %
-The plane section property \eqref{eq:req-p1} ensures that for the few continuum solutions where plane sections \emph{do} remain plane, the rotation field \(\bm{\theta}\) becomes exactly the physical cross section rotation.
-For example, in the simple \(\mathrm{P}_{\rm I}\) case of a cantilever loaded by a moment, \eqref{eq:req-p1} limits the traces under consideration to those which would not introduce spurious spring-like behavior at the root through the boundary condition \(\bm{\theta}(0) = \mathbf{0}\). 
-In problems where warping does arise, this spring phenomenon becomes inescapable. 
-
+% These conditions 
 
 Strains \(\bm{e}\) generated from a trace with the property \eqref{eq:class-i-a} can be written in the form:
 \begin{equation}
-\bm{e}_{\rm z}(x) 
+\bm{e}(x) 
 % = \TraceDeDpRoot(\mathbf{1} + x\TraceEvolveEP)\bm{p}
 =(\mathbf{1} + x\TraceEvolveEE)\TraceDeDpRoot\bm{p}
 \label{eq:def-T0}
 \end{equation}
-\begin{remark}
-A trace is not uniquely determined by its action on any finite-dimensional subspace of $\mathcal{U}(\Omega)$. 
-In particular, infinitely many distinct traces may agree on the twelve-dimensional Saint~Venant subspace $\bar{\mathrm{P}} \subset \mathcal{U}(\Omega)$. Nevertheless, for beam analysis, the behavior on $\bar{\mathrm{P}}$ is precisely what matters: it determines the stiffness matrix, the strain measures, and the physical meaning of boundary conditions. 
-We therefore characterize traces by their restriction to $\bar{\mathrm{P}}$, with the understanding that this characterization defines an equivalence class of section operators rather than a unique trace.
-\end{remark}
-\begin{proposition}\label{prop:trace-matrix}
-The equivalence class (\cref{def:sv-equivalence}) of traces with the properties \eqref{eq:class-i-a} is uniquely represented in the Saint~Venant class by a matrix \(\TraceDpDeRoot \in\mathrm{GL}(6)\), and 
+
+The equivalence class of traces with the properties \eqref{eq:class-i-a} is uniquely represented in the Saint~Venant class by a matrix \(\TraceDpDeRoot \in\mathrm{GL}(6)\), from which:
 \begin{subequations}
     \begin{align} 
         \TraceEvolveEE &= \TraceDeDpRoot \IesanEvolveSP \TraceDpDeRoot \\
@@ -258,14 +135,23 @@ The equivalence class (\cref{def:sv-equivalence}) of traces with the properties 
 \end{subequations}
 where \(\IesanStiff\) is given by \eqref{eq:G0-neg-m} and 
 \(\IesanEvolveSP\) is the evolution operator given by \eqref{eq:A-matrix-neg}.
-\end{proposition}
 
-
-\subparagraph{P1}
-\begin{proposition}[Structure of Plane Traces]
-\label{prop:plane-trace-structure}
-If $\mathcal T$ is Class I, then (P1${}^{\rm SV}$) implies that the trace matrix
-$\TraceDeDpRoot$ has the block form:
+% \begin{proposition}\label{prop:trace-matrix}
+% The equivalence class of traces with the properties \eqref{eq:class-i-a} is uniquely represented in the Saint~Venant class by a matrix \(\TraceDpDeRoot \in\mathrm{GL}(6)\), and 
+% \begin{subequations}
+%     \begin{align} 
+%         \TraceEvolveEE &= \TraceDeDpRoot \IesanEvolveSP \TraceDpDeRoot \\
+%         \TraceDeDpOne &= \TraceDeDpRoot \IesanEvolveSP \label{eq:res-d1} \\
+%         \TraceStiffNM &= \IesanStiff \TraceDpDeRoot \label{eq:def-CT}
+%     \end{align}
+% \end{subequations}
+% where \(\IesanStiff\) is given by \eqref{eq:G0-neg-m} and 
+% \(\IesanEvolveSP\) is the evolution operator given by \eqref{eq:A-matrix-neg}.
+% \end{proposition}
+% \begin{proposition}[Structure of Plane Traces]
+% \label{prop:plane-trace-structure}
+Furthermore, if $\mathcal T$ is Class I, then the trace matrix
+$\TraceDeDpRoot$ must have the block form:
 \begin{equation}
 \TraceDeDpRoot = \begin{bmatrix}
 1 & \mathbf{0} % \CenterTrace 
@@ -316,10 +202,11 @@ Total: & 18 & & \\
 \end{center}
 \end{table}
 \fi
-\end{proposition}
+% \end{proposition}
 
-\begin{proof}
-The plane section property constrains how $\TraceDeDpRoot$ acts on the section-rigid part of each Saint Venant mode.
+% \begin{proof}
+This is demonstrated as follows. 
+The plane section property \eqref{eq:req-p1} constrains how $\TraceDeDpRoot$ acts on the section-rigid part of each Saint Venant mode:
 
 \textit{Extension} ($a_\varepsilon$): The section-rigid displacement is 
 $x\,a_\varepsilon\FrameBasis$, giving $\bm{\theta} = \mathbf{0}$ and 
@@ -349,12 +236,9 @@ but these enter only in $\TraceDeDpOne = \TraceDeDpRoot\IesanEvolveSP$.
 All entries in columns 5--6 arise from warping contributions and remain free 
 parameters: $\TraceNF$ (axial--flexure), $\TraceFF$ (shear--flexure), 
 $\TraceTF$ (twist--flexure), and $\TraceMF$ (curvature--flexure).
+% \end{proof}
 
-Counting the free parameters: $\CenterTrace$ (2) + $\TraceNF$ (2) + 
-$\TraceFT$ (2) + $\TraceFF$ (4) + $\TraceTF$ (2) + $\TraceMF$ (4) + $\TraceBT$ (2) = 18.
-\end{proof}
-
-Conditions D1 and P1 furnish the following universal form for \(\TraceDeDpOne\):
+Using \eqref{eq:res-d1} and \eqref{eq:T0-plane-structure} furnishes the following universal form for \(\TraceDeDpOne\):
 \begin{equation}
 \TraceDeDpOne =
 \TraceDeDpRoot\IesanEvolveSP =
@@ -370,7 +254,7 @@ Conditions D1 and P1 furnish the following universal form for \(\TraceDeDpOne\):
 \label{eq:res-d1-block}
 \end{equation}
 
-The inverse \(\TraceDpDeRoot\) exhibits the block structure:
+Inverting \eqref{eq:T0-plane-structure} furnishes for \(\TraceDpDeRoot\):
 \begin{SaveEquation}{eq:T0-inv}
 \TraceDpDeRoot = \left[\begin{array}{cc|cc}
 1 & \ShiftN^{\top} 
@@ -385,6 +269,8 @@ The inverse \(\TraceDpDeRoot\) exhibits the block structure:
 \end{SaveEquation}
 with:
 % with entries given in terms of the blocks  $\TraceFF$, $\TraceFT$, $\CenterTrace$, and $\TraceTF$ from \cref{tab:T0-blocks}:
+
+\iffalse
 \begin{table}[H]
 \begin{center}
 \caption{Trace matrix block structure.}
@@ -421,6 +307,7 @@ Total: & & 18 & & \\
 \end{tabular}
 \end{center}
 \end{table}
+\fi
 
 \begin{subequations}
 \begin{align}
@@ -543,8 +430,8 @@ In view of the Saint~Venant strains \eqref{eq:iesan-point-strain}, the warping s
 \ \FrameBasis\otimes\bm{\psi}
 \Big\}.
 \]
-Because this contains the plane-rigid span \(\PlaneMotions\), the primary trace fields \(\bm{u},\bm{\theta}\) 
-will not generally represent the full plane-rigid content, which becomes offloaded onto the warping field \(\bm\alpha\) through a linear operator \(\RigidShift\) determined by the trace. 
+% Because this contains the plane-rigid span \(\PlaneMotions\), the primary trace fields \(\bm{u},\bm{\theta}\) 
+% will not generally represent the full plane-rigid content, which becomes offloaded onto the warping field \(\bm\alpha\) through a linear operator \(\RigidShift\) determined by the trace. 
 Upon elimination of the warping fields \(\bm\alpha\) the material strains are 
 \begin{SaveEquation}{eq:eps-B-e}
 \StrainVector(\reflenx,\bm{r}) = \Big(\RigidStrainMatrix (\mathbf{1} + \RigidShift) + \WarpStrainMatrix \ShapeShift\Big) \,\bm{e}(\reflenx)
@@ -581,15 +468,14 @@ and
 \label{eq:class-i-La}
 \end{equation}
 
-\begin{itemize}
-\item In a Petrov-Galerkin formulation the stress resultants are furnished by 
+In a Petrov-Galerkin formulation the stress resultants are furnished by 
     \begin{SaveEquation}{eq:petrov-section}
     \begin{aligned}
         \snm &= \int \RigidStrainMatrix^{\top}\StressVector(\StrainVector)\dA\\
         \TraceStiffNM &= \int \RigidStrainMatrix^{\top}\StressVectorTangent\Big(\RigidStrainMatrix (\mathbf{1} + \RigidShift) + \WarpStrainMatrix \ShapeShift\Big)\dA + \mathbf{K}_{\rm W}\\
     \end{aligned}
     \end{SaveEquation}
-    where \(\mathbf{K}_{\rm W}\) is the contribution from the Wagner term:
+    where \(\mathbf{K}_{\rm W}\) is the contribution from the Wagner term \eqref{eq:wagner-gl-strain-pi}:
 \begin{equation}
 \begin{aligned}
     \hat{\bm{K}}_{\mathrm{W}} =
@@ -619,33 +505,22 @@ r^{2}  \FrameBasis \otimes \FrameBasis \mathbb{C}
 \label{eq:section-wagner-tangent}
 \end{equation}
 
-\item Bubnov-Galerkin, the stress resultants and tangent are:
-    \begin{SaveEquation}{eq:bubnov-section}
-    \begin{aligned}
-    \TraceTotalEnergyStress &= (\mathbf{1} + \RigidShift^{\top})\snm + \ShapeShift^{\top}\int \WarpStrainMatrix^{\top}\StressVector(\StrainVector)\dA \\
-    \bar{\mathbf{C}}_T &= \int \Big(\RigidStrainMatrix (\mathbf{1} + \RigidShift) + \WarpStrainMatrix \ShapeShift\Big)^{\top}\StressVectorTangent\Big(\RigidStrainMatrix (\mathbf{1} + \RigidShift) + \WarpStrainMatrix \ShapeShift\Big)\dA
-    \end{aligned}
-    \end{SaveEquation}
-\end{itemize}
+In a Bubnov-Galerkin formulation, the stress resultants and tangent are:
+\begin{SaveEquation}{eq:bubnov-section}
+\begin{aligned}
+\TraceTotalEnergyStress &= (\mathbf{1} + \RigidShift^{\top})\snm + \ShapeShift^{\top}\int \WarpStrainMatrix^{\top}\StressVector(\StrainVector)\dA \\
+\bar{\mathbf{C}}_T &= \int \Big(\RigidStrainMatrix (\mathbf{1} + \RigidShift) + \WarpStrainMatrix \ShapeShift\Big)^{\top}\StressVectorTangent\Big(\RigidStrainMatrix (\mathbf{1} + \RigidShift) + \WarpStrainMatrix \ShapeShift\Big)\dA
+\end{aligned}
+\end{SaveEquation}
+
 
 
 
 \subsubsection{Summary.}
 The Class I traces represent a family of beam theories parameterized by 18 constants which are all capable of exactly representing Saint~Venant solutions through Type 3 beam finite elements.
 
-The lifting \eqref{eq:trace-lift-linear} is the common kinematic interface for both regimes:
-(i) in Type~1 beam theories, $\bm\alpha(x)$ is retained as an independent field and a section model may be posed as
-$(\bm\gamma,\bm\kappa,\bm\alpha,\bm\alpha')\mapsto(\bm n,\bm m,\bm w,\bm v)$; (ii) in Type~3 theories, $\bm\alpha,\bm\alpha'$
-are eliminated and reconstructed internally from $\bm{e}=(\bm\gamma,\bm\kappa)$ through the Class~I trace data, after which the same
-generalized section operator can be called and its output condensed back to a $6$-vector consistent with the element equilibrium operator.
 
-In a Type 3 finite element simulation, the trace matrix \(\TraceDpDeRoot\) is incorporated into the section response through the elimination operators \(\RigidShift\) \eqref{eq:class-ii-Le} and \(\ShapeShift\) \eqref{eq:class-i-La}.
-This determines:
-\begin{itemize}
-    \item The scaling of the warping shapes \(\bm\Phi\),
-    \item How much of the plane-rigid content is carried by \(\bm{u},\bm{\theta}\)
-\end{itemize}
-Under all loadings in the Saint~Venant class \(\IesanMotions\) the element response exactly represents the continuum motion \(\hat{\bm u}\) through the lifting \eqref{eq:trace-lift-linear}.
+In a Type 3 finite element simulation, the trace matrix \(\TraceDpDeRoot\) is incorporated into the section response through the matrices \(\RigidShift\) \eqref{eq:class-ii-Le} and \(\ShapeShift\) \eqref{eq:class-i-La}.
 
 \begin{table}[H]
 \caption{Summary of symbols (Class I).}
@@ -667,9 +542,6 @@ Under all loadings in the Saint~Venant class \(\IesanMotions\) the element respo
     $\TraceEvolveEE$ & & \eqref{eq:def-T0} & \\ 
     $\TraceStiffNM$ & & \eqref{eq:def-CT} & & \cref{tab:iesan-constants},\cref{tab:T0-inv-blocks}
     \\[3pt] 
-    \hline \\[-8pt]
-    $\bar{\mathbf{C}}_T$ \\
-    $\IesanEnergy$ & 
      % & \eqref{eq:def-iesan-energy} 
      \\
     \bottomrule

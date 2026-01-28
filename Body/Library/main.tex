@@ -2,33 +2,29 @@
 
 \subsection{Introduction}
 
-\paragraph{Motivation}
+% \paragraph{Motivation}
 
-This chapter introduces a unified 3D frame element library that builds on the prior developments. 
-The work builds on the modular architecture that has been pioneered in work like \cite{filippou1996fedeas}, \cite{desouza2000forcebased}, \cite{scott2008softwarea}. 
+This chapter describes the implementation of the prior developments. 
+The work builds on the modular architecture that has been pioneered by authors like  \cite{filippou1996fedeas}, \cite{desouza2000forcebased}, 
+\cite{lecorvec2012nonlinear},\cite{scott2008softwarea}. 
 
-Two elements are presented, which are supported by three cross sections and four geometric transformations. 
-All cross section models support shear deformations and at least one
-warping mode, and work seamlessly with standard frame elements whether or not they take such deformations into account.
-
-
-\paragraph{Literature}
-\cite{taucer1991fiber}\cite{ngoc2017damage}. 
-
-Mixed finite element formulations tend to be desirable when inelastic response must be represented, and geometric nonlinearities are expected to be moderate \citep{neuenhofer1997evaluation}. 
-The development and implementation of these methods tends to be more involved than displacement formulations, and they are typically applied to linearized governing equations. 
+Two elements are presented which are supported by four geometric transformation options. 
+The cross section can be used with both shear-deformable and shear-free beam elements and support and at least one
+auxiliary warping mode.
 
 
-\paragraph{Scope.}
-Only shear-deformable formulations are discussed. 
-Shear-deformable beam theories are known to converge to Euler-Bernoulli beam theory in the limit of increasing span-to-depth ratio, and therefore are valid over a larger range of structure types, making them more suitable for the demands of our context.
+% \paragraph{Literature}
+% \cite{taucer1991fiber}\cite{ngoc2017damage}. 
 
-For similar reasons, only distributed inelasticity formulations are considered (as opposed to concentrated inelasticity formulations). 
-Concentrated inelasticity formulations inherently carry several restrictive assumptions pertaining to things like element loading (typically assume no distributed loads) and resultant coupling. 
-Furthermore, concentrated inelasticity elements require non-semantic information (need a better way to describe this), like moment-rotation curves. Distributed inelasticity elements, on the other hand, generally only require standard material parameters like the yield stress and Young's modulus. 
+% \paragraph{Scope.}
+% Only shear-deformable formulations are discussed. 
+% Shear-deformable beam theories are known to converge to Euler-Bernoulli beam theory in the limit of increasing span-to-depth ratio, and therefore are valid over a larger range of structure types, making them more suitable for the demands of our context.
 
+% For similar reasons, only distributed inelasticity formulations are considered (as opposed to concentrated inelasticity formulations). 
+% Concentrated inelasticity formulations inherently carry several restrictive assumptions pertaining to things like element loading (typically assume no distributed loads) and resultant coupling. 
+
+\iffalse
 \subsection{Modeling Considerations}
-
 \begin{enumerate}
     \item Geometric nonlinearity. 
     In the context of frame models (Box~\ref{box:model-summary}), geometric nonlinearities arise from two sources:
@@ -90,7 +86,7 @@ Furthermore, concentrated inelasticity elements require non-semantic information
         \item[ii)] $T$ is small.
       \end{enumerate}
 \end{enumerate}
-
+\fi
 
 
 \subsection{Element Library}\label{elements}
@@ -154,20 +150,20 @@ The \texttt{Prism} element is a standard linearly elastic prismatic
   kinematics is novel and supports asymmetric sections.
 \fi
 
-\paragraph{2. ForceFrame}
-  The \ForceFrame{} element is ideal for modeling inelasticity in
-  frames \citep{neuenhofer1997evaluation}. 
-  % Both \gls{frame:shear} and \gls{frame:euler} formulations are
-  % supported with \gls{frame:basic} and \gls{frame:axial} (\(P-\delta\)) element kinematics. 
+\paragraph{1. ForceFrame}
+The \ForceFrame{} element is ideal for modeling inelasticity in
+frames \citep{neuenhofer1997evaluation}. 
   
-  This element is adapted from the \texttt{forceBeamColumn} and
-  \texttt{forceBeamColumnCBDI} elements of \OpenSees{} and
-  \texttt{Dinel3dFrm\_EBwFF} from FEDEASLab. 
+Mixed finite element formulations tend to be desirable when inelastic response must be represented, and geometric nonlinearities are expected to be moderate \citep{neuenhofer1997evaluation}. 
+The development and implementation of these methods tends to be more involved than displacement formulations, and they are typically applied to linearized governing equations. 
 
+This element is adapted from the \texttt{forceBeamColumn} and
+\texttt{forceBeamColumnCBDI} elements of \OpenSees{} and
+\texttt{Dinel3dFrm\_EBwFF} from FEDEASLab. 
 
-  Implementation details are discussed in \cref{sec:ForceFrame}.
+Implementation details are discussed in \cref{sec:ForceFrame}.
 
-
+\iffalse
 \paragraph{3. CubicFrame}
   The \texttt{Cubic} element fits displacements to a cubic polynomial
   inside a 2-node basic system with optional shearing deformations. This
@@ -176,17 +172,17 @@ The \texttt{Prism} element is a standard linearly elastic prismatic
   The implementation of this element derives from
   the \texttt{Dinel3dFrm\_EBwDF} and \texttt{Dinel3dFrm\_TwDF*} elements
   of FEDEASLab \citep{filippou1996fedeas}.
+\fi
 
-
-\paragraph{4. ExactFrame}
-  The \ExactFrame{} element is a \(C^0\) displacement formulation of
-  the exact shear-deformable element kinematics. 
-  This element is ideal
-  for modeling large elastic deformations. 
-  Reduced integration must be
-  used to avoid shear locking, and consequently a combination of \(h\)
-  and \(p\) refinement is required in order to adequately capture
-  inelasticity.
+\paragraph{2. ExactFrame.}
+The \ExactFrame{} element is a \(C^0\) displacement formulation of
+the geometrically exact shear-deformable Cosserat rod. 
+This element is ideal
+for modeling large elastic deformations. 
+Reduced integration must be
+used to avoid shear locking, and consequently a combination of \(h\)
+and \(p\) refinement is required in order to adequately capture
+inelasticity.
 
 
 % \subsection{Euler}
@@ -214,37 +210,19 @@ The \texttt{Prism} element is a standard linearly elastic prismatic
     \label{fig:frame-class}
 \end{figure}
 
-Elements are grouped into three types based on their geometric nature:
-
-\begin{itemize}
-\tightlist
-\item
-  \textbf{Type I} elements are formulated in a basic system and can only
-  be connected with 2 nodes. 
-  Valid geometric transformations for these
-  elements include \texttt{Linear}, \texttt{PDelta}, and
-  \texttt{Corotational}.
-\item
-  \textbf{Type II} elements are formulated in a local system and can be
-  connected with an arbitrary number of nodes. Valid geometric
-  transformations for these elements include \texttt{Linear} and
-  \texttt{Corotational}.
-\item
-  \textbf{Type III} elements are formulated in the global system using
-  exact kinematics.
-\end{itemize}
-
 \begin{enumerate}
     \item\label{lib:T1} \texttt{Linear}
-    \item\label{lib:T3} \texttt{Corotational} \cref{sec:coro-details}
+    \item\label{lib:T3} \texttt{Corotational} (\cref{sec:coro-details})
     \item\label{lib:T4} \texttt{Spherical} \cref{sec:sfin}
 \end{enumerate}
 
-Rotation parameterization is controlled by:
+Available transformations on the rotation parameterization include:
 \begin{enumerate}
-    \item[R1.] \texttt{Tangent}
-    \item[R2.] \texttt{Logarithm}
-    \item[R3.] \texttt{Quaternion}
+    \item \texttt{Iter}. This option is the most computationally efficient. 
+    It is not vulnerable to singularities and is most suitable for extremely large rotations (Example~\ref{sec:frame-1010}). 
+    The formulation exhibits artificial path dependence (Example~\cref{sec:frame-1007}).
+    \item \texttt{Incr}. 
+    \item \texttt{Init}.
 \end{enumerate}
 
 \subsection{Section Library}
@@ -258,24 +236,59 @@ Rotation parameterization is controlled by:
 
 The \ShearFiber{} section implements the developments of \cref{sec:gensec} and \cref{sec:timo}. 
 
-% \begin{itemize}
-%     \item \texttt{ShearFiber}$_{\rm I}$:  \eqref{eq:linear-gl-strain-pi}
-%     \item \texttt{ShearFiber}$_{\rm II}$: \eqref{eq:wagner-gl-strain-pi}
-% \end{itemize}
+\begin{table}[H]
+    \caption{Caption}
+    \label{tab:ShearFiberInputs}
+    \centering
+    \begin{tabular}{ll}
+    \toprule
+        \texttt{Kinematics} & A string naming a kinematic formulation: \\
+          & \begin{minipage}[t]{0.8\textwidth}
+              \begin{itemize}
+                \item \texttt{"Wagner"}: Truncated nonlinear kinematics of \eqref{eq:wagner-gl-strain-pi}.
+                \item \texttt{"Linear"}: Linearized kinematics \eqref{eq:linear-gl-strain-pi}.
+              \end{itemize}
+          \end{minipage} 
+        \\ \LightRule
+        \texttt{Trace} &  A string indicating a trace formulation. This is used to build the \(\RigidShift\) and \(\ShapeShift\) matrices in \eqref{eq:petrov-section}.
+         \\ &
+          \begin{minipage}[t]{0.8\textwidth}
+             \begin{itemize}
+               \item \texttt{"None"}:
+               \item \texttt{"Energetic"}: The Class III trace described in \cref{sec:trace-energy}. 
+               \item \texttt{"Geometric"}: 
+                 The Class II trace described in \cref{sec:trace-cowper}.
+              \end{itemize}
+            \end{minipage}
+        \\ \LightRule
+        \texttt{Fibers}  &  Array of fiber data with entries containing fields: \\
+        & \begin{minipage}[t]{0.8\textwidth}
+          \begin{itemize}
+             \item \texttt{Location}: 2D coordinate \(\SectionCoordinate_i\) of the fiber in the section.
+             \item \texttt{Area}  : Weight assigned to the fiber for performing quadrature in the section.
+             \item \texttt{Shape}  : $n_w\times 3$ array of warping shapes and gradients.
+             \item \texttt{Material}: 
+          \end{itemize}
+        \end{minipage}
+        \\
+        \bottomrule
+    \end{tabular}
+\end{table}
 
 
+\iffalse
 \subsection{Element Loading}\label{sec:loading}
-\input{Body/Loading/main}
+\input{Body/Library/Loading/main}
 
 \subsection{Sensitivity}
 \cite{al-aukaily2019corotational}
-
+\fi
 
 
 \subsection{Verification}
 \paragraph{Geometric Transformations.}
 Five examples from the literature are used to confirm that the proposed geometric transformation framework
-reproduces exactly the results of two seminal studies on geometrically exact formulations \cite{simo1986threedimensional}, \cite{ibrahimbegović1995computational}.
+reproduces exactly the results of two seminal studies on geometrically exact formulations \citep{simo1986threedimensional}, \cite{ibrahimbegović1995computational}.
 %
 The examples go on to showcase the effect of enhancing these formulations with strain-objectivity.
 
@@ -295,30 +308,3 @@ convergence properties of the wrapped element even for a deformation history wit
 Saint~Venant solutions through the proposed formulation. 
 Behavior under inelastic material response is investigated in \Cref{sec:frame-2007} and \Cref{sec:frame-2021}.
 
-
-\subsection{Summary}
-
-
-
-This library addresses the following shortcomings in the existing
-\OpenSees{} offerings:
-
-\begin{itemize}
-\tightlist
-\item
-  No geometrically exact elements
-% \item
-%   Current elements do not handle distributed mass consistently
-\item
-  Cross section library is disjoint
-\item
-  Higher-order section kinematics are not handled consistently (e.g.
-  Wagner strains)
-\item
-  Inconsistent treatment of asymmetric sections
-\item
-  Geometric transformations do not support shear or multi-node frame
-  elements
-\item
-  Objectivity violation in the corotational transformation
-\end{itemize}

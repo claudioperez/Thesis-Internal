@@ -20,16 +20,7 @@ The rightmost term is dropped assuming \(g = 0\). Rearranging for \(\frac{\parti
 \label{eq:dqdv}
 \end{equation}
 where the relation \(\frac{\partial g}{\partial \bm{v}} = -\mathbf{1}\) is used. 
-Next define:
-\begin{equation*}
-\begin{aligned}
-\mathbf{F} &\triangleq \frac{\partial g}{\partial \bm{q}} = \int \ForceInterp^{\top} \mathbf{F}_{s} \ForceInterp\, \dd x \\
-\mathbf{K}_{f} &\triangleq \frac{\partial g}{\partial \bm{u}} =\frac{\partial }{\partial \bm{u}} \int \ForceInterp^{\top} \mathbf{F}_{s} \bm{s}_p(x,\bm{u})\,\dd x \\
-\mathbf{A} & \triangleq \frac{\partial \bm{v}}{\partial \bm{u}} \\
-\mathbf{K}_{q} &\triangleq \frac{\partial \bm{q}}{\partial \bm{v}} \\
-\end{aligned}
-\end{equation*}
-so \eqref{eq:dqdv} becomes
+This is written compactly as
 \begin{equation}
 \delta \bm{q} \cdot 
 \mathbf{F}\mathbf{K}_q \mathbf{A}
@@ -39,6 +30,15 @@ so \eqref{eq:dqdv} becomes
 \right)\delta \bm{u}
 \label{eq:dqdv-2}
 \end{equation}
+with the definitions:
+\begin{equation*}
+\begin{aligned}
+\mathbf{F} &\triangleq \frac{\partial g}{\partial \bm{q}} = \int \ForceInterp^{\top} \mathbf{F}_{s} \ForceInterp\, \dd x \\
+\mathbf{K}_{f} &\triangleq \frac{\partial g}{\partial \bm{u}} =\frac{\partial }{\partial \bm{u}} \int \ForceInterp^{\top} \mathbf{F}_{s} \bm{s}_p(x,\bm{u})\,\dd x \\
+\mathbf{A} & \triangleq \frac{\partial \bm{v}}{\partial \bm{u}} \\
+\mathbf{K}_{q} &\triangleq \frac{\partial \bm{q}}{\partial \bm{v}} \\
+\end{aligned}
+\end{equation*}
 Multiplying \eqref{eq:dqdv-2} by \(\bm{F}^{-1}\) furnishes:
 \begin{equation*}
 \delta \bm{q} \cdot \mathbf{K}_q \mathbf{A} \delta \bm{u}

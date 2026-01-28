@@ -1,8 +1,8 @@
 
 
-\subsubsection{Class II: Equilibrium Consistency}
+\subsection{Class II: Equilibrium Consistency}
 The traces that fall under Class I are capable of exactly representing Saint~Venant's solutions in a standard finite element context, but without further restriction they may still exhibit certain undesirable properties.
-In particular, the stress resultants... TODO
+In particular, [TODO: elaborate]
 \begin{itemize}
     \item Tangent symmetry
     \item Nodal loads
@@ -15,40 +15,25 @@ The conjugate stiffness is constructed from the material strain energy:
 \label{eq:energy-conjugacy-def}
 \end{equation}
 
-Define the energetic tangent \(\IesanEnergy\):
-\begin{equation}
-\IesanEnergy \coloneq \int_\Section \mathbf{S}_0^\top \mathbb{C}\, \mathbf{S}_0\dA
-\label{eq:def-iesan-energy}
-\end{equation}
 
-\subparagraph{S2}
-\begin{definition}[Class II]\label{def:class-ii}
+% \begin{definition}[Class II]\label{def:class-ii}
 A Class I trace \(\mathcal{T}\) is a \textbf{Class II} trace if the energy-conjugate resultants $\bar{\bm{s}}$ satisfy the same equilibrium as the classical resultants \eqref{eq:equilibrium-ode}:
 \begin{equation}
 \bar{\bm{s}}' = \mathbb{J}\,\bar{\bm{s}}.
 \label{eq:sbar-equilibrium}
 \end{equation}
-\end{definition}
+% \end{definition}
 
-\subparagraph{C2}
-
-\begin{corollary}
-Prismatic $\mathbf{C}_T$ implies prismatic $\bar{\mathbf{C}}_T$.
-\end{corollary}
-\begin{proof}
-When $\TraceEvolveEP = \IesanEvolveSP$, we have $\mathbf{M}(x) = \mathbf{1}$ identically, 
-which lies in $O(\IesanEnergy)$.
-\end{proof}
 
 \begin{remark}
-The converse does not hold. 
+Prismatic $\mathbf{C}_T$ implies prismatic $\bar{\mathbf{C}}_T$ but the converse does not hold. 
 Prismatic $\bar{\mathbf{C}}_T$ with non-prismatic 
 $\mathbf{C}_T$ requires $\TraceEvolveEP - \IesanEvolveSP \neq \mathbf{0}$ 
 but $\IesanEnergy$-skew. This is an exceptional situation. 
 \end{remark}
 
-\begin{proposition}[S2. Equilibrium-Conjugate]
-\label{prop:equilibrium-compatibility}
+% \begin{proposition}[S2. Equilibrium-Conjugate]
+% \label{prop:equilibrium-compatibility}
 Let $\mathbf{C}_T$ and $\bar{\mathbf{C}}_T$ be prismatic (C2). 
 The condition 
 \eqref{eq:sbar-equilibrium} holds if and only if
@@ -58,9 +43,9 @@ The condition
 \qquad\forall x.
 \label{eq:commutator-condition}
 \end{equation}
-\end{proposition}
+% \end{proposition}
 
-\begin{proof}
+% \begin{proof}
 With prismatic stiffnesses, $\bar{\bm{s}} = \bar{\mathbf{C}}\,\bm{e}$ and 
 $\snm = \mathbf{C}_T\,\bm{e}$, so $\bar{\bm{s}} = \bar{\mathbf{G}}\,\snm$. 
 From \eqref{eq:equilibrium-ode}:
@@ -71,50 +56,12 @@ From \eqref{eq:equilibrium-ode}:
 For this to equal $\mathbb{J}\,\bar{\bm{s}}$, we require 
 $\bar{\mathbf{G}}\,\mathbb{J}\,\bar{\mathbf{G}}^{-1} = \mathbb{J}$, i.e., 
 $[\bar{\mathbf{G}}, \mathbb{J}] = \mathbf{0}$.
-\end{proof}
+% \end{proof}
 
-The commutator condition \eqref{eq:commutator-condition} constrains the 
-structure of $\bar{\mathbf{G}}$.
-
-\begin{lemma}[Structure of the Centralizer]
-\label{lem:centralizer}
-A matrix $\bar{\mathbf{G}}$ commutes with the equilibrium generator $\mathbb{J}$ 
-if and only if it has the block form
-\begin{equation}
-\bar{\mathbf{G}} = \begin{bmatrix}
-\bar{G}_{11} & \bar{\bm{g}}_{12}^\top & \bar{G}_{13} & 0 \\
-\mathbf{0} & \bar{\mathbf{G}}_{22} & \mathbf{0} & \mathbf{0} \\
-\bar{G}_{31} & \bar{\bm{g}}_{32}^\top & \bar{G}_{33} & 0 \\
-\bar{\bm{g}}_{41} & \bar{\mathbf{G}}_{42} & \bar{\bm{g}}_{43} & \bar{\mathbf{G}}_{44}
-\end{bmatrix}
-\label{eq:K-structure}
-\end{equation}
-with $\bar{\mathbf{G}}_{44} = -\FrameBasis^\times \bar{\mathbf{G}}_{22}\,\FrameBasis^\times$.
-\end{lemma}
-
-\begin{proof}
-The commutator $[\bar{\mathbf{G}}, \mathbb{J}]$ has nonzero contributions only 
-from the $(4,2)$ block of $\mathbb{J}$:
-\begin{align*}
-[\bar{\mathbf{G}}\mathbb{J}]_{i2} &= -\bar{G}_{i4}\,\FrameBasis^\times, \\
-[\mathbb{J}\bar{\mathbf{G}}]_{4j} &= -\FrameBasis^\times \bar{G}_{2j}.
-\end{align*}
-Setting $[\bar{\mathbf{G}}, \mathbb{J}] = \mathbf{0}$:
-\begin{itemize}
-\item Rows 1--3, column 2: $\bar{G}_{14} = 0$, $\bar{\mathbf{G}}_{24} = \mathbf{0}$, $\bar{G}_{34} = 0$.
-\item Row 2, columns 1, 3: $\bar{\mathbf{G}}_{21} = \mathbf{0}$, $\bar{\mathbf{G}}_{23} = \mathbf{0}$.
-\item Row 4, column 2: $\bar{\mathbf{G}}_{44}\,\FrameBasis^\times = \FrameBasis^\times \bar{\mathbf{G}}_{22}$.
-\end{itemize}
-The constraint $\bar{\mathbf{G}}_{44}\,\FrameBasis^\times = \FrameBasis^\times \bar{\mathbf{G}}_{22}$ 
-is equivalent to $\bar{\mathbf{G}}_{44} =-\FrameBasis^\times \bar{\mathbf{G}}_{22}\,\FrameBasis^\times$ 
-since $(\FrameBasis^\times)^{2} = -\oneS$.
-\end{proof}
-
-The set of all matrices of the form \eqref{eq:K-structure} comprise the equilibrium invariance group $G$:
+The set of all matrices satisfying \eqref{eq:commutator-condition} comprise the equilibrium invariance group $G$:
 \[
 G \coloneq \bigl\{\,\mathbf{K} \in \mathrm{GL}(6) \;\big|\; [\mathbf{K},\mathbb{J}] = 0\,\bigr\}.
 \]
-Every \(\mathbf{K} \in G\) has the block form \eqref{eq:K-structure}. 
 This further restricts the space of trace matrices \(\TraceDeDpRoot\) to a nonlinear sub-manifold, for which a clean structure like that obtained under P1 does not exist.
 However, it is possible to conveniently parameterize a subset of these traces, by first identifying a reference trace \(\mathcal{T}_R\) in the class. 
 
@@ -163,27 +110,26 @@ with blocks expressed in terms of the reference, and four free parameters
 \end{proposition}
 A proof is provided in \cref{sec:proof-s3}.
 
-\subsubsection{Class III}
+\subsection{Class III: Variational Consistency}
 We now consider a final restriction which eliminates all remaining free parameters, and furnishes a unique trace matrix: the \emph{energetic} trace. 
 
-\begin{definition}[Class III]\label{def:class-iii}
+% \begin{definition}[Class III]\label{def:class-iii}
 A Class I trace is a \textbf{Class III} trace if the conjugate resultants \(\TraceTotalEnergyStress\) are exactly the classical rigid-section resultants \(\snm\):
 \begin{equation}
-    \bar{\bm{s}} \equiv \snm
+    \bar{\bm{s}} \equiv \snm .
     \label{eq:def-s3}
 \end{equation}
-ie, the unique trace such that generated strains \(\bm{e}\) are work conjugate to the classical resultants \(\snm\).
-\end{definition}
+% \end{definition}
 
-\begin{proposition}[Class III]
-All Class III traces are equivalent in the Saint~Venant class, with trace matrix given by the consistency condition:
+% \begin{proposition}[Class III]
+All Class III traces are equivalent in the Saint~Venant class, with trace matrix determined by the consistency condition:
 \begin{equation}
 \TraceDeDpRoot = \IesanStiff^{-\top} \IesanEnergy
 \label{eq:T0-formula}
 \end{equation}
 
-\end{proposition}
-\begin{proof}
+% \end{proposition}
+% \begin{proof}
 For a Class I trace with $\bm{e}(x) = \TraceDeDpRoot \exp(x\IesanEvolveSP)\bm{p}$, 
 the energy tangent \eqref{eq:energy-conjugacy-def} becomes:
 \begin{equation*}
@@ -216,6 +162,4 @@ The linear evolution \(x^1\) yields the consistency condition:
 \IesanStiff^{-1} \mathbf{R}_1 = \IesanEvolveSP
 \label{eq:consistency-condition}
 \end{equation}
-This condition states that the evolution of stress resultants along 
-the beam matches the universal strain evolution prescribed by  $\IesanEvolveSP$.
-\end{proof}
+% \end{proof}

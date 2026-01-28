@@ -14,8 +14,11 @@
     \label{fig:frame-1041-solution}
 \end{figure}
 
-This example reproduces an experiment by \cite{engel1953measurements}. 
-Several analyses are performed under increasing magnitudes of the applied moment couple \(M\), which is applied at the start of an analysis and then held constant while the torque \(T\) is gradually increased.
+\subparagraph{Context}
+This example reproduces an experiment by \cite{engel1953measurements} where the Wagner term \eqref{eq:wagner-gl-strain-pi} plays a central role.
+
+\subparagraph{Setup}
+Several analyses are performed under increasing magnitudes of the applied moment \(M\), which is applied at the start of an analysis and then held constant while the torque \(T\) is gradually increased.
 
 
 \FrameSection{
@@ -24,3 +27,5 @@ label/problem=frame-1041,
 shape={Angle},
 kinematics/section={\eqref{eq:wagner-gl-strain-pi}},
 }
+
+Both the \ForceFrame{} and \ExactFrame{} elements show excellent agreement.

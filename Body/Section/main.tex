@@ -2,7 +2,7 @@
 \subsection{Introduction}
 In this section we motivate a family of resultant constitutive relations that establishes a connection between the one-dimensional framework outlined above and the three dimensional framework of continuum mechanics.
 %
-That is, given a ``cross section'' \(\Section \subset \mathbb{R}^2\) where each point \(\hat{\rho}\) is assigned a tensorial stress-strain model \(\TensorMaterial: \StrainTensor \mapsto \bm{T}\), 
+That is, given a cross section \(\Section \subset \mathbb{R}^2\) where each point \(\hat{\rho}\) is assigned a tensorial stress-strain model \(\TensorMaterial: \StrainTensor \mapsto \bm{T}\), 
 the objective is to define a frame resultant model:
 \[
 \ResultMaterial : \ShearStrain,\CurveStrain,\bm{\alpha}',\bm{\alpha} \mapsto \bm{n},\bm{m},\bm{w},\bm{v}
@@ -21,7 +21,7 @@ where the vector-valued warping field
 \(\bm{\Phi}(\bm{r})\,\bm{\alpha}(\reflenx)\in\mathbb{R}^3\) allows transverse warping components.
 %
 \begin{remark}
-This generalizes the kinematic model of \cite{simo1991geometricallyexact} by allowing \(n_w \ge 1\) warping shapes \(\bm{\varphi}\) and aligns with the work by \cite{klinkel2003anisotropic} (also \cite{elfatmi2007nonuniform} who only considered linearized beam theory).
+This generalizes the kinematic model of \cite{simo1991geometricallyexact} by allowing \(n_w \ge 1\) warping shapes \(\bm{\varphi}\) and aligns with the work by \cite{klinkel2003anisotropic}.
 \end{remark}
 \begin{remark}
 The linearization of \eqref{eq:finite-alignment-field} is:
@@ -39,7 +39,7 @@ and the linearized displacement \(\hat{\bm{u}} = \hat{\bm{x}} - (x\FrameBasis + 
 \end{remark}
 
 
-
+\iffalse
 \subsection{Stress Constraints}
 
 Recall that the Saint-Venant field generates vanishing stress components \(\FrameBasis_{\alpha}\cdot\PlaneStressTensor\FrameBasis_{\beta} = 0\). 
@@ -133,6 +133,8 @@ For Saint–Venant-type stresses with the form \eqref{eq:saint-venant-stress} on
 \left<\StressTensor,\,\stackrel{\rm s}{\nabla}\PlaneWarp\,\right>=0,
 \label{eq:sv-orthogonality}
 \end{equation}
+
+\fi 
 
 \iffalse
 \begin{Quote}
@@ -260,15 +262,12 @@ A simplification of \eqref{eq:exact-gl-strain-Phi} which retains important nonli
 \bm{r}\cdot\bm{r}\,\FrameBasis
 % \label{eq:wagner-gl-strain-pi}
 \end{SaveEquation}
-Let the generalized strain-direction be
-\(
-\delta\bm{e}\triangleq(\delta\bm{\gamma},~\delta\bm{\kappa},~\delta\bm{\alpha}',~\delta\bm{\alpha})
-\)
 Introduce the decomposition:
 \begin{equation}
 \WarpTotalShapes = \FrameBasis\otimes\WarpAxialShapes + \WarpPlaneShapes
 \label{eq:decom-warp-shapes}
 \end{equation}
+\iffalse
 From \eqref{eq:wagner-gl-strain-pi} the  variation
 \(
 \delta\StrainVector=\TotalStrainMatrix\,\delta\bm{e}
@@ -310,6 +309,7 @@ and the remainder
 \delta\hat{\bm{E}}_{\perp}=\sym\big(\nabla(\mathbf{1}_{\Section}\bm{\Phi}\,\delta\bm{\alpha})\big)
 \)
 is orthogonal to \(\StressTensor\) under \eqref{eq:sv-orthogonality}.
+\fi
 
 \paragraph{Linear Strain.}
 The first order truncation of \eqref{eq:exact-gl-strain-Phi} furnishes:

@@ -1,6 +1,6 @@
 
 
-\subsection{Class II: Equilibrium Consistency}
+\subsection{Class II: Equilibrium Consistency}\label{def:class-ii}
 The traces that fall under Class I are capable of exactly representing Saint~Venant's solutions in a standard finite element context, but without further restriction they may still exhibit certain undesirable properties.
 In particular, [TODO: elaborate]
 \begin{itemize}
@@ -66,7 +66,7 @@ This further restricts the space of trace matrices \(\TraceDeDpRoot\) to a nonli
 However, it is possible to conveniently parameterize a subset of these traces, by first identifying a reference trace \(\mathcal{T}_R\) in the class. 
 
 
-\subsection{Class III: Variational Consistency}
+\subsection{Class III: Variational Consistency}\label{def:class-iii}
 We now consider a final restriction which eliminates all remaining free parameters, and furnishes a unique trace matrix: the \emph{energetic} trace. 
 
 % \begin{definition}[Class III]\label{def:class-iii}
@@ -92,7 +92,7 @@ the energy tangent \eqref{eq:energy-conjugacy-def} becomes:
 \delta\bm{p}\cdot \left(\mathbf{1} + x\TraceEvolveEP^\top\right) \TraceDeDpRoot^\top \bm{s}(x) 
 = \delta\bm{p}\cdot \left(\mathbf{1} + x\TraceEvolveEP^\top\right) \IesanEnergy\, \left(\mathbf{1} + x\TraceEvolveEP\right) \bm{p}.
 \end{equation*}
-Since this must hold for all $\bm{p}$, we require:
+Since this must hold for all $\bm{p}$, the class requires:
 \begin{equation*}
 \TraceDeDpRoot^\top \mathbf{R}(x) = \IesanEnergy\, \left(\mathbf{1} + x\TraceEvolveEP\right).
 % \label{eq:conjugacy-condition}

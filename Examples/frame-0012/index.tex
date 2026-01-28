@@ -8,35 +8,24 @@ This class consists of the terminal loadings described in \cref{sec:sv} in the r
 % Elastic shear deformations in a 2D cantilever were investigated by . 
 
 A cantilever beam fixed at $x=0$ is loaded with a transverse force $\bar{F} \FrameBasis_z$ at the free end $\reflenx=L$.
+A variety of cross sections are investigated, and the length-depth ratio is $L/d = 3/2$. 
+
+All problems are solved using a single \ForceFrame{} element with the \ShearFiber{} section at 5 Gauss-Legendre integration points.
+
+
 
 \subsubsection{Rectangle}
-
-\paragraph{Shear correction}
 
 
 
 \subsubsection{Hollow Rectangle}\label{sec:frame-0012/H}
 
-\begin{figure}[H]
-  \centering 
-  \includegraphics[width=0.8\linewidth]{Examples/frame-0012/img/shear_h_poisson.png}
-\end{figure}
+% \begin{figure}[H]
+%   \centering 
+%   \includegraphics[width=0.8\linewidth]{Examples/frame-0012/img/shear_h_poisson.png}
+% \end{figure}
 
-\Cref{tab:0012-result} compares the simulated deflections $\bm{u}$ and fiber strains $\varepsilon_{1k} \coloneq \FrameBasis_{k}\cdot\StrainVector(\xi_i,\,\bm{r}_i)$ against the continuum solution \eqref{eq:general-solution} and \eqref{eq:iesan-point-strain}, respectively. 
 
-\begin{table}[H]
-    \centering
-    \caption{Caption}
-    \label{tab:0012-result}
-    \begin{tabular}{c|cc|cc}
-       & \multicolumn{2}{c|}{Energetic Trace} & \multicolumn{2}{c}{Geometric Trace} \\ 
-       & Simulation & Error & Simulation & Error \\
-      \midrule
-      $u_y$ & & \\ 
-      $u_z$ \\
-      $\varepsilon_{11}$ \\
-    \end{tabular}
-\end{table}
 
 \begin{figure}[H]
     \centering
@@ -50,6 +39,44 @@ A cantilever beam fixed at $x=0$ is loaded with a transverse force $\bar{F} \Fra
 \subsubsection{Channel}
 \cite{paradiso2021shear}
 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.45\linewidth]{Examples/frame-0012/img/c05.png}
+    \includegraphics[width=0.4\linewidth]{Examples//frame-0012//img/0012-c05-e12.png}
+    \caption{Monitoring points (left) and shear strain $\varepsilon_{12}$ distribution (right) obtained by the \ShearFiber{} section with the \ForceFrame{} element [TODO: Figure needs annotation].}
+    \label{fig:0012-c05}
+\end{figure}
+
+The channel section in \cref{fig:0012-c05} is modeled assuming Poisson's ratio $\nu = 1/4$.
+
+\Cref{tab:0012-result} compares the simulated deflections $u_y(L)$ and fiber strains $\varepsilon_{1k} \coloneq \FrameBasis_{k}\cdot\StrainVector(\xi_i,\,\bm{r}_i)$ against the continuum solution \eqref{eq:general-solution} and \eqref{eq:iesan-point-strain}, respectively. 
+Strains are evaluated at the 5$^{\rm th}$ Gauss point down the length, and at the monitoring points \(\bm{r}_i\) depicted in \cref{fig:0012-c05}.
+
+\begin{table}[H]
+    \centering
+    \caption{Channel section under unit force $\bar{F}$ and torque $\bar{T}$.}
+    \label{tab:0012-result}
+    \begin{tabular}{cc|rr|rr}
+    \toprule
+       && \multicolumn{2}{c|}{Energetic Trace} & \multicolumn{2}{c}{Geometric Trace} \\ 
+       && Simulation & Error & Simulation & Error \\
+      \midrule
+  %3 [-0.20322237  6.39599662]
+& $u_y(L)$ & 0.3560345  &   6.95316e-6  & 0.553589853116 & 3.123906982e-5 \\ \LightRule
+    &$\varepsilon_{11}$ &  -0.053748667 & 1.14020149e-12 &  -0.053748667 & 1.140459697113821e-12  \\
+1   &$\varepsilon_{12}$ &  -0.036598242 & 3.62167262e-05 &  -0.036598242 & 3.621672629551967e-05 \\
+    &$\varepsilon_{13}$ &  -0.145137367 & 3.81070298e-05 &  -0.145137367 & 3.810702989385292e-05 \\ \LightRule
+  %50 &% [-0.21698358 -5.7010103 ]
+   &$\varepsilon_{11}$ &  0.0479083587 &  8.1217241e-12 &  0.047908358 & 8.121579343230135e-12 \\
+2  &$\varepsilon_{12}$ & -0.0089260481 &  4.6232539e-5  & -0.008926048 &  4.623253907947774e-5 \\
+   &$\varepsilon_{13}$ & -0.0969487453 &  3.2917544e-5  & -0.096948745 &  3.291754456886357e-5 \\ \LightRule
+  %100 &%[-0.44226497 -2.7       ]
+   &$\varepsilon_{11}$ &  0.0226894112    & 2.19200e-11 & 0.022689411230 &   2.1920164601886248e-11 \\
+3  &$\varepsilon_{12}$ & -8.27173607e-5   & 5.45478e-5 &  -8.2717360702e-5 & 5.454781914984001e-5 \\
+   &$\varepsilon_{13}$ & -0.2630898411    & 3.66853e-5 &  -0.2630898411  & 3.6685308112e-5 \\ 
+   \bottomrule
+    \end{tabular}
+\end{table}
 
 \subsubsection{Bridge Girder}\label{sec:frame-0012/G02}
 This example is considered by \cite{gruttmann2001shear,tran2021efficiency}.

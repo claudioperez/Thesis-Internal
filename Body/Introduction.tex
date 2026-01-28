@@ -14,10 +14,11 @@ A central obstacle is computational.
 Physics-based assessment requires finite element models capable of representing the inelastic behavior that governs damage progression in structural members.
 For bridges, these members are predominantly beams and columns, and their accurate simulation under seismic loading involves geometric nonlinearity, cross-sectional warping, and inelastic material response.
 There is a wealth of literature addressing these phenomena, but many issues remain unresolved. 
-Furthermore, much of this literature precipitates in specialized element types whose implementations are difficult to validate in combination, difficult to embed in workflows requiring gradient information, and are not amendable to adaptive model refinement algorithms or integration with emerging standards in building information modeling like IFC. 
+% Furthermore, much of this literature precipitates in specialized element types whose implementations are difficult to validate in combination, difficult to embed in workflows requiring gradient information, and are not amendable to adaptive model refinement algorithms or integration with emerging standards in building information modeling like IFC. 
 
 
-Part~I of this dissertation develops a family of beam finite elements that address these issues.
+Part~I of this dissertation develops a family of beam finite elements that address these issues. 
+[TODO: Elaborate].
 % The formulation admits an arbitrary number of cross-sectional warping modes and classifies beam theories according to how the associated amplitudes are constrained.
 % A \emph{trace formalism} is introduced that characterizes the family of theories capable of exactly representing Saint~Venant's solution. %, and explicit expressions are derived for the warping shapes consistent with each.
 For inelastic analysis, the framework permits warping effects to be condensed at the section level, so that standard six-degree-of-freedom beam elements can be employed without modification to the element formulation.

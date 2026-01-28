@@ -1,17 +1,5 @@
 \newcommand{\AlignAxis}{\bm{\alpha}}
 
-\subsection{Summary}
-Transformation:
-\begin{enumerate}
-    \item \emph{Update} Call \ref{EuclidIsom::update} to update \(\bm{c},\bm{R}\)
-\end{enumerate}
-
-Isometry:
-\begin{enumerate}
-    \item \emph{Initialize}\label{EuclidIsom::initialize} Compute \(\bm{R}_0\) and \(\bar{\bm{C}}\) from \eqref{eq:init-Cbar}
-    \item \emph{Update}\label{EuclidIsom::update} \(\bm{R}\) from nodal rotations \(\bm{\Lambda}_a\) and new chord \(\Delta\bm{x}\), then compute \(\bar{\bm{c}}\) using \eqref{eq:solve-cbar}.
-\end{enumerate}
-
 \subsection{Local System}
 \begin{equation}
 \begin{cases}

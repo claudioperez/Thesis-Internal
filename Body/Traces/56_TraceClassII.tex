@@ -65,50 +65,6 @@ G \coloneq \bigl\{\,\mathbf{K} \in \mathrm{GL}(6) \;\big|\; [\mathbf{K},\mathbb{
 This further restricts the space of trace matrices \(\TraceDeDpRoot\) to a nonlinear sub-manifold, for which a clean structure like that obtained under P1 does not exist.
 However, it is possible to conveniently parameterize a subset of these traces, by first identifying a reference trace \(\mathcal{T}_R\) in the class. 
 
-\begin{proposition}\label{prop:class-ii-e}
-Consider a reference plane-section trace \(\mathcal{T}^{R}\) with trace matrix \(\TraceDeDpRoot^R\). 
-% \begin{equation*}
-%   \TraceDeDpRoot^R =
-%   \begin{bmatrix}
-%     1          & \bm{r}_R^\top & 0 & {\TraceNF}_R^\top \\
-%     \mathbf{0} & \mathbf{0}    & {\TraceFT}_R & {\TraceFF}_R \\
-%     0          & \mathbf{0}^\top & 1 & {\TraceTF}_R^\top \\
-%     \mathbf{0} & -\FrameBasis^\times & {\TraceBT}_R & {\TraceMF}_R
-%   \end{bmatrix}.
-% \end{equation*}
-Then \(\TraceDeDpRoot = \mathbf{X}\,\TraceDeDpRoot^R\) has the same plane-section
-pattern
-\begin{equation*}
-  \TraceDeDpRoot =
-  \begin{bmatrix}
-    1          & \CenterTrace^\top & 0 & \TraceNF^\top \\
-    \mathbf{0} & \mathbf{0}              & \TraceFT & \TraceFF \\
-    0          & \mathbf{0}^\top         & 1 & \TraceTF^\top \\
-    \mathbf{0} & -\FrameBasis^\times     & \TraceBT & \TraceMF
-  \end{bmatrix},
-\end{equation*}
-with blocks expressed in terms of the reference, and four free parameters 
-\(\bm{b},\bm{c}\):
-\begin{align*}
-  \CenterTrace^\top
-    &= \bm{r}_R^\top - \bm{b}^\top \FrameBasis^\times, \\ %[4pt]
-  \TraceFT
-    &= {\TraceFT}_R + \bm{c}, \\ %[4pt]
-  \TraceFF
-    &= {\TraceFF}_R + \bm{c}\otimes{\TraceTF}_R, \\ %[4pt]
-  \TraceNF^\top
-    &= {\TraceNF}_R^\top
-       - (\bm{b}^\top {\TraceBT}_R)\,{\TraceTF}_R^\top
-       + \bm{b}^\top {\TraceMF}_R, \\%[4pt]
-  \TraceTF
-    &= {\TraceTF}_R, \\%[4pt]
-  \TraceBT
-    &= {\TraceBT}_R, \\%[4pt]
-  \TraceMF
-    &= {\TraceMF}_R.
-\end{align*}
-\end{proposition}
-A proof is provided in \cref{sec:proof-s3}.
 
 \subsection{Class III: Variational Consistency}
 We now consider a final restriction which eliminates all remaining free parameters, and furnishes a unique trace matrix: the \emph{energetic} trace. 

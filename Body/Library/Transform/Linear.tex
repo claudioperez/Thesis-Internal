@@ -17,15 +17,12 @@
 Consider a line segment in 3D defined by two endpoints \(\bm{X}_I\) and \(\bm{X}_J\). 
 After deformation, the endpoints have moved to \(\bm{X}_I + \bm{u}_I\)
  and \(\bm{X}_J + \bm{u}_J\). 
-Let 
-\[
-\Delta \bm{X} \;\coloneq\; \bm{X}_J - \bm{X}_I
-\] 
-be the direction of the line in the reference configuration, and 
+The direction of the line in the reference configuration $\Delta\bm{X}$, and in the deformed configuration $\Delta \bm{x}$ are
 \begin{equation}
+\Delta \bm{X} \;\coloneq\; \bm{X}_J - \bm{X}_I
+\qquad\text{and}\qquad
 \Delta \bm{x} \;\coloneq\; (\bm{X}_J + \bm{u}_J)\;-\;(\bm{X}_I + \bm{u}_I)
 \end{equation}
-is the direction in the deformed configuration. 
 The lengths of the original and deformed line are, respectively:
 \[
 L_0 \; \coloneq \; \|\Delta \bm{X}\|
@@ -34,7 +31,7 @@ L_n \; \coloneq \; \|\Delta \bm{x}\|
 \]
 
 \paragraph{Translation.}
-The line is represented in the ``natural'' reference configuration \(\bar{\bm{X}}\) by a Euclidean transformation of the reference placement \(\bm{X}\):
+The line is represented in the natural reference configuration \(\bar{\bm{X}}\) by a Euclidean transformation of the reference placement \(\bm{X}\):
 \[
 \bar{\bm{X}} = \bm{R}_0^{\top}\bm{X} - \bar{\bm{C}}
 \]
@@ -66,7 +63,7 @@ The translations \(\bar{\bm{C}}\) and \(\bar{\bm{c}}\) are selected to enforce \
 \label{eq:solve-cbar}
 \end{equation}
 %
-To find \(\bar{\bm{C}}\) use \eqref{eq:solve-cbar} for \(\bar{\bm{c}}\) in \eqref{eq:iso-u}:
+The offset \(\bar{\bm{C}}\) is obtained using \eqref{eq:solve-cbar} for \(\bar{\bm{c}}\) in \eqref{eq:iso-u}:
 \[
 \begin{aligned}
 \bar{\bm{u}}(\xi)
@@ -81,7 +78,7 @@ Enforcing \(\bm{u}_I = \mathbf{0}\) furnishes
 \bar{\bm{C}} = \bm{R}_0^{\top}\bm{X}_I
 \label{eq:init-Cbar}
 \end{equation}
-so that in turn
+so that
 \begin{equation*}
 \bar{\bm{u}}(\xi) = \bm{R}^{\top}(\bm{X}(\xi)-\bm{X}_I) 
  + \bm{R}^{\top}(\bm{u}(\xi)-\bm{u}_I)
@@ -93,11 +90,11 @@ so that in turn
 
 \paragraph{Orientation.}
 
-We want a rotation \(\bm{R}(\varepsilon)\) (with
-\(\bm{R}(0)=\mathbf{1}\)) that maps the original unit direction
+The rotation \(\bm{R}(\varepsilon)\) with
+\(\bm{R}(0)=\mathbf{1}\) that maps the original unit direction
 \(\Delta \bm{X}^{\ast} = \tfrac{\Delta \bm{X}}{\|\Delta \bm{X}\|}\) to
 the new unit direction
-\(\Delta \bm{x}^{\ast}(\varepsilon) = \tfrac{\Delta \bm{x}(\varepsilon)}{\|\Delta \bm{x}(\varepsilon)\|}\):
+\(\Delta \bm{x}^{\ast}(\varepsilon) = \tfrac{\Delta \bm{x}(\varepsilon)}{\|\Delta \bm{x}(\varepsilon)\|}\) is:
 \[
 \bm{R}(\varepsilon)\,\Delta \bm{X}^{\ast} 
 \;=\;
@@ -210,7 +207,7 @@ where
 
 \subsection{Linearization}
 
-Consider small displacements of the endpoints, proportional to a small parameter \(\varepsilon\):
+Consider small displacements of the endpoints proportional to a small parameter \(\varepsilon\):
 \[
 \bm{u}_I(\varepsilon) \;=\; \varepsilon\,\bm{u}_I, 
 \quad

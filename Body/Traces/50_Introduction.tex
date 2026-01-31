@@ -76,13 +76,21 @@ However, because this investigation was limited to the plane, several salient th
 \end{itemize}
 
 
+\subsection{Literature}
+
+\cite{saritas2006mixed} incorporated shear warping into a 2D inelastic beam element without auxiliary degrees of freedom. 
+\cite{lecorvec2012nonlinear} generalized this to 3D using Lagrange interpolation for warping. 
+These interpolation schemes had to be constructed uniquely for a given section geometry, were not able to reproduce classical Timoshenko beam solutions in the elastic range. 
+
+
+
 \subsection{Outline}
 
 
 An outline:
 \begin{itemize}
     \item Introduce the \emph{trace} abstraction, which formalizes the ambiguity in representing the Saint-Venant class through classical fields \(\bm{u},\bm{\theta}\). 
-    \item Investigate the special class of traces that exhibit Type 3 locality... they can be exactly represented with \emph{only} 6-DOF, and are compatible with the interpolation assumptions of traditional elements.
+    \item Investigate the special class of traces that can be exactly represented with \emph{only} 6-DOF, and are compatible with the interpolation assumptions of traditional finite elements.
     \item Elaborate the effect of the trace on the boundary conditions that the beam model is capable of representing. 
 \end{itemize}
 

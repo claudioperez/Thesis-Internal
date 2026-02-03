@@ -23,9 +23,23 @@ Such problems lie outside the domain of classical finite element methods \citep{
 Formulations that restore objectivity exist, but they sacrifice the symmetric tangent stiffness that accelerates iterative solution.
 
 \item[Material Nonlinearity.]
-In a beam theory the pointwise stress and strain in a member is represented only in an average sense through section resultants. [need to elaborate on how this makes simulating inelasticity difficult]. 
-Fiber section models \citep{taucer1991fiber} reconstruct this state of strain by leveraging the plane section hypothesis of Euler-Bernoulli and Timoshenko beam theories, but this fails to account for cross-sectional warping and often furnishes unrealistic response. 
-In the elastic theory of beams these effects are tacitly represented by the Saint~Venant torsion and shear-correction cross sectional constants, but these approaches do not lend themselves to inelastic. 
+Inelastic material response exhibits a complicated dependency on the three dimensional state of stress and strain in a body. 
+
+Fiber section models \citep{taucer1991fiber} reconstruct a \emph{uniaxial} strain field by leveraging the plane section hypothesis of Euler-Bernoulli and Timoshenko beam theories. 
+This approach yields acceptable accuracy when a uniaxial material model can sufficiently capture the inelastic material response and boundary conditions are simple.
+
+It is possible to reconstruct a \emph{multiaxial} strain field from the fields of a beam theory by leveraging the plane section hypothesis, but this fails to account for cross-sectional warping and tends to over-predict strength and stiffness. 
+
+A more accurate approach for reconstructing a multiaxial strain state introduces auxiliary kinematic fields in the formulation of the beam theory that model this warping \citep{lecorvec2012nonlinear,klinkel2003anisotropic}. 
+When no limit is placed on the number of warping fields, it is possible to represent a continuum to any desired accuracy. 
+However such models are often cumbersome, and it is preferable to forgo auxiliary warping fields altogether whenever possible.
+
+When cross sectional warping is expected to vary uniformly over the body, auxiliary warping fields can be eliminated by associating various warping modes with classical beam deformations like curvature \(\bm{\kappa}\). 
+In the elastic setting this furnishes the classical Saint~Venant torsion constant and Timoshenko's shear correction factor. 
+This approach has also been developed for two dimensional inelastic simulations \citep{simo1982bifurcation,saritas2006mixed}. 
+However, in the three dimensional setting, several open problems remain.
+
+% In the elastic theory of beams these effects are tacitly represented by the Saint~Venant torsion and shear-correction cross sectional constants. 
 
 \item[Physical Transparency.] [TODO: Setup for how certain formulations of shear and rotations are required to model certain boundary conditions and loadings, and the tradeoffs that arise.]
 

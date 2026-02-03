@@ -577,9 +577,9 @@ original unit direction \(\Delta \bm{X}^*\) to the new unit direction
   \bm{R}(\varepsilon)\,\Delta \bm{X}^*
   \;=\;
   \Delta \bm{x}^*(\varepsilon).
-\] Differentiate both sides w.r.t. \(\varepsilon\). At
-\(\varepsilon=0\), \(\bm{R}(0)=\mathbf{1}\). 
-We get 
+\] 
+Differentiate both sides with respect to \(\varepsilon\). At
+\(\varepsilon=0\), \(\bm{R}(0)=\mathbf{1}\) this furnishes:
 \[
   \left.\frac{\mathrm{d}}{\mathrm{d}\varepsilon}\bm{R}(\varepsilon)\right|_{\varepsilon=0}\,\Delta \bm{X}^*
   \;+\;
@@ -588,8 +588,8 @@ We get
   \;=\;
   \left.\frac{\mathrm{d}}{\mathrm{d}\varepsilon}\Delta \bm{x}^*(\varepsilon)\right|_{\varepsilon=0}.
 \]
-where \(\Delta \bm{X}^*\) is a constant with vanishing derivative. 
-Also \(\bm{R}(0)=\mathbf{1}\). 
+where \(\Delta \bm{X}^*\) is a constant with vanishing derivative  
+and \(\bm{R}(0)=\mathbf{1}\). 
 Thus 
 \[
   \left.\frac{\mathrm{d}}{\mathrm{d}\varepsilon}\bm{R}(\varepsilon)\right|_{\varepsilon=0}\,\Delta \bm{X}^*
@@ -611,7 +611,7 @@ Using \eqref{eq:linear-Dxstar} for
 The right-hand side is orthogonal to
 \(\Delta \bm{X}^*\), which shows that
 \(\bigl.\tfrac{d}{d\varepsilon}\bm{R}(\varepsilon)\bigr|_{\varepsilon=0}\)
-acts like a \emph{skew-symmetric} operator on \(\Delta \bm{X}^*\). 
+acts like a skew-symmetric operator on \(\Delta \bm{X}^*\). 
 %
 Indeed, a rank-1 check shows there must exist some vector
 \(\bm{\omega}\) such that for \emph{all} \(\mathbf{x}\), \[
@@ -629,34 +629,25 @@ Applying it to \(\Delta \bm{X}^*\) gives
     - (\Delta \bm{X}^*\!\cdot \Delta \bm{u})\,\Delta \bm{X}^*
   \Bigr].
 \] 
-One can check that
+The vector 
 \(\bm{\omega} = \tfrac{1}{\|\Delta \bm{X}\|}\,\bigl(\Delta \bm{X}^*\times \Delta \bm{u}\bigr)\)
 satisfies exactly that. 
 Thus, finally, 
 \begin{equation}
   \boxed{
   \frac{\mathrm{d}}{\mathrm{d}\varepsilon}\bm{R}(\varepsilon)\Big|_{\varepsilon=0}
+  = \lim_{\varepsilon\to 0}\,
+  \frac{\bm{R}(\varepsilon) - \mathbf{1}}{\varepsilon}
   \;=\;
   \bm{\omega}^{\times},
-  \qquad
+  \qquad\text{with}\qquad
   \bm{\omega}
-  \;=\;
-  \frac{\Delta \bm{X}\times \Delta \bm{u}}{\|\Delta \bm{X}\|^2}.
+  \coloneq
+  \frac{\Delta \bm{X}\times \Delta \bm{u}}{\|\Delta \bm{X}\|^2}
+  =\bm{R}\frac{1}{L} \FrameBasis \times \Delta \bm{u}.
   }
 \end{equation}
 
-
-
-\begin{equation*}
-\boxed{
-  R'(0) = \lim_{\varepsilon\to 0}\,
-  \frac{\bm{R}(\varepsilon) - \mathbf{1}}{\varepsilon}
-  \;=\;
-  \left[
-    \frac{\Delta \bm{X}\times \Delta \bm{u}}{\|\Delta \bm{X}\|^2}
-  \right]^{\times}.
-}
-\end{equation*}
 
 % Equivalently,
 % \[
@@ -678,7 +669,6 @@ Thus, finally,
 
 \begin{ambox}[Linear Transform]{box:linear-transform}
 \begin{enumerate}
-    \item Rotation Parameters
     \item Global offset
     \[
     \bm{u}_a,\bm{w}_a \mapsto \begin{pmatrix}
@@ -703,7 +693,6 @@ Thus, finally,
         \bm{R}\bm{m}_a
     \end{pmatrix}
     \]
-    \item Local offset
     \item Isometry
     \[
     \bm{u}_a,\FrameRotation \mapsto \begin{pmatrix}
@@ -732,42 +721,38 @@ Thus, finally,
 \vspace{5ex}
 \begin{ambox}[Linear Transform]{box:linear-transform}
 
-% \begin{table}[]
 \begin{center}
+\renewcommand{\arraystretch}{1.5}
 \begin{tabular}{ccc}
-    \multicolumn{3}{c}{Node logarithm} \\
-         &  \(\displaystyle
-           \bm{u}_a,\FrameRotation_a \mapsto  
+   Pull & & Push \\
+    %\multicolumn{3}{c}
+    & {Node logarithm} & \\
+         \(\displaystyle
+          \begin{pmatrix}
+           \bm{u}_a\\\FrameRotation_a 
+          \end{pmatrix}
+           \mapsto  
              \begin{pmatrix}
                 \bm{u}_a \\
                 \operatorname{Log}\FrameRotation_a
             \end{pmatrix}\)
-         & \(\displaystyle
-         \bm{n}_a,\bm{m}_a \mapsto 
+         & &
+         \(\displaystyle
+         \begin{pmatrix}
+         \bm{n}_a \\ \bm{m}_a 
+         \end{pmatrix}\mapsto 
          \begin{pmatrix}
             \bm{n}_a \\
             \bm{m}_a + \bm{r}_a \times\bm{n}_a
         \end{pmatrix}
          \)
-            \\
-         & 
+        \\
+        \(\displaystyle\Big\downarrow\) & & \(\displaystyle\Big\uparrow\)
 \end{tabular}
 \end{center}
 
 % \end{table}
 \begin{enumerate}
-    \item[0] Node logarithm
-    \[
-    \bm{u}_a,\FrameRotation_a \mapsto \begin{pmatrix}
-        \bm{u}_a \\
-        \operatorname{Log}\FrameRotation_a
-    \end{pmatrix}
-    \qquad\qquad
-    \bm{n}_a,\bm{m}_a \mapsto \begin{pmatrix}
-        \bm{n}_a \\
-        \bm{m}_a + \bm{r}_a \times\bm{n}_a
-    \end{pmatrix}
-    \]
     \item Global offset
     \[
     \bm{u}_a,\bm{w}_a \mapsto \begin{pmatrix}
@@ -780,7 +765,7 @@ Thus, finally,
         \bm{m}_a + \bm{r}_a \times\bm{n}_a
     \end{pmatrix}
     \]
-    \item 
+    \item Rotation
     \[
     \bm{u}_a,\bm{w}_a \mapsto \begin{pmatrix}
         \bm{R}^{\top}\bm{u}_a \\
@@ -792,8 +777,7 @@ Thus, finally,
         \bm{R}\bm{m}_a
     \end{pmatrix}
     \]
-    \item Local offset
-    \item 
+    \item Isometry
     \[
     \bm{u}_a,\bm{w}_a \mapsto \begin{pmatrix}
         (\bm{u}_{a \in [I,J]} - \bm{u}_I) 
@@ -883,7 +867,7 @@ $$
 
 \begin{equation}
 \begin{aligned}
-L^{\prime} & =\frac{1}{L}\left(\bm{X}_j-\bm{X}_i\right) \cdot\left(\bm{X}_2^{\prime}-\bm{X}_i^{\prime}\right) \\
+L^{\prime} & =\frac{1}{L}\left(\bm{X}_J-\bm{X}_I\right) \cdot\left(\bm{X}_J^{\prime}-\bm{X}_I^{\prime}\right) \\
 \mathbf{e}_1^{\prime} & =\frac{1}{L_1^2}\left(\Delta \bm{X}^{\prime} L-\Delta \bm{X} L^{\prime}\right) \\
 \mathbf{e}_2^{\prime} & =\frac{1}{\left(\left\|\mathbf{v}_2\right\|^{\prime}\right)^2} \left(\mathbf{v}_2^{\prime} \left\|\mathbf{v}_2\right\|-\mathbf{v}_2\left\|\mathbf{v}_2\right\|^{\prime}\right) \\
 %

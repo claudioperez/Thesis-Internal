@@ -1,5 +1,5 @@
 
-This example investigates properties of various traces. 
+This example investigates properties of the energetic and geometric traces. 
 
 \subsubsection{Rectangle}
 Markers in \cref{fig:0012-r} shows the variation of the eigenvalues of the generalized shear correction matrix \eqref{eq:shear-correction} for different Poisson ratios \(\nu\) and aspect ratios $d/b$.
@@ -38,18 +38,26 @@ Curves are shown for the equations in \cref{tab:rectangle-scf}.
 \end{subequations}
 
 \begin{figure}[H]
-    \centering
-    \includegraphics[width=0.8\linewidth]{Examples/frame-0012/img/shear_rectangle_poisson.png}
-    \caption{Caption}
-    \label{fig:0012-r}
+  \centering
+  \includegraphics[width=0.8\linewidth]{Examples/frame-0012/img/shear_rectangle_poisson.png}
+  \caption{Shear correction factors for a solid rectangle.}
+  \label{fig:0012-r}
 \end{figure}
 
 
 \subsubsection{Hollow Rectangle}\label{sec:frame-0012/H}
 
+\Cref{fig:0012-h} plots the eigenvalues of the shear correction matrix \eqref{eq:shear-correction} for the energetic and geometric traces, as well as the following equation \citep{cowper1966shear}:
+\begin{equation*}
+\kappa = \frac{10(1+\nu)(1+3 m)^2}{\left(12+72 m+150 m^2+90 m^3\right)+\nu\left(11+66 m+135 m^2+90 m^3\right)+10 n^2\left((3+\nu) m+3 m^2\right)}
+\end{equation*}
+where \(m=\frac{b t_1}{d t_2}\) and \(n=\frac{b}{d}\). 
+
 \begin{figure}[H]
-  \centering 
+  \centering
   \includegraphics[width=0.8\linewidth]{Examples/frame-0012/img/shear_h_poisson.png}
+  \caption{Shear correction factors for a hollow rectangle.}
+  \label{fig:0012-h}
 \end{figure}
 
 

@@ -163,6 +163,18 @@ This element is adapted from the \texttt{forceBeamColumn} and
 
 Implementation details are discussed in \cref{sec:ForceFrame}.
 
+
+\paragraph{2. ExactFrame.}
+The \ExactFrame{} element is a \(C^0\) displacement formulation of
+the geometrically exact shear-deformable Cosserat rod. 
+The formulation is derived from \cite{simo1986threedimensional} and \cite{perez2024nonlinear}. 
+This element is ideal for modeling large elastic deformations. 
+Reduced integration must be
+used to avoid shear locking, and consequently a combination of \(h\)
+and \(p\) refinement is required in order to adequately capture
+inelasticity. 
+
+
 \iffalse
 \paragraph{3. CubicFrame}
   The \texttt{Cubic} element fits displacements to a cubic polynomial
@@ -173,17 +185,6 @@ Implementation details are discussed in \cref{sec:ForceFrame}.
   the \texttt{Dinel3dFrm\_EBwDF} and \texttt{Dinel3dFrm\_TwDF*} elements
   of FEDEASLab \citep{filippou1996fedeas}.
 \fi
-
-\paragraph{2. ExactFrame.}
-The \ExactFrame{} element is a \(C^0\) displacement formulation of
-the geometrically exact shear-deformable Cosserat rod. 
-This element is ideal
-for modeling large elastic deformations. 
-Reduced integration must be
-used to avoid shear locking, and consequently a combination of \(h\)
-and \(p\) refinement is required in order to adequately capture
-inelasticity.
-
 
 % \subsection{Euler}
 %   The \gls{frame:euler} element is a straightforward \(C^1\) displacement
@@ -199,6 +200,9 @@ inelasticity.
 %   Reduced integration must be used for this element to avoid shear
 %   locking, and consequently a combination of \(h\) and \(p\) refinement
 %   is required in order to adequately capture inelasticity.
+
+
+\ForceFrame{} is more accurate and efficient for modeling problems with small deformations. 
 
 
 \subsection{Transformation Library}\label{sec:transformation-types}

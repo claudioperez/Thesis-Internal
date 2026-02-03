@@ -1,0 +1,71 @@
+
+The most general approach to modeling warping is to take the \(n_w\) warping amplitudes \(\bm{\alpha}\) as independent configuration variables. 
+This generalizes the approach of \cite{reissner1952nonuniform} for warping torsion.
+
+\paragraph{Equilibrium}
+Regardless of any kinematic assumptions on the primary kinematic variables \(\bm{x}\) and \(\FrameRotation\), the warping resultants \(\bm{w}\) and \(\bm{v}\) are governed by the same equilibrium equation:
+\begin{equation}
+\bm{w}' - \bm{v} + \bm{f}_{\mathrm{w}} = \mathbf{0}
+\label{eq:bi-equilibrium}
+\end{equation}
+where $\bm{f}_{\mathrm{w}}$ is a generalized distributed load in the warping variables (typically taken to be zero). 
+%
+The complete system of equilibrium equations is
+\begin{equation} 
+\left\{\begin{array}{r}
+(\FrameRotation \bm{n})^{\prime}+{\bm{f}}_n=\mathbf{0} \\
+(\FrameRotation \bm{m})^{\prime}+\bm{x}^{\prime} \times (\FrameRotation \bm{n}) +{\bm{f}}_m=\mathbf{0} \\
+\bm{w}^{\prime}-\bm{v} + \bm{f}_{\rm w} = \mathbf{0}
+\end{array}\right. 
+\label{eq:finite-equilibrium}
+\end{equation}
+where \(\bm{f}_n\) and \(\bm{f}_m\) are given body force and moment loadings, respectively. 
+\citep{antman1974kirchhoffs,simo1991geometricallyexact,klinkel2003anisotropic}. 
+
+% This is separated out of the equilibrium equation \eqref{eq:finite-equilibrium}, so that 
+% all assumptions on and simplifications to the primary kinematic variables \(\bm{x}\) and \(\FrameRotation\) are contained within a \emph{primary} equilibrium operator \(\mathbb{B}_{\mathrm{p}}\). 
+
+
+\vspace{1ex}
+\begin{ambox}[Type 1: Independent Warping]{box:type1-warping}
+A Type 1 constitutive response maps \(6+2n_w\) strains \((\bm{\gamma},\, \bm{\kappa},\, \bm{\alpha}',\, \bm{\alpha})\) to \(6+ 2n_w\) generalized stresses \((\bm{n},\, \bm{m},\,\bm{w},\bm{v})\)
+\[
+[\bm{n},\bm{m},\bm{w},\bm{v}] = \mathcal{S}(\bm{\gamma},\, \bm{\kappa},\, \bm{\alpha}',\, \bm{\alpha})
+\]
+
+\begin{equation}
+\begin{aligned}
+    \mathbb{B}_{\mathrm{p}} \bm{A}_*\begin{pmatrix} \bm{n} \\ \bm{m} \end{pmatrix} + \bm{f}_{\mathrm{p}} &= \dot{\bm{\mu}} \\ 
+    \bm{w}' - \bm{v} + \bm{f}_{\mathrm{w}} &= \mathbf{0}
+\end{aligned}
+\end{equation}
+\end{ambox}
+
+
+\subsection{Type 1: Independent Warping}
+
+The most general approach to model warping is to take the \(\nwarp\) warping amplitudes \(\bm{\alpha}\) as independent configuration variables. 
+This follows the approach of \citep{reissner1952nonuniform} for warping torsion. 
+Regardless of any kinematic assumptions on the primary kinematic variables \(\TraceLocation\) and \(\FrameRotation\), the warping resultants \(\bimoment\) and \(\bishear\) are governed by the same equilibrium equation:
+\begin{equation*}
+    \bimoment' - \bishear + \bm{f}_{\mathrm{w}} = \mathbf{0}
+\end{equation*}
+This is separated out of the equilibrium equation \eqref{eq:finite-equilibrium}, so that all assumptions on and simplifications to the primary kinematic variables \(\TraceLocation\) and \(\FrameRotation\) are contained within a \emph{primary} equilibrium operator \(\EquilibriumDerivative\). 
+
+A \textbf{Type 1} constitutive formulation is completely general in the sense that it can readily return a response for all other formulation types.
+
+\vspace{1ex}
+\begin{ambox}[Type 1: Independent Warping]{box:type1-warping}
+A Type 1 constitutive response maps \(6+2\, \nwarp\) strains \((\ShearStrain,\, \CurveStrain,\, \bm{\alpha}',\, \bm{\alpha})\) to \(6+ 2\, \nwarp\) generalized stresses \((\ShearResult,\, \CurveResult,\,\bm{w},\bm{v})\)
+\[
+[\bm{s}_{\mathrm{p}},\bm{w},\bm{v}] = \SectionEvaluation{\bm{e}_{\mathrm{p}},\, \bm{\alpha}',\, \bm{\alpha}}
+\]
+Equilibrium takes the form 
+\begin{equation}
+\begin{aligned}
+    \mathbb{B}_{\rm p} \bm{\sigma}_{\mathrm{p}} + \bm{f}_{\mathrm{p}} &= \dot{\bm{\mu}} \\ 
+    \bimoment' - \bishear + \bm{f}_{\mathrm{w}} &= \mathbf{0}
+\end{aligned}
+\end{equation}
+\end{ambox}
+

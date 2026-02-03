@@ -1,0 +1,112 @@
+\subsection{Overview}
+
+
+\begin{Note}
+In this section, governing equations are developed for a line embedded in 3D space.
+A primary result is the observation that constitutive equations for all cases are related by a simple linear transformation.
+\end{Note}
+
+
+In this section we derive governing equations for models of a directed curve embedded in $\mathbb{R}^3$. 
+
+The Type 1 case is of interest because it is relatively easy to implement and appears regularly in the literature (though usually not in such a general form) like Reissner's theory of torsion warping \citep{reissner1952nonuniform}.
+Type~2 is harder to implement because it seems to produce higher-order equilibrium equations, but it is important because it covers several widely studied models, such as Vlasov's nonuniform torsion theory.
+Finally, the Type~3 case is particularly interesting.
+It is not as easy to implement as Type~1, but our goal is to show that the resulting differential equations are such that standard finite elements can be reused to model it, provided that the cross-sectional constitutive law is appropriately condensed.
+In particular, we aim to show that a section implemented for the general Type~1 formulation can be ``wrapped'' by a procedure applying the operators $\mathbf{L}$.
+In a later section we show that, when this Type~3 condensed/wrapped section is used in a standard $6$-DOF shear-deformable beam finite element (which expects only six stress resultants), it is possible to represent the full Saint~Venant class exactly, without altering the element.
+Moreover, when the section exhibits material or geometric nonlinearity through the resultant mapping, the resulting wrapper/Type~3 element combination remains a consistent approximation to a well-posed governing equilibrium boundary-value problem.
+% Within the Saint~Venant class the differential constraints arise only in a few fields and display several simplifying features; this will allow us to restrict the treatment of such constraints so as to avoid most of the pathological consequences they normally entail.
+
+A key observation is that the constitutive equations for all of the cases considered are related by a simple linear transformation.
+
+\begin{Quote}
+The Type 4 case is of interest because it's relatively easy to implemented, and sees regular use in literature (but not in such a general form). Type 3 is harder to implement because it seems to produce a higher order equilibrium equation, but nonetheless it is of interest because it covers several widely studied models like Vlasov's nonuniform torsion model. 
+Finally, type 3 is extremely interesting. its not as easy to implement as Type 4, but my goal is to show that the resulting differential equations are such that standard finite elements can be reused to model it, provided that the resultant constitutive model is appropriately condensed. 
+I ultimately want to show that a section that is implemented for the general type 4 formulation can be simply "wrapped" by a procedure that applies the L operators. 
+In a later section we want to show that when this Type 3 condensed/wrapped section is used in a ``standard" 6-DOF shear deformable beam finite element (which expects only 6 resultants), it is possible to exactly model the complete Saint Venant Class, without any alterations to the element. Furthermore, we want that when the section exhibits material or geometric nonlinear response through the resultant mapping, the wrapper-type3 element combination remains a ``consistant" approximant to a meaningful governing equilibrium BVP. 
+In the Saint~Venant-class,  differential constraints only arise in a few fields which exhibit several simplifying features which I hope will allow us to sufficiently restrict the treatment of such constraints so as to eliminate all the messy implications they entail. 
+\end{Quote}
+
+
+\subsection{Literature}
+
+% Differential
+%
+% \begin{itemize}
+%     \item \cite{euler1744curvis}, \cite{kirchhoff1859ueber}, \cite{love1906treatise}
+
+%     \item \cite{cosserat1896theorie}
+
+%     \item \cite{ericksen1957exact}, \cite{green1966general},  \cite{naghdi1973theory}.
+%     From this period, the works of \cite{antman1973theory,antman1974kirchhoffs} were particularly influential. \cite{antman2005nonlinear} is a preeminent source for mathematical treatment of the geometrically exact three-dimensional theory. However, the focus of this work is on analytic results. 
+
+% \end{itemize}
+
+% Supplements
+\cite{oreilly2017modeling,goss2003snap} offer perspectives that are rich in historical context. 
+\cite{hjelmstad2005fundamentals} presents a comprehensive treatment of two-dimensional beam theories, with limited coverage of three-dimensional theories and the complications that arise from the non-vectorial manifold.
+Useful resources which treat beam theory with  differential geometry are \cite{landau1970theory,connor1976analysis}.
+
+\cite{zienkiewicz2014finite} provides an account of the
+necessary theory for its deployment in finite element applications,
+while \cite{meier2019geometrically} offers a comprehensive survey of the 
+state of the art for geometrically exact finite elements. 
+
+
+\subsection{Kinematics}
+
+Consider the geometrically exact governing equations of a generalized Cosserat rod that is extended with \(n_w\) cross-sectional warping modes.
+
+Following the approach by \cite{simo1985finite}, the cross-section orientation is identified by a variable \(\FrameRotation(\reflenx) = \frameBasis \otimes \FrameBasis + \frameBasis_{\beta} \otimes \FrameBasis_{\beta}\) representing the constrained map from three directors in the reference configuration 
+\(\left\{\FrameBasis, \FrameBasis_\alpha\right\}\) to their placement in the current configuration \(\{\frameBasis, \frameBasis_\alpha\}\). 
+The index-free directors \(\FrameBasis\) and \(\frameBasis\) are, by definition, normal to the cross section plane. 
+The body coordinate \(\reflenx \in[0, L]\) is taken as the reference arc-length and
+the notation \((~\cdot~)^{\prime} \triangleq \partial(~\cdot~) / \partial \reflenx\) is adopted. 
+The placement of the deformed curve is represented by a vector \(\bm{x}(\reflenx) \in \mathbb{R}^3\), and cross sectional warping is represented by a vector \(\bm{\alpha}(\reflenx) \in \mathbb{R}^{n_w}\) of \(n_w\) \emph{warping amplitudes}. 
+The strain measures arise uniquely from the differential geometry of
+directed curves embedded in Euclidean space
+\citep{cosserat1909theorie,ericksen1957exact}. 
+These furnish components representing axial \(\epsilon\), shear \(\gamma_{\alpha}\), torsion \(\Twist\),
+and curvature \(\kappa_{\alpha}\) strains in the reference director basis \(\{\FrameBasis,\, \FrameBasis_{\beta}\}\):
+%
+\begin{SaveEquation}{eq:def-gam-kap}
+  \begin{aligned}
+    \bm{\gamma} &= \FrameRotation^{\top} \left(\bm{x}^\prime - \frameBasis \right) \\
+    &= \epsilon \FrameBasis + \gamma_\beta \FrameBasis_\beta 
+  \end{aligned}
+  \qquad\text{ and }\qquad
+  \begin{aligned}
+    \bm{\kappa} &= \left(\FrameRotation^\mathrm{t} \FrameRotation^\prime \right)^{\vee} \\
+    &= \Twist \FrameBasis + \kappa_\beta  \FrameBasis_{\beta }
+  \end{aligned}
+% \label{eq:def-gam-kap}
+\end{SaveEquation}
+%
+where summation over the two cross-section directors \(\FrameBasis_{\beta}\) is implied by the repeated indices \(\beta\), and 
+the notation \((~\cdot~)^{\vee}\) indicates that the argument \(\FrameRotation^{\prime}\FrameRotation^{\top}\) is a skew-symmetric map with axial vector \(\bm{\kappa}\).
+Similarly, the notation \((\,\cdot\,)^{\times}\) is adopted to represent a vector \(\bm{a} \in \mathbb{R}^3\) acting as a skew-symmetric linear operator \(\bm{a}^{\times}: \mathbb{R}^3 \rightarrow \mathbb{R}^3\) so, for example,
+\[
+\bm{\kappa}^{\times} = \FrameRotation^\mathrm{t} \FrameRotation^\prime
+\]
+This way \((\,\cdot\,)^{\vee}\) and \((\,\cdot\,)^{\times}\) represent the \emph{vee} and \emph{hat} isomorphisms on the Lie algebra \(\mathfrak{so}(3)\).
+%
+A constitutive relation is required between the material stress \(\bm{s}\) and strain \(\bm{e}\):
+\begin{equation} 
+  \bm{s} \triangleq \begin{pmatrix}
+  \bm{n} \\ 
+  \bm{m} \\
+  \bm{w} \\
+  \bm{v}
+  \end{pmatrix}
+  \quad\text{ and }\quad 
+  \bm{e} \triangleq \begin{pmatrix}
+  \bm{\gamma}\\ 
+  \bm{\kappa} \\
+  \bm{\alpha}' \\
+  \bm{\alpha}
+  \end{pmatrix}
+  \label{eq:cosserat-strain}
+\end{equation}
+
+We restrict our attention to prismatic initially straight rods so that \(\FrameBasis' = \mathbf{0}\).

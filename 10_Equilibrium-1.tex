@@ -1,0 +1,204 @@
+
+
+
+\subsection{Type 2: Constrained Warping}
+
+It is common to assume that the amplitudes of certain warping modes are proportional to a component of one of the primary strain variables \(\bm{e}_{\rm p} = (\ShearStrain,\,\CurveStrain)\). 
+For example, torsional warping is often assumed to be proportional to the rate of twist \(\varkappa \triangleq \CurveStrain\cdot \FrameBasis\).
+Assumptions of this nature can be expressed with \(\mathtt{n_c}\) linear constraints with the form 
+%
+\begin{equation}
+\left\{
+\begin{aligned}
+\mathbf{L}_{\rm vv}\bm{\alpha} &- \mathbf{L}_{\rm{vp}}\bm{e}_{\rm{p}} &= \mathbf{0} \\
+\mathbf{L}_{\rm ww}\bm{\alpha}' &- \mathbf{L}_{\rm{wp}} \bm{e}_{\rm p} &= \mathbf{0}
+\end{aligned}\right.
+% \label{eq:linear-warp-constraints}
+\end{equation}
+or
+\[
+\left\{
+\begin{aligned}
+    \mathbf{L}_{\rm vv}\bm{\alpha} = \mathbf{L}_{\rm vn} \bm\gamma + \mathbf{L}_{\rm vm}\bm\kappa \\
+    \mathbf{L}_{\rm ww}\bm{\alpha}' = \mathbf{L}_{\rm wn} \bm\gamma + \mathbf{L}_{\rm wm}\bm\kappa \\
+\end{aligned}
+\right.
+\]
+%
+where \(\bm{e}_{\rm p} \triangleq (\ShearStrain, \CurveStrain)\) is the collection of primary strain variables and \(\mathbf{L}_{\rm p}\) and \(\mathbf{L}_{\mathrm{vp}}\) are linear projection operators satisfying
+\[
+\left.
+\begin{aligned}
+\mathbf{L}_{\rm vv}^2 &= \mathbf{L}_{\rm vv}\\
+\mathbf{L}_{\rm ww}^2 &= \mathbf{L}_{\rm ww} \\
+\end{aligned}\right\}\in\mathbb{R}^{n_w\times n_w},
+\qquad
+\left.
+\begin{aligned}
+\mathbf{L}_{\rm vv}\mathbf{L}_{\rm vp} &= \mathbf{L}_{\rm vp} \\
+\mathbf{L}_{\rm ww}\mathbf{L}_{\rm wp} &= \mathbf{L}_{\rm wp}\\
+\end{aligned}
+\right\}\in\mathbb{R}^{n_w\times 6},
+\quad\text{and}\quad
+\mathbf{L}_{\rm vv}\mathbf{L}_{\rm ww} = \mathbf{L}_{\rm vv}^T\mathbf{L}_{\rm ww} = \mathbf{0}
+\]
+
+
+\subsubsection{Algebraic Constraints}
+
+\paragraph{Kinematics}
+
+\begin{equation}
+\bm{\alpha} = \bar{\bm{\alpha}} + \underbrace{\mathbf{L}_{\rm vp}\bm{e}_{\rm p}}_{\hat{\bm{\alpha}}}
+    +\tilde{\bm{\alpha}}
+% \label{eq:decompose-alpha}
+\end{equation}
+where the reduced warping vector \(\bar{\bm{\alpha}}\)
+$$
+\bar{\bm{\alpha}} \triangleq \bm{\alpha} - \mathbf{L}_{\rm vv} \bm{\alpha} - \tilde{\bm{\alpha}}
+$$
+has \(\nwarp - \mathtt{n_c}\) non-zero components.
+\[
+\bar{\bm{\alpha}}^{\prime}=\left(\mathbf{1}-\mathbf{L}_{\mathrm{ww}}\right) \bm{\alpha}^{\prime}, 
+\quad
+\bar{\bm{\alpha}}=\left(\mathbf{1}-\mathbf{L}_{\mathrm{vv}}\right) \bm{\alpha}
+\]
+
+
+The vector of constrained generalized strains \(\bar{\bm{e}}\) is:
+\[
+{\bm{e}} = \mathbf{L}\bar{\bm{e}}
+\]
+with
+% \begin{equation}
+% \bm{e}=\begin{pmatrix}
+% \bm{e}_{\rm p} \\ \bm{\alpha}' \\\bm{\alpha}
+% \end{pmatrix}=\underbrace{\begin{bmatrix}
+% \mathbf{1}  & \mathbf{0} & \mathbf{0} \\ 
+% \mathbf{L}_{\rm wp} & \mathbf{1} - \mathbf{L}_{\rm ww} & \mathbf{0} \\
+% \mathbf{L}_{\rm vp} & \mathbf{0} & \mathbf{1}-\mathbf{L}_{\rm vv}
+% \end{bmatrix}}_{\mathbf{L}}
+% \begin{pmatrix}
+% \bm{e}_{\rm p} \\ \bar{\bm{\alpha}}' \\ \bar{\bm{\alpha}}
+% \end{pmatrix}
+% \label{eq:warping-projection}
+% \end{equation}
+
+\begin{equation}
+\bm{e}=\begin{pmatrix}
+\bm\gamma \\ \bm\kappa \\ \bm{\alpha}' \\\bm{\alpha}
+\end{pmatrix}=\underbrace{\begin{bmatrix}
+\mathbf{1} & \mathbf{0} & \mathbf{0} & \mathbf{0} \\ 
+\mathbf{0} & \mathbf{1}  & \mathbf{0} & \mathbf{0} \\ 
+\mathbf{L}_{\rm wn} &\mathbf{L}_{\rm wm} & \mathbf{1} - \mathbf{L}_{\rm ww} & \mathbf{0} \\
+\mathbf{L}_{\rm vn} & \mathbf{L}_{\rm vm} & \mathbf{0} & \mathbf{1}-\mathbf{L}_{\rm vv}
+\end{bmatrix}}_{\mathbf{L}}
+\begin{pmatrix}
+\bm\gamma \\ \bm\kappa \\ \bar{\bm{\alpha}}' \\ \bar{\bm{\alpha}}
+\end{pmatrix}
+% \label{eq:warping-projection}
+\end{equation}
+%
+
+\paragraph{Equilibrium}
+
+Recall the Galerkin projection \(\mathcal{G}_{\chi}[\bm{\eta}]\)
+\begin{equation*}
+\mathcal{G}_{\chi}[\bm{\eta}] = \left< \mathbb{B}_{\rm p} \bm{\sigma}_{\rm p} ,\, \bm{\eta}_{\rm p} \right>
+-\left< \bm{w}'-\bm{v},\, \delta\bm{\alpha} \right>
+\end{equation*}
+Using \eqref{eq:decompose-alpha} for \(\bm{\alpha}\) and exploiting linearity of the inner product furnishes
+\begin{equation*}
+\mathcal{G}_{\chi}[\bm{\eta}]
+= \left< \mathbb{B}_{\rm p} \bm{\sigma}_{\rm{p}} ,\, \bm{\eta}_{\rm p} \right>
+-\left< \bm{w}'-\bm{v} ,\, \delta \bar{\bm{\alpha}} \right>
+-\left< \bm{w}'-\bm{v} ,\, \mathbf{L}_{\mathrm{vp}} \delta \bm{e}_{\rm p} \right>
+\end{equation*}
+Using the transpose property \(\mathbf{L}_{\mathrm{vp}}\) by \(\left<\bm{w'} - \bm{v},\,\mathbf{L}_{\rm v p} \bm{e}_{\rm p}\right> = \left<\mathbf{L}_{\rm vp}^*[\bm{w'} - \bm{v}],\, \bm{e}_{\rm p}\right>\) furnishes
+\begin{equation*}
+\mathcal{G}_{\chi}[\bm{\eta}] = \left< \mathbb{B} \bm{s}_{\rm p} ,\, \bm{\eta}_{\rm p} \right>
+-\left< \bm{w}'-\bm{v} ,\, \delta \bar{\bm{\alpha}} \right>
+-\left< \mathbf{L}_{\mathrm{vp}}^T [\bm{w}'-\bm{v}] ,\, \delta \bm{e}_{\rm p} \right>
+\end{equation*}
+\iffalse
+By linearity 
+$$
+\delta \bar{\bm{\alpha}} = \delta \bm{\alpha} - \mathbf{L}_{\mathrm{vp}}[\delta \bm{\alpha}]% + \mathbf{L}_{\rm p}[\delta \ShearStrain, \delta \CurveStrain]
+\quad
+\text{ and }
+\quad
+\bar{\bm{\alpha}}' = \bm{\alpha}' - \mathbf{L}_{\mathrm{vp}}[\bm{\alpha}']% + \mathbf{L}_{\rm p}\left[\ShearStrain',\CurveStrain'\right]
+$$
+\fi 
+%
+Using %\eqref{eq:vstrain} for
+\(\delta \bm{e}_{\rm p}\triangleq D\bm{e}\cdot \bm{\eta}= \bm{A}\mathrm{B}^*\bm{\eta}_{\rm p}\) 
+and exploiting linearity of the inner product again furnishes
+\begin{equation*}
+\mathcal{G}_{\chi}[\bm{\eta}] = 
+\left<\bm{s}_{\rm p}  - \mathbf{L}_{\mathrm{vp}}^* (\bimoment' -\bishear),\, \delta \bm{e}_{\rm p} \right>
+% +\mathcal{G}_{\partial}
+-\left< \bm{w}'-\bm{v} ,\, \delta \bar{\bm{\alpha}} \right>
+% +\left< \mathbf{L}_{\rm p}^* [\bm{w}'-\bm{v}] ,\, \delta \bm{e}_{\rm p} \right>
+\end{equation*}
+Introduce
+\begin{equation}
+\begin{aligned}
+\bar{\bm{s}}_{\rm p} &\triangleq \bm{s}_{\rm p} + \mathbf{L}_{\rm p}^*\bishear \\
+\bar{\bimoment} &\triangleq \bimoment - \mathbf{L}_{\alpha}^* \bimoment \\
+\bar{\bishear} &\triangleq \bishear - \mathbf{L}_{\alpha}^* \bishear 
+\end{aligned}
+% \label{eq:augment-stress}
+\end{equation}
+so that
+\begin{equation*}
+\mathcal{G}_{\chi}[\bm{\eta}] = 
+\left< \bar{\bm{s}}_{\rm p} - \mathbf{L}_{\rm vp}^* \bimoment' ,\, \delta \bm{e}_{\rm p} \right>
+-\left< {\bm{w}}'-{\bm{v}} ,\, \delta \bar{\bm{\alpha}} \right>
+\end{equation*}
+Use the relation \(\delta \bm{e}_{\rm p} = \bm{A}\mathrm{B}^*\bm{\eta}_{\rm p}\)
+and transpose:
+
+\begin{equation}
+\mathcal{G}_{\chi}[\bm{\eta}] = 
+\left< \operatorname{B}_{\rm p} \left[\bar{\bm{s}}_{\rm p} - \mathbf{L}_{\rm vp}^* \bimoment' \right],\,  \bm{\eta}_{\rm p} \right>
+-\left< {\bm{w}}'-{\bm{v}} ,\, \delta \bar{\bm{\alpha}} \right>
+\end{equation}
+This furnishes the algebraically constrained system of equilibrium equations:
+\begin{equation*}
+\left\{
+\begin{aligned}
+\mathbb{B}_{\rm p}[{\bm{s}}_{\rm p} - \mathbf{L}^T_{\rm vp}(\bm{w}' - \bm{v})] - \bm{f} &=\mathbf{0} \\
+\bar{\bm{w}}' - \bar{\bm{v}} &= \mathbf{0} \\
+\end{aligned}
+\right.
+\end{equation*}
+or, equivalently
+\begin{equation}
+\left\{
+\begin{aligned}
+\mathbb{B}_{\rm p}[\bar{\bm{s}}_{\rm p} - \mathbf{L}^T_{\rm vp}\bm{w}'] - \bm{f} &=\mathbf{0} \\
+\bar{\bm{w}}' - \bar{\bm{v}} &= \mathbf{0} \\
+\end{aligned}
+\right.
+\label{eq:constrain-equilibrium-algebraic}
+\end{equation}
+
+
+\vspace{1ex}
+\begin{ambox}[Type 2: Constrained Warping]{box:warp2}
+For linear constraints on warping with the form of \eqref{eq:linear-warp-constraints}, the material response from Type 1 is augmented with the form
+\[
+[\bar{\bm{s}}_{\mathrm{p}},\bm{w},\bar{\bishear}] = \SectionEvaluation{
+\bm{e}_{\mathrm{p}}, \bm{\alpha}', \bar{\bm{\alpha}}
+}
+\]
+with momentum balance given by
+\begin{equation}
+\begin{aligned}
+    \mathbb{B}_{\rm p} \bm{A}_* \left[\bar{\bm{s}}_{\mathrm{p}} + \mathbf{L}_{\rm vp}^{\top}\bm{w}'\right]+ \bm{f}_{\mathrm{p}} &= \dot{\bm{\mu}} \\ 
+    \bar{\bimoment}' - \bar{\bishear} + \bm{f}_{\mathrm{w}} &= \mathbf{0}
+\end{aligned}
+\label{eq:type2-equilibrium}
+\end{equation}
+\end{ambox}

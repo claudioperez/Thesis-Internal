@@ -3,19 +3,6 @@ When no limit is placed on the number of warping fields \(\bm{\alpha}\) employed
 However this is impractical, and it is preferable to forgo auxiliary warping fields altogether whenever possible. 
 In the case of linear isotropy this is achieved by employing cross sectional constants like the shear correction factor. However, even in the simple case of linear isotropy, the subject of shear warping in beam theory remains a actively debated subject with unresolved ambiguities and strong disagreements \citep{dong2010much,dong2013principal,serpieri2014equivalence}. 
 
-The difficulty may be attributed to two issues:
-\begin{enumerate}
-\item Indeterminacy in Saint~Venant's continuum solutions, and
-\item Indeterminacy in the reduced form
-\RepeatEquation{eq:trace-lift-linear}
-% \begin{equation*}
-% % \begin{SaveEquation}{eq:trace-lift-linear}
-% \hat{\bm u}(\reflenx, \bm{r})=\bm{u}(x)
-% +\bm\theta(x)\times\bm{r}+\bm\Phi(\bm{r})\,\bm{\alpha}(x)
-% % \label{eq:trace-lift-linear}
-% % \end{SaveEquation}
-% \end{equation*}
-\end{enumerate}
 %
 The ambiguous nature of Saint~Venant's solutions is well known in the continuum mechanics literature (\cref{sec:sv}). 
 However, we are not aware of any works that formalize this in the context of dimensionally reduced 1D beam theories, or systematically investigate the extent to which beam theories may exactly represent 3D solutions in the Saint Venant class. 
@@ -76,7 +63,7 @@ However, because this investigation was limited to the plane, several salient th
 \end{itemize}
 
 
-\subsection{Literature}
+\subsubsection{Literature}
 
 \cite{saritas2006mixed} incorporated shear warping into a 2D inelastic beam element without auxiliary degrees of freedom. 
 \cite{lecorvec2012nonlinear} generalized this to 3D using Lagrange interpolation for warping. 
@@ -84,7 +71,7 @@ These interpolation schemes had to be constructed uniquely for a given section g
 
 
 
-\subsection{Outline}
+\subsubsection{Outline}
 
 
 An outline:
@@ -93,4 +80,135 @@ An outline:
     \item Investigate the special class of traces that can be exactly represented with \emph{only} 6-DOF, and are compatible with the interpolation assumptions of traditional finite elements.
     \item Elaborate the effect of the trace on the boundary conditions that the beam model is capable of representing. 
 \end{itemize}
+
+
+\subsection{Preliminaries}
+
+\subparagraph{S1}
+The Saint-Venant equilibrium equations for stress resultants 
+$\snm$ form a first-order initial value problem:
+\begin{equation}
+\left\{
+\begin{aligned}
+\snm'(x) & = \mathbb{J}\,\snm(x), \\
+\snm(0) &= \bm{s}_0
+\end{aligned}\right.
+\qquad\text{with}\qquad 
+\snm := (N,\ShearForce,T,\bm{M})
+\label{eq:equilibrium-ode}
+\end{equation}
+where \(\mathbb{J}\) is the equilibrium generator:
+\begin{equation}
+\mathbb{J} \coloneq \begin{bmatrix}
+ \mathbf{0} & \mathbf{0}\\
+ -\FrameBasis^\times & \mathbf{0}
+\end{bmatrix}
+\label{eq:J-matrix}
+\end{equation}
+\begin{Details}
+\[
+\mathbb{J}^{\top}\mathbb{J} = \begin{bmatrix}
+    \oneS & \mathbf{0} \\
+    \mathbf{0} & \mathbf{0}
+\end{bmatrix},
+\quad\text{and}\quad 
+\mathbb{J}\mathbb{J}^{\top} = \begin{bmatrix}
+    \mathbf{0} & \mathbf{0} \\
+    \mathbf{0} & \oneS
+\end{bmatrix},
+\]
+\end{Details}
+Integrating \eqref{eq:equilibrium-ode} in view of the nilpotency property \(\mathbb{J}^2 = \mathbf{0}\) furnishes:
+\begin{equation*}
+\snm(x) = (\mathbf{1} + \reflenx\mathbb{J})\,\snm(0).
+\end{equation*}
+
+The resultants \(\snm\) at \(x=0\) thus depend linearly on the parameters \((a_{\varepsilon},\, \bm{a}_{\Section},\, a_{\vartheta},\, \bm{b}_{\Section})\):
+\begin{equation}
+\snm(0) = \IesanStiff\IesanVector
+\label{eq:snm0-in-p}
+\end{equation}
+where \(\IesanVector\in\mathbb{R}^6\) collects the six kinematic  parameters of the particular solution: 
+\begin{equation}
+\IesanVector \coloneq (a_{\varepsilon},\, \bm{a}_{\Section},\, a_{\vartheta},\, \bm{b}_{\Section})
+\label{eq:def-iesan-vector}
+\end{equation}
+In view of \eqref{eq:2-15} and \eqref{eq:2-18}:
+\begin{equation}
+\IesanStiff = \begin{bmatrix}
+EA & EA\CentroidLocation^\top & 0 & \mathbf{0} \\[4pt]
+\mathbf{0} & \mathbf{0} & \mathbf{0} & E\IntRGoRG \\[4pt]
+0 & \mathbf{0} & G\Jsv & \mathbf{0} \\[4pt]
+-EA\FrameBasis\times\CentroidLocation & -\FrameBasis^\times E\IntRoR & \mathbf{0} & \mathbf{0}
+\end{bmatrix}.
+\label{eq:G0-neg-m}
+\end{equation}
+where the centroidal inertia tensor \(\IntRGoRG\) is defined: 
+\begin{equation}
+    \IntRGoRG = \IntRoR - A\CentroidLocation\otimes\CentroidLocation
+\label{eq:def-intRGoRG}
+\end{equation}
+\begin{Details}
+Thus
+\begin{equation}
+\IesanStiff^{-1} =
+\begin{bmatrix}
+\displaystyle \frac{1}{EA} + \CentroidLocation\cdot (E\IntRGoRG)^{-1}\,\CentroidLocation
+& \mathbf{0}
+& 0
+& -\CentroidLocation^\top (E\IntRGoRG)^{-1}\,\FrameBasis^\times
+\\[6pt]
+-(E\IntRGoRG)^{-1}\,\CentroidLocation
+& \mathbf{0}
+& \mathbf{0}
+& (E\IntRGoRG)^{-1}\,\FrameBasis^\times
+\\[6pt]
+0
+& \mathbf{0}
+& \displaystyle \frac{1}{G\Jsv}
+& \mathbf{0}
+\\[6pt]
+\mathbf{0}
+& (E\IntRGoRG)^{-1}
+& \mathbf{0}
+& \mathbf{0}
+\end{bmatrix}
+\label{eq:G0-inv-neg-m}
+\end{equation}
+\end{Details}
+Further, introduce the evolution operator \(\IesanEvolveSP\):
+\begin{equation}
+\IesanEvolveSP
+:=\IesanStiff^{-1}\mathbb{J}\IesanStiff 
+=\begin{bmatrix}
+\mathbf{0} & \oneS - \FrameBasis\otimes\CentroidLocation \\[4pt]
+\mathbf{0} & \mathbf{0}
+\end{bmatrix}
+= \begin{bmatrix}
+0 & \mathbf{0} & 0 & -\CentroidLocation^{\top} \\[4pt]
+\mathbf{0} & \mathbf{0} & \mathbf{0} & \oneS \\[4pt]
+0 & \mathbf{0} & 0 & \mathbf{0} \\[4pt]
+\mathbf{0} & \mathbf{0} & \mathbf{0} & \mathbf{0} \\
+\end{bmatrix}
+\label{eq:A-matrix-neg}
+\end{equation}
+
+\begin{Details}
+Using $\IesanEvolveSP^2=\mathbf 0$:
+\begin{equation*}
+\snm(x)=\IesanStiff\exp\left(x\IesanEvolveSP\right)\bm{p} 
+=\IesanStiff(\mathbf 1+x\IesanEvolveSP)\bm p,
+% \label{eq:snm-in-p}
+\end{equation*}
+\end{Details}
+\begin{Details}
+Note:
+\begin{equation*}
+\mathbb{J}\IesanStiff = 
+\begin{pmatrix}
+    \mathbf{0} & \mathbf{0} \\
+    \mathbf{0} & -\FrameBasis\times(E\IntRGoRG)
+\end{pmatrix}
+\end{equation*}
+\end{Details}
 

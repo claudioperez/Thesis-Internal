@@ -139,7 +139,8 @@ This feature is a critical component to enabling the event record (\cref{fig:int
 \paragraph{Evaluation Management}
 The \texttt{Evaluation} table is a central repository that stores the results of all evaluations conducted on the platform. This table is managed by the \texttt{evaluation} module, ensuring that the results are stored securely and can be accessed efficiently.
 
-The \texttt{evaluation.daemon} submodule plays a key role in this process. It implements the \texttt{EvaluationDaemon} class, a helper class responsible for scheduling \glspl{predictor} to populate \texttt{Evaluation} entries. 
+The \texttt{evaluation.daemon} submodule plays a central role in this process. 
+It implements the \texttt{EvaluationDaemon} class, a helper class responsible for scheduling \glspl{predictor} to populate \texttt{Evaluation} entries. 
 This scheduling process is tailored to the specific properties of each \texttt{Asset} and \texttt{Event}, ensuring that the evaluations are conducted in a manner that optimizes the use of computational resources.
 
 The \texttt{EvaluationDaemon} instance is created by invoking the static \texttt{create} method of the \texttt{Evaluation} model class. This method is typically called through the \texttt{events} module in response to the creation of a new \texttt{Event} entry. This process ensures that every \gls{event} triggers an evaluation, facilitating real-time monitoring and analysis of the structural health.

@@ -164,36 +164,41 @@
 \input{Body/Part-I}
 \clearpage
 
-\section{Element Formulations}\label{sec:genwarp}
+\section{Modeling Paradigm}\label{sec:genwarp}
 \input{10_EquilibriumOverview}
 \clearpage
-\input{10_Equilibrium}
-\clearpage
-\inputdraft{10_Equilibrium-1}
-\clearpage
-\inputdraft{10_Equilibrium-3}
-\clearpage
-% \inputdraft{15_Examples}
+% \input{10_Equilibrium}
 % \clearpage
+% \inputdraft{10_Equilibrium-1}
+% \clearpage
+% \inputdraft{10_Equilibrium-3}
+% \clearpage
+% \inputdraft{15_Examples}
+\clearpage
 
 
-\section{Section Kinematics}\label{sec:gensec}
+\section{A Section-Local Enhanced Strain Framework}\label{sec:gensec}
+%Section Formulation}
 \input{Body/Section/main}
-\input{Body/Section/21_Literature}
+% \input{Body/Section/21_Literature}
 \clearpage 
 
 \subsection{Conclusions}
 \input{Body/Section/Conclusions}
 \clearpage
 
-\section{Elastic Consistency}\label{sec:timo}
+\section{Enhanced Uniform Warping}\label{sec:timo}
 \input{Body/Traces/main}
 \clearpage
 
-\section{Geometric Transformations}\label{sec:transform}
-\input{Body/Transformations/index}
-\input{Body/Transformations/Conclusions}
+\section{Enhanced Nonuniform Warping}\label{sec:nonuniform}
+\input{Body/Nonuniform/main}
 \clearpage 
+
+% \section{Geometric Transformations}\label{sec:transform}
+% \input{Body/Transformations/index}
+% \input{Body/Transformations/Conclusions}
+% \clearpage 
 
 \section{Summary}
 \input{Body/Part-I-Conclusions}
@@ -205,9 +210,9 @@
 \input{Body/Part-II}
 \clearpage
 
-\pagebreak
-\section{Modeling Library}\label{sec:library}
-\input{Body/Library/main}
+
+% \section{Modeling Library}\label{sec:library}
+% \input{Body/Library/main}
 \clearpage
 
 
@@ -216,13 +221,14 @@
 \clearpage 
 
 \section{BRACE2}\label{sec:irie}
-% \InputChapter{Body/Irie/main}
+\InputChapter{Body/Irie/main}
 \clearpage
 
-% \InputChapter{Part II/main}%
+\InputChapter{Part II/main}%
+\clearpage 
 
 \input{Examples/index}
-\clearpage 
+\clearpage
 
 \section{Conclusions}
 \input{Body/Part-II-Conclusions}
@@ -239,9 +245,9 @@
 % \printglossary[type=frame]
 % \printglossary[type=brace]
 \clearpage
-\input{Part I/Rotations}
-% \input{Part I/Derivatives}
-\input{Body/Rotations/Functions}
+% \input{Part I/Rotations}
+% % \input{Part I/Derivatives}
+% \input{Body/Rotations/Functions}
 \clearpage 
 
 \InputChapter{Part I/Kinematics/main}
@@ -251,13 +257,18 @@
 % \input{Body/Library/Transform/main}
 \clearpage
 
-\include{Body/Iesan/main}
-\clearpage
-
-
 \section{The Force Formulation}\label{sec:ForceFrame}
 % \input{Body/ForceFrame/main}
 \clearpage
+
+\include{Body/Iesan/main}
+\clearpage
+
+\input{Sections/A_IntegralIdentities}
+\clearpage
+\section{Warping Functions}
+\input{Body/A_WarpingFunctions/main}
+\clearpage 
 
 \section{Trace Derivations}
 \input{Body/Traces/A3_Cowper}

@@ -1,0 +1,72 @@
+
+\subsection{Enhanced Shapes}
+
+In the absence of auxiliary warping fields, the  linearized compatible section kinematic operator \eqref{eq:def-section-kinematic-matrix-Phi} is
+\begin{equation*}
+\begin{aligned}
+\RigidStrainMatrix(\bm{r}) &:= \begin{bmatrix} 
+\mathbf{1} & -\bm{r}^{\times}
+\end{bmatrix}_{3\times6} 
+\end{aligned}
+\end{equation*}
+In view of the Saint~Venant strains \eqref{eq:iesan-point-strain}, the enhanced shapes must take the form:
+\begin{SaveEquation}{eq:uniform-shapes}
+\EnhanShapes = \RigidStrainMatrix\RigidShift + \WarpStrainMatrix\ShapeShift
+\qquad\text{with}\qquad
+\WarpStrainMatrix(\bm{r}) := 
+\begin{bmatrix}
+\nabla\WarpTwistIesan
+&\FrameBasis_{\beta}\otimes\nabla_{\beta}\bm{\WarpShearIesan} + \bm{\Pi}_{(b)}
+\end{bmatrix}_{3\times 3}
+\end{SaveEquation}
+where \(\RigidShift\) and \(\ShapeShift\) are constant matrices.
+% Because this contains the plane-rigid span \(\PlaneMotions\), the primary trace fields \(\bm{u},\bm{\theta}\) 
+% will not generally represent the full plane-rigid content, which becomes offloaded onto the warping field \(\bm\alpha\) through a linear operator \(\RigidShift\) determined by the trace. 
+% Upon elimination of the warping fields \(\bm\alpha\) the material strains are 
+% \begin{SaveEquation}{eq:eps-B-e}
+% \StrainVector(\reflenx,\bm{r}) = \Big(\RigidStrainMatrix  + \RigidStrainMatrix\RigidShift + \WarpStrainMatrix \ShapeShift\Big) \,\bm{e}(\reflenx)
+% \end{SaveEquation}
+In view of \eqref{eq:def-T0}, the strain at \(\reflenx=0\) is:
+\begin{equation}
+\bm{\varepsilon}(0,\bm{r}) = \Big(\RigidStrainMatrix (\bm{r})(\mathbf{1} + \RigidShift) + \WarpStrainMatrix(\bm{r})\ShapeShift\Big) \,\TraceDeDpRoot \bm{p}
+\label{eq:trace-strain}
+\end{equation}
+Equating the \(\reflenx\)-constant strains in \eqref{eq:iesan-point-strain} with \eqref{eq:trace-strain} and exploiting the block structure of \(\TraceDpDeRoot\) \eqref{eq:T0-inv} furnishes:
+\begin{equation}
+\RigidShift = \begin{bmatrix}
+\FrameBasis\otimes\ShiftN - \oneS & \ShiftScaleN\FrameBasis\otimes\FrameBasis %+ \FrameBasis\otimes(\CenterTrace\times\FrameBasis) 
+\\
+-\FrameBasis^{\times}\ShiftA + %\FrameBasis\otimes\ShiftNK + 
+\FrameBasis\otimes\ShiftB^{\top}(\CenterShearLocation +\ShiftT)
+& (\ShiftScaleT + \ShiftK\cdot\CenterShearLocation - 1)\FrameBasis\otimes\FrameBasis + (\ShiftF\times\FrameBasis)\otimes\FrameBasis
+\end{bmatrix}_{6\times6}
+\label{eq:class-ii-Le}
+\end{equation}
+and
+\begin{equation}
+\ShapeShift = 
+\begin{bmatrix}
+(\ShiftB^{\top}\CenterShearLocation + \ShiftT)^{\top} & (\CenterShearLocation\cdot\ShiftK + \ShiftScaleT)\FrameBasis^{\top} \\
+\ShiftB & \ShiftK\otimes\FrameBasis
+\end{bmatrix}_{3\times6}
+\label{eq:class-i-La}
+\end{equation}
+
+In a Petrov-Galerkin formulation the stress resultants are furnished by 
+    \begin{SaveEquation}{eq:petrov-section}
+    \begin{aligned}
+        \snm &= \int \RigidStrainMatrix^{\top}\StressVector(\StrainVector)\dA\\
+        \TraceStiffNM &= \int \RigidStrainMatrix^{\top}\StressVectorTangent\Big(\RigidStrainMatrix (\mathbf{1} + \RigidShift) + \WarpStrainMatrix \ShapeShift\Big)\dA + \mathbf{K}_{\rm W}\\
+    \end{aligned}
+    \end{SaveEquation}
+    where \(\mathbf{K}_{\rm W}\) is the contribution from the Wagner term \eqref{eq:section-wagner-tangent}:
+
+
+In a Bubnov-Galerkin formulation, the stress resultants and tangent are:
+\begin{SaveEquation}{eq:bubnov-section}
+\begin{aligned}
+\TraceTotalEnergyStress &= (\mathbf{1} + \RigidShift^{\top})\snm + \ShapeShift^{\top}\int \WarpStrainMatrix^{\top}\StressVector(\StrainVector)\dA \\
+\bar{\mathbf{C}}_T &= \int \Big(\RigidStrainMatrix (\mathbf{1} + \RigidShift) + \WarpStrainMatrix \ShapeShift\Big)^{\top}\StressVectorTangent\Big(\RigidStrainMatrix (\mathbf{1} + \RigidShift) + \WarpStrainMatrix \ShapeShift\Big)\dA
+\end{aligned}
+\end{SaveEquation}
+

@@ -15,7 +15,7 @@ Salient features of Iesan's treatment include:
 \end{Quote}
 
 \subsection{Overview}
-
+\begin{Note}
 The Saint~Venant problems concern a prismatic, homogeneous, and isotropic linearly elastic body 
 \(
 \Body=(0,L)\times\Section
@@ -30,6 +30,7 @@ Together with the axial unit \(\FrameBasis:= \FrameBasis_y\times\FrameBasis_z\),
 \]
 A point in \(\Body\) has coordinates \(\reflenx\,\FrameBasis + \bm{r}\) in the reference configuration, where \(\bm{r} \in\Section_x\) is the coordinate of a point in the section at \(\reflenx\) and \(\bm{r}\cdot\FrameBasis = 0\).
 The boundary of \(\Body\) consists of the the lateral boundary \(\BodyLateralSurface=\SectionBoundary\times(0,L)\) and the surfaces \(\Section_0,\,\Section_L\) of the sections at the ends \(\reflenx \in \{0,L\}\).  
+\end{Note}
 The \emph{resultants} are the integrals of the traction \(-\StressTensor\,\FrameBasis\) on the root section \(\Section_0\):
 \begin{equation}
 \mathscr{F}(\hat{\bm u})=\int_{\Section_0}\StressTensor(\hat{\bm u})\,(-\FrameBasis)\dA,\qquad
@@ -323,11 +324,11 @@ b_\vartheta&=0,
 \end{equation}
 and \(c_\vartheta\) is determined by the relaxed torsion boundary condition \(\FrameBasis\cdot\int \bm{r}\times\bm{\tau}\dA = 0\):
 \begin{equation}
-\Jsv\,c_\vartheta
+\,c_\vartheta
 = \CenterShearLocation\cdot\bm{b}_{\Section}
-% -\FrameBasis\cdot\int_{\Section} \bm{r}\times \left(\nabla \bm{\WarpShearIesan}^{\top}
+% -\frac{1}{\Jsv}\FrameBasis\cdot\int_{\Section} \bm{r}\times \left(\nabla \bm{\WarpShearIesan}^{\top}
 % + \bm{\Pi}_{(b)} \right)\bm{b}_{\Section} \dA 
-% =-\int_\Section\Big[(\FrameBasis\times\bm{r})\cdot\nabla\big(\bm{\WarpShearIesan}\cdot\bm{b}_{\Section}\big)
+% =-\frac{1}{\Jsv}\int_\Section\Big[(\FrameBasis\times\bm{r})\cdot\nabla\big(\bm{\WarpShearIesan}\cdot\bm{b}_{\Section}\big)
 % +\tfrac12\,\nu\,r^2\,(\FrameBasis\times\bm{r})\cdot\bm{b}_{\Section}\Big]\dA .
 \label{eq:iesan-2-22}
 \end{equation}

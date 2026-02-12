@@ -1,24 +1,5 @@
 % \section{Appendix 4.A: Discretization}\label{ch:discretization}
-\subsubsection{Mechanical Systems}
 
-This section presents a general approach for discretizing a large class of structural equilibrium problems that are governed by partial differential equations to formulate a representative discrete internal force vector $\intern$. 
-The procedure generalizes the classical finite element method which is typically formulated on Sobolev vector spaces \citep{hughes1987finite} to the setting of nonlinear manifolds{\footnote{A manifold is a mathematical representation of a curved surface. Manifolds naturally arise as solution sets of constrained systems of equations and as graphs of functions.}}, which are encountered in the geometrically nonlinear analysis of plates, rods, and shells.
-In all such problems, equilibrium can be stated in terms of nonlinear partial differential equations of the form:
-\begin{equation}
-\rho \ddot{\bm{u}} = \bm{f} -  \mathbb{B}_\chi\bm{\sigma},
-\label{eq:strong}
-\end{equation}
-where \(\mathbb{B}_\chi\) is a nonlinear
-differential operator and both the generalized stress \(\bm{\sigma}\) and the body force \(\bm{f}\) are \emph{continuous} functions defined over a body \(\mathcal{B}\) placed in space by a
-map \(\chi\). In general \(\mathbb{B}\) may depend nonlinearly on \(\chi\),
-but always acts linearly on \(\bm{\sigma}\). 
-% This class of problems is formally summarized in Box~\ref{box:mechanical-equilibrium}.
-% Problems with the form of
-% \eqref{eq:strong} describe the equilibrium of continuua, rods, and shells, whose
-% configurations \(\chi\) may comprise a \emph{nonlinear} space
-% \(\mathscr{C}\).
-% Additional resources for this material are contained in
-% \cite{marsden1994mathematical,zienkiewicz2014finite,ogden1997nonlinear} and \cite{shilov1996elementary}.
 
 \hypertarget{sec:discretization}{%
 \subsubsection{Projection}\label{sec:discretization}}
@@ -27,7 +8,7 @@ The structure outlined in Box~\ref{box:mechanical-equilibrium} implies a weak st
 of \eqref{eq:strong} that is centered around the Galerkin \emph{residual functional}:
 %
 \begin{equation}
-\mathcal{G}\left[\bm{\eta}\right] \triangleq \left< \bm{\eta}, \, \bm{f}\right>_\chi - \left< \bm{\eta}, \, \mathbb{B}_\chi \bm{\sigma}\right>_\chi.
+\mathcal{G}\left[\bm{\eta}\right] \triangleq \left< \bm{\eta}, \, \bm{f}\,\right>_\chi - \left< \bm{\eta}, \, \mathbb{B}_\chi \bm{\sigma}\right>_\chi.
 \label{eq:galerkin}
 \end{equation}
 %
@@ -47,81 +28,6 @@ the subscript \(\chi\) on \(\mathbb{B}_\chi\) and
 for brevity % {of notation}
 and the body force \(\bm{f}\)
 is not considered.
-\iftrue
-
-\begin{ambox}[Continuous Mechanics]{box:mechanical-equilibrium}
-\begin{description}
-% \tightlist
-\item[Body]
-A body \(\mathcal{B}\) is a set of points \(\bm{\xi}\), and a placement
-\(\mathcal{B}_\chi\) of \(\mathcal{B}\) is a Riemannian manifold
-\(\mathcal{B}_\chi\) with boundary \(\partial \mathcal{B}\) and tangent
-bundle \(T\mathcal{B}_\chi\) embedded in an ambient Euclidean space
-\(\mathcal{E}\). The map
-\(\chi\colon \mathcal{B}\rightarrow \mathcal{B}_\chi\) associates the
-state of a material point \(\bm{\xi}\) to the placement
-\(\mathcal{B}_\chi\). A reference configuration
-\(\chi_0\colon \mathcal{B}\rightarrow \mathcal{B}_{\chi_0}\) is often
-implied and the pull-back by the composition \(\chi\circ\chi_0^{-1}\) is
-denoted by \(\bm{A}\).
-% \tightlist
-\item[Energy]
-The set \(\mathscr{C}\) of configurations \(\chi\) forms a smooth
- manifold. A configuration \(\chi\) is identified by a couple
-\((\bm{x}, \bm{\Lambda})\) where \(\bm{x}\in\mathscr{C}_x\) is a
-vectorial configuration variable and
-\(\bm{\Lambda}\in\mathscr{C}_{\scriptscriptstyle{\Lambda}}\) a
-non-vectorial variable. These enter independently in a Riemannian metric
-on the tangent space \(T_\chi\mathscr{C}\) to \(\mathscr{C}\) at
-\(\chi\), which takes the assumed form: 
-\begin{equation}
-  \left< \cdot , \, \cdot\right>_{\chi} = \left< \cdot , \, \cdot\right>_{x} + \left< \cdot , \, \cdot\right>_{\scriptscriptstyle{\Lambda}} .
-  \label{eq:conf-pair}
-\end{equation}
-%
-\item[Stress]
-The spatial stress \(\bm{\sigma}\) in \eqref{eq:strong} is related to a
-material stress \(\bm{s}\) which is defined with respect to inner products 
-in \(\mathscr{C}\) at the current \(\chi\) and reference
-\(\chi_0\) configurations:
-\begin{equation}
-  \left<\bm{c},\, \bm{\sigma}\right>_{\chi}
-  =\left< \bm{A}\bm{c},\, \bm{s}\right>_{\chi_0}
-  = \left<\bm{c},\, \bm{A}_*\bm{s}\right>_{\chi}
-  %=\left< \bm{A}\bm{c},\, \bm{s}\right>_{\chi_0}\qquad\text{ for any }\bm{c},
-  \label{eq:def-Astar}
-\end{equation}
-for any \(\bm{c}\).
-% with \(\bm{A}_*\) denoting the Piola transformation. 
-Similarly, a dual
-\(\mathbb{B}^*\) to the equilibrium operator \(\mathbb{B}\) in
-\eqref{eq:strong} is defined with respect to \eqref{eq:conf-pair}:
-\begin{equation}
-  \left<\bm{\eta},\, \mathbb{B}_\chi\bm{\sigma}\right>_\chi = \left<\mathbb{B}_\chi^*\bm{\eta},\, \bm{\sigma}\right>_\chi.
-  \label{eq:def-adjoint}
-\end{equation}
-% \tightlist
-\item[Strain]
-The material strain \(\bm{e}\) is compatible with
-\(\mathbb{B}^*_\chi\) through the differential relation: 
-\begin{equation}
-  D\bm{e}\cdot\bm{u} \equiv \bm{A}\mathbb{B}^*_\chi \bm{u}.
-  \label{eq:vstrain}
-\end{equation}
-%
-\item[Constitution]
-The constitutive response is defined between the material stress
-\(\bm{s}\) and the material strain \(\bm{e}\) with material \(\bm{C}_s\) and
-spatial \(\bm{C}_\sigma\) moduli defined by:
-\begin{equation}
-  D \bm{s}\cdot \bm{u} = \bm{C}_s \, D \bm{e}\cdot {\bm{u}}
-  \qquad\text{ and }\qquad
-  \bm{C}_\sigma \triangleq \bm{A}_*\bm{C}_s\bm{A}.
-  \label{eq:def-moduli}
-\end{equation}
-\end{description}
-\end{ambox}
-\fi
 
 In nonlinear finite element analysis,
 the solution algorithm searches for a configuration \(\chi\) in the space \(\mathscr{C}\) that satisfies the
@@ -246,7 +152,7 @@ Substitution back into \eqref{eq:def-K} furnishes the final expression for the m
 \end{aligned}
 \label{eq:Km}
 \end{equation}
-where \eqref{eq:def-moduli} is used to replace \(\bm{C}_s\) by \(\bm{C}_{\sigma}\)
+where \eqref{eq:def-moduli} is used to replace \(\bm{C}_s\) by the spatial moduli \(\bm{C}_{\sigma}\triangleq \bm{A}_*\bm{C}_s\bm{A}\)
 after transferring \(\bm{A}\) in the first inner product argument to the second argument
 with \eqref{eq:def-Astar}.
 

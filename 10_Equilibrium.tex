@@ -34,7 +34,7 @@ where the reduced warping vector \(\bar{\bm{\alpha}} \triangleq (\mathbf{I} - \m
 
 % \subsubsection{Algebraic Constraints}
 
-\paragraph{Kinematics}
+\paragraph{Kinematics.}
 Using the constraints \eqref{eq:linear-warp-constraints}, the full strain vector can be expressed through the transformation:
 
 \begin{equation}
@@ -68,7 +68,7 @@ Using the constraints \eqref{eq:linear-warp-constraints}, the full strain vector
 %
 where \(\mathbf{L}_{\rm vn}\) and \(\mathbf{L}_{vm}\) are the partitions of \(\mathbf{L}_{\rm vp}\) corresponding to \(\bm{\gamma}\) and \(\bm{\kappa}\), respectively, and similarly for \(\mathbf{L}_{\rm wn}\) and \(\mathbf{L}_{\rm wm}\).
 \begin{remark}
-Here $\bar{\bm{\alpha}}$ partitions out the constrained amplitudes, and $\bm{\alpha}$ is the union of these constrained amplitudes with the unconstrained amplitudes. So, eg, given a two-mode warping model $\bm{\alpha} = (\alpha_1, \alpha_2)$, and one constraint, $\alpha_1 = \FrameBasis\cdot\bm{\kappa}$,
+Here $\bar{\bm{\alpha}}$ partitions out the constrained amplitudes, and $\bm{\alpha}$ is the union of these constrained amplitudes with the unconstrained amplitudes. Thus, for example, given a two-mode warping model $\bm{\alpha} = (\alpha_1, \alpha_2)$, and one constraint, $\alpha_1 = \FrameBasis\cdot\bm{\kappa}$,
 then \[
 \mathbf{L}_{\rm vv} = \begin{bmatrix}
 1 & 0 \\ 0 & 0
@@ -80,7 +80,7 @@ then \[
 \]
 \end{remark}
 
-\paragraph{Equilibrium}
+\paragraph{Equilibrium.}
 
 To derive the equilibrium equations for the constrained system, we consider the Galerkin projection of the equilibrium residual. The weak form contribution from warping is:
 \begin{equation*}
@@ -96,6 +96,7 @@ After exploiting the linearity of the inner product and the transpose property o
 -\left< \bm{w}'-\bm{v} ,\, \delta \bar{\bm{\alpha}} \right>
 \end{equation*}
 
+\iffalse
 This motivates the definition of augmented stress resultants:
 \begin{equation}
 \begin{aligned}
@@ -121,6 +122,8 @@ and the corresponding resultant transformation \(\mathbf{L}^*\):
 \bm{n} \\ \bm{m} \\ \bm{w} \\ \bm{v}
 \end{pmatrix}
 \end{equation*}
+\fi 
+
 %
 \vspace{1ex}
 \begin{ambox}[Type 2: Constrained Warping]{box:warp2}
@@ -159,15 +162,12 @@ The treatment of the $\mathbf{L}_{\rm vp}^{\top}\bm{w}'$ term in \eqref{eq:type2
 \item The \emph{element} must then compute $\bm{w}'$ through differentiation of its interpolated bimoment field and apply the correction $-\mathbf{L}_{\rm vp}^{\top}\bm{w}'$ to the primary equilibrium.
 \end{itemize}
 This division implies that Type 2 elements require higher-order interpolation to accurately compute $\bm{w}'$, making them more complex to implement than standard beam elements. 
-This motivates the Type 3 formulation, where the assumption $\bar{\bm{\alpha}}' = \mathbf{0}$ (uniform warping) eliminates the $\bm{w}'$ term entirely, allowing all operations to remain at the section level and enabling the use of standard 6-DOF beam elements without modification.
+This motivates the Type 3 family, where the $\bm{w}'$ term is dropped entirely, allowing all operations to remain at the section level and enabling the use of standard 6-DOF beam elements without modification.
 \end{remark}
 
 \subsection{Type 3: Uniform Warping}
 
-For algebraic constraints in Type 3, we seek to derive a case that is appropriate for elements that cannot supply $\bm{\alpha}'$ to the section. 
-
-
-Type 3 imposes two conditions on the constrained warping modes:
+Type 3 imposes two assumptions on the constrained warping modes:
 \begin{equation}
 \mathbf{L}_{\rm vp}\bm{e}_{\rm p}' = \mathbf{0} \quad \text{and} \quad \langle\bm{w}' - \bm{v}, \mathbf{L}_{\rm vp}\delta\bm{e}_{\rm p}\rangle = \mathbf{0}
 \label{eq:type3-conditions}

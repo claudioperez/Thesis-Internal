@@ -13,7 +13,9 @@
 % Fixing the problem within existing software architectures would require rewriting element-level code, with attendant re-validation, for each affected element type.
 % \end{Aside}
 
-A family of models are developed for simulating slender members exhibiting geometric and material nonlinearities. 
+\subsection{Objectives}\label{sec:part-i-objectives}
+
+% A family of models are developed for simulating slender members exhibiting geometric and material nonlinearities. 
 Slender members are typically represented by dimensionally reduced \citep{kantorovich1958approximate} models of three dimensional continuua, known as beam theories, which simplify the partial differential equations of elastostatics to produce an ordinary differential equation in one spatial variable.
 When discretized by the finite element method, these models offer a substantial advantage in computational demand, but several complications arise in the face of geometric and material nonlinear response:
 \begin{description}
@@ -26,13 +28,16 @@ Formulations that restore objectivity exist, but they sacrifice the symmetric ta
 Inelastic material response exhibits a complicated dependency on the three dimensional state of stress and strain in a body. 
 
 Fiber section models \citep{taucer1991fiber} reconstruct a \emph{uniaxial} strain field by leveraging the plane section hypothesis of Euler-Bernoulli and Timoshenko beam theories. 
-This approach yields acceptable accuracy when a uniaxial material model can sufficiently capture the inelastic material response and boundary conditions are simple.
+This approach yields acceptable accuracy when a uniaxial material model can sufficiently capture the inelastic material response. 
+This is often the case for slender members with simple cross sections that are not expected to experience torsion. 
 
 It is possible to reconstruct a \emph{multiaxial} strain field from the fields of a beam theory by leveraging the plane section hypothesis, but this fails to account for cross-sectional warping and tends to over-predict strength and stiffness. 
 
-A more accurate approach for reconstructing a multiaxial strain state introduces auxiliary kinematic fields in the formulation of the beam theory that model this warping \citep{lecorvec2012nonlinear,klinkel2003anisotropic}. 
+A more accurate approach for reconstructing a multiaxial strain state introduces auxiliary kinematic fields in the formulation of the beam theory that model this warping \citep{reissner1952nonuniform,klinkel2003anisotropic,lecorvec2012nonlinear}. 
 When no limit is placed on the number of warping fields, it is possible to represent a continuum to any desired accuracy. 
-However such models are often cumbersome, and it is preferable to forgo auxiliary warping fields altogether whenever possible.
+With only one auxiliary warping field, \cite{armero2021modeling} has demonstrated that such models furnish stress fields which violate equilibrium and may produce inaccurate results. 
+However, excessive auxiliary warping fields can be computationally prohibitive. 
+Furthermore such models are often cumbersome, and it is preferable to forgo auxiliary warping fields altogether whenever possible.
 
 When cross sectional warping is expected to vary uniformly over the body, auxiliary warping fields can be eliminated by associating various warping modes with classical beam deformations like curvature \(\bm{\kappa}\). 
 In the elastic setting this furnishes the classical Saint~Venant torsion constant and Timoshenko's shear correction factor. 
@@ -41,89 +46,50 @@ However, in the three dimensional setting, several open problems remain.
 
 % In the elastic theory of beams these effects are tacitly represented by the Saint~Venant torsion and shear-correction cross sectional constants. 
 
-\item[Physical Transparency.] [TODO: Setup for how certain formulations of shear and rotations are required to model certain boundary conditions and loadings, and the tradeoffs that arise.]
+% \item[Physical Transparency.] [TODO: Setup for how certain formulations of shear and rotations are required to model certain boundary conditions and loadings, and the tradeoffs that arise.]
 
 \end{description}
 
-\subsection{Objectives}\label{sec:part-i-objectives}
 
-We seek a formulation in which warping effects are entirely absorbed into the 
-section-level constitutive relation, so that standard six-DOF beam elements 
-can be employed without modification.
 
 \subsection{Scope and Methodology}
 
-The developments in this work are restricted to the following setting [TODO: Elaborate.]:
+An assumed strain framework is developed that enhances section constitutive models for standard beam elements and supports integrating inelastic multiaxial material response over the cross section. 
+
+The developments are restricted to the following setting :
 \begin{itemize}
 \item Prismatic, initially straight beams with arbitrary cross-section geometry. 
 \item Quasi-static response.
 \item Small to moderate material strain.
+% \item Initially isotropic.
 \end{itemize}
 
 The following simplifying assumptions are adopted:
 \begin{itemize}
     \item Saint-Venant stress
-    \item For Type 3, warping-deformation relation maintains proportionality through inelastic response.
+    
+    % \item For Type 3, warping-deformation relation maintains proportionality through inelastic response.
 \end{itemize}
 
 
 \subsection{Outline}
 
-\Cref{sec:genwarp} develops equilibrium equations for a family of beam theories that account for cross-sectional warping in the geometrically exact context.
-Beam theories are classified into four types according to how warping amplitudes are related to the classical beam strains. 
-The Type~3 formulation, in which warping amplitudes are algebraically constrained to the beam strains, is of particular interest as it requires only six degrees of freedom.
+% \Cref{sec:genwarp} develops equilibrium equations for a family of beam theories that account for cross-sectional warping in the geometrically exact context.
+% Beam theories are classified into four types according to how warping amplitudes are related to the classical beam strains. 
+% The Type~3 formulation, in which warping amplitudes are algebraically constrained to the beam strains, is of particular interest as it requires only six degrees of freedom.
 
-\Cref{sec:gensec} develops the section-level constitutive equations that connects 
-the one-dimensional beam model to the three-dimensional continuum. 
-% We introduce material points in the cross-section through an extended displacement field and derive strain measures consistent with the beam kinematics.
+\Cref{sec:genwarp} introduces the general mathematical setting. 
+Notation is introduced and the theory of geometrically exact Cosserat beams with auxiliary warping is recalled. The distinction between uniform and nonuniform warping is introduced. 
 
-\cref{sec:timo} is centered on identifying a minimal set of warping shapes which allow for the exact reconstruction of Saint~Venant's classical continuum solutions through the reduced Type~3 models of \cref{sec:genwarp}. 
+\Cref{sec:gensec} develops the section-local enhanced strain principal and presents an algorithm for its implementation. 
+This general principal is specialized in \Cref{sec:timo} and \Cref{sec:nonuniform} for uniform and nonuniform warping, respectively. 
+In both cases, the enhanced shapes are derived to ensure continuum-exact response in the elastic regime. 
+
+\Cref{sec:timo} is centered on identifying a minimal set of warping shapes which allow for the exact reconstruction of Saint~Venant's classical continuum solutions without auxiliary warping fields. 
+
+
+%through the reduced Type~3 models of \cref{sec:genwarp}. 
 % The investigation gives rise to the 
 
 % \end{Details}
 
-
-\subsection{Literature}
-
-% \cite[p39]{vlasov1961thinwalled}
-
-\subsubsection{Uniform warping.}
-
-
-Existing implementations of inelastic beam elements with warping \citep{saritas2009inelastic,%
-lecorvec2012nonlinear,dire2018mixed} introduce auxiliary kinematic fields 
-that must be interpolated along the element length. These additional degrees 
-of freedom either inflate the global system of equations—incurring a cost 
-that scales as the cube of the DOF count for direct linear solvers—or must 
-be condensed out at the element level during each Newton iteration.
-
-% \paragraph{Elastostatics}
-
-% \cite{brown1994nonuniform}
-
-
-\cite{elfatmi2007nonuniform} put forth an elastic warping beam theory with three warping modes based on the full Saint~Venant solution. 
-This work considers  arbitrary section geometry, but neglects the Poisson effect.
-
-
-% Inelastic response with warping is investigated by \cite{neal1961effecta,neal1961effect}.
-
-\subsubsection{Torsion-flexural coupling}
-\cite{kim2005exact,elfatmi2007nonuniform}, and \cite{du2020threedimensional}. 
-See also \cite{lewinski2021incorporating} who implemented the model of \cite{elfatmi2007nonuniform}.
-See also \cite{ladeveze1998new}.
-
-
-\subsubsection{Element Kinematics (Finite Deformation)}
-% Exact rotations plus warping
-\cite{simo1991geometricallyexact} introduced a geometrically exact formulation which incorporates one auxiliary cross-sectional warping mode. 
-This was investigated further by \cite{gruttmann2000theory} who emphasized the use of sections intersecting the reference curve at an arbitrary point. 
-This theory has also been investigated by \cite{rong2020geometrically} in the context of isogeometric analysis who considered the nonlinear Wagner term. 
-However, in this work the reference curve is restricted to intersect sections at the centroid. 
-
-\subsubsection{Section Kinematics (Moderate Strain)}
-\cite{rong2020geometrically} incorporated Wagner effects in a geometrically exact beam element with torsion warping.
-
-\cite{chadha2019comprehensive} investigate the a model that accounts for transverse warping induced through axial loading of a beam.
-
-% The asymmetric formulation of \cite{hsiao2000corotational} takes the shear-center as reference point.

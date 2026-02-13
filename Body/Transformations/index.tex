@@ -10,7 +10,7 @@
     common sources for
     a non-symmetric consistent tangent stiffness:
     (i) the formulation neglects to account for a Levi-Civita connection on the configuration manifold (for the case that one exists), or 
-    (ii) the residual is represented on a diffinite elementrent basis than the configuration increment.
+    (ii) the residual is represented on a different basis than the configuration increment.
     %When the former
     In the case of (i), %factor is at play,
     symmetry is typically restored at the equilibrium points \citep{simo1986threedimensional} and it can often be shown that a non-consistent symmetrized stiffness may not jeopardize the quadratic convergence of the solution algorithm \citep{nour-omid1991finite}.
@@ -20,14 +20,14 @@
     In this case, the lack of symmetry persists even at equilibrium points, and there is generally no way to employ a symmetric solver without jeopardizing quadratic convergence. 
   
   \item[Natural parameters.]
-    When a configuration is modeled on a manifold, the nodal variables of the configuration may be very diffinite elementrent from 
+    When a configuration is modeled on a manifold, the nodal variables of the configuration may be very different from 
     those for 
     their increments. 
     This can be difficult to implement in a conventional finite element platform, 
     where current and incremental state variables %FCF 
     are represented in vectors of %FCF %with
     the same size.
-    Furthermore, this representation may be very diffinite elementrent from that of the linearized theory, 
+    Furthermore, this representation may be very different from that of the linearized theory, 
     which
     may be discouraging for
     %can be very offputting to 
@@ -71,7 +71,7 @@
     The solution proposed by \cite{crisfield1999objectivity} and implemented by 
     \cite{jelenić1999geometrically,eugster2023family}
     uses interpolation along manifold geodesics with a Petrov-Galerkin formulation, 
-    but consequently forfinite elementits the symmetry of the tangent stiffness \citep{romero2004interpolation}.
+    but consequently forfeits the symmetry of the tangent stiffness \citep{romero2004interpolation}.
 %
   % \item[Nodal work-conjugacy]
 %
@@ -86,7 +86,7 @@
     which relaxes % where
     the director orthogonality constraint
     that enforces the plane section condition. 
-    In this formulation, the constraint is effinite elementctively recovered through mesh refinement.
+    In this formulation, the constraint is effectively recovered through mesh refinement.
 %    
 \end{description}
 %
@@ -127,9 +127,9 @@ Furthermore, symmetry at equilibrium is achieved by enforcing a Bubnov-Galerkin 
 % Similar methods are adopted by the ``natural'' formulations of Argyris and ``co-rotational'' formulations of \cite{nour-omid1991finite}. 
 % These formulations postulate the existence of a natural coordinate frame and are used to extend elements formulated as approximations to linearized equilibrium BVPs, to simulate large motions.
 % Procedures that are derived from discrete virtual work statements have been successfully used to employ linear finite elements in geometrically nonlinear simulations.
-% Despite taking a geometrically linear diffinite elementrential equation as a starting point, these formulations are known to successfully reproduce solutions of nonlinear boundary value problems and can be found in prominent commercial simulation software.
-% However, because these methods take a discrete virtual work statement as their point of departure, it is not clear in what capacity these formulations approximate a governing diffinite elementrential equation.
-% This creates the impression that elements derived in this manner belong to a class that is distinct from those arising from traditional finite element solutions of nonlinear diffinite elementrential equations. Even works like \cite{simo1987role} present these methods as if they fundamentally stem from a diffinite elementrent set of governing equations.
+% Despite taking a geometrically linear differential equation as a starting point, these formulations are known to successfully reproduce solutions of nonlinear boundary value problems and can be found in prominent commercial simulation software.
+% However, because these methods take a discrete virtual work statement as their point of departure, it is not clear in what capacity these formulations approximate a governing differential equation.
+% This creates the impression that elements derived in this manner belong to a class that is distinct from those arising from traditional finite element solutions of nonlinear differential equations. Even works like \cite{simo1987role} present these methods as if they fundamentally stem from a different set of governing equations.
 
 
 \subsection{Weighted Residuals on Manifolds}\label{sec:fea-prelim}

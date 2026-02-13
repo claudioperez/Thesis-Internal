@@ -1,32 +1,25 @@
-\subsection{Overview}
 
-
-\begin{Note}
 In this section, governing equations are developed for a line embedded in 3D space.
-A primary result is the observation that constitutive equations for all cases are related by a simple linear transformation.
-\end{Note}
 
 
-In this section we derive governing equations for models of a directed curve embedded in $\mathbb{R}^3$. 
 
-The Type 1 case is of interest because it is relatively easy to implement and appears regularly in the literature (though usually not in such a general form) like Reissner's theory of torsion warping \citep{reissner1952nonuniform}.
-Type~2 is harder to implement because it seems to produce higher-order equilibrium equations, but it is important because it covers several widely studied models, such as Vlasov's nonuniform torsion theory.
-Finally, the Type~3 case is particularly interesting.
-It is not as easy to implement as Type~1, but our goal is to show that the resulting differential equations are such that standard finite elements can be reused to model it, provided that the cross-sectional constitutive law is appropriately condensed.
-In particular, we aim to show that a section implemented for the general Type~1 formulation can be ``wrapped'' by a procedure applying the operators $\mathbf{L}$.
-In a later section we show that, when this Type~3 condensed/wrapped section is used in a standard $6$-DOF shear-deformable beam finite element (which expects only six stress resultants), it is possible to represent the full Saint~Venant class exactly, without altering the element.
-Moreover, when the section exhibits material or geometric nonlinearity through the resultant mapping, the resulting wrapper/Type~3 element combination remains a consistent approximation to a well-posed governing equilibrium boundary-value problem.
-% Within the Saint~Venant class the differential constraints arise only in a few fields and display several simplifying features; this will allow us to restrict the treatment of such constraints so as to avoid most of the pathological consequences they normally entail.
+% The Type 1 case is of interest because it is relatively easy to implement and appears regularly in the literature (though usually not in such a general form) like Reissner's theory of torsion warping \citep{reissner1952nonuniform}.
+% Type~2 is harder to implement because it seems to produce higher-order equilibrium equations, but it is important because it covers several widely studied models, such as Vlasov's nonuniform torsion theory.
+% Finally, the Type~3 case is particularly interesting.
+% It is not as easy to implement as Type~1, but our goal is to show that the resulting differential equations are such that standard finite elements can be reused to model it, provided that the cross-sectional constitutive law is appropriately condensed.
+% In particular, we aim to show that a section implemented for the general Type~1 formulation can be ``wrapped'' by a procedure applying the operators $\mathbf{L}$.
+% In a later section we show that, when this Type~3 condensed/wrapped section is used in a standard $6$-DOF shear-deformable beam finite element (which expects only six stress resultants), it is possible to represent the full Saint~Venant class exactly, without altering the element.
+% Moreover, when the section exhibits material or geometric nonlinearity through the resultant mapping, the resulting wrapper/Type~3 element combination remains a consistent approximation to a well-posed governing equilibrium boundary-value problem.
+% % Within the Saint~Venant class the differential constraints arise only in a few fields and display several simplifying features; this will allow us to restrict the treatment of such constraints so as to avoid most of the pathological consequences they normally entail.
 
-A key observation is that the constitutive equations for all of the cases considered are related by a simple linear transformation.
 
-\begin{Quote}
-The Type 4 case is of interest because it's relatively easy to implemented, and sees regular use in literature (but not in such a general form). Type 3 is harder to implement because it seems to produce a higher order equilibrium equation, but nonetheless it is of interest because it covers several widely studied models like Vlasov's nonuniform torsion model. 
-Finally, type 3 is extremely interesting. its not as easy to implement as Type 4, but my goal is to show that the resulting differential equations are such that standard finite elements can be reused to model it, provided that the resultant constitutive model is appropriately condensed. 
-I ultimately want to show that a section that is implemented for the general type 4 formulation can be simply "wrapped" by a procedure that applies the L operators. 
-In a later section we want to show that when this Type 3 condensed/wrapped section is used in a ``standard" 6-DOF shear deformable beam finite element (which expects only 6 resultants), it is possible to exactly model the complete Saint Venant Class, without any alterations to the element. Furthermore, we want that when the section exhibits material or geometric nonlinear response through the resultant mapping, the wrapper-type3 element combination remains a ``consistant" approximant to a meaningful governing equilibrium BVP. 
-In the Saint~Venant-class,  differential constraints only arise in a few fields which exhibit several simplifying features which I hope will allow us to sufficiently restrict the treatment of such constraints so as to eliminate all the messy implications they entail. 
-\end{Quote}
+% \begin{Quote}
+% The Type 4 case is of interest because it's relatively easy to implemented, and sees regular use in literature (but not in such a general form). Type 3 is harder to implement because it seems to produce a higher order equilibrium equation, but nonetheless it is of interest because it covers several widely studied models like Vlasov's nonuniform torsion model. 
+% Finally, type 3 is extremely interesting. its not as easy to implement as Type 4, but my goal is to show that the resulting differential equations are such that standard finite elements can be reused to model it, provided that the resultant constitutive model is appropriately condensed. 
+% I ultimately want to show that a section that is implemented for the general type 4 formulation can be simply "wrapped" by a procedure that applies the L operators. 
+% In a later section we want to show that when this Type 3 condensed/wrapped section is used in a ``standard" 6-DOF shear deformable beam finite element (which expects only 6 resultants), it is possible to exactly model the complete Saint Venant Class, without any alterations to the element. Furthermore, we want that when the section exhibits material or geometric nonlinear response through the resultant mapping, the wrapper-type3 element combination remains a ``consistant" approximant to a meaningful governing equilibrium BVP. 
+% In the Saint~Venant-class,  differential constraints only arise in a few fields which exhibit several simplifying features which I hope will allow us to sufficiently restrict the treatment of such constraints so as to eliminate all the messy implications they entail. 
+% \end{Quote}
 
 
 \subsection{Literature}
@@ -44,23 +37,160 @@ In the Saint~Venant-class,  differential constraints only arise in a few fields 
 % \end{itemize}
 
 % Supplements
-\cite{oreilly2017modeling,goss2003snap} offer perspectives that are rich in historical context. 
-\cite{hjelmstad2005fundamentals} presents a comprehensive treatment of two-dimensional beam theories, with limited coverage of three-dimensional theories and the complications that arise from the non-vectorial manifold.
-Useful resources which treat beam theory with  differential geometry are \cite{landau1970theory,connor1976analysis}.
+\cite{oreilly2017modeling,goss2003snap} offer rich historical accounts of nonlinear beam theories. 
+\cite{hjelmstad2005fundamentals} presents a comprehensive treatment of two-dimensional beam theories, with limited coverage of three-dimensional theories and the complications that arise from the non-vectorial manifold. 
+Useful resources which treat beam theory with  differential geometry are \cite{landau1970theory,connor1976analysis}. 
 
 \cite{zienkiewicz2014finite} provides an account of the
-necessary theory for its deployment in finite element applications,
+necessary theory for approximating such models by the finite element method,
 while \cite{meier2019geometrically} offers a comprehensive survey of the 
 state of the art for geometrically exact finite elements. 
 
 
+% \cite[p39]{vlasov1961thinwalled}
+
+\paragraph{Uniform warping.}
+
+
+Existing implementations of inelastic beam elements with warping \citep{saritas2009inelastic,%
+lecorvec2012nonlinear,dire2018mixed} introduce auxiliary kinematic fields 
+that must be interpolated along the element length. These additional degrees 
+of freedom either inflate the global system of equations—incurring a cost 
+that scales as the cube of the DOF count for direct linear solvers—or must 
+be condensed out at the element level during each Newton iteration.
+
+% \paragraph{Elastostatics}
+
+% \cite{brown1994nonuniform}
+
+
+\cite{elfatmi2007nonuniform} put forth an elastic warping beam theory with three warping modes based on the full Saint~Venant solution. 
+This work considers  arbitrary section geometry, but neglects the Poisson effect.
+
+
+% Inelastic response with warping is investigated by \cite{neal1961effecta,neal1961effect}.
+
+\paragraph{Torsion-flexural coupling.}
+\cite{kim2005exact,elfatmi2007nonuniform}, and \cite{du2020threedimensional}. 
+See also \cite{lewinski2021incorporating} who implemented the model of \cite{elfatmi2007nonuniform}.
+See also \cite{ladeveze1998new}.
+
+
+\paragraph{Element Kinematics (Finite Deformation).}
+% Exact rotations plus warping
+\cite{simo1991geometricallyexact} introduced a geometrically exact formulation which incorporates one auxiliary cross-sectional warping mode. 
+This was investigated further by \cite{gruttmann2000theory} who emphasized the use of sections intersecting the reference curve at an arbitrary point. 
+This theory has also been investigated by \cite{rong2020geometrically} in the context of isogeometric analysis who considered the nonlinear Wagner term. 
+However, in this work the reference curve is restricted to intersect sections at the centroid. 
+
+\paragraph{Section Kinematics (Moderate Strain).}
+\cite{rong2020geometrically} incorporated Wagner effects in a geometrically exact beam element with torsion warping.
+
+\cite{chadha2019comprehensive} investigate the a model that accounts for transverse warping induced through axial loading of a beam.
+
+% The asymmetric formulation of \cite{hsiao2000corotational} takes the shear-center as reference point.
+
+
+\iffalse
+\subsection{Mechanical Systems}
+
+This section presents a general approach for discretizing a large class of structural equilibrium problems that are governed by partial differential equations to formulate a representative discrete internal force vector $\intern$. 
+The procedure generalizes the classical finite element method which is typically formulated on Sobolev vector spaces \citep{hughes1987finite} to the setting of nonlinear manifolds{\footnote{A manifold is a mathematical representation of a curved surface. Manifolds naturally arise as solution sets of constrained systems of equations and as graphs of functions.}}, which are encountered in the geometrically nonlinear analysis of plates, rods, and shells.
+In all such problems, equilibrium can be stated in terms of nonlinear partial differential equations of the form:
+\begin{equation}
+\rho \ddot{\bm{u}} = \bm{f} -  \mathbb{B}_\chi\bm{\sigma},
+\label{eq:strong}
+\end{equation}
+where \(\mathbb{B}_\chi\) is a nonlinear
+differential operator and both the generalized stress \(\bm{\sigma}\) and the body force \(\bm{f}\) are \emph{continuous} functions defined over a body \(\mathcal{B}\) placed in space by a
+map \(\chi\). In general \(\mathbb{B}\) may depend nonlinearly on \(\chi\),
+but always acts linearly on \(\bm{\sigma}\). 
+% This class of problems is formally summarized in Box~\ref{box:mechanical-equilibrium}.
+% Problems with the form of
+% \eqref{eq:strong} describe the equilibrium of continuua, rods, and shells, whose
+% configurations \(\chi\) may comprise a \emph{nonlinear} space
+% \(\mathscr{C}\).
+% Additional resources for this material are contained in
+% \cite{marsden1994mathematical,zienkiewicz2014finite,ogden1997nonlinear} and \cite{shilov1996elementary}.
+\iftrue
+
+\begin{ambox}[Continuous Mechanics]{box:mechanical-equilibrium}
+\begin{description}
+% \tightlist
+\item[Body]
+A body \(\mathcal{B}\) is a set of points \(\bm{\xi}\), and a placement
+\(\mathcal{B}_\chi\) of \(\mathcal{B}\) is a Riemannian manifold
+\(\mathcal{B}_\chi\) with boundary \(\partial \mathcal{B}\) and tangent
+bundle \(T\mathcal{B}_\chi\) embedded in an ambient Euclidean space
+\(\mathcal{E}\). The map
+\(\chi\colon \mathcal{B}\rightarrow \mathcal{B}_\chi\) associates the
+state of a material point \(\bm{\xi}\) to the placement
+\(\mathcal{B}_\chi\). A reference configuration
+\(\chi_0\colon \mathcal{B}\rightarrow \mathcal{B}_{\chi_0}\) is often
+implied and the pull-back by the composition \(\chi\circ\chi_0^{-1}\) is
+denoted by \(\bm{A}\).
+% \tightlist
+\item[Energy]
+The set \(\mathscr{C}\) of configurations \(\chi\) forms a smooth
+ manifold. A configuration \(\chi\) is identified by a couple
+\((\bm{x}, \bm{\Lambda})\) where \(\bm{x}\in\mathscr{C}_x\) is a
+vectorial configuration variable and
+\(\bm{\Lambda}\in\mathscr{C}_{\scriptscriptstyle{\Lambda}}\) a
+non-vectorial variable. These enter independently in a Riemannian metric
+on the tangent space \(T_\chi\mathscr{C}\) to \(\mathscr{C}\) at
+\(\chi\), which takes the assumed form: 
+\begin{equation}
+  \left< \cdot , \, \cdot\right>_{\chi} = \left< \cdot , \, \cdot\right>_{x} + \left< \cdot , \, \cdot\right>_{\scriptscriptstyle{\Lambda}} .
+  \label{eq:conf-pair}
+\end{equation}
+%
+\item[Stress]
+The spatial stress \(\bm{\sigma}\) in \eqref{eq:strong} is related to a
+material stress \(\bm{s}\) which is defined with respect to inner products 
+in \(\mathscr{C}\) at the current \(\chi\) and reference
+\(\chi_0\) configurations:
+\begin{equation}
+  \left<\bm{c},\, \bm{\sigma}\right>_{\chi}
+  =\left< \bm{A}\bm{c},\, \bm{s}\right>_{\chi_0}
+  = \left<\bm{c},\, \bm{A}_*\bm{s}\right>_{\chi}
+  %=\left< \bm{A}\bm{c},\, \bm{s}\right>_{\chi_0}\qquad\text{ for any }\bm{c},
+  \label{eq:def-Astar}
+\end{equation}
+for any \(\bm{c}\).
+% with \(\bm{A}_*\) denoting the Piola transformation. 
+Similarly, a dual
+\(\mathbb{B}^*\) to the equilibrium operator \(\mathbb{B}\) in
+\eqref{eq:strong} is defined with respect to \eqref{eq:conf-pair}:
+\begin{equation}
+  \left<\bm{\eta},\, \mathbb{B}_\chi\bm{\sigma}\right>_\chi = \left<\mathbb{B}_\chi^*\bm{\eta},\, \bm{\sigma}\right>_\chi.
+  \label{eq:def-adjoint}
+\end{equation}
+% \tightlist
+\item[Strain]
+The material strain \(\bm{e}\) is compatible with
+\(\mathbb{B}^*_\chi\) through the differential relation: 
+\begin{equation}
+  D\bm{e}\cdot\bm{u} \equiv \bm{A}\mathbb{B}^*_\chi \bm{u}.
+  \label{eq:vstrain}
+\end{equation}
+%
+\item[Constitution]
+The constitutive response is defined between the material stress
+\(\bm{s}\) and the material strain \(\bm{e}\) with material \(\bm{C}_s\)  moduli defined by:
+\begin{equation}
+  D \bm{s}\cdot \bm{u} = \bm{C}_s \, D \bm{e}\cdot {\bm{u}}.
+  \label{eq:def-moduli}
+\end{equation}
+\end{description}
+\end{ambox}
+\fi
+\fi 
+
 \subsection{Kinematics}
 
-Consider the geometrically exact governing equations of a generalized Cosserat rod that is extended with \(n_w\) cross-sectional warping modes.
-
-Following the approach by \cite{simo1985finite}, the cross-section orientation is identified by a variable \(\FrameRotation(\reflenx) = \frameBasis \otimes \FrameBasis + \frameBasis_{\beta} \otimes \FrameBasis_{\beta}\) representing the constrained map from three directors in the reference configuration 
+The cross-section orientation is identified by a variable \(\FrameRotation(\reflenx) = \frameBasis \otimes \FrameBasis + \frameBasis_{\beta} \otimes \FrameBasis_{\beta}\) representing the constrained map from three directors in the reference configuration 
 \(\left\{\FrameBasis, \FrameBasis_\alpha\right\}\) to their placement in the current configuration \(\{\frameBasis, \frameBasis_\alpha\}\). 
-The index-free directors \(\FrameBasis\) and \(\frameBasis\) are, by definition, normal to the cross section plane. 
+% The index-free directors \(\FrameBasis\) and \(\frameBasis\) are, by definition, normal to the cross section plane. 
 The body coordinate \(\reflenx \in[0, L]\) is taken as the reference arc-length and
 the notation \((~\cdot~)^{\prime} \triangleq \partial(~\cdot~) / \partial \reflenx\) is adopted. 
 The placement of the deformed curve is represented by a vector \(\bm{x}(\reflenx) \in \mathbb{R}^3\), and cross sectional warping is represented by a vector \(\bm{\alpha}(\reflenx) \in \mathbb{R}^{n_w}\) of \(n_w\) \emph{warping amplitudes}. 

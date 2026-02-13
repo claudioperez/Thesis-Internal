@@ -1,0 +1,492 @@
+When auxiliary warping is included in the model, stress fields arise in violation of the equilibrium field equations \eqref{eq:sv-equilibrium}. 
+This has been observed for torsional warping by \cite{...} and was extensively investigated by \cite{armero2021modeling}. 
+
+\subsection{Preliminaries}
+
+\iftrue
+
+Define smooth, positive differential 2-forms \( \volG \) and \( \volE \)  on the cross-section \( \Section\) weighted by the shear \(G\) and Young's modulus \(E\), respectively:
+\[
+\begin{aligned}
+    \volG &= \WeightG(\PlanePosition)\,\dA
+    &\qquad
+    \volE &= \WeightE(\PlanePosition)\,\dA \\
+\end{aligned}
+\]
+where \(\dA\) is the Euclidean area form in the cross section plane \(\Section\). 
+These serve as volume forms over the cross section and define divergence and  integration on the section $\Section$ with densities $\WeightE$ and $\WeightG$ relative to the standard area form \citep{marsden1994mathematical}. 
+Define the \(E\)-inner product, \(G\)-energy inner product, and \(G\)-Poisson bracket:
+\begin{equation}
+\left<u,\, v\right>_E \triangleq \int_{\Section} u \, v \, \volE,
+\qquad
+\left(u,\, v\right)_G \triangleq \int_{\Section} \nabla u \cdot \nabla v \, \volG,
+\quad \text{and}\quad 
+\left\{u,\, v\right\}_G \triangleq \int_{\Section} \nabla u \cdot \FrameBasis \times \nabla v\, \volG
+\label{eq:def-products}
+\end{equation}
+acting on \(u,v\in L^{2}(\Section,\mathbb{R})\). 
+Observe that the bracket \eqref{eq:def-products}$_3$ integrates the scalar triple product \([\nabla \phi,\, \FrameBasis,\, \PlanePosition] \triangleq \nabla \phi \cdot \FrameBasis \times \PlanePosition\)
+\begin{equation*}
+\tfrac{1}{2}\left\{\phi, r^2\right\}_G = \int [\nabla \phi,\, \FrameBasis,\, \PlanePosition]\, \mu_G
+\end{equation*}
+
+\subsection{Equilibrium Violations}
+Under pure torsion, a beam with a single auxiliary warping field generates strains from \eqref{eq:linear-gl-strain-pi}:
+\begin{equation}
+\begin{aligned}
+\hat{\bm{\varepsilon}} 
+&= \alpha' \WarpSV\,\FrameBasis + \Twist \FrameBasis \times (\PlanePosition-\tilde{\bm{\SectionLocation}}) + \alpha \nabla  \WarpSV \\
+&= \alpha' \WarpSV\,\FrameBasis +  \Twist \, \bigl(\nabla \WarpSV + \FrameBasis\times(\PlanePosition - \tilde{\bm{\SectionLocation}})\bigr) - (\Twist - \alpha) \nabla \WarpSV
+\end{aligned}
+\label{eq:torsion-strain}
+\end{equation}
+where the Saint Venant function \(\WarpSVP\) with regard to a point \(\bm{\pi} \in \Section\) is uniquely defined up to a constant as the Riesz vector 
+\begin{equation}
+    (\WarpSVP,\, \psi)_G =  \frac{1}{2} \left\{ \| \PlanePosition - \bm{\pi}\|^2,\, \psi\right\}_G %= - [\nabla \psi,\, \FrameBasis, \PlanePosition]_G =
+    \qquad \forall \psi \in \mathcal{F}(\Section)
+    \label{eq:def-sv-riesz}
+\end{equation}
+or, equivalently (by \cref{prop:armero-81}), as the solution to the standard Neumann Laplace problem:
+\begin{equation}
+\left\{
+\begin{array}{rll}
+\DivG\left(\left.\nabla \WarpSVP+\FrameBasis \times(\PlanePosition-\bm{\pi})\right.\right) &=0 & \text { in } \Section, \\
+\nabla_{\bm{\nu}} \WarpSVP &=-\FrameBasis\times(\PlanePosition-{\bm{\pi}}) \cdot \bm{\nu} & \text { on } \PlaneBoundary, \\
+\int_{\Section} \WarpSVP \volE &= 0
+\end{array}
+\right.
+\label{eq:warp-sv-bvp}
+% \quad\text{and}\quad
+% \begin{array}{ll}
+% \nabla \cdot\left(n_G \nabla \WarpFA \right)=n_E \WarpSV & \text { in } \Section, \\
+% \nabla_{\bm{\nu}} \WarpFA =0 & \text { along } \partial \Section,
+% \end{array}
+\end{equation}
+where \(\DivG\) is the divergence with respect to the volume form \(\mu_G\), as defined by \eqref{eq:def-div} (Box~\ref{box:recall}). 
+
+
+% \begin{equation*}
+% \FrameBasis \times \left(\SectionIntegral{\bar{\bm{r}}\otimes\bar{\bm{r}}} \right)^{-1}\SectionIntegral{\tilde{\varphi}\,\bar{\bm{r}}\times\FrameBasis}
+% =-\FrameBasis^\times\tilde{\bm{\SectionLocation}}
+% \end{equation*}
+
+Under elastic isotropic material response, the stress field arising from \eqref{eq:torsion-strain} is in violation of equilibrium \eqref{eq:sv-axial-equilibrium}:
+\begin{equation}
+\left\{
+\begin{aligned}
+0 &\ne \Div\bm{\PointShearStress} + \AxialStress' = 
+ \Gref \DivG(\alpha\nabla\WarpSV + \Twist\FrameBasis\times(\SectionCoordinate-\tilde{\bm{\SectionLocation}})) + E\WarpSV\alpha'' \\
+0 &\ne \PointShearStress\cdot\bm{\nu} =...
+ \end{aligned}
+ \right.
+ \label{eq:torsion-violation}
+\end{equation}
+
+
+The residual shear stress
+$G(\Twist - \alpha)\,(\FrameBasis\times\PlanePosition)$ violates
+cross-sectional equilibrium in two respects: it carries a nonzero traction
+$G(\FrameBasis\times\PlanePosition)\cdot\bm{\nu}$ on~$\partial\Omega$,
+and its divergence
+$\nabla\cdot G(\FrameBasis\times\PlanePosition)$ does not match the
+distribution $E\,\WarpSV$ required by longitudinal balance of the axial stress
+$E\,\alpha''\,\WarpSV$. 
+The traction must vanish identically and constitutes a
+hard constraint; the divergence must be proportional to $E\,\WarpSV$, but with
+an amplitude that couples to the axial problem and is not determined at the cross-sectional level. 
+
+A gradient enrichment $\nabla\chi$ is a natural choice,
+as it derives from an additional warping displacement. 
+However, a single
+gradient field satisfying prescribed Neumann data has its divergence fully
+determined. 
+Two fields are therefore needed: one to absorb the inhomogeneous
+boundary data, with whatever divergence results, and a second with homogeneous
+Neumann data, whose amplitude remains free to supply the required interior source. 
+This motivates the ansatz
+\begin{equation}
+  \tilde{\StrainVector}
+  = (\Twist - \alpha)\,
+    \bigl(\nabla\chi_1
+    + \EnhanConstFA\,\nabla\chi_2\bigr),
+  \label{eq:enhan-ansatz}
+\end{equation}
+where $\EnhanConstFA$ is determined variationally.
+
+
+The transverse shear components of the 
+strain~\eqref{eq:torsion-strain} is
+\begin{equation}
+  \PointShearStrain % \hat{\bm{\gamma}}
+  = \alpha\bigl(\nabla\WarpSV + \FrameBasis\times\PlanePosition\bigr)
+  + (\Twist - \alpha)\,\FrameBasis\times\PlanePosition.
+  \label{eq:shear-decomp}
+\end{equation}
+The Saint-Venant warping function $\WarpSV$ is defined so that the shear pattern
+$G(\nabla\WarpSV + \FrameBasis\times\PlanePosition)$ is divergence-free with
+vanishing boundary traction:
+\begin{equation}
+  \nabla\cdot\bigl[G\bigl(\nabla\WarpSV
+    + \FrameBasis\times\PlanePosition\bigr)\bigr] = 0
+  \;\;\text{in }\Omega, \qquad
+  G\bigl(\nabla\WarpSV
+    + \FrameBasis\times\PlanePosition\bigr)\cdot\bm{\nu} = 0
+  \;\;\text{on }\partial\Omega,
+  \label{eq:sv-bvp}
+\end{equation}
+so the first term in~\eqref{eq:shear-decomp} is self-equilibrated for any value
+of~$\alpha$. The residual
+$(\Twist - \alpha)\,\FrameBasis\times\PlanePosition$ produces two violations of
+cross-sectional equilibrium. On the boundary it generates a spurious traction
+\begin{equation}
+  G\,(\Twist - \alpha)\,
+  (\FrameBasis\times\PlanePosition)\cdot\bm{\nu}
+  \quad\text{on }\partial\Omega,
+  \label{eq:torsion-violation}
+\end{equation}
+and in the interior, the shear stress divergence
+\begin{equation}
+  \nabla\cdot(G\,\hat{\bm{\gamma}})
+  = (\Twist - \alpha)\,
+    \nabla\cdot\bigl[G\,(\FrameBasis\times\PlanePosition)\bigr]
+  \label{eq:divergence-violation}
+\end{equation}
+fails to balance the axial stress gradient $E\,\alpha''\,\WarpSV$ required by
+longitudinal equilibrium. 
+We seek to address both defects by enriching the
+transverse strain with a superposition of cross-sectional gradient fields:
+\begin{equation}
+  \tilde{\bm{\gamma}}
+  = (\Twist - \alpha)\,
+    \bigl(\nabla\chi_1 + \EnhanConstFA\,\nabla\chi_2\bigr).
+  \label{eq:enhan-ansatz}
+\end{equation}
+
+\paragraph{Traction.}
+Choose $\chi_1$ so that
+$\FrameBasis\times\PlanePosition + \nabla\chi_1$ is both traction-free and
+divergence-free:
+\begin{equation}
+  \nabla\cdot G\bigl(\nabla\chi_1
+    + \FrameBasis\times\PlanePosition\bigr) = 0
+  \;\;\text{in }\Omega, \qquad
+  G\bigl(\nabla\chi_1
+    + \FrameBasis\times\PlanePosition\bigr)\cdot\bm{\nu} = 0
+  \;\;\text{on }\partial\Omega.
+  \label{eq:chi1-bvp}
+\end{equation}
+This coincides with~\eqref{eq:sv-bvp}, giving $\chi_1 = \WarpSV$ uniquely (up to
+an additive constant). 
+After this enrichment, the total shear reduces to
+$\Twist(\nabla\WarpSV + \FrameBasis\times\PlanePosition)$, which is traction-free
+and divergence-free. 
+This eliminates~\eqref{eq:torsion-violation}
+and~\eqref{eq:divergence-violation} simultaneously, but the divergence is now
+zero, whereas longitudinal equilibrium demands a nonzero shear stress
+divergence proportional to~$E\,\WarpSV$ to balance axial stress gradients from
+nonuniform warping.
+
+\paragraph{Divergence.}
+To supply the missing divergence without disturbing the traction-free condition, $\chi_2$ must satisfy
+\begin{equation}
+  \nabla\cdot(G\,\nabla\chi_2) + E\,\WarpSV = 0
+  \;\;\text{in }\Omega, \qquad
+  G\,\nabla_{\bm{\nu}}\chi_2= 0
+  \;\;\text{on }\partial\Omega,
+  \label{eq:fa-bvp}
+\end{equation}
+whose solvability is ensured by the normalization
+$\int_{\Section} \,\WarpSV \volE = 0$. 
+The homogeneous Neumann condition preserves the traction-free state established by~$\WarpSV$ and the divergence $-E\,\WarpSV$ balances the axial stress gradient $E\,\alpha''\,\WarpSV$. 
+
+\iffalse
+\begin{Note}
+The kinematic strain field associated with the warping displacement $\alpha\,\WarpSV$ is
+\begin{equation}
+  \hat{\PointShearStrain} = \alpha'\,\WarpSV\,\FrameBasis
+  + \Twist\,\FrameBasis\times\PlanePosition
+  + \alpha\,\nabla\WarpSV.
+  \label{eq:kinematic-strain}
+\end{equation}
+Its transverse components admit the decomposition
+\begin{equation}
+  \hat{\bm{\gamma}} = \alpha\bigl(\nabla\WarpSV + \FrameBasis\times\PlanePosition\bigr)
+  + (\Twist - \alpha)\,\FrameBasis\times\PlanePosition.
+  \label{eq:shear-decomp}
+\end{equation}
+The Saint-Venant warping function $\WarpSV$ is defined by the requirement that the
+shear pattern $\nabla\WarpSV + \FrameBasis\times\PlanePosition$ be self-equilibrated:
+\begin{equation}
+  \nabla\cdot G\bigl(\nabla\WarpSV
+  + \FrameBasis\times\PlanePosition\bigr)  = 0
+  \;\;\text{in }\Omega, \qquad
+  G\bigl(\nabla\WarpSV
+  + \FrameBasis\times\PlanePosition\bigr)\cdot\bm{\eta} = 0
+  \;\;\text{on }\partial\Omega,
+  \label{eq:sv-bvp}
+\end{equation}
+so the first term in~\eqref{eq:shear-decomp} satisfies cross-sectional equilibrium
+for any value of $\alpha$. The residual
+$(\Twist - \alpha)\,\FrameBasis\times\PlanePosition$ produces the
+spurious boundary traction
+\begin{equation}
+  G\,(\Twist - \alpha)\,
+  (\FrameBasis\times\PlanePosition)\cdot\bm{\nu}
+  \quad\text{on }\partial\Omega.
+  \label{eq:torsion-violation}
+\end{equation}
+
+To remove this violation, we seek a gradient enrichment
+$(\Twist - \alpha)\,\nabla\chi$ such that
+$(\Twist - \alpha)\bigl(\FrameBasis\times\PlanePosition + \nabla\chi\bigr)$ is
+self-equilibrated. Imposing both the divergence-free and traction-free conditions
+yields
+\begin{equation}
+  \nabla\cdot\bigl[G\bigl(\nabla\chi
+  + \FrameBasis\times\PlanePosition\bigr)\bigr] = 0
+  \;\;\text{in }\Omega, \qquad
+  G\bigl(\nabla\chi
+  + \FrameBasis\times\PlanePosition\bigr)\cdot\bm{\nu} = 0
+  \;\;\text{on }\partial\Omega,
+  \label{eq:chi-bvp}
+\end{equation}
+which coincides with~\eqref{eq:sv-bvp}. The unique solution (up to an additive
+constant) is $\chi = \WarpSV$, and the corrected shear reduces to
+$\Twist\bigl(\nabla\WarpSV + \FrameBasis\times\PlanePosition\bigr)$. This
+correction is unique: any alternative gradient $\nabla\psi$ that independently
+preserves both conditions satisfies
+$\nabla\cdot(G\,\nabla\psi) = 0$ in $\Omega$ with
+$G\,\partial\psi/\partial n = 0$ on $\partial\Omega$, which admits only
+$\psi = \mathrm{const}$.
+
+A nontrivial gradient enrichment that preserves the traction-free condition
+necessarily has nonzero divergence. To represent the secondary warping shear that
+arises from nonuniform bimoment, we introduce a second warping function $\WarpFA$
+through the flexural-analogy problem
+\begin{equation}
+  \nabla\cdot(G\,\nabla\WarpFA) + E\,\WarpSV = 0
+  \;\;\text{in }\Omega, \qquad
+  G\,\frac{\partial\WarpFA}{\partial n} = 0
+  \;\;\text{on }\partial\Omega,
+  \label{eq:fa-bvp}
+\end{equation}
+whose solvability is ensured by the standard normalization
+$\int_{\Omega} E\,\WarpSV\;dA = 0$. The homogeneous Neumann condition guarantees
+that $\nabla\WarpFA$ does not disturb the traction-free state established by
+$\nabla\WarpSV$, while the source term $E\,\WarpSV$ furnishes the divergence
+needed to balance axial stress gradients of the form $E\,\alpha''\,\WarpSV$.
+
+Combining both enrichments, the enhanced strain field takes the form
+\begin{equation}
+  \tilde{\StrainVector} = (\Twist - \alpha)\,
+  \bigl(\nabla\WarpSV + \EnhanConstFA\,\nabla\WarpFA\bigr),
+  \label{eq:nonuniform-shapes}
+\end{equation}
+where $\EnhanConstFA$ is a
+free parameter to be resolved variationally.
+The total strain
+$\bm{\varepsilon} = \hat{\StrainVector} + \tilde{\StrainVector}$ then reads
+\begin{equation}
+  \bm{\varepsilon} = \alpha'\,\WarpSV\,\FrameBasis
+  + \Twist\,\FrameBasis\times\PlanePosition
+  + \alpha\,\nabla\WarpSV
+  + (\Twist - \alpha)\,\EnhanShape\,
+  \bigl(\nabla\WarpSV + \EnhanConstFA\,\nabla\WarpFA\bigr).
+  \label{eq:total-strain}
+\end{equation}
+\end{Note}
+\fi
+
+Define a function \(\WarpFA\)
+\begin{equation}
+\left\{
+\begin{aligned}
+\bigl( \DivG\nabla\WarpFA \bigr)\volG
+  &=\WarpSV\,\volE.
+&\quad\text{in }\Section, \\
+\nabla_\nu \WarpFA &= 0 
+&\quad \text{on } \SectionBoundary \\
+\int_{\Section} \WarpFA \volE &= \AvgFA
+\end{aligned}
+\label{eq:warp-fa-bvp}
+\right.
+\end{equation}
+considered by \cite{reissner1952nonuniform,armero2021modeling,genoese2013mixed}. 
+% Equivalently, \(\WarpFA\) is defined up to a constant \(\AvgFA\) as the Riesz representation  (\cref{prop:FA88})
+% \begin{equation}
+% (\WarpFA,\, \phi)_G = - \left<\WarpSV,\, \phi\right>_E
+% \qquad \forall \phi \in \mathcal{F}(\Section)
+% \label{eq:def-fa-riesz}
+% \end{equation}
+
+Define constants:
+%
+\begin{subequations}\label{eq:J_defs}
+\begin{alignat}{7}          % <── three column *pairs*: 7 = 2·3+1
+\Jw        &\triangleq&\; &\langle\WarpSV,\WarpSV\rangle_E
+           &\equiv&\;    &-(\WarpFA,\WarpSV)_G
+           & &\;    & %[\nabla\WarpFA,\FrameBasis, \PlanePosition-\tilde{\bm{\SectionLocation}}]_G
+           \label{eq:Jw}
+           \\[4pt]
+%
+\Jv        &\triangleq&\;  &(\WarpSV,\WarpSV)_G
+           & &\;           & %-[\nabla \WarpSV,\, \FrameBasis,\, \PlanePosition - \bm{\SectionLocation}]
+           & &             &                              
+           \label{eq:Jv}\\[4pt]
+%
+\Js &\triangleq&\; &(\WarpFA,\WarpFA)_G
+           &\equiv&\;    &-\langle\WarpSV,\WarpFA\rangle_E
+           & &           &
+\label{eq:Jsigma} \\[4pt]
+%
+J &\triangleq&\; & \bigl(\WarpSV,\, \tfrac{1}{2} r^2\bigr)_G
+           &+&    &\left(\tfrac{1}{2}r^2,\, \tfrac{1}{2}r^2\right)_G
+           & &             &
+\end{alignat}
+\end{subequations}
+
+\subsection{Enhanced Shapes}
+
+Taking $\chi_1 = \WarpSV$ and $\chi_2 = \WarpFA$
+in~\eqref{eq:enhan-ansatz} gives the enhanced strain interpolation 
+\begin{SaveEquation}{eq:nonuniform-shapes}
+\EnhanShapes = \nabla\WarpSV + \EnhanConstFA\,\nabla\WarpFA
+\end{SaveEquation}
+
+where \(\WarpFA\) solves the Neumann-Poisson problem \eqref{eq:warp-fa-bvp} and \(\EnhanConstFA\) is an arbitrary constant. 
+%
+Taking
+\begin{equation}
+\EnhanConstFA = \frac{\Jw}{\Js} = -\frac{\left( \WarpFA,\,  \WarpSV\right)_G}{\left( \WarpFA,\,  \WarpFA\right)_G}
+\label{eq:fa-lambda}
+\end{equation}
+makes \(\EnhanShape\) orthogonal to \(\nabla \WarpFA\) in the sense that:
+$$
+\begin{aligned}
+\int \EnhanShape \cdot \nabla \WarpFA \, \dd A
+&=\langle\nabla \WarpSV, \nabla \WarpFA\rangle_E+ \EnhanConstFA \langle\nabla \WarpFA, G \nabla \WarpFA\rangle \\
+&=\left(~~~\WarpSV,\, ~~~\WarpFA\right)_G + \EnhanConstFA \left(\WarpFA,\, \WarpFA \right)_G\\ 
+&= 0
+% &= \left<~~~\WarpSV,\, ~~~\WarpSV\right>_E +
+\end{aligned}
+$$
+Among all fields with the form \eqref{eq:nonuniform-shapes}, this gives the unique one with the smallest weighted \(L^2\) norm \(\int \|\EnhanShape\|^2 \,\volG\).
+
+% The interpolation \eqref{eq:nonuniform-shapes} furnishes
+% \begin{equation}
+% \tilde{\StrainVector}
+%   = (\Twist - \alpha)\,
+%     \bigl(\nabla\WarpSV
+%     + \EnhanConstFA\,\nabla\WarpFA\bigr),
+%   \label{eq:def-enhan-strain}
+% \end{equation}
+The total strain $\bm{\varepsilon}
+= \hat{\StrainVector} + \tilde{\StrainVector}$ reads
+\begin{equation}
+  \bm{\varepsilon}
+  = \alpha'\,\WarpSV\,\FrameBasis
+  + \Twist\,\FrameBasis\times\PlanePosition
+  + \alpha\,\nabla\WarpSV
+  + (\Twist - \alpha)\,\EnhanShape\,
+    \bigl(\nabla\WarpSV
+    + \EnhanConstFA\,\nabla\WarpFA\bigr).
+  \label{eq:total-strain}
+\end{equation}
+
+% The violation \eqref{eq:torsion-violation} is remedied by the enhanced strain field:
+% \begin{equation}
+%     \StrainVector = \hat{\StrainVector} + \EnhanShape(\hat{\rho}) \, \EnhanParam 
+%     \qquad\text{with}\qquad
+%     \EnhanShape \triangleq %\WeightG \, \bigl(
+%     \nabla \WarpSV + \EnhanConstFA  \, \nabla \WarpFA ,
+%     \quad \EnhanParam = \Twist-\alpha,
+%     \qquad\text{and}\qquad
+%     \int \EnhanShape\cdot\PointShearStress(\hat{\StrainVector}+\EnhanShape(\hat{\rho}))\dA = 0
+%     %\bigr)
+%     % \EnhanShape \triangleq \WeightE\, \nabla \WarpSV + \EnhanConstFA \, \WeightG \, \nabla \WarpFA
+%     \label{eq:nonuniform-shapes}
+% \end{equation}
+%
+
+% \begin{subequations}\label{eq:J_defs}
+% \begin{alignat}{7}          % <── three column *pairs*: 7 = 2·3+1
+% \Jw        &\triangleq&\; &\langle\WarpSV,\WarpSV\rangle_E
+%            &\equiv&\;    &-(\WarpFA,\WarpSV)_G
+%            &\equiv&\;    &[\nabla\WarpFA,\FrameBasis,
+%                             \PlanePosition-\tilde{\bm{\SectionLocation}}]_G
+%            \label{eq:Jw}
+%            \\[4pt]
+% %
+% \Jv        &\triangleq&\;  &(\WarpSV,\WarpSV)_G
+%            &=&\;           & -[\nabla \WarpSV,\, \FrameBasis,\, \PlanePosition - \bm{\SectionLocation}]
+%            & &             &                              
+%            \label{eq:Jv}\\[4pt]
+% %
+% \Js &\triangleq&\; &(\WarpFA,\WarpFA)_G
+%            &\equiv&\;    &-\langle\WarpSV,\WarpFA\rangle_E
+%            & &             &
+%            \label{eq:Jsigma}
+% \end{alignat}
+% \end{subequations}
+For a prismatic member, \(\WarpSV' = \WarpFA' = 0\) and consequently, 
+\begin{equation}
+    \FrameBasis\cdot \EnhanShape = 0
+    \label{eq:enhan-prism}
+\end{equation}
+
+% Various interpolations \(\chi\) are investigated:
+% \begin{equation*}
+% \chi(\xi) = \begin{cases}
+% ~~  1 \\
+% ~~   x - \frac{L}{2} \\
+%     (x - \frac{L}{2})^3 
+% \end{cases}
+% \end{equation*}
+
+% \subsubsection{Case I: Section-Local Formulation}
+% % Begin by considering the case when \(\chi = 1\). 
+% This eliminates the assumed parameters \(\EnhanParam\) at the element level, allowing them to be computed locally in the resultant constitutive model. 
+% However, this carries the restriction that Conditions (i) and (iii) must be satisfied exactly by the section interpolation \(\EnhanShape\).
+
+\begin{equation*}
+\mathbf{K}_{\mathrm{ea}} = \int G 
+\begin{pmatrix}
+    \EnhanShape \\
+    \EnhanShape\times \PlanePosition \\
+    \mathbf{0} \\
+    \nabla \WarpSV \cdot \EnhanShape
+\end{pmatrix}
+\, \dd A
+\end{equation*}
+
+\begin{equation}
+K_{\mathrm{aa}} = \int \EnhanShape \cdot \mathbf{C}\EnhanShape \, \mu = \bar{G} (\Jv+\EnhanConstFA \Jw)
+\qquad\text{ and }\qquad
+\mathbf{K}_{\mathrm{ea}} = \bar{G} (\Jv+\EnhanConstFA \Jw) \left(\begin{array}{r}
+    ~\mathbf{0} \\ 
+    - \FrameBasis \\
+    ~\mathbf{0} \\
+    ~1
+\end{array}\right)
+\end{equation}
+
+\begin{equation}
+    \EnhanParam = - \underbrace{\begin{bmatrix}
+        \mathbf{0} & -\FrameBasis & \mathbf{0} & 1
+    \end{bmatrix}}_{K_{\mathrm{aa}}^{-1}\mathbf{K}_{\mathrm{ae}}}\bm{e}
+\end{equation}
+
+\begin{equation}
+\mathbf{K} = \int_{\Section} \TotalStrainMatrix^{\top}\mathbb{C}\TotalStrainMatrix\, \dd A 
+- \bar{G}(\Jv - \EnhanConstFA \Jw) \begin{bmatrix}
+\mathbf{0} & \mathbf{0} & \mathbf{0} & 0 \\
+\mathbf{0} & \FrameBasis\otimes\FrameBasis & \mathbf{0} & 0 \\
+\mathbf{0} & \mathbf{0} & \mathbf{0} & 0 \\
+    0  &     0  &     0  & 1 \\
+\end{bmatrix}
+\end{equation}
+
+% \input{Sections/43_PropCii}
+
+%
+\fi

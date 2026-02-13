@@ -1,6 +1,6 @@
 
 
-\chapter{Type I Prediction: Structural Modeling}\label{ch:predictor_t1}
+\chapter{Type I Prediction: Damage Metrics}\label{ch:predictor_t1}
 
 \section{Introduction}
 
@@ -40,9 +40,11 @@ Several models are developed for each bridge with varying fidelities to
 target a wide range of events.
 In order to accurately represent the structural response to a broad range of
 excitation intensities, several \glspl{predictor-t1} may be required. 
-For events of low to moderate intensity, a low-fidelity linear model, e.g., \cref{fig:meloland-abut}, often suffices. 
+For events of low to moderate intensity, a low-fidelity linear model often suffices. 
 However, in order to compute damage indicators following high intensity events, a high-fidelity nonlinear model is required that is able to account for and report on inelastic and geometrically nonlinear response. 
 Because these nonlinear models tend to be computationally intensive, a lower-fidelity model may be utilized to report partial metrics pending the completion of the full nonlinear analysis.
+
+\iffalse
 \begin{figure}[H]
 \hypertarget{fig:meloland-abuts}{%
 \centering
@@ -50,6 +52,7 @@ Because these nonlinear models tend to be computationally intensive, a lower-fid
 \caption{A low-fidelity model of Caltrans bridge No. \texttt{58-0215} (Meloland Road Overpass).}\label{fig:meloland-abut}
 }
 \end{figure}
+
 
 \subsection{Low Fidelity Models}
 
@@ -234,6 +237,8 @@ Given that the bridge and the corresponding foundation models are decoupled and 
 In the current implementation of the platform, the soil-shaft interaction models are integrated with the structural model of the bridge itself by connecting the head node of each shaft pile to the bottom node of the corresponding column by enforcing an equal-degree-of-freedom constraint. 
 Such implementation is demonstrated in \cref{sec:painter}.
 
+\fi 
+
 
 \section{Limit States}
 
@@ -243,13 +248,13 @@ The node at the base is restrained in all degrees of freedom with the
 other (top) node connected to the superstructure being free from any constraints. 
 A rigid joint offset is inserted at the top of each column to the center of the cap beam.
 
-\begin{figure}[h!]
-\centering
-% \includegraphics[height=0.3\textheight]{Part II/figures/general/ColumnGeometry.pdf}
-\includegraphics[height=0.3\textheight]{Part II/figures/meloland/Section_Meloland.pdf}
-\caption{Strategy of fiber modeling of column members.}
-\label{fig:sec_modeling}
-\end{figure}
+% \begin{figure}[h!]
+% \centering
+% % \includegraphics[height=0.3\textheight]{Part II/figures/general/ColumnGeometry.pdf}
+% \includegraphics[height=0.3\textheight]{Part II/figures/meloland/Section_Meloland.pdf}
+% \caption{Strategy of fiber modeling of column members.}
+% \label{fig:sec_modeling}
+% \end{figure}
 
 To determine the metric of \emph{damage state} (DS) for a column component given an imposed dynamic loading, maximum strain and maximum displacement are computed from nonlinear response history analysis. 
 There are multiple proposed schemes for defining DS, including strain-based DS (\cref{tab:DS}) that models the relationship between fiber strains and component capacity based on previous Caltrans-PEER studies, and ductility-based DS \citep{saini2014probabilistic} that models the relationship between a displacement-based damage index and component capacity. 
@@ -261,7 +266,7 @@ The \gls{platform} employs strain-based DS.
 \begin{tabular}{@{}cNNLLc@{}}\toprule
 \multirow{3}{*}{Label} & \multirow{3}{*}{Description} & \multirow{3}{5cm}{\centering Defining Criteria} & \multicolumn{3}{c}{Damage State} \\ \cmidrule{4-6} & & & Fiber Location & Compression or Tension & Strain \\ \midrule
 {DS0} & No damage & -- & -- & -- & -- \\ \midrule
-{DS1} & EQ-related tight cracking of cover & Cover cracking: the cover surface reaches tensile strength & Any outermost cover fiber & Tension & \gls{et} \\ \midrule
+{DS1} & Tight cracking of cover & Cover cracking: the cover surface reaches tensile strength & Any outermost cover fiber & Tension & \gls{et} \\ \midrule
 {DS2} & Moderate cracking (mixed orientations) \& minor spalling/flaking & Minor spalling: the cover surface reaches compressive strength & Any outermost cover fiber  & Compression & \gls{esp} \\ \midrule
 {DS3} & Open cracking or major spalling (exterior to confinement) & Major spalling: a significant depth of the cover reaches compressive strength & Any cover fiber at 1/2-3/4 of the cover depth & Compression & \gls{esp} \\ \midrule
 {DS4} & Exposed core (interior of confinement) & Exposed core: the entire depth of the cover reaches compressive strength & Any innermost cover fiber & Compression & \gls{esp} \\ \midrule

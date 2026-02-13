@@ -268,7 +268,7 @@ Inverting \eqref{eq:T0-plane-structure} furnishes for \(\TraceDpDeRoot\):
 \end{array}\right]
 % \label{eq:T0-inv}
 \end{SaveEquation}
-with:
+with entries given by \cref{tab:T0-inv-blocks}.
 % with entries given in terms of the blocks  $\TraceFF$, $\TraceFT$, $\CenterTrace$, and $\TraceTF$ from \cref{tab:T0-blocks}:
 
 \iffalse
@@ -282,20 +282,25 @@ with:
 % Block & Size &  Units & Description \\ 
 \begin{tabular}{rlllll}
 \toprule
-\multicolumn{2}{@{}l}{Block} & Size & Units & Coupling & \\ 
+\multicolumn{2}{@{}l}{Block} & Size & Units \\%& Coupling & \\ 
 \midrule
 $\ShiftB$ &  & $\mathbb{R}^{2 \times 2}$  &  \Length{-2} 
   & \(\bm\gamma\stackrel{\CenterShearLocation}{\rightarrow}\Twist\)
-  & $\bm{\gamma}\rightarrow\bm\alpha_{\WarpShearIesan}\stackrel{\CenterShearLocation}{\rightarrow}\alpha_{\WarpTwistIesan}$ \\
+  % & $\bm{\gamma}\rightarrow\bm\alpha_{\WarpShearIesan}\stackrel{\CenterShearLocation}{\rightarrow}\alpha_{\WarpTwistIesan}$ 
+  \\
 $\ShiftA$ & & $\mathbb{R}^{2 \times 2}$ &  \Length{-1} 
-  &  $\bm\gamma\rightarrow\bm\kappa$
-  & --- \\
+  % &  $\bm\gamma\rightarrow\bm\kappa$
+  % & --- 
+  \\
 $\TraceBT$ & & $\mathbb{R}^2$  & --- 
-& Curvature--torsion coupling \\
-$\TraceFT$ & & $\mathbb{R}^2$  & L 
-& Shear--torsion coupling \\
-$\TraceTF$ & & $\mathbb{R}^2$  & \Length{1} %--- 
-& Twist--flexure coupling \\
+% & Curvature--torsion coupling \\
+% $\TraceFT$ & & $\mathbb{R}^2$  & L 
+% & Shear--torsion coupling 
+\\
+$\TraceTF$ & & $\mathbb{R}^2$  & \Length{1} 
+% --- 
+% & Twist--flexure coupling 
+\\
 % $\TraceMF$ & $\mathbb{R}^{2\times2}$  & \Length{1} % ---
 % & Curvature--flexure coupling \\
 $\TraceNF$ & & $\mathbb{R}^2$  & \Length{2} %L 
@@ -309,7 +314,7 @@ Total: & & 18 & & \\
 \end{center}
 \end{table}
 \fi
-
+\iffalse
 \begin{subequations}
 \begin{align}
 \ShiftB &=\left(\TraceFF-\TraceFT\otimes\TraceTF\right)^{-1} \\
@@ -331,8 +336,9 @@ Total: & & 18 & & \\
     \TraceFT &= -\ShiftB^{-1}\ShiftK \\
 \end{aligned}
 \end{equation}
+\fi 
 
-\begin{Details}
+% \begin{Details}
 \begin{table}[H]
 \begin{center}
 \caption{Inverse trace matrix blocks.}
@@ -340,42 +346,50 @@ Total: & & 18 & & \\
 \renewcommand{\arraystretch}{1.3}
 \begin{tabular}{rlllll}
 \toprule
-\multicolumn{2}{@{}l}{Block} & Size & Units & Coupling & \\ 
+\multicolumn{2}{@{}l}{Block} & Size & Units \\%& Coupling & \\ 
 \midrule
 $\ShiftB$ & $\!=\left(\TraceFF-\TraceFT\otimes\TraceTF\right)^{-1} $& $\mathbb{R}^{2 \times 2}$ &  \Length{-2} 
-  & \(\bm\gamma\stackrel{\CenterShearLocation}{\rightarrow}\Twist\)
-  & $\bm{\gamma}\rightarrow\bm\alpha_{\WarpShearIesan}\stackrel{\CenterShearLocation}{\rightarrow}\alpha_{\WarpTwistIesan}$ \\
+  % & \(\bm\gamma\stackrel{\CenterShearLocation}{\rightarrow}\Twist\)
+  % & $\bm{\gamma}\rightarrow\bm\alpha_{\WarpShearIesan}\stackrel{\CenterShearLocation}{\rightarrow}\alpha_{\WarpTwistIesan}$ 
+  \\
 $\ShiftA$ & $\!=\FrameBasis^\times\bigl(\TraceBT\otimes\TraceTF - \TraceMF\bigr)\,\ShiftB$ & $\mathbb{R}^{2 \times 2}$ &  \Length{-1} 
-  &  $\bm\gamma\rightarrow\bm\kappa$
-  & --- \\
+  % &  $\bm\gamma\rightarrow\bm\kappa$
+  % & --- 
+  \\
 $\ShiftK$& $\!=-\ShiftB\TraceFT$ & $\mathbb{R}^2$ &  \Length{-1} 
-  & $\Twist\rightarrow\Twist$ 
-  & $\Twist\rightarrow\bm\alpha_{\WarpShearIesan}$ \\
+  % & $\Twist\rightarrow\Twist$ 
+  % & $\Twist\rightarrow\bm\alpha_{\WarpShearIesan}$ 
+  \\
 $\ShiftT$ & $\!=-\ShiftB\TraceTF$ & $\mathbb{R}^2$ &  \Length{-1} 
-  & --- & $\epsilon\rightarrow\alpha_{\WarpTwistIesan}$ \\
+  % & --- & $\epsilon\rightarrow\alpha_{\WarpTwistIesan}$ 
+  \\
 % $\ShiftNK$ & $\!=-\FrameBasis\times\CenterTrace$ &  $\mathbb{R}^2$ &  L 
 %   & --- & --- \\
 $\ShiftN$ & $\!=- \ShiftB\TraceNF$ & $\mathbb{R}^2$ &  --- 
-  & $\bm\gamma\rightarrow\epsilon$ 
-  & --- \\
+  % & $\bm\gamma\rightarrow\epsilon$ 
+  % & ---
+  \\
 $\ShiftF$ 
   & $=\FrameBasis\times\Bigl(
 -\TraceBT+\bigl(\TraceMF - \TraceBT\otimes\TraceTF\bigr)\,\ShiftB\TraceFT
 \Bigr)$ & $\mathbb{R}^2$ &  --- 
-  & $\Twist\rightarrow\bm{\kappa}$ 
-  & --- \\
+  % & $\Twist\rightarrow\bm{\kappa}$ 
+  % & --- 
+  \\
 $\ShiftScaleN$ & $\!=\TraceNF\cdot\ShiftB\TraceFT$ %-\CenterTrace\cdot\ShiftF 
 & $\mathbb{R}$ &  L
-  & $\Twist\rightarrow\epsilon$ 
-  & --- \\
+  % & $\Twist\rightarrow\epsilon$ 
+  % & --- 
+  \\
 $\ShiftScaleT$ & $\!=1 - \TraceTF\cdot\ShiftK$ & $\mathbb{R}$ &  --- 
-  & $\Twist\rightarrow\Twist$ 
-  & $\Twist\rightarrow\alpha_{\WarpTwistIesan}$\\
+  % & $\Twist\rightarrow\Twist$ 
+  % & $\Twist\rightarrow\alpha_{\WarpTwistIesan}$
+  \\
 \bottomrule
 \end{tabular}
 \end{center}
 \end{table}
-\end{Details}
+% \end{Details}
 
 
 \input{Sections/50/T0-inv}
@@ -419,110 +433,12 @@ The (2,2) block reveals the generalized shear correction coefficients:
 \label{eq:shear-correction}
 \end{equation}
 
-\paragraph{Implementation.}
-In view of the Saint~Venant strains \eqref{eq:iesan-point-strain}, the warping shapes \(\bm\Phi\) must contain:
-\[
-% \bm{\Phi}=
-\Big\{
-  \One,
-\ -\bm{r}^{\times},
-\ \bm{W}_{(a)},
-\ \bm{\Pi}_{(b)},
-\ \FrameBasis\,\varphi,
-\ \FrameBasis\otimes\bm{\psi}
-\Big\}.
-\]
-% Because this contains the plane-rigid span \(\PlaneMotions\), the primary trace fields \(\bm{u},\bm{\theta}\) 
-% will not generally represent the full plane-rigid content, which becomes offloaded onto the warping field \(\bm\alpha\) through a linear operator \(\RigidShift\) determined by the trace. 
-Upon elimination of the warping fields \(\bm\alpha\) the material strains are 
-\begin{SaveEquation}{eq:eps-B-e}
-\StrainVector(\reflenx,\bm{r}) = \Big(\RigidStrainMatrix (\mathbf{1} + \RigidShift) + \WarpStrainMatrix \ShapeShift\Big) \,\bm{e}(\reflenx)
-\end{SaveEquation}
-with \(\bm{e}(x) = (\bm\gamma(x),\,\bm{\kappa}(x))\) and:
-\begin{equation*}
-\begin{aligned}
-\RigidStrainMatrix(\bm{r}) &:= [\mathbf{1}, \;-\bm{r}^{\times}]_{3\times6} \\
-\WarpStrainMatrix(\bm{r}) &:= [\nabla\WarpTwistIesan,\; \FrameBasis_{\beta}\otimes\nabla_{\beta}\bm{\WarpShearIesan} + \bm{\Pi}_{(b)}]_{3\times 3}
-\end{aligned}
-\end{equation*}
-In view of \eqref{eq:def-T0}, the strain at \(\reflenx=0\) is:
-\begin{equation}
-\bm{\varepsilon}(0,\bm{r}) = \Big(\RigidStrainMatrix (\bm{r})(\mathbf{1} + \RigidShift) + \WarpStrainMatrix(\bm{r})\ShapeShift\Big) \,\TraceDeDpRoot \bm{p}
-\label{eq:trace-strain}
-\end{equation}
-Equating the \(\reflenx\)-constant strains in \eqref{eq:iesan-point-strain} with \eqref{eq:trace-strain} and exploiting the block structure of \(\TraceDpDeRoot\) \eqref{eq:T0-inv} furnishes:
-\begin{equation}
-\RigidShift = \begin{bmatrix}
-\FrameBasis\otimes\ShiftN - \oneS & \ShiftScaleN\FrameBasis\otimes\FrameBasis %+ \FrameBasis\otimes(\CenterTrace\times\FrameBasis) 
-\\
--\FrameBasis^{\times}\ShiftA + %\FrameBasis\otimes\ShiftNK + 
-\FrameBasis\otimes\ShiftB^{\top}\CenterShearLocation & (\ShiftScaleT + \ShiftK\cdot\CenterShearLocation - 1)\FrameBasis\otimes\FrameBasis + (\ShiftF\times\FrameBasis)\otimes\FrameBasis
-\end{bmatrix}_{6\times6}
-\label{eq:class-ii-Le}
-\end{equation}
-and
-\begin{equation}
-\ShapeShift = 
-\begin{bmatrix}
-(\ShiftB^{\top}\CenterShearLocation + \ShiftT)^{\top} & (\CenterShearLocation\cdot\ShiftK + \ShiftScaleT)\FrameBasis^{\top} \\
-\ShiftB & \ShiftK\otimes\FrameBasis
-\end{bmatrix}_{3\times6}
-\label{eq:class-i-La}
-\end{equation}
-
-In a Petrov-Galerkin formulation the stress resultants are furnished by 
-    \begin{SaveEquation}{eq:petrov-section}
-    \begin{aligned}
-        \snm &= \int \RigidStrainMatrix^{\top}\StressVector(\StrainVector)\dA\\
-        \TraceStiffNM &= \int \RigidStrainMatrix^{\top}\StressVectorTangent\Big(\RigidStrainMatrix (\mathbf{1} + \RigidShift) + \WarpStrainMatrix \ShapeShift\Big)\dA + \mathbf{K}_{\rm W}\\
-    \end{aligned}
-    \end{SaveEquation}
-    where \(\mathbf{K}_{\rm W}\) is the contribution from the Wagner term \eqref{eq:wagner-gl-strain-pi}:
-\begin{equation}
-\begin{aligned}
-    \hat{\bm{K}}_{\mathrm{W}} =
-\Twist & \SectionIntegral{
-\left[\begin{matrix}
-\bm{0} & r^{2}  \mathbb{C} \FrameBasis \otimes \FrameBasis & \bm{0} & \bm{0} \\
-r^{2}  \FrameBasis \otimes \FrameBasis \mathbb{C} 
-& r^{2}  \left(\bm{r}^{\times} \mathbb{C} \FrameBasis \otimes \FrameBasis -  \FrameBasis \otimes \FrameBasis \mathbb{C} \bm{r}^{\times}\right) & r^{2}  \FrameBasis \otimes \FrameBasis \mathbb{C} \FrameBasis\otimes \bm{\varphi} & r^{2}  \FrameBasis \otimes \FrameBasis \mathbb{C} \FrameBasis_{\beta} \otimes \nabla_{\beta} \bm{\varphi}\\
-\bm{0} & r^{2}  \bm{\varphi} \otimes \FrameBasis \mathbb{C} \FrameBasis \otimes \FrameBasis & \bm{0} & \bm{0} \\
-\bm{0} & r^{2}  \nabla_{\beta} \bm{\varphi} \otimes \FrameBasis_{\beta} \mathbb{C} \FrameBasis \otimes \FrameBasis & \bm{0} & \bm{0} 
-\end{matrix}\right]} \\
-+\Twist^2 & \SectionIntegral{\left[\begin{matrix}
-\bm{0} & \bm{0} & \bm{0} & \bm{0} \\
-\bm{0} & r^{4} \FrameBasis \otimes \FrameBasis \mathbb{C} \FrameBasis \otimes \FrameBasis & \bm{0} & \bm{0} \\
-\bm{0} & \bm{0} & \bm{0} & \bm{0} \\
-\bm{0} & \bm{0} & \bm{0} & \bm{0}
-\end{matrix}\right]
-} \\
-&+\SectionIntegral{\left[\begin{matrix}
-\bm{0} & \bm{0} & \bm{0} & \bm{0} \\
-\bm{0} & r^2 \AxialStress & \bm{0} & \bm{0} \\
-\bm{0} & \bm{0} & \bm{0} & \bm{0} \\
-\bm{0} & \bm{0} & \bm{0} & \bm{0} 
-\end{matrix}\right]
-}
-\end{aligned}
-\label{eq:section-wagner-tangent}
-\end{equation}
-
-In a Bubnov-Galerkin formulation, the stress resultants and tangent are:
-\begin{SaveEquation}{eq:bubnov-section}
-\begin{aligned}
-\TraceTotalEnergyStress &= (\mathbf{1} + \RigidShift^{\top})\snm + \ShapeShift^{\top}\int \WarpStrainMatrix^{\top}\StressVector(\StrainVector)\dA \\
-\bar{\mathbf{C}}_T &= \int \Big(\RigidStrainMatrix (\mathbf{1} + \RigidShift) + \WarpStrainMatrix \ShapeShift\Big)^{\top}\StressVectorTangent\Big(\RigidStrainMatrix (\mathbf{1} + \RigidShift) + \WarpStrainMatrix \ShapeShift\Big)\dA
-\end{aligned}
-\end{SaveEquation}
-
-
-
 
 \subsubsection{Summary.}
 The Class I traces represent a family of beam theories parameterized by 18 constants which are all capable of exactly representing Saint~Venant solutions through Type 3 beam finite elements.
 
 
-In a Type 3 finite element simulation, the trace matrix \(\TraceDpDeRoot\) is incorporated into the section response through the matrices \(\RigidShift\) \eqref{eq:class-ii-Le} and \(\ShapeShift\) \eqref{eq:class-i-La}.
+% In a Type 3 finite element simulation, the trace matrix \(\TraceDpDeRoot\) is incorporated into the section response through the matrices \(\RigidShift\) \eqref{eq:class-ii-Le} and \(\ShapeShift\) \eqref{eq:class-i-La}.
 
 \begin{table}[H]
 \caption{Summary of symbols (Class I).}

@@ -12,12 +12,15 @@ The developments of Part~I are summarized by Box~\ref{box:model-summary}.
     %     \RepeatEquation{eq:def-gam-kap}
     \item Element Kinematics
         \begin{description}
-            \item[$\circ$ Finite] \RepeatEquation{eq:finite-alignment-field}
-            \item[$\circ$ Linear]
+            \item[$\circ$ Finite] (Box~\ref{box:exact-shear-svq})
+            \RepeatEquation{eq:finite-alignment-field}
+            \item[$\circ$ Linear] (Box~\ref{box:basic-shear})
             \RepeatEquation{eq:trace-lift-linear}
         \end{description}
     \item Section Kinematics 
-        \RepeatEquation{eq:saint-venant-stress}
+        % \RepeatEquation{eq:saint-venant-stress}
+        \RepeatEquation{eq:enhan-strain}
+        with
         \RepeatEquation{eq:strain-tensor-decomp}
         \begin{description}
             \item[$\circ$ Wagner] \RepeatEquation{eq:wagner-gl-strain-pi}
@@ -27,15 +30,13 @@ The developments of Part~I are summarized by Box~\ref{box:model-summary}.
     \item Warping Variation
      \begin{description}
         \item[$\circ$ Type 1: Nonuniform]
-        \item[$\circ$ Type 3: Uniform]
-          Trace Matrix:
-          \RepeatEquation{eq:T0-inv}
-          Fiber strain:
-          \RepeatEquation{eq:eps-B-e}
-          Resultants:
+        \RepeatEquation{eq:nonuniform-shapes}
+        \item[$\circ$ Type 3: Uniform] 
+          % Trace Matrix:
+          % \RepeatEquation{eq:T0-inv}
           % \begin{description}
           % \item[$\circ$ Petrov] 
-          \RepeatEquation{eq:petrov-section}
+          \RepeatEquation{eq:uniform-shapes}
           % \item[$\circ$ Bubnov]
           % \RepeatEquation{eq:bubnov-section}
           % \end{description}

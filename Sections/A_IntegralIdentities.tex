@@ -365,7 +365,7 @@ Since $\alpha \wedge \beta \in \Omega^n(M)$, the formula follows by integrating 
 \[
 \dd \interior{\bm{X}}{(\alpha \wedge \beta)}=\mathcal{L}_X(\alpha \wedge \beta)=\mathcal{L}_X \alpha \wedge \beta+\alpha \wedge \mathcal{L}_X \beta
 \]
-and using \cref{eq:gauss-div-thm} (Stoke's Theorem).
+and using \eqref{eq:gauss-div-thm} (Stoke's Theorem).
 \end{proof}
 
 \iffalse
@@ -406,7 +406,7 @@ and using \cref{eq:gauss-div-thm} (Stoke's Theorem).
 \subsection{Torsion}
 \begin{proposition}
 \label{prop:armero-81}
-The solution \(\WarpSV\) to the boundary value problem \cref{eq:warp-sv-bvp} is the Riesz vector:
+The solution \(\WarpSV\) to the boundary value problem \eqref{eq:warp-sv-bvp} is the Riesz vector:
 \begin{equation}
     (\WarpSV,\, \phi)_G =  \frac{1}{2} \left\{\PlanePosition \cdot \PlanePosition,\, \phi\right\}_G %= - [\nabla \phi,\, \FrameBasis, \PlanePosition]_G =
     \qquad \forall \phi \in \mathcal{F}(\PlaneManifold)
@@ -477,16 +477,16 @@ where we have used
 \[
 \begin{array}{rlr}
 \dd \phi \wedge \interior{\nabla \WarpFA}{\volG} 
-&= \dd \phi \wedge \star (\nabla \WarpFA)^{\flat}  & \qquad \text{\cref{eq:hodge-zero}}\\
-&= \dd \phi \wedge \star     \dd \WarpFA &  \qquad \text{\cref{eq:ident-ext-d}} \\
-&= \left<\dd \WarpFA,\, \dd \phi \right> \volG & \qquad \text{\cref{eq:hodge-defn}} \\
+&= \dd \phi \wedge \star (\nabla \WarpFA)^{\flat}  & \qquad \text{\eqref{eq:hodge-zero}}\\
+&= \dd \phi \wedge \star     \dd \WarpFA &  \qquad \text{\eqref{eq:ident-ext-d}} \\
+&= \left<\dd \WarpFA,\, \dd \phi \right> \volG & \qquad \text{\eqref{eq:hodge-defn}} \\
 \end{array}
 \]
-Thus (\(\dagger\)) is exactly an integration (by parts) of the product rule for \cref{eq:def-lie-form}
+Thus (\(\dagger\)) is exactly an integration (by parts) of the product rule for \eqref{eq:def-lie-form}
 \[
 \mathcal{L}_{(\WarpSV \nabla \WarpFA)} \volG = \WarpSV \mathcal{L}_{\nabla \WarpFA}\volG + \dd \WarpSV \wedge \interior{\nabla \WarpFA}{\volG}
 \]
-where by the divergence theorem (\cref{eq:gauss-div-thm})
+where by the divergence theorem (\eqref{eq:gauss-div-thm})
 \[
 \int_{\PlaneManifold} \mathcal{L}_{(\WarpSV \nabla \WarpFA)} \volG =
 \int_{\PlaneBoundary} \WarpSV  \nabla \WarpFA \cdot \bm{\nu} \; \eta_G
@@ -581,14 +581,14 @@ where $\sigma_G = n_G \, \dd s$:
     \label{eq:torsion-neumann}
     \end{equation}
 
-    If \(\varphi_a\) is the solution to \cref{eq:torsion-neumann} with \(\bm{\pi} = \bm{\SectionLocation}_a\), then 
+    If \(\varphi_a\) is the solution to \eqref{eq:torsion-neumann} with \(\bm{\pi} = \bm{\SectionLocation}_a\), then 
     \[
     \varphi_{b} \triangleq \varphi_a + [\FrameBasis, \bm{\SectionLocation}_{ab}, \bm{\SectionCoordinate}] - [\FrameBasis, \bm{\SectionLocation}_{ab},  \bar{\bm{\SectionLocation}}] % TODO: A?
     \]
     is the solution for \(\bm{\SectionLocation}_{b} \triangleq \bm{\SectionLocation}_a + \bm{\SectionLocation}_{ab}\)
 \end{proposition}
 \begin{proof}
-Our objective is to show that the function \(\varphi_b\) (i) is harmonic, (ii) satisfies the the boundary condition \cref{eq:torsion-neumann}$_2$, and (iii) satisfies the normalizing condition.
+Our objective is to show that the function \(\varphi_b\) (i) is harmonic, (ii) satisfies the the boundary condition \eqref{eq:torsion-neumann}$_2$, and (iii) satisfies the normalizing condition.
 \begin{equation*}
 \nabla_{\mathbf{n}}\varphi_b = \nabla_{\mathbf{n}}\varphi_a + \nabla_{\mathbf{n}}\left[\FrameBasis,\, \bm{\SectionLocation}_{ab},\, \SectionCoordinate \right]
 \end{equation*}

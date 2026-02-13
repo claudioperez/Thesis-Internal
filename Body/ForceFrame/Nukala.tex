@@ -1,0 +1,126 @@
+\subsubsection{2. Variational Principals}
+
+Consider a body in its reference configuration $\left(\mathscr{B} \subset \Re^3\right)$ occupying volume $\mathscr{V}_0=\mathscr{A}_0 \times \mathscr{L}_0$ with boundary $\mathscr{S}_0$. Let $\overline{\mathscr{B}}$ denote the closure of $\mathscr{B}$ such that $\overline{\mathscr{B}}=\mathscr{B} \cup \mathscr{S}_0$. Let $\mathscr{S}_{\sigma_0}$ and $\mathscr{S}_{u_0}$ denote the segments of $\mathscr{S}_0$ over which tractions and displacements are prescribed such that $\mathscr{S}_0=\mathscr{S}_{\sigma_0}+\mathscr{S}_{u_0}$. The deformation of the body from its reference configuration is described by the displacement field $\bm{u}: \overline{\mathscr{B}} \rightarrow \Re^3$, which is assumed to be prescribed as $\bm{u}=\overline{\bm{u}}$ on $\mathscr{S}_{u_0}$. Further, assume that the nominal traction vector is prescribed as $\mathbf{t}^0=\overline{\mathbf{t}}^0$ on $\mathscr{S}_{\sigma_0}$.
+Let $\mathscr{U}$ and $\mathscr{G}$ denote the spaces of the generalized displacement (e.g., displacements, rotations, and warping degree of freedom) and generalized stress (i.e., stress resultant) fields, respectively. Similarly, let $\mathscr{U}_\delta$ and $\mathscr{G}_\delta$ denote the spaces of the admissible generalized displacement and stress variations. The displacements are assumed to be smooth within the element and compatible between adjacent elements, satisfying the essential (kinematic) boundary conditions on $\mathscr{S}_{u_0}$. Mathematically, the displacements and the admissible displacement variations belong to the following spaces:
+
+$$
+\left.\begin{array}{l}
+\mathscr{U}=\left\{\bm{u} \in\left[H^1\left(\mathscr{V}_0\right)\right]^{n_{\mathrm{dim}}}|\bm{u}|_{\mathscr{S}_{u_0}}=\overline{\bm{u}}\right\} \\
+\mathscr{U}_\delta=\left\{\delta \bm{u} \in\left[H^1\left(\mathscr{V}_0\right)\right]^{n_{\mathrm{dim}}}|\delta \bm{u}|_{\mathscr{S}_{u_0}}=\mathbf{0}\right\}
+\end{array}\right\},
+$$
+
+where $n_{\mathrm{dim}}=3$ for beam kinematics corresponding to the displacement vector, the rotation vector and the warping amplitude and $H^1\left(\mathscr{V}_0\right)$ denotes the Sobolev space of functions [4,13]. In certain beam formulations, displacement derivatives are used as rotational degrees of freedom. Under these circumstances $\bm{u} \in\left[H^2\left(\mathscr{V}_0\right)\right]^{n_{\text {dim }}}$, and $\delta \bm{u} \in\left[H^2\left(\mathscr{V}_0\right)\right]^{n_{\text {dim }}}$.
+
+The generalized stress is continuous within each element, but it is not inter-element compatible for the type of beam element considered in this paper. 
+Thus, the physical stress-resultants and their variations belong to the square integrable function spaces denoted by
+
+$$
+\mathscr{G}=\mathscr{G}_\delta=\left\{\tau \mid \tau \in\left[L_2\left(\mathscr{V}_0\right)\right]^{n_{\mathrm{str}}}\right\}
+$$
+
+where $n_{\text {str }}=6$ for the beam formulation in [1] (corresponding to the axial force, two components of moment, the bimoment, uniform torque and the Wagner stress resultant).
+
+The mixed beam finite elements considered in this work are based on the following fundamental two-field Hellinger-Reissner weak-form $\operatorname{HR}(\bm{u}, \bm{\sigma})$ :
+
+$$
+\int_{\mathscr{V}_0} \delta \widehat{\bm{\varepsilon}} \cdot \bm{\sigma} \mathrm{~d} \mathscr{V}_0-G_{\mathrm{ext}}-\int_{\mathscr{V}_0} \delta \bm{\sigma} \cdot[\bm{\varepsilon}-\widehat{\bm{\varepsilon}}] \mathrm{d} \mathscr{V}_0=0
+$$
+where $\bm{\sigma}$ and $\bm{\varepsilon}$ denote the interpolated second Piola Kirchhoff stress and the corresponding GreenLagrange strain, respectively. The stress, $\bm{\sigma}_{\Sigma}$, at a material point is calculated using the constitutive equation $\bm{\sigma}_{\Sigma}=\bm{\sigma}_{\Sigma}(\bm{\varepsilon})$. The symbol $\widehat{\bm{\varepsilon}}$ denotes the compatible strain field derived from the element displacements, which is defined as
+
+$$
+\widehat{\bm{\varepsilon}}=\frac{1}{2}\left(\mathbf{F}^{\mathrm{T}} \mathbf{F}-\mathbf{I}\right) .
+$$
+
+
+In the above equation, $\mathbf{F}$ denotes the deformation gradient defined as $\mathbf{F}=\mathbf{I}+\bm{u} \nabla$, utilizing Malvern's [14] notation for the gradient operator ∇ , and
+
+$$
+G_{\mathrm{ext}}=\int_{\mathscr{H}_{\sigma_0}} \overrightarrow{\mathbf{t}}^0 \cdot \delta \bm{u} \mathrm{~d} \mathscr{S}+\int_{\mathscr{V}_0} \rho_0 \mathbf{b}_0 \cdot \delta \bm{u} \mathrm{~d} \mathscr{V}_0
+$$
+
+Based on this idealization, the strain at a point in the cross-section of a beam can be related to the crosssectional generalized strains as
+$$
+\left.\begin{array}{l}
+\widehat{\bm{\varepsilon}}=\TotalStrainMatrix \hat{\bm{e}} \\
+\bm{\varepsilon}=\TotalStrainMatrix \mathbf{k}
+\end{array}\right\},
+$$
+
+where $\widehat{\bm{\varepsilon}}=\left\{\begin{array}{ll}\hat{\epsilon}_p & \hat{\gamma}_p\end{array}\right\}^{\mathrm{T}}$ are the compatible strains (derived from the displacements), and $\bm{\varepsilon}$ are the corresponding strains derived from the assumed stress resultants (i.e., from the dual variables). In the above description, $\hat{\epsilon}_p$ and $\hat{\gamma}_p$ refer to the normal and uniform torsion shear strains at any material point in the cross-section. In the companion paper [1], the normal strain due to the axial force, bending moments and bimoment, and the shear strain due to uniform torsion based on mitre model [18] are included in the present formulation. 
+In Eq. (6),
+
+$$
+\hat{\bm{e}}=\left\{\begin{array}{llllll}
+\hat{\epsilon} & -\hat{\kappa}_2 & \hat{\kappa}_1 & \hat{\kappa}_3^{\prime} & \frac{1}{2} \hat{\kappa}_3^2 & \hat{\kappa}_3
+\end{array}\right\}^{\mathrm{T}}
+$$
+
+is the compatible cross-sectional generalized strain vector (derived from the displacements) and $\mathbf{k}$ denotes the generalized strains derived from the assumed stress resultants. In Eq. (7), $\hat{\epsilon}$ is the normal strain at the reference point in the cross-section, $\left\{\begin{array}{lll}\hat{\kappa}_1 & \hat{\kappa}_2 & \hat{\kappa}_3\end{array}\right\}^{\mathrm{T}}$ are the axial vector components of the material curvature tensor, and $(\cdot)^{\prime}$ represents the derivative with respect to the element length coordinate $S$. The matrix $\TotalStrainMatrix$ denotes the cross-section generalized coordinate matrix, and is given by
+
+$$
+[\TotalStrainMatrix]=\left[\begin{array}{cccccc}
+1 & X_1 & X_2 & \bar{\varpi} & \left(X_1^2+X_2^2\right) & 0 \\
+0 & 0 & 0 & 0 & 0 & \Upsilon
+\end{array}\right]
+$$
+
+in which $X_1$ and $X_2$ denote the cross-section coordinates, $\bar{\varpi}$ is the warping function and $Y$ is the generalized coordinate associated with the shear strain due to uniform torsion, which is based on the mitre model [18]. The stress resultants that are work conjugate to the generalized strains, $\hat{\bm{e}}$, may be expressed in vector form as
+
+$$
+\mathbf{R}=\left\{\begin{array}{llllll}
+N_3 & M_1 & M_2 & B & W & T_{s v}
+\end{array}\right\}^{\mathrm{T}},
+$$
+
+where $N_3$ is the component of the material stress-resultant vector conjugate to $\hat{\epsilon}, M_1$ and $M_2$ are the components of the material moments about the cross-section axes, $B$ is the bimoment, $W$ is the Wagner stress resultant, and $T_{s v}$ is the uniform torque.
+
+By using the above relations, the two-field $\operatorname{HR}(\bm{u}, \bm{\sigma})$ may be expressed in terms of generalized displacements and generalized stresses (stress resultants), i.e., $\operatorname{HR}(\bm{u}, \mathbf{R})$, as
+
+$$
+\operatorname{HR}(\bm{u}, \mathbf{R} ; \delta \bm{u}, \delta \mathbf{R})
+=\int_{\mathscr{L}_0} \delta \hat{\bm{e}}\cdot \bm{s} \,\dd x
+-\int_{\mathscr{L}_0} \delta \bm{s} \cdot (\mathbf{k}-\hat{\bm{e}}) \,\dd x
+-G_{\mathrm{ext}}
+=0,
+$$
+
+where the generalized stresses acting over a cross-section are defined as
+
+$$
+\mathbf{R}=\int_{\Section} \TotalStrainMatrix^{\mathrm{T}} \bm{\sigma} \dA .
+$$
+
+
+Furthermore, for the type of element presented in the companion paper, the governing equations at a section level may be expressed as $\mathbf{R}=\mathbf{R}_{\Sigma}$ where
+
+$$
+\mathbf{R}_{\Sigma}=\int_{\Section} \TotalStrainMatrix^{\mathrm{T}} \bm{\sigma}_{\Sigma}(\bm{\varepsilon}) \dA .
+$$
+
+
+It should be noted that $\mathbf{R}_{\Sigma}$ denotes the generalized stresses obtained through the strain driven constitutive equations of the form $\bm{\sigma}_{\Sigma}=\bm{\sigma}_{\Sigma}(\bm{\varepsilon})$, whereas $\mathbf{R}$ represents the interpolated generalized stresses (i.e., Eq. (11) is an implicit definition of $\mathbf{R}$ and is not implemented in the element calculations).
+
+Linearization of the $\operatorname{HR}(\bm{u}, \mathbf{R} ; \delta \bm{u}, \delta \mathbf{R})$ functional (Eq. (10)) about a configuration ( $\hat{\bm{u}}, \bm{s}_0$ ) leads to
+
+$$
+\mathscr{L}[\operatorname{HR}(\bm{u}, \mathbf{R} ; \delta \bm{u}, \delta \mathbf{R})]=\operatorname{HR}(\hat{\bm{u}}, \bm{s}_0 ; \delta \bm{u}, \delta \mathbf{R})+\operatorname{DHR}(\hat{\bm{u}}, \bm{s}_0 ; \delta \bm{u}, \delta \mathbf{R}),
+$$
+
+where
+
+$$
+\operatorname{DHR}(\hat{\bm{u}}, \bm{s}_0 ; \delta \bm{u}, \delta \mathbf{R})=\int_{\mathscr{L}_0}(\delta \hat{\bm{e}} \cdot \Delta \mathbf{R}+\Delta \delta \hat{\bm{e}} \cdot \mathbf{R}) \dd x -\int_{\mathscr{L}_0}(\delta \mathbf{R} \cdot(\Delta \mathbf{k}-\Delta \hat{\bm{e}})+\Delta \delta \mathbf{R} \cdot(\mathbf{k}-\hat{\bm{e}})) \dd x-\Delta G_{\mathrm{ext}} .
+$$
+
+\subsubsection{Algorithms}
+
+In general, state determination algorithms for mixed formulations involving material and geometric nonlinearity are more complex than those of displacement-based formulations. This is due to the presence of more than one independent field variable in the variational principle. Also, many constitutive theories consider strain as an independent variable and stress as a dependent variable. In a standard displacement based formulation, the state determination is a strain driven problem, i.e., the stresses are obtained from the strains. This is in sharp contrast with stress-based mixed finite elements, where both the displacements and stresses are independent variables.
+
+In this section, four alternative state determination procedures are presented for nonlinear mixed beam finite elements. 
+Where specific equations are developed, the focus is on the $\mathrm{HR}(\bm{u}, \mathbf{R})$ variational principle. Elements that use procedures similar to two of these algorithms have been presented in the literature within the context of other mixed formulations $[7,8,10-12]$. 
+These procedures are obtained by using linearized versions of the local nonlinear equations (i.e., the strain-displacement compatibility and/or constitutive equations) in conjunction with the global nonlinear structural equilibrium equations. However, to the knowledge of the authors, a detailed development and comparison of the different consistent state determination algorithms for mixed $\mathrm{HR}(\bm{u}, \mathbf{R})$ beam elements has not been presented to date.
+
+In the following sections, a state determination algorithm based on separate iterative solution of the nonlinear governing equations (Eq. (19)) at the global, element and section levels is presented first. This algorithm is referred to as the $\mathrm{N}-\mathrm{N}$ algorithm, i.e., it involves nonlinear iteration at the element and at the section levels. This is followed by an algorithm based on the use of the linearized equations at the section level. In this algorithm, the section level iterations are eliminated, and thus it is referred to as the N-L algorithm. Thirdly, an algorithm in which the linearized element compatibility equations are employed, but in which the nonlinear section equations are still utilized (the $\mathrm{L}-\mathrm{N}$ algorithm), is presented. Finally, an algorithm in which both the linearized section and element level equations are employed (i.e., the L-L algorithm) is developed.
+
+The following notation is used to describe the different state determination algorithms. In these subsections, and in the subsequent sections of the paper, the subscripts $n$ and $n+1$ denote the previous and current load steps respectively, and the superscripts $i, j, k$ denote the iteration indices at the global, element and section levels respectively. These indices are not shown whenever the meaning is clear from the context in which the variable is used.

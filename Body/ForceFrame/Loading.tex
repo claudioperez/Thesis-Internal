@@ -1,9 +1,14 @@
 \subsection{Loading}
 
+\begin{equation}
+    g(\bm{u},\bm{v},\bm{q}) = \delta \bm{q} \cdot \int \ForceInterp^{\top}\mathbf{F}_{s}\,\bigl(\ForceInterp\bm{q} + \bm{s}_{p}(x,\bm{u}) - \bm{s}(\bm{e})\bigr)\, \dd x - \delta \bm{q} \cdot \bm{v} = 0
+    \label{eq:force-residual}
+\end{equation}
+
 The total differential of the residual \eqref{eq:force-residual} is
 \begin{equation*}
 \begin{aligned}
-& D_{u} g 
+& D_{u} \gv 
 =\left(
 \frac{\partial g}{\partial \bm{u}} \delta \bm{u}+\frac{\partial g}{\partial \bm{v}} \frac{\partial \bm{v}}{\partial \bm{u}} \delta \bm{u} + \frac{\partial g}{\partial \bm{q}} \frac{\partial \bm{q}}{\partial \bm{v}} \frac{\partial \bm{v}}{\partial \bm{u}}\right) \cdot \delta \bm{q}
 +\frac{d \delta \bm{q}}{d u} \delta \bm{u} \, g = 0
@@ -33,8 +38,8 @@ This is written compactly as
 with the definitions:
 \begin{equation*}
 \begin{aligned}
-\mathbf{F} &\triangleq \frac{\partial g}{\partial \bm{q}} = \int \ForceInterp^{\top} \mathbf{F}_{s} \ForceInterp\, \dd x \\
-\mathbf{K}_{f} &\triangleq \frac{\partial g}{\partial \bm{u}} =\frac{\partial }{\partial \bm{u}} \int \ForceInterp^{\top} \mathbf{F}_{s} \bm{s}_p(x,\bm{u})\,\dd x \\
+\mathbf{F}_q &\triangleq \frac{\partial \gv}{\partial \bm{q}} = \int \ForceInterp^{\top} \mathbf{F}_{s} \ForceInterp\, \dd x \\
+\mathbf{K}_{f} &\triangleq \frac{\partial \gv}{\partial \bm{u}} =\frac{\partial }{\partial \bm{u}} \int \ForceInterp^{\top} \mathbf{F}_{s} \bm{s}_p(x,\bm{u})\,\dd x \\
 \mathbf{A} & \triangleq \frac{\partial \bm{v}}{\partial \bm{u}} \\
 \mathbf{K}_{q} &\triangleq \frac{\partial \bm{q}}{\partial \bm{v}} \\
 \end{aligned}

@@ -1,0 +1,73 @@
+\begin{ambox}[Newton Algorithm]{box:MF}
+
+Given target deformations \(\bm{v}\), find \(\bm{q}\):
+\begin{enumerate}
+    \item Initialize \(\dd \bm{q} = \mathbf{0}\).
+    \item Perform \textbf{Update B}.
+    \item While \(\|\residv\| > \epsilon\) repeat \textbf{Update A}.
+\end{enumerate}
+where:
+\begin{itemize}
+    \item \textbf{Update A.} Given \(\residv\), update basic forces \(\bm{q}\) 
+    \begin{enumerate}
+      \item Set \(\dd \tilde{\bm{q}} = −\mathbf{F}_q^{-1} \tilde{\bm{g}}_{\rm v}\) and \(\eta=1\).
+      \item Line search: While \(\phi(\eta) > \epsilon\):
+      \begin{enumerate}
+          \item Perform \textbf{Update B} with \(\dd \bm{q} = \eta\, \dd\tilde{\bm{q}}\) and evaluate \(\phi(\eta) = \|\residv\|\).
+          \item Update \(\eta \leftarrow \tfrac{1}{2}\eta\). 
+      \end{enumerate}
+      \item Update \(\bm{q} \leftarrow \eta\,\dd\tilde{\bm{q}}\).
+    \end{enumerate}
+
+    \item \textbf{Update B.} Given \(\bm{v}\), \(\dd \bm{q}\) and a state \(\mathcal{N}_i = \{\bm{q}, \bm{e}_{\ell}\}\), advance \(\bm{e}\) and compute \(\tilde{\bm{g}}_{\rm v}\), \(\{\resids\}\) and \(\mathbf{F}_q\).
+    \begin{enumerate}
+    % \item Compute section deformation increments from force corrections: \(\delta \bm{e} = \mathbf{K}_s^{-1} (\ForceInterp \delta \bm{q})\)
+    \item Section deformation update: \(\bm{e} \leftarrow \bm{e} + \dd \bm{e}\) with \(\dd \bm{e} = \mathbf{K}_s^{-1} (\ForceInterp \dd \bm{q})\)
+    \item Perform section state determination, get resultants \(\bm{s}_e\)
+    \item Interpolate unbalanced forces \(\resids = \ForceInterp  \bm{q} − \bm{s}_e\)
+    \item Apply second deformation correction: \(\bm{e} \leftarrow \bm{e} + \mathbf{K}_s^{-1} \resids\)
+    \item Integrate compatibility residual \eqref{eq:def-mv-flex}: \(\tilde{\bm{g}}_{\rm v} = −\bm{v} + \int  \ForceInterp^{\top} \bm{e} \,\dd x\) 
+    \end{enumerate}
+\end{itemize}
+and:
+\begin{table}[H]
+    \centering
+    % \caption{Summary of notation.}
+    \begin{tabular}{cccl}
+        \toprule
+        Symbol & & Equation & Description \\ \midrule
+        % \(\gv\)  & \texttt{DDq'*vu}   &  & Deformation residual \\
+        \(\residv\) & & \eqref{eq:def-mf-gv} & Compatibility residual \\
+        \(\resids\) & & \eqref{eq:def-mf-gs} & Equilibrium residual \\
+        \(\inters\) & & \eqref{eq:def-interps} & Interpolated section forces \\
+        \(\tilde{\bm{g}}_{\rm v}\) & & \eqref{eq:def-mv-flex} & Staggered compatibility residual \\
+        \(\mathbf{K}_{\rm s}\) & & \eqref{eq:def-section-flexibility} & Section stiffness. \\
+        \(\mathbf{F}_{\rm s}\) & & \eqref{eq:def-section-flexibility} & Section flexibility. \\
+        \(\mathbf{F}_q\) & & \eqref{eq:def-mv-flex} & Element flexibility \\
+        \LightRule 
+        \(\phi\) & & \eqref{eq:def-line-merit} & Line search merit function \\
+    \bottomrule
+    \end{tabular}
+    % \caption{Summary of isotropic cross section constants.}
+    \label{tab:mixed-frame-notation}
+\end{table}
+\end{ambox}
+
+\iffalse
+\begin{enumerate}
+\item[A3.] FEDEASLab (\texttt{FF})
+
+\begin{enumerate}
+\item Infinitesimal force update \(\bm{q}\leftarrow \bm{q} + \delta \bm{q}\) with \(\delta\bm{q} = \mathbf{K}_0^{-1} \delta \bm{v}\)
+\item \textbf{[SH]} Interpolate total section forces: \(\bm{s}(x) = \ForceInterp  \bm{q}\)
+\item Compute section force increment: \(\dd \bm{s} = \bm{s}^h − \bm{s}_0\)
+% \item Obtain deformation increment from flexibility: \(\Delta e = \mathbf{K}_{s}^{-1}    \Delta s\)
+\item \textbf{[EI]} \emph{Incremental} section deformation update \(\bm{e}\leftarrow \bm{e} + \dd \bm{e}\) with \(\dd \bm{e} = \mathbf{K}_{s}^{-1}    \dd s\)
+\item \textbf{[SE]} Perform section state determination → get resisting forces \(\bm{s}_e\)
+\item Interpolate unbalanced section forces \(\resids = \ForceInterp\bm{q} − \bm{s}_e\) and residual deformations \(e_r = \mathbf{K}_{s}^{-1} \resids\)
+\item \textbf{[VR]} Integrate compatibility residual: \(v_r = \int  \ForceInterp^{\top} e_r \,\dd x\)
+\item Correct basic forces: \(\dd \bm{q} = −\mathbf{F}^{-1} v_r\)
+\end{enumerate}
+
+\end{enumerate}
+\fi

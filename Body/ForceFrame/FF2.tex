@@ -1,0 +1,284 @@
+
+\subsection{0) Unknowns and maps}\label{unknowns-and-maps}
+
+At each integration point \(x_i\) (weight \(w_i\)):
+
+\begin{itemize}
+\tightlist
+\item
+  Basic force vector: \(\bm{q}\in\mathbb{R}^{n_b}\)
+\item
+  Section deformation vector: \(\mathbf{e}_i \in \mathbb{R}^{n_s}\)
+\item
+  Force interpolation:
+  \(\mathbf{B}_i := \mathbf{B}(x_i)\in\mathbb{R}^{n_s\times n_b}\)
+\item
+  Interpolated (target) section resultants: \[
+  \mathbf{s}^h_i(\bm{q}) = \mathbf{B}_i\,\bm{q} + \mathbf{s}^{p}_i
+  \]
+\item
+  Constitutive (resisting) section resultants: \[
+  \mathbf{s}_i(\mathbf{e}_i)
+  \]
+\item
+  Section tangent stiffness: \[
+  \mathbf{K}_{s} := \frac{\partial \mathbf{s}_i}{\partial \mathbf{e}_i}\Big|_{\text{current iterate}}
+  \]
+\item
+  Section tangent flexibility: \[
+  \mathbf{F}_{s} := \mathbf{K}_{s}^{-1}
+  \]
+\end{itemize}
+
+Also define the basic deformation vector (given from the global solve)
+\(\bm{v}\in\mathbb{R}^{n_b}\).
+
+\subsection{1) Strong residual statement (the coupled nonlinear
+equations)}\label{strong-residual-statement-the-coupled-nonlinear-equations}
+
+We solve for \(\bm{q}\) and \(\{\mathbf{e}_i\}\) such that:
+
+\subsubsection{(A) Compatibility (exact kinematic
+constraint)}\label{a-compatibility-exact-kinematic-constraint}
+
+\[
+\mathbf{r}_v(\{\mathbf{e}_i\}) \;:=\; \bm{v} \;-\; \sum_{i=1}^{n_{IP}} w_i\,\mathbf{B}_i^{T}\mathbf{e}_i \;=\;\mathbf{0}
+\tag{1}
+\]
+
+\subsubsection{(B) Section force consistency at every integration
+point}
+
+I'll write it in the ``FF-sign'' form (target minus resisting):
+
+\[
+\mathbf{r}_{s,i}(\bm{q},\mathbf{e}_i)\;:=\;\mathbf{s}^h_i(\bm{q}) - \mathbf{s}_i(\mathbf{e}_i)\;=\;\mathbf{0}
+\tag{2}
+\]
+
+That's the \emph{strong} residual system: (1) + (2) for all \(i\).
+
+\subsection{2) Newton linearization of the residual
+system}\label{newton-linearization-of-the-residual-system}
+
+Let the current iterate be \((\bm{q},\{\mathbf{e}_i\})\). We seek
+corrections \((\delta\bm{q},\{\delta\mathbf{e}_i\})\) such that the
+linearized residual vanishes.
+
+\subsubsection{2.1 Linearize compatibility residual
+(1)}\label{linearize-compatibility-residual-1}
+
+\[
+\mathbf{r}_v(\{\mathbf{e}_i+\delta\mathbf{e}_i\})
+\approx
+\mathbf{r}_v(\{\mathbf{e}_i\})
+-
+\sum_i w_i\,\mathbf{B}_i^{T}\delta\mathbf{e}_i
+\]
+
+Newton condition: \(\mathbf{r}_v + \delta\mathbf{r}_v = \mathbf{0}\),
+so:
+
+\[
+\sum_i w_i\,\mathbf{B}_i^{T}\delta\mathbf{e}_i
+=
+\mathbf{r}_v(\{\mathbf{e}_i\})
+=
+\bm{v}-\sum_i w_i\,\mathbf{B}_i^T\mathbf{e}_i
+\tag{3}
+\]
+
+\subsubsection{2.2 Linearize section residual (2) at each
+IP}\label{linearize-section-residual-2-at-each-ip}
+
+First compute Jacobians:
+
+\begin{itemize}
+\tightlist
+\item
+  \(\dfrac{\partial \mathbf{s}^h_i}{\partial \bm{q}}=\mathbf{B}_i\)
+\item
+  \(\dfrac{\partial \mathbf{s}_i}{\partial \mathbf{e}_i}=\mathbf{K}_{s}\)
+\end{itemize}
+
+So linearization:
+
+\[
+\mathbf{r}_{s,i}(\bm{q}+\delta\bm{q},\mathbf{e}_i+\delta\mathbf{e}_i)
+\approx
+\mathbf{r}_{s,i}(\bm{q},\mathbf{e}_i)
++
+\mathbf{B}_i\,\delta\bm{q}
+-
+\mathbf{K}_{s}\,\delta\mathbf{e}_i
+\]
+
+Newton condition \(\mathbf{r}_{s,i}+\delta\mathbf{r}_{s,i}=\mathbf{0}\)
+gives:
+
+\[
+\mathbf{B}_i\,\delta\bm{q} - \mathbf{K}_{s}\,\delta\mathbf{e}_i
+=
+-\mathbf{r}_{s,i}(\bm{q},\mathbf{e}_i)
+=
+-\big(\mathbf{s}^h_i(\bm{q})-\mathbf{s}_i(\mathbf{e}_i)\big)
+\tag{4}
+\]
+
+Solve (4) for \(\delta\mathbf{e}_i\):
+
+\[
+\mathbf{K}_{s}\,\delta\mathbf{e}_i
+=
+\mathbf{B}_i\,\delta\bm{q}
++ \mathbf{r}_{s,i}
+% +
+% \big(\mathbf{s}^h_i(\bm{q})-\mathbf{s}_i(\mathbf{e}_i)\big)
+\]
+
+\[
+\delta\mathbf{e}_i
+=
+\mathbf{F}_{s}\,\mathbf{B}_i\,\delta\bm{q}
++
+\mathbf{F}_{s}\,\big(\mathbf{s}^h_i(\bm{q})-\mathbf{s}_i(\mathbf{e}_i)\big)
+= \dd \bm{e}_q + \dd \bm{e}_s
+\tag{5}
+\]
+
+Now we can answer your ``what is what?'' questions precisely:
+
+\begin{itemize}
+\item
+  \textbf{What is \(\Delta \mathbf{s}\)?}\\
+  In (5), the term driven by \(\delta\bm{q}\) is: \[
+  \Delta\mathbf{s}_i := \mathbf{B}_i\,\delta\bm{q}
+  \] i.e., the \emph{increment in interpolated/target section forces
+  caused by the basic-force correction}.
+\item
+  \textbf{What is $\mathbf{r}(x)$ (or \(\mathbf{r}_i\)) exactly?}\\
+  It is the \emph{Newton deformation correction induced by the current
+  section force residual}, i.e. \[
+  \boxed{
+  \mathbf{r}_i
+  :=
+  \mathbf{F}_{s}\,\big(\mathbf{s}^h_i(\bm{q})-\mathbf{s}_i(\mathbf{e}_i)\big)
+  }
+  \tag{6}
+  \] No mysticism: it is literally the solution of the \emph{linearized}
+  section equation (4) when \(\delta\bm{q}=0\).\\
+  Put differently: it's the deformation increment that would (to first
+  order) remove the force mismatch at the section.
+\end{itemize}
+
+
+\subsection{\texorpdfstring{3) Eliminate \(\delta\mathbf{e}_i\) to get
+the FF force correction
+\(\delta\bm{q}\)}{3) Eliminate \textbackslash delta\textbackslash mathbf\{e\}\_i to get the FF force correction \textbackslash delta\textbackslash mathbf\{q\}}}\label{eliminate-deltamathbfe_i-to-get-the-ff-force-correction-deltamathbfq}
+
+Substitute (5) into the linearized compatibility equation (3):
+
+Left-hand side of (3): \[
+\sum_i w_i\,\mathbf{B}_i^{T}\delta\mathbf{e}_i
+=
+\sum_i w_i\,\mathbf{B}_i^{T}
+\Big(
+\mathbf{F}_{s}\mathbf{B}_i\delta\bm{q}
++
+\mathbf{F}_{s}(\mathbf{s}^h_i-\mathbf{s}_i)
+\Big)
+\]
+
+Group terms:
+
+\[
+\Big(\sum_i w_i\,\mathbf{B}_i^{T}\mathbf{F}_{s}\mathbf{B}_i\Big)\delta\bm{q}
++
+\sum_i w_i\,\mathbf{B}_i^{T}\mathbf{F}_{s}(\mathbf{s}^h_i-\mathbf{s}_i)
+=
+\mathbf{r}_v
+\tag{7}
+\]
+
+
+Define the \textbf{integrated residual deformation vector} \[
+\boxed{
+\bm{v}_r := \sum_i w_i\,\mathbf{B}_i^{T}\mathbf{F}_{s}(\mathbf{s}^h_i-\mathbf{s}_i)
+}
+\tag{9}
+\]
+
+Then (7) becomes the Newton system reduced to \(\delta\bm{q}\):
+
+\[
+\boxed{
+\mathbf{F}\,\delta\bm{q} + \bm{v}_r = \mathbf{r}_v
+}
+\tag{10}
+\]
+
+So the fully general Newton correction is: \[
+\boxed{
+\delta\bm{q} = \mathbf{F}^{-1}\Big(\mathbf{r}_v - \bm{v}_r\Big)
+}
+\tag{11}
+\]
+
+\subsection{4) The ``pure FF'' update you asked
+for}\label{the-pure-ff-update-you-asked-for}
+
+You specifically asked to justify the FF inner-loop update of the form
+
+\[
+\delta\bm{q} = \mathbf{F}^{-1}\int \mathbf{B}^T\mathbf{f}_s(\mathbf{s}^h-\mathbf{s}(\mathbf{e}))\,dx
+\]
+
+From (11), that corresponds to the case where the right-hand side
+\(\mathbf{r}_v\) is taken as zero during the \textbf{inner
+force-correction loop} (because the imposed \(\bm{v}\) has already
+been enforced/frozen at that stage).
+
+Setting \(\mathbf{r}_v=\mathbf{0}\) in (10):
+
+\[
+\mathbf{F}\,\delta\bm{q} + \bm{v}_r = \mathbf{0}
+\quad\Rightarrow\quad
+\boxed{
+\delta\bm{q} = -\mathbf{F}^{-1}\bm{v}_r
+}
+\tag{12}
+\]
+
+Expanding \(\bm{v}_r\) from (9):
+
+\[
+\boxed{
+\delta\bm{q}
+=
+-\Big(\int_0^L \mathbf{B}^T\mathbf{F}_s\mathbf{B}\,\dd x\Big)^{-1}
+\Big(\int_0^L \mathbf{B}^T\mathbf{F}_s(\mathbf{s}^h-\mathbf{s}(\mathbf{e}))\,\dd x\Big)
+}
+\tag{13}
+\]
+
+That is exactly the FF update (up to sign convention).
+
+
+
+
+\subsection{Where does the ``pure FF'' update come from?}
+
+Your requested FF-looking update is essentially
+
+\[\dd \bm{q} = -\mathbf{F}^{-1}\int_0^L \ForceInterp^{\top} \mathbf{F}_{s}\big(\inters-\bm{s}(\bm{e})\big)\,\dd\reflenx,\]
+
+i.e.
+
+\[F\,\dd \bm{q} = -v_r.\]
+
+That corresponds to the special case of the condensed Newton step
+(N-condensed) with
+
+\[\residv[\bm{e}]=0\]
+
+at that stage of the iteration.

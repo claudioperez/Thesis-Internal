@@ -1,0 +1,83 @@
+
+\subsection{Newton linearization and Schur complement}
+
+Newton step seeks \((\dd \bm{q},\dd \bm{e})\) such that
+
+\[
+\residv[\bm{e}+\dd \bm{e}]\approx 0,\qquad \resids(\cdot;\bm{q}+\dd \bm{q},\,\bm{e}+\dd \bm{e})\approx 0.
+\]
+
+Linearizing \eqref{eq:def-mf-gv}:
+\[
+\residv[\bm{e}+\dd \bm{e}] = \residv[\bm{e}]-\int_0^L \ForceInterp^{\top}\,\dd \bm{e}\,\dd\reflenx.
+\]
+
+Setting \(\residv[\bm{e}+\dd \bm{e}]=\mathbf{0}\) gives
+
+\[
+\int_0^L \ForceInterp^{\top}\,\dd \bm{e}\,\dd\reflenx = \residv[\bm{e}].
+\tag{C}
+\]
+
+Linearizing \eqref{eq:def-mf-gs}:
+\[
+\resids(x;q+\dd \bm{q},e+\dd \bm{e})\approx \resids(x;q,e) + \ForceInterp(x)\dd \bm{q} - \mathbf{K}_s(x)\dd \bm{e}(x)
+\]
+
+where
+
+\begin{equation}
+\mathbf{K}_s(x):=\frac{\partial s}{\partial e}(x),\qquad \mathbf{F}_{s}(x):=\mathbf{K}_s^{-1}(x).
+\label{eq:def-section-flexibility}
+\end{equation}
+
+Setting the linearization to zero:
+
+\begin{equation}
+\ForceInterp(x)\dd \bm{q} - \mathbf{K}_s(x)\dd \bm{e}(x) = -\resids(x;q,e).
+\end{equation}
+
+Solve for \(\dd \bm{e}(x)\):
+
+\[
+\dd \bm{e}(x) = \mathbf{F}_{s}(x)\,\ForceInterp(x)\,\dd \bm{q} \;+\; \mathbf{F}_{s}(x)\,\resids(x;q,e).
+\tag{S}
+\]
+
+Now substitute (S) into (C):
+
+\[
+\int_0^L \ForceInterp^{\top} \mathbf{F}_{s} \ForceInterp\,\dd\reflenx\;\dd \bm{q} 
+\;+\;\int_0^L \ForceInterp^{\top} \mathbf{F}_{s} \resids\,\dd\reflenx \;=\; \residv[\bm{e}].
+\]
+
+Define
+
+\begin{equation}
+\mathbf{F}_q := \int_0^L \ForceInterp^{\top} \mathbf{F}_{s} \ForceInterp\,\dd\reflenx,
+\qquad
+\tilde{\bm{g}}_{\rm v} := \residv - \int_0^L \ForceInterp^{\top} \mathbf{F}_{s} \resids\,\dd\reflenx
+% \quad
+% v_r := \int_0^L \ForceInterp^{\top} \mathbf{F}_{s} \resids\,\dd\reflenx
+% = \int_0^L \ForceInterp^{\top} \mathbf{F}_{s}\big(\inters-s(e)\big)\,\dd\reflenx.
+\label{eq:def-mv-flex}
+\end{equation}
+
+Then the staggered Newton step is
+
+\begin{equation}
+\mathbf{F}\,\dd \bm{q} = \tilde{\bm{g}}_{\rm v} %= \residv[\bm{e}]-v_r.
+\label{eq:mf-dq}
+\end{equation}
+
+\subsubsection{Line Search}
+The basic forces \(\bm{q}\) are updated by scaling the Newton step furnished by \eqref{eq:mf-dq}:
+\begin{equation}
+\bm{q} \leftarrow \bm{q} + \eta\, \dd \bm{q}
+\end{equation}
+where \(\eta\) is determined by a line search algorithm. 
+A backtracking line search is performed with 
+\begin{equation}
+\phi(\eta) = \|\residv\|
+\label{eq:def-line-merit}
+\end{equation}

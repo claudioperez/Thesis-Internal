@@ -1,5 +1,5 @@
 
-Consider the linear equilibrium equations (Box~\ref{box:basic-shear}):
+Recall the linear equilibrium equations (Box~\ref{box:basic-shear}):
 \begin{equation}
     \begin{aligned}
         \bm{n}' &=  \mathbf{0} \\
@@ -7,19 +7,31 @@ Consider the linear equilibrium equations (Box~\ref{box:basic-shear}):
         \bm{w}' - \bm{v} &= \mathbf{0}
     \end{aligned}
 \end{equation}
-Let
-\begin{equation*}
-\bm{m}(x) = \phi_I(x) \bm{m}_I + \phi_J(x) \bm{m}_J + \bm{m}_{\mathrm{p}}(x)
-\qquad\text{and}\qquad
-\bm{w}(x) = \phi_I \bm{w}_I + \phi_J \bm{w}_J
-\end{equation*}
-%
-The solution is expressed as:
 
-$$
-\bm{s}_h(x) = \ForceInterp(x) \bm{q} + \bm{s}_{\mathrm{p}}(x)
-$$
-where the matrix $\ForceInterp(x)$ contains resultant interpolation functions that express section forces in terms of basic forces. 
+The state determination requires solving \(n_q+n_{\rm IP}\,n_s\) nonlinear equations comprising the compatibility residual \(\residv\) and \(n_{\rm IP}\) pointwise equilibrium residuals \(\resids\):
+\begin{subequations}
+\begin{align}
+\residv[\bm{e}] &:= \bm{v}-\int_0^L \ForceInterp^{\top}(x)\,\bm{e}(x)\,\dd\reflenx = \mathbf{0}
+&(\text{\(n_q\) equations})
+\label{eq:def-mf-gv}
+\\
+\resids(\bm{q},\bm{e};\,x_{\ell}) &:= \inters(\bm{q};\,x)-\bm{s}(\bm{e}(x_{\ell}))=\mathbf{0}
+&(\text{\(n_s\) equations for each \(x_{\ell}\)})
+\label{eq:def-mf-gs}
+\end{align}
+\label{eq:def-mf-residual}
+\end{subequations}
+for the basic forces \(\bm{q}\in\mathbb{R}^{n_q}\) and section deformations \(\bm{e}_{\ell}\in\mathbb{R}^{n_s}\) at each integration point \(x_{\ell}\)
+where:
+\begin{equation}
+\inters(x) = \ForceInterp(x) \bm{q} + \bm{s}_{\mathrm{p}}(x)
+\label{eq:def-interps}
+\end{equation}
+and the matrix $\ForceInterp(x)$ contains resultant interpolation functions that express section forces in terms of basic forces. 
+
+An efficient algorithm for solving \eqref{eq:def-mf-residual} was put forth by \cite{taylor2003mixed}. 
+This is recalled in the following section and summarized in Box~\ref{box:MF}. 
+\iffalse
 \begin{equation}
 \begin{pmatrix}
 N(x)   \\
@@ -47,46 +59,41 @@ M_{zi} \\
 M_{zj}
 \end{pmatrix}
 \end{equation}
-% 
-From the principle of virtual forces, the compatibility relationship between section deformations and element deformations is
-
-$$
-\dd \mathbf{v}=\int_0^L \ForceInterp^{\top} \dd \bm{e} \, \dd x
-$$
-
-\begin{equation}
-    g(\bm{u},\bm{v},\bm{q}) = \delta \bm{q} \cdot \int \ForceInterp^{\top}\mathbf{F}_{s}\,\bigl(\ForceInterp\bm{q} + \bm{s}_{p}(x,\bm{u}) - \bm{s}(\bm{e})\bigr)\, \dd x - \delta \bm{q} \cdot \bm{v} = 0
-    \label{eq:force-residual}
-\end{equation}
+\fi
+%
 
 
-\subsection{Summary}
 
+% \subsection{Summary}
 
-\begin{enumerate}
-    \item 
-    $$
-    \left<\delta\bm{u},\; \mathbb{B}\bm{s} - \bm{f}\right> = 0
-    \qquad\implies\qquad 
-    (\mathbf{A}^{\mathrm{t}}_{a}\bm{s}_a - \bm{p}_w) - \bm{p} = \mathbf{0}
-    $$
+% \begin{table}[H]
+% \centering
+% \begin{tabular}{rrr}
+     
+%     \(
+%     \left<\delta\bm{u},\; \mathbb{B}\bm{s} - \bm{f}\right> = 0
+%     \)
+%     &
+%     \(
+%     (\mathbf{A}^{\mathrm{t}}_{a}\bm{s}_a - \bm{p}_w) - \bm{p} = \mathbf{0}
+%     \)
 
-    \item 
-    $$
-    \left<\delta\bm{e},\; \bm{s}(\bm{e}^h) - \bm{s}^h\right> = 0
-    \qquad\implies\qquad
-    \bm{e}^h_{\ell} = \hat{S}^{-1}(\bm{s}^h_{\ell})
-    $$
+%     \\ 
+%     \(
+%     \left<\delta\bm{e},\; \bm{s}(\bm{e}^h) - \bm{s}^h\right> = 0
+%     \)
+%     & \(
+%     \bm{e}^h_{\ell} = \hat{S}^{-1}(\bm{s}^h_{\ell})
+%     \)
+%     \\
 
-    \item 
-    $$
-    \left<\delta \bm{s},\; \bm{e}(\bm{u}^h(x)) - \bm{e}^h(x)\right> = 0
-    \qquad
-    \begin{aligned}
-    &\implies\quad 
-    d\bm{v}(\bm{e}^h(x)) - \bm{A}d\bm{u} = \mathbf{0} \\
-    &\implies\quad
-    d\bm{q} = \bm{F}^{-1} d\bm{v}
-    \end{aligned}
-    $$
-\end{enumerate}
+%     \(
+%     \left<\delta \bm{s},\; \bm{e}(\bm{u}^h(x)) - \bm{e}^h(x)\right> = 0
+%     \)
+%     & \(
+%     \begin{aligned}
+%     d\bm{v}(\bm{e}^h(x)) - \bm{A}d\bm{u} = \mathbf{0} \\
+%     \end{aligned}
+%     \)
+% \end{tabular}
+% \end{table}

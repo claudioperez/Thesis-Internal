@@ -1,10 +1,11 @@
-\begin{ambox}[Newton Algorithm]{box:MF}
+\begin{ambox}[State determination of the \ForceFrame{} element.]{box:MF}
 
 Given target deformations \(\bm{v}\), find \(\bm{q}\):
 \begin{enumerate}
     \item Initialize \(\dd \bm{q} = \mathbf{0}\).
     \item Perform \textbf{Update B}.
     \item While \(\|\residv\| > \epsilon\) repeat \textbf{Update A}.
+    \item Compute \(\mathbf{K}_u\) \eqref{eq:mf-tangent}.
 \end{enumerate}
 where:
 \begin{itemize}
@@ -23,8 +24,8 @@ where:
     \begin{enumerate}
     % \item Compute section deformation increments from force corrections: \(\delta \bm{e} = \mathbf{K}_s^{-1} (\ForceInterp \delta \bm{q})\)
     \item Section deformation update: \(\bm{e} \leftarrow \bm{e} + \dd \bm{e}\) with \(\dd \bm{e} = \mathbf{K}_s^{-1} (\ForceInterp \dd \bm{q})\)
-    \item Perform section state determination, get resultants \(\bm{s}_e\)
-    \item Interpolate unbalanced forces \(\resids = \ForceInterp  \bm{q} − \bm{s}_e\)
+    \item Perform section state determination (Box~\ref{box:impl}), get resultants \(\bm{s}_e\)
+    \item Interpolate unbalanced forces \(\resids = \ForceInterp  \bm{q} + \bm{s}_p − \bm{s}_e\)
     \item Apply second deformation correction: \(\bm{e} \leftarrow \bm{e} + \mathbf{K}_s^{-1} \resids\)
     \item Integrate compatibility residual \eqref{eq:def-mv-flex}: \(\tilde{\bm{g}}_{\rm v} = −\bm{v} + \int  \ForceInterp^{\top} \bm{e} \,\dd x\) 
     \end{enumerate}
@@ -45,6 +46,7 @@ and:
         \(\mathbf{F}_{\rm s}\) & & \eqref{eq:def-section-flexibility} & Section flexibility. \\
         \(\mathbf{F}_q\) & & \eqref{eq:def-mv-flex} & Element flexibility \\
         \LightRule 
+        \(\eta\) & & \eqref{eq:def-line-search} & Line search parameter \\
         \(\phi\) & & \eqref{eq:def-line-merit} & Line search merit function \\
     \bottomrule
     \end{tabular}

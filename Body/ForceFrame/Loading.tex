@@ -1,4 +1,4 @@
-\subsection{Loading}
+\subsection{Element Loading}
 
 \begin{equation}
     g(\bm{u},\bm{v},\bm{q}) = \delta \bm{q} \cdot \int \ForceInterp^{\top}\mathbf{F}_{s}\,\bigl(\ForceInterp\bm{q} + \bm{s}_{p}(x,\bm{u}) - \bm{s}(\bm{e})\bigr)\, \dd x - \delta \bm{q} \cdot \bm{v} = 0
@@ -14,7 +14,8 @@ The total differential of the residual \eqref{eq:force-residual} is
 +\frac{d \delta \bm{q}}{d u} \delta \bm{u} \, g = 0
 \end{aligned}
 \end{equation*}
-The rightmost term is dropped assuming \(g = 0\). Rearranging for \(\frac{\partial \bm{q}}{\partial \bm{v}}\) furnishes:
+The rightmost term is dropped taking \(g = 0\). 
+Rearranging for \(\frac{\partial \bm{q}}{\partial \bm{v}}\) furnishes:
 \begin{equation}
 \delta \bm{q} \cdot \left(
 \frac{\partial g}{\partial \bm{q}} \frac{\partial \bm{q}}{\partial \bm{v}}\frac{\partial \bm{v}}{\partial \bm{u}}
@@ -48,13 +49,12 @@ Multiplying \eqref{eq:dqdv-2} by \(\bm{F}^{-1}\) furnishes:
 \begin{equation*}
 \delta \bm{q} \cdot \mathbf{K}_q \mathbf{A} \delta \bm{u}
 =
-\delta \bm{q} \cdot \bm{F}^{-T} \left(\mathbf{A} - \mathbf{K}_f\right) \delta \bm{u}
+\delta \bm{q} \cdot \bm{F}^{-\top} \left(\mathbf{A} - \mathbf{K}_f\right) \delta \bm{u}
 \end{equation*}
 
 \begin{equation}
-\boxed{
-\mathbf{K}\delta\bm{u} = \mathbf{A}^T\mathbf{F}^{-1}\left( 
+\mathbf{K}_u\delta\bm{u} = \mathbf{A}^{\top}\mathbf{F}^{-1}\left( 
 \mathbf{A} - \mathbf{K}_f
 \right)\delta \bm{u}
-}
+\label{eq:mf-tangent}
 \end{equation}

@@ -6,14 +6,16 @@
     \item A trace \(\mathcal{T}\) of a continuum displacement \(\hat{\bm u}\) is an operation:
     \RepeatEquation{eq:trace-map}
     such that
-    \RepeatEquation{eq:trace-lift-linear}
+    \RepeatEquation{eq:trace-lift-linear} 
     \item Traces are physically distinguished by how they manifest in boundary fixities on the beam displacement \(\bm{u}\) and rotation \(\bm{\theta}\) fields.
-    \item The geometric \citep{cowper1966shear} and energetic \citep{renton1991generalized} theories of shear  
-     both lead to exact continuum solutions in this framework, and are included in the Class I family of traces. 
-    \item Any Class I trace (\cref{def:class-1}) is compatible with Type 3 beam finite elements via a Petrov-Galerkin section \eqref{eq:petrov-section}, which preserves the classical section resultants. However, most Class I traces result in an asymmetric tangent stiffness.
+    \item The elastic moment-curvature response of a section is trace-independent (\cref{rem:bend-trace-indep}), and therefore is uniquely determined solely by the cross sectional geometry and Young's modulus \(E\). 
+    \item The elastic shear response is \emph{not} trace-independent. 
+    \item The geometric \citep{cowper1966shear} and energetic \citep{renton1991generalized} treatments of shear  
+     both lead to exact continuum solutions in the present framework, and are included in the Class I family of traces. 
+    \item Any Class I trace (\cref{def:class-1}) is compatible with Type 3 beam finite elements via a Petrov-Galerkin formulation \eqref{eq:petrov-section}, which preserves the classical section resultants. However, most Class I traces result in an asymmetric tangent stiffness.
     \item Class II traces (\cref{def:class-ii}) are the subset of Class I traces which may be implemented via a Bubnov-Galerkin section \eqref{eq:bubnov-section} to furnish a symmetric tangent stiffness.
     \item Class III traces (\cref{def:class-iii}) are the subset of Class II traces that produce the classical beam stress resultants \(\snm = (N,\ShearForce,T,\bm{M})\) under the symmetric Bubnov-Galerkin implementation \eqref{eq:bubnov-section}.
-    \item All Class III traces are equivalent under Saint~Venant loads (\cref{def:sv-equivalence}), and their trace matrix is given by \eqref{eq:energetic-trace-blocks}.
+    \item All Class III traces are equivalent under Saint~Venant loads (\cref{def:sv-equivalence}), and their trace matrix is given uniquely by \eqref{eq:energetic-trace-blocks}.
 \end{itemize}
 
 \begin{itemize}
@@ -21,17 +23,6 @@
     \item An 18 parameter subset of these solutions will admit a physically meaningful kinematic interpretation in the configuration variables \(\bm{u},\bm{\theta}\).
     \item A  4 parameter subset is exactly variationally compatible with the linear Type 3 equilibrium operator.
 \end{itemize}
-
-Novelty:
-\begin{itemize}
-    \item Classical trace equations are obtained in a form suitable for 3D inelastic simulations with Type 3 elements, general sections, and non-zero Poisson ratio. 
-    \item Identify exact scaling relationship between shear warping functions \(\bm{\psi}\) and beam strains \(\bm\gamma\).
-    \item Nonlinear section geometry (Wagner term) incorporated inside section.
-    \item Classical shear correction coefficients are associated to continuum exact 3D displacements.
-\end{itemize}
-
-Although the warping functions \(\WarpTwistIesan\) and \(\WarpShearIesan\) are defined by elastic boundary value problems, their use for inelastic modeling is well justified. 
-In this context, the elastic warping functions serve as shape functions.
 
 
 
@@ -45,3 +36,52 @@ This problem does not fall under the relaxed Saint~Venant class, which precludes
 % 1. are these conclusions theoretically sound
 % 2. Am i missing any salient points of practical interest?
 % 3. How does one understand the implications of the boundary condition phenomenon on beam element continuity? does trace selection have an impact on compatibility in finite element analysis? eg, if i model a saint-venant transversely loaded cantilever with two beam finite finite elements under a given trace, what does the displacement field look like at the element interface?
+
+
+\begin{itemize}
+    \item \cite{timoshenko1987theory} investigated a the flexural solution identified by the root boundary condition:
+    \[
+    \hat{\bm u}'(x_0, \mathbf{0}) = \mathbf{0}
+    \]
+    A trace defined to realize boundary conditions in this form exactly reproduces the response of classical Euler-Bernoulli beam theory, while remaining exact in the Saint-Venant class.
+
+    \item \cite{timoshenko1921correction} imposed the root condition by requiring the directional derivative of the axial displacement component along a chosen cross-section direction \(\mathbf{t}\) vanishes at that boundary point. 
+    In 3D this might be stated as:
+    $$
+    \left.\mathbf{t} \cdot \nabla_r(\hat{\bm u} \cdot \FrameBasis)\right|_{x=L, \bm{r}=r_0}=0,
+    $$
+    This produces a shear correction of \(\kappa = 2/3\).
+    % The full trace is derived in \cref{sec:trace-timo}.
+    \item In the landmark work by \cite{cowper1966shear}, a systematic investigation was conducted to obtain shear-correction factors corresponding to a trace which we have generalized to 3D with the form:
+    \begin{equation}
+    \bar{\bm{u}}(x) \coloneq \SectionAverage{\hat{\bm{u}}} - \bar{\bm{\theta}} \times \CentroidLocation, 
+    \qquad 
+    \bar{\bm{\theta}}(x) \coloneq \RotationAverage{\hat{\bm{u}}},
+    \label{eq:def-section-avg-trace}
+    \end{equation}
+    Here $\SectionAverage{\cdot}$ and $\RotationAverage{\cdot}$ are integral functionals defined by \eqref{eq:def-section-averages} which average the 3D field \(\hat{\bm u}\) at a cross section and furnish an $L^2$-optimal fitting of a section-rigid field to the 3D displacement \(\hat{\bm u}_{\rm P}\). 
+    The free parameters are determined by section geometry through rotation and translation averages of the warping functions, which is carried out in \cref{sec:trace-cowper}.
+    The approach by \cite{cowper1966shear} laid the foundation for the plane beam theories developed by \cite{simo1982bifurcation,hjelmstad1983seismic,hjelmstad1987warping}. 
+
+    \item The shear-correction factors of \cite{krenk1985pretwist}, \cite{renton1991generalized} and \cite{romano1992shear} are realized by a trace that defines beam strains to be 
+    work-conjugate to the classical resultants:
+    \begin{equation}
+    \delta\bm{\gamma} \cdot \bm{n} + \delta\bm{\kappa} \cdot \bm{m} 
+    = \int_\Section \delta\bm{\varepsilon} \cdot \bm{\sigma} \, \mathrm{d}A
+    \label{eq:def-trace-conjugate}
+    \end{equation}
+    for all variations within the Saint~Venant class.
+      % \begin{equation*}
+      %   \int \ShearStress_{(b)}\cdot (\ShearStress_{(b)}/G)\,\mathrm{d}A
+      %   = \ShearForce\cdot \bm\gamma^{\rm sh} + T_{\mathrm C^{\rm sh}}\varkappa_{(b)}
+      % \end{equation*}
+    This uniquely determines all 18 
+    parameters and guarantees a symmetric section stiffness matrix. The full trace is derived in \cref{sec:trace-energy}. 
+    \item
+    \cite[Eq. (7.4.52)]{slaughter2013linearized}, and \cite{reddy2002energy}:
+    \[
+    \tfrac12 \bm{\epsilon}\nabla\times\hat{\bm u}= \mathbf{0}
+    \]
+    This produces a \emph{stiffening} shear correction of \(\kappa = 4/3\), which is peculiarly greater than unity. 
+    % The full trace is derived in \cref{sec:trace-slaughter}.
+\end{itemize}

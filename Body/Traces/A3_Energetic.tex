@@ -79,7 +79,7 @@ where the shear strain shape functions are
 \begin{align}
 \mathbf{b}_{(\WarpTwistIesan)}(\bm{r}) &\coloneq \FrameBasis \times \bm{r} + \nabla\WarpTwistIesan(\bm{r}), 
 \label{eq:tau-phi} \\
-\mathbf{B}_{(\WarpShearIesan)}(\bm{r}) &\coloneq (\nabla\bm{\WarpShearIesan})^{\top} + \PoissonFlexure(\bm{r}).
+\mathbf{B}_{(\WarpShearIesan)}(\bm{r}) &\coloneq (\nabla\WarpShearShape{})^{\top} + \PoissonFlexure(\bm{r}).
 \label{eq:tau-psi}
 \end{align}
 \end{subequations}
@@ -98,7 +98,7 @@ where the Saint~Venant energy matrix \(\IesanEnergy\) is
 EA & EA\CentroidLocation^\top & 0 & \mathbf{0} \\
 EA\CentroidLocation & E\IntRoR & \mathbf{0} & \mathbf{0} \\
 0 & \mathbf{0} & G\Jsv & G(\Jsv\CenterShearLocation + \mathbf{h}_{\WarpTwistIesan})^\top \\
-\mathbf{0} & \mathbf{0} & G(\Jsv\CenterShearLocation + \mathbf{h}_{\WarpTwistIesan}) & G(\mathbf{H}_{\WarpShearIesan} + \Jsv\CenterShearLocation\otimes\CenterShearLocation + \CenterShearLocation\otimes\mathbf{h}_{\WarpTwistIesan} + \mathbf{h}_{\WarpTwistIesan}\otimes\CenterShearLocation)
+\mathbf{0} & \mathbf{0} & G(\Jsv\CenterShearLocation + \mathbf{h}_{\WarpTwistIesan}) & G(\mathbf{H}_{\WarpShear} + \Jsv\CenterShearLocation\otimes\CenterShearLocation + \CenterShearLocation\otimes\mathbf{h}_{\WarpTwistIesan} + \mathbf{h}_{\WarpTwistIesan}\otimes\CenterShearLocation)
 \end{bmatrix}
 \end{aligned}
 \label{eq:energy-matrix}
@@ -107,7 +107,7 @@ EA\CentroidLocation & E\IntRoR & \mathbf{0} & \mathbf{0} \\
 and the following definitions have been introduced:
 \begin{subequations}
 \begin{align}
-\mathbf{H}_{\WarpShearIesan} &:= \int_\Section \mathbf{B}_{(b)}^\top \mathbf{B}_{(b)} \dA, 
+\mathbf{H}_{\WarpShear} &:= \int_\Section \mathbf{B}_{(b)}^\top \mathbf{B}_{(b)} \dA, 
 \label{eq:def-H-bb} \\[4pt]
 \mathbf{h}_{\WarpTwistIesan} &:= \int_\Section \mathbf{B}_{(b)}^\top \mathbf{b}_{(\varphi)} \dA 
 % = -\Jsv\CenterShearLocation + \tfrac{\nu}{2}\bm{\zeta} - \nu\bm{\lambda},
@@ -159,12 +159,12 @@ The inverse of the energy matrix \eqref{eq:energy-matrix} is:
 \end{equation*}
 where 
 \begin{equation}
-% \tilde{\Jsv} := \Jsv - \mathbf{h}_{\WarpTwistIesan}\cdot \mathbf{H}_{\WarpShearIesan}^{-1} \mathbf{h}_{\WarpTwistIesan}, 
-\tilde{\mathbf{H}}_{bb} := \mathbf{H}_{\WarpShearIesan} - \frac{1}{\Jsv}\mathbf{h}_{\WarpTwistIesan}\otimes\mathbf{h}_{\WarpTwistIesan},
+% \tilde{\Jsv} := \Jsv - \mathbf{h}_{\WarpTwistIesan}\cdot \mathbf{H}_{\WarpShear}^{-1} \mathbf{h}_{\WarpTwistIesan}, 
+\tilde{\mathbf{H}}_{bb} := \mathbf{H}_{\WarpShear} - \frac{1}{\Jsv}\mathbf{h}_{\WarpTwistIesan}\otimes\mathbf{h}_{\WarpTwistIesan},
 \qquad\text{and}\qquad
 \TraceTF := \frac{1}{\Jsv}\bigl(\Jsv\CenterShearLocation + \mathbf{h}_{\WarpTwistIesan}\bigr)
 \qquad 
-% \bm{\eta} := \mathbf{H}_{\WarpShearIesan}^{-1} \mathbf{h}_{\WarpTwistIesan}.
+% \bm{\eta} := \mathbf{H}_{\WarpShear}^{-1} \mathbf{h}_{\WarpTwistIesan}.
 \label{eq:reduced-torsion}
 \end{equation}
 

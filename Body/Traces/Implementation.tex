@@ -16,7 +16,7 @@ In view of the Saint~Venant strains \eqref{eq:iesan-point-strain}, the enhanced 
 \WarpStrainMatrix(\bm{r}) := 
 \begin{bmatrix}
 \nabla\WarpTwistIesan
-&\FrameBasis_{\beta}\otimes\nabla_{\beta}\bm{\WarpShearIesan} + \bm{\Pi}_{(b)}
+&\FrameBasis_{\beta}\otimes\nabla_{\beta}\WarpShearShape{} + \bm{\Pi}_{(b)}
 \end{bmatrix}_{3\times 3}
 \end{SaveEquation}
 where \(\RigidShift\) and \(\ShapeShift\) are constant matrices.
@@ -53,13 +53,13 @@ and
 \end{equation}
 
 In a Petrov-Galerkin formulation the stress resultants are furnished by 
-    \begin{SaveEquation}{eq:petrov-section}
-    \begin{aligned}
-        \snm &= \int \RigidStrainMatrix^{\top}\StressVector(\StrainVector)\dA\\
-        \TraceStiffNM &= \int \RigidStrainMatrix^{\top}\StressVectorTangent\Big(\RigidStrainMatrix (\mathbf{1} + \RigidShift) + \WarpStrainMatrix \ShapeShift\Big)\dA + \mathbf{K}_{\rm W}\\
-    \end{aligned}
-    \end{SaveEquation}
-    where \(\mathbf{K}_{\rm W}\) is the contribution from the Wagner term \eqref{eq:section-wagner-tangent}:
+\begin{SaveEquation}{eq:petrov-section}
+\begin{aligned}
+    \bm{s} &= \int \TotalStrainMatrix^{\top}\StressVector(\StrainVector)\dA\\
+    \TraceStiffNM &= \int \RigidStrainMatrix^{\top}\StressVectorTangent\Big(\TotalStrainMatrix + \EnhanShapes\Big)\dA + \mathbf{K}_{\rm W}\\
+\end{aligned}
+\end{SaveEquation}
+where \(\mathbf{K}_{\rm W}\) is the contribution from the Wagner term \eqref{eq:section-wagner-tangent}:
 
 
 In a Bubnov-Galerkin formulation, the stress resultants and tangent are:

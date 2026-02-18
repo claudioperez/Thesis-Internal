@@ -289,7 +289,7 @@ Regarding \eqref{eq:iesan-2-22} and the constant tensor relating to \(c_{\varthe
 The outward unit normal is $\bm{\nu}$ and the unit tangent is $\bm{t}$.
 \[
 \bm{J}
-:=\int_{\Section}\bm{r}^\times\!\left(\nabla\bm{\WarpShearIesan})^{\!\top}
+:=\int_{\Section}\bm{r}^\times\!\left(\nabla\WarpShearShape{})^{\!\top}
 +\tfrac{\nu}{2}\,r^2\mathbf{1}\right)\,da
 \;\in\mathbb{R}^{2}.
 \]
@@ -410,8 +410,8 @@ Equivalently, column-wise (since for any \( \bm a\otimes\bm b\), the (j)-th colu
 
 The nonzero \(yz\)-block is the \(2\times2\) matrix
 \[
-\mathbf I = \int_{\Section}\big(\bm{\WarpShearIesan}-\bm{r}\big)\otimes(\FrameBasis\times\bm{r})\mathrm{~d}A
-=\underbrace{\int_{\Section}\bm{\WarpShearIesan}\otimes(\FrameBasis\times\bm{r})\mathrm{~d}A}_{\mathbf A}
+\mathbf I = \int_{\Section}\big(\WarpShearShape{}-\bm{r}\big)\otimes(\FrameBasis\times\bm{r})\mathrm{~d}A
+=\underbrace{\int_{\Section}\WarpShearShape{}\otimes(\FrameBasis\times\bm{r})\mathrm{~d}A}_{\mathbf A}
 -\underbrace{\int_{\Section}\bm{r}\otimes(\FrameBasis\times\bm{r})\mathrm{~d}A}_{\mathbf G = -\IntRoR\FrameBasis^\times}.
 \]
 
@@ -420,7 +420,7 @@ Mixed term \(\mathbf A\) via integral theorems
 Set \(f:=\tfrac12 r^2 \) so that \(\nabla f=\bm{r}\) and \(\FrameBasis\times\nabla f=\FrameBasis\times\bm{r}\).
 Then
 \[
-\mathbf A=\int_{\Section}\bm{\WarpShearIesan}\otimes\FrameBasis\times\nabla f\mathrm{~d}A.
+\mathbf A=\int_{\Section}\WarpShearShape{}\otimes\FrameBasis\times\nabla f\mathrm{~d}A.
 \]
 Apply the rotated-gradient integration by parts (Stokes/Green in 2-D \eqref{eq:thm-stokes-green}) with \(\bm a=\bm\psi\), \(g=f\):
 \[\mathbf A

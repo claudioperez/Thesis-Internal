@@ -4,10 +4,10 @@
 Newton step seeks \((\dd \bm{q},\dd \bm{e})\) such that
 
 \[
-\residv[\bm{e}+\dd \bm{e}]\approx 0,\qquad \resids(\cdot;\bm{q}+\dd \bm{q},\,\bm{e}+\dd \bm{e})\approx 0.
+\residv[\bm{e}+\dd \bm{e}]\approx 0,\qquad \resids(x_{\ell};\bm{q}+\dd \bm{q},\,\bm{e}+\dd \bm{e})\approx 0.
 \]
 
-Linearizing \eqref{eq:def-mf-gv}:
+Linearizing \eqref{eq:def-mf-gv} furnishes:
 \[
 \residv[\bm{e}+\dd \bm{e}] = \residv[\bm{e}]-\int_0^L \ForceInterp^{\top}\,\dd \bm{e}\,\dd\reflenx.
 \]
@@ -19,22 +19,22 @@ Setting \(\residv[\bm{e}+\dd \bm{e}]=\mathbf{0}\) gives
 \tag{C}
 \]
 
-Linearizing \eqref{eq:def-mf-gs}:
+Linearizing \eqref{eq:def-mf-gs} furnishes:
 \[
-\resids(x;q+\dd \bm{q},e+\dd \bm{e})\approx \resids(x;q,e) + \ForceInterp(x)\dd \bm{q} - \mathbf{K}_s(x)\dd \bm{e}(x)
+\resids(x;q+\dd \bm{q},e+\dd \bm{e})\approx \resids(x;q,e) + \ForceInterp(x)\dd \bm{q} - \Ks(x)\dd \bm{e}(x)
 \]
 
 where
 
 \begin{equation}
-\mathbf{K}_s(x):=\frac{\partial s}{\partial e}(x),\qquad \mathbf{F}_{s}(x):=\mathbf{K}_s^{-1}(x).
+\Ks(x):=\frac{\partial s}{\partial e}(x),\qquad \mathbf{F}_{s}(x):=\Ks^{-1}(x).
 \label{eq:def-section-flexibility}
 \end{equation}
 
 Setting the linearization to zero:
 
 \begin{equation}
-\ForceInterp(x)\dd \bm{q} - \mathbf{K}_s(x)\dd \bm{e}(x) = -\resids(x;q,e).
+\ForceInterp(x)\dd \bm{q} - \Ks(x)\dd \bm{e}(x) = -\resids(x;q,e).
 \end{equation}
 
 Solve for \(\dd \bm{e}(x)\):
@@ -66,7 +66,7 @@ Define
 Then the staggered Newton step is
 
 \begin{equation}
-\mathbf{F}\,\dd \bm{q} = \tilde{\bm{g}}_{\rm v} %= \residv[\bm{e}]-v_r.
+\mathbf{F}_q\,\dd \bm{q} = \tilde{\bm{g}}_{\rm v} %= \residv[\bm{e}]-v_r.
 \label{eq:mf-dq}
 \end{equation}
 
@@ -74,6 +74,7 @@ Then the staggered Newton step is
 The basic forces \(\bm{q}\) are updated by scaling the Newton step furnished by \eqref{eq:mf-dq}:
 \begin{equation}
 \bm{q} \leftarrow \bm{q} + \eta\, \dd \bm{q}
+\label{eq:def-line-search}
 \end{equation}
 where \(\eta\) is determined by a line search algorithm. 
 A backtracking line search is performed with 

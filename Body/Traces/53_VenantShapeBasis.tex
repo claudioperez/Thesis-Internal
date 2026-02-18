@@ -55,7 +55,7 @@ After removing all patterns in $\mathscr{R}(\Section)$ from the Saint-Venant sol
 \\
 %
 &\text{Longitudinal:} \notag\\
-&&&\FrameBasis\otimes\bm{\WarpShearIesan}&&\text{ Flexure }&\text{2 amplitudes }&&\bm{\alpha}_{\WarpShearIesan}\propto\bm{b}_{\Section}\sim \reflenx^0 \\
+&&&\FrameBasis\otimes\bm{\WarpShearIesan}&&\text{ Flexure }&\text{2 amplitudes }&&\bm{\alpha}_{\WarpShear}\propto\bm{b}_{\Section}\sim \reflenx^0 \\
 &&&\FrameBasis\,\WarpTwistIesan &&\text{ Torsion }&\text{1 amplitude }&&\alpha_{\WarpTwistIesan} \propto a_{\vartheta}+c_{\vartheta}\sim \reflenx^0 
 \end{alignat}
 \label{eq:def-poisson-warping}
@@ -66,7 +66,7 @@ After removing all patterns in $\mathscr{R}(\Section)$ from the Saint-Venant sol
 &\text{Poisson extension:} \quad && \bm{W}_{(\varepsilon)} := -\nu\bm{r}, \quad && \alpha_{\varepsilon} \propto a_\varepsilon, \\
 &\text{Poisson bending:} \quad && \bm{W}_{(a)} := -\nu\operatorname{dev}\bm{r}\otimes\bm{r}, \quad && \bm{\alpha}_a \propto \IesanLoadM, \\
 &\text{Poisson flexure:} \quad && \PoissonFlexure := -\nu(\operatorname{dev}\bm{r}\otimes\bm{r} - \bm{r}\otimes\CentroidLocation), \quad && \bm{\alpha}_b \propto \bm{b}_{\Section}, \\
-&\text{Shear warping:} \quad && \FrameBasis \otimes \bm{\WarpShearIesan}, \quad && \bm{\alpha}_{\WarpShearIesan} \propto \bm{b}_{\Section}, \\
+&\text{Shear warping:} \quad && \FrameBasis \otimes \WarpShearShape, \quad && \bm{\alpha}_{\WarpShear} \propto \bm{b}_{\Section}, \\
 &\text{Torsion warping:} \quad && \FrameBasis \WarpTwistIesan, \quad && \alpha_{\WarpTwistIesan} \propto a_{\vartheta} + c_{\vartheta}.
 \end{alignat}
 % \label{eq:def-poisson-warping}

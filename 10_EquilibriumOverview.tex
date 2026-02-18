@@ -1,7 +1,7 @@
 
 In this section, governing equations are developed for a line embedded in 3D space.
 
-
+TODO: Introduce concept of ``section'' and ``element'' level.
 
 % The Type 1 case is of interest because it is relatively easy to implement and appears regularly in the literature (though usually not in such a general form) like Reissner's theory of torsion warping \citep{reissner1952nonuniform}.
 % Type~2 is harder to implement because it seems to produce higher-order equilibrium equations, but it is important because it covers several widely studied models, such as Vlasov's nonuniform torsion theory.
@@ -48,16 +48,6 @@ state of the art for geometrically exact finite elements.
 
 
 % \cite[p39]{vlasov1961thinwalled}
-
-\paragraph{Uniform warping.}
-
-
-Existing implementations of inelastic beam elements with warping \citep{saritas2009inelastic,%
-lecorvec2012nonlinear,dire2018mixed} introduce auxiliary kinematic fields 
-that must be interpolated along the element length. These additional degrees 
-of freedom either inflate the global system of equations—incurring a cost 
-that scales as the cube of the DOF count for direct linear solvers—or must 
-be condensed out at the element level during each Newton iteration.
 
 % \paragraph{Elastostatics}
 
@@ -192,7 +182,7 @@ The cross-section orientation is identified by a variable \(\FrameRotation(\refl
 \(\left\{\FrameBasis, \FrameBasis_\alpha\right\}\) to their placement in the current configuration \(\{\frameBasis, \frameBasis_\alpha\}\). 
 % The index-free directors \(\FrameBasis\) and \(\frameBasis\) are, by definition, normal to the cross section plane. 
 The body coordinate \(\reflenx \in[0, L]\) is taken as the reference arc-length and
-the notation \((~\cdot~)^{\prime} \triangleq \partial(~\cdot~) / \partial \reflenx\) is adopted. 
+the notation \((~\cdot~)^{\prime} \coloneq \partial(~\cdot~) / \partial \reflenx\) is adopted. 
 The placement of the deformed curve is represented by a vector \(\bm{x}(\reflenx) \in \mathbb{R}^3\), and cross sectional warping is represented by a vector \(\bm{\alpha}(\reflenx) \in \mathbb{R}^{n_w}\) of \(n_w\) \emph{warping amplitudes}. 
 The strain measures arise uniquely from the differential geometry of
 directed curves embedded in Euclidean space
@@ -222,21 +212,21 @@ Similarly, the notation \((\,\cdot\,)^{\times}\) is adopted to represent a vecto
 This way \((\,\cdot\,)^{\vee}\) and \((\,\cdot\,)^{\times}\) represent the \emph{vee} and \emph{hat} isomorphisms on the Lie algebra \(\mathfrak{so}(3)\).
 %
 A constitutive relation is required between the material stress \(\bm{s}\) and strain \(\bm{e}\):
-\begin{equation} 
-  \bm{s} \triangleq \begin{pmatrix}
+\begin{SaveEquation}{eq:cosserat-strain} 
+  \bm{s} \coloneq \begin{pmatrix}
   \bm{n} \\ 
   \bm{m} \\
   \bm{w} \\
   \bm{v}
   \end{pmatrix}
   \quad\text{ and }\quad 
-  \bm{e} \triangleq \begin{pmatrix}
+  \bm{e} \coloneq \begin{pmatrix}
   \bm{\gamma}\\ 
   \bm{\kappa} \\
   \bm{\alpha}' \\
   \bm{\alpha}
   \end{pmatrix}
-  \label{eq:cosserat-strain}
-\end{equation}
+  % \label{eq:cosserat-strain}
+\end{SaveEquation}
 
 We restrict our attention to prismatic initially straight rods so that \(\FrameBasis' = \mathbf{0}\).

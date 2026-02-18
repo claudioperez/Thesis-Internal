@@ -51,3 +51,80 @@ The developments of Part~I are summarized by Box~\ref{box:model-summary}.
 \end{enumerate}
 \end{ambox}
 
+
+\subsection{Implementation}
+
+\begin{ambox}[Section Preprocessing.]{box:prep}
+\paragraph{Objective.}
+Given a cross section \(\Section \subset \mathbb{R}^2\) where each point is assigned a tensorial stress-strain material \(\TensorMaterial: \StrainTensor \mapsto \bm{T}\), 
+define a \emph{cross section discretization} \(\Section^h\).
+\paragraph{Procedure.}
+\begin{enumerate}
+    \item Discretize the section \(\Section\) into quadrature points \(\{\PlanePosition_{\ell}\}\) and weights \(\{\dd A_{\ell}\}\)
+    \item Solve the BVPs \cref{eq:warp-sv-bvp} for \(\WarpTwistIesan\) and \cref{eq:warp-fa-bvp} for \(\WarpFA\), and for each point \(\PlanePosition_{\ell}\) in the discretization store 
+    \begin{itemize}
+        \item \(\TotalStrainMatrix(\PlanePosition_{\ell})\) \eqref{eq:def-section-kinematic-matrix-Phi} or \eqref{eq:def-section-kinematic-matrix-wagner}.
+        \item \(\EnhanShapes(\PlanePosition_{\ell})\) from \cref{sec:timo} or \eqref{eq:nonuniform-shapes}.
+        % \item \(~~\WarpSV(\PlanePosition_{\ell}) \in \mathbb{R}\)
+        % \item \(\nabla \WarpSV(\PlanePosition_{\ell}) \in \mathbb{R}^2\)
+        % \item \(\nabla \WarpFA (\PlanePosition_{\ell}) \in \mathbb{R}^2\)
+    \end{itemize}
+\end{enumerate}
+\end{ambox}
+
+\iftrue
+\begin{ambox}[Material State Determination.]{box:mati}
+\paragraph{Objective.}
+Given a strain vector \(\StrainVector \in \mathbb{R}^3\) and tensorial stress-strain material model \(\TensorMaterial \colon \mathrm{Sym}(\mathbb{R}^3, \mathbb{R}^3) \rightarrow \mathrm{Sym}(\mathbb{R}^3, \mathbb{R}^3)\), return the stress vector \(\StressVector \in \mathbb{R}^3\) representing the constrained stress tensor.
+% \[
+% \StressTensor = \StressVector \symbun \FrameBasis
+% \]
+\paragraph{Procedure.}
+Perform Newton-Raphson iterations solving for the strain tensor \(\tilde{\StrainTensor}\) that satisfies the constraints
+\[
+\FrameBasis_{\alpha}\cdot  \TensorMaterial\bigl(\StrainVector \symbun \FrameBasis + \tilde{\StrainTensor} \bigr)\, \FrameBasis_{\beta} = 0
+\]
+Details of the procedure are developed by \cite{klinkel2002using}.
+\end{ambox}
+\fi 
+
+\begin{ambox}[Section State Determination.]{box:impl}
+\paragraph{Objective.}
+Given deformations \(\bm{e}\), compute resultants \(\bm{s}\) \eqref{eq:stress-resultants}, enhanced parameters \(\bm{\eta}\), and tangent \(\Ks\) \eqref{eq:section-tangent}
+by solving \eqref{eq:def-enhan-residual}
+over a cross section discretization as described in Box~\ref{box:prep}:
+\[\{\PlanePosition_{\ell},\, \dd A_{\ell}, \, 
+\TotalStrainMatrix(\PlanePosition_{\ell}),\, 
+\EnhanShapes(\PlanePosition_{\ell}),\,
+\; \bigm| \; 
+\PlanePosition_{\ell} \in \Section^h
+\}
+\]
+
+\paragraph{Procedure.}
+% \citep{simo1993improved}
+\begin{enumerate}
+    \item Retrieve the section state variable \(\bm{\EnhanParam} \in \mathbb{R}^{n_a}\) from the prior evaluation
+    \item Find \(\bm{\eta}\), \(\Ken\), and \(\Kn\) by solving the residual equation \eqref{eq:def-enhan-residual}:
+    \RepeatEquation{eq:def-enhan-residual}
+    where at each Newton-Raphson iteration \(k\):
+    \[
+     \bm{\EnhanParam}^{k+1} = \bm{\EnhanParam}^{k} - \Knn^{-1} \residn (\bm{\EnhanParam}^{k})
+    \qquad\text{ and }\qquad
+    \Kae = \int_{\PlaneManifold} \EnhanShapes^{\top} \mathbf{C}^k \TotalStrainMatrix\, \dd A
+    \]
+    and the stress vector \(\StressVector\) and tangent \(\mathbf{C}\) are evaluated using the procedure of Box~\ref{box:mati} with \(\StrainVector = \operatorname{A}[\bm{e}] + \EnhanShapes \bm{\EnhanParam}\).
+
+
+    \item Form the section resultant vector \(\bm{s}\) \eqref{eq:stress-resultants} and tangent \(\Ke\) \eqref{eq:Kee}:
+    \[
+    \bm{s} = \int \TotalStrainMatrix^{\top} \bm{\sigma}(\hat{\bm{\varepsilon}} + \EnhanShapes \bm{\EnhanParam}) \dA
+    \qquad\text{and}\qquad
+    \Ke = \int \TotalStrainMatrix^{\top}\mathbf{C}\TotalStrainMatrix \dA + \Kwg
+    % - \Kae^{\top} \Kaa^{-1} \Kae
+    \]
+    with \(\Kwg\) given by \eqref{eq:section-wagner-tangent}.
+    \item Form the tangent \(\Ks\) \eqref{eq:section-tangent} from \(\Ke\), \(\Ken\), and \(\Kn\):
+    \RepeatEquation{eq:section-tangent}
+\end{enumerate}
+\end{ambox}

@@ -99,6 +99,7 @@
 \input{meta}
 
 \addbibresource{References/references.bib}
+\addbibresource{References/convergence.bib}
 \addbibresource{References/warping.bib}
 \addbibresource{References/buckling.bib}
 \addbibresource{References/bridges.bib}
@@ -106,6 +107,7 @@
 \addbibresource{References/elastostatics.bib}
 \addbibresource{References/filippou.bib}
 \addbibresource{References/cosserat.bib}
+\addbibresource{References/general.bib}
 \addbibresource{References/concrete.bib}
 \addbibresource{References/wagner.bib}
 \addbibresource{References/elements.bib}
@@ -158,13 +160,13 @@
 \clearpage 
 
 % \part{Finite Element Formulations}
-\part{Structural Mechanics}
+% \part{Structural Mechanics}
 
 \section{Overview}\label{sec:Part-I}
 \input{Body/Part-I}
 \clearpage
 
-\section{Modeling Paradigm}\label{sec:genwarp}
+\section{Element Formulations}\label{sec:genwarp}
 \input{10_EquilibriumOverview}
 \clearpage
 % \input{10_Equilibrium}
@@ -177,12 +179,10 @@
 \clearpage
 
 
-\section{A Section-Local Enhanced Strain Framework}\label{sec:gensec}
+\section{An Enhanced Strain Framework for Sections}\label{sec:gensec}
 %Section Formulation}
 \input{Body/Section/main}
 % \input{Body/Section/21_Literature}
-\clearpage 
-
 \subsection{Conclusions}
 \input{Body/Section/Conclusions}
 \clearpage
@@ -211,8 +211,8 @@
 \clearpage
 
 
-% \section{Modeling Library}\label{sec:library}
-% \input{Body/Library/main}
+\section{Modeling Library}\label{sec:library}
+\input{Body/Library/main}
 \clearpage
 
 
@@ -221,10 +221,10 @@
 \clearpage 
 
 \section{BRACE2}\label{sec:irie}
-\InputChapter{Body/Irie/main}
-\clearpage
+% \InputChapter{Body/Irie/main}
+% \clearpage
 
-\InputChapter{Part II/main}%
+% \InputChapter{Part II/main}%
 \clearpage 
 
 \input{Examples/index}
@@ -245,9 +245,9 @@
 % \printglossary[type=frame]
 % \printglossary[type=brace]
 \clearpage
-% \input{Part I/Rotations}
-% % \input{Part I/Derivatives}
-% \input{Body/Rotations/Functions}
+\input{Part I/Rotations}
+% \input{Part I/Derivatives}
+\input{Body/Rotations/Functions}
 \clearpage 
 
 \InputChapter{Part I/Kinematics/main}
@@ -258,7 +258,7 @@
 \clearpage
 
 \section{The Force Formulation}\label{sec:ForceFrame}
-% \input{Body/ForceFrame/main}
+\input{Body/ForceFrame/main}
 \clearpage
 
 \include{Body/Iesan/main}
@@ -266,6 +266,7 @@
 
 \input{Sections/A_IntegralIdentities}
 \clearpage
+
 \section{Warping Functions}
 \input{Body/A_WarpingFunctions/main}
 \clearpage 

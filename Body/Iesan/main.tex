@@ -108,12 +108,12 @@ Components of interest are singled out as
 \qquad
 \PointShearStress :=(\FrameBasis_\beta\otimes\FrameBasis_\beta)\,\StressTensor\,\FrameBasis,
 \]
-Ie\c{s}an’s construction recovers the Saint–Venant form \eqref{eq:saint-venant-stress}
-\begin{equation*}
-\StressTensor = \AxialStress\,\FrameBasis\otimes\FrameBasis
-+\FrameBasis\otimes\bm{\tau}+\bm{\tau}\otimes\FrameBasis,
-% \label{eq:saint-venant-stress}
-\end{equation*}
+% Ie\c{s}an’s construction recovers the Saint–Venant form \eqref{eq:saint-venant-stress}
+% \begin{equation*}
+% \StressTensor = \AxialStress\,\FrameBasis\otimes\FrameBasis
+% +\FrameBasis\otimes\bm{\tau}+\bm{\tau}\otimes\FrameBasis,
+% % \label{eq:saint-venant-stress}
+% \end{equation*}
 % i.e., the in–plane block vanishes as a consequence of the solution.
 \end{remark}
 
@@ -156,13 +156,13 @@ Integrating \eqref{eq:iesan-problem-1} furnishes the particular solution:
 \end{aligned}
 \label{eq:iesan-displacement-1}
 \end{equation}
-where the torsion warping \(\WarpTwistIesan\) is determined by the Neumann problem:
+where the torsion warping function \(\WarpTwistIesan:\Section\rightarrow\mathbb{R}\) is determined by the Neumann problem:
 \begin{equation}
 \left\{
 \begin{aligned}
 \Delta \WarpTwistIesan&=0 && \text{in }\Section,\\
 \partial_{\bm{\nu}} \WarpTwistIesan&=-\,(\FrameBasis\times\PlanePosition)\cdot \bm{\nu} && \text{on } \SectionBoundary,\\
-\int_{\Section} \WarpTwistIesan\, \dA&=0, &&
+\int_{\Section} \WarpTwistIesan\, \volE &=0, &&
 \end{aligned}
 \right.
 \label{eq:bvp-warp-twist-iesan}
@@ -263,27 +263,27 @@ Integrating \eqref{eq:iesan-problem-2} furnishes the particular solution:
 +c_\vartheta\,\reflenx\,(\FrameBasis\times\bm{r}),\\
 \FrameBasis\cdot\hat{\bm u}_{\rm I\!I}(\reflenx,\bm{r})
 &=\tfrac12\,\reflenx^{2}\, (\bm{r}-\CentroidLocation)\cdot\bm{b}_{\Section}
-+c_\vartheta\,\WarpTwistIesan(\bm{r})+\bm{\WarpShearIesan}(\bm{r}) \cdot \bm{b}_{\Section},
++c_\vartheta\,\WarpTwistIesan(\bm{r})+\WarpShearShape{}(\bm{r}) \cdot \bm{b}_{\Section},
 \end{aligned}
 \label{eq:iesan-displacement-2}
 \end{equation}
-where flexural warping \(\bm{\WarpShearIesan}\) is determined by the  Poisson–Neumann problem:
+where flexural warping \(\WarpShearShape{}:\Section\rightarrow\mathbb{R}^{2}\) is determined by the  Poisson–Neumann problem:
 \begin{equation}
 \left\{
 \begin{aligned}
-\Delta\WarpShearIesan&=-2\big(\bm{r}-\CentroidLocation\big)\cdot\bm{b}_{\Section} && \text{in }\Section,\\
-\partial_{\bm\nu}\WarpShearIesan&=\nu\,\bm\nu\cdot\Big(\operatorname{dev}\bm{r}\otimes\bm{r}-\bm{r}\otimes\CentroidLocation\Big)\bm{b}_{\Section}
+\Delta(\WarpShearShape \cdot\bm{b}_{\Section})&=-2\big(\bm{r}-\CentroidLocation\big)\cdot\bm{b}_{\Section} && \text{in }\Section,\\
+\partial_{\bm\nu}(\WarpShearShape\cdot\bm{b}_{\Section})&=\nu\,\bm\nu\cdot\Big(\operatorname{dev}\bm{r}\otimes\bm{r}-\bm{r}\otimes\CentroidLocation\Big)\bm{b}_{\Section}
 && \text{on } \SectionBoundary,\\
-\int_\Section \WarpShearIesan\,\volE&=0, &&
+\int_\Section \WarpShearShape\cdot\bm{b}_{\Section}\,\volE&=0, &&
 \end{aligned}
 \right.
 \label{eq:bvp-warp-shear-iesan}
 \end{equation}
 where the deviator \(\operatorname{dev}\bm{r}\otimes\bm{r}\) is understood in the section plane  
 \(\operatorname{dev}\bm{r}\otimes\bm{r}=\bm{r}\otimes\bm{r}-\tfrac12(\bm{r}\cdot\bm{r})\,\oneS\). 
-This problem has been considered by \cite{romano2012torsion} with the symbol \(\phi^{\rm SH}\), \cite{pilkey2003analysis} with the symbols \(\Phi,\Psi\), 
-\cite{lacarbonara2007solution} with the symbol \(\omega_i\),
-and \cite{hjelmstad1983seismic} with the symbol \(\Psi\). 
+% This problem has been considered by \cite{romano2012torsion} with the symbol \(\phi^{\rm SH}\), \cite{pilkey2003analysis} with the symbols \(\Phi,\Psi\), 
+% \cite{lacarbonara2007solution} with the symbol \(\omega_i\),
+% and \cite{hjelmstad1983seismic} with the symbol \(\Psi\). 
 
 The strain under \eqref{eq:iesan-displacement-2} is
 \begin{equation}
@@ -295,7 +295,7 @@ The strain under \eqref{eq:iesan-displacement-2} is
 \bm\varepsilon_\gamma
 &= c_{\vartheta}\big(\nabla\WarpTwistIesan + \FrameBasis\times\bm{r}\big)
 -\nu\Big(\operatorname{dev}(\bm{r}\otimes\bm{r})-\bm{r}\otimes\CentroidLocation\Big)\bm{b}_{\Section}
-+\nabla\big(\bm{\WarpShearIesan}\cdot\bm{b}_{\Section}\big),
++\nabla\big(\WarpShearShape{}\cdot\bm{b}_{\Section}\big),
 \end{aligned}
 \label{eq:iesan-strain-2}
 \end{equation}
@@ -306,7 +306,7 @@ and the stress is
 \bm{\tau}(\hat{\bm u})
 &=G\Big[(a_\vartheta+c_\vartheta)\big(\nabla\WarpTwistIesan+\FrameBasis\times\bm{r}\big)
 -\nu\Big(\operatorname{dev}(\bm{r}\otimes\bm{r})-\bm{r}\otimes\CentroidLocation\Big)\bm{b}_{\Section}
-+\nabla\big(\bm{\WarpShearIesan}\cdot\bm{b}_{\Section}\big)\Big].
++\nabla\big(\WarpShearShape{}\cdot\bm{b}_{\Section}\big)\Big].
 \end{aligned}
 \label{eq:iesan-stress-2}
 \end{equation}
@@ -326,15 +326,15 @@ and \(c_\vartheta\) is determined by the relaxed torsion boundary condition \(\F
 \begin{equation}
 \,c_\vartheta
 = \CenterShearLocation\cdot\bm{b}_{\Section}
-% -\frac{1}{\Jsv}\FrameBasis\cdot\int_{\Section} \bm{r}\times \left(\nabla \bm{\WarpShearIesan}^{\top}
+% -\frac{1}{\Jsv}\FrameBasis\cdot\int_{\Section} \bm{r}\times \left(\nabla \WarpShearShape{}^{\top}
 % + \bm{\Pi}_{(b)} \right)\bm{b}_{\Section} \dA 
-% =-\frac{1}{\Jsv}\int_\Section\Big[(\FrameBasis\times\bm{r})\cdot\nabla\big(\bm{\WarpShearIesan}\cdot\bm{b}_{\Section}\big)
+% =-\frac{1}{\Jsv}\int_\Section\Big[(\FrameBasis\times\bm{r})\cdot\nabla\big(\WarpShearShape{}\cdot\bm{b}_{\Section}\big)
 % +\tfrac12\,\nu\,r^2\,(\FrameBasis\times\bm{r})\cdot\bm{b}_{\Section}\Big]\dA .
 \label{eq:iesan-2-22}
 \end{equation}
 where \(\Jsv\) is the torsion constant defined by \eqref{eq:def-j-origin}, and the \emph{shear point} \(\CenterShearLocation\in\Section\) is defined by:
 \begin{equation}
-\CenterShearLocation := \frac{1}{\Jsv} \int_\Section (\nabla\bm{\WarpShearIesan} + \bm{\Pi}_{(b)}^\top)\,\bm{r} \times \FrameBasis \dA.
+\CenterShearLocation := \frac{1}{\Jsv} \int_\Section (\nabla\WarpShearShape{} + \bm{\Pi}_{(b)}^\top)\,\bm{r} \times \FrameBasis \dA.
 \label{eq:def-shear-center}
 \end{equation}
 
@@ -343,9 +343,9 @@ where \(\Jsv\) is the torsion constant defined by \eqref{eq:def-j-origin}, and t
 \begin{aligned}
 c_{\vartheta} &=- \frac{1}{\Jsv}\int_{\Section} \Big[(\FrameBasis\times \bm{r})\cdot \nabla \WarpShearIesan
 + \tfrac{1}{2}\,\nu\, r^2 \,(\FrameBasis\times \bm{r})\cdot \bm{b}_{\Section}\Big]\dA \\
- &=- \frac{1}{\Jsv}\int_{\Section} \Big[(\FrameBasis\times \bm{r})\cdot (\nabla \bm{\WarpShearIesan}^T
+ &=- \frac{1}{\Jsv}\int_{\Section} \Big[(\FrameBasis\times \bm{r})\cdot (\nabla \WarpShearShape{}^T
 + \tfrac{1}{2}\,\nu\, r^2 \,\oneS) \bm{b}_{\Section}\Big]\dA \\
- &= \FrameBasis\cdot\frac{1}{\Jsv}\left[\int_{\Section} \bm{r}\times (\nabla \bm{\WarpShearIesan}^T
+ &= \FrameBasis\cdot\frac{1}{\Jsv}\left[\int_{\Section} \bm{r}\times (\nabla \WarpShearShape{}^T
 + \tfrac{1}{2}\,\nu\, r^2 \,\oneS)\dA \right] \bm{b}_{\Section} \\
 \end{aligned}
 \]

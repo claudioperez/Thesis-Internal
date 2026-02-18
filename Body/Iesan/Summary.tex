@@ -11,7 +11,7 @@ Combining \eqref{eq:iesan-displacement-1} and \eqref{eq:iesan-displacement-2} fu
 &\quad-\tfrac16\,\reflenx^3\,\bm{b}_{\Section}
 -\reflenx\,\nu\Big(\operatorname{dev}\bm{r}\otimes\bm{r}-\bm{r}\otimes\CentroidLocation\Big)\bm{b}_{\Section}
 +\tfrac12 \reflenx^2\,\FrameBasis\otimes(\bm{r}-\CentroidLocation)\,\bm{b}_{\Section}
-+\FrameBasis\otimes\bm{\WarpShearIesan}(\bm{r})\,\bm{b}_{\Section}\\
++\FrameBasis\otimes\WarpShearShape{}(\bm{r})\,\bm{b}_{\Section}\\
 &\quad+\big(\reflenx\,\FrameBasis\times\bm{r}+\WarpTwistIesan\,\FrameBasis\big)c_\vartheta, 
 \end{aligned}
 \label{eq:iesan-general-solution}
@@ -33,7 +33,7 @@ Combining \eqref{eq:iesan-displacement-1} and \eqref{eq:iesan-displacement-2} fu
 &\quad+\bm{W}_{(\varepsilon)}\,a_{\varepsilon}
 + \bm{W}_{(a)}\,\bm{a}_{\Section} \\
 &\quad+\WarpTwistIesan\,\FrameBasis\,(a_\vartheta+c_{\vartheta}) \\
-&\quad+\FrameBasis\otimes\bm{\WarpShearIesan}(\bm{r})\,\bm{b}_{\Section}
+&\quad+\FrameBasis\otimes\WarpShearShape{}(\bm{r})\,\bm{b}_{\Section}
 +\reflenx\,\bm{\Pi}_{(b)}\bm{b}_{\Section} \\
 %
 &=
@@ -49,7 +49,7 @@ Combining \eqref{eq:iesan-displacement-1} and \eqref{eq:iesan-displacement-2} fu
 \end{equation*}
 \end{Details}
 with \(\bm a\) fixed by \eqref{eq:2-15}, \(\bm b\) by \eqref{eq:2-18}, \(\WarpTwistIesan\) by \eqref{eq:bvp-warp-twist-iesan},
-\(\bm{\WarpShearIesan}\) by \eqref{eq:bvp-warp-shear-iesan},  \(c_\vartheta\) by \eqref{eq:iesan-2-22}. 
+\(\WarpShearShape{}\) by \eqref{eq:bvp-warp-shear-iesan},  \(c_\vartheta\) by \eqref{eq:iesan-2-22}. 
 % and $\hat{\bm u}_{\rm R}$ is an arbitrary infinitesimal rigid body displacement field. 
 %
 The complete Saint-Venant solution is the sum of the particular solution \eqref{eq:iesan-general-solution}, 
@@ -75,7 +75,7 @@ The infinitesimal strain tensor is
 \;+\;\FrameBasis\stackrel{\rm s}{\otimes} \bm{\varepsilon}_{\gamma}
 \;-\;\nu\,\PointAxialStrain\,\oneS,
 \]
-where recall \(\bm{a}\stackrel{\rm s}{\otimes}\bm{b} = \tfrac{1}{2} (\bm{a}\otimes\bm{b} + \bm{b}\otimes\bm{a})\) is the symmetrized bun product and:
+where recall \(\bm{a}\stackrel{\rm s}{\otimes}\bm{b} \coloneq \tfrac{1}{2} (\bm{a}\otimes\bm{b} + \bm{b}\otimes\bm{a})\) is the symmetrized bun product and:
 \begin{subequations}
 \begin{align}
 \PointAxialStrain
@@ -86,7 +86,7 @@ where recall \(\bm{a}\stackrel{\rm s}{\otimes}\bm{b} = \tfrac{1}{2} (\bm{a}\otim
 \PointShearStrain 
 &= (a_{\vartheta} + c_{\vartheta})(\FrameBasis\times \bm{r} + \nabla\WarpTwistIesan) 
 +\bm{\Pi}_{(b)}\bm{b}_{\Section}
-+ (\nabla \bm{\WarpShearIesan})^{\top} \bm{b}_{\Section} 
++ (\nabla \WarpShearShape{})^{\top} \bm{b}_{\Section} 
 \label{eq:iesan-point-shear-strain}
 \end{align}
 \label{eq:iesan-point-strain}
@@ -117,7 +117,7 @@ Decompose $\nabla \hat{\bm{u}} = \FrameBasis\otimes\hat{\bm{u}}' + \gradS\hat{\b
 \;+\; \tfrac12 x^2\,\FrameBasis\otimes \bm{b}_{\Section}
 \;+\; \FrameBasis\otimes\bigl(c_\vartheta\,\gradS\WarpTwistIesan\bigr)
 \\&\quad
-+\; \FrameBasis\otimes \nabla\big(\bm{\WarpShearIesan}\cdot \bm{b}_{\Section}\big).
++\; \FrameBasis\otimes \nabla\big(\WarpShearShape{}\cdot \bm{b}_{\Section}\big).
 \end{aligned}
 \label{eq:grad-uhat-iesan}
 \end{equation}
@@ -142,7 +142,7 @@ Combine these to write
 ~\reflenx \,\bm{a}_{\Section} + \tfrac12 \reflenx ^2\,\bm{b}_{\Section}
 + (\nabla\varphi)\,a_\vartheta
 + c_\vartheta\,\nabla\WarpTwistIesan
-+ \nabla \big(\bm{\WarpShearIesan}\cdot\bm{b}_{\Section}\big)
++ \nabla \big(\WarpShearShape{}\cdot\bm{b}_{\Section}\big)
 \Big\}
 \\&\quad
 -\nu\Big[a_{\varepsilon}+(\bm{r}\cdot\bm{a}_{\Section})
@@ -161,7 +161,7 @@ Using that $\sym(\FrameBasis\times\oneS)=\mathbf{0}$  and collecting symmetric p
 \end{Details}
 % \bm V_\Sigma
 % &= (\FrameBasis\times\bm{r} + \gradS \WarpTwistIesan)\,(a_\vartheta+c_\vartheta)
-% \;+\; \gradS \big(\bm{\WarpShearIesan}\cdot\bm{b}_{\Section}\big)
+% \;+\; \gradS \big(\WarpShearShape{}\cdot\bm{b}_{\Section}\big)
 % \;-\;\nu\bigl(\dev(\bm{r}\otimes\bm{r})-\bm{r}\otimes\CentroidLocation\bigr)\bm{b}_{\Section}\\
 
 % \[
@@ -186,7 +186,7 @@ Using that $\sym(\FrameBasis\times\oneS)=\mathbf{0}$  and collecting symmetric p
 % \;-\;\nu\bigl(\dev(\bm{r}\otimes\bm{r})-\bm{r}\otimes\CentroidLocation\bigr)\bm{b}_{\Section}
 % \;+\; (\nabla\WarpTwistIesan)\,a_\vartheta
 % \;+\; c_\vartheta\,\gradS\WarpTwistIesan
-% \;+\; \nabla\!\big(\bm{\WarpShearIesan}\cdot\bm{b}_{\Section}\big) .
+% \;+\; \nabla\!\big(\WarpShearShape{}\cdot\bm{b}_{\Section}\big) .
 % \]
 
 % \subsubsection{Equilibrium}
@@ -212,7 +212,7 @@ Using that $\sym(\FrameBasis\times\oneS)=\mathbf{0}$  and collecting symmetric p
         \(\bm{q}_{\theta}\in\mathbb{R}^3\) & & & Rigid rotation at \(x=0\), or constant transverse displacement rate   \\
         \LightRule
         \(\WarpTwistIesan\)   & \Length{2}  & \eqref{eq:bvp-warp-twist-iesan} \\
-        \(\bm{\WarpShearIesan}\) & \Length{3}   & \eqref{eq:bvp-warp-shear-iesan} & \\
+        \(\WarpShearShape{}\) & \Length{3}   & \eqref{eq:bvp-warp-shear-iesan} & \\
         \LightRule 
         \(\CentroidLocation\) & L & \eqref{eq:def-centroid} & Location of the centroid. \\
         \(\IntRoR\) & \Length{4} & \eqref{eq:def-j-origin} & \\

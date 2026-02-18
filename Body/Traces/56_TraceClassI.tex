@@ -286,7 +286,7 @@ with entries given by \cref{tab:T0-inv-blocks}.
 \midrule
 $\ShiftB$ &  & $\mathbb{R}^{2 \times 2}$  &  \Length{-2} 
   & \(\bm\gamma\stackrel{\CenterShearLocation}{\rightarrow}\Twist\)
-  % & $\bm{\gamma}\rightarrow\bm\alpha_{\WarpShearIesan}\stackrel{\CenterShearLocation}{\rightarrow}\alpha_{\WarpTwistIesan}$ 
+  % & $\bm{\gamma}\rightarrow\bm\alpha_{\WarpShear}\stackrel{\CenterShearLocation}{\rightarrow}\alpha_{\WarpTwistIesan}$ 
   \\
 $\ShiftA$ & & $\mathbb{R}^{2 \times 2}$ &  \Length{-1} 
   % &  $\bm\gamma\rightarrow\bm\kappa$
@@ -350,7 +350,7 @@ Total: & & 18 & & \\
 \midrule
 $\ShiftB$ & $\!=\left(\TraceFF-\TraceFT\otimes\TraceTF\right)^{-1} $& $\mathbb{R}^{2 \times 2}$ &  \Length{-2} 
   % & \(\bm\gamma\stackrel{\CenterShearLocation}{\rightarrow}\Twist\)
-  % & $\bm{\gamma}\rightarrow\bm\alpha_{\WarpShearIesan}\stackrel{\CenterShearLocation}{\rightarrow}\alpha_{\WarpTwistIesan}$ 
+  % & $\bm{\gamma}\rightarrow\bm\alpha_{\WarpShear}\stackrel{\CenterShearLocation}{\rightarrow}\alpha_{\WarpTwistIesan}$ 
   \\
 $\ShiftA$ & $\!=\FrameBasis^\times\bigl(\TraceBT\otimes\TraceTF - \TraceMF\bigr)\,\ShiftB$ & $\mathbb{R}^{2 \times 2}$ &  \Length{-1} 
   % &  $\bm\gamma\rightarrow\bm\kappa$
@@ -358,7 +358,7 @@ $\ShiftA$ & $\!=\FrameBasis^\times\bigl(\TraceBT\otimes\TraceTF - \TraceMF\bigr)
   \\
 $\ShiftK$& $\!=-\ShiftB\TraceFT$ & $\mathbb{R}^2$ &  \Length{-1} 
   % & $\Twist\rightarrow\Twist$ 
-  % & $\Twist\rightarrow\bm\alpha_{\WarpShearIesan}$ 
+  % & $\Twist\rightarrow\bm\alpha_{\WarpShear}$ 
   \\
 $\ShiftT$ & $\!=-\ShiftB\TraceTF$ & $\mathbb{R}^2$ &  \Length{-1} 
   % & --- & $\epsilon\rightarrow\alpha_{\WarpTwistIesan}$ 
@@ -432,7 +432,9 @@ The (2,2) block reveals the generalized shear correction coefficients:
 \bm{K} = \frac{1}{GA}E\IntRGoRG\ShiftB
 \label{eq:shear-correction}
 \end{equation}
-
+\begin{remark}\label{rem:bend-trace-indep}
+The (4,4) block of \eqref{eq:C-C1} is independent of the trace and therefore unambiguous.
+\end{remark}
 
 \subsubsection{Summary.}
 The Class I traces represent a family of beam theories parameterized by 18 constants which are all capable of exactly representing Saint~Venant solutions through Type 3 beam finite elements.

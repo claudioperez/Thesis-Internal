@@ -1,20 +1,32 @@
 
 \subsection{Introduction}
-In this section we motivate a family of resultant constitutive relations that establishes a connection between the one-dimensional framework outlined above and the three dimensional framework of continuum mechanics.
 %
+The objective of this section is to develop a framework for formulating constitutive equations for the models introduced in \cref{sec:genwarp}, which relates the generalized strains \(\bm{e}\) and stresses \(\bm{s}\):
+\RepeatEquation{eq:cosserat-strain}
 
-\Cref{sec:enhan-prelim} introduces the reference continuum model and its connection to the 1D fields of the beam theory. 
+\subsubsection{Literature}
+
+\subsubsection{Objective}
+
+\subsubsection{Outline}
+
+\Cref{sec:enhan-prelim} introduces the reference continuum model and its connection to the 1D fields of the beam theory \eqref{eq:finite-alignment-field}. 
+The constrained stress condition \eqref{eq:saint-venant-stress} is introduced and justified. 
+
+\Cref{sec:section-kinematics} derives the \emph{compatible} strain field in the setting of \cref{sec:enhan-prelim}, where a natural distinction arises between geometric nonlinearities at the \emph{section} and \emph{element} levels. 
+
+\Cref{sec:enhan-section} introduces the enhanced strain principle. 
 
 
 \subsection{Preliminaries}\label{sec:enhan-prelim}
 
-In the continuum setting the model is a body 
+In the continuum setting the model is a body %with reference configuration 
 \(
 \Body=(0,L)\times\Section
 \),
 where \(\Section\subset\mathbb{R}^2\) is a bounded cross-section
-spanned by basis vectors \(\{\FrameBasis_y,\FrameBasis_z\}\). 
-Together with the axial unit \(\FrameBasis\), the vectors \(\{\FrameBasis,\,\FrameBasis_y,\,\FrameBasis_z\}\) form an orthonormal basis and the 3D identity is:
+spanned by basis vectors \(\{\FrameBasis_y,\FrameBasis_z\}\) in \(\mathbb{R}^3\). 
+Together with the axial unit vector \(\FrameBasis\), the vectors \(\{\FrameBasis,\,\FrameBasis_y,\,\FrameBasis_z\}\) form an orthonormal basis and the 3D identity is:
 \[
 \mathbf{1}=\FrameBasis\otimes\FrameBasis+\oneS
 \qquad\text{with}\qquad
@@ -23,7 +35,7 @@ Together with the axial unit \(\FrameBasis\), the vectors \(\{\FrameBasis,\,\Fra
 A point in \(\Body\) has coordinates \(\reflenx\,\FrameBasis + \bm{r}\) in the reference configuration, where \(\bm{r} \in\Section_x\) is the coordinate of a point in the section at \(\reflenx\) and \(\bm{r}\cdot\FrameBasis = 0\).
 The boundary of \(\Body\) consists of the the lateral boundary \(\BodyLateralSurface=\SectionBoundary\times(0,L)\) and the surfaces \(\Section_0,\,\Section_L\) of the sections at the ends \(\reflenx \in \{0,L\}\).  
 
-The deformed configuration is:
+The deformation is represented by the deflection \(\bm{x}(x)\in\mathbb{R}^3\), rotation \(\FrameRotation(x)\in\mathrm{SO}(3)\) and warping fields \(\bm{\alpha}(x)\in\mathbb{R}^{n_w}\):
 \begin{SaveEquation}{eq:finite-alignment-field}
 \hat{\bm{x}}(\reflenx, \PlanePosition) 
 = \bm{x}(\reflenx) + \FrameRotation \bigl(\PlanePosition 
@@ -31,12 +43,9 @@ The deformed configuration is:
 % \label{eq:finite-alignment-field}
 \end{SaveEquation}
 %
-where the vector-valued warping field
-\(\bm{\Phi}(\bm{r})\,\bm{\alpha}(\reflenx)\in\mathbb{R}^3\) allows transverse warping components.
-%
-\begin{remark}
-This generalizes the kinematic model of \cite{simo1991geometricallyexact} by allowing \(n_w \ge 1\) warping shapes \(\bm{\varphi}\) and resembles the work by \cite{klinkel2003anisotropic}.
-\end{remark}
+where \(\bm{\Phi}:\Section\rightarrow\mathbb{R}^3\) represents cross sectional warping shapes.  
+The representation \eqref{eq:finite-alignment-field} is exact in the limit \(n_w\rightarrow\infty\). 
+
 \begin{remark}
 The linearization of \eqref{eq:finite-alignment-field} is:
 %
@@ -57,7 +66,7 @@ and the linearized displacement \(\hat{\bm{u}} = \hat{\bm{x}} - (x\FrameBasis + 
 The following developments are made without appealing to a coordinate system (we only assume right-handedness), and thus at no commitments are made to a particular coordinate convention. However, such conventions can aid the interpretation of equations and are required for implementation. 
 Two common conventions for assigning coordinates \(x,y,z\) are:
 \begin{itemize}
-    \item Take the first (\(x\)) coordinate to coincide with the reference axis \(\FrameBasis\) of the rod. This furnishes components on the basis \(\{\bm{\partial}_x,\bm{\partial}_y,\bm{\partial}_z\}\)
+    \item Take the first (\(x\)) coordinate to coincide with the reference longitudinal axis \(\FrameBasis\). This furnishes components on the basis \(\{\bm{\partial}_x,\bm{\partial}_y,\bm{\partial}_z\}\)
     \[
     \FrameBasis \equiv \bm{\partial}_x = \begin{pmatrix}
         1 \\ 0 \\ 0
@@ -94,7 +103,7 @@ Two common conventions for assigning coordinates \(x,y,z\) are:
 \end{remark}
 \begin{remark}
 The 3D out-of-plane reference director \(\FrameBasis\) is used to form cross products with vectors in the plane \(\Section\). 
-For example, given a function \(u: S \rightarrow \mathbb{R}\), the expression \(\FrameBasis \times \nabla u\) may be interpreted in coordinates \(\bm{\partial}_x \coloneq \FrameBasis\) either as 
+For example, given a function \(u: S \rightarrow \mathbb{R}\) with \(u' = 0\), the notation \(\FrameBasis \times \nabla u\) may be interpreted in coordinates \(\bm{\partial}_x \coloneq \FrameBasis\) either as 
 \[
 \begin{bmatrix}
 0 & 0 & 0 \\
@@ -113,7 +122,6 @@ For example, given a function \(u: S \rightarrow \mathbb{R}\), the expression \(
 u_{,y} \\ u_{,z}
 \end{pmatrix}
 \]
-as appropriate, where we have the assumption \(u' = 0\).
 \end{remark}
 
 \subsubsection{Assumptions}
@@ -146,7 +154,6 @@ The infinitesimal strain tensor $\StrainTensor$ is decomposed as
 % \label{eq:strain-tensor-decomp}
 \end{SaveEquation}
 with $\PointShearStrain$ a vector with zero projection on $\FrameBasis$. 
-
 For any superposition satisfying \(\StressTensor\,\bm n=\mathbf{0}\) on \(\BodyLateralSurface\) and \eqref{eq:saint-venant-stress},
 the field equations reduce on each section to
 \begin{subequations}
@@ -294,7 +301,7 @@ Thus \(\stackrel{\rm s}{\nabla}\PlaneWarp\,\) may create in–plane (membrane) s
 \subsection{Compatible Strain}\label{sec:section-kinematics}
 
 \paragraph{Finite Strain.}
-The tangent map \(\bm{F}\coloneq T\,\hat{\chi}\) of the finite configuration \eqref{eq:finite-alignment-field} takes the form
+The tangent map \(\bm{F}\coloneq T\,\hat{\chi}\) of the finite deformation \eqref{eq:finite-alignment-field} is:
 \begin{equation}
 \bm{F}
 =\FrameRotation\!\left(\mathbf{1}+\bm{\mu}\otimes\FrameBasis
@@ -316,7 +323,9 @@ where $\ShearStrain $ and $\CurveStrain $ are the beam strain variables defined 
 \end{equation*}
 Introduce the decomposition:
 \begin{equation}
-\WarpTotalShapes = \FrameBasis\otimes\WarpAxialShapes + \WarpPlaneShapes
+\WarpTotalShapes = \FrameBasis\otimes\WarpAxialShapes + \WarpPlaneShapes,
+\qquad
+\WarpAxialShapes\coloneq \FrameBasis\cdot\bm{\Phi}\in\mathbb{R}^{1\times n_w}.
 \label{eq:decom-warp-shapes}
 \end{equation}
 
@@ -349,7 +358,7 @@ where the symmetric bun product \(\bm{a}\stackrel{\mathrm{s}}{\otimes}\bm{b}\) i
 \paragraph{Moderate (Wagner) Strain.}
 A truncation of \eqref{eq:exact-gl-strain-Phi} which retains important nonlinearities is:
 \begin{SaveEquation}{eq:wagner-gl-strain-pi}
-\StrainTensor
+\hat{\StrainTensor}
 ~=~\hat{\StrainVector}\stackrel{\mathrm{s}}{\otimes}\FrameBasis
 ~+~\stackrel{\rm s}{\nabla}\PlaneWarp
 ~+~\mathrm{h.o.t.},
@@ -364,7 +373,12 @@ A truncation of \eqref{eq:exact-gl-strain-Phi} which retains important nonlinear
 \bm{r}\cdot\bm{r}\,\FrameBasis
 % \label{eq:wagner-gl-strain-pi}
 \end{SaveEquation}
-\iffalse
+Linearizing \cref{eq:wagner-gl-strain-pi} furnishes
+\[
+\delta \hat{\bm{E}} = \delta \ShearStrain - \bm{r}\times\delta \CurveStrain + (\FrameBasis\otimes \bm{\varphi})\delta \bm{\alpha} + (\nabla \bm{\varphi})^{\top} \delta \bm{\alpha}' + \Twist r^2\, \FrameBasis\otimes\FrameBasis\delta \Twist 
+\]
+where \(r^2 \coloneq \bm{r}\cdot\bm{r}\).
+\iftrue
 From \eqref{eq:wagner-gl-strain-pi} the  variation
 \(
 \delta\StrainVector=\TotalStrainMatrix\,\delta\bm{e}
@@ -374,13 +388,11 @@ furnishes the section kinematic matrix:
 \TotalStrainMatrix
 =\left[
 \;\mathbf{1}
-~~~-\,\left(\bm{r}+\bm{\Phi}\bm{\alpha}\right)^{\times}
-~~~\bm{\Phi}
-~~~\Big(\,\bm{\kappa}^{\times}\WarpTotalShapes~+~\nabla\WarpAxialShapes\,\Big)
+~~~-\,\bm{r}^{\times}+\Twist r^2 \FrameBasis\otimes\FrameBasis
+~~~~\FrameBasis\otimes\bm{\varphi}
+~~~~\FrameBasis_{\beta}\otimes\nabla_{\beta}\WarpAxialShapes
+% ~~~\Big(\,\bm{\kappa}^{\times}\WarpTotalShapes~+~\nabla\WarpAxialShapes\,\Big)
 \right],
-\qquad
-\quad
-\WarpAxialShapes\coloneq \FrameBasis\cdot\bm{\Phi}\in\mathbb{R}^{1\times n_w}.
 \label{eq:def-section-kinematic-matrix-wagner}
 \end{equation}
 where 
@@ -405,36 +417,8 @@ and the remainder
 \(
 \delta\hat{\bm{E}}_{\perp}=\sym\big(\nabla(\mathbf{1}_{\Section}\bm{\Phi}\,\delta\bm{\alpha})\big)
 \)
-is orthogonal to \(\StressTensor\) under the assumption \eqref{eq:saint-venant-stress}.
+is orthogonal to \(\StressTensor\) under the constrained stress condition \eqref{eq:saint-venant-stress}.
 \fi
-\begin{equation}
-\begin{aligned}
-    \hat{\bm{K}}_{\mathrm{W}} =
-\Twist & \SectionIntegral{
-\left[\begin{matrix}
-\mathbf{0} & r^{2}  \mathbb{C} \FrameBasis \otimes \FrameBasis & \mathbf{0} & \mathbf{0} \\
-r^{2}  \FrameBasis \otimes \FrameBasis \mathbb{C} 
-& r^{2}  \left(\bm{r}^{\times} \mathbb{C} \FrameBasis \otimes \FrameBasis -  \FrameBasis \otimes \FrameBasis \mathbb{C} \bm{r}^{\times}\right) & r^{2}  \FrameBasis \otimes \FrameBasis \mathbb{C} \FrameBasis\otimes \bm{\varphi} & r^{2}  \FrameBasis \otimes \FrameBasis \mathbb{C} \FrameBasis_{\beta} \otimes \nabla_{\beta} \bm{\varphi}\\
-\mathbf{0} & r^{2}  \bm{\varphi} \otimes \FrameBasis \mathbb{C} \FrameBasis \otimes \FrameBasis & \mathbf{0} & \mathbf{0} \\
-\mathbf{0} & r^{2}  \nabla_{\beta} \bm{\varphi} \otimes \FrameBasis_{\beta} \mathbb{C} \FrameBasis \otimes \FrameBasis & \mathbf{0} & \mathbf{0} 
-\end{matrix}\right]} \\
-+\Twist^2 & \SectionIntegral{\left[\begin{matrix}
-\mathbf{0} & \mathbf{0} & \mathbf{0} & \mathbf{0} \\
-\mathbf{0} & r^{4} \FrameBasis \otimes \FrameBasis \mathbb{C} \FrameBasis \otimes \FrameBasis & \mathbf{0} & \mathbf{0} \\
-\mathbf{0} & \mathbf{0} & \mathbf{0} & \mathbf{0} \\
-\mathbf{0} & \mathbf{0} & \mathbf{0} & \mathbf{0}
-\end{matrix}\right]
-} \\
-&+\SectionIntegral{\left[\begin{matrix}
-\mathbf{0} & \mathbf{0} & \mathbf{0} & \mathbf{0} \\
-\mathbf{0} & r^2 \AxialStress & \mathbf{0} & \mathbf{0} \\
-\mathbf{0} & \mathbf{0} & \mathbf{0} & \mathbf{0} \\
-\mathbf{0} & \mathbf{0} & \mathbf{0} & \mathbf{0} 
-\end{matrix}\right]
-}
-\end{aligned}
-\label{eq:section-wagner-tangent}
-\end{equation}
 
 \paragraph{Linear Strain.}
 The first order truncation of \eqref{eq:exact-gl-strain-Phi} furnishes:
@@ -463,7 +447,7 @@ furnishes:
 =\left[
 \;\mathbf{1}
 ~~~-\bm{r}^{\times}
-~~~\WarpTotalShapes
+~~~\FrameBasis\otimes\bm{\varphi}
 ~~~~\FrameBasis_{\beta}\otimes\nabla_{\beta}\WarpAxialShapes
 \right],
 \label{eq:def-section-kinematic-matrix-Phi}
@@ -472,14 +456,55 @@ Thus, for any virtual increment,
 \begin{equation}
 \delta\StrainVector
 =\delta\bm{\gamma}
--\big(\bm{r}
-+\WarpTotalShapes\bm{\alpha}\big)\times\delta\bm{\kappa}
+-\bm{r}\times\delta\bm{\kappa}
 +\WarpTotalShapes\,\delta\bm{\alpha}'
 +\bm{\kappa}\times\WarpTotalShapes\,\delta\bm{\alpha}
 +\gradS\big(\FrameBasis\cdot\bm{\Phi}\,\delta\bm{\alpha}\big),
 \label{eq:delta-epsilon-Phi}
 \end{equation}
 
+
+\subsubsection{Resultants}
+
+It is natural [TODO: elaborate on why; it follows equivalently from virtual work, stationary variational principles, and Galerkin weighted residuals] to impose the requirement:
+\begin{equation}
+\left<\TraceTotalEnergyStress,\,\delta\FrameStrain\right>_{\FrameBody}=\left<\StressTensor ,\,\delta\StrainTensor\right>_{\hat{\FrameBody}}
+\label{eq:seSE}
+\end{equation}
+where \(\delta \bm{e}\) and \(\delta \StrainTensor\) are arbitrary variations of the strain variables.
+
+Recall the Frobenius inner product 
+\(
+    \left.\bm{A} \cdot \bm{B}\right. \coloneq \operatorname{tr} \bm{A}\bm{B}^{\top}
+\)
+for two linear operators \(\bm{A}\) and \(\bm{B}\). 
+%
+If \(\delta \StrainTensor\) has the representation \(\left(\TotalStrainMatrix \delta\FrameStrain\right) \stackrel{s}{\otimes}\FrameBasis\) for some second-order tensor \(\TotalStrainMatrix\), then
+\begin{equation*}
+    \left<\StressTensor ,\,\delta\StrainTensor\right> = \SectionIntegral{ 
+    \operatorname{tr} \left[\StressTensor\, \tfrac{1}{2}\left(\TotalStrainMatrix\delta \FrameStrain \otimes \FrameBasis + \FrameBasis\otimes \TotalStrainMatrix\delta \FrameStrain \right)
+    \right]
+    }
+\end{equation*}
+%
+Exploiting linearity of the trace together with the identity \(\operatorname{tr} (\bm{a}\otimes\bm{b}) = \bm{a}\cdot \bm{b}\) for arbitrary vectors \(\bm{a}\) and \(\bm{b}\) yields
+\begin{equation*}
+    \left<\StressTensor ,\,\delta\StrainTensor\right> = \delta \FrameStrain\cdot \SectionIntegral{
+        \TotalStrainMatrix^{\top}\tfrac{1}{2}\left(\StressTensor \,\FrameBasis + \StressTensor^{\top}\FrameBasis\right)
+    }
+\end{equation*}
+and consequently by requiring \eqref{eq:seSE} the conjugate resultants \(\TraceTotalEnergyStress\) are obtained:
+\begin{equation*}
+\TraceTotalEnergyStress \equiv \SectionIntegral{\TotalStrainMatrix^{\top}\tfrac{1}{2}\left(\StressTensor\,\FrameBasis + \StressTensor^{\top}\FrameBasis\right)}
+\end{equation*}
+For a symmetric stress tensor \(\StressTensor\) one further has
+\begin{equation}
+\TraceTotalEnergyStress = \SectionIntegral{
+  \TotalStrainMatrix^{\top} \StressVector
+}
+\label{eq:stress-resultants}
+\end{equation}
+where recall the stress vector \(\StressVector\) is defined by \eqref{eq:def-stress-vector}.
 
 \begin{Details}
 Note that for $\bm{\omega} \coloneq (\bm{\alpha}(\reflenx)\cdot\bm{\varphi}(y,z))\FrameBasis$
@@ -510,7 +535,7 @@ $$
 \end{Details}
 
 
-\subsection{Enhanced Strains}
+\subsection{Enhanced Strains}\label{sec:enhan-section}
 The section strain field \(\StrainVector\) may be enhanced in a manner analogous to the three-field variational formulation of elasticity \citep{simo1986variational,simo1990class,simo1992geometrically}:
 % \begin{equation*}
 % \bm{E} = \hat{\bm{E}}(\hat{\bm{x}}) + \tilde{\bm{E}}
@@ -529,10 +554,6 @@ where \(\hat{\bm{E}} = \hat{\bm{\varepsilon}}\symbun\FrameBasis\) is the compati
 % \PlaneBasis_{\alpha} \cdot \StressTensor \PlaneBasis_{\beta} = 0
 % \]
 % Our interest is in the enhanced strain vector \(\tilde{\StrainVector}\). 
-
-
-
-
 Let $\operatorname{B}^*\left[\mathcal{E}\right] \subset \mathscr{E}$ be the space of compatible linear strain tensors generated by the space $\mathcal{E}$ of rod strain fields \(\bm{e}\); i.e. 
 $$
 \begin{aligned}
@@ -602,119 +623,88 @@ Consider conditions analogous to those of \cite{simo1992geometrically}:
 
 \item Consistency. % $S^h$ and $\tilde{\mathscr{E}}^h$ are $L_2$-orthogonal. 
     The subspace of admissible stresses, denoted by $\StressSpaceH \subset L$, is $L_2$ -orthogonal to the space $\tilde{\mathscr{E}}$ of enhanced strain fields. 
-    This requires \(\tilde{\bm{r}}(\bm{\EnhanParam}) = \mathbf{0}\) with
-    \begin{equation}
-    \tilde{\bm{r}}(\bm{\EnhanParam}) \coloneq \int_{\PlaneManifold \times \FrameBody} \EnhanShapes^{\top} \StressVector \left(\operatorname{A}[\bm{e}] + \EnhanShapes \bm{\EnhanParam} \right) \, \dd A\, \dd \xi
-    \label{eq:def-enhan-residual}
-    \end{equation}
+    This requires \(\residn(\bm{\EnhanParam}) = \mathbf{0}\) with
+    \begin{SaveEquation}{eq:def-enhan-residual}
+    \residn(\bm{\EnhanParam}) \coloneq \int_{\Section} \EnhanShapes^{\top} \StressVector \left(\operatorname{A}[\bm{e}] + \EnhanShapes \bm{\EnhanParam} \right) \dA
+    % \label{eq:def-enhan-residual}
+    \end{SaveEquation}
 % \item Patch test. The space $\StressSpaceH$ of admissible nominal stress fields contains piece-wise constant functions. 
 % In connection with \eqref{eq:def-enhan-residual}, this furnishes the condition:
 \end{enumerate}
-In traditional assumed strain formulations a third criteria is required
-which asserts that the space of admissible nominal stress fields contains piece-wise constant functions, and implies \citep{simo1990class}:
-\begin{equation}
-\int_{\PlaneManifold \times \FrameBody} \EnhanShapes \, \dd A \, \dd \xi = \mathbf{0}
-\label{eq:condiii}
-\end{equation}
-However, such a condition would not make sense in the present context. 
-
-This framework is entirely localized within the section constitutive response. This has the limitation that it is only capable of applying corrections which vary along \(\reflenx\) in proportion with the strain measures \(\bm{e}\). 
-However, this is the quality that allows the method to enhance response without introducing additional auxiliary fields.
-
-\iffalse
-\paragraph{Remarks}
+Condition (i) is essential. Condition (ii) is ideal and justified as follows:
 \begin{itemize}
-\item Condition (i) ensures stability of the method for the linearized problem, and precludes interpolations for the enhanced strain field which would result in rank-deficient methods.
-    \item 
-Given an interpolation space $\tilde{\mathscr{E}}^h$ of enhanced strain fields, the orthogonality Condition~(ii) may produce an overly constrained space $\StressSpace^h$ which would preclude convergence of the method. 
-We prevent such a situation by requiring Condition (iii).
-\item For the linear theory, Condition~(iii) is closely related to satisfaction of the classical patch test (see \cite{taylor1986patch}).
+    \item When...
 \end{itemize}
-\fi
+% In traditional assumed strain formulations a third criteria is required
+% which asserts that the space of admissible nominal stress fields contains piece-wise constant functions, and implies \citep{simo1990class}:
+% \begin{equation}
+% \int_{\Section \times \FrameBody} \EnhanShapes \dA \, \dd \xi = \mathbf{0}
+% \label{eq:condiii}
+% \end{equation}
+% However, such a condition would not make sense in the present context. 
 
-\subsection{Resultants}
 
-It is natural [TODO: elaborate on why; it follows equivalently from virtual work, stationary variational principles, and Galerkin weighted residuals] to impose the requirement:
+\subsection{Linearization}
+
+Linearizing \eqref{eq:stress-resultants} furnishes:
 \begin{equation}
-\left<\TraceTotalEnergyStress,\,\delta\FrameStrain\right>_{\FrameBody}=\left<\StressTensor ,\,\delta\StrainTensor\right>_{\hat{\FrameBody}}
-\label{eq:seSE}
+    \mathcal{L}\bm{s} = \Ke \dd \bm{e} + \Ken \dd \bm{\eta}
+\label{eq:Lins}
 \end{equation}
-where \(\delta \bm{e}\) and \(\delta \StrainTensor\) are arbitrary variations of the strain variables.
-
-Recall the Frobenius inner product 
-\(
-    \left.\bm{A} \cdot \bm{B}\right. \coloneq \operatorname{tr} \bm{A}\bm{B}^{\top}
-\)
-for two linear operators \(\bm{A}\) and \(\bm{B}\). 
-%
-If \(\delta \StrainTensor\) has the representation \(\left(\TotalStrainMatrix \delta\FrameStrain\right) \stackrel{s}{\otimes}\FrameBasis\) for some second-order tensor \(\TotalStrainMatrix\), then
-\begin{equation*}
-    \left<\StressTensor ,\,\delta\StrainTensor\right> = \SectionIntegral{ 
-    \operatorname{tr} \left[\StressTensor\, \tfrac{1}{2}\left(\TotalStrainMatrix\delta \FrameStrain \otimes \FrameBasis + \FrameBasis\otimes \TotalStrainMatrix\delta \FrameStrain \right)
-    \right]
-    }
-\end{equation*}
-%
-Exploiting linearity of the trace together with the identity \(\operatorname{tr} (\bm{a}\otimes\bm{b}) = \bm{a}\cdot \bm{b}\) for arbitrary vectors \(\bm{a}\) and \(\bm{b}\) yields
-\begin{equation*}
-    \left<\StressTensor ,\,\delta\StrainTensor\right> = \delta \FrameStrain\cdot \SectionIntegral{
-        \TotalStrainMatrix^{\top}\tfrac{1}{2}\left(\StressTensor \,\FrameBasis + \StressTensor^{\top}\FrameBasis\right)
-    }
-\end{equation*}
-and consequently by requiring \eqref{eq:seSE} we obtain the generalized resultants \(\TraceTotalEnergyStress\) 
-\begin{equation*}
-\TraceTotalEnergyStress \equiv \SectionIntegral{\TotalStrainMatrix^{\top}\tfrac{1}{2}\left(\StressTensor\,\FrameBasis + \StressTensor^{\top}\FrameBasis\right)}
-\end{equation*}
-For a symmetric stress tensor \(\StressTensor\) one further has
+where:
+\begin{subequations}
+\begin{align}
+\Ke &\coloneq \int \TotalStrainMatrix^{\top}\mathbb{C}\TotalStrainMatrix \dA  + \Kwg \label{eq:Kee} \\
+\Ken &\coloneq \int \TotalStrainMatrix^{\top}\mathbb{C}\EnhanShapes\dA \label{eq:Ken} \\
+\end{align}
+\end{subequations}
+and \(\Kwg\) is obtained by linearizing the Wagner term \eqref{eq:wagner-gl-strain-pi}:
 \begin{equation}
-\TraceTotalEnergyStress = \SectionIntegral{
-  \TotalStrainMatrix^{\top} \StressVector
+\begin{aligned}
+\Kwg =
+\Twist & \SectionIntegral{
+\left[\begin{matrix}
+\mathbf{0} & r^{2}  \mathbb{C} \FrameBasis \otimes \FrameBasis & \mathbf{0} & \mathbf{0} \\
+r^{2}  \FrameBasis \otimes \FrameBasis \mathbb{C} 
+& r^{2}  \left(\bm{r}^{\times} \mathbb{C} \FrameBasis \otimes \FrameBasis - \FrameBasis \otimes \FrameBasis \mathbb{C} \bm{r}^{\times}\right) & r^{2}  \FrameBasis \otimes \FrameBasis \mathbb{C} \FrameBasis\otimes \bm{\varphi} & r^{2}  \FrameBasis \otimes \FrameBasis \mathbb{C} \FrameBasis_{\beta} \otimes \nabla_{\beta} \bm{\varphi}\\
+\mathbf{0} & r^{2}  \bm{\varphi} \otimes \FrameBasis \mathbb{C} \FrameBasis \otimes \FrameBasis & \mathbf{0} & \mathbf{0} \\
+\mathbf{0} & r^{2}  \nabla_{\beta} \bm{\varphi} \otimes \FrameBasis_{\beta} \mathbb{C} \FrameBasis \otimes \FrameBasis & \mathbf{0} & \mathbf{0} 
+\end{matrix}\right]} \\
++\Twist^2 & \SectionIntegral{\left[\begin{matrix}
+\mathbf{0} & \mathbf{0} & \mathbf{0} & \mathbf{0} \\
+\mathbf{0} & r^{4} \FrameBasis \otimes \FrameBasis \mathbb{C} \FrameBasis \otimes \FrameBasis & \mathbf{0} & \mathbf{0} \\
+\mathbf{0} & \mathbf{0} & \mathbf{0} & \mathbf{0} \\
+\mathbf{0} & \mathbf{0} & \mathbf{0} & \mathbf{0}
+\end{matrix}\right]
+} \\
+&+\SectionIntegral{\left[\begin{matrix}
+\mathbf{0} & \mathbf{0} & \mathbf{0} & \mathbf{0} \\
+\mathbf{0} & r^2 \AxialStress & \mathbf{0} & \mathbf{0} \\
+\mathbf{0} & \mathbf{0} & \mathbf{0} & \mathbf{0} \\
+\mathbf{0} & \mathbf{0} & \mathbf{0} & \mathbf{0} 
+\end{matrix}\right]
 }
-\label{eq:stress-resultants}
+\end{aligned}
+\label{eq:section-wagner-tangent}
 \end{equation}
-where recall the stress vector \(\StressVector\) is defined by \eqref{eq:def-stress-vector}.
 
-\subsection{Implementation}
+Linearizing \eqref{eq:def-enhan-residual} furnishes:
+\begin{equation}
+\mathcal{L}\residn = \mathbf{K}_{e\eta}^{\top}\dd \bm{e} + \mathbf{K}_{\eta \eta}\dd \bm{\eta}
+\qquad\implies\qquad 
+\dd\bm{\eta} = \widetilde{\mathbf{K}} \dd \bm{e}
+\label{eq:Linn}
+\end{equation}
+with
+\begin{subequations}
+\begin{align}
+% \mathbf{K}_{\eta e} &\coloneq \int \EnhanShapes^{\top}\mathbb{C}\TotalStrainMatrix\dA \\
+    \Knn &\coloneq \int \EnhanShapes^{\top}\mathbb{C}\EnhanShapes\dA \label{eq:Knn} \\
+    \Kn &\coloneq -\Knn^{-1}\Ken^{\top} \label{eq:Kn}
+\end{align}
+\end{subequations}
 
-\begin{ambox}[Resultant State Determination]{box:impl}
-\paragraph{Objective.}
-Given a cross section discretization as described in Box~\ref{box:prep}
-\[\{\PlanePosition_{\ell},\, \dd A_{\ell}, \WarpSV(\PlanePosition_{\ell}),\, 
-\nabla \WarpSV(\PlanePosition_{\ell}),\, 
-\WarpFA(\PlanePosition_{\ell}),\,
-\nabla \WarpFA(\PlanePosition_{\ell})
-\; \bigm| \; 
-\PlanePosition_{\ell} \in \Section^h
-\}
-\] 
-define a frame resultant constitutive model:
-\[
-\ResultMaterial : \ShearStrain,\CurveStrain,\bm{\alpha}',\bm{\alpha} \mapsto \bm{n},\bm{m},\bm{w},\bm{v}
-\]
-
-\paragraph{Procedure.}
-% \citep{simo1993improved}
-\begin{enumerate}
-    \item Retrieve the section state variable \(\bm{\EnhanParam} \in \mathbb{R}^{n_a}\) from the prior evaluation
-    \item Solve the residual equation \eqref{eq:def-enhan-residual} 
-    for the enhanced parameters \(\bm{\EnhanParam} \in \mathbb{R}^{n_a}\)
-    \begin{equation*}
-      \tilde{\bm{r}}(\bm{\EnhanParam}) = \int_{\PlaneManifold} \EnhanShapes^{\top} \StressVector \left(\operatorname{B}[\bm{e}] + \EnhanShapes \bm{\EnhanParam} \right) \, \dd A
-    \end{equation*}
-    where at each iteration \(k\):
-    \[
-     \bm{\EnhanParam}^{k+1} = \bm{\EnhanParam}^{k} - \Kaa^{-1} \tilde{\bm{r}} (\bm{\EnhanParam}^{k})
-    \qquad\text{ and }\qquad
-    \Kae = \int_{\PlaneManifold} \EnhanShapes^{\top} \mathbf{C}^k \TotalStrainMatrix\, \dd A
-    \]
-    Note that the the stress vector \(\StressVector\) and tangent \(\mathbf{C}\) are evaluated using the procedure of Box~\ref{box:mati} with \(\StrainVector = \operatorname{B}[\bm{e}] + \EnhanShapes \bm{\EnhanParam}\).
-
-    \item Return the section resultant vector \(\bm{s}\) and tangent \(\mathbf{K}\)
-    \[
-    \bm{s} = \int \TotalStrainMatrix^{\top} \bm{\sigma}(\hat{\bm{\varepsilon}} + \EnhanShapes \bm{\EnhanParam})\, \dd A
-    \qquad\text{and}\qquad
-    \mathbf{K} = \int \TotalStrainMatrix^{\top}\mathbf{C}\TotalStrainMatrix \, \dd A 
-    - \Kae^{\top} \Kaa^{-1} \Kae
-    \]
-\end{enumerate}
-\end{ambox}
+From \eqref{eq:Lins} and \eqref{eq:Linn}:
+\begin{SaveEquation}{eq:section-tangent}
+\Ks = \Ke - \mathbf{K}_{\eta e}^{\top} \Kn
+\end{SaveEquation}

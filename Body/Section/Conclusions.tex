@@ -1,8 +1,28 @@
+A general framework has been developed for formulating cross-sectional constitutive models that relate the family of objective beam theories in \cref{sec:genwarp} to a three-dimensional continuum for any number of auxiliary warping fields \(\bm{\alpha}\), including none at all. 
 
-Three compatibility relations have been derived relating the trace strains \(\bm{e}\) to a material strain tensor \(\StrainTensor\): the exact form \eqref{eq:exact-gl-strain-Phi}, the partial truncation \eqref{eq:wagner-gl-strain-pi}, and the total linearization \eqref{eq:linear-gl-strain-pi}. 
-All three representations of the material strains may be employed in connection with a finite deformation trace model \eqref{eq:linear-gl-strain-pi}, or the linearization \eqref{eq:trace-lift-linear}.
+In \cref{sec:section-kinematics} three compatibility relations have been derived relating the deformations \(\bm{e}\) to a material strain tensor \(\StrainTensor\): the exact form \eqref{eq:exact-gl-strain-Phi}, the partial truncation \eqref{eq:wagner-gl-strain-pi}, and the total linearization \eqref{eq:linear-gl-strain-pi}. 
+All three representations of the material strains may be employed in connection with a finite deformation beam theory \eqref{eq:finite-alignment-field}, or the linearization \eqref{eq:trace-lift-linear}. 
+In the remainder of this work attention will be limited to the moderate-strain Wagner model \eqref{eq:wagner-gl-strain-pi}, and the linearized model \eqref{eq:linear-gl-strain-pi}.
 These results specialize to several notable works in the literature:
 \begin{itemize}
-    \item \cite{simo1991geometricallyexact} employed the linearized material kinematics \eqref{eq:linear-gl-strain-pi} in connection with the geometrically exact \eqref{eq:finite-alignment-field} with one warping mode associated to Saint-Venant torsion function. \cite{gruttmann2000theory} generalized \cite{simo1991geometricallyexact} to consider sections in arbitrary coordinate systems and elasto-plastic material response.
+    \item \cite{simo1991geometricallyexact} employed the linearized material kinematics \eqref{eq:linear-gl-strain-pi} in connection with the geometrically exact \eqref{eq:finite-alignment-field} with one warping mode associated to Saint-Venant torsion function. \cite{gruttmann2000theory} generalized \cite{simo1991geometricallyexact} to consider sections in arbitrary coordinate systems and elasto-plastic material response. 
+    The present treatment supports an arbitrary number of warping shapes, and allows for accurate incorporation of the Wagner effect in the geometrically exact setting \eqref{eq:finite-alignment-field} by switching the cross sectional model. 
+    \item The higher-order strain field \eqref{eq:wagner-gl-strain-pi} was considered by \cite{battini2002corotational-thesis} and \cite{lecorvec2012nonlinear} with the linearized beam theory \eqref{eq:trace-lift-linear}. 
+    However, these works employed a constrained continuum derivation which tightly coupled the effect of nonlinear section strains to the element formulation. In the work by \cite{battini2002corotational-thesis} this resulted in a dedicated finite element implementation to incorporate the effect. \cite{lecorvec2012nonlinear} achieved a more modular implementation by averaging out the Wagner effect and incorporating it into a geometric transformation. However, this approach is less accurate, and remains coupled to the element implementation.
+    In the present approach the effect is encapsulated in the section resultant model and is compatible with any finite element formulation in the family presented in \cref{sec:genwarp} without loss of accuracy as demonstrated in Example~\ref{sec:frame-0015} and Example~\ref{sec:frame-1035}.
 \end{itemize}
 
+The enhanced strain framework of \cref{sec:enhan-section} enriches the constitutive model without introducing auxiliary fields beyond those considered by the underlying beam theory, and is likewise encapsulated within the cross section resultant model. 
+This has the limitation that it is only capable of applying corrections which vary along \(\reflenx\) in proportion with the strain measures \(\bm{e}\). 
+However, this is the quality that allows the method to enhance response without introducing additional auxiliary fields. 
+
+\iffalse
+\paragraph{Remarks}
+\begin{itemize}
+\item Condition (i) ensures stability of the method for the linearized problem, and precludes interpolations for the enhanced strain field which would result in rank-deficient methods.
+    \item 
+Given an interpolation space $\tilde{\mathscr{E}}^h$ of enhanced strain fields, the orthogonality Condition~(ii) may produce an overly constrained space $\StressSpace^h$ which would preclude convergence of the method. 
+We prevent such a situation by requiring Condition (iii).
+\item For the linear theory, Condition~(iii) is closely related to satisfaction of the classical patch test (see \cite{taylor1986patch}).
+\end{itemize}
+\fi

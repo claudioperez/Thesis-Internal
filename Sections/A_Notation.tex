@@ -2,10 +2,13 @@
 \subsection*{Element Formulation} 
 \begin{table}[H]
     \centering
-    \caption{Table of notation}
+    \caption{Summary of symbols for \cref{sec:gensec}}
     \begin{tabular}{lcl}
         \toprule
-        Symbol & & Description \\ \midrule 
+        Symbol & Equation & Description \\
+        \midrule 
+        \multicolumn{3}{c}{Element} \\ 
+        \LightRule
         $\{\FrameBasis,\FrameBasis_{\beta}\}$ &  & Beam directors in the reference configuration \\
         $\{\frameBasis,\frameBasis_{\beta}\}$ &  & Beam directors in the deformed configuration \\
         $\TraceLocation$ & & Position of a cross section \\
@@ -13,10 +16,9 @@
         $\bm{\alpha}$ & & Warping amplitude \\
         $\reflenx$ & & Beam coordinate normalized by reference arc length \\
         $\deflenx$ & & Beam coordinate normalized by deformed arc length \\
-        
-        \midrule 
-        \multicolumn{3}{c}{Section} \\ 
-        \LightRule
+        % \midrule 
+        % \multicolumn{3}{c}{Section} \\ 
+        % \LightRule
         $\bm\gamma$ & \eqref{eq:def-gam-kap} or \eqref{eq:gam-kap-linear} & \\
         $\bm\kappa$ & \eqref{eq:def-gam-kap} or \eqref{eq:gam-kap-linear} & \\
         
@@ -24,46 +26,89 @@
         \midrule 
         \multicolumn{3}{c}{Material} \\
         \LightRule
-        $\StrainVector$ &  \eqref{eq:strain-tensor-decomp} & \\
-        $\StressVector \in \mathbb{R}^3$ &  \eqref{eq:def-stress-vector} &  \\ 
+        $\hat{\StrainTensor}$ & & Compatible strain tensor \\
+        $\tilde{\StrainTensor}$ & & Constrained strain tensor \\
+        $\bar{\StrainTensor}$ & & Enhanced strain tensor \\
+        \(\StressTensor\) & & \\
+        $\StressVector$ &  \eqref{eq:def-stress-vector} &  \\ 
         $\WarpTotalShapes$ & \eqref{eq:finite-alignment-field} \\
         $\WarpAxialShapes$ & \eqref{eq:decom-warp-shapes} \\
         $\WarpPlaneShapes$ & \eqref{eq:decom-warp-shapes} \\
         \midrule
-        \multicolumn{3}{c}{Resultants} \\ 
+        \multicolumn{3}{c}{Section} \\ 
         \LightRule
-        $\TraceTotalEnergyStress$ & \eqref{eq:stress-resultants} & Total conjugate resultant vector \\
-        $\TotalStrainMatrix$ & \eqref{eq:def-section-kinematic-matrix-wagner} or \eqref{eq:def-section-kinematic-matrix-Phi} & Section kinematic matrix \\
-        $\snm$ & \eqref{eq:equilibrium-ode} & \\
-        
+        $\StrainVector$ &  \eqref{eq:strain-tensor-decomp} & \\
+        $\TotalStrainMatrix$ & \eqref{eq:def-section-kinematic-matrix-wagner} or \eqref{eq:def-section-kinematic-matrix-Phi} & Section kinematic matrix for Wagner \eqref{eq:wagner-gl-strain-pi} or Linear kinematics \eqref{eq:linear-gl-strain-pi}. \\
+        $\bm{s}$ & \eqref{eq:stress-resultants} & Total conjugate resultant vector \\
+        \midrule
+        \multicolumn{3}{c}{Linearization} \\ 
+        \LightRule
+        \(\Ks\) & \eqref{eq:section-tangent} & \\
+        \(\Ke\) & \eqref{eq:Kee} \\
+        \(\Ken\) & \eqref{eq:Ken} \\
+        \(\Kwg\) & \eqref{eq:section-wagner-tangent} \\
+        \(\Knn\) & \eqref{eq:Knn} \\
+        \(\Kn\) & \eqref{eq:Kn} \\
         \bottomrule
     \end{tabular}
     % \label{tab:my_label}
 \end{table}
 
 
-\subsection*{Saint Venant} 
+\subsection*{Uniform Warping} 
+% \begin{table}[H]
+%     \centering
+%     \caption{Summary of symbols for \cref{sec:timo}.}
+%     \begin{tabular}{ccl}
+%         \toprule
+%         Symbol & Equation & Description \\ \midrule
+%     \bottomrule
+%     \end{tabular}
+%     % \caption{Summary of isotropic cross section constants.}
+%     \label{tab:constants}
+% \end{table}
+
 \begin{table}[H]
     \centering
-    \caption{Summary of cross section constants.}
+    \caption{Summary of symbols for \cref{sec:timo}.}
     \begin{tabular}{clcl}
         \toprule
         Symbol & Units & Equation & Description \\ \midrule
+        \(\EnhanShapes\) & - & \eqref{eq:uniform-shapes} & \\
+        \(\TraceDpDeRoot\) & - & \eqref{eq:T0-inv} & Furnished by \eqref{eq:trace-blocks-geometric} (Geometric) or \eqref{eq:energetic-trace-blocks} (Energetic) \\
+        \(\RigidShift\) & - & \eqref{eq:class-ii-Le} \\
+        \(\ShapeShift\) & - & \eqref{eq:class-i-La} \\
+        
         \(\WarpTwistIesan\)      & L$^2$ & \eqref{eq:bvp-warp-twist-iesan} & Torsion warping function \\
-        \(\bm{\WarpShearIesan}\) & L$^3$ & \eqref{eq:bvp-warp-shear-iesan} & Flexural warping function \\
-        \midrule 
+        \(\WarpShearShape{}\) & L$^3$ & \eqref{eq:bvp-warp-shear-iesan} & Flexural warping function \\
         \(\CentroidLocation\) & L & \eqref{eq:def-centroid} & Location of the centroid. \\
         \(\CenterShearLocation\) & L & \eqref{eq:def-shear-center} & Shear point location \\
         \(\IntRoR\) & L$^4$ & \eqref{eq:def-j-origin} & Plane moment of inertia tensor \\
         \(\Io\)     & \Length{4} & & Polar moment of inertia, \(\Io = \operatorname{tr}\IntRoR\) \\
         \(\Jo\) & L$^4$ & \eqref{eq:def-j-origin} & Saint Venant torsion constant \\
-        $\Jv$ & L$^4$ & & \\
-        \midrule
-        $\WarpFA$     & & & Armero warping function \\
-        $\Jw$ & \Length{6} & & Vlasov warping constant \\
-        $\Ja$ & \Length{8} \\
     \bottomrule
     \end{tabular}
     % \caption{Summary of isotropic cross section constants.}
     \label{tab:constants}
+\end{table}
+
+\subsection*{Nonuniform Warping} 
+
+
+\begin{table}[H]
+    \centering
+    \caption{Summary of symbols for \cref{sec:nonuniform}.}
+    \begin{tabular}{clcl}
+        \toprule
+        Symbol & Units & Equation & Description \\ \midrule
+        \(\EnhanShapes\) & & \eqref{eq:nonuniform-shapes} \\
+        \(\EnhanConstFA\) & $\sim$ & \eqref{eq:nonuniform-shapes} &  \\
+        $\WarpFA$     & & \eqref{eq:warp-fa-bvp} & Nonuniform warping function \\
+        $\Jv$ & L$^4$ & \eqref{eq:Jv} & \\
+        $\Jw$ & \Length{6} & \eqref{eq:Jw} & Vlasov warping constant \\
+        $\Ja$ & \Length{8} & \eqref{eq:Jsigma} &  \\
+    \bottomrule
+    \end{tabular}
+    % \caption{Summary of isotropic cross section constants.}
+    \label{tab:nonuniform-notation}
 \end{table}

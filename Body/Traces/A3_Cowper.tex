@@ -120,7 +120,7 @@ Recall the particular solution under pure flexure \eqref{eq:iesan-displacement-2
 + \Big( -\tfrac{1}{6}x^3\,\mathbf{1}_\Omega 
 + x\,\PoissonFlexure 
 + \tfrac{1}{2}x^2\,\FrameBasis \otimes (\bm{r} - \CentroidLocation) 
-+ \FrameBasis \otimes \bm{\WarpShearIesan} \Big)\,\bm{b}_{\Section},
++ \FrameBasis \otimes \WarpShearShape{} \Big)\,\bm{b}_{\Section},
 \end{equation*}
 where recall $\PoissonFlexure:\Section\rightarrow\Section\otimes\Section$ is the Poisson flexural warping shape \eqref{eq:def-eight-shapes}. 
 % \subparagraph{Rotation.}
@@ -144,7 +144,7 @@ where with \(\FrameBasis\otimes\bm{\SectionLocation}_{\pi} := \RotationAverage{\
 % \TraceMF 
 \bm{\Gamma}_0
 &:= \CenterTwistLocation \otimes \CenterShearLocation 
-+ \RotationAverage{\FrameBasis \otimes \bm{\WarpShearIesan}}.
++ \RotationAverage{\FrameBasis \otimes \WarpShearShape{}}.
 \label{eq:cowper-MF}
 \end{align}
 \end{subequations}
@@ -169,7 +169,7 @@ where:
 &:= \SectionAverage{\PoissonFlexure} 
 - \CentroidLocation^\times \RotationAverage{\PoissonFlexure}
 + \FrameBasis \times (\CenterTwistLocation \otimes \CenterShearLocation 
-+ \RotationAverage{\FrameBasis \otimes \bm{\WarpShearIesan}}),
++ \RotationAverage{\FrameBasis \otimes \WarpShearShape{}}),
 \end{aligned}
 \label{eq:def-Gamma0}
 \end{equation}
@@ -187,7 +187,7 @@ where:
 &:= \SectionAverage{\PoissonFlexure} 
 - \CentroidLocation^\times \RotationAverage{\PoissonFlexure}
 + \FrameBasis \times (\CenterTwistLocation \otimes \CenterShearLocation 
-+ \RotationAverage{\FrameBasis \otimes \bm{\WarpShearIesan}}),
++ \RotationAverage{\FrameBasis \otimes \WarpShearShape{}}),
 \end{aligned}
 \end{equation}
 \end{Details}
@@ -220,14 +220,14 @@ where \(\TraceBT = \TraceNF = \mathbf{0}\).
     \item \eqref{eq:req-d1} requires \(\TraceDeDpOne = \TraceDeDpRoot\IesanEvolveSP\), which in view of \eqref{eq:res-d1-block} is satisfied by \eqref{eq:T0-cowper}
     \item \eqref{eq:req-p1} requires \(\TraceDeDpRoot\) exhibit the block form \eqref{eq:T0-plane-structure}, 
 \end{itemize}
-In view of \eqref{eq:Tinv-from-T}:
+In view of \cref{tab:T0-inv-blocks}: %\eqref{eq:Tinv-from-T}:
 \begin{equation}
 \begin{array}{rlllll}
 % \renewcommand{\arraystretch}{1.3}
 \ShiftB & =\left(
 \SectionAverage{\PoissonFlexure} 
 - \CentroidLocation^\times \RotationAverage{\PoissonFlexure}
-+ \FrameBasis \times\RotationAverage{\FrameBasis \otimes \bm{\WarpShearIesan}}
++ \FrameBasis \times\RotationAverage{\FrameBasis \otimes \WarpShearShape{}}
 -(\FrameBasis\times\CenterTwistLocation)\otimes \bm{\SectionLocation}_{\pi}
 \right)^{-1}
 \\
@@ -237,7 +237,7 @@ In view of \eqref{eq:Tinv-from-T}:
 \\
 \ShiftScaleT & =1 - (\CenterShearLocation + \bm{\SectionLocation}_{\pi})\cdot\ShiftK 
  \\
-\ShiftA &=-\FrameBasis^\times (\CenterTwistLocation \otimes \CenterShearLocation + \RotationAverage{\FrameBasis \otimes \bm{\WarpShearIesan}})\,\ShiftB 
+\ShiftA &=-\FrameBasis^\times (\CenterTwistLocation \otimes \CenterShearLocation + \RotationAverage{\FrameBasis \otimes \WarpShearShape{}})\,\ShiftB 
 & =\mathbf{0}
 \\
 \ShiftN && = \mathbf{0} 
@@ -249,6 +249,7 @@ In view of \eqref{eq:Tinv-from-T}:
 & = 0
  \\
 \end{array}
+\label{eq:trace-blocks-geometric}
 \end{equation}
 
 \subsubsection{Summary}

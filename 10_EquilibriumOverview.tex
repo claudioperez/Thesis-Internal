@@ -37,7 +37,7 @@ TODO: Introduce concept of ``section'' and ``element'' level.
 % \end{itemize}
 
 % Supplements
-\cite{oreilly2017modeling,goss2003snap} offer rich historical accounts of nonlinear beam theories. 
+\cite{oreilly2017modeling,goss2003snap,levien2008elastica} offer rich historical accounts of nonlinear beam theories. 
 \cite{hjelmstad2005fundamentals} presents a comprehensive treatment of two-dimensional beam theories, with limited coverage of three-dimensional theories and the complications that arise from the non-vectorial manifold. 
 Useful resources which treat beam theory with  differential geometry are \cite{landau1970theory,connor1976analysis}. 
 
@@ -46,6 +46,7 @@ necessary theory for approximating such models by the finite element method,
 while \cite{meier2019geometrically} offers a comprehensive survey of the 
 state of the art for geometrically exact finite elements. 
 
+\citep{antman1974kirchhoffs,simo1991geometricallyexact,klinkel2003anisotropic}
 
 % \cite[p39]{vlasov1961thinwalled}
 
@@ -54,29 +55,15 @@ state of the art for geometrically exact finite elements.
 % \cite{brown1994nonuniform}
 
 
-\cite{elfatmi2007nonuniform} put forth an elastic warping beam theory with three warping modes based on the full Saint~Venant solution. 
-This work considers  arbitrary section geometry, but neglects the Poisson effect.
-
 
 % Inelastic response with warping is investigated by \cite{neal1961effecta,neal1961effect}.
 
-\paragraph{Torsion-flexural coupling.}
-\cite{kim2005exact,elfatmi2007nonuniform}, and \cite{du2020threedimensional}. 
-See also \cite{lewinski2021incorporating} who implemented the model of \cite{elfatmi2007nonuniform}.
 See also \cite{ladeveze1998new}.
 
-
-\paragraph{Element Kinematics (Finite Deformation).}
-% Exact rotations plus warping
-\cite{simo1991geometricallyexact} introduced a geometrically exact formulation which incorporates one auxiliary cross-sectional warping mode. 
-This was investigated further by \cite{gruttmann2000theory} who emphasized the use of sections intersecting the reference curve at an arbitrary point. 
-This theory has also been investigated by \cite{rong2020geometrically} in the context of isogeometric analysis who considered the nonlinear Wagner term. 
-However, in this work the reference curve is restricted to intersect sections at the centroid. 
 
 \paragraph{Section Kinematics (Moderate Strain).}
 \cite{rong2020geometrically} incorporated Wagner effects in a geometrically exact beam element with torsion warping.
 
-\cite{chadha2019comprehensive} investigate the a model that accounts for transverse warping induced through axial loading of a beam.
 
 % The asymmetric formulation of \cite{hsiao2000corotational} takes the shear-center as reference point.
 
@@ -97,7 +84,7 @@ map \(\chi\). In general \(\mathbb{B}\) may depend nonlinearly on \(\chi\),
 but always acts linearly on \(\bm{\sigma}\). 
 % This class of problems is formally summarized in Box~\ref{box:mechanical-equilibrium}.
 % Problems with the form of
-% \eqref{eq:strong} describe the equilibrium of continuua, rods, and shells, whose
+% \eqref{eq:strong} describe the equilibrium of continua, rods, and shells, whose
 % configurations \(\chi\) may comprise a \emph{nonlinear} space
 % \(\mathscr{C}\).
 % Additional resources for this material are contained in
@@ -177,6 +164,16 @@ The constitutive response is defined between the material stress
 \fi 
 
 \subsection{Kinematics}
+
+The configuration variables for a beam include a vector
+\(\bm{x}\) identifying the curve, a rotation
+\(\FrameRotation\) identifying the cross section
+orientation, and a warping amplitude vector
+\(\bm{\alpha}\) which is used to represent deformation modes within a
+cross section.
+\[
+\chi \triangleq \left(\bm{x}, \FrameRotation, \bm{\alpha}\right)
+\]
 
 The cross-section orientation is identified by a variable \(\FrameRotation(\reflenx) = \frameBasis \otimes \FrameBasis + \frameBasis_{\beta} \otimes \FrameBasis_{\beta}\) representing the constrained map from three directors in the reference configuration 
 \(\left\{\FrameBasis, \FrameBasis_\alpha\right\}\) to their placement in the current configuration \(\{\frameBasis, \frameBasis_\alpha\}\). 

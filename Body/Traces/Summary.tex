@@ -12,7 +12,7 @@
     \item The elastic shear response is \emph{not} trace-independent. 
     \item The geometric \citep{cowper1966shear} and energetic \citep{renton1991generalized} treatments of shear  
      both lead to exact continuum solutions in the present framework, and are included in the Class I family of traces. 
-    \item Any Class I trace (\cref{def:class-1}) is compatible with Type 3 beam finite elements via a Petrov-Galerkin formulation \eqref{eq:petrov-section}, which preserves the classical section resultants. However, most Class I traces result in an asymmetric tangent stiffness.
+    \item Any Class I trace (\cref{def:class-1}) is compatible with Type 1 beam finite elements via a Petrov-Galerkin formulation \eqref{eq:petrov-section}, which preserves the classical section resultants. However, most Class I traces result in an asymmetric tangent stiffness.
     \item Class II traces (\cref{def:class-ii}) are the subset of Class I traces which may be implemented via a Bubnov-Galerkin section \eqref{eq:bubnov-section} to furnish a symmetric tangent stiffness.
     \item Class III traces (\cref{def:class-iii}) are the subset of Class II traces that produce the classical beam stress resultants \(\snm = (N,\ShearForce,T,\bm{M})\) under the symmetric Bubnov-Galerkin implementation \eqref{eq:bubnov-section}.
     \item All Class III traces are equivalent under Saint~Venant loads (\cref{def:sv-equivalence}), and their trace matrix is given uniquely by \eqref{eq:energetic-trace-blocks}.
@@ -20,7 +20,7 @@
 
 \begin{itemize}
     \item There is a 36-parameter space of particular solutions to Saint Venant's problem that can be consistently modeled by standard beam elements with only enhancements to the resultant model.
-    \item An 18 parameter subset of these solutions will admit a physically meaningful kinematic interpretation in the configuration variables \(\bm{u},\bm{\theta}\).
+    \item A 16 parameter subset (\cref{tab:trace-consts}) of these solutions will admit a physically meaningful kinematic interpretation in the configuration variables \(\bm{u},\bm{\theta}\).
     \item A  4 parameter subset is exactly variationally compatible with the linear Type 3 equilibrium operator.
 \end{itemize}
 

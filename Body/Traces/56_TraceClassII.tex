@@ -1,6 +1,6 @@
 
 
-\subsection{Class II: Equilibrium Consistency}\label{def:class-ii}
+\subsubsection{Class II: Equilibrium Consistency}\label{sec:class-ii}
 The traces that fall under Class I are capable of exactly representing Saint~Venant's solutions in a standard finite element context, but without further restriction they may still exhibit certain undesirable properties.
 In particular, [TODO: elaborate]
 \begin{itemize}
@@ -16,13 +16,13 @@ The conjugate stiffness is constructed from the material strain energy:
 \end{equation}
 
 
-% \begin{definition}[Class II]\label{def:class-ii}
+\begin{definition}[Class II]\label{def:class-ii}
 A Class I trace \(\mathcal{T}\) is a \textbf{Class II} trace if the energy-conjugate resultants $\bar{\bm{s}}$ satisfy the same equilibrium as the classical resultants \eqref{eq:equilibrium-ode}:
 \begin{equation}
 \bar{\bm{s}}' = \mathbb{J}\,\bar{\bm{s}}.
 \label{eq:sbar-equilibrium}
 \end{equation}
-% \end{definition}
+\end{definition}
 
 
 \begin{remark}
@@ -66,16 +66,16 @@ This further restricts the space of trace matrices \(\TraceDeDpRoot\) to a nonli
 However, it is possible to conveniently parameterize a subset of these traces, by first identifying a reference trace \(\mathcal{T}_R\) in the class. 
 
 
-\subsection{Class III: Variational Consistency}\label{def:class-iii}
-We now consider a final restriction which eliminates all remaining free parameters, and furnishes a unique trace matrix: the \emph{energetic} trace. 
+\subsubsection{Class III: Variational Consistency}\label{sec:class-iii}
+A final restriction is now considered which eliminates all remaining free parameters, and furnishes a unique trace matrix: the \emph{energetic} trace. 
 
-% \begin{definition}[Class III]\label{def:class-iii}
+\begin{definition}[Class III]\label{def:class-iii}
 A Class I trace is a \textbf{Class III} trace if the conjugate resultants \(\TraceTotalEnergyStress\) are exactly the classical rigid-section resultants \(\snm\):
 \begin{equation}
     \bar{\bm{s}} \equiv \snm .
     \label{eq:def-s3}
 \end{equation}
-% \end{definition}
+\end{definition}
 
 % \begin{proposition}[Class III]
 All Class III traces are equivalent in the Saint~Venant class, with trace matrix determined by the consistency condition:

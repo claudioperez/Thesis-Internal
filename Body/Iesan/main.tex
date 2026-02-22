@@ -334,7 +334,9 @@ and \(c_\vartheta\) is determined by the relaxed torsion boundary condition \(\F
 \end{equation}
 where \(\Jsv\) is the torsion constant defined by \eqref{eq:def-j-origin}, and the \emph{shear point} \(\CenterShearLocation\in\Section\) is defined by:
 \begin{equation}
-\CenterShearLocation := \frac{1}{\Jsv} \int_\Section (\nabla\WarpShearShape{} + \bm{\Pi}_{(b)}^\top)\,\bm{r} \times \FrameBasis \dA.
+\CenterShearLocation := \frac{1}{\Jsv} \int_\Section (\nabla\WarpShearShape{} + \PoissonFlexure^\top)\,\bm{r} \times \FrameBasis \dA.
+\qquad\text{with}\qquad 
+\PoissonFlexure(\PlanePosition)\coloneq -\,\nu\big(\operatorname{dev}\bm{r}\otimes\bm{r}-\bm{r}\otimes\CentroidLocation\big)
 \label{eq:def-shear-center}
 \end{equation}
 

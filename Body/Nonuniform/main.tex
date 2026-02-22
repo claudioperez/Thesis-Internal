@@ -121,7 +121,7 @@ where $\EnhanConstFA$ is a free parameter.
 The transverse shear components of the 
 strain~\eqref{eq:torsion-strain} is
 \begin{equation}
-  \PointShearStrain % \hat{\bm{\gamma}}
+  \PointShearStrain % \hat{\bm{\varepsilon}}_{\gamma}
   = \alpha\bigl(\nabla\WarpTwistIesan + \FrameBasis\times\PlanePosition\bigr)
   + (\Twist - \alpha)\,\FrameBasis\times\PlanePosition.
   \label{eq:shear-decomp}
@@ -130,8 +130,8 @@ The Saint-Venant warping function $\WarpTwistIesan$ is defined so that the shear
 $G(\nabla\WarpTwistIesan + \FrameBasis\times\PlanePosition)$ is divergence-free with
 vanishing boundary traction:
 \begin{equation}
-  \nabla\cdot\bigl[G\bigl(\nabla\WarpTwistIesan
-    + \FrameBasis\times\PlanePosition\bigr)\bigr] = 0
+  \nabla\cdot G\bigl(\nabla\WarpTwistIesan
+    + \FrameBasis\times\PlanePosition\bigr) = 0
   \;\;\text{in }\Omega, \qquad
   G\bigl(\nabla\WarpTwistIesan
     + \FrameBasis\times\PlanePosition\bigr)\cdot\bm{\nu} = 0
@@ -139,7 +139,8 @@ vanishing boundary traction:
   \label{eq:sv-bvp}
 \end{equation}
 so the first term in~\eqref{eq:shear-decomp} is self-equilibrated for any value
-of~$\alpha$. The residual
+of~$\alpha$. 
+The residual
 $(\Twist - \alpha)\,\FrameBasis\times\PlanePosition$ produces two violations of
 cross-sectional equilibrium. On the boundary it generates a spurious traction
 \begin{equation}
@@ -150,9 +151,9 @@ cross-sectional equilibrium. On the boundary it generates a spurious traction
 \end{equation}
 and in the interior, the shear stress divergence
 \begin{equation}
-  \nabla\cdot(G\,\hat{\bm{\gamma}})
+  \nabla\cdot(G\,\hat{\bm{\varepsilon}}_{\gamma})
   = (\Twist - \alpha)\,
-    \nabla\cdot\bigl[G\,(\FrameBasis\times\PlanePosition)\bigr]
+    \nabla\cdot G\,(\FrameBasis\times\PlanePosition)
   \label{eq:divergence-violation}
 \end{equation}
 fails to balance the axial stress gradient $E\,\alpha''\,\WarpTwistIesan$ required by
@@ -214,7 +215,7 @@ The kinematic strain field associated with the warping displacement $\alpha\,\Wa
 \end{equation}
 Its transverse components admit the decomposition
 \begin{equation}
-  \hat{\bm{\gamma}} = \alpha\bigl(\nabla\WarpTwistIesan + \FrameBasis\times\PlanePosition\bigr)
+  \hat{\bm{\varepsilon}}_{\gamma} = \alpha\bigl(\nabla\WarpTwistIesan + \FrameBasis\times\PlanePosition\bigr)
   + (\Twist - \alpha)\,\FrameBasis\times\PlanePosition.
   \label{eq:shear-decomp}
 \end{equation}

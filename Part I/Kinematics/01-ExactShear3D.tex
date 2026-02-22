@@ -18,7 +18,7 @@ abstractly by a single variable \(\FrameRotation(\xi)\) representing the
 constrained map from the directors of the reference configuration 
 \(\left\{\FrameBasis, \FrameBasis_\alpha\right\}\) to those
 in the current configuration \(\{\frameBasis, \frameBasis_\alpha\}\).
-The constraints on this map are identical to those of Equation~(\ref{eq:def-SO3})
+The constraints on this map are identical to those of \eqref{eq:def-SO3}
 indicating \(\FrameRotation\) can be identified with
 the special orthogonal group \(\mathrm{SO}(3)\), and consequently the
 problem is without a vectorial configuration manifold. 
@@ -49,9 +49,9 @@ T_\chi \mathscr{C} \triangleq \left\{
 \text{ on } \partial\mathcal{B}
 \,\right\}
 \end{equation*}
-where the right representation \(T_{\scriptscriptstyle{\Lambda}}^r \mathrm{SO}(3)\) of the tangent space on \(\mathrm{SO}(3)\) is used (Equation~\ref{eq:rTSO3}).
+where the right representation \(T_{\scriptscriptstyle{\Lambda}}^r \mathrm{SO}(3)\) of the tangent space on \(\mathrm{SO}(3)\) is used \eqref{eq:rTSO3}.
 Leveraging the inner product on \(\mathrm{SO}(3)\)
-in Equation (\ref{eq:def-SO3-inner}), the associated inner product on
+in \eqref{eq:def-SO3-inner}, the associated inner product on
 \(\mathscr{C}\) is given by
 \begin{equation} 
 \begin{aligned}
@@ -115,7 +115,7 @@ in the cross section plane.
 After collecting the generalized stresses \(\bm{\sigma} = (\shearResult, \curveResult)\)
 and body loading \(\bm{f} = (\bm{f}_n, \bm{f}_m)\) 
 the strong boundary value problem for static equilibrium is put in the form 
-of Equation~(\ref{eq:strong}) with:
+of \eqref{eq:strong} with:
 \begin{equation} 
   \mathbb{B} \triangleq -\begin{bmatrix}
     \frac{\mathrm{d}}{\mathrm{d}\xi}\mathbf{1} &  \\
@@ -129,7 +129,7 @@ of Equation~(\ref{eq:strong}) with:
 \label{eq:cosserat-B}
 \end{equation}
 where $\mathbf{1}$ is the $3 \times 3$ identity and the notation $(~\cdot~)^{\times}$
-is introduced in Equation~(\ref{eq:hat}).
+is introduced in \eqref{eq:hat}.
 %
 \iffalse
 Expanding furnishes on the deformed director basis \(\{\frameBasis_i\}\):
@@ -197,7 +197,7 @@ Re-writing this in terms of the generalized stress finally reveals the adjoint \
 The strain measures arise naturally from the differential geometry of
 directed curves embedded in Euclidean space
 \citep{cosserat1909theorie,ericksen1957exact}. These
-furnish components representing axial \(\epsilon\), shear \(\gamma_{\alpha}\), torsion \(\tau\),
+furnish components representing axial \(\epsilon\), shear \(\gamma_{\alpha}\), torsion \(\Twist\),
 and curvature \(\kappa_{\alpha}\) strains in the current director basis:
 %
 \begin{equation*} 
@@ -208,12 +208,12 @@ and curvature \(\kappa_{\alpha}\) strains in the current director basis:
   \qquad\text{ and }\qquad
   \begin{aligned}
     \curveStrain &= \left(\FrameRotation^\prime \FrameRotation^\mathrm{t}\right)^{\vee} - \curveStrain_0 \\
-    &= \tau \frameBasis + \kappa_\alpha \frameBasis_{\alpha}
+    &= \Twist \frameBasis + \kappa_\alpha \frameBasis_{\alpha}
   \end{aligned}
 \end{equation*}
 %
 where the notation \(\curveStrain^{\times}\) indicates that the quantity \(\FrameRotation^{\prime}\FrameRotation^{\mathrm{t}}\) is skew-symmetric, and the vector \(\curveStrain\) is its axial vector. % is introduced by Equation~(\ref{eq:vee}).
-Equation~(\ref{eq:cosserat-pull}) for $\bm{A}$ furnishes the material stress $\bm{s}$ and strain $\bm{e}$:
+\eqref{eq:cosserat-pull} for $\bm{A}$ furnishes the material stress $\bm{s}$ and strain $\bm{e}$:
 % \RepeatEquation{eq:cosserat-strain}
 \begin{equation} 
   \bm{s} \triangleq \begin{pmatrix}\FrameRotation^\mathrm{t}\shearResult\\ \FrameRotation^\mathrm{t}\curveResult\end{pmatrix}
@@ -258,36 +258,4 @@ associated with a given metric:
 \end{equation}
 \fi 
 
-
-
-\begin{ambox}[\gls{frame:exact} \gls{frame:shear} Frame (SVQ)]{box:exact-shear-svq}
-
-\textbf{Equilibrium} \eqref{eq:finite-equilibrium}
-\begin{equation*} 
--\EquilibriumDerivative \bm{A}_* \bm{s}_{\mathrm{p}} = \left\{\begin{array}{r}
-\shearResult^{\prime}+{\bm{f}}_n=\mathbf{0} \\
-\curveResult^{\prime}+\bm{x}^{\prime} \times \shearResult+{\bm{f}}_m = \mathbf{0} \\
-\end{array}\right.
-\end{equation*}
-
-\textbf{Kinematics}
-\begin{equation*} 
-  \begin{aligned}
-    \ShearStrain &= \FrameRotation^\mathrm{t}\bm{x}^\prime - \FrameBasis 
-  \end{aligned}
-  \qquad\text{ and }\qquad
-  \begin{aligned}
-    \CurveStrain &= 
-    \left(\FrameRotation^\mathrm{t}\FrameRotation^\prime\right)^{\vee}
-  \end{aligned}
-\end{equation*}
-
-\textbf{Variations}
-\eqref{eq:cosserat-pull}:
-\begin{equation*}
-\bm{A} = \operatorname{diag}(\FrameRotation^{\mathrm{t}}, \FrameRotation^{\mathrm{t}})
-\qquad\text{ and }\qquad
-\bm{A}_* = \operatorname{diag}(\FrameRotation, \FrameRotation).
-\end{equation*}
-\end{ambox}
 

@@ -1,3 +1,41 @@
+
+\begin{figure}[t]
+  \centering
+
+  % --- Row 1: three side-by-side ---
+  \begin{subfigure}[t]{0.32\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{Figures/column.png}
+    \caption{\(\mathrm{P}_{\rm I}\) Extension.}
+    \label{fig:demo-a}
+  \end{subfigure}\hfill
+  \begin{subfigure}[t]{0.32\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{Figures/column.png}
+    \caption{\(\mathrm{P}_{\rm I}\) Bending.}
+    \label{fig:demo-b}
+  \end{subfigure}\hfill
+  \begin{subfigure}[t]{0.32\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{Figures/column.png}
+    \caption{\(\mathrm{P}_{\rm I}\) Torsion.}
+    \label{fig:demo-c}
+  \end{subfigure}
+
+  \medskip
+
+  % --- Row 2: one centered ---
+  \begin{subfigure}[t]{0.66\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{Figures/column.png}
+    \caption{\(\mathrm{P}_{\rm I\!I}\) Flexure.}
+    \label{fig:demo-d}
+  \end{subfigure}
+
+  \caption{Saint~Venant's problems.}
+  \label{fig:sv-problems}
+\end{figure}
+
 \subsection{Introduction}
 When no limit is placed on the number of warping fields \(\bm{\alpha}\) employed by a beam theory, it is possible to represent a continuum to any desired accuracy. 
 However this is impractical, and it is preferable to forgo auxiliary warping fields altogether whenever possible. 
@@ -14,17 +52,21 @@ However, because this investigation was limited to the plane, several salient th
 % poses a fundamental obstacle for associating these modes to classical deflection \(\bm{u}(\reflenx)\), rotation \(\bm{\theta}(\reflenx)\), and warping \(\bm{\alpha}(\reflenx)\) fields. 
 
 
+% \subsubsection{Outline}
 
-\subsubsection{Outline}
-
-
-An outline:
+The presentation is structured as follows:
 \begin{itemize}
     \item Introduce the \emph{trace} abstraction, which formalizes the ambiguity in representing the Saint-Venant class through classical fields \(\bm{u},\bm{\theta}\). 
     \item Investigate the special class of traces that can be exactly represented with \emph{only} 6-DOF, and are compatible with the interpolation assumptions of traditional finite elements.
     \item Elaborate the effect of the trace on the boundary conditions that the beam model is capable of representing. 
 \end{itemize}
 
+\Cref{sec:trace}
+\Cref{sec:class-i}
+\Cref{sec:class-ii}
+\Cref{sec:class-iii}
+
+\Cref{sec:trace-shapes}
 
 \subsection{Preliminaries}
 

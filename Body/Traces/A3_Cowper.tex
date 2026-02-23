@@ -65,14 +65,14 @@ The bending displacement is
 \begin{equation*}
 \hat{\bm{u}}^{(a)} = \Big( -\tfrac{1}{2}x^2\,\mathbf{1}_\Omega 
 + x\,\FrameBasis \otimes \bm{r} 
-+ \bm{W}_{(a)} \Big) \bm{a}_\Omega,
++ \PlaneShape \Big) \bm{a}_\Omega,
 \end{equation*}
-where recall $\bm{W}_{(a)} := -\nu\,\mathrm{dev}(\bm{r} \otimes \bm{r})$ is the 
+where recall $\PlaneShape := -\nu\,\mathrm{dev}(\bm{r} \otimes \bm{r})$ is the 
 Poisson bending warping \eqref{eq:def-eight-shapes}. 
 The section averages give:
 \begin{align*}
 \bar{\bm{\theta}}^{(a)}(x) &= -x\,(\FrameBasis \times \bm{a}_\Omega) 
-+ \RotationAverage{\bm{W}_{(a)}}\,\bm{a}_\Omega.
++ \RotationAverage{\PlaneShape}\,\bm{a}_\Omega.
 \end{align*}
 
 The curvature is:
@@ -83,7 +83,7 @@ After simplification using the identity
 $\FrameBasis \times (\FrameBasis \times \bm{a}_\Omega) = -\bm{a}_\Omega$, 
 the shear strain is:
 \begin{equation*}
-\bar{\bm{\gamma}}^{(a)} = \FrameBasis \times \RotationAverage{\bm{W}_{(a)}}\,\bm{a}_\Omega,
+\bar{\bm{\gamma}}^{(a)} = \FrameBasis \times \RotationAverage{\PlaneShape}\,\bm{a}_\Omega,
 \end{equation*}
 
 \paragraph{Torsion Mode.}
@@ -200,7 +200,7 @@ Collecting the contributions at $x = 0$, the trace matrix is:
 1 & \mathbf{0} & 0 & \mathbf{0} %(\TraceFF)_\parallel^\top 
 \\[4pt]
 \mathbf{0} 
-& \mathbf{0} % (\FrameBasis \times \RotationAverage{\bm{W}_{(a)}})_\perp 
+& \mathbf{0} % (\FrameBasis \times \RotationAverage{\PlaneShape})_\perp 
 & \FrameBasis \times \CenterTwistLocation & \TraceFF \\[4pt]
 0 & \mathbf{0} & 1 & \TraceTF^\top %\CenterShearLocation^\top + (\RotationAverage{\PlaneShearShape})_\parallel^\top 
 \\[4pt]
@@ -300,13 +300,13 @@ in $(a_\varepsilon, \bm{a}_\Omega, a_\vartheta, \bm{b}_{\Section})$ coordinates.
 &= -\CentroidLocation \cdot [\TraceDeDpRoot]_{\cdot, a_\varepsilon} 
 + [\TraceDeDpRoot]_{\cdot, \bm{a}_\Omega} \\
 &= -\CentroidLocation \cdot \begin{pmatrix} 1 \\ \mathbf{0} \\ 0 \\ \mathbf{0} \end{pmatrix}
-+ \begin{pmatrix} \mathbf{0}^\top \\ (\FrameBasis \times \RotationAverage{\bm{W}_{(a)}})_\perp \\ \mathbf{0}^\top \\ -\FrameBasis^\times \end{pmatrix} \\
-&= \begin{pmatrix} -\CentroidLocation^\top \\ (\FrameBasis \times \RotationAverage{\bm{W}_{(a)}})_\perp \\ \mathbf{0}^\top \\ -\FrameBasis^\times \end{pmatrix}.
++ \begin{pmatrix} \mathbf{0}^\top \\ (\FrameBasis \times \RotationAverage{\PlaneShape})_\perp \\ \mathbf{0}^\top \\ -\FrameBasis^\times \end{pmatrix} \\
+&= \begin{pmatrix} -\CentroidLocation^\top \\ (\FrameBasis \times \RotationAverage{\PlaneShape})_\perp \\ \mathbf{0}^\top \\ -\FrameBasis^\times \end{pmatrix}.
 \end{align*}
 
-The key observation is that $\RotationAverage{\bm{W}_{(a)}}$ is parallel to 
-$\FrameBasis$ (since $\bm{r} \times \bm{W}_{(a)}$ lies in the axial direction), 
-so $(\FrameBasis \times \RotationAverage{\bm{W}_{(a)}})_\perp = \mathbf{0}$.
+The key observation is that $\RotationAverage{\PlaneShape}$ is parallel to 
+$\FrameBasis$ (since $\bm{r} \times \PlaneShape$ lies in the axial direction), 
+so $(\FrameBasis \times \RotationAverage{\PlaneShape})_\perp = \mathbf{0}$.
 
 Therefore $\TraceDeDpRoot\mathbf{A} = \bm{e}_1$, confirming 
 $\bm{e}(x) = \TraceDeDpRoot \exp\left(x\mathbf{A}\right)\bm{p}$.

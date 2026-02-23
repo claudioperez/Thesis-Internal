@@ -96,7 +96,8 @@ where the Saint~Venant energy matrix \(\IesanEnergy\) is
 \IesanEnergy := \int_\Section \mathbf{S}_0^\top \mathbb{C}\, \mathbf{S}_0 \dA 
 &=\begin{bmatrix}
 \AxialRigidity & EA\CentroidLocation^\top & 0 & \mathbf{0} \\
-EA\CentroidLocation & E\IntRoR & \mathbf{0} & \mathbf{0} \\
+EA\CentroidLocation & \CoupleRigidity % E\IntRoR 
+& \mathbf{0} & \mathbf{0} \\
 0 & \mathbf{0} & \TwistRigidity & (\TwistRigidity\CenterShearLocation + G\mathbf{h}_{\WarpTwistIesan})^\top \\
 \mathbf{0} & \mathbf{0} & G(\Jsv\CenterShearLocation + \mathbf{h}_{\WarpTwistIesan}) & G(\mathbf{H}_{\WarpShear} + \Jsv\CenterShearLocation\otimes\CenterShearLocation + \CenterShearLocation\otimes\mathbf{h}_{\WarpTwistIesan} + \mathbf{h}_{\WarpTwistIesan}\otimes\CenterShearLocation)
 \end{bmatrix}

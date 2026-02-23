@@ -57,7 +57,7 @@ Neglecting to specify complete pointwise boundary data in this manner produces a
 \label{eq:cauchy-space}
 \end{equation}
 In the treatment by \cite{iesan1986saintvenants} %resolves this indeterminacy in a systematic fashion that is well-suited to the present investigation. 
-the family of Saint~Venant problems is decomposed into two classes, the extension-bending-torsion problem \(\mathrm{P}_{\rm I}(\AxialRxn, \MomentRxn)\) for prescribed axial force \(\AxialRxn\) and moment \(\MomentRxn\) resultants, and the flexure problem \(\mathrm{P}_{\rm I\!I}(\ShearRxn)\) for a prescribed transverse resultant \(\ShearRxn = \bar{F}_{\alpha} \,\FrameBasis_{\alpha}\):
+the family of Saint~Venant problems is decomposed into two classes, the extension-bending-torsion problem \(\mathrm{P}_{\rm I}(\AxialRxn, \MomentRxn)\) for prescribed axial force \(\AxialRxn\) and moment \(\MomentRxn\) resultants, and the flexure problem \(\mathrm{P}_{\mathrm{I\!I}}(\ShearRxn)\) for a prescribed transverse resultant \(\ShearRxn = \bar{F}_{\alpha} \,\FrameBasis_{\alpha}\):
 \begin{equation}
 \mathrm{P}_{\rm I}(\AxialRxn,\MomentRxn)\left\{
 \begin{aligned}
@@ -69,7 +69,7 @@ the family of Saint~Venant problems is decomposed into two classes, the extensio
 %
 \qquad\text{and}\qquad 
 %
-\mathrm{P}_{\rm I\!I}(\ShearRxn) \left\{
+\mathrm{P}_{\mathrm{I\!I}}(\ShearRxn) \left\{
 \begin{aligned}
 \Div\,\StressTensor&=\mathbf{0} &&\text{in }\Body\\
 \StressTensor\,\bm n&=\mathbf{0} &&\text{on }\BodyLateralSurface\\
@@ -78,7 +78,7 @@ the family of Saint~Venant problems is decomposed into two classes, the extensio
 \end{aligned}\right.
 \label{eq:partial-elastostatic-equilibrium}
 \end{equation}
-% The problems \(\mathrm{P}_{\rm I}\) and \(\mathrm{P}_{\rm I\!I}\), introduced by \cite{iesan1986saintvenants}, decompose the Saint Venant class of problems into two uncoupled classes with a fundamental connection. 
+% The problems \(\mathrm{P}_{\rm I}\) and \(\mathrm{P}_{\mathrm{I\!I}}\), introduced by \cite{iesan1986saintvenants}, decompose the Saint Venant class of problems into two uncoupled classes with a fundamental connection. 
 \cite{iesan1986saintvenants} observes that mapping \(\hat{\bm u}\mapsto \hat{\bm u}'\) preserves lateral traction–free fields and transforms resultants as  \citep[Thm~2.1]{iesan1986saintvenants}\footnote{
 The units for these identities appear paradoxical, and may be understood as the follows. 
 Since \(\StressTensor(\hat{\bm u}')=(\StressTensor(\hat{\bm u}))'\), the resultants computed from \(\hat{\bm u}'\) carry an extra factor \(1/\text{length}\) relative to those of \(\hat{\bm u}\). 
@@ -96,8 +96,8 @@ so \(\mathscr{M}(\hat{\bm u}')\) indeed has the same units as \(\FrameBasis\time
 \qquad
 \FrameBasis\cdot\mathscr{M}(\hat{\bm u}')=0
 \] 
-Consequently, if a displacement \(\hat{\bm u}_{\rm I\!I}\) is a solution of the flexure problem \(\mathrm{P}_{\rm I\!I}(\ShearRxn)\), then its axial derivative \(\hat{\bm u}'_{\rm I\!I}\) is a solution of the extension-bending-torsion problem \(\mathrm{P}_{\rm I}(0,\,\FrameBasis\times\ShearRxn)\) \citep{iesan1987saintvenants}. % (Corollary~2.2). 
-This connection motivates the program of Ie\c{s}an, whereby a particular solution to \(\mathrm{P}_{\rm I}\) is identified by prescribing the shape of \(\hat{\bm u}'\), and a solution to \(\mathrm{P}_{\rm I\!I}\), identified by prescribing the shape of \(\hat{\bm u}''\). 
+Consequently, if a displacement \(\hat{\bm u}_{\mathrm{I\!I}}\) is a solution of the flexure problem \(\mathrm{P}_{\mathrm{I\!I}}(\ShearRxn)\), then its axial derivative \(\hat{\bm u}'_{\mathrm{I\!I}}\) is a solution of the extension-bending-torsion problem \(\mathrm{P}_{\rm I}(0,\,\FrameBasis\times\ShearRxn)\) \citep{iesan1987saintvenants}. % (Corollary~2.2). 
+This connection motivates the program of Ie\c{s}an, whereby a particular solution to \(\mathrm{P}_{\rm I}\) is identified by prescribing the shape of \(\hat{\bm u}'\), and a solution to \(\mathrm{P}_{\mathrm{I\!I}}\), identified by prescribing the shape of \(\hat{\bm u}''\). 
 These prescriptions select particular solutions within the relaxed class that are unique up to a rigid body field field, while leaving end tractions unspecified pointwise.
 
 \begin{remark}
@@ -118,6 +118,8 @@ Components of interest are singled out as
 \end{remark}
 
 \subsection{Auxiliary Problem}
+
+\cref{eq:def-eight-shapes}
 
 \subsection{Problem I: extension--bending--torsion}
 
@@ -224,10 +226,10 @@ In the recovered field, \((\FrameBasis_\alpha\otimes\FrameBasis_\beta)\,\StressT
 \subsection{Problem II: flexure}
 
 \subsubsection*{Synopsis}
-Problem \(\mathrm{P}_{\rm I\!I}\) models flexure under a transverse resultant force \(\ShearRxn\) with \(\AxialRxn=0\) and \(\MomentRxn=\mathbf{0}\). 
+Problem \(\mathrm{P}_{\mathrm{I\!I}}\) models flexure under a transverse resultant force \(\ShearRxn\) with \(\AxialRxn=0\) and \(\MomentRxn=\mathbf{0}\). 
 The identifying kinematic postulate requires that the second axial derivative is a rigid motion,
 \[
-\hat{\bm u}_{\rm I\!I}''= b_{\varepsilon}\,\FrameBasis
+\hat{\bm u}_{\mathrm{I\!I}}''= b_{\varepsilon}\,\FrameBasis
 +\big(b_{\vartheta}\,\FrameBasis-\FrameBasis\times\bm{b}_{\Section}\big)\times\bm{x},
 \qquad
 \bm{b}_{\Section}\in\mathbb{R}^2,\; b_{\varepsilon},b_{\vartheta}\in\mathbb{R}.
@@ -235,7 +237,7 @@ The identifying kinematic postulate requires that the second axial derivative is
 It follows that \(\hat{\bm u}'\) is a \(\mathrm{P}_{\rm I}\) Saint–Venant field with bending moments \(\FrameBasis\times\ShearRxn\) %(Corollary~2.2)
 , and hence
 \(
-\hat{\bm u}_{\rm I\!I}\{\bm b,\bm c\}=\int_0^{\reflenx}{\bm u}_{\rm I}\{\bm b\}\,\mathrm {~d}\reflenx+\bm{u}_{\rm I}\{\bm c\}+\tilde{\bm w}
+\hat{\bm u}_{\mathrm{I\!I}}\{\bm b,\bm c\}=\int_0^{\reflenx}{\bm u}_{\rm I}\{\bm b\}\,\mathrm {~d}\reflenx+\bm{u}_{\rm I}\{\bm c\}+\tilde{\bm w}
 \).
 
 
@@ -243,9 +245,9 @@ It follows that \(\hat{\bm u}'\) is a \(\mathrm{P}_{\rm I}\) Saint–Venant fiel
 Given a transverse shear resultant \(\ShearRxn\) on \(\Section_0\), determine \((\hat{\bm u}\{\bm{b},\bm{c}\},\,\StressTensor)\) such that:
 %
 \begin{subequations}
-\begin{empheq}[left=\bar{\mathrm{P}}_{\rm I\!I}\empheqlbrace]{align}
-\hat{\bm u}_{\rm I\!I}&\in\mathrm{P}_{\rm I\!I}(\ShearRxn) \\
-\hat{\bm u}''_{\rm I\!I} &= b_{\varepsilon}\,\FrameBasis
+\begin{empheq}[left=\bar{\mathrm{P}}_{\mathrm{I\!I}}\empheqlbrace]{align}
+\hat{\bm u}_{\mathrm{I\!I}}&\in\mathrm{P}_{\mathrm{I\!I}}(\ShearRxn) \\
+\hat{\bm u}''_{\mathrm{I\!I}} &= b_{\varepsilon}\,\FrameBasis
 +\big(b_{\vartheta}\,\FrameBasis-\FrameBasis\times\bm{b}_{\Section}\big)\times\bm{r},
 \label{eq:iesan-postulate-2}
 \end{empheq}
@@ -257,12 +259,12 @@ Given a transverse shear resultant \(\ShearRxn\) on \(\Section_0\), determine \(
 Integrating \eqref{eq:iesan-problem-2} furnishes the particular solution:
 \begin{equation}
 \begin{aligned}
-\oneS\hat{\bm u}_{\rm I\!I}(\reflenx,\bm{r})
+\oneS\hat{\bm u}_{\mathrm{I\!I}}(\reflenx,\bm{r})
 &=-\tfrac16\,\reflenx^{3}\,\bm{b}_{\Section}
 +\reflenx\,\nu\Big(\tfrac12 r^{2}\,\bm{b}_{\Section}-(\bm{b}_{\Section}\cdot\bm{r})\,\bm{r}\Big)
 +\reflenx\,\nu\,(\CentroidLocation\cdot\bm{b}_{\Section})\,\bm{r}
 +c_\vartheta\,\reflenx\,(\FrameBasis\times\bm{r}),\\
-\FrameBasis\cdot\hat{\bm u}_{\rm I\!I}(\reflenx,\bm{r})
+\FrameBasis\cdot\hat{\bm u}_{\mathrm{I\!I}}(\reflenx,\bm{r})
 &=\tfrac12\,\reflenx^{2}\, (\bm{r}-\CentroidLocation)\cdot\bm{b}_{\Section}
 +c_\vartheta\,\WarpTwistIesan(\bm{r})+\WarpShearShape{}(\bm{r}) \cdot \bm{b}_{\Section},
 \end{aligned}

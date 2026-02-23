@@ -3,11 +3,13 @@
 The objective of this section is to develop a framework for formulating constitutive equations for a general family of nonlinear rod theories.
 
 The approach draws on the structure of the enhanced strain method in continuum finite element analysis, where the compatible strain field is supplemented by an additional field that is orthogonal to the admissible stress space. 
-In the present work, an analogous construction is carried out at the cross-sectional level. For a given set of beam strain measures, enhanced strain modes are introduced over the section that improve the representation of the three-dimensional strain state without altering the governing equations of the beam theory. 
+In the present work, an analogous construction is carried out at the cross-sectional level. 
+For a given set of beam strain measures, enhanced strain modes are introduced over the section that improve the representation of the three-dimensional strain state without altering the governing equations of the beam theory. 
 The enhanced modes are resolved locally at each section through a procedure that introduces no additional degrees of freedom into the global system. 
 \end{Note}
 
-This section develops a constitutive framework for a broad class of nonlinear rod theories. The construction is motivated by enhanced strain methods in finite element analysis, in which the compatible strain is augmented by additional modes that do not enter the admissible stress work.
+This section develops a constitutive framework for a broad class of nonlinear beam theories. 
+The construction is motivated by enhanced strain methods in finite element analysis, in which the compatible strain is augmented by additional modes that do not enter the admissible stress work.
 
 Here the same idea is applied at the cross-sectional level. For a prescribed set of beam strain measures, additional section strain modes are introduced to improve the representation of the underlying three-dimensional strain field. The associated mode amplitudes are determined locally at each cross section and are condensed out of the global system. As a result, the beam equilibrium equations are unchanged, while the section constitutive mapping is enriched.
 
@@ -657,13 +659,21 @@ where the last equality uses symmetry of \(\StressTensor\) and the definition \e
 \begin{ambox}[Basic Shear Frame]{box:basic-shear}
 
 \textbf{Equilibrium}
-
+% \begin{equation}
+% -\EquilibriumDerivative\bm{A}_* \bm{s}_{\mathrm{p}} = \left\{\begin{aligned}
+% & \ShearResult^{\prime} \\
+% & \CurveResult^{\prime} + \FrameBasis \times\ShearResult \\
+% & \bm{w}' - \bm{v}
+% \end{aligned}
+% \right.
+% \end{equation}
 \begin{equation}
--\EquilibriumDerivative\bm{A}_* \bm{s}_{\mathrm{p}} = \left\{\begin{aligned}
-& \ShearResult^{\prime} \\
-& \CurveResult^{\prime} + \FrameBasis \times\ShearResult \\
-& \bm{w}' - \bm{v}
-\end{aligned}
+\left\{
+    \begin{aligned}
+        \bm{n}' &=  \mathbf{0} \\
+        \bm{m}' + \FrameBasis \times \bm{n} &= \mathbf{0} \\
+        \bm{w}' - \bm{v} &= \mathbf{0}
+    \end{aligned}
 \right.
 \end{equation}
 
@@ -712,11 +722,6 @@ The construction applies without modification to geometrically exact and lineari
 
 The local enforcement of \(\StressTensor_{\alpha\beta}=0\) accounts for constitutive coupling to in-plane strains, but it does not address limitations of the compatible section kinematics in the energetically active strain components. The enhanced formulation introduced next targets this second limitation. It enriches the strain state used in the section constitutive update while retaining the same beam-level balance laws and global unknowns.
 
-\begin{Note}
-In principle, any deficiency of the standard kinematic ansatz may be addressed by enriching the warping expansion in \eqref{eq:finite-alignment-field}, i.e., increasing $n_w$ and introducing additional warping amplitudes $\bm{\alpha}(x)$. This strategy is systematic, but it is often excessive in practice because each added mode promotes an additional one-dimensional field that must be interpolated along $\mathcal{C}$ and solved globally. 
-Moreover, many of the warping features that materially affect the response are not independent kinematic degrees of freedom: they are predominantly local cross-sectional distortions whose amplitude is governed by the existing generalized strains $\bm{e}$ and therefore arises in proportion to them. 
-This motivates an alternative viewpoint in which the beam-level balance laws are left unchanged, but the section strain state entering the constitutive model is enriched. The enhanced formulation introduced below follows the classical enhanced strain concept: additional section modes are appended to the compatible strain field and their amplitudes are determined locally by a stationarity/orthogonality condition with respect to the admissible (Saint-Venant) stress space, so that no additional global degrees of freedom are introduced and the construction applies equally to geometrically exact and linearized members of the beam family.
-\end{Note}
 
 \subsubsection{Enhanced strain field}
 

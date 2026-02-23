@@ -3,7 +3,7 @@ This has been observed for torsional warping by \cite{...} and was extensively i
 
 \subsection{Preliminaries}
 
-\iftrue
+\iffalse
 Consider linear elastic deformations of an isotropic body with stresses of the form \eqref{eq:saint-venant-stress} so 
 \begin{equation*}
     \bm{\sigma} = \mathbf{C}\bm{\varepsilon}
@@ -37,6 +37,19 @@ The bracket \eqref{eq:def-products}$_3$ integrates the scalar triple product \([
 \end{equation*}
 
 \subsection{Equilibrium Violations}
+
+For any stress field satisfying \eqref{eq:saint-venant-stress} and the traction-free condition \(\StressTensor\,\bm n=\mathbf{0}\) on \(\BodyLateralSurface\),
+the field equations reduce on each section to
+\begin{subequations}
+\label{eq:sv-equilibrium}
+\begin{align}
+\bm{\tau}'&=\mathbf{0} && \text{in }\Section,\\
+\DivS\bm{\tau}+\AxialStress'&=0 && \text{in }\Section, \label{eq:sv-axial-equilibrium}\\
+\bm{\tau}\cdot\bm\nu&=0 && \text{on }\SectionBoundary.
+\end{align}
+\end{subequations}
+
+
 Under pure torsion, a beam with a single auxiliary warping field \(\alpha\) generates strains from \eqref{eq:linear-gl-strain-pi}:
 \begin{equation}
 \begin{aligned}

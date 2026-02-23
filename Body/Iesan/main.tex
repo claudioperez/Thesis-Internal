@@ -117,6 +117,7 @@ Components of interest are singled out as
 % i.e., the in–plane block vanishes as a consequence of the solution.
 \end{remark}
 
+\subsection{Auxiliary Problem}
 
 \subsection{Problem I: extension--bending--torsion}
 
@@ -199,9 +200,9 @@ The integration constants \((\bm{a}_{\Section},a_{\varepsilon},a_\vartheta)\) ar
 %
 \begin{equation}
 \begin{aligned}
-E\big(\IntRoR\,\bm{a}_{\Section}+A\,a_{\varepsilon}\,\CentroidLocation\big)&=\MomentRxn\times\FrameBasis,\\
-EA\big(\bm{a}_{\Section}\cdot\CentroidLocation+a_{\varepsilon}\big)&=-\AxialRxn,\\
-G\,\Jsv\,a_\vartheta&=-\TwistRxn,
+\big(\CoupleRigidity\,\bm{a}_{\Section}+a_{\varepsilon}\,EA\CentroidLocation\big)&=\MomentRxn\times\FrameBasis,\\
+\big(\bm{a}_{\Section}\cdot EA\CentroidLocation+\AxialRigidity a_{\varepsilon}\big)&=-\AxialRxn,\\
+\TwistRigidity\,a_\vartheta&=-\TwistRxn,
 \end{aligned}
 \label{eq:2-15}
 \end{equation}
@@ -210,11 +211,11 @@ where \(A\) is the cross sectional area, \(\CentroidLocation\) is the location o
 \CentroidLocation := \frac{1}{A}\int \bm{r}\dA 
 \label{eq:def-centroid}
 \end{equation}
-and the torsion constant \(\Jsv\) and plane inertia tensor \(\IntRoR\) are defined by:
+and the torsion constant \(\TwistRigidity\) and plane inertia tensor \(\CoupleRigidity\) are defined by:
 \begin{equation}
-\IntRoR := \int \bm{r}\otimes\bm{r}\dA
+\CoupleRigidity := \int E\bm{r}\otimes\bm{r}\dA
 \qquad\text{and}\qquad
-\Jsv:=\int_\Section\Big(r^2+(\FrameBasis\times\bm{r})\cdot\nabla\WarpTwistIesan\Big)\dA .
+\TwistRigidity:=\int_\Section G\Big(r^2+(\FrameBasis\times\bm{r})\cdot\nabla\WarpTwistIesan\Big)\dA .
 \label{eq:def-j-origin}
 \end{equation}
 Note that these are defined with respect to the unspecified coordinate origin. 
@@ -316,7 +317,7 @@ As with \(\mathrm{P}_{\rm I}\), the recovered field satisfies \(\PlaneStressTens
 The free parameters are determined from
 \begin{equation}
 \begin{aligned}
-E\big(\IntRoR\,\bm{b}_{\Section}+A\,\CentroidLocation\,b_\varepsilon\big)&=-\ShearRxn,\\
+\big(E\IntRoR\,\bm{b}_{\Section}+EA\,\CentroidLocation\,b_\varepsilon\big)&=-\ShearRxn,\\
 \bm{b}_{\Section}\cdot\CentroidLocation+b_\varepsilon&=0,\\
 b_\vartheta&=0,
 \end{aligned}
@@ -327,18 +328,19 @@ and \(c_\vartheta\) is determined by the relaxed torsion boundary condition \(\F
 \,c_\vartheta
 = \CenterShearLocation\cdot\bm{b}_{\Section}
 % -\frac{1}{\Jsv}\FrameBasis\cdot\int_{\Section} \bm{r}\times \left(\nabla \WarpShearShape{}^{\top}
-% + \bm{\Pi}_{(b)} \right)\bm{b}_{\Section} \dA 
+% + \PlaneShearShape \right)\bm{b}_{\Section} \dA 
 % =-\frac{1}{\Jsv}\int_\Section\Big[(\FrameBasis\times\bm{r})\cdot\nabla\big(\WarpShearShape{}\cdot\bm{b}_{\Section}\big)
 % +\tfrac12\,\nu\,r^2\,(\FrameBasis\times\bm{r})\cdot\bm{b}_{\Section}\Big]\dA .
 \label{eq:iesan-2-22}
 \end{equation}
-where \(\Jsv\) is the torsion constant defined by \eqref{eq:def-j-origin}, and the \emph{shear point} \(\CenterShearLocation\in\Section\) is defined by:
+where the \emph{shear point} \(\CenterShearLocation\in\Section\) is defined by:
 \begin{equation}
-\CenterShearLocation := \frac{1}{\Jsv} \int_\Section (\nabla\WarpShearShape{} + \PoissonFlexure^\top)\,\bm{r} \times \FrameBasis \dA.
+\CenterShearLocation := \frac{1}{\TwistRigidity} \int_\Section G(\nabla\WarpShearShape{} + \PlaneShearShape^\top)\,\bm{r} \times \FrameBasis \dA.
 \qquad\text{with}\qquad 
-\PoissonFlexure(\PlanePosition)\coloneq -\,\nu\big(\operatorname{dev}\bm{r}\otimes\bm{r}-\bm{r}\otimes\CentroidLocation\big)
+\PlaneShearShape(\PlanePosition)\coloneq -\,\nu\big(\operatorname{dev}\bm{r}\otimes\bm{r}-\bm{r}\otimes\CentroidLocation\big)
 \label{eq:def-shear-center}
 \end{equation}
+and \(\TwistRigidity\) is the torsion constant defined by \eqref{eq:def-j-origin}, and \(\PlaneShape\) is the solution to ...
 
 \begin{Details}
 \[

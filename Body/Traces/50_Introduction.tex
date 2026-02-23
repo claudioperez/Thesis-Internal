@@ -122,10 +122,10 @@ where \(\IesanVector\in\mathbb{R}^6\) collects the six kinematic  parameters of 
 In view of \eqref{eq:2-15} and \eqref{eq:2-18}:
 \begin{equation}
 \IesanStiff = \begin{bmatrix}
-EA & EA\CentroidLocation^\top & 0 & \mathbf{0} \\[4pt]
-\mathbf{0} & \mathbf{0} & \mathbf{0} & E\IntRGoRG \\[4pt]
-0 & \mathbf{0} & G\Jsv & \mathbf{0} \\[4pt]
--EA\FrameBasis\times\CentroidLocation & -\FrameBasis^\times E\IntRoR & \mathbf{0} & \mathbf{0}
+\AxialRigidity & EA\CentroidLocation^\top & 0 & \mathbf{0} \\[4pt]
+\mathbf{0} & \mathbf{0} & \mathbf{0} & \ShearRigidity \\[4pt]
+0 & \mathbf{0} & \TwistRigidity & \mathbf{0} \\[4pt]
+-\FrameBasis\times EA\CentroidLocation & -\FrameBasis^\times \CoupleRigidity & \mathbf{0} & \mathbf{0}
 \end{bmatrix}.
 \label{eq:G0-neg-m}
 \end{equation}
@@ -139,23 +139,23 @@ Thus
 \begin{equation}
 \IesanStiff^{-1} =
 \begin{bmatrix}
-\displaystyle \frac{1}{EA} + \CentroidLocation\cdot (E\IntRGoRG)^{-1}\,\CentroidLocation
+\displaystyle \frac{1}{EA} + \CentroidLocation\cdot (\ShearRigidity)^{-1}\,\CentroidLocation
 & \mathbf{0}
 & 0
-& -\CentroidLocation^\top (E\IntRGoRG)^{-1}\,\FrameBasis^\times
+& -\CentroidLocation^\top (\ShearRigidity)^{-1}\,\FrameBasis^\times
 \\[6pt]
--(E\IntRGoRG)^{-1}\,\CentroidLocation
+-(\ShearRigidity)^{-1}\,\CentroidLocation
 & \mathbf{0}
 & \mathbf{0}
-& (E\IntRGoRG)^{-1}\,\FrameBasis^\times
+& (\ShearRigidity)^{-1}\,\FrameBasis^\times
 \\[6pt]
 0
 & \mathbf{0}
-& \displaystyle \frac{1}{G\Jsv}
+& \displaystyle \frac{1}{\TwistRigidity}
 & \mathbf{0}
 \\[6pt]
 \mathbf{0}
-& (E\IntRGoRG)^{-1}
+& (\ShearRigidity)^{-1}
 & \mathbf{0}
 & \mathbf{0}
 \end{bmatrix}
@@ -193,7 +193,7 @@ Note:
 \mathbb{J}\IesanStiff = 
 \begin{pmatrix}
     \mathbf{0} & \mathbf{0} \\
-    \mathbf{0} & -\FrameBasis\times(E\IntRGoRG)
+    \mathbf{0} & -\FrameBasis\times(\ShearRigidity)
 \end{pmatrix}
 \end{equation*}
 \end{Details}

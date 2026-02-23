@@ -1,5 +1,5 @@
 
-\subsection{General solution}
+\subsection{General solution for Poisson-homogeneous bodies}
 
 Combining \eqref{eq:iesan-displacement-1} and \eqref{eq:iesan-displacement-2} furnishes the particular solution for the complete Saint-Venant class:
 \begin{equation}
@@ -34,7 +34,7 @@ Combining \eqref{eq:iesan-displacement-1} and \eqref{eq:iesan-displacement-2} fu
 + \bm{W}_{(a)}\,\bm{a}_{\Section} \\
 &\quad+\WarpTwistIesan\,\FrameBasis\,(a_\vartheta+c_{\vartheta}) \\
 &\quad+\FrameBasis\otimes\WarpShearShape{}(\bm{r})\,\bm{b}_{\Section}
-+\reflenx\,\bm{\Pi}_{(b)}\bm{b}_{\Section} \\
++\reflenx\,\PlaneShearShape\bm{b}_{\Section} \\
 %
 &=
  \reflenx\,\FrameBasis\,a_{\varepsilon}
@@ -85,7 +85,7 @@ where recall \(\bm{a}\stackrel{\rm s}{\otimes}\bm{b} \coloneq \tfrac{1}{2} (\bm{
 %
 \PointShearStrain 
 &= (a_{\vartheta} + c_{\vartheta})(\FrameBasis\times \bm{r} + \nabla\WarpTwistIesan) 
-+\bm{\Pi}_{(b)}\bm{b}_{\Section}
++\PlaneShearShape\bm{b}_{\Section}
 + (\nabla \WarpShearShape{})^{\top} \bm{b}_{\Section} 
 \label{eq:iesan-point-shear-strain}
 \end{align}
@@ -211,14 +211,16 @@ Using that $\sym(\FrameBasis\times\oneS)=\mathbf{0}$  and collecting symmetric p
         \(\bm{q}_u\in\mathbb{R}^3\) & L & & Rigid translation at \(x=0\) \\
         \(\bm{q}_{\theta}\in\mathbb{R}^3\) & & & Rigid rotation at \(x=0\), or constant transverse displacement rate   \\
         \LightRule
+        \(\PlaneShape\) & \\
+        \(\PlaneShapeStrain\) \\
         \(\WarpTwistIesan\)   & \Length{2}  & \eqref{eq:bvp-warp-twist-iesan} \\
         \(\WarpShearShape{}\) & \Length{3}   & \eqref{eq:bvp-warp-shear-iesan} & \\
         \LightRule 
         \(\CentroidLocation\) & L & \eqref{eq:def-centroid} & Location of the centroid. \\
         \(\IntRoR\) & \Length{4} & \eqref{eq:def-j-origin} & \\
-        \(\Jsv\) & \Length{4} & \eqref{eq:def-j-origin} & Torsion constant \\
+        \(\TwistRigidity\) & \Length{4} & \eqref{eq:def-j-origin} & Torsion constant (\(\Jsv\)) \\
         \(\CenterShearLocation\) & L & \eqref{eq:def-shear-center} & Torsion-flexure center \\
-        \(\IntRGoRG\) & \Length{4} & \eqref{eq:def-intRGoRG} & Centroidal plane inertia tensor\\
+        \(\IntRGoRG\) & \Length{4} & \eqref{eq:def-intRGoRG} & Centroidal plane inertia tensor \\
         \LightRule 
         \(\snm\) & --- & \eqref{eq:equilibrium-ode} \\
         \(\IesanVector\) & --- & \eqref{eq:def-iesan-vector}\\

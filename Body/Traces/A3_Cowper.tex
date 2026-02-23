@@ -118,11 +118,11 @@ Recall the particular solution under pure flexure \eqref{eq:iesan-displacement-2
 \hat{\bm{u}}_{\rm I\!I} = \big( x\,\FrameBasis \times \bm{r} 
 + \WarpTwistIesan\,\FrameBasis \big)\,\CenterShearLocation \cdot \bm{b}_{\Section}
 + \Big( -\tfrac{1}{6}x^3\,\mathbf{1}_\Omega 
-+ x\,\PoissonFlexure 
++ x\,\PlaneShearShape 
 + \tfrac{1}{2}x^2\,\FrameBasis \otimes (\bm{r} - \CentroidLocation) 
 + \FrameBasis \otimes \WarpShearShape{} \Big)\,\bm{b}_{\Section},
 \end{equation*}
-where recall $\PoissonFlexure:\Section\rightarrow\Section\otimes\Section$ is the Poisson flexural warping shape \eqref{eq:def-eight-shapes}. 
+where recall $\PlaneShearShape:\Section\rightarrow\Section\otimes\Section$ is the Poisson flexural warping shape \eqref{eq:def-eight-shapes}. 
 % \subparagraph{Rotation.}
 The rotation average \(\RotationAverage{\hat{\bm u}_{\rm I\!I}}\) gives:
 \begin{equation*}
@@ -131,14 +131,14 @@ The rotation average \(\RotationAverage{\hat{\bm u}_{\rm I\!I}}\) gives:
 + \TraceMF\,\bm{b}_{\Section},
 % \label{eq:cowper-theta-flexure}
 \end{equation*}
-where with \(\FrameBasis\otimes\bm{\SectionLocation}_{\pi} := \RotationAverage{\PoissonFlexure}\):
+where with \(\FrameBasis\otimes\bm{\SectionLocation}_{\pi} := \RotationAverage{\PlaneShearShape}\):
 \begin{subequations}
 \begin{align}
 % \mathbf{K}_1 &:= 
-\TraceTF &:= \CenterShearLocation + \RotationAverage{\PoissonFlexure}^{\top}\FrameBasis
+\TraceTF &:= \CenterShearLocation + \RotationAverage{\PlaneShearShape}^{\top}\FrameBasis
 =: \CenterShearLocation + \bm{\SectionLocation}_{\pi}, 
 \label{eq:cowper-TF} \\
-% \TraceTF =: \CenterShearLocation + \FrameBasis^{\top}\RotationAverage{\PoissonFlexure}, 
+% \TraceTF =: \CenterShearLocation + \FrameBasis^{\top}\RotationAverage{\PlaneShearShape}, 
 % \\ %\label{eq:def-K1} \\
 %
 % \TraceMF 
@@ -166,8 +166,8 @@ where:
 \begin{equation}
 \begin{aligned}
 \TraceFF 
-&:= \SectionAverage{\PoissonFlexure} 
-- \CentroidLocation^\times \RotationAverage{\PoissonFlexure}
+&:= \SectionAverage{\PlaneShearShape} 
+- \CentroidLocation^\times \RotationAverage{\PlaneShearShape}
 + \FrameBasis \times (\CenterTwistLocation \otimes \CenterShearLocation 
 + \RotationAverage{\FrameBasis \otimes \WarpShearShape{}}),
 \end{aligned}
@@ -177,15 +177,15 @@ where:
 \begin{equation}
 \begin{aligned}
 \TraceFF &:= (\FrameBasis \times \CentroidLocation) \otimes \CenterShearLocation 
-+ \SectionAverage{\PoissonFlexure} 
++ \SectionAverage{\PlaneShearShape} 
 - \left((\FrameBasis \times \CentroidLocation) \otimes \CenterShearLocation 
-+ \CentroidLocation^\times \RotationAverage{\PoissonFlexure}\right)
++ \CentroidLocation^\times \RotationAverage{\PlaneShearShape}\right)
 + \FrameBasis \times \bm{\Gamma}_0, \\
-&:= \SectionAverage{\PoissonFlexure} 
-- \CentroidLocation^\times \RotationAverage{\PoissonFlexure}
+&:= \SectionAverage{\PlaneShearShape} 
+- \CentroidLocation^\times \RotationAverage{\PlaneShearShape}
 + \FrameBasis \times \bm{\Gamma}_0,\\
-&:= \SectionAverage{\PoissonFlexure} 
-- \CentroidLocation^\times \RotationAverage{\PoissonFlexure}
+&:= \SectionAverage{\PlaneShearShape} 
+- \CentroidLocation^\times \RotationAverage{\PlaneShearShape}
 + \FrameBasis \times (\CenterTwistLocation \otimes \CenterShearLocation 
 + \RotationAverage{\FrameBasis \otimes \WarpShearShape{}}),
 \end{aligned}
@@ -202,7 +202,7 @@ Collecting the contributions at $x = 0$, the trace matrix is:
 \mathbf{0} 
 & \mathbf{0} % (\FrameBasis \times \RotationAverage{\bm{W}_{(a)}})_\perp 
 & \FrameBasis \times \CenterTwistLocation & \TraceFF \\[4pt]
-0 & \mathbf{0} & 1 & \TraceTF^\top %\CenterShearLocation^\top + (\RotationAverage{\PoissonFlexure})_\parallel^\top 
+0 & \mathbf{0} & 1 & \TraceTF^\top %\CenterShearLocation^\top + (\RotationAverage{\PlaneShearShape})_\parallel^\top 
 \\[4pt]
 \mathbf{0} & -\FrameBasis^\times & \mathbf{0} & \mathbf{0} %\TraceMF
 \end{bmatrix}
@@ -225,8 +225,8 @@ In view of \eqref{eq:Tinv-from-T}:% \cref{tab:T0-inv-blocks}: %
 \begin{array}{rlllll}
 % \renewcommand{\arraystretch}{1.3}
 \ShiftB & =\left(
-\SectionAverage{\PoissonFlexure} 
-- \CentroidLocation^\times \RotationAverage{\PoissonFlexure}
+\SectionAverage{\PlaneShearShape} 
+- \CentroidLocation^\times \RotationAverage{\PlaneShearShape}
 + \FrameBasis \times\RotationAverage{\FrameBasis \otimes \WarpShearShape{}}
 -(\FrameBasis\times\CenterTwistLocation)\otimes \bm{\SectionLocation}_{\pi}
 \right)^{-1}
@@ -264,8 +264,8 @@ In view of \eqref{eq:Tinv-from-T}:% \cref{tab:T0-inv-blocks}: %
     \(\CentroidLocation\)     & \eqref{eq:def-centroid} \\
     \(\CenterShearLocation\)  & \eqref{eq:def-shear-center} \\
     \(\CenterTwistLocation\)  & \eqref{eq:def-twist-center} \\
-    \(\bm{\SectionLocation}_{\pi}\) & \(\RotationAverage{\bm{\Pi}_{(b)}}^{\top}\FrameBasis\) \\
-    \(\SectionAverage{\bm{\Pi}_{(b)}}\) & \(\tfrac12\Io\oneS - \IntRGoRG\) \\
+    \(\bm{\SectionLocation}_{\pi}\) & \(\RotationAverage{\PlaneShearShape}^{\top}\FrameBasis\) \\
+    \(\SectionAverage{\PlaneShearShape}\) & \(\tfrac12\Io\oneS - \IntRGoRG\) \\
     \bottomrule
     \end{tabular}
 \end{table}

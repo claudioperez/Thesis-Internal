@@ -156,7 +156,7 @@ The flexure mode displacement is
 \begin{equation*}
 \begin{aligned}
 \hat{\bm{u}}^{(b)} &= (x\,\FrameBasis \times \bm{r} + \WarpTwistIesan\,\FrameBasis)\,c_\vartheta + \Big( -\tfrac{1}{6}x^3\,\mathbf{1}_\Omega 
-+ x\,\PoissonFlexure 
++ x\,\PlaneShearShape 
 + \tfrac{1}{2}x^2\,\FrameBasis \otimes (\bm{r} - \CentroidLocation) 
 + \FrameBasis \otimes \WarpShearShape{} \Big)\,\bm{b}_{\Section},
 \end{aligned}
@@ -170,19 +170,19 @@ Applying $\RotationAverage{\cdot}$ to $\hat{\bm{u}}^{(b)}$:
 \begin{align*}
 \bar{\bm{\theta}}^{(b)}(x) &= (x\,\FrameBasis + \CenterTwistLocation)\,c_\vartheta 
 - \tfrac{1}{2}x^2\,(\FrameBasis \times \bm{b}_{\Section}) 
-+ x\,\RotationAverage{\PoissonFlexure}\,\bm{b}_{\Section} 
++ x\,\RotationAverage{\PlaneShearShape}\,\bm{b}_{\Section} 
 + \RotationAverage{\FrameBasis \otimes \WarpShearShape{}}\,\bm{b}_{\Section} \\
 &= (x\,\FrameBasis + \CenterTwistLocation)\,(\CenterShearLocation \cdot \bm{b}_{\Section}) 
 - \tfrac{1}{2}x^2\,(\FrameBasis \times \bm{b}_{\Section}) 
-+ x\,\RotationAverage{\PoissonFlexure}\,\bm{b}_{\Section} 
++ x\,\RotationAverage{\PlaneShearShape}\,\bm{b}_{\Section} 
 + \RotationAverage{\FrameBasis \otimes \WarpShearShape{}}\,\bm{b}_{\Section}.
 \end{align*}
-where $\RotationAverage{\PoissonFlexure}\in\mathbb{R}^{3\times2}$, \(\RotationAverage{\FrameBasis\otimes\WarpShearShape{}}\in\mathbb{R}^{3\times2}\),
+where $\RotationAverage{\PlaneShearShape}\in\mathbb{R}^{3\times2}$, \(\RotationAverage{\FrameBasis\otimes\WarpShearShape{}}\in\mathbb{R}^{3\times2}\),
 and \(\CenterTwistLocation := \RotationAverage{\FrameBasis\WarpTwistIesan}\in\Section\).
 Then, grouping terms:
 \begin{equation}
 \bar{\bm{\theta}}^{(b)}(x) = -\tfrac{1}{2}x^2\,(\FrameBasis \times \bm{b}_{\Section}) 
-+ x\,\left( \FrameBasis \otimes \CenterShearLocation + \RotationAverage{\PoissonFlexure} \right)\,\bm{b}_{\Section} 
++ x\,\left( \FrameBasis \otimes \CenterShearLocation + \RotationAverage{\PlaneShearShape} \right)\,\bm{b}_{\Section} 
 + \left( \CenterTwistLocation \otimes \CenterShearLocation + \RotationAverage{\FrameBasis\otimes\WarpShearShape{}} \right)\,\bm{b}_{\Section}.
 \label{eq:cowper-theta-flexure}
 \end{equation}
@@ -191,7 +191,7 @@ The curvature is:
 \begin{equation}
 \bar{\bm{\kappa}}^{(b)}(x) 
 = -x\,(\FrameBasis \times \bm{b}_{\Section}) 
-+ \left( \FrameBasis \otimes \CenterShearLocation + \RotationAverage{\PoissonFlexure} \right)\,\bm{b}_{\Section}.
++ \left( \FrameBasis \otimes \CenterShearLocation + \RotationAverage{\PlaneShearShape} \right)\,\bm{b}_{\Section}.
 \label{eq:kappa-flexure}
 \end{equation}
 
@@ -200,7 +200,7 @@ Applying $\SectionAverage{\cdot}$ and subtracting $\bar{\bm{\theta}}^{(b)} \time
 \begin{align*}
 \SectionAverage{\hat{\bm{u}}^{(b)}} &= x\,(\FrameBasis \times \CentroidLocation)\,c_\vartheta 
 - \tfrac{1}{6}x^3\,\bm{b}_{\Section} 
-+ x\,\SectionAverage{\PoissonFlexure}\,\bm{b}_{\Section},
++ x\,\SectionAverage{\PlaneShearShape}\,\bm{b}_{\Section},
 \end{align*}
 using $\SectionAverage{\bm{r} - \CentroidLocation} = \mathbf{0}$ and $\SectionAverage{\WarpShearShape{}} = \mathbf{0}$.
 
@@ -208,7 +208,7 @@ Thus:
 \begin{equation*}
 \bar{\bm{u}}^{(b)}(x) = x\,(\FrameBasis \times \CentroidLocation)\,c_\vartheta 
 - \tfrac{1}{6}x^3\,\bm{b}_{\Section} 
-+ x\,\SectionAverage{\PoissonFlexure}\,\bm{b}_{\Section} 
++ x\,\SectionAverage{\PlaneShearShape}\,\bm{b}_{\Section} 
 - \bar{\bm{\theta}}^{(b)}(x) \times \CentroidLocation.
 \end{equation*}
 
@@ -216,7 +216,7 @@ Computing $\bar{\bm{\theta}}^{(b)} \times \CentroidLocation$ from \eqref{eq:cowp
 \begin{align*}
 \bar{\bm{\theta}}^{(b)} \times \CentroidLocation 
 &= -\tfrac{1}{2}x^2\,(\FrameBasis \times \bm{b}_{\Section}) \times \CentroidLocation 
-+ x\,\left( \FrameBasis \otimes \CenterShearLocation + \RotationAverage{\PoissonFlexure} \right)\,\bm{b}_{\Section} \times \CentroidLocation 
++ x\,\left( \FrameBasis \otimes \CenterShearLocation + \RotationAverage{\PlaneShearShape} \right)\,\bm{b}_{\Section} \times \CentroidLocation 
  + \big( \CenterTwistLocation \otimes \CenterShearLocation + \RotationAverage{\FrameBasis\otimes\WarpShearShape{}} \big)\,\bm{b}_{\Section} \times \CentroidLocation.
 \end{align*}
 Using $(\FrameBasis \times \bm{b}_{\Section}) \times \CentroidLocation = -\FrameBasis \otimes \CentroidLocation\,\bm{b}_{\Section}$:
@@ -229,7 +229,7 @@ Using $(\FrameBasis \times \bm{b}_{\Section}) \times \CentroidLocation = -\Frame
 where we define:
 \begin{align}
 \bm{\Lambda}_1 &:= (\FrameBasis \times \CentroidLocation) \otimes \CenterShearLocation 
-+ \CentroidLocation^{\times} \RotationAverage{\PoissonFlexure}, 
++ \CentroidLocation^{\times} \RotationAverage{\PlaneShearShape}, 
 \label{eq:def-Lambda1} \\
 \bm{\Lambda}_0 &:= (\CentroidLocation \times \CenterTwistLocation) \otimes \CenterShearLocation 
 + \CentroidLocation^{\times} \RotationAverage{\FrameBasis\otimes\WarpShearShape{}}.
@@ -241,7 +241,7 @@ Thus:
 \bar{\bm{u}}^{(b)}(x) &= -\tfrac{1}{6}x^3\,\bm{b}_{\Section} 
 - \tfrac{1}{2}x^2\,\FrameBasis \otimes \CentroidLocation\,\bm{b}_{\Section} 
 + x\,\left( (\FrameBasis \times \CentroidLocation) \otimes \CenterShearLocation 
-+ \SectionAverage{\PoissonFlexure} - \bm{\Lambda}_1 \right)\,\bm{b}_{\Section} 
++ \SectionAverage{\PlaneShearShape} - \bm{\Lambda}_1 \right)\,\bm{b}_{\Section} 
 - \bm{\Lambda}_0\,\bm{b}_{\Section}.
 \end{align*}
 
@@ -250,7 +250,7 @@ The derivative is:
 (\bar{\bm{u}}^{(b)})'(x) = -\tfrac{1}{2}x^2\,\bm{b}_{\Section} 
 - x\,\FrameBasis \otimes \CentroidLocation\,\bm{b}_{\Section} 
 + \big( (\FrameBasis \times \CentroidLocation) \otimes \CenterShearLocation 
-+ \SectionAverage{\PoissonFlexure} - \bm{\Lambda}_1 \big)\,\bm{b}_{\Section}.
++ \SectionAverage{\PlaneShearShape} - \bm{\Lambda}_1 \big)\,\bm{b}_{\Section}.
 \end{equation*}
 
 The shear strain is:
@@ -262,9 +262,9 @@ Computing $\FrameBasis \times \bar{\bm{\theta}}^{(b)}$ from \eqref{eq:cowper-the
 \begin{align*}
 \FrameBasis \times \bar{\bm{\theta}}^{(b)} 
 &= -\tfrac{1}{2}x^2\,\FrameBasis \times (\FrameBasis \times \bm{b}_{\Section}) 
-+ x\,\FrameBasis \times \big( \FrameBasis \otimes \CenterShearLocation + \RotationAverage{\PoissonFlexure} \big)\,\bm{b}_{\Section} + \FrameBasis \times \big( \CenterTwistLocation \otimes \CenterShearLocation + \RotationAverage{\FrameBasis\otimes\WarpShearShape{}} \big)\,\bm{b}_{\Section} \\
++ x\,\FrameBasis \times \big( \FrameBasis \otimes \CenterShearLocation + \RotationAverage{\PlaneShearShape} \big)\,\bm{b}_{\Section} + \FrameBasis \times \big( \CenterTwistLocation \otimes \CenterShearLocation + \RotationAverage{\FrameBasis\otimes\WarpShearShape{}} \big)\,\bm{b}_{\Section} \\
 &= \tfrac{1}{2}x^2\,\bm{b}_{\Section} 
-+ x\,\FrameBasis \times \RotationAverage{\PoissonFlexure}\,\bm{b}_{\Section} 
++ x\,\FrameBasis \times \RotationAverage{\PlaneShearShape}\,\bm{b}_{\Section} 
 + \FrameBasis \times \big( \CenterTwistLocation \otimes \CenterShearLocation + \RotationAverage{\FrameBasis\otimes\WarpShearShape{}} \big)\,\bm{b}_{\Section},
 \end{align*}
 using $\FrameBasis \times (\FrameBasis \times \bm{b}_{\Section}) = -\bm{b}_{\Section}$ and 
@@ -274,9 +274,9 @@ $\FrameBasis \times (\FrameBasis \otimes \CenterShearLocation) = \mathbf{0}$
 Combining:
 \begin{align*}
 \bar{\bm{\gamma}}^{(b)}(x) &= \Big( -\tfrac{1}{2}x^2\,\bm{b}_{\Section} + \tfrac{1}{2}x^2\,\bm{b}_{\Section} \Big) \\
-&\quad + x\,\Big( -\FrameBasis \otimes \CentroidLocation + \FrameBasis \times \RotationAverage{\PoissonFlexure} \Big)\,\bm{b}_{\Section} \\
+&\quad + x\,\Big( -\FrameBasis \otimes \CentroidLocation + \FrameBasis \times \RotationAverage{\PlaneShearShape} \Big)\,\bm{b}_{\Section} \\
 &\quad + \Big( (\FrameBasis \times \CentroidLocation) \otimes \CenterShearLocation 
-+ \SectionAverage{\PoissonFlexure} - \bm{\Lambda}_1 
++ \SectionAverage{\PlaneShearShape} - \bm{\Lambda}_1 
 + \FrameBasis \times (\CenterTwistLocation \otimes \CenterShearLocation + \RotationAverage{\FrameBasis\otimes\WarpShearShape{}}) \Big)\,\bm{b}_{\Section}.
 \end{align*}
 
@@ -285,12 +285,12 @@ The $x^2$ terms cancel. Define:
 \bm{\Gamma}_1 &:= -\FrameBasis \otimes \CentroidLocation , 
 \label{eq:def-Gamma1} \\
 \bm{\Gamma}_0 &:= (\FrameBasis \times \CentroidLocation) \otimes \CenterShearLocation 
-+ \SectionAverage{\PoissonFlexure} - \bm{\Lambda}_1 
++ \SectionAverage{\PlaneShearShape} - \bm{\Lambda}_1 
 + \FrameBasis \times (\CenterTwistLocation \otimes \CenterShearLocation + \RotationAverage{\FrameBasis\otimes\WarpShearShape{}}).
 \label{eq:def-Gamma0}
 \end{align}
 
-Thus, because \(\FrameBasis \times \RotationAverage{\PoissonFlexure} = \mathbf{0}\):
+Thus, because \(\FrameBasis \times \RotationAverage{\PlaneShearShape} = \mathbf{0}\):
 \begin{equation}
 \bar{\bm{\gamma}}^{(b)}(x) = x\,\bm{\Gamma}_1\,\bm{b}_{\Section} + \bm{\Gamma}_0\,\bm{b}_{\Section}.
 \label{eq:gamma-flexure}
@@ -309,7 +309,7 @@ and $\bm{p}$ is the vector of load parameters \eqref{eq:def-iesan-vector}:
 \TraceDeDpRoot = \begin{pmatrix}
 1 & \mathbf{0}^\top & 0 & (\bm{\Gamma}_0)_\parallel^\top \\[4pt]
 \mathbf{0} & \mathbf{0} & (\FrameBasis \times \CenterTwistLocation)_\perp & (\bm{\Gamma}_0)_\perp \\[4pt]
-0 & \mathbf{0}^\top & 1 & (\CenterShearLocation + (\RotationAverage{\PoissonFlexure})_\parallel)^\top \\[4pt]
+0 & \mathbf{0}^\top & 1 & (\CenterShearLocation + (\RotationAverage{\PlaneShearShape})_\parallel)^\top \\[4pt]
 \mathbf{0} & -\FrameBasis^\times & \mathbf{0} & (\RotationAverage{\FrameBasis\otimes\WarpShearShape{}} + \CenterTwistLocation \otimes \CenterShearLocation)_\perp
 \end{pmatrix}
 \label{eq:T-section-avg}
@@ -322,10 +322,10 @@ are linearly independent, giving $\mathrm{rank}(\mathbf{T}) = 6$ and hence the w
 When the coordinate origin coincides with the centroid ($\CentroidLocation = \mathbf{0}$), 
 several terms simplify:
 \begin{itemize}
-\item $\bm{\Lambda}_1 = \CentroidLocation^\times \RotationAverage{\PoissonFlexure} = \mathbf{0}$
+\item $\bm{\Lambda}_1 = \CentroidLocation^\times \RotationAverage{\PlaneShearShape} = \mathbf{0}$
 \item $\bm{\Lambda}_0 = \CentroidLocation^\times \RotationAverage{\FrameBasis\otimes\WarpShearShape{}} = \mathbf{0}$
-\item $\bm{\Gamma}_1 = \FrameBasis \times \RotationAverage{\PoissonFlexure}$
-\item $\bm{\Gamma}_0 = \SectionAverage{\PoissonFlexure} + \FrameBasis \times (\CenterTwistLocation \otimes \CenterShearLocation + \RotationAverage{\FrameBasis\otimes\WarpShearShape{}})$
+\item $\bm{\Gamma}_1 = \FrameBasis \times \RotationAverage{\PlaneShearShape}$
+\item $\bm{\Gamma}_0 = \SectionAverage{\PlaneShearShape} + \FrameBasis \times (\CenterTwistLocation \otimes \CenterShearLocation + \RotationAverage{\FrameBasis\otimes\WarpShearShape{}})$
 \end{itemize}
 For doubly-symmetric sections with centroidal coordinates, additional 
 simplifications occur: $\CenterTwistLocation = \mathbf{0}$, $\CenterShearLocation = \mathbf{0}$, 
@@ -336,7 +336,7 @@ and many cross-coupling terms vanish.
 The tensor $\bm{\Gamma}_0$ in \eqref{eq:def-Gamma0}, when restricted to the 
 transverse components and for centroidal coordinates, reduces to
 \begin{equation}
-(\bm{\Gamma}_0)_\perp = \SectionAverage{\PoissonFlexure} 
+(\bm{\Gamma}_0)_\perp = \SectionAverage{\PlaneShearShape} 
 + \FrameBasis \times \RotationAverage{\FrameBasis \otimes \WarpShearShape{}},
 \end{equation}
 which matches the classical shear-flexure coupling tensor 

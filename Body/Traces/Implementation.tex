@@ -16,10 +16,10 @@ In view of the Saint~Venant strains \eqref{eq:iesan-point-strain}, the enhanced 
 \WarpStrainMatrix(\bm{r}) := 
 \begin{bmatrix}
 \nabla\WarpTwistIesan
-&\FrameBasis_{\beta}\otimes\nabla_{\beta}\WarpShearShape{} + \bm{\Pi}_{(b)}
+&\FrameBasis_{\beta}\otimes\nabla_{\beta}\WarpShearShape{} + \PlaneShearShape
 \end{bmatrix}_{3\times 3}
 \end{SaveEquation}
-where \(\RigidShift\) and \(\ShapeShift\) are constant matrices, and the functions \(\WarpTwistIesan\), \(\WarpShearShape{}\) and \(\bm{\Pi}_{(b)}\) are defined by \eqref{eq:bvp-warp-twist-iesan}, \eqref{eq:bvp-warp-shear-iesan}, and  \eqref{eq:def-shear-center}, respectively.
+where \(\RigidShift\) and \(\ShapeShift\) are constant matrices, and the functions \(\WarpTwistIesan\), \(\WarpShearShape{}\) and \(\PlaneShearShape\) are defined by \eqref{eq:bvp-warp-twist-iesan}, \eqref{eq:bvp-warp-shear-iesan}, and  \eqref{eq:def-shear-center}, respectively.
 % Because this contains the plane-rigid span \(\PlaneMotions\), the primary trace fields \(\bm{u},\bm{\theta}\) 
 % will not generally represent the full plane-rigid content, which becomes offloaded onto the warping field \(\bm\alpha\) through a linear operator \(\RigidShift\) determined by the trace. 
 % Upon elimination of the warping fields \(\bm\alpha\) the material strains are 

@@ -393,7 +393,7 @@ The off-diagonal blocks of the trace matrices encode couplings between
 loading modes and strain measures. For asymmetric sections, flexure induces 
 twist through the shear center offset, and this coupling appears differently 
 in different traces. The section-average trace exhibits explicit geometric 
-couplings through terms like $\RotationAverage{\PoissonFlexure}$ and 
+couplings through terms like $\RotationAverage{\PlaneShearShape}$ and 
 $\RotationAverage{\FrameBasis \otimes \bm{\WarpShearIesan}}$, while the 
 energy-conjugate trace absorbs these into a modified shear stiffness.
 
@@ -430,13 +430,13 @@ EA
 & EA\left(\ShiftNK^\top + \CentroidLocation^\top\FrameBasis^\times\right)
 \\ %[8pt]
 \mathbf{0} &
-E\IntRGoRG\,\ShiftB &
--\,E\IntRGoRG\,\ShiftB\TraceFT &
+\ShearRigidity\,\ShiftB &
+-\,\ShearRigidity\,\ShiftB\TraceFT &
 \mathbf{0}
 \\ \hline %\\[8pt] \hline
 0 &
-G\Jsv\,(\bm{\varsigma}_{21}^{\mathrm{N}})^\top
-& G\Jsv\,\ShiftScaleT &
+\TwistRigidity\,(\bm{\varsigma}_{21}^{\mathrm{N}})^\top
+& \TwistRigidity\,\ShiftScaleT &
 \mathbf{0}^\top
 \\ %[8pt]
 EA\FrameBasis\times\CentroidLocation 
@@ -452,7 +452,7 @@ EA(\FrameBasis\times\CentroidLocation)\otimes\ShiftNK + \FrameBasis^\times E\Int
 \end{equation}
 The (2,2) block reveals the generalized shear correction coefficients:
 \begin{equation*}
-\bm{K} = \frac{1}{GA}E\IntRGoRG\ShiftB
+\bm{K} = \frac{1}{GA}\ShearRigidity\ShiftB
 \end{equation*}
 % \end{remark}
 \end{Old}

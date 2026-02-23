@@ -146,10 +146,10 @@ using the Saint-Venant relation \(\ShearForce = E\bm{I}_m\bm{b}_{\Section}\).
 
 
 From
-\(\bar{\bm{u}}'_\perp = (-\tfrac{1}{2}x^2 + \SectionAverage{\PoissonFlexure})\bm{b}_{\Section}\)
+\(\bar{\bm{u}}'_\perp = (-\tfrac{1}{2}x^2 + \SectionAverage{\PlaneShearShape})\bm{b}_{\Section}\)
 and \(\bm{u}'_\perp = \GaugeShearB - \tfrac{1}{2}x^2\bm{b}_{\Section}\):
 \[
-\GaugeShearB = \SectionAverage{\PoissonFlexure}\bm{b}_{\Section}
+\GaugeShearB = \SectionAverage{\PlaneShearShape}\bm{b}_{\Section}
 \]
 
 From
@@ -165,14 +165,14 @@ and
 
 Then:
 \[
-\bm{\gamma} = \GaugeShearB + \GaugeShearA = \SectionAverage{\PoissonFlexure}\bm{b}_{\Section} + \FrameBasis\times\bar{\Theta}[\FrameBasis\otimes\bm{\psi}]\bm{b}_{\Section} = (\ScaleShearGeomA)^{-1}\bm{b}_{\Section} = \bar{\bm{\gamma}}
+\bm{\gamma} = \GaugeShearB + \GaugeShearA = \SectionAverage{\PlaneShearShape}\bm{b}_{\Section} + \FrameBasis\times\bar{\Theta}[\FrameBasis\otimes\bm{\psi}]\bm{b}_{\Section} = (\ScaleShearGeomA)^{-1}\bm{b}_{\Section} = \bar{\bm{\gamma}}
 \]
 
 This confirms
-\((\ScaleShearGeomA)^{-1} = \SectionAverage{\PoissonFlexure} + \FrameBasis\times\bar{\Theta}[\FrameBasis\otimes\bm{\psi}]\).
+\((\ScaleShearGeomA)^{-1} = \SectionAverage{\PlaneShearShape} + \FrameBasis\times\bar{\Theta}[\FrameBasis\otimes\bm{\psi}]\).
 
 Define: \[
-\ScaleShearGeomB := -\SectionAverage{\PoissonFlexure}\ScaleShearGeomA\]
+\ScaleShearGeomB := -\SectionAverage{\PlaneShearShape}\ScaleShearGeomA\]
 \[\bar{\Xi}_\theta := (\FrameBasis\times\bar{\Theta}[\FrameBasis\otimes\bm{\psi}])^{-1}
 \]
 
@@ -182,7 +182,7 @@ So \(\GaugeShearB = -(\ScaleShearGeomB)^{-1}\bm{\gamma}\) and
 Note:
 \((\ScaleShearGeomB)^{-1} + \bar{\Xi}_\theta^{-1}\ScaleShearGeomA = (\ScaleShearGeomA)^{-1}\),
 i.e.,
-\(-\SectionAverage{\PoissonFlexure} + \FrameBasis\times\bar{\Theta}[\FrameBasis\otimes\bm{\psi}]\ScaleShearGeomA = (\ScaleShearGeomA)^{-1}\)\ldots{}
+\(-\SectionAverage{\PlaneShearShape} + \FrameBasis\times\bar{\Theta}[\FrameBasis\otimes\bm{\psi}]\ScaleShearGeomA = (\ScaleShearGeomA)^{-1}\)\ldots{}
 
 Wait, let me verify:
 \(\GaugeShearB + \GaugeShearA = -(\ScaleShearGeomB)^{-1}\bm{\gamma} + \bar{\Xi}_\theta^{-1}\ScaleShearGeomA\bm{\gamma}\)
@@ -192,7 +192,7 @@ With
 \(\bm{\gamma} = (\ScaleShearGeomA)^{-1}\bm{b}_{\Section}\):
 
 \[
-\GaugeShearB + \GaugeShearA = \SectionAverage{\PoissonFlexure}\bm{b}_{\Section} + \FrameBasis\times\bar{\Theta}[\FrameBasis\otimes\bm{\psi}]\bm{b}_{\Section} = (\ScaleShearGeomA)^{-1}\bm{b}_{\Section} = \bm{\gamma}
+\GaugeShearB + \GaugeShearA = \SectionAverage{\PlaneShearShape}\bm{b}_{\Section} + \FrameBasis\times\bar{\Theta}[\FrameBasis\otimes\bm{\psi}]\bm{b}_{\Section} = (\ScaleShearGeomA)^{-1}\bm{b}_{\Section} = \bm{\gamma}
 \]
 
 
@@ -205,7 +205,7 @@ With
 Matching the transverse deflection \(\bm{u}_\perp = \bar{\bm{u}}_\perp\)
 requires: 
 \[
-\GaugeShearB = \SectionAverage{\PoissonFlexure}\bm{b}_{\Section}
+\GaugeShearB = \SectionAverage{\PlaneShearShape}\bm{b}_{\Section}
 \]
 
 Matching the transverse rotation
@@ -216,14 +216,14 @@ Matching the transverse rotation
 
 These identifications yield the section-averaged shear strain:
 \[
-\bm{\gamma} = \left(\SectionAverage{\PoissonFlexure} + \FrameBasis\times\bar{\Theta}[\FrameBasis\otimes\bm{\psi}]\right) \bm{b}_{\Section}
+\bm{\gamma} = \left(\SectionAverage{\PlaneShearShape} + \FrameBasis\times\bar{\Theta}[\FrameBasis\otimes\bm{\psi}]\right) \bm{b}_{\Section}
 = (\ScaleShearGeomA)^{-1}\bm{b}_{\Section}
 \]
 
 Inverting furnishes the constraint operators in terms of
 \(\bm{\gamma}\):
 \[
-\GaugeShearB = \SectionAverage{\PoissonFlexure}\ScaleShearGeomA\bm{\gamma}, \qquad \GaugeShearA = \FrameBasis\times\bar{\Theta}[\FrameBasis\otimes\bm{\psi}]\ScaleShearGeomA\bm{\gamma}
+\GaugeShearB = \SectionAverage{\PlaneShearShape}\ScaleShearGeomA\bm{\gamma}, \qquad \GaugeShearA = \FrameBasis\times\bar{\Theta}[\FrameBasis\otimes\bm{\psi}]\ScaleShearGeomA\bm{\gamma}
 \]
 
 \paragraph{Constraints Matrices (V1)}
@@ -231,7 +231,7 @@ Inverting furnishes the constraint operators in terms of
 For Cowper, the gauge parameters are:
 \[
 \begin{aligned}
-\GaugeShearB &= \SectionAverage{\PoissonFlexure}\ScaleShearGeomA\bm{\gamma}\\
+\GaugeShearB &= \SectionAverage{\PlaneShearShape}\ScaleShearGeomA\bm{\gamma}\\
 \GaugeShearA &= \FrameBasis\times\bar{\Theta}[\FrameBasis\otimes\bm{\psi}]\ScaleShearGeomA\bm{\gamma}
 \end{aligned}
 \]
@@ -240,7 +240,7 @@ The constraint operators \(\bm{\alpha}'_v = -\GaugeShearB\) and
 \(\bm{\alpha}_r = -\GaugeShearA\) are
 \[
 \begin{aligned}
-\mathbf{L}_{\rm wn}^{(v)} &= -\SectionAverage{\PoissonFlexure}\ScaleShearGeomA \\
+\mathbf{L}_{\rm wn}^{(v)} &= -\SectionAverage{\PlaneShearShape}\ScaleShearGeomA \\
 \mathbf{L}_{\rm vn}^{(v)} &= \mathbf{0}
 \end{aligned}
 \qquad\text{and}\qquad
@@ -254,7 +254,7 @@ The constraint operators \(\bm{\alpha}'_v = -\GaugeShearB\) and
 The \(v\) and \(r\) amplitues are differentially and algebraically constraind, respectively:
 \[
 \begin{aligned}
-\mathbf{L}_{\rm wn}^{(v)} &= -\SectionAverage{\PoissonFlexure}\ScaleShearGeomA, && \mathbf{L}_{\rm vn}^{(v)} = 0 \\
+\mathbf{L}_{\rm wn}^{(v)} &= -\SectionAverage{\PlaneShearShape}\ScaleShearGeomA, && \mathbf{L}_{\rm vn}^{(v)} = 0 \\
 \mathbf{L}_{\rm vn}^{(r)} &= -\FrameBasis\times\bar{\Theta}[\FrameBasis\otimes\bm{\psi}]\ScaleShearGeomA, 
 && \mathbf{L}_{\rm wn}^{(r)} = 0
 \end{aligned}
@@ -265,13 +265,13 @@ The \(v\) and \(r\) amplitues are differentially and algebraically constraind, r
 The axial component of rotation in the gauged model is
 \(\vartheta = \eta_\vartheta + x(a_\vartheta + c_\vartheta)\), while
 Cowper's averaged axial rotation is 
-\(\bar{\vartheta} = x\,\FrameBasis\cdot\bar{\Theta}[\PoissonFlexure]\bm{b}_{\Section}\).
+\(\bar{\vartheta} = x\,\FrameBasis\cdot\bar{\Theta}[\PlaneShearShape]\bm{b}_{\Section}\).
 
 Under pure flexure, matching would require
-\(c_\vartheta = \FrameBasis\cdot\bar{\Theta}[\PoissonFlexure]\bm{b}_{\Section}\).
+\(c_\vartheta = \FrameBasis\cdot\bar{\Theta}[\PlaneShearShape]\bm{b}_{\Section}\).
 However, the Saint-Venant solution determines:
 \[
-\Jsv c_\vartheta = -\FrameBasis\cdot\int_{\Section} \bm{r}\times(\nabla\bm{\psi} + \PoissonFlexure)\bm{b}_{\Section} \dA
+\Jsv c_\vartheta = -\FrameBasis\cdot\int_{\Section} \bm{r}\times(\nabla\bm{\psi} + \PlaneShearShape)\bm{b}_{\Section} \dA
 \]
 
 These expressions differ by the shear warping contribution
@@ -309,7 +309,7 @@ The identification would be:
 \[\tilde{\eta}_\vartheta = c_\vartheta - \bar{c}_{\vartheta}\]
 
 where:
-\[\bar{c}_{\vartheta} := \FrameBasis\cdot\bar{\Theta}[\PoissonFlexure]\bm{b}_{\Section} = \FrameBasis\cdot\bar{\bm{I}}^{-1}\int_{\Section} (\bm{r}-\bar{\bm{p}})\times\PoissonFlexure\,dA\,\bm{b}_{\Section}\]
+\[\bar{c}_{\vartheta} := \FrameBasis\cdot\bar{\Theta}[\PlaneShearShape]\bm{b}_{\Section} = \FrameBasis\cdot\bar{\bm{I}}^{-1}\int_{\Section} (\bm{r}-\bar{\bm{p}})\times\PlaneShearShape\,dA\,\bm{b}_{\Section}\]
 
 We need to express this in terms of \(\bm{\gamma}\). Using
 \(\bm{b}_{\Section} = \bar{\Xi}_\kappa\bm{\gamma}\):
@@ -323,14 +323,14 @@ the SV constraint, which depends on \(\bm{b}_{\Section}\).
 
 Define:
 \[
-\mathbf{g}_{c} := -\frac{1}{\Jsv}\FrameBasis\cdot\int_{\Section} \bm{r}\times(\nabla\bm{\psi}^T + \PoissonFlexure)\,dA
+\mathbf{g}_{c} := -\frac{1}{\Jsv}\FrameBasis\cdot\int_{\Section} \bm{r}\times(\nabla\bm{\psi}^T + \PlaneShearShape)\,dA
 \]
 So \(c_\vartheta = \mathbf{g}_{\vartheta}\cdot\bm{b}_{\Section}\).
 
 Similarly, \(\bar{c}_{\vartheta} = \bar{\mathbf{g}}\cdot\bm{b}_{\Section}\)
 where:
 \[
-\bar{\mathbf{g}} := \FrameBasis\cdot\bar{\bm{I}}^{-1} \int_{\Section} (\bm{r}-\bar{\bm{p}})\times\PoissonFlexure\,dA
+\bar{\mathbf{g}} := \FrameBasis\cdot\bar{\bm{I}}^{-1} \int_{\Section} (\bm{r}-\bar{\bm{p}})\times\PlaneShearShape\,dA
 \]
 
 Then \(\tilde{\eta}_{\vartheta}\) is linear in \(\bm{\gamma}\), and
@@ -402,7 +402,7 @@ Bishear
 \bottomrule\noalign{}
 \endlastfoot
 \(v\) & \(\mathbf{1}_{\Section}\) & \(\alpha'_v = -\bm{\eta}_v\) &
-\(-\SectionAverage{\PoissonFlexure}\bar{\Xi}_\kappa\bm{\gamma}\) & \(\ShearForce\) &
+\(-\SectionAverage{\PlaneShearShape}\bar{\Xi}_\kappa\bm{\gamma}\) & \(\ShearForce\) &
 \(0\) \\[0.3cm]
 \(r\) & \(\FrameBasis\otimes\bm{r}\) & \(\alpha_r = -\bm{\eta}_{\Section}\) &
 \(-\mathbf{B}\bar{\Xi}_\kappa\bm{\gamma}\) & \(E\bm{I}_m\bm{b}_{\Section}\)

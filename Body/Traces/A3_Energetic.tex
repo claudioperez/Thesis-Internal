@@ -79,7 +79,7 @@ where the shear strain shape functions are
 \begin{align}
 \mathbf{b}_{(\WarpTwistIesan)}(\bm{r}) &\coloneq \FrameBasis \times \bm{r} + \nabla\WarpTwistIesan(\bm{r}), 
 \label{eq:tau-phi} \\
-\mathbf{B}_{(\WarpShearIesan)}(\bm{r}) &\coloneq (\nabla\WarpShearShape{})^{\top} + \PoissonFlexure(\bm{r}).
+\mathbf{B}_{(\WarpShearIesan)}(\bm{r}) &\coloneq (\nabla\WarpShearShape{})^{\top} + \PlaneShearShape(\bm{r}).
 \label{eq:tau-psi}
 \end{align}
 \end{subequations}
@@ -95,9 +95,9 @@ where the Saint~Venant energy matrix \(\IesanEnergy\) is
 \begin{aligned}
 \IesanEnergy := \int_\Section \mathbf{S}_0^\top \mathbb{C}\, \mathbf{S}_0 \dA 
 &=\begin{bmatrix}
-EA & EA\CentroidLocation^\top & 0 & \mathbf{0} \\
+\AxialRigidity & EA\CentroidLocation^\top & 0 & \mathbf{0} \\
 EA\CentroidLocation & E\IntRoR & \mathbf{0} & \mathbf{0} \\
-0 & \mathbf{0} & G\Jsv & G(\Jsv\CenterShearLocation + \mathbf{h}_{\WarpTwistIesan})^\top \\
+0 & \mathbf{0} & \TwistRigidity & (\TwistRigidity\CenterShearLocation + G\mathbf{h}_{\WarpTwistIesan})^\top \\
 \mathbf{0} & \mathbf{0} & G(\Jsv\CenterShearLocation + \mathbf{h}_{\WarpTwistIesan}) & G(\mathbf{H}_{\WarpShear} + \Jsv\CenterShearLocation\otimes\CenterShearLocation + \CenterShearLocation\otimes\mathbf{h}_{\WarpTwistIesan} + \mathbf{h}_{\WarpTwistIesan}\otimes\CenterShearLocation)
 \end{bmatrix}
 \end{aligned}
@@ -132,18 +132,18 @@ The inverse of the energy matrix \eqref{eq:energy-matrix} is:
 \begin{aligned}
 \IesanEnergy^{-1}
 &=\begin{bmatrix}
-\frac{1}{EA} + \CentroidLocation\cdot (E\IntRGoRG)^{-1}\CentroidLocation 
-& -\CentroidLocation^\top (E\IntRGoRG)^{-1} 
+\frac{1}{\AxialRigidity} + \CentroidLocation\cdot (\ShearRigidity)^{-1}\CentroidLocation 
+& -\CentroidLocation^\top (\ShearRigidity)^{-1} 
 & 0 
 & \mathbf{0} \\[6pt]
--(E\IntRGoRG)^{-1}\CentroidLocation 
-& (E\IntRGoRG)^{-1} 
+-(\ShearRigidity)^{-1}\CentroidLocation 
+& (\ShearRigidity)^{-1} 
 & \mathbf{0} 
 & \mathbf{0} \\[6pt]
 0 
 & \mathbf{0} 
 & % \displaystyle 
-  (G\Jsv)^{-1} 
+  (\TwistRigidity)^{-1} 
   + \TraceTF\cdot
     (G\tilde{\mathbf{H}}_{bb})^{-1}
     \TraceTF
@@ -177,9 +177,9 @@ Using \(\IesanStiff\) given by \eqref{eq:G0-neg-m} in \eqref{eq:T0-formula} furn
 & \mathbf{0}
 & 0 
 & \ShiftNK
-% -EA\Bigl(\dfrac{1}{EA} + \CentroidLocation\cdot (E\IntRGoRG)^{-1}\CentroidLocation\Bigr)
+% -EA\Bigl(\dfrac{1}{EA} + \CentroidLocation\cdot (\ShearRigidity)^{-1}\CentroidLocation\Bigr)
 % (\FrameBasis\times\CentroidLocation)^\top
-% + \CentroidLocation^\top (E\IntRGoRG)^{-1}(E\FrameBasis^\times\IntRoR)^\top
+% + \CentroidLocation^\top (\ShearRigidity)^{-1}(E\FrameBasis^\times\IntRoR)^\top
 \\[8pt]
 \mathbf{0} & \mathbf{0} & \mathbf{0} 
 & \FrameBasis^{\times} 
@@ -198,16 +198,16 @@ Using \(\IesanStiff\) given by \eqref{eq:G0-neg-m} in \eqref{eq:T0-formula} furn
 where 
 \begin{equation}
 \begin{aligned}
-\ShiftB &= (G\tilde{\mathbf{H}}_{bb})^{-1}(E\IntRGoRG)^\top &&\sim L^{-2} \\ 
+\ShiftB &= (G\tilde{\mathbf{H}}_{bb})^{-1}(\ShearRigidity)^\top &&\sim L^{-2} \\ 
 \ShiftA &= \mathbf{0},\\
 \TraceTF &= \frac{1}{\Jsv}(\Jsv \CenterShearLocation + \mathbf{h}_{\WarpTwistIesan}) &&\sim L \\
 \TraceFT 
-%&= G(E\IntRGoRG)^{-1}(\Jsv \CenterShearLocation + \mathbf{h}_{\WarpTwistIesan}) \sim L \\
- &= G\Jsv (E\IntRGoRG)^{-1}\TraceTF &&\sim L \\
+%&= G(\ShearRigidity)^{-1}(\Jsv \CenterShearLocation + \mathbf{h}_{\WarpTwistIesan}) \sim L \\
+ &= \TwistRigidity (\ShearRigidity)^{-1}\TraceTF &&\sim L \\
 \ShiftN &= \mathbf{0},\\[2pt]
-\ShiftNK &= -\Bigl(1 + EA\,\CentroidLocation\cdot (E\IntRGoRG)^{-1}\CentroidLocation\Bigr)
+\ShiftNK &= -\Bigl(1 + EA\,\CentroidLocation\cdot (\ShearRigidity)^{-1}\CentroidLocation\Bigr)
   (\FrameBasis\times\CentroidLocation)
-  + \FrameBasis\times E\IntRoR\,(E\IntRGoRG)^{-1}\CentroidLocation && \sim L \\
+  + \FrameBasis\times E\IntRoR\,(\ShearRigidity)^{-1}\CentroidLocation && \sim L \\
 \ShiftF &= \mathbf{0},\\ 
 \hline \\[-8pt]
 \ShiftT 

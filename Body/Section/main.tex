@@ -1,12 +1,15 @@
 \subsection{Introduction}
-
+\begin{Note}
 The objective of this section is to develop a framework for formulating constitutive equations for a general family of nonlinear rod theories.
 
 The approach draws on the structure of the enhanced strain method in continuum finite element analysis, where the compatible strain field is supplemented by an additional field that is orthogonal to the admissible stress space. 
 In the present work, an analogous construction is carried out at the cross-sectional level. For a given set of beam strain measures, enhanced strain modes are introduced over the section that improve the representation of the three-dimensional strain state without altering the governing equations of the beam theory. 
 The enhanced modes are resolved locally at each section through a procedure that introduces no additional degrees of freedom into the global system. 
+\end{Note}
 
+This section develops a constitutive framework for a broad class of nonlinear rod theories. The construction is motivated by enhanced strain methods in finite element analysis, in which the compatible strain is augmented by additional modes that do not enter the admissible stress work.
 
+Here the same idea is applied at the cross-sectional level. For a prescribed set of beam strain measures, additional section strain modes are introduced to improve the representation of the underlying three-dimensional strain field. The associated mode amplitudes are determined locally at each cross section and are condensed out of the global system. As a result, the beam equilibrium equations are unchanged, while the section constitutive mapping is enriched.
 
 \subsubsection{Literature}
 
@@ -33,56 +36,18 @@ while \cite{meier2019geometrically} offers a comprehensive survey of the
 state of the art for geometrically exact finite elements. 
 
 
-% \cite[p39]{vlasov1961thinwalled}
-
-\paragraph{Uniform warping.} 
-Existing implementations of inelastic beam elements with warping \citep{saritas2009inelastic,%
-lecorvec2012nonlinear,dire2018mixed} introduce auxiliary kinematic fields 
-that must be interpolated along the element length. These additional degrees 
-of freedom either inflate the global system of equations—incurring a cost 
-that scales as the cube of the DOF count for direct linear solvers—or must 
-be condensed out at the element level during each Newton iteration.
-
-% \paragraph{Elastostatics}
-
 % \cite{brown1994nonuniform}
-
-
-\cite{elfatmi2007nonuniform} put forth an elastic warping beam theory with three warping modes based on the full Saint~Venant solution. 
-This work considers  arbitrary section geometry, but neglects the Poisson effect.
 
 
 % Inelastic response with warping is investigated by \cite{neal1961effecta,neal1961effect}.
 
-\paragraph{Torsion-flexural coupling.}
-\cite{kim2005exact,elfatmi2007nonuniform}, and \cite{du2020threedimensional}. 
-See also \cite{lewinski2021incorporating} who implemented the model of \cite{elfatmi2007nonuniform}.
-See also \cite{ladeveze1998new}.
 
+% \paragraph{Section Kinematics (Moderate Strain).}
+% \cite{rong2020geometrically} incorporated Wagner effects in a geometrically exact beam element with torsion warping.
 
-\paragraph{Element Kinematics (Finite Deformation).}
-% Exact rotations plus warping
-\cite{simo1991geometricallyexact} introduced a geometrically exact formulation which incorporates one auxiliary cross-sectional warping mode. 
-This was investigated further by \cite{gruttmann2000theory} who emphasized the use of sections intersecting the reference curve at an arbitrary point. 
-This theory has also been investigated by \cite{rong2020geometrically} in the context of isogeometric analysis who considered the nonlinear Wagner term. 
-However, in this work the reference curve is restricted to intersect sections at the centroid. 
-
-\paragraph{Section Kinematics (Moderate Strain).}
-\cite{rong2020geometrically} incorporated Wagner effects in a geometrically exact beam element with torsion warping.
-
-\cite{chadha2019comprehensive} investigate the a model that accounts for transverse warping induced through axial loading of a beam.
 
 % The asymmetric formulation of \cite{hsiao2000corotational} takes the shear-center as reference point.
 
-
-\subsubsection{Outline}
-
-The presentation is structured as follows. 
-
-\Cref{sec:genwarp} introduces the reference continuum model. 
-It is shown that in-plane warping contributions to the material strain tensor are energetically invisible under this stress assumption, motivating their omission from the standard beam model; the enhanced strain framework of \cref{sec:enhan-section} provides a systematic means of recovering their effect. 
-
-\Cref{sec:enhan-section} introduces the enhanced strain principle. 
 
 \subsection{Element Model}\label{sec:genwarp}
 
@@ -105,6 +70,7 @@ Together with the axial unit vector \(\FrameBasis\), the vectors \(\{\FrameBasis
 A point in \(\Body\) has coordinates \(\reflenx\,\FrameBasis + \bm{r}\) in the reference configuration, where \(\bm{r} \in\Section_x\) is the coordinate of a point in the section at \(\reflenx\) and \(\bm{r}\cdot\FrameBasis = 0\).
 The boundary of \(\Body\) consists of the lateral boundary \(\BodyLateralSurface=\SectionBoundary\times(0,L)\) and the surfaces \(\Section_0,\,\Section_L\) of the sections at the ends \(\reflenx \in \{0,L\}\).  
 
+\iffalse
 \begin{remark}
 The following developments are made without appealing to a coordinate system (we only assume right-handedness), and thus no commitments are made to a particular coordinate convention. However, such conventions can aid the interpretation of equations and are required for implementation. 
 Two common conventions for assigning coordinates \(x,y,z\) are:
@@ -167,7 +133,7 @@ u_{,y} \\ u_{,z}
 \end{pmatrix}
 \]
 \end{remark}
-
+\fi
 
 
 \subsubsection{Kinematics}\label{sec:std-kinematics}
@@ -182,28 +148,6 @@ The deformation is represented by the deflection \(\bm{x}(\reflenx)\in\mathbb{R}
 \end{SaveEquation}
 where \(\WarpAxialShapes:\Section\rightarrow\mathbb{R}^{n_w}\) collects \(n_w\) cross-sectional warping shapes. 
 % The representation \eqref{eq:finite-alignment-field} is exact in the limit \(n_w\rightarrow\infty\). 
-%
-\iffalse
-The warping shapes \(\bm{\Phi}\) may be decomposed into axial and in-plane parts:
-\begin{equation}
-\WarpTotalShapes = \FrameBasis\otimes\WarpAxialShapes + \WarpPlaneShapes,
-\qquad
-\WarpAxialShapes\coloneq \FrameBasis\cdot\bm{\Phi}\in\mathbb{R}^{1\times n_w},
-\label{eq:decom-warp-shapes}
-\end{equation}
-where \(\WarpAxialShapes\) collects the axial components and \(\WarpPlaneShapes\) the in-plane components of the warping shapes. 
-Correspondingly, the warping contribution to the deformation \eqref{eq:finite-alignment-field} decomposes into a scalar axial warping field and a vector in-plane warping field:
-\begin{equation*}
-\AxialWarp\coloneq \WarpAxialShapes\cdot\bm{\alpha} = \FrameBasis\cdot\bm{\Phi}\bm{\alpha}\in\mathbb{R}, 
-\qquad\text{and}\qquad
-\PlaneWarp\coloneq \mathbf{1}_{\Section}\,\bm{\Phi}\bm{\alpha} = \WarpPlaneShapes\,\bm{\alpha}.
-\end{equation*}
-
-The axial warping shapes \(\WarpAxialShapes\) enrich the axial and shear strain components---those coupling to \(\FrameBasis\)---and thus directly participate in the beam's virtual work. 
-The in-plane warping \(\PlaneWarp\), by contrast, contributes only membrane-type (\(\alpha\beta\)) components to the material strain tensor. 
-As will be shown in \cref{sec:sv-stress}, these components are energetically orthogonal to the admissible stress field under the Saint-Venant stress assumption, and are therefore invisible to the beam-level virtual work principle. 
-This observation motivates restricting the \emph{standard} warping model to axial shapes \(\WarpAxialShapes\), while the effect of in-plane warping can be recovered through the enhanced strain framework of \cref{sec:enhan-section}.
-\fi
 %
 % \subsubsection{Deformation Gradient}\label{sec:def-gradient}
 The tangent map \(\bm{F}\coloneq T\,\hat{\chi}\) of the finite deformation \eqref{eq:finite-alignment-field} is:
@@ -372,7 +316,6 @@ Thus the state of stress and strain along \(\reflenx\) is modeled by:
   \bm{\alpha}' \\
   \bm{\alpha}
   \end{pmatrix}
-  % \label{eq:cosserat-strain}
 \end{SaveEquation}
 where \(\bm{n}\),\(\bm{m}\), ...
 
@@ -384,19 +327,6 @@ The governing equations of the beam theory are obtained by requiring that the vi
 hold for all admissible variations \(\delta\bm{e}\). 
 
 The identity \eqref{eq:seSE} is enforced in two steps: integration over the cross section yields the stress resultants \eqref{eq:stress-resultants}, and subsequent integration along the beam axis yields the equilibrium equations \eqref{eq:finite-equilibrium}.
-
-
-% \subsubsection{Resultants}\label{sec:resultants}
-
-% This furnishes the equalities
-% \begin{equation*}
-% \left<\TraceTotalEnergyStress,\,\delta\FrameStrain\right>
-% \equiv \left<\StressVector,\, \delta \hat{\StrainVector}\right>
-% \equiv \left<\StressTensor ,\,\delta\StrainTensor\right>.
-% \end{equation*}
-
-
-% \subsubsection{Equilibrium}\label{sec:equilibrium}
 
 Imposing the remainder of \eqref{eq:seSE} by integration along \(\reflenx\) and integrating by parts furnishes the complete system of equilibrium equations:
 \begin{equation} 
@@ -498,8 +428,8 @@ This furnishes the representation for the stress vector \(\StressVector \in \mat
 \subsubsection{Section Constitution}\label{sec:std-section}
 
 By the virtual work reduction \eqref{eq:sv-vw-reduction}, the section constitutive 
-relation requires only the strain vector \(\hat{\StrainVector}\)---the part of 
-\(\hat{\StrainTensor}\) coupling to \(\FrameBasis\). The compatible in-plane 
+relation requires only the strain vector \(\hat{\StrainVector}\). 
+The compatible in-plane 
 contributions (such as \(\tfrac{1}{2}\nabla\AxialWarp\otimes\nabla\AxialWarp\)) 
 and the condensed strains \(\PlaneStrainTensor_{\alpha\beta}\) are invisible to 
 the virtual work and need not appear explicitly. 
@@ -535,7 +465,7 @@ The first-order truncation of \eqref{eq:exact-gl-strain-Phi} furnishes:
 \end{SaveEquation}
 \end{description}
 
-\paragraph{Section kinematic matrix.}
+% \paragraph{Section kinematic matrix.}
 The variation of the strain vector takes the form 
 \(\delta\hat{\bm{\varepsilon}} = \TotalStrainMatrix\,\delta\bm{e}\),
 where \(\TotalStrainMatrix(\bm{r})\) is the \emph{section kinematic matrix} 
@@ -767,9 +697,26 @@ $$
   \end{array}\right].
 \]
 \end{ambox}
+
+
 \subsection{Enhanced Section Strains}\label{sec:enhan-section}
 
-In principle, any deficiency of the standard kinematic ansatz may be addressed by enriching the warping expansion in \eqref{eq:finite-alignment-field}, i.e., increasing $n_w$ and introducing additional warping amplitudes $\bm{\alpha}(x)$. This strategy is systematic, but it is often excessive in practice because each added mode promotes an additional one-dimensional field that must be interpolated along $\mathcal{C}$ and solved globally. Moreover, many of the warping features that materially affect the response are not independent kinematic degrees of freedom: they are predominantly local cross-sectional distortions whose amplitude is governed by the existing generalized strains $\bm{e}$ and therefore arises in proportion to them. This motivates an alternative viewpoint in which the beam-level balance laws are left unchanged, but the section strain state entering the constitutive model is enriched. The enhanced formulation introduced below follows the classical enhanced strain concept: additional section modes are appended to the compatible strain field and their amplitudes are determined locally by a stationarity/orthogonality condition with respect to the admissible (Saint-Venant) stress space, so that no additional global degrees of freedom are introduced and the construction applies equally to geometrically exact and linearized members of the beam family.
+
+
+A direct way to improve the section kinematics is to enlarge the warping basis in \eqref{eq:finite-alignment-field}. This strategy is systematic, but it introduces additional one-dimensional warping amplitudes that must be discretized along \(\mathcal{C}\) and solved globally. In many applications, only a small number of such auxiliary fields is desirable, because much of the cross-sectional distortion is primarily a local response driven by the existing generalized strains \(\bm e\).
+
+This motivates a sectional enhancement strategy intended to \emph{minimize} the number of auxiliary warping fields. 
+The beam balance laws are retained, while the strain state entering the section constitutive update is enriched by additional cross-sectional modes. The corresponding mode amplitudes are solved locally at each section and condensed. 
+The construction applies without modification to geometrically exact and linearized beam formulations.
+
+
+The local enforcement of \(\StressTensor_{\alpha\beta}=0\) accounts for constitutive coupling to in-plane strains, but it does not address limitations of the compatible section kinematics in the energetically active strain components. The enhanced formulation introduced next targets this second limitation. It enriches the strain state used in the section constitutive update while retaining the same beam-level balance laws and global unknowns.
+
+\begin{Note}
+In principle, any deficiency of the standard kinematic ansatz may be addressed by enriching the warping expansion in \eqref{eq:finite-alignment-field}, i.e., increasing $n_w$ and introducing additional warping amplitudes $\bm{\alpha}(x)$. This strategy is systematic, but it is often excessive in practice because each added mode promotes an additional one-dimensional field that must be interpolated along $\mathcal{C}$ and solved globally. 
+Moreover, many of the warping features that materially affect the response are not independent kinematic degrees of freedom: they are predominantly local cross-sectional distortions whose amplitude is governed by the existing generalized strains $\bm{e}$ and therefore arises in proportion to them. 
+This motivates an alternative viewpoint in which the beam-level balance laws are left unchanged, but the section strain state entering the constitutive model is enriched. The enhanced formulation introduced below follows the classical enhanced strain concept: additional section modes are appended to the compatible strain field and their amplitudes are determined locally by a stationarity/orthogonality condition with respect to the admissible (Saint-Venant) stress space, so that no additional global degrees of freedom are introduced and the construction applies equally to geometrically exact and linearized members of the beam family.
+\end{Note}
 
 \subsubsection{Enhanced strain field}
 
@@ -797,15 +744,16 @@ Let $\mathcal{E}$ denote the space of admissible rod strain fields $\bm e(x)$ an
 \hat{\StrainVector} = \TotalStrainMatrix(\xi,\hat{\rho})\,\bm{e},\ \bm{e}\in\mathcal{E}
 \right\}.
 \]
-The enhanced modes generate the finite-dimensional subspace $\tilde{\mathscr{E}}$ (cf.\ \eqref{eq:SR16}), consisting of tensors of the form $(\EnhanShapes(\bm r)\bm{\EnhanParam})\symbun\FrameBasis$.
+The enhanced modes generate the finite-dimensional subspace $\tilde{\mathscr{E}}$, consisting of tensors of the form $(\EnhanShapes(\bm r)\bm{\EnhanParam})\symbun\FrameBasis$.
 
 \subsubsection{Stability}
-
-The enhanced field must not duplicate what is already representable by the beam kinematics. This is enforced by requiring a null intersection between the enhanced space and the compatible image space,
+% --- Suggested rewrite: Stability + consistency (compressed, less repetitive) ---
+The enhanced modes must be linearly independent of strains already representable by admissible beam fields. We therefore require
 \[
-\tilde{\mathscr{E}} \cap \operatorname{B^*}\left[\mathcal{E}\right]=\{0\}.
+\tilde{\mathscr{E}} \cap \operatorname{B}^*[\mathcal{E}] = \{0\},
 \]
-This condition is structural: it guarantees that the decomposition in \eqref{eq:enhan-strain} is identifiable, i.e., the enhanced contribution cannot be reabsorbed into a redefinition of $\bm e$. In particular, it prevents spurious zero-energy directions in the local elimination of $\bm{\EnhanParam}$ and ensures that the beam strain measures retain their intended interpretation.
+which ensures identifiability of the split in \eqref{eq:enhan-strain} and prevents rank deficiency in the local condensation.
+
 
 \subsubsection{Consistency}
 
@@ -816,14 +764,18 @@ Then the condition reads: find $\bm{\EnhanParam}(x)$ such that
 \begin{SaveEquation}{eq:def-enhan-residual}
 \residn(\bm{\EnhanParam}) \coloneq \int_{\Section} \EnhanShapes^{\top} \StressVector \left(\operatorname{A}[\bm{e}] + \EnhanShapes \bm{\EnhanParam} \right) \dA
 \end{SaveEquation}
-vanishes. When \eqref{eq:def-enhan-residual} holds, virtual work contributions associated with variations $\delta\bm{\EnhanParam}$ vanish, so the beam-level balance laws remain those of \cref{sec:genwarp}; only the section constitutive mapping $\bm e\mapsto \bm s$ is modified through the enhanced stress response.
+vanishes. 
+
+The enhanced parameters are determined by sectional stationarity of the internal work with respect to variations \(\delta\bm{\EnhanParam}\). Using the constrained stress response \(\StressVector(\cdot)\), this yields the residual \eqref{eq:def-enhan-residual}. 
+When a strain-energy potential exists, the stationarity condition preserves the variational structure and leads to a consistent condensed tangent.
+
+
+When \eqref{eq:def-enhan-residual} holds, virtual work contributions associated with variations $\delta\bm{\EnhanParam}$ vanish, so the beam-level balance laws remain those of \cref{sec:genwarp}; only the section constitutive mapping $\bm e\mapsto \bm s$ is modified through the enhanced stress response.
 
 Condition (ii) is an ideal selection principle for the enhanced parameters $\bm{\EnhanParam}$. It determines $\bm{\EnhanParam}$ by imposing section-wise stationarity with respect to variations $\delta\bm{\EnhanParam}$, which enforces $L_2$ orthogonality of the enhanced strain space to the admissible stress space. When the material response admits a potential, this identification preserves the variational structure through the sectional condensation because $\bm{\EnhanParam}$ is obtained from the same stationarity principle. 
 In contrast, stability is required for a well-posed split. Condition (ii) may be relaxed while still reproducing Saint-Venant fields exactly in the cases examined later, but the resulting beam model then lacks a variational interpretation.
 
-Condition (ii) is treated here as an ideal property: it is a natural stationarity/orthogonality requirement that yields a consistent tangent and is therefore particularly credible in inelastic updates. It is not the same kind of structural necessity as stability, and in later examples it can be relaxed while retaining exact reproduction of Saint-Venant fields.
-
-\subsubsection{Local solution and tangent}
+\subsubsection{Implementation}
 
 For a given beam strain state $\bm e(x)$, the enhanced parameters $\bm{\EnhanParam}(x)$ are obtained locally by solving \eqref{eq:def-enhan-residual} at the section. This local solve is performed concurrently with the material-point condensation implied by \eqref{eq:saint-venant-stress}: at each section quadrature point one evaluates $\bar{\bm\varepsilon}=\operatorname{A}[\bm e]+\EnhanShapes\bm{\EnhanParam}$, computes the constrained stress vector $\StressVector(\bar{\bm\varepsilon})$, and assembles $\residn(\bm{\EnhanParam})$. 
 A Newton iteration in $\bm{\EnhanParam}$ then furnishes the unique section value. 
@@ -887,15 +839,59 @@ with
 \end{subequations}
 and substitution gives the condensed section tangent:
 \begin{SaveEquation}{eq:section-tangent}
-\Ks = \Ke - \mathbf{K}_{\eta e}^{\top} \Kn
+\Ks = \Ke + \mathbf{K}_{\eta e}^{\top} \Kn
 \end{SaveEquation}
+
+
+\begin{ambox}[Section State Determination.]{box:impl}
+\paragraph{Objective.}
+Given deformations \(\bm{e}\), compute resultants \(\bm{s}\) \eqref{eq:stress-resultants}, enhanced parameters \(\bm{\eta}\), and tangent \(\Ks\) \eqref{eq:section-tangent}
+by solving \eqref{eq:def-enhan-residual}
+over a cross section discretization as described in Box~\ref{box:prep}:
+\[\{\PlanePosition_{\ell},\, \dd A_{\ell}, \, 
+\TotalStrainMatrix(\PlanePosition_{\ell}),\, 
+\EnhanShapes(\PlanePosition_{\ell}),\,
+\; \bigm| \; 
+\PlanePosition_{\ell} \in \Section^h
+\}
+\]
+
+\paragraph{Procedure.}
+% \citep{simo1993improved}
+\begin{enumerate}
+    \item Retrieve the section state variable \(\bm{\EnhanParam} \in \mathbb{R}^{n_a}\) from the prior evaluation
+    \item Find \(\bm{\eta}\), \(\Ken\), and \(\Kn\) by solving the residual equation \eqref{eq:def-enhan-residual}:
+    \RepeatEquation{eq:def-enhan-residual}
+    where at each Newton-Raphson iteration \(k\):
+    \[
+     \bm{\EnhanParam}^{k+1} = \bm{\EnhanParam}^{k} - \Knn^{-1} \residn (\bm{\EnhanParam}^{k})
+    \qquad\text{ and }\qquad
+    \Kae = \int_{\PlaneManifold} \EnhanShapes^{\top} \mathbf{C}^k \TotalStrainMatrix\, \dd A
+    \]
+    and the stress vector \(\StressVector\) and tangent \(\mathbf{C}\) are evaluated using the procedure of Box~\ref{box:mati} with \(\StrainVector = \operatorname{A}[\bm{e}] + \EnhanShapes \bm{\EnhanParam}\).
+
+
+    \item Form the section resultant vector \(\bm{s}\) \eqref{eq:stress-resultants} and tangent \(\Ke\) \eqref{eq:Kee}:
+    \[
+    \bm{s} = \int \TotalStrainMatrix^{\top} \bm{\sigma}(\hat{\bm{\varepsilon}} + \EnhanShapes \bm{\EnhanParam}) \dA
+    \qquad\text{and}\qquad
+    \Ke = \int \TotalStrainMatrix^{\top}\mathbf{C}\TotalStrainMatrix \dA + \Kwg
+    % - \Kae^{\top} \Kaa^{-1} \Kae
+    \]
+    with \(\Kwg\) given by \eqref{eq:section-wagner-tangent}.
+    \item Form the tangent \(\Ks\) \eqref{eq:section-tangent} from \(\Ke\), \(\Ken\), and \(\Kn\):
+    \RepeatEquation{eq:section-tangent}
+\end{enumerate}
+\end{ambox}
+
 
 \subsubsection{Discussion}
 
-\paragraph{On the role of condition (ii).}
-Condition (i) is required to make the split in \eqref{eq:enhan-strain} well-posed. Condition (ii) is imposed to recover a section-wise stationarity property: the enhanced parameters act as internal variables whose values are determined by a local orthogonality condition against admissible stresses. This is the mechanism that yields a consistent linearization \eqref{eq:Lins}--\eqref{eq:section-tangent} and makes the approach credible for path-dependent constitutive updates. Nevertheless, one may also prescribe $\bm{\EnhanParam}$ directly as a function of $\bm e$ (thus relaxing \eqref{eq:def-enhan-residual}); the resulting model need not be variational, but can still reproduce Saint-Venant solutions exactly in the cases considered later.
+Condition (i) is required to make the split in \eqref{eq:enhan-strain} well-posed. 
+Condition (ii) is imposed to recover a section-wise stationarity property such that the enhanced parameters act as internal variables whose values are determined by a local orthogonality condition against admissible stresses. 
+Nevertheless, one may also prescribe $\bm{\EnhanParam}$ directly as a function of $\bm e$ (thus relaxing \eqref{eq:def-enhan-residual}); the resulting model need not be variational, but can still reproduce Saint-Venant solutions exactly in the cases considered later.
 
-\paragraph{On condition \eqref{eq:condiii}.}
+
 Traditional assumed/enhanced strain formulations at the element level often invoke an additional constraint ensuring compatibility with low-order stress interpolations, leading to the requirement \citep{simo1990class}
 \begin{equation}
 \int_{\Section \times \FrameBody} \EnhanShapes \dA \, \dd \xi = \mathbf{0}
@@ -918,13 +914,17 @@ These results specialize to several notable works in the literature:
     \item \cite{simo1991geometricallyexact} employed the linearized material kinematics \eqref{eq:linear-gl-strain-pi} in connection with the geometrically exact model (Box~\ref{box:exact-shear-svq}) with one warping mode associated to the Saint-Venant torsion function. \cite{gruttmann2000theory} generalized \cite{simo1991geometricallyexact} to consider sections in arbitrary coordinate systems and elasto-plastic material response. 
     The present treatment supports an arbitrary number of warping shapes, and allows for accurate incorporation of the Wagner effect in the geometrically exact setting \eqref{eq:finite-alignment-field} by switching the cross-sectional model. 
     \item The higher-order strain field \eqref{eq:wagner-gl-strain-pi} was considered by \cite{battini2002corotational-thesis} and \cite{lecorvec2012nonlinear} with the linearized beam model \eqref{eq:trace-lift-linear}. 
-    However, these works employed a constrained continuum derivation which tightly coupled the effect of nonlinear section strains to the element formulation. In the work by \cite{battini2002corotational-thesis} this resulted in a dedicated finite element implementation to incorporate the effect. \cite{lecorvec2012nonlinear} achieved a more modular implementation by averaging out the Wagner effect and incorporating it into a geometric transformation. However, this approach is less accurate, and remains coupled to the element implementation.
+    However, these works employed a constrained continuum derivation which tightly coupled the effect of nonlinear section strains to the element formulation. In the work by \cite{battini2002corotational-thesis} this resulted in a dedicated finite element implementation to incorporate the effect. \cite{du2020threedimensional} employed a similar approach. 
+    \cite{lecorvec2012nonlinear} achieved a more modular implementation by averaging out the Wagner effect and incorporating it into a geometric transformation. However, this approach is less accurate, and remains coupled to the element implementation.
     In the present approach the effect is encapsulated in the section resultant model and is compatible with any finite element formulation in the family presented in \cref{sec:genwarp} without loss of accuracy as demonstrated in Example~\ref{sec:frame-0015} and Example~\ref{sec:frame-1035}.
 \end{itemize}
 
 The enhanced strain framework of \cref{sec:enhan-section} enriches the constitutive model without introducing auxiliary fields beyond those considered by the underlying beam theory, and is likewise encapsulated within the cross-section resultant model. 
 This has the limitation that it is only capable of applying corrections which vary along \(\reflenx\) in proportion with the strain measures \(\bm{e}\). 
 However, this is the quality that allows the method to enhance response without introducing additional auxiliary fields.
+
+
+\cite{chadha2019comprehensive} investigate the a model that accounts for transverse warping induced through axial loading of a beam.
 
 
 \begin{Note}

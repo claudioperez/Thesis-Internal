@@ -348,9 +348,9 @@ In view of \eqref{eq:T0-inv} with \(\IesanStiff\) given by \eqref{eq:G0-neg-m}, 
 =
 \left[\begin{array}{cc|cc}
 \AxialRigidity 
-& EA\left(\ShiftN 
-+ \ShiftA^{\top}\CentroidLocation\right)^{\top} 
-& EA\left(\ShiftScaleN + \CentroidLocation\cdot \ShiftF\right) 
+& \left(\AxialRigidity\ShiftN 
++ \ShiftA^{\top} EA\CentroidLocation\right)^{\top} 
+& \left(EA\ShiftScaleN + EA\CentroidLocation\cdot \ShiftF\right) 
 & EA\CentroidLocation^\top\FrameBasis^\times
 \\
 \mathbf{0} &

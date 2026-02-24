@@ -363,11 +363,11 @@ In view of \eqref{eq:T0-inv} with \(\IesanStiff\) given by \eqref{eq:G0-neg-m}, 
 & \TwistRigidity\,\ShiftScaleT &
 \mathbf{0}
 \\ %[8pt]
--EA\FrameBasis\times\CentroidLocation 
-& -EA(\FrameBasis\times\CentroidLocation)\otimes\ShiftN
+-\FrameBasis\times\AxialCoupling 
+& -(\FrameBasis\times\AxialCoupling)\otimes\ShiftN
   -\FrameBasis^\times E\IntRoR\,\ShiftA 
 &
- -EA\FrameBasis\times\CentroidLocation\,\ShiftScaleN
+ -\FrameBasis\times\AxialCoupling\,\ShiftScaleN
  -\FrameBasis\times E\IntRoR\,\ShiftF
 &
 % EA(\FrameBasis\times\CentroidLocation)\otimes\ShiftNK 
@@ -381,10 +381,10 @@ In view of \eqref{eq:T0-inv} with \(\IesanStiff\) given by \eqref{eq:G0-neg-m}, 
 =
 \left[\begin{array}{cc|cc}
 \AxialRigidity
-& EA\left(\ShiftN 
-+ \ShiftA^{\top}\CentroidLocation\right)^{\top} 
-& EA\left(\ShiftScaleN + \CentroidLocation\cdot \ShiftF\right) 
-& EA\CentroidLocation^\top\FrameBasis^\times
+& \left(\AxialRigidity\ShiftN 
++ \ShiftA^{\top}\AxialCoupling\right)^{\top} 
+& \left(\AxialRigidity\ShiftScaleN + \AxialCoupling\cdot \ShiftF\right) 
+& \AxialCoupling^\top\FrameBasis^\times
 \\[2pt]
 \mathbf{0} &
 \TraceShearRigidity &
@@ -396,11 +396,11 @@ In view of \eqref{eq:T0-inv} with \(\IesanStiff\) given by \eqref{eq:G0-neg-m}, 
 & \TwistRigidity\,\ShiftScaleT &
 \mathbf{0}
 \\ %[8pt]
--EA\FrameBasis\times\CentroidLocation 
-& -EA(\FrameBasis\times\CentroidLocation)\otimes\ShiftN
+-\FrameBasis\times\AxialCoupling 
+& -(\FrameBasis\times\AxialCoupling)\otimes\ShiftN
   -\FrameBasis^\times E\IntRoR\,\ShiftA 
 &
- -EA\FrameBasis\times\CentroidLocation\,\ShiftScaleN
+ -\FrameBasis\times\AxialCoupling\,\ShiftScaleN
  -\FrameBasis\times E\IntRoR\,\ShiftF
 &
 % EA(\FrameBasis\times\CentroidLocation)\otimes\ShiftNK 
@@ -410,13 +410,15 @@ In view of \eqref{eq:T0-inv} with \(\IesanStiff\) given by \eqref{eq:G0-neg-m}, 
 \end{equation}
 where:
 \begin{align}
-\TraceShearRigidity &:= \ShearRigidity \ShiftB \\
-\TraceShearOrigin &:=-\TraceFT \\
-\TraceTwistOrigin &:=-\TwistRigidity (\TraceShearRigidity)^{-1}\ShiftB\TraceTF
+\TraceShearRigidity &\coloneq \ShearRigidity \ShiftB \\
+\TraceShearOrigin &\coloneq-\TraceFT \\
+\TraceTwistOrigin &\coloneq-\TwistRigidity (\TraceShearRigidity)^{-1}\ShiftB\TraceTF
 \end{align}
 The (2,2) block of \eqref{eq:C-C1} reveals the generalized shear correction coefficients:
 \begin{equation}
-\bm{K} = \frac{1}{GA}\ShearRigidity\ShiftB
+\bm{K} = (\PlaneShearRigidity)^{-1}\ShearRigidity\ShiftB
+\qquad\text{with}\qquad 
+\PlaneShearRigidity \coloneq \int G\dA
 \label{eq:shear-correction}
 \end{equation}
 \begin{remark}\label{rem:bend-trace-indep}
@@ -441,7 +443,7 @@ The Class I traces represent a family of beam theories parameterized by 16 const
 Block & Size &  Units & Description \\ 
 \midrule
 $\TraceShearRigidity$ & $\mathbb{R}^{2\times2}$  & \Length{2} %L   
-& Shear--corrected area \\
+& Trace-consistent shear rigidity. \\
 $\ShiftA$ & $\mathbb{R}^{2\times2}$  & \Length{1} % ---
 & Curvature--flexure coupling \\
 $\TraceShearOrigin$ & $\mathbb{R}^2$  & L 

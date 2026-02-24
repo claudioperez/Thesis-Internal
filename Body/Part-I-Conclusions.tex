@@ -61,7 +61,7 @@ define a \emph{cross section discretization} \(\Section^h\).
 \paragraph{Procedure.}
 \begin{enumerate}
     \item Discretize the section \(\Section\) into quadrature points \(\{\PlanePosition_{\ell}\}\) and weights \(\{\dd A_{\ell}\}\)
-    \item Solve the BVPs \cref{eq:warp-sv-bvp} for \(\WarpTwistIesan\) and \cref{eq:warp-fa-bvp} for \(\WarpFA\), and for each point \(\PlanePosition_{\ell}\) in the discretization store 
+    \item Solve the BVPs \cref{eq:bvp-warp-twist-iesan} for \(\WarpTwistIesan\) and \cref{eq:warp-fa-bvp} for \(\WarpFA\), and for each point \(\PlanePosition_{\ell}\) in the discretization store 
     \begin{itemize}
         \item \(\TotalStrainMatrix(\PlanePosition_{\ell})\) \eqref{eq:def-section-kinematic-matrix-Phi} or \eqref{eq:def-section-kinematic-matrix-wagner}.
         \item \(\EnhanShapes(\PlanePosition_{\ell})\) from \cref{sec:timo} or \eqref{eq:nonuniform-shapes}.

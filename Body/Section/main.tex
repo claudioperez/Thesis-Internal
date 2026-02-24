@@ -335,9 +335,10 @@ where \(\bm{f}_n\) and \(\bm{f}_m\) are given body force and moment loadings, re
 The general state of strain has the decomposition:
 \begin{SaveEquation}{eq:strain-tensor-decomp}
 \hat{\StrainTensor} = \FrameBasis\stackrel{s}{\otimes}(\PointAxialStrain\,\FrameBasis 
-+ \PointShearStrain) + \PlaneStrainTensor_{\alpha\beta}\FrameBasis_{\alpha}\otimes\FrameBasis_{\beta} 
++ \PointShearStrain) + \PlaneStrainTensor
 \end{SaveEquation}
-with \(\PointShearStrain\) a vector with zero projection on \(\FrameBasis\). 
+with \(\PointShearStrain\) a vector with zero projection on \(\FrameBasis\)
+and \(\PlaneStrainTensor = \oneS \hat{\StrainTensor}\oneS\) so that \(\FrameBasis\otimes\FrameBasis\PlaneStrainTensor\,\FrameBasis\otimes\FrameBasis = \mathbf{0}\). 
 The compatible strain \eqref{eq:exact-gl-strain-Phi} contributes to both parts: 
 the terms involving \(\stackrel{\mathrm{s}}{\otimes}\FrameBasis\) furnish the 
 axial and shear components, while the quadratic term 
@@ -363,7 +364,7 @@ This furnishes the stress vector \(\StressVector \in \mathbb{R}^3\):
 
 Since \(\StressTensor_{\alpha\beta}=0\), neither the compatible in-plane strain 
 \(\tfrac{1}{2}\nabla\AxialWarp\otimes\nabla\AxialWarp\) nor any additional 
-in-plane strain \(\PlaneStrainTensor_{\alpha\beta}\) contributes to the virtual work. 
+in-plane strain \(\PlaneStrainTensor\) contributes to the virtual work. 
 Only the strain vector \(\hat{\StrainVector}\), which carries the components 
 coupling to \(\FrameBasis\), is energetically active:
 \begin{equation}
@@ -698,7 +699,7 @@ $$
 
 
 
-A direct way to improve the section kinematics is to enlarge the warping basis in \eqref{eq:finite-alignment-field}. This strategy is systematic, but it introduces additional one-dimensional warping amplitudes that must be discretized along \(\mathcal{C}\) and solved globally. In many applications, only a small number of such auxiliary fields is desirable, because much of the cross-sectional distortion is primarily a local response driven by the existing generalized strains \(\bm e\).
+A direct way to improve the section kinematics is to enlarge the warping basis in \eqref{eq:finite-alignment-field}. This strategy is systematic, but it introduces additional one-dimensional warping amplitudes that must be discretized along \(\mathcal{C}\) and solved globally. In many applications, only a small number of such auxiliary fields is desirable, because much of the cross-sectional distortion is primarily a local response driven by the existing generalized strains \(\bm{e}\).
 
 This motivates a sectional enhancement strategy intended to \emph{minimize} the number of auxiliary warping fields. 
 The beam balance laws are retained, while the strain state entering the section constitutive update is enriched by additional cross-sectional modes. The corresponding mode amplitudes are solved locally at each section and condensed. 
@@ -714,7 +715,7 @@ The section constitutive response is driven by the strain vector field over the 
 \[
 \operatorname{A}[\bm{e}] \;\coloneq\; \hat{\bm{\varepsilon}}(\bm{e}) \in L_2(\Section;\mathbb{R}^3),
 \]
-so that $\operatorname{A}[\bm{e}](\bm r)$ is the compatible pointwise strain vector at $\bm r\in\Section$.
+so that $\hat{\StrainVector}(\bm{e})(\bm r)$ is the compatible pointwise strain vector at $\bm r\in\Section$.
 
 The enhanced strain ansatz augments this field by a finite set of section modes. In a form analogous to the three-field variational setting in elasticity \citep{simo1986variational,simo1990class,simo1992geometrically},
 \begin{SaveEquation}{eq:enhan-strain}
@@ -725,9 +726,9 @@ The enhanced strain ansatz augments this field by a finite set of section modes.
 where $\EnhanShapes(\bm r)\in\mathbb{R}^{3\times \EnhanDim}$ is a matrix of prescribed section functions and $\bm{\EnhanParam}(x)\in\mathbb{R}^{\EnhanDim}$ is a vector of \emph{local} section parameters. The latter is not introduced as an additional beam field: it is determined independently at each cross section and eliminated from the global system. 
 
 It is useful to distinguish the compatible strain space induced by admissible beam strain fields from the enhanced strain space. 
-Let $\mathcal{E}$ denote the space of admissible rod strain fields $\bm e(x)$ and define the image space
+Let $\mathcal{E}$ denote the space of admissible rod strain fields $\bm{e}(x)$ and define the space
 \[
-\operatorname{B}^*[\mathcal{E}]
+\operatorname{A}[\mathcal{E}]
 \;\coloneq\;
 \left\{
 \hat{\StrainVector} \symbun \FrameBasis \;\middle|\;
@@ -739,35 +740,39 @@ The enhanced modes generate the finite-dimensional subspace $\tilde{\mathscr{E}}
 \subsubsection{Stability}
 % --- Suggested rewrite: Stability + consistency (compressed, less repetitive) ---
 The enhanced modes must be linearly independent of strains already representable by admissible beam fields. We therefore require
-\[
-\tilde{\mathscr{E}} \cap \operatorname{B}^*[\mathcal{E}] = \{0\},
-\]
+\begin{equation}
+\tilde{\mathscr{E}} \cap \operatorname{A}[\mathcal{E}] = \{0\},
+\label{eq:def-enhan-stability}
+\end{equation}
 which ensures identifiability of the split in \eqref{eq:enhan-strain} and prevents rank deficiency in the local condensation.
 
 
 \subsubsection{Consistency}
 
-Let $L \coloneq L_2(\Section;\mathbb{R}^3)$ denote the ambient space of stress vectors over the section, and let $\StressSpaceH\subset L$ denote the admissible stress space induced by the Saint-Venant restriction \eqref{eq:saint-venant-stress} together with the chosen material model and local stress constraint enforcement. The ideal consistency requirement is that the enhanced strain space is $L_2$-orthogonal to $\StressSpaceH$. In the present setting this is enforced by stationarity of the sectional internal work with respect to variations of the local parameters $\bm{\EnhanParam}$.
-
-To express this compactly, write $\StressVector(\bm{\varepsilon})$ for the \emph{constrained} stress vector returned by the material routine for a given strain vector $\bm{\varepsilon}$ (including the local enforcement of $\StressTensor_{\alpha\beta}=0$, cf.\ \citep{klinkel2002using}). 
-Then the condition reads: find $\bm{\EnhanParam}(x)$ such that
+% Let $L \coloneq L_2(\Section;\mathbb{R}^3)$ denote the ambient space of stress vectors over the section, and let $\StressSpaceH\subset L$ denote the admissible stress space induced by the Saint-Venant restriction \eqref{eq:saint-venant-stress} together with the chosen material model and local stress constraint enforcement. 
+An ideal consistency requirement is that the enhanced strain space is $L_2$-orthogonal to $\StressSpaceH$. 
+In the present setting this is enforced by stationarity of the sectional internal work with respect to variations of the local parameters $\bm{\EnhanParam}$, which is equivalent to requiring the residual:
+% To express this compactly, write $\StressVector(\bm{\varepsilon})$ for the \emph{constrained} stress vector returned by the material routine for a given strain vector $\bm{\varepsilon}$ (including the local enforcement of $\StressTensor_{\alpha\beta}=0$, cf.\ \citep{klinkel2002using}). 
+% Then the condition reads: find $\bm{\EnhanParam}(x)$ such that
 \begin{SaveEquation}{eq:def-enhan-residual}
-\residn(\bm{\EnhanParam}) \coloneq \int_{\Section} \EnhanShapes^{\top} \StressVector \left(\operatorname{A}[\bm{e}] + \EnhanShapes \bm{\EnhanParam} \right) \dA
+\residn(\bm{\EnhanParam}) \coloneq \int_{\Section} \EnhanShapes^{\top} \StressVector \left(\hat{\StrainVector}(\bm{e}) + \EnhanShapes \bm{\EnhanParam} \right) \dA
 \end{SaveEquation}
 vanishes. 
-
-The enhanced parameters are determined by sectional stationarity of the internal work with respect to variations \(\delta\bm{\EnhanParam}\). Using the constrained stress response \(\StressVector(\cdot)\), this yields the residual \eqref{eq:def-enhan-residual}. 
-When a strain-energy potential exists, the stationarity condition preserves the variational structure and leads to a consistent condensed tangent.
+When a strain-energy potential exists, the stationarity condition \eqref{eq:def-enhan-residual} preserves the variational structure.
 
 
-When \eqref{eq:def-enhan-residual} holds, virtual work contributions associated with variations $\delta\bm{\EnhanParam}$ vanish, so the beam-level balance laws remain those of \cref{sec:genwarp}; only the section constitutive mapping $\bm e\mapsto \bm s$ is modified through the enhanced stress response.
+When \eqref{eq:def-enhan-residual} holds, virtual work contributions associated with variations $\delta\bm{\EnhanParam}$ vanish, so the beam-level balance laws remain those of \cref{sec:genwarp}; only the section constitutive mapping $\bm{e}\mapsto \bm{s}$ is modified through the enhanced stress response.
+This enforces $L_2$ orthogonality of the enhanced strain space to the admissible stress space. 
+When the material response admits a potential, this identification preserves the variational structure through the sectional condensation because $\bm{\EnhanParam}$ is obtained from the same stationarity principle. 
 
-Condition (ii) is an ideal selection principle for the enhanced parameters $\bm{\EnhanParam}$. It determines $\bm{\EnhanParam}$ by imposing section-wise stationarity with respect to variations $\delta\bm{\EnhanParam}$, which enforces $L_2$ orthogonality of the enhanced strain space to the admissible stress space. When the material response admits a potential, this identification preserves the variational structure through the sectional condensation because $\bm{\EnhanParam}$ is obtained from the same stationarity principle. 
-In contrast, stability is required for a well-posed split. Condition (ii) may be relaxed while still reproducing Saint-Venant fields exactly in the cases examined later, but the resulting beam model then lacks a variational interpretation.
+The condition \eqref{eq:def-enhan-residual} may be relaxed while still reproducing Saint-Venant fields exactly in the cases examined later, but the resulting beam model then lacks a variational interpretation. 
+In contrast, the stability condition \eqref{eq:def-enhan-stability} is required for a well-posed split. 
 
 \subsubsection{Implementation}
 
-For a given beam strain state $\bm e(x)$, the enhanced parameters $\bm{\EnhanParam}(x)$ are obtained locally by solving \eqref{eq:def-enhan-residual} at the section. This local solve is performed concurrently with the material-point condensation implied by \eqref{eq:saint-venant-stress}: at each section quadrature point one evaluates $\bar{\bm\varepsilon}=\operatorname{A}[\bm e]+\EnhanShapes\bm{\EnhanParam}$, computes the constrained stress vector $\StressVector(\bar{\bm\varepsilon})$, and assembles $\residn(\bm{\EnhanParam})$. 
+For a given beam strain state $\bm{e}(x)$, the enhanced parameters $\bm{\EnhanParam}(x)$ are obtained locally by solving \eqref{eq:def-enhan-residual} at the section. 
+This local solve is performed concurrently with the material-point condensation implied by \eqref{eq:saint-venant-stress}. 
+At each section quadrature point one evaluates $\bar{\bm\varepsilon}=\operatorname{A}[\bm{e}]+\EnhanShapes\bm{\EnhanParam}$, computes the constrained stress vector $\StressVector(\bar{\bm\varepsilon})$, and assembles $\residn(\bm{\EnhanParam})$. 
 A Newton iteration in $\bm{\EnhanParam}$ then furnishes the unique section value. 
 The corresponding beam resultants are computed exactly as in \eqref{eq:stress-resultants}, using the stress vector associated with the enhanced strain state \eqref{eq:enhan-strain}.
 
@@ -827,15 +832,15 @@ with
     \Kn &\coloneq -\Knn^{-1}\Ken^{\top} \label{eq:Kn}
 \end{align}
 \end{subequations}
-and substitution gives the condensed section tangent:
+and substitution in \eqref{eq:Lins} produces the condensed section tangent:
 \begin{SaveEquation}{eq:section-tangent}
 \Ks = \Ke + \mathbf{K}_{\eta e}^{\top} \Kn
 \end{SaveEquation}
-
+The complete procedure is summarized by Box~\ref{box:impl}.
 
 \begin{ambox}[Section State Determination.]{box:impl}
 \paragraph{Objective.}
-Given deformations \(\bm{e}\), compute resultants \(\bm{s}\) \eqref{eq:stress-resultants}, enhanced parameters \(\bm{\eta}\), and tangent \(\Ks\) \eqref{eq:section-tangent}
+Given deformations \(\bm{e}\), compute resultants \(\bm{s}\) \eqref{eq:stress-resultants}, enhanced parameters \(\bm{\eta}\), and the tangent \(\Ks\) \eqref{eq:section-tangent}
 by solving \eqref{eq:def-enhan-residual}
 over a cross section discretization as described in Box~\ref{box:prep}:
 \[\{\PlanePosition_{\ell},\, \dd A_{\ell}, \, 
@@ -858,7 +863,7 @@ over a cross section discretization as described in Box~\ref{box:prep}:
     \qquad\text{ and }\qquad
     \Kae = \int_{\PlaneManifold} \EnhanShapes^{\top} \mathbf{C}^k \TotalStrainMatrix\, \dd A
     \]
-    and the stress vector \(\StressVector\) and tangent \(\mathbf{C}\) are evaluated using the procedure of Box~\ref{box:mati} with \(\StrainVector = \operatorname{A}[\bm{e}] + \EnhanShapes \bm{\EnhanParam}\).
+    and the stress vector \(\StressVector\) and tangent \(\mathbf{C}\) are evaluated using the procedure of Box~\ref{box:mati} with \(\StrainVector = \hat{\StrainVector}(\bm{e}) + \EnhanShapes \bm{\EnhanParam}\).
 
 
     \item Form the section resultant vector \(\bm{s}\) \eqref{eq:stress-resultants} and tangent \(\Ke\) \eqref{eq:Kee}:
@@ -869,7 +874,8 @@ over a cross section discretization as described in Box~\ref{box:prep}:
     % - \Kae^{\top} \Kaa^{-1} \Kae
     \]
     with \(\Kwg\) given by \eqref{eq:section-wagner-tangent}.
-    \item Form the tangent \(\Ks\) \eqref{eq:section-tangent} from \(\Ke\), \(\Ken\), and \(\Kn\):
+
+    \item Form the tangent \(\Ks\) \eqref{eq:section-tangent} from \(\Ke\) \eqref{eq:Kee}, \(\Ken\) \eqref{eq:Ken}, and \(\Kn\) \eqref{eq:Kn}:
     \RepeatEquation{eq:section-tangent}
 \end{enumerate}
 \end{ambox}
@@ -879,7 +885,7 @@ over a cross section discretization as described in Box~\ref{box:prep}:
 
 Condition (i) is required to make the split in \eqref{eq:enhan-strain} well-posed. 
 Condition (ii) is imposed to recover a section-wise stationarity property such that the enhanced parameters act as internal variables whose values are determined by a local orthogonality condition against admissible stresses. 
-Nevertheless, one may also prescribe $\bm{\EnhanParam}$ directly as a function of $\bm e$ (thus relaxing \eqref{eq:def-enhan-residual}); the resulting model need not be variational, but can still reproduce Saint-Venant solutions exactly in the cases considered later.
+Nevertheless, one may also prescribe $\bm{\EnhanParam}$ directly as a function of $\bm{e}$ (thus relaxing \eqref{eq:def-enhan-residual}); the resulting model need not be variational, but can still reproduce Saint-Venant solutions exactly in the cases considered later.
 
 
 Traditional assumed/enhanced strain formulations at the element level often invoke an additional constraint ensuring compatibility with low-order stress interpolations, leading to the requirement \citep{simo1990class}
@@ -889,7 +895,7 @@ Traditional assumed/enhanced strain formulations at the element level often invo
 \end{equation}
 for the relevant element domains. 
 In the present construction the enhancement is purely sectional and is eliminated locally; there is no independent nominal-stress interpolation space on $\Section\times(0,L)$ to which such a condition would naturally refer. 
-The controlling requirements are instead the identifiability condition (i) and the section-wise stationarity condition (ii), both stated directly in terms of the cross-sectional constitutive update.
+
 
 
 \subsection{Conclusions}
@@ -916,25 +922,3 @@ However, this is the quality that allows the method to enhance response without 
 
 \cite{chadha2019comprehensive} investigate the a model that accounts for transverse warping induced through axial loading of a beam.
 
-
-\begin{Note}
-For a linear isotropic body, the shear stress \(\ShearStress\) is coupled only to the shear strain \(\bm{\varepsilon}_{\gamma}\):
-\[
-\bm{\tau} = G\bm{\varepsilon}_{\gamma},
-\]
-while the axial stress \(\AxialStress\) and the in-plane stresses are coupled:
-\[
-\begin{aligned}
-\hat{\StressTensor}
-&= 2G \hat{\bm{E}}+\lambda (\PointAxialStrain + \operatorname{tr} \hat{\bm{E}}) \; \FrameBasis_{\alpha} \otimes \FrameBasis_{\alpha}, \\
-\AxialStress
-&=(2 G+\lambda) \PointAxialStrain+\lambda \operatorname{tr} \PlaneStrainTensor.
-\end{aligned}
-\]
-Thus, if the in-plane strain \(\PlaneStrainTensor\) satisfies:
-\begin{equation*}
-\operatorname{tr}\PlaneStrainTensor = -2\nu\,\PointAxialStrain
-\quad\text{then}\quad 
-\AxialStress = E\,\PointAxialStrain.
-\end{equation*}
-\end{Note}

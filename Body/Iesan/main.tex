@@ -118,8 +118,31 @@ Components of interest are singled out as
 \end{remark}
 
 \subsection{Auxiliary Problem}
+\eqref{eq:def-eight-shapes}
 
-\cref{eq:def-eight-shapes}
+\begin{subequations}
+\begin{align}
+\operatorname{div}\tilde{\StressTensor}^{(k)}+\nabla \big(\lambda\,(\FrameBasis_{k}\cdot(\bm{r} + \FrameBasis))\big)&=\mathbf{0},
+\qquad\text{in }\Section
+\label{eq:ie-3-2-10} 
+\\
+\tilde{\StressTensor}^{(k)}\bm{\nu}&=-\FrameBasis_k\cdot(\bm{r}+\FrameBasis)\,\lambda\bm{\nu},
+\qquad\text{on }\SectionBoundary 
+\label{eq:ie-3-2-11}
+\end{align}
+\label{eq:bvp-plane-shapes}
+\end{subequations}
+Define
+\begin{equation}
+\PlaneShape \coloneq \hat{\bm u}_{\Section}^{(\beta)}\otimes\FrameBasis_{\beta},
+\qquad
+\PlaneShapeStrain
+\coloneq \FrameBasis_\beta \operatorname{tr}\tilde{\StrainTensor}^{(\beta)},
+\qquad \FrameBasis_\beta \in\Section,
+\qquad
+\bar{\pi} \coloneq\operatorname{tr}\tilde{\StrainTensor}^{(3)},
+\label{eq:def-Theta}
+\end{equation}
 
 \subsection{Problem I: extension--bending--torsion}
 
@@ -153,7 +176,11 @@ Integrating \eqref{eq:iesan-problem-1} furnishes the particular solution:
 \begin{aligned}
 % \hat{\bm u}\{\bm a\} &\in \mathrm{P}_{\rm I}(\AxialRxn,\MomentRxn) \\
 \hat{\bm u}_{\rm I}\{\bm a\}
-&=\Big(-\tfrac12 \reflenx^2\,\mathbf{1}-\nu\,\operatorname{dev}\bm{r}\otimes\bm{r}+\reflenx\,\FrameBasis\otimes\bm{r}\Big)\bm{a}_{\Section}
+&=\Big(-\tfrac12 \reflenx^2\,\mathbf{1}
++\reflenx\,\FrameBasis\otimes\bm{r}
++\PlaneShape
+% -\nu\,\operatorname{dev}\bm{r}\otimes\bm{r}
+\Big)\bm{a}_{\Section}
 +(\reflenx\,\FrameBasis-\nu\,\bm{r})\,a_{\varepsilon}
 +\big(\reflenx\,\FrameBasis\times\bm{r}+\WarpTwistIesan\,\FrameBasis\big)a_\vartheta ,
 \end{aligned}
@@ -202,26 +229,27 @@ The integration constants \((\bm{a}_{\Section},a_{\varepsilon},a_\vartheta)\) ar
 %
 \begin{equation}
 \begin{aligned}
-\big(\CoupleRigidity\,\bm{a}_{\Section}+a_{\varepsilon}\,EA\CentroidLocation\big)&=\MomentRxn\times\FrameBasis,\\
-\big(\bm{a}_{\Section}\cdot EA\CentroidLocation+\AxialRigidity a_{\varepsilon}\big)&=-\AxialRxn,\\
+\CoupleRigidity\,\bm{a}_{\Section}+a_{\varepsilon}\,\AxialCoupling &=\MomentRxn\times\FrameBasis,\\
+\bm{a}_{\Section}\cdot \AxialCoupling+\AxialRigidity\, a_{\varepsilon} &=-\AxialRxn,\\
 \TwistRigidity\,a_\vartheta&=-\TwistRxn,
 \end{aligned}
 \label{eq:2-15}
 \end{equation}
-where \(A\) is the cross sectional area, \(\CentroidLocation\) is the location of the centroid defined by:
+where the axial rigidity \(\AxialRigidity\) and coupling vector \(\AxialCoupling\) are defined by:
 \begin{equation}
-\CentroidLocation := \frac{1}{A}\int \bm{r}\dA 
-\label{eq:def-centroid}
-\end{equation}
-and the torsion constant \(\TwistRigidity\) and plane inertia tensor \(\CoupleRigidity\) are defined by:
-\begin{equation}
-\CoupleRigidity := \int E\bm{r}\otimes\bm{r}\dA
+\AxialRigidity \coloneq \int \volE 
 \qquad\text{and}\qquad
-\TwistRigidity:=\int_\Section G\Big(r^2+(\FrameBasis\times\bm{r})\cdot\nabla\WarpTwistIesan\Big)\dA .
+\AxialCoupling \coloneq \int \bm{r}\volE 
+\label{eq:def-axial-rigidity}
+\end{equation}
+and the torsional rigidity \(\TwistRigidity\) and plane moment rigidity \(\CoupleRigidity\) are defined by:
+\begin{equation}
+\CoupleRigidity := \int \bm{r}\otimes\bm{r}\volE
+\qquad\text{and}\qquad
+\TwistRigidity:=\int_\Section \Big(r^2+(\FrameBasis\times\bm{r})\cdot\nabla\WarpTwistIesan\Big)\volG .
 \label{eq:def-j-origin}
 \end{equation}
 Note that these are defined with respect to the unspecified coordinate origin. 
-In the recovered field, \((\FrameBasis_\alpha\otimes\FrameBasis_\beta)\,\StressTensor=0\) and  \eqref{eq:saint-venant-stress} holds.
 
 \subsection{Problem II: flexure}
 
@@ -270,35 +298,60 @@ Integrating \eqref{eq:iesan-problem-2} furnishes the particular solution:
 \end{aligned}
 \label{eq:iesan-displacement-2}
 \end{equation}
-where flexural warping \(\WarpShearShape{}:\Section\rightarrow\mathbb{R}^{2}\) is determined by the  Poisson–Neumann problem:
+where 
+\begin{equation}
+\PlaneShearShape(\PlanePosition)\coloneq \PlaneShape-\PlaneAxialShape\otimes\CentroidLocation
+\qquad\text{and}\qquad
+\tilde{\PlaneShapeStrain}
+\coloneq \PlaneShapeStrain - \bar{\pi}\,\CentroidLocation
+\label{eq:def-plane-shear-shape}
+\end{equation}
+with
+\begin{equation}
+\CentroidLocation := \frac{1}{A}\int \bm{r}\dA 
+\label{eq:def-centroid}
+\end{equation}
+and the flexural warping shape \(\WarpShearShape{}:\Section\rightarrow\mathbb{R}^{2}\) is determined by the  Poisson–Neumann problem:
 \begin{equation}
 \left\{
 \begin{aligned}
-\Delta(\WarpShearShape \cdot\bm{b}_{\Section})&=-2\big(\bm{r}-\CentroidLocation\big)\cdot\bm{b}_{\Section} && \text{in }\Section,\\
-\partial_{\bm\nu}(\WarpShearShape\cdot\bm{b}_{\Section})&=\nu\,\bm\nu\cdot\Big(\operatorname{dev}\bm{r}\otimes\bm{r}-\bm{r}\otimes\CentroidLocation\Big)\bm{b}_{\Section}
+\Delta(\WarpShearShape \cdot\bm{b}_{\Section})&=\bm{f}_{\mathrm{I\!I}}\cdot\bm{b}_{\Section}
+%-2\big(\bm{r}-\CentroidLocation\big)\cdot\bm{b}_{\Section} 
+&& \text{in }\Section,\\
+\partial_{\bm\nu}(\WarpShearShape\cdot\bm{b}_{\Section})&=-\bm{\nu}\cdot\PlaneShearShape\bm{b}_{\Section}
+%\nu\,\bm\nu\cdot\Big(\operatorname{dev}\bm{r}\otimes\bm{r}-\bm{r}\otimes\CentroidLocation\Big)\bm{b}_{\Section}
 && \text{on } \SectionBoundary,\\
 \int_\Section \WarpShearShape\cdot\bm{b}_{\Section}\,\volE&=0, &&
 \end{aligned}
 \right.
 \label{eq:bvp-warp-shear-iesan}
 \end{equation}
-where the deviator \(\operatorname{dev}\bm{r}\otimes\bm{r}\) is understood in the section plane  
-\(\operatorname{dev}\bm{r}\otimes\bm{r}=\bm{r}\otimes\bm{r}-\tfrac12(\bm{r}\cdot\bm{r})\,\oneS\). 
+with:
+\[
+\bm{f}_{\mathrm{I\!I}}(\bm{r})
+\coloneq -(\lambda+2G)\big(\bm{r}-\CentroidLocation\big)
+-\operatorname{div}\big(G\,\PlaneShearShape\big)
+-\lambda\,\tilde{\PlaneShapeStrain}\\
+\]
 % This problem has been considered by \cite{romano2012torsion} with the symbol \(\phi^{\rm SH}\), \cite{pilkey2003analysis} with the symbols \(\Phi,\Psi\), 
 % \cite{lacarbonara2007solution} with the symbol \(\omega_i\),
 % and \cite{hjelmstad1983seismic} with the symbol \(\Psi\). 
 
 The strain under \eqref{eq:iesan-displacement-2} is
 \begin{equation}
-\begin{aligned}
 \StrainTensor(\hat{\bm u})
-&=(\varepsilon\,\FrameBasis+\bm\varepsilon_\gamma)\stackrel{\rm s}{\otimes}\FrameBasis
--\nu\,\varepsilon\,\oneS,\\
-\varepsilon&=\reflenx\,(\bm{r}-\CentroidLocation)\cdot\bm{b}_{\Section},\\
-\bm\varepsilon_\gamma
+=(\PointAxialStrain\,\FrameBasis+\PointShearStrain)\symbun\FrameBasis
++\PlaneStrainTensor
+\qquad\text{with}\qquad
+% -\nu\,\varepsilon\,\oneS,
+\begin{aligned}
+\PointAxialStrain&=\reflenx\,(\bm{r}-\CentroidLocation)\cdot\bm{b}_{\Section},\\
+\PointShearStrain
 &= c_{\vartheta}\big(\nabla\WarpTwistIesan + \FrameBasis\times\bm{r}\big)
--\nu\Big(\operatorname{dev}(\bm{r}\otimes\bm{r})-\bm{r}\otimes\CentroidLocation\Big)\bm{b}_{\Section}
-+\nabla\big(\WarpShearShape{}\cdot\bm{b}_{\Section}\big),
++ \PlaneShearShape\bm{b}_{\Section}
+% -\nu\Big(\operatorname{dev}(\bm{r}\otimes\bm{r})-\bm{r}\otimes\CentroidLocation\Big)\bm{b}_{\Section}
++\nabla\big(\WarpShearShape{}\cdot\bm{b}_{\Section}\big),\\
+\PlaneStrainTensor &= ...
 \end{aligned}
 \label{eq:iesan-strain-2}
 \end{equation}
@@ -308,18 +361,18 @@ and the stress is
 \AxialStress(\hat{\bm u})&=E\,\reflenx\,(\bm{r}-\CentroidLocation)\cdot\bm{b}_{\Section},\\
 \bm{\tau}(\hat{\bm u})
 &=G\Big[(a_\vartheta+c_\vartheta)\big(\nabla\WarpTwistIesan+\FrameBasis\times\bm{r}\big)
--\nu\Big(\operatorname{dev}(\bm{r}\otimes\bm{r})-\bm{r}\otimes\CentroidLocation\Big)\bm{b}_{\Section}
++ \PlaneShearShape\bm{b}_{\Section}
+% -\nu\Big(\operatorname{dev}(\bm{r}\otimes\bm{r})-\bm{r}\otimes\CentroidLocation\Big)\bm{b}_{\Section}
 +\nabla\big(\WarpShearShape{}\cdot\bm{b}_{\Section}\big)\Big].
 \end{aligned}
 \label{eq:iesan-stress-2}
 \end{equation}
-As with \(\mathrm{P}_{\rm I}\), the recovered field satisfies \(\PlaneStressTensor=\mathbf{0}\), and is therefore represented by  \eqref{eq:saint-venant-stress}.
 
 % Differentiation in \(\reflenx\) links flexure to bending with \(\MomentRxn+\FrameBasis\times\ShearRxn=\mathbf{0}\).
 The free parameters are determined from
 \begin{equation}
 \begin{aligned}
-\big(E\IntRoR\,\bm{b}_{\Section}+EA\,\CentroidLocation\,b_\varepsilon\big)&=-\ShearRxn,\\
+\CoupleRigidity \,\bm{b}_{\Section}+ \AxialCoupling\,b_\varepsilon &=-\ShearRxn,\\
 \bm{b}_{\Section}\cdot\CentroidLocation+b_\varepsilon&=0,\\
 b_\vartheta&=0,
 \end{aligned}
@@ -338,11 +391,9 @@ and \(c_\vartheta\) is determined by the relaxed torsion boundary condition \(\F
 where the \emph{shear point} \(\CenterShearLocation\in\Section\) is defined by:
 \begin{equation}
 \CenterShearLocation := \frac{1}{\TwistRigidity} \int_\Section G(\nabla\WarpShearShape{} + \PlaneShearShape^\top)\,\bm{r} \times \FrameBasis \dA.
-\qquad\text{with}\qquad 
-\PlaneShearShape(\PlanePosition)\coloneq -\,\nu\big(\operatorname{dev}\bm{r}\otimes\bm{r}-\bm{r}\otimes\CentroidLocation\big)
 \label{eq:def-shear-center}
 \end{equation}
-and \(\TwistRigidity\) is the torsion constant defined by \eqref{eq:def-j-origin}, and \(\PlaneShape\) is the solution to ...
+and \(\TwistRigidity\) is the torsion constant defined by \eqref{eq:def-j-origin}.
 
 \begin{Details}
 \[

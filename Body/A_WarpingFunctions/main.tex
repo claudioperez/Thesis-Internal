@@ -14,10 +14,21 @@ Recall \eqref{eq:bvp-warp-twist-iesan}:
 \end{equation}
 
 $$
-\int_{\Omega} \left(\nabla \WarpSVP+\FrameBasis\times\PlanePosition\right) \cdot \nabla\left(\delta \WarpSV\right) \volG=0
+\int_{\Omega} \left(\nabla \WarpSVP+\FrameBasis\times\PlanePosition\right) \cdot \nabla w \volG=0
 $$
 
 \subsection{Shape II: Shear}
+\begin{equation}
+\begin{aligned}
+\int_{\Section}G\,\nabla(\WarpShearShape\cdot\bm{b}_{\Section})\cdot\nabla w\;\dA
+% &=\int_{\Section}\Big[(\lambda+2G)\,(\bm{r}-\CentroidLocation)
+% +\lambda\,\tilde{\PlaneShapeStrain}\Big]\cdot\bm{b}_{\Section}\;w\;\dA
+% +\int_{\Section} G\;\big(\PlaneShearShape\,\bm{b}_{\Section}\big)\cdot\nabla w\;\dA,\\
+&=\int 2G\frac{1-\nu}{1-2\nu}(\bm{r} - \CentroidLocation)\cdot\bm{b}_{\Section}\, w \dA \\
+&+ \int 2G\frac{\nu}{1-2\nu} \tilde{\PlaneShapeStrain}\cdot\bm{b}_{\Section} \, w \dA \\
+&+\int_{\Section}G\;\big(\PlaneShearShape\,\bm{b}_{\Section}\big)\cdot\nabla w\;\dA, \\
+\end{aligned}
+\end{equation}
 
 \subsection{Shape III: Twist}
 

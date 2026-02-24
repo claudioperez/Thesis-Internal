@@ -14,6 +14,9 @@ A similar example was considered by \cite{lecorvec2012nonlinear}, where 16 warpi
 Here only one warping degree of freedom is used. Excellent agreement with the analytic solution is obtained using both the \ForceFrame{} and \ExactFrame{} elements.
 
 \iftrue
+
+\subsubsection*{General Solution}
+
 Consider a cross section satisfying \(\CenterTwistLocation \equiv \CentroidLocation\). 
 Align this point with the origin of the plane coordinate system, \(\PlanePosition = \bm{0}\). 
 
@@ -25,8 +28,6 @@ Align this point with the origin of the plane coordinate system, \(\PlanePositio
 \item Warping free $B \,(= \alpha') =0$ or $\theta^{\prime \prime}=0$
 \item Twisting free $\vartheta^{\prime \prime \prime}-\lambda^2 \vartheta^{\prime}=0$ %$\qquad\implies T=B'$
 \end{enumerate}
-
-\subsubsection*{General Solution}
 
 \paragraph{Kinematics.}
 The rotation \(\bm{\Lambda}\)
@@ -135,7 +136,7 @@ In standard form:
 This furnishes the general solution
 \begin{equation}
 \begin{aligned}
-\vartheta(\reflenx)= \frac{\TwistRxn}{\lambda \eta \, G\Jo}\left(
+\vartheta(\reflenx)= \frac{\TwistRxn}{\lambda \eta \, \TwistRigidity}\left(
  C_1 + \lambda\eta \, \reflenx +  C_2 \cosh \lambda \reflenx + C_3 \sinh \lambda \reflenx
 \right)
 \end{aligned}
@@ -247,7 +248,7 @@ C_3& =-1 %\frac{1}{2}
 
 Recall the differential equation for a prismatic shaft of length $L$:
 $$
-E \Jw \vartheta^{\mathrm{iv}} - G \Jo \vartheta'' = m_x
+E \Jw \vartheta^{\mathrm{iv}} - \TwistRigidity \vartheta'' = m_x
 $$
 where, $G \Jo$ is the torsion stiffness, $E \Jw$ is the warping stiffness and $m_x$ is a distributed torsion moment along the beam. 
 In standard form:

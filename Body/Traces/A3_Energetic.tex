@@ -99,7 +99,7 @@ where the Saint~Venant energy matrix \(\IesanEnergy\) is
 EA\CentroidLocation & \CoupleRigidity % E\IntRoR 
 & \mathbf{0} & \mathbf{0} \\
 0 & \mathbf{0} & \TwistRigidity & (\TwistRigidity\CenterShearLocation + G\mathbf{h}_{\WarpTwistIesan})^\top \\
-\mathbf{0} & \mathbf{0} & G(\Jsv\CenterShearLocation + \mathbf{h}_{\WarpTwistIesan}) & G(\mathbf{H}_{\WarpShear} + \Jsv\CenterShearLocation\otimes\CenterShearLocation + \CenterShearLocation\otimes\mathbf{h}_{\WarpTwistIesan} + \mathbf{h}_{\WarpTwistIesan}\otimes\CenterShearLocation)
+\mathbf{0} & \mathbf{0} & (\TwistRigidity\CenterShearLocation + G\mathbf{h}_{\WarpTwistIesan}) & G(\mathbf{H}_{\WarpShear} + \Jsv\CenterShearLocation\otimes\CenterShearLocation + \CenterShearLocation\otimes\mathbf{h}_{\WarpTwistIesan} + \mathbf{h}_{\WarpTwistIesan}\otimes\CenterShearLocation)
 \end{bmatrix}
 \end{aligned}
 \label{eq:energy-matrix}
@@ -133,7 +133,7 @@ The inverse of the energy matrix \eqref{eq:energy-matrix} is:
 \begin{aligned}
 \IesanEnergy^{-1}
 &=\begin{bmatrix}
-\frac{1}{\AxialRigidity} + \CentroidLocation\cdot (\ShearRigidity)^{-1}\CentroidLocation 
+(\AxialRigidity)^{-1} + \CentroidLocation\cdot (\ShearRigidity)^{-1}\CentroidLocation 
 & -\CentroidLocation^\top (\ShearRigidity)^{-1} 
 & 0 
 & \mathbf{0} \\[6pt]
@@ -244,7 +244,6 @@ $\mathbf{H}_{bb}$ & \Length{6} %\Length{4}
 $\mathbf{h}_{\varphi b}$ & \Length{5} %\Length{4}
 & Shear-torsion coupling 
     \eqref{eq:h-coupling} \\
-% $\tilde{\Jo}$ & \Length{4} & Reduced torsion constant \eqref{eq:reduced-torsion} \\
 % $\bm{\eta}$ & \Length{-1} %--- 
 % & Shear-torsion coupling ratio \eqref{eq:reduced-torsion} \\[6pt]
 \multicolumn{3}{@{}l}{\textit{Poisson-torsion coupling}} \\[2pt]

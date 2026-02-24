@@ -123,7 +123,7 @@ where the energy matrix takes the block form:
 \bar{\mathbf{C}} = \begin{pmatrix}
 EA & \mathbf{0}^\top & 0 & EA\CentroidLocation^\top \\
 \mathbf{0} & G\mathbf{H}_{\psi\psi} & G\mathbf{h}_{\varphi\psi} & \mathbf{0} \\
-0 & G\mathbf{h}_{\varphi\psi}^\top & G\Jo & \mathbf{0}^\top \\
+0 & G\mathbf{h}_{\varphi\psi}^\top & \TwistRigidity & \mathbf{0}^\top \\
 EA\CentroidLocation & \mathbf{0} & \mathbf{0} & E\IntRoR
 \end{pmatrix},
 \label{eq:energy-matrix}
@@ -163,9 +163,9 @@ $\bm{s} = -\mathbf{R}(x)\,\bm{p}$, where $\mathbf{R}(x) = \IesanStiff + x\mathbf
 The constant part encodes the Saint-Venant constitutive relations:
 \begin{equation}
 \IesanStiff = \begin{pmatrix}
-EA & EA\CentroidLocation^\top & 0 & \mathbf{0}^\top \\
+\AxialRigidity & EA\CentroidLocation^\top & 0 & \mathbf{0}^\top \\
 \mathbf{0} & \mathbf{0} & \mathbf{0} & E\IntRGoRG \\
-0 & \mathbf{0}^\top & G\Jo & \mathbf{0}^\top \\
+0 & \mathbf{0}^\top & \TwistRigidity & \mathbf{0}^\top \\
 EA(\FrameBasis \times \CentroidLocation) & E\FrameBasis^\times\IntRoR & \mathbf{0} & \mathbf{0}
 \end{pmatrix}
 \qquad\text{and}\qquad 

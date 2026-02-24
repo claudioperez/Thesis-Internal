@@ -74,9 +74,9 @@ Applying the section-average operators:
 + \RotationAverage{-\nu\,\mathrm{dev}(\bm{r} \otimes \bm{r})}\,\bm{a}_\Omega,
 \end{align*}
 where we used $\RotationAverage{(\FrameBasis\times\bm{a}_{\Section})\times \bm{r}} = -\,(\FrameBasis \times \bm{a}_\Omega)$. 
-Then with \(\RotationAverage{\bm{W}_{(a)}} \in \mathbb{R}^{3 \times 2}\):
+Then with \(\RotationAverage{\PlaneShape} \in \mathbb{R}^{3 \times 2}\):
 \begin{align*}
-\bar{\bm{\theta}}^{(a)}(x) &= -x\,(\FrameBasis \times \bm{a}_\Omega) + \RotationAverage{\bm{W}_{(a)}}\,\bm{a}_\Omega, \\
+\bar{\bm{\theta}}^{(a)}(x) &= -x\,(\FrameBasis \times \bm{a}_\Omega) + \RotationAverage{\PlaneShape}\,\bm{a}_\Omega, \\
 \bar{\bm{u}}^{(a)}(x) &= -\tfrac{1}{2}x^2\,\bm{a}_\Omega 
 - \nu\,\SectionAverage{\mathrm{dev}(\bm{r} \otimes \bm{r})}\,\bm{a}_\Omega 
 + x\,(\CentroidLocation \cdot \bm{a}_\Omega)\,\FrameBasis 
@@ -99,15 +99,15 @@ Using the identity $(\FrameBasis \times \bm{a}_\Omega) \times \CentroidLocation
 Thus:
 \begin{align*}
 \bar{\bm{\gamma}}^{(a)} &= (\bar{\bm{u}}^{(a)})' + \FrameBasis \times \bar{\bm{\theta}}^{(a)} \\
-&= -x\,\bm{a}_\Omega + \FrameBasis \times \big( -x\,(\FrameBasis \times \bm{a}_\Omega) + \RotationAverage{\bm{W}_{(a)}}\,\bm{a}_\Omega \big) \\
-&= -x\,\bm{a}_\Omega + x\,\bm{a}_\Omega + \FrameBasis \times \RotationAverage{\bm{W}_{(a)}}\,\bm{a}_\Omega \\
-&= (\FrameBasis \times \RotationAverage{\bm{W}_{(a)}})\,\bm{a}_\Omega,
+&= -x\,\bm{a}_\Omega + \FrameBasis \times \big( -x\,(\FrameBasis \times \bm{a}_\Omega) + \RotationAverage{\PlaneShape}\,\bm{a}_\Omega \big) \\
+&= -x\,\bm{a}_\Omega + x\,\bm{a}_\Omega + \FrameBasis \times \RotationAverage{\PlaneShape}\,\bm{a}_\Omega \\
+&= (\FrameBasis \times \RotationAverage{\PlaneShape})\,\bm{a}_\Omega,
 \end{align*}
 where we used $\FrameBasis \times (\FrameBasis \times \bm{a}_\Omega) = -\bm{a}_\Omega$ 
 (since $\bm{a}_\Omega \perp \FrameBasis$). 
 Hence:
 \begin{equation*}
-\bm{e}^{(a)}(x) = \begin{pmatrix} (\FrameBasis \times \RotationAverage{\bm{W}_{(a)}})\,\bm{a}_\Omega \\ 
+\bm{e}^{(a)}(x) = \begin{pmatrix} (\FrameBasis \times \RotationAverage{\PlaneShape})\,\bm{a}_\Omega \\ 
 -\FrameBasis \times \bm{a}_\Omega \end{pmatrix},
 \end{equation*}
 which is constant in $x$.

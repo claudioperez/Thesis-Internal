@@ -1,5 +1,31 @@
 
 \subsection{General solution for Poisson-homogeneous bodies}
+The complete Saint-Venant solution is the sum of the particular solution \eqref{eq:iesan-general-solution}, 
+and a homogeneous solution \(\hat{\bm u}_{\rm R}\):
+\begin{equation}
+\hat{\bm{u}}(x,\bm{r}) = \hat{\bm{u}}_{\rm P}(x,\bm{r}) + \hat{\bm{u}}_{\rm R}(x,\bm{r})
+\label{eq:general-solution}
+\end{equation}
+and \(\hat{\bm{u}}_{\rm R}\) is an arbitrary the rigid body motion with six free parameters \(\bm{q}_u\in \mathbb{R}^3\) and \(\bm{q}_\theta\in \mathbb{R}^3\):
+\begin{equation}
+\begin{aligned}
+\hat{\bm u}_{\rm R}\{\bm{q}\} 
+&= \bm{q}_u + \bm{q}_\theta \times \hat{\bm{x}}(\reflenx,\bm{r}) \\
+% &= \bm{q}_u + \bm{q}_\theta \times (\reflenx \FrameBasis + \bm{r})
+\end{aligned}
+\label{eq:rigid-field}
+\end{equation}
+When Poisson's ratio is uniform, the boundary value problems \eqref{eq:bvp-plane-shapes} admit the closed form solutions:
+\begin{subequations}
+\begin{align}
+\PlaneAxialShape&=-\nu\,\bm{r} \\
+ \PlaneShape &=  -\,\nu \operatorname{dev}\bm{r}\otimes\bm{r}\\
+ \PlaneShearShape &=  -\,\nu\big(\operatorname{dev}\bm{r}\otimes\bm{r}-\bm{r}\otimes\CentroidLocation\big)
+\end{align}
+\label{eq:ph-plane-shapes}
+\end{subequations}
+where the deviator \(\operatorname{dev}\bm{r}\otimes\bm{r}\) is understood in the section plane 
+\(\operatorname{dev}\bm{r}\otimes\bm{r}=\bm{r}\otimes\bm{r}-\tfrac12(\bm{r}\cdot\bm{r})\,\oneS\). 
 
 Combining \eqref{eq:iesan-displacement-1} and \eqref{eq:iesan-displacement-2} furnishes the particular solution for the complete Saint-Venant class:
 \begin{equation}
@@ -30,8 +56,8 @@ Combining \eqref{eq:iesan-displacement-1} and \eqref{eq:iesan-displacement-2} fu
 &\quad+\reflenx\,\FrameBasis\times\bm{r}\,(a_\vartheta+c_{\vartheta}) \\
 &\quad-\tfrac12 \reflenx^2\,\FrameBasis\otimes\CentroidLocation\,\bm{b}_{\Section} \\
 % \hline
-&\quad+\bm{W}_{(\varepsilon)}\,a_{\varepsilon}
-+ \bm{W}_{(a)}\,\bm{a}_{\Section} \\
+&\quad+\PlaneAxialShape\,a_{\varepsilon}
++ \PlaneShape\,\bm{a}_{\Section} \\
 &\quad+\WarpTwistIesan\,\FrameBasis\,(a_\vartheta+c_{\vartheta}) \\
 &\quad+\FrameBasis\otimes\WarpShearShape{}(\bm{r})\,\bm{b}_{\Section}
 +\reflenx\,\PlaneShearShape\bm{b}_{\Section} \\
@@ -52,30 +78,16 @@ with \(\bm a\) fixed by \eqref{eq:2-15}, \(\bm b\) by \eqref{eq:2-18}, \(\WarpTw
 \(\WarpShearShape{}\) by \eqref{eq:bvp-warp-shear-iesan},  \(c_\vartheta\) by \eqref{eq:iesan-2-22}. 
 % and $\hat{\bm u}_{\rm R}$ is an arbitrary infinitesimal rigid body displacement field. 
 %
-The complete Saint-Venant solution is the sum of the particular solution \eqref{eq:iesan-general-solution}, 
-and a homogeneous solution \(\hat{\bm u}_{\rm R}\):
-\begin{equation}
-\hat{\bm{u}}(x,\bm{r}) = \hat{\bm{u}}_{\rm P}(x,\bm{r}) + \hat{\bm{u}}_{\rm R}(x,\bm{r})
-\label{eq:general-solution}
-\end{equation}
-and \(\hat{\bm{u}}_{\rm R}\) is an arbitrary the rigid body motion with six free parameters \(\bm{q}_u\in \mathbb{R}^3\) and \(\bm{q}_\theta\in \mathbb{R}^3\):
-\begin{equation}
-\begin{aligned}
-\hat{\bm u}_{\rm R}\{\bm{q}\} 
-&= \bm{q}_u + \bm{q}_\theta \times \hat{\bm{x}}(\reflenx,\bm{r}) \\
-% &= \bm{q}_u + \bm{q}_\theta \times (\reflenx \FrameBasis + \bm{r})
-\end{aligned}
-\label{eq:rigid-field}
-\end{equation}
+
 %
 The infinitesimal strain tensor is
 \[
 \StrainTensor
 = \PointAxialStrain\,\FrameBasis\otimes\FrameBasis
-\;+\;\FrameBasis\stackrel{\rm s}{\otimes} \bm{\varepsilon}_{\gamma}
+\;+\;\FrameBasis\symbun \bm{\varepsilon}_{\gamma}
 \;-\;\nu\,\PointAxialStrain\,\oneS,
 \]
-where recall \(\bm{a}\stackrel{\rm s}{\otimes}\bm{b} \coloneq \tfrac{1}{2} (\bm{a}\otimes\bm{b} + \bm{b}\otimes\bm{a})\) is the symmetrized bun product and:
+where recall \(\bm{a}\symbun\bm{b} \coloneq \tfrac{1}{2} (\bm{a}\otimes\bm{b} + \bm{b}\otimes\bm{a})\) is the symmetrized bun product and:
 \begin{subequations}
 \begin{align}
 \PointAxialStrain
@@ -91,6 +103,28 @@ where recall \(\bm{a}\stackrel{\rm s}{\otimes}\bm{b} \coloneq \tfrac{1}{2} (\bm{
 \end{align}
 \label{eq:iesan-point-strain}
 \end{subequations}
+
+\begin{Note}
+For a linear isotropic body, the shear stress \(\ShearStress\) is coupled only to the shear strain \(\bm{\varepsilon}_{\gamma}\):
+\[
+\bm{\tau} = G\bm{\varepsilon}_{\gamma},
+\]
+while the axial stress \(\AxialStress\) and the in-plane stresses are coupled:
+\[
+\begin{aligned}
+\hat{\StressTensor}
+&= 2G \hat{\bm{E}}+\lambda (\PointAxialStrain + \operatorname{tr} \hat{\bm{E}}) \; \FrameBasis_{\alpha} \otimes \FrameBasis_{\alpha}, \\
+\AxialStress
+&=(2 G+\lambda) \PointAxialStrain+\lambda \operatorname{tr} \PlaneStrainTensor.
+\end{aligned}
+\]
+Thus, if the in-plane strain \(\PlaneStrainTensor\) satisfies:
+\begin{equation*}
+\operatorname{tr}\PlaneStrainTensor = -2\nu\,\PointAxialStrain
+\quad\text{then}\quad 
+\AxialStress = E\,\PointAxialStrain.
+\end{equation*}
+\end{Note}
 
 \begin{Details}
 Decompose $\nabla \hat{\bm{u}} = \FrameBasis\otimes\hat{\bm{u}}' + \gradS\hat{\bm{u}}$.
@@ -193,6 +227,7 @@ Using that $\sym(\FrameBasis\times\oneS)=\mathbf{0}$  and collecting symmetric p
 
 \subsection{Summary}
 
+\newcommand{\SummarySaintVenant}{
 \begin{table}[H]
     \centering
     \caption{Symbols employed for Saint~Venant's solution.}
@@ -200,7 +235,7 @@ Using that $\sym(\FrameBasis\times\oneS)=\mathbf{0}$  and collecting symmetric p
     \begin{tabular}{clcl}
     \toprule
     Symbol & Units & & Description \\ \midrule
-        \(a_{\varepsilon}\in\mathbb{R}\) & $\sim$  & & Axial strain parameter \\
+        \(a_{\varepsilon}\in\mathbb{R}\) & $\sim$  & & Axial strain parameter for \(\mathrm{P}_{\rm I}\) \\
         \(a_{\vartheta}\in\mathbb{R}\)   & \Length{-1} & \\
         \(\bm{a}_{\Section}\in\Section\) & \Length{-1} & & Bending parameters for \(\mathrm{P}_{\rm I}\) \\
         \LightRule
@@ -211,14 +246,19 @@ Using that $\sym(\FrameBasis\times\oneS)=\mathbf{0}$  and collecting symmetric p
         \(\bm{q}_u\in\mathbb{R}^3\) & L & & Rigid translation at \(x=0\) \\
         \(\bm{q}_{\theta}\in\mathbb{R}^3\) & & & Rigid rotation at \(x=0\), or constant transverse displacement rate   \\
         \LightRule
-        \(\PlaneShape\) & \\
-        \(\PlaneShapeStrain\) \\
+        \(\PlaneShape\) & & \eqref{eq:bvp-plane-shapes} or \eqref{eq:ph-plane-shapes} \\
+        \(\PlaneShapeStrain\) & $\sim$ & \eqref{eq:def-Theta} \\
+        \(\bar{\pi}\) & $\sim$ & \eqref{eq:def-Theta} \\
+        \(\tilde{\PlaneShapeStrain}\) & & \eqref{eq:def-plane-shear-shape} or ... \\
+        \(\PlaneShearShape\)  &  & \eqref{eq:def-plane-shear-shape} or \eqref{eq:ph-plane-shapes} \\
         \(\WarpTwistIesan\)   & \Length{2}  & \eqref{eq:bvp-warp-twist-iesan} \\
         \(\WarpShearShape{}\) & \Length{3}   & \eqref{eq:bvp-warp-shear-iesan} & \\
         \LightRule 
+        \(\AxialRigidity\) & & \eqref{eq:def-axial-rigidity} & Axial rigidity. \\
+        \(\AxialCoupling\) & & \eqref{eq:def-axial-rigidity} & First moment vector. \\
+        \(\CoupleRigidity\) & \Length{4} & \eqref{eq:def-j-origin} & Second moment tensor. \\
+        \(\TwistRigidity\) & \Length{4} & \eqref{eq:def-j-origin} & Saint Venant torsional rigidity \\
         \(\CentroidLocation\) & L & \eqref{eq:def-centroid} & Location of the centroid. \\
-        \(\IntRoR\) & \Length{4} & \eqref{eq:def-j-origin} & \\
-        \(\TwistRigidity\) & \Length{4} & \eqref{eq:def-j-origin} & Torsion constant (\(\Jsv\)) \\
         \(\CenterShearLocation\) & L & \eqref{eq:def-shear-center} & Torsion-flexure center \\
         \(\IntRGoRG\) & \Length{4} & \eqref{eq:def-intRGoRG} & Centroidal plane inertia tensor \\
         \LightRule 
@@ -228,3 +268,6 @@ Using that $\sym(\FrameBasis\times\oneS)=\mathbf{0}$  and collecting symmetric p
     \bottomrule
     \end{tabular}
 \end{table}
+}
+
+\SummarySaintVenant

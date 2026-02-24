@@ -1,12 +1,12 @@
 \subsection{Introduction}
-\begin{Note}
-The objective of this section is to develop a framework for formulating constitutive equations for a general family of nonlinear rod theories.
+% \begin{Note}
+% The objective of this section is to develop a framework for formulating constitutive equations for a general family of nonlinear rod theories.
 
-The approach draws on the structure of the enhanced strain method in continuum finite element analysis, where the compatible strain field is supplemented by an additional field that is orthogonal to the admissible stress space. 
-In the present work, an analogous construction is carried out at the cross-sectional level. 
-For a given set of beam strain measures, enhanced strain modes are introduced over the section that improve the representation of the three-dimensional strain state without altering the governing equations of the beam theory. 
-The enhanced modes are resolved locally at each section through a procedure that introduces no additional degrees of freedom into the global system. 
-\end{Note}
+% The approach draws on the structure of the enhanced strain method in continuum finite element analysis, where the compatible strain field is supplemented by an additional field that is orthogonal to the admissible stress space. 
+% In the present work, an analogous construction is carried out at the cross-sectional level. 
+% For a given set of beam strain measures, enhanced strain modes are introduced over the section that improve the representation of the three-dimensional strain state without altering the governing equations of the beam theory. 
+% The enhanced modes are resolved locally at each section through a procedure that introduces no additional degrees of freedom into the global system. 
+% \end{Note}
 
 This section develops a constitutive framework for a broad class of nonlinear beam theories. 
 The construction is motivated by enhanced strain methods in finite element analysis, in which the compatible strain is augmented by additional modes that do not enter the admissible stress work.
@@ -14,18 +14,6 @@ The construction is motivated by enhanced strain methods in finite element analy
 Here the same idea is applied at the cross-sectional level. For a prescribed set of beam strain measures, additional section strain modes are introduced to improve the representation of the underlying three-dimensional strain field. The associated mode amplitudes are determined locally at each cross section and are condensed out of the global system. As a result, the beam equilibrium equations are unchanged, while the section constitutive mapping is enriched.
 
 \subsubsection{Literature}
-
-% Differential
-%
-% \begin{itemize}
-%     \item \cite{euler1744curvis}, \cite{kirchhoff1859ueber}, \cite{love1906treatise}
-
-%     \item \cite{cosserat1896theorie}
-
-%     \item \cite{ericksen1957exact}, \cite{green1966general},  \cite{naghdi1973theory}.
-%     From this period, the works of \cite{antman1973theory,antman1974kirchhoffs} were particularly influential. \cite{antman2005nonlinear} is a preeminent source for mathematical treatment of the geometrically exact three-dimensional theory. However, the focus of this work is on analytic results. 
-
-% \end{itemize}
 
 % Supplements
 \cite{oreilly2017modeling,goss2003snap} offer rich historical accounts of nonlinear beam theories. 
@@ -355,9 +343,6 @@ the terms involving \(\stackrel{\mathrm{s}}{\otimes}\FrameBasis\) furnish the
 axial and shear components, while the quadratic term 
 \(\tfrac{1}{2}\nabla\AxialWarp\otimes\nabla\AxialWarp\) produces in-plane 
 (\(\alpha\beta\)) components.
-In addition, the physical strain field includes further in-plane contributions 
-(e.g., lateral contraction) that are not captured by the compatible field 
-\eqref{eq:finite-alignment-field}.
 
 It is standard to restrict the material response to stress tensors with the Saint-Venant form:
 \begin{SaveEquation}{eq:saint-venant-stress}

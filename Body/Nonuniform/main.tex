@@ -1,9 +1,9 @@
-When auxiliary warping is included in the model, stress fields arise in violation of the equilibrium field equations \eqref{eq:sv-equilibrium}. 
+When auxiliary warping is included in the model, stress fields arise in violation of the equilibrium field equations.% \eqref{eq:sv-equilibrium}. 
 This has been observed for torsional warping by \cite{...} and was extensively investigated by \cite{armero2021modeling}. 
 
 \subsection{Preliminaries}
 
-\iffalse
+\iftrue
 Consider linear elastic deformations of an isotropic body with stresses of the form \eqref{eq:saint-venant-stress} so 
 \begin{equation*}
     \bm{\sigma} = \mathbf{C}\bm{\varepsilon}
@@ -14,9 +14,9 @@ where \(E\) and \(G\) are Young's and the shear modulus, respectively, and the n
 Define smooth, positive differential 2-forms \( \volG \) and \( \volE \)  on the cross-section \( \Section\) weighted by the shear \(G\) and Young's modulus \(E\), respectively:
 \[
 \begin{aligned}
-    \volG &= \WeightG(\PlanePosition)\,\dA
+    \volG &= G(\PlanePosition)\,\dA
     &\qquad
-    \volE &= \WeightE(\PlanePosition)\,\dA \\
+    \volE &= E(\PlanePosition)\,\dA \\
 \end{aligned}
 \]
 where \(\dA\) is the Euclidean area form in the cross section plane \(\Section\). 
@@ -35,6 +35,10 @@ The bracket \eqref{eq:def-products}$_3$ integrates the scalar triple product \([
 \begin{equation*}
 \tfrac{1}{2}\left\{\phi, r^2\right\}_G = \int [\nabla \phi,\, \FrameBasis,\, \PlanePosition]\, \mu_G
 \end{equation*}
+\fi 
+
+
+\iffalse
 
 \subsection{Equilibrium Violations}
 

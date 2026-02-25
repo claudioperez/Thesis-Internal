@@ -15,22 +15,8 @@ Salient features of Iesan's treatment include:
 \end{Quote}
 
 \subsection{Overview}
-\begin{Note}
-The Saint~Venant problems concern a prismatic, homogeneous, and isotropic linearly elastic body 
-\(
-\Body=(0,L)\times\Section
-\),
-where \(\Section\subset\mathbb{R}^2\) is a bounded cross-section
-spanned by \(\{\FrameBasis_y,\FrameBasis_z\}\). 
-Together with the axial unit \(\FrameBasis:= \FrameBasis_y\times\FrameBasis_z\), the vectors \(\{\FrameBasis,\,\FrameBasis_y,\,\FrameBasis_z\}\) form an orthonormal basis and the 3D identity is:
-\[
-\mathbf{1}=\FrameBasis\otimes\FrameBasis+\oneS
-\qquad\text{with}\qquad
-\oneS=\FrameBasis_{\beta}\otimes\FrameBasis_{\beta}
-\]
-A point in \(\Body\) has coordinates \(\reflenx\,\FrameBasis + \bm{r}\) in the reference configuration, where \(\bm{r} \in\Section_x\) is the coordinate of a point in the section at \(\reflenx\) and \(\bm{r}\cdot\FrameBasis = 0\).
-The boundary of \(\Body\) consists of the the lateral boundary \(\BodyLateralSurface=\SectionBoundary\times(0,L)\) and the surfaces \(\Section_0,\,\Section_L\) of the sections at the ends \(\reflenx \in \{0,L\}\).  
-\end{Note}
+Infinitesimal motions of the body described in \cref{sec:std-continuum} are investigated, and attention is restricted to those composed heterogeneously of an isotropic material. 
+
 The \emph{resultants} are the integrals of the traction \(-\StressTensor\,\FrameBasis\) on the root section \(\Section_0\):
 \begin{equation}
 \mathscr{F}(\hat{\bm u})=\int_{\Section_0}\StressTensor(\hat{\bm u})\,(-\FrameBasis)\dA,\qquad
@@ -118,7 +104,7 @@ Components of interest are singled out as
 \end{remark}
 
 \subsection{Auxiliary Problem}
-\eqref{eq:def-eight-shapes}
+% \eqref{eq:def-eight-shapes}
 
 \begin{subequations}
 \begin{align}
@@ -136,11 +122,11 @@ Define
 \begin{equation}
 \PlaneShape \coloneq \hat{\bm u}_{\Section}^{(\beta)}\otimes\FrameBasis_{\beta},
 \qquad
+\bar{\pi} \coloneq\operatorname{tr}\tilde{\StrainTensor}^{(3)},
+\qquad
 \PlaneShapeStrain
 \coloneq \FrameBasis_\beta \operatorname{tr}\tilde{\StrainTensor}^{(\beta)},
 \qquad \FrameBasis_\beta \in\Section,
-\qquad
-\bar{\pi} \coloneq\operatorname{tr}\tilde{\StrainTensor}^{(3)},
 \label{eq:def-Theta}
 \end{equation}
 

@@ -95,8 +95,8 @@ where the Saint~Venant energy matrix \(\IesanEnergy\) is
 \begin{aligned}
 \IesanEnergy := \int_\Section \mathbf{S}_0^\top \mathbb{C}\, \mathbf{S}_0 \dA 
 &=\begin{bmatrix}
-\AxialRigidity & EA\CentroidLocation^\top & 0 & \mathbf{0} \\
-EA\CentroidLocation & \CoupleRigidity % E\IntRoR 
+\AxialRigidity & \AxialCoupling^\top & 0 & \mathbf{0} \\
+\AxialCoupling & \CoupleRigidity % E\IntRoR 
 & \mathbf{0} & \mathbf{0} \\
 0 & \mathbf{0} & \TwistRigidity & (\TwistRigidity\CenterShearLocation + G\mathbf{h}_{\WarpTwistIesan})^\top \\
 \mathbf{0} & \mathbf{0} & (\TwistRigidity\CenterShearLocation + G\mathbf{h}_{\WarpTwistIesan}) & G(\mathbf{H}_{\WarpShear} + \Jsv\CenterShearLocation\otimes\CenterShearLocation + \CenterShearLocation\otimes\mathbf{h}_{\WarpTwistIesan} + \mathbf{h}_{\WarpTwistIesan}\otimes\CenterShearLocation)
@@ -206,7 +206,7 @@ where
 %&= G(\ShearRigidity)^{-1}(\Jsv \CenterShearLocation + \mathbf{h}_{\WarpTwistIesan}) \sim L \\
  &= \TwistRigidity (\ShearRigidity)^{-1}\TraceTF &&\sim L \\
 \ShiftN &= \mathbf{0},\\[2pt]
-\ShiftNK &= -\Bigl(1 + EA\,\CentroidLocation\cdot (\ShearRigidity)^{-1}\CentroidLocation\Bigr)
+\ShiftNK &= -\Bigl(1 + \AxialCoupling\cdot (\ShearRigidity)^{-1}\CentroidLocation\Bigr)
   (\FrameBasis\times\CentroidLocation)
   + \FrameBasis\times E\IntRoR\,(\ShearRigidity)^{-1}\CentroidLocation && \sim L \\
 \ShiftF &= \mathbf{0},\\ 
@@ -214,7 +214,8 @@ where
 \ShiftT 
 %&= -\frac{1}{\Jsv}\,\ShiftB^\top\bigl(\Jsv\CenterShearLocation + \mathbf{h}_{\WarpTwistIesan}\bigr) \\
  &= -\ShiftB^\top\TraceTF && \sim L^{-1} \\
-\ShiftK &= -\tilde{\mathbf{H}}_{bb}^{-1}\bigl(\Jsv\CenterShearLocation + \mathbf{h}_{\WarpTwistIesan}\bigr) \\
+ %
+\ShiftK &= -(G\tilde{\mathbf{H}}_{bb})^{-1}\bigl(\TwistRigidity\CenterShearLocation + G\mathbf{h}_{\WarpTwistIesan}\bigr) \\
 \ShiftScaleT 
 % &= 1 + \frac{1}{\Jsv}\bigl(\Jsv\CenterShearLocation + \mathbf{h}_{\WarpTwistIesan}\bigr)\cdot\tilde{\mathbf{H}}_{bb}^{-1}\bigl(\Jsv\CenterShearLocation + \mathbf{h}_{\WarpTwistIesan}\bigr) \\
 &= 1 - \TraceTF\cdot \ShiftK && \sim 1 \\

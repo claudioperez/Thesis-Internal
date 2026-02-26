@@ -41,35 +41,35 @@
 % However this is impractical, and it is preferable to forgo auxiliary warping fields altogether whenever possible. 
 % In the case of linear isotropy this is achieved by employing cross sectional constants like the shear correction factor. However, even in the simple case of linear isotropy, the subject of shear warping in beam theory remains a actively debated subject with unresolved ambiguities and strong disagreements \citep{dong2010much,dong2013principal,serpieri2014equivalence}. 
 
+The previous section established a general constitutive framework for beam sections that is compatible with geometrically exact kinematics and multiaxial material response. The present section specializes that framework to the important case of uniform warping, where the cross-sectional distortion is governed by Saint~Venant-type modes and can be represented without introducing additional warping degrees of freedom. 
+
+The objective is to obtain section-level constitutive relations that remain fully compatible with nonlinear beam equilibrium while reproducing the classical three-dimensional continuum response in the elastic regime. To that end, enhanced strain modes are constructed to enrich the section update locally, preserving the global beam kinematics and balance laws while enforcing continuum-consistent shear and torsion behavior. The resulting family of models furnishes a practical, computationally efficient bridge between standard beam elements and three-dimensional elasticity, and serves as a baseline for the more general nonuniform warping developments that follow.
+
+Identifying appropriate shapes for the enhanced framework requires an association between the beam fields and the continuum displacement field. 
+This association is not unique, and each choice implies a distinct interpretation of boundary conditions on the beam variables \(\bm{u}\) and \(\bm{\theta}\). The present work addresses this by introducing the abstraction of a \emph{trace} and classifying the admissible associations within the family of beam theories in \cref{sec:genwarp}.
+
 %
+\subsubsection{Literature}
 The ambiguous nature of Saint~Venant's solutions is well known in the continuum mechanics literature (\cref{sec:sv}). 
 However, we are not aware of any works that formalize this in the context of dimensionally reduced 1D beam theories, or systematically investigate the extent to which beam theories may exactly represent 3D solutions in the Saint Venant class. 
 Rather, it is typically assumed at the outset that the 1D model will only approximate a continuum solution. 
 The subject is raised by \cite{simo1982bifurcation}, where a brief investigation is made in the context of planar buckling. 
 However, because this investigation was limited to the plane, several salient three dimensional considerations do not arise such as work-conjugacy of resultants and handling of asymmetric sections. 
 
-% The representation \eqref{eq:trace-lift-linear} is non-unique, which
-% poses a fundamental obstacle for associating these modes to classical deflection \(\bm{u}(\reflenx)\), rotation \(\bm{\theta}(\reflenx)\), and warping \(\bm{\alpha}(\reflenx)\) fields. 
+% The trace formalism developed below provides a concrete way to characterize this ambiguity while retaining compatibility with nonlinear beam kinematics, so that exact Saint~Venant benchmarks can be enforced without altering the global equilibrium equations.
 
 
-% \subsubsection{Outline}
 
-The presentation is structured as follows:
-\begin{itemize}
-    \item Introduce the \emph{trace} abstraction, which formalizes the ambiguity in representing the Saint-Venant class through classical fields \(\bm{u},\bm{\theta}\). 
-    \item Investigate the special class of traces that can be exactly represented with \emph{only} 6-DOF, and are compatible with the interpolation assumptions of traditional finite elements.
-\end{itemize}
+\subsubsection{Outline}
 
-\Cref{sec:trace}
-\Cref{sec:class-i}
-\Cref{sec:class-ii}
-\Cref{sec:class-iii}
+The presentation proceeds as follows. 
+\Cref{sec:uniform-evolution} ...
+\Cref{sec:trace} introduces the trace abstraction which represents an association of a continuum deformation with the classical fields \(\bm{u},\bm{\theta}\). 
+\Cref{sec:class-i}, \Cref{sec:class-ii}, and \Cref{sec:class-iii} introduce classifications of traces through their representation of Sain~Venants solutions. 
+Finally, \Cref{sec:trace-shapes} constructs explicit enhanced section shapes in the setting of \cref{sec:enhan-section}.
 
-\Cref{sec:trace-shapes}
+\subsection{Evolution Equations}\label{sec:uniform-evolution}
 
-\subsection{Preliminaries}
-
-\subparagraph{S1}
 The Saint-Venant equilibrium equations for stress resultants 
 $\snm$ form a first-order initial value problem:
 \begin{equation}

@@ -380,30 +380,32 @@ and using \eqref{eq:gauss-div-thm} (Stoke's Theorem).
 % \int_{\PlaneManifold} \iota_{\nabla \WarpFA}( \dd \WarpSV) \wedge \mu
 % $$
 
+\iffalse
 \subsection{Classical}
 
 \begin{enumerate}
 \item For any vector field \(\bm w\) on \(\Section\), Green’s identity applied componentwise yields
 \begin{equation}
-\int_{\Section}\nabla\bm w\,(\nabla\bm w)^{\!\top}\,\mathrm dA
+\int_{\Section}\nabla\bm w\,(\nabla\bm w)^{\!\top}\,\dA
 = -\int_{\Section}\bm w\otimes \Delta\bm w\,\mathrm dA
 \;+\;\int_{\SectionBoundary}\bm w\otimes \partial_{\bm\nu}\bm w\,\mathrm ds.
 \label{eq:thm-green-vec}
 \end{equation}
 \item Also, by the divergence theorem,
 \begin{equation}
-\int_{\Section}\nabla\bm w\,\mathrm dA
+\int_{\Section}\nabla\bm w\,\dA
 =\int_{\SectionBoundary}\bm\nu\otimes\bm w\,\mathrm ds.
 \label{eq:div-thm-vec}
 \end{equation}
 \item Rotated-gradient integration by parts (Stokes/Green in 2-D). For any vector field \(\bm a\) and scalar \(g\),
 \begin{equation}
-\int_{\Section}\bm a\otimes\FrameBasis\times\nabla g\,\mathrm{d}A
+\int_{\Section}\bm a\otimes\FrameBasis\times\nabla g\,\dA
 =\oint_{\partial\Section} g\,\bm a\otimes(\bm\nu\times\FrameBasis)\,\mathrm ds
--\int_{\Section} g\,(\nabla\bm a)\,J^{\top}\,\mathrm{d}A.
+-\int_{\Section} g\,(\nabla\bm a)\,J^{\top}\,\dA.
 \label{eq:thm-stokes-green}
 \end{equation}
 \end{enumerate}
+\fi 
 
 \subsection{Torsion}
 \begin{proposition}
@@ -484,11 +486,11 @@ where we have used
 &= \left<\dd \WarpFA,\, \dd \phi \right> \volG & \qquad \text{\eqref{eq:hodge-defn}} \\
 \end{array}
 \]
-Thus (\(\dagger\)) is exactly an integration (by parts) of the product rule for \eqref{eq:def-lie-form}
+Thus (\(\dagger\)) is exactly an integration by parts of the product rule for \eqref{eq:def-lie-form}
 \[
 \mathcal{L}_{(\WarpSV \nabla \WarpFA)} \volG = \WarpSV \mathcal{L}_{\nabla \WarpFA}\volG + \dd \WarpSV \wedge \interior{\nabla \WarpFA}{\volG}
 \]
-where by the divergence theorem (\eqref{eq:gauss-div-thm})
+where by the divergence theorem \eqref{eq:gauss-div-thm}
 \[
 \int_{\PlaneManifold} \mathcal{L}_{(\WarpSV \nabla \WarpFA)} \volG =
 \int_{\PlaneBoundary} \WarpSV  \nabla \WarpFA \cdot \bm{\nu} \; \eta_G
@@ -571,7 +573,7 @@ where $\sigma_G = n_G \, \dd s$:
 \end{remark}
 \fi
 
-
+\iffalse
 \begin{proposition}[Relocation]
     Consider the BVP:
     \begin{equation}
@@ -598,3 +600,4 @@ Our objective is to show that the function \(\varphi_b\) (i) is harmonic, (ii) s
 \end{equation*}
 
 \end{proof}
+\fi

@@ -12,11 +12,11 @@ The state determination requires solving \(n_q+n_{\rm IP}\,n_s\) nonlinear equat
 \begin{subequations}
 \begin{align}
 \residv[\bm{e}] &:= \bm{v}-\int_0^L \ForceInterp^{\top}(x)\,\bm{e}(x)\,\dd\reflenx = \mathbf{0}
-&(\text{\(n_q\) equations})
+&\text{(\(n_q\) equations) }
 \label{eq:def-mf-gv}
 \\
 \resids(\bm{q},\bm{e};\,x_{\ell}) &:= \inters(\bm{q};\,x)-\bm{s}(\bm{e}(x_{\ell}))=\mathbf{0}
-&(\text{\(n_s\) equations for each \(x_{\ell}\)})
+&\text{(\(n_s\) equations for each \(x_{\ell}\)) }
 \label{eq:def-mf-gs}
 \end{align}
 \label{eq:def-mf-residual}
@@ -30,7 +30,7 @@ where:
 and the matrix $\ForceInterp(x)$ contains resultant interpolation functions that express section forces in terms of basic forces. 
 
 An efficient algorithm for solving \eqref{eq:def-mf-residual} was put forth by \cite{taylor2003mixed}. 
-This is generalized in the following section to support the consistent handling of element loading under nonlinear geometry. The developments summarized in Box~\ref{box:MF}. 
+This is generalized in the following section to support the consistent handling of element loading under nonlinear geometry. The developments are  summarized in Box~\ref{box:MF}. 
 \iffalse
 \begin{equation}
 \begin{pmatrix}

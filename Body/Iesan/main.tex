@@ -86,22 +86,22 @@ Consequently, if a displacement \(\hat{\bm u}_{\mathrm{I\!I}}\) is a solution of
 This connection motivates the program of Ie\c{s}an, whereby a particular solution to \(\mathrm{P}_{\rm I}\) is identified by prescribing the shape of \(\hat{\bm u}'\), and a solution to \(\mathrm{P}_{\mathrm{I\!I}}\), identified by prescribing the shape of \(\hat{\bm u}''\). 
 These prescriptions select particular solutions within the relaxed class that are unique up to a rigid body field field, while leaving end tractions unspecified pointwise.
 
-\begin{remark}
-No restriction is imposed on the in–plane stress \((\FrameBasis_\alpha\otimes\FrameBasis_\beta)\,\StressTensor\) at this stage. 
-Components of interest are singled out as
-\[
-\AxialStress:=\FrameBasis\cdot\StressTensor\,\FrameBasis\in\mathbb{R},
-\qquad
-\PointShearStress :=(\FrameBasis_\beta\otimes\FrameBasis_\beta)\,\StressTensor\,\FrameBasis,
-\]
-% Ie\c{s}an’s construction recovers the Saint–Venant form \eqref{eq:saint-venant-stress}
-% \begin{equation*}
-% \StressTensor = \AxialStress\,\FrameBasis\otimes\FrameBasis
-% +\FrameBasis\otimes\bm{\tau}+\bm{\tau}\otimes\FrameBasis,
-% % \label{eq:saint-venant-stress}
-% \end{equation*}
-% i.e., the in–plane block vanishes as a consequence of the solution.
-\end{remark}
+% \begin{remark}
+% No restriction is imposed on the in–plane stress \((\FrameBasis_\alpha\otimes\FrameBasis_\beta)\,\StressTensor\) at this stage. 
+% Components of interest are singled out as
+% \[
+% \AxialStress:=\FrameBasis\cdot\StressTensor\,\FrameBasis\in\mathbb{R},
+% \qquad
+% \PointShearStress :=(\FrameBasis_\beta\otimes\FrameBasis_\beta)\,\StressTensor\,\FrameBasis,
+% \]
+% % Ie\c{s}an’s construction recovers the Saint–Venant form \eqref{eq:saint-venant-stress}
+% % \begin{equation*}
+% % \StressTensor = \AxialStress\,\FrameBasis\otimes\FrameBasis
+% % +\FrameBasis\otimes\bm{\tau}+\bm{\tau}\otimes\FrameBasis,
+% % % \label{eq:saint-venant-stress}
+% % \end{equation*}
+% % i.e., the in–plane block vanishes as a consequence of the solution.
+% \end{remark}
 
 \subsection{Auxiliary Problem}
 % \eqref{eq:def-eight-shapes}
@@ -175,12 +175,19 @@ Integrating \eqref{eq:iesan-problem-1} furnishes the particular solution:
 where the torsion warping function \(\WarpTwistIesan:\Section\rightarrow\mathbb{R}\) is determined by the Neumann problem:
 \begin{equation}
 \left\{
-\begin{aligned}
-\Delta \WarpTwistIesan&=0 && \text{in }\Section,\\
-\partial_{\bm{\nu}} \WarpTwistIesan&=-\,(\FrameBasis\times\PlanePosition)\cdot \bm{\nu} && \text{on } \SectionBoundary,\\
-\int_{\Section} \WarpTwistIesan\, \volE &=0, &&
-\end{aligned}
+\begin{array}{rll}
+\operatorname{div}_G\left(\left.\nabla \WarpSVP+\FrameBasis\times\PlanePosition\right.\right) &=0 & \text { in } \Section, \\
+\nabla_{\bm{\nu}} \WarpSVP &=-\FrameBasis\times\PlanePosition \cdot \bm{\nu} & \text { on } \SectionBoundary, \\
+\int_{\Section} \WarpSVP \volE &= 0
+\end{array}
 \right.
+% \left\{
+% \begin{aligned}
+% \Delta \WarpTwistIesan&=0 && \text{in }\Section,\\
+% \partial_{\bm{\nu}} \WarpTwistIesan&=-\,(\FrameBasis\times\PlanePosition)\cdot \bm{\nu} && \text{on } \SectionBoundary,\\
+% \int_{\Section} \WarpTwistIesan\, \volE &=0, &&
+% \end{aligned}
+% \right.
 \label{eq:bvp-warp-twist-iesan}
 \end{equation}
 \begin{Details}
@@ -215,22 +222,25 @@ The integration constants \((\bm{a}_{\Section},a_{\varepsilon},a_\vartheta)\) ar
 %
 \begin{equation}
 \begin{aligned}
-\CoupleRigidity\,\bm{a}_{\Section}+a_{\varepsilon}\,\AxialCoupling &=\MomentRxn\times\FrameBasis,\\
 \bm{a}_{\Section}\cdot \AxialCoupling+\AxialRigidity\, a_{\varepsilon} &=-\AxialRxn,\\
+\CoupleRigidity\,\bm{a}_{\Section}+a_{\varepsilon}\,\AxialCoupling &=\MomentRxn\times\FrameBasis,\\
 \TwistRigidity\,a_\vartheta&=-\TwistRxn,
 \end{aligned}
 \label{eq:2-15}
 \end{equation}
-where the axial rigidity \(\AxialRigidity\) and coupling vector \(\AxialCoupling\) are defined by:
+where the axial rigidity \(\AxialRigidity\) and first moment vector \(\AxialCoupling\) are defined by:
 \begin{equation}
-\AxialRigidity \coloneq \int \volE 
+\AxialRigidity \coloneq \int_\Section \Big[\lambda+2G+\lambda\bar{\pi}\Big]\dA
+%\int \volE 
 \qquad\text{and}\qquad
-\AxialCoupling \coloneq \int \bm{r}\volE 
+\AxialCoupling \coloneq \int_\Section \Big[(\lambda+2G)\,\bm{r}+\lambda\,\PlaneShapeStrain\Big]\dA
+%\int \bm{r}\volE 
 \label{eq:def-axial-rigidity}
 \end{equation}
 and the torsional rigidity \(\TwistRigidity\) and plane moment rigidity \(\CoupleRigidity\) are defined by:
 \begin{equation}
-\CoupleRigidity := \int \bm{r}\otimes\bm{r}\volE
+\CoupleRigidity \coloneq \int_{\Section}\bm{r}\otimes\Big[(\lambda+2G)\,\bm{r}+\lambda\,\PlaneShapeStrain\Big]\dA
+% \coloneq \int \bm{r}\otimes\bm{r}\volE
 \qquad\text{and}\qquad
 \TwistRigidity:=\int_\Section \Big(r^2+(\FrameBasis\times\bm{r})\cdot\nabla\WarpTwistIesan\Big)\volG .
 \label{eq:def-j-origin}
@@ -294,17 +304,18 @@ where
 \end{equation}
 with
 \begin{equation}
-\CentroidLocation := \frac{1}{A}\int \bm{r}\dA 
+\CentroidLocation := \frac{1}{\AxialRigidity} \AxialCoupling
+% \frac{1}{\AxialRigidity}\int \bm{r}\volE 
 \label{eq:def-centroid}
 \end{equation}
 and the flexural warping shape \(\WarpShearShape{}:\Section\rightarrow\mathbb{R}^{2}\) is determined by the  Poisson–Neumann problem:
 \begin{equation}
 \left\{
 \begin{aligned}
-\Delta(\WarpShearShape \cdot\bm{b}_{\Section})&=\bm{f}_{\mathrm{I\!I}}\cdot\bm{b}_{\Section}
+\Div \big(G\nabla(\WarpShearShape \cdot\bm{b}_{\Section})\big)&=\bm{f}_{\mathrm{I\!I}}\cdot\bm{b}_{\Section}
 %-2\big(\bm{r}-\CentroidLocation\big)\cdot\bm{b}_{\Section} 
 && \text{in }\Section,\\
-\partial_{\bm\nu}(\WarpShearShape\cdot\bm{b}_{\Section})&=-\bm{\nu}\cdot\PlaneShearShape\bm{b}_{\Section}
+G\nabla_{\bm\nu}(\WarpShearShape\cdot\bm{b}_{\Section})&=-\bm{\nu}\cdot\PlaneShearShape\bm{b}_{\Section}
 %\nu\,\bm\nu\cdot\Big(\operatorname{dev}\bm{r}\otimes\bm{r}-\bm{r}\otimes\CentroidLocation\Big)\bm{b}_{\Section}
 && \text{on } \SectionBoundary,\\
 \int_\Section \WarpShearShape\cdot\bm{b}_{\Section}\,\volE&=0, &&

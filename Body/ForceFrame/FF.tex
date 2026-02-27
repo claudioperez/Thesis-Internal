@@ -14,10 +14,10 @@ Linearizing \eqref{eq:def-mf-gv} furnishes:
 
 Setting \(\residv[\bm{e}+\dd \bm{e}]=\mathbf{0}\) gives
 
-\[
+\begin{equation}
 \int_0^L \ForceInterp^{\top}\,\dd \bm{e}\,\dd\reflenx = \residv[\bm{e}].
-\tag{C}
-\]
+\label{eq:C}
+\end{equation}
 
 Linearizing \eqref{eq:def-mf-gs} furnishes:
 \[
@@ -39,12 +39,12 @@ Setting the linearization to zero:
 
 Solve for \(\dd \bm{e}(x)\):
 
-\[
+\begin{equation}
 \dd \bm{e}(x) = \mathbf{F}_{s}(x)\,\ForceInterp(x)\,\dd \bm{q} \;+\; \mathbf{F}_{s}(x)\,\resids(x;q,e).
-\tag{S}
-\]
+\label{eq:S}
+\end{equation}
 
-Now substitute (S) into (C):
+Now substitute \eqref{eq:S} into \eqref{eq:C}:
 
 \[
 \int_0^L \ForceInterp^{\top} \mathbf{F}_{s} \ForceInterp\,\dd\reflenx\;\dd \bm{q} 

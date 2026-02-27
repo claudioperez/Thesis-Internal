@@ -95,7 +95,6 @@
         \(\CentroidLocation\) & L & \eqref{eq:def-centroid} & Location of the centroid. \\
         \(\CenterShearLocation\) & L & \eqref{eq:def-shear-center} & Shear point location \\
         \(\IntRoR\) & L$^4$ & \eqref{eq:def-j-origin} & Plane moment of inertia tensor \\
-        \(\Io\)     & \Length{4} & & Polar moment of inertia, \(\Io = \operatorname{tr}\IntRoR\) \\
     \bottomrule
     \end{tabular}
     % \caption{Summary of isotropic cross section constants.}
@@ -103,6 +102,7 @@
 \end{table}
 
 \subsection*{Nonuniform Warping} 
+
 
 
 \begin{table}[H]
@@ -114,9 +114,9 @@
         \(\EnhanShapes\) & & \eqref{eq:nonuniform-shapes} \\
         \(\EnhanConstFA\) & $\sim$ & \eqref{eq:nonuniform-shapes} &  \\
         $\WarpFA$     & & \eqref{eq:warp-fa-bvp} & Nonuniform warping function \\
-        $\Jv$ & L$^4$ & \eqref{eq:Jv} & \\
-        $\Jw$ & \Length{6} & \eqref{eq:Jw} & Vlasov warping constant \\
-        $\Ja$ & \Length{8} & \eqref{eq:Jsigma} &  \\
+        $\GJv$ & S\Length{4} & \eqref{eq:Jv} & \\
+        $\EJw$ & S\Length{6} & \eqref{eq:Jw} & Vlasov warping constant \\
+        $\Ja$ &  S\Length{8} & \eqref{eq:Jsigma} &  \\
     \bottomrule
     \end{tabular}
     % \caption{Summary of isotropic cross section constants.}

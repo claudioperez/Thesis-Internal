@@ -1,7 +1,7 @@
 \subsection{The Section-Average Trace}
 \label{sec:trace-cowper}
 
-The section-average trace extracts the $L^2$-optimal rigid approximation 
+The section-average trace of a homogeneous section extracts the $L^2$-optimal rigid approximation 
 to the displacement field \eqref{eq:def-section-avg-trace}:
 \begin{equation*}
 \bar{\bm{u}}(x) := \SectionAverage{\hat{\bm{u}}} - \bar{\bm{\theta}} \times \CentroidLocation, 
@@ -264,7 +264,7 @@ In view of \eqref{eq:Tinv-from-T}:% \cref{tab:T0-inv-blocks}: %
     \(\CenterShearLocation\)  & \eqref{eq:def-shear-center} \\
     \(\CenterTwistLocation\)  & \eqref{eq:def-twist-center} \\
     \(\bm{\SectionLocation}_{\pi}\) & \(\RotationAverage{\PlaneShearShape}^{\top}\FrameBasis\) \\
-    \(\SectionAverage{\PlaneShearShape}\) & \(\tfrac12\Io\oneS - \IntRGoRG\) \\
+    \(\SectionAverage{\PlaneShearShape}\) & \(\tfrac12\Io\oneS - \IntRGoRG\) & & with \(\Io = \operatorname{tr}\IntRoR\)\\
     \bottomrule
     \end{tabular}
 \end{table}

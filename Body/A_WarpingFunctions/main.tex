@@ -1,23 +1,14 @@
 \cite{pilkey2003analysis}, \cite{lacarbonara2007solution} and \cite{armero2021modeling}.
 
 \subsection{Shape I: Twist}
-Recall \eqref{eq:bvp-warp-twist-iesan}:
-\begin{equation}
-\left\{
-\begin{array}{rll}
-\operatorname{div}_G\left(\left.\nabla \WarpSVP+\FrameBasis\times\PlanePosition\right.\right) &=0 & \text { in } \Section, \\
-\nabla_{\bm{\nu}} \WarpSVP &=-\FrameBasis\times\PlanePosition \cdot \bm{\nu} & \text { on } \SectionBoundary, \\
-\int_{\Section} \WarpSVP \volE &= 0
-\end{array}
-\right.
-\label{eq:apx-warp-sv-bvp}
-\end{equation}
+\eqref{eq:bvp-warp-twist-iesan}:
 
 $$
 \int_{\Omega} \left(\nabla \WarpSVP+\FrameBasis\times\PlanePosition\right) \cdot \nabla w \volG=0
 $$
 
 \subsection{Shape II: Shear}
+\eqref{eq:bvp-warp-shear-iesan}
 \begin{equation}
 \begin{aligned}
 \int_{\Section}G\,\nabla(\WarpShearShape\cdot\bm{b}_{\Section})\cdot\nabla w\;\dA

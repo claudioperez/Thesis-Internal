@@ -44,23 +44,6 @@ Let $\mathbf{Q}(x,\bm{r})$ denote the residual obtained by projecting the Saint-
 % \end{equation*}
 % with each $\bm{\Phi}_j$ independent of $x$. 
 After removing all patterns in $\mathscr{R}(\Section)$ from the Saint-Venant solution, the residual is spanned by the following linearly independent shapes:
-\begin{Old}
-\begin{subequations}
-\begin{alignat}{8}
-&\text{Transverse:}\notag\\
-&&&\PlaneAxialShape:=-\,\nu\,\bm{r}&&\text{ Poisson extension }& \text{1 amplitude }&&\alpha_{\varepsilon}\propto a_\varepsilon \sim \reflenx^0\\
-&&&\bm{W}_{(a)}:=-\,\nu\,\operatorname{dev}\bm{r}\otimes\bm{r}&&\text{ Poisson bending }&\text{2 amplitudes }&&\bm{\alpha}_a\propto\IesanLoadM\sim \reflenx^0 \label{eq:def-Wa}\\
-&&&\PlaneShearShape:=-\,\nu\big(\operatorname{dev}\bm{r}\otimes\bm{r}-\bm{r}\otimes\CentroidLocation\big)&&\text{ Poisson flexure }&\text{2 amplitudes }&&\bm{\alpha}_{b}\propto\bm{b}_{\Section}\sim \reflenx^1
-\label{eq:def-Wb}
-\\
-%
-&\text{Longitudinal:} \notag\\
-&&&\FrameBasis\otimes\bm{\WarpShearIesan}&&\text{ Flexure }&\text{2 amplitudes }&&\bm{\alpha}_{\WarpShear}\propto\bm{b}_{\Section}\sim \reflenx^0 \\
-&&&\FrameBasis\,\WarpTwistIesan &&\text{ Torsion }&\text{1 amplitude }&&\alpha_{\WarpTwistIesan} \propto a_{\vartheta}+c_{\vartheta}\sim \reflenx^0 
-\end{alignat}
-\label{eq:def-poisson-warping}
-\end{subequations}
-\end{Old}
 %
 \begin{subequations}
 \begin{alignat}{3}
@@ -71,7 +54,7 @@ After removing all patterns in $\mathscr{R}(\Section)$ from the Saint-Venant sol
 &\text{Torsion warping:} \quad && \FrameBasis \WarpTwistIesan, \quad && \alpha_{\WarpTwistIesan} \propto a_{\vartheta} + c_{\vartheta}.
 \end{alignat}
 % \label{eq:def-poisson-warping}
-\label{eq:def-eight-shapes}
+% \label{eq:def-eight-shapes}
 \end{subequations}
 %
 where  \(\nu\) is Poisson's ratio and the centroid location \(\CentroidLocation\) is defined by \eqref{eq:def-centroid}.

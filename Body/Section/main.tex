@@ -14,7 +14,7 @@ The construction is motivated by enhanced strain methods in finite element analy
 Here the same idea is applied at the cross-sectional level. 
 For a prescribed set of beam strain measures, additional section strain modes are introduced to improve the representation of the underlying three-dimensional strain field. The associated mode amplitudes are determined locally at each cross section and are condensed out of the global system. As a result, the beam equilibrium equations are unchanged, while the section constitutive mapping is enriched.
 
-\subsubsection{Literature}
+\subsection{Literature}
 
 % Supplements
 \cite{oreilly2017modeling,goss2003snap} offer rich historical accounts of nonlinear beam theories. 
@@ -46,7 +46,7 @@ The governing equations for the standard Type II family of beam theories is brie
 In \cref{sec:std-continuum}, the body is introduced in the continuum setting. \Cref{sec:std-kinematics} introduces the kinematic representation of this body in terms of fields on the curve \(\mathcal{C}\), from which the beam deformations \(\bm{e}\) naturally precipitate and conjugate generalized stress \(\bm{s}\) are implied. \Cref{sec:std-equilibrium} derives equilibrium equations for these resultants \(\bm{s}\). 
 \Cref{sec:std-section} derives the section constitutive relation \(\bm{e}\rightarrow\bm{s}\) by completing the virtual work identity.
 
-\subsubsection{Continuum}\label{sec:std-continuum}
+\subsection{Continuum}\label{sec:std-continuum}
 In the continuum setting the model is a body
 \(
 \Body=(0,L)\times\Section
@@ -128,7 +128,7 @@ u_{,y} \\ u_{,z}
 \fi
 
 
-\subsubsection{Kinematics}\label{sec:std-kinematics}
+\subsection{Kinematics}\label{sec:std-kinematics}
 
 The deformation is represented by the deflection \(\bm{x}(\reflenx)\in\mathbb{R}^3\), rotation \(\FrameRotation(\reflenx)\in\mathrm{SO}(3)\), and warping fields \(\bm{\alpha}(\reflenx)\in\mathbb{R}^{n_w}\):
 \begin{SaveEquation}{eq:finite-alignment-field}
@@ -141,7 +141,7 @@ The deformation is represented by the deflection \(\bm{x}(\reflenx)\in\mathbb{R}
 where \(\WarpAxialShapes:\Section\rightarrow\mathbb{R}^{n_w}\) collects \(n_w\) cross-sectional warping shapes. 
 % The representation \eqref{eq:finite-alignment-field} is exact in the limit \(n_w\rightarrow\infty\). 
 %
-% \subsubsection{Deformation Gradient}\label{sec:def-gradient}
+% \subsection{Deformation Gradient}\label{sec:def-gradient}
 The tangent map \(\bm{F}\coloneq T\,\hat{\chi}\) of the finite deformation \eqref{eq:finite-alignment-field} is:
 \begin{equation}
 \bm{F}
@@ -198,7 +198,7 @@ $$
 $$
 \end{Details}
 %
-% \subsubsection{Material Strain Tensor}\label{sec:material-strain}
+% \subsection{Material Strain Tensor}\label{sec:material-strain}
 
 The Green-Lagrange strain tensor \(\hat{\StrainTensor}\coloneq\tfrac12(\bm{F}^{\top}\bm{F}-\mathbf{1})\) with \eqref{eq:F-Phi} is:
 \begin{equation}
@@ -271,7 +271,7 @@ All strain representations derived below may be employed in connection with eith
 
 
 
-\subsubsection{Equilibrium Equations}\label{sec:std-equilibrium}
+\subsection{Equilibrium Equations}\label{sec:std-equilibrium}
 % Introduce e and s
 In \cref{sec:std-kinematics} the measures \(\ShearStrain\), \(\CurveStrain\), \(\bm{\alpha}\) and \(\bm{\alpha}'\) arise as natural strain measures on the curve \(\mathcal{C}\). 
 Thus the state of stress and strain along \(\reflenx\) is modeled by:
@@ -313,7 +313,7 @@ Imposing the remainder of \eqref{eq:seSE} by integration along \(\reflenx\) and 
 where \(\bm{f}_n\) and \(\bm{f}_m\) are given body force and moment loadings, respectively. 
 
 
-\subsubsection{Material Constitution}\label{sec:std-material}
+\subsection{Material Constitution}\label{sec:std-material}
 
 The general state of strain has the decomposition:
 \begin{SaveEquation}{eq:strain-tensor-decomp}
@@ -367,7 +367,7 @@ in \cref{sec:enhan-section} \citep{klinkel2002using}.
 This identity is the basis for the section constitutive relations developed in \cref{sec:std-section}.
 
 \iffalse
-\subsubsection{Material Constitution}
+\subsection{Material Constitution}
 
 The general state of strain has the decomposition:
 \begin{SaveEquation}{eq:strain-tensor-decomp}
@@ -400,7 +400,7 @@ This furnishes the representation for the stress vector \(\StressVector \in \mat
 \label{eq:def-stress-vector}
 \end{equation}
 \fi
-\subsubsection{Section Constitution}\label{sec:std-section}
+\subsection{Section Constitution}\label{sec:std-section}
 
 By the virtual work reduction \eqref{eq:sv-vw-reduction}, the section constitutive 
 relation requires only the strain vector \(\hat{\StrainVector}\). 
@@ -499,7 +499,7 @@ and consequently, requiring \eqref{eq:seSE} section-wise, the conjugate resultan
 where the last equality uses symmetry of \(\StressTensor\) and the definition \eqref{eq:def-stress-vector} of the stress vector.
 
 \iffalse
-\subsubsection{Section Constitution}\label{sec:std-section}
+\subsection{Section Constitution}\label{sec:std-section}
 The stress condition \eqref{eq:saint-venant-stress} introduces a constraint that determines the plane strains \(\tilde{\StrainTensor}\). This motivates adopting a truncated representation of the strains. Two cases of interest are:
 
 \begin{description}
@@ -600,7 +600,7 @@ and consequently, requiring \eqref{eq:seSE} section-wise, the conjugate resultan
 where the last equality uses symmetry of \(\StressTensor\) and the definition \eqref{eq:def-stress-vector} of the stress vector.
 \fi
 
-\subsubsection{Summary}
+\subsection{Summary}
 
 \begin{ambox}[Geometrically exact frame]{box:exact-shear-svq}
 
@@ -697,7 +697,7 @@ The local enforcement of the stress constraint \eqref{eq:stress-constraint} acco
 The enhanced formulation introduced next targets this second limitation. It enriches the strain state used in the section constitutive update while retaining the same beam-level balance laws and global unknowns.
 
 
-\subsubsection{Enhanced strain field}
+\subsection{Enhanced strain field}
 
 The section constitutive response is driven by the strain vector field over the section. The compatible strain vector $\hat{\bm{\varepsilon}}$ is obtained from the chosen truncation of \cref{sec:std-section} and may be regarded as the action of a section operator on the beam strain measures,
 \[
@@ -727,7 +727,7 @@ Let $\mathcal{E}$ denote the space of admissible rod strain fields $\bm{e}(x)$ a
 \]
 The enhanced modes generate the finite-dimensional subspace $\tilde{\mathscr{E}}$, consisting of tensors of the form $(\EnhanShapes(\bm r)\bm{\EnhanParam})\symbun\FrameBasis$.
 
-\subsubsection{Stability}
+\subsection{Stability}
 The enhanced modes must be linearly independent of strains already representable by admissible beam fields. We therefore require
 \begin{equation}
 \tilde{\mathscr{E}} \cap \operatorname{A}[\mathcal{E}] = \{0\},
@@ -736,7 +736,7 @@ The enhanced modes must be linearly independent of strains already representable
 which ensures identifiability of the split in \eqref{eq:enhan-strain} and prevents rank deficiency in the local condensation.
 
 
-\subsubsection{Consistency}
+\subsection{Consistency}
 
 % Let $L \coloneq L_2(\Section;\mathbb{R}^3)$ denote the ambient space of stress vectors over the section, and let $\StressSpaceH\subset L$ denote the admissible stress space induced by the Saint-Venant restriction \eqref{eq:saint-venant-stress} together with the chosen material model and local stress constraint enforcement. 
 An ideal consistency requirement is that the enhanced strain space is $L_2$-orthogonal to $\StressSpaceH$. 
@@ -757,7 +757,7 @@ When the material response admits a potential, this identification preserves the
 The condition \eqref{eq:def-enhan-residual} may be relaxed while still reproducing Saint-Venant fields exactly in the cases examined later, but the resulting beam model then lacks a variational interpretation. 
 In contrast, the stability condition \eqref{eq:def-enhan-stability} is required for a well-posed split. 
 
-\subsubsection{Implementation}
+\subsection{Implementation}
 
 For a given beam strain state $\bm{e}(x)$, the enhanced parameters $\bm{\EnhanParam}(x)$ are obtained locally by solving \eqref{eq:def-enhan-residual} at the section. 
 This local solve is performed concurrently with the material-point condensation implied by \eqref{eq:saint-venant-stress}. 
@@ -875,9 +875,9 @@ over a cross section discretization as described in Box~\ref{box:prep}:
 \end{ambox}
 
 
-\subsubsection{Discussion}
+\subsection{Discussion}
 
-Condition (i) is required to make the split in \eqref{eq:enhan-strain} well-posed. 
+Condition (i) is required to make the enhanced strain decomposition \eqref{eq:enhan-strain} well-posed. 
 Condition (ii) is imposed to recover a section-wise stationarity property such that the enhanced parameters act as internal variables whose values are determined by a local orthogonality condition against admissible stresses. 
 Nevertheless, one may also prescribe $\bm{\EnhanParam}$ directly as a function of $\bm{e}$ (thus relaxing \eqref{eq:def-enhan-residual}); the resulting model need not be variational, but can still reproduce Saint-Venant solutions exactly in the cases considered later.
 

@@ -79,7 +79,7 @@ Beam theories which are capable of representing multiaxial nonlinear material re
 
 % In three dimensions, torsional warping is well understood for Type I elements with good fidelity, whereas an analogous treatment of shear-induced warping remains less developed—particularly when coupled to multiaxial inelastic constitutive response.
 
-\subsubsection{Type I}
+\subsection{Type I}
 % For uniform warping, the central open problem is handling complications associated with shear (Saint Venant's P_II).
 When cross sectional warping is expected to vary uniformly over the body, auxiliary warping fields can be eliminated by associating various warping modes with classical beam deformations like curvature \(\bm{\kappa}\). 
 The phenomenon of torsional warping is particularly amenable to this approach and has been successfully incorporated into beam finite elements by several authors \citep{gruttmann1998geometrical}, but warping induced by transverse shear introduces several difficulties:
@@ -97,7 +97,7 @@ In the case of pure bending, it is standard that inelastic elements maintain exa
 A comparably consistent treatment for shear appears to remain an open problem.
 % There does not appear to be a formulation for shear that accomplishes this achievement. 
 
-\subsubsection{Type II}
+\subsection{Type II}
 % For nonuniform warping, 
 When cross sectional warping is \emph{nonuniform}, auxiliary warping fields become necessary and open problems exist for both shear and torsion. 
 The central problem is minimizing the number of warping shapes. 
@@ -122,7 +122,8 @@ The foundation laid by the RBV model has been directly extended to incorporate S
 % See also \cite{ladeveze1998new}.
 
 \paragraph{General Field Theories.}
-\cite{lecorvec2012nonlinear} generalized this line of work further by considering an arbitrary number of warping fields with warping shapes constructed by Lagrange interpolation polynomials in a geometrically linear inelastic finite element formulation.
+\cite{lecorvec2011enhanced} % lecorvec2012nonlinear
+generalized this line of work further by considering an arbitrary number of warping fields with warping shapes constructed by Lagrange interpolation polynomials in a geometrically linear inelastic finite element formulation.
 The resulting formulation is particularly powerful when several auxiliary fields are included, and has been championed by several authors \citep{dire20173d,addessi2021enriched}. 
 However, these interpolation schemes had to be constructed uniquely for a given section geometry, and were not able to reproduce classical Timoshenko beam solutions in the elastic range. 
 Furthermore, due to the general nature of the Lagrange interpolation basis, several warping fields were required to accurately reproduce classical solutions. 
@@ -132,12 +133,12 @@ Furthermore, due to the general nature of the Lagrange interpolation basis, seve
 An assumed strain framework is developed that enhances section constitutive models for standard beam elements in Type I and II categories, and supports integrating inelastic multiaxial material response over the cross section. 
 
 
-Beam theories are typically derived for finite element analysis by one of two approaches \citep{antman1995nonlinear}:
-\begin{itemize}
-\item In an \emph{induced} approach , the field equations of continuum mechanics are stated weakly in the form of a functional\footnote{Typical functionals include virtual work, Hu-Washizu, and Hellinger-Reissner.} 
-and the displacement field is postulated. 
-\item In an \emph{intrinsic} approach, a reduced kinematic description and strain measures are postulated on a one-dimensional domain and governing equations are derived by enforcing work conjugacy.
-\end{itemize}
+% Beam theories are typically derived for finite element analysis by one of two approaches \citep{antman1995nonlinear}:
+% \begin{itemize}
+% \item In an \emph{induced} approach , the field equations of continuum mechanics are stated weakly in the form of a functional\footnote{Typical functionals include virtual work, Hu-Washizu, and Hellinger-Reissner.} 
+% and the displacement field is postulated. 
+% \item In an \emph{intrinsic} approach, a reduced kinematic description and strain measures are postulated on a one-dimensional domain and governing equations are derived by enforcing work conjugacy.
+% \end{itemize}
 
 
 \begin{remark}\label{rem:inelastic-consistency}

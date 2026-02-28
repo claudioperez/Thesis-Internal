@@ -24,7 +24,8 @@ In order to conduct a meaningful structural health assessment, the assessor must
 The \gls{asset} abstraction represents the primary subject of structural health monitoring. For example, the Painter St. Overcrossing in \cref{fig:continuous-flare} (a) is an \gls{asset} identified with station number \texttt{CE89324} of the California Strong Motion Instrumentation Program (CSMIP) and structure number \texttt{04 0236} in the Federal Highway Administration’s National Bridge Inventory.
 Naturally, an inventory of \glspl{asset} will consist of a wide variety of structural designs, each with distinct vulnerabilities and strengths. 
 It is essential that the representation of an \gls{asset} is able to account for these contextual details.
-For example, several older bridges in the Caltrans inventory, including the Painter St. overcrossing, are designed with continuous flared columns like that shown in \cref{fig:continuous-flare} (a).  Structures with this design are particularly vulnerable to certain failure modes as shown in \cref{fig:continuous-flare} (b) \cite{sanchez1997seismic,soleimani2017seismic,caltrans2009memo-6-1}.
+For example, several older bridges in the Caltrans inventory, including the Painter St. overcrossing, are designed with continuous flared columns like that shown in \cref{fig:continuous-flare} (a).  
+Structures with this design are particularly vulnerable to certain failure modes as shown in \cref{fig:continuous-flare} (b) \citep{sanchez1997seismic,soleimani2017seismic,caltrans2009memo-6-1}.
 % An asset must be represented by a well-defined schema.
 
 \begin{figure}[h!]
@@ -75,7 +76,8 @@ In the context of \eqref{eq:newton-discrete}, \glspl{predictor-t1} answer the pr
  If the form of $\intern$ is \emph{assumed} and the loading $\extern$ is \emph{given}, then $\displ$ and $\veloc$ can be approximately \emph{determined}.
 \end{quote}
 %
-\glspl{predictor-t1} are commonly realized as approximate models for boundary value problems on infinite-dimensional (Hilbert) vector spaces by employing a \emph{finite element} discretization to furnish $\Mass$ and $\intern$ and an approximation to $\extern$ is constructed from input sensor data. Highly nonlinear geometric phenomena like buckling and collapse are efficiently represented by generalizing to the setting of infinite-dimensional manifolds \cite{perez2024nonlinear}.
+\glspl{predictor-t1} are commonly realized as approximate models for boundary value problems on infinite-dimensional (Hilbert) vector spaces by employing a \emph{finite element} discretization to furnish $\Mass$ and $\intern$ and an approximation to $\extern$ is constructed from input sensor data. 
+Highly nonlinear geometric phenomena like buckling and collapse are efficiently represented by generalizing to the setting of infinite-dimensional manifolds \cite{perez2024nonlinear}.
 Finite elements models as \glspl{predictor} have recently been considered in the context of digital twins by \cite{torzoni2024digital,ghahari2022bridge,chern2024brace2}. 
 These techniques are particularly
 attractive because they are readily
@@ -116,15 +118,17 @@ Health monitoring then entails tracking the data-fitted identity of a structure 
     \caption{Class diagram for the Metric abstraction.}
     \label{fig:metric-class}
 \end{figure}
-\glspl{metric} represent the various outputs that \glspl{predictor} might produce. They provide a common language for interpreting and comparing the results of different \glspl{predictor}. For instance, both a system identification method and a finite element model can be used to fit modal properties to a given input and output signal. Despite these being fundamentally different \glspl{predictor}, the \gls{metric} abstraction allows the modal properties they produce to be presented in a common manner or compared.
+\glspl{metric} represent the various outputs that \glspl{predictor} might produce. They provide a common language for interpreting and comparing the results of different \glspl{predictor}. For instance, both a system identification method and a finite element model can be used to fit modal properties to a given input and output signal. 
+Despite these being fundamentally different \glspl{predictor}, the \gls{metric} abstraction allows the modal properties they produce to be presented in a common manner or compared.
 
 The Metric is thus realized as an immutable value object that binds three elements: a tag identifying the physical quantity, a compact payload containing the numerical values, and a verdict that classifies those values against user‑defined thresholds (\cref{fig:metric-class}).  
-Because the data, metadata, and judgement travel together, metrics are self‑describing and directly comparable across predictor families.  Whether a frequency shift is inferred by an inverse system‑identification routine or computed by a forward finite‑element simulation, it is exposed through the same interface and can participate in the same decision logic.
+Because the data, metadata, and judgment travel together, metrics are self‑describing and directly comparable across predictor families.  Whether a frequency shift is inferred by an inverse system‑identification routine or computed by a forward finite‑element simulation, it is exposed through the same interface and can participate in the same decision logic.
 
-Metrics are generally used for two important purposes: they may be passed down to decision-makers to inform judgment calls or fed back to \glspl{predictor} for the purpose of model updating or training \cite{katam2023review,avci2021review}. 
+Metrics are generally used for two important purposes: they may be passed down to decision-makers to inform judgment calls or fed back to \glspl{predictor} for the purpose of model updating or training \citep{katam2023review,avci2021review}. 
 
 \subsubsection{Metrics for Evaluation}
-When metrics are passed to decision-makers, they translate the complex mathematical models into understandable and actionable information. This could be in the form of risk assessments, performance indicators, or any other form of measurement that is relevant to the physical system being modeled. By providing a consistent interface for these outputs, the \gls{metric} abstraction ensures that the insights generated by different \glspl{predictor} are comparable and comprehensible, regardless of the underlying prediction method \cite{doebling1998summary,salawu1997detection,dilorenzo2023physics,muin2024human}.
+When metrics are passed to decision-makers, they translate the complex mathematical models into understandable and actionable information. This could be in the form of risk assessments, performance indicators, or any other form of measurement that is relevant to the physical system being modeled. 
+By providing a consistent interface for these outputs, the \gls{metric} abstraction ensures that the insights generated by different \glspl{predictor} are comparable and comprehensible, regardless of the underlying prediction method \citep{doebling1998summary,salawu1997detection,dilorenzo2023physics,muin2024human}.
 %
 % The envisioned judgment calls can include closing a particular bridge, prioritizing locations to send early responders to for in-depth inspection, or declaring that no action is needed. 
 \iffalse
@@ -147,7 +151,8 @@ The best use for such metrics is compiling the structure-level condition assessm
 \fi
 
 \subsubsection{Metrics for Updating}
-The second role of metrics is their use in model updating or training. In this scenario, the metrics serve as a feedback mechanism. The outputs of the \glspl{predictor} are evaluated against some desired outcome or benchmark, and this evaluation is fed back into the \gls{predictor}. This feedback can be used to adjust the parameters of the \gls{predictor}, effectively ‘training’ it to improve its future outputs \cite{torzoni2024digital,ereiz2022review,ghahari2022bridge}.
+The second role of metrics is their use in model updating or training. In this scenario, the metrics serve as a feedback mechanism. The outputs of the \glspl{predictor} are evaluated against some desired outcome or benchmark, and this evaluation is fed back into the \gls{predictor}. 
+This feedback can be used to adjust the parameters of the \gls{predictor}, effectively ‘training’ it to improve its future outputs \citep{torzoni2024digital,ereiz2022review,ghahari2022bridge}.
 
 The \gls{metric} abstraction is instrumental in this context. It provides a common interface for these evaluations, facilitating the interchangeability of different training algorithms. For instance, consider two distinct \glspl{predictor}: one employing a least squares method for system identification, and another utilizing a genetic algorithm for optimizing a finite element model \citep{gomez-cabrera2022review}. 
 Despite the fundamental differences in their methodologies, both \glspl{predictor} can leverage the \gls{metric} abstraction to establish a consistent feedback loop.

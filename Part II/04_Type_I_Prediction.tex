@@ -259,7 +259,7 @@ A rigid joint offset is inserted at the top of each column to the center of the 
 To determine the metric of \emph{damage state} (DS) for a column component given an imposed dynamic loading, maximum strain and maximum displacement are computed from nonlinear response history analysis. 
 There are multiple proposed schemes for defining DS, including strain-based DS (\cref{tab:DS}) that models the relationship between fiber strains and component capacity based on previous Caltrans-PEER studies, and ductility-based DS \citep{saini2014probabilistic} that models the relationship between a displacement-based damage index and component capacity. 
 The \gls{platform} employs strain-based DS.
-\begin{table}[h!]
+\begin{table}[H]
 \centering
 \caption{Damage state criteria for strain-based component capacity model.}
 \begin{adjustbox}{width=1\textwidth}
@@ -281,7 +281,7 @@ The \gls{platform} employs strain-based DS.
 The damage state metric can be used to further extend the decision-making process for operational actions with standard practices by Caltrans' Structures Maintenance and Investigations group, such as those outlined in the ``Caltrans First Responder Bridge Assessment Guide''. 
 For example, DS1-2 corresponds to allowing the structure to remain open; DS3-4 corresponds to inspecting the structure while allowing it to remain open; DS5 corresponds to closing the bridge for further inspection, and DS6 corresponds to closing the bridge immediately. The {\em{decision boundaries}} are to be calibrated in the future as more events occur and are analyzed by the \gls{platform}.
 
-\subsection{Interpretation}
+\section{Interpretation}
 
 Following their execution on the platform, \glspl{predictor-t1} results are processed into metrics. 
 %  they assign a little bit of meaning to the results -- for exmample, we might get a certain strain response and say this equals damage state 1, or minor damage -- flexural cracks.
@@ -290,7 +290,7 @@ Following their execution on the platform, \glspl{predictor-t1} results are proc
 The processed metrics are displayed on the metric cards (\cref{fig:sam_metrics}). As they are results of \glspl{predictor-t1}, they correspond to \emph{simulated} response values. 
 When there are multiple predictors, the desired predictor can be selected from the predictor selection region at the bottom of each metric card.
 
-\begin{figure}%[H]
+\begin{figure}[H]
 \centering
 \includegraphics[width=0.5\linewidth]{Part II/figures/predictors/t1_metrics_ds.png}
 \includegraphics[width=0.5\linewidth]{Part II/figures/predictors/t1_metrics_drift.png}

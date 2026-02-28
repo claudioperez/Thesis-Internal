@@ -1,6 +1,6 @@
 
 
-\subsection{Introduction}
+\section{Introduction}
 
 The \OpenSees{} framework \citep{mckenna1997object} is underpinned by a carefully layered C++ core that offers powerful abstractions for creating nonlinear finite-element programs. 
 Among the most widely used applications built on this core are the Tcl and Python interpreters, which provide domain-specific scripting environments for structural and geotechnical modeling. 
@@ -15,7 +15,7 @@ The design replaces process-level singletons with user-owned objects whose lifet
 This architectural change enables reliable embedding of \OpenSees{} in mission-critical systems, safe concurrent evaluation of multiple models, and integration with automatic differentiation frameworks that require explicit computational graphs. 
 The proposed architecture derives largely from the FEDEASLab toolbox for MATLAB \citep{filippou2004fedeaslab}. 
 
-\subsection{The Legacy Interpreter Architecture}
+\section{The Legacy Interpreter Architecture}
 \label{sec:legacy}
 
 The \OpenSees{} interpreters are built on an intermediary layer of stateful functions known as the OPS API \citep{zhu2018openseespy}. 
@@ -51,7 +51,7 @@ The lack of encapsulation means that a library embedding \OpenSees{} cannot guar
 % The architectural deficiency lies not in the core but in the interpreter layer that mediates access to it. 
 % The OPS API, by interposing global state between the user and the core, forfeits the composability and encapsulation that the core's object-oriented design was intended to provide.
 
-\subsection{A Structured Runtime}\label{sec:runtime}
+\section{A Structured Runtime}\label{sec:runtime}
 
 The restructured runtime eliminates global state by introducing explicit context objects that own finite-element entities and encapsulate analysis state. 
 Every API function receives the relevant context as an argument, making dependencies explicit and enabling multiple independent analyses within a single process.
@@ -94,7 +94,7 @@ This pattern admits a natural extension to language bindings. The Python interfa
 The restructured runtime does not require abandoning existing command implementations. Because the new API is strictly more explicit than the old one, a compatibility layer can present the legacy interface by maintaining a thread-local ``current context'' that global-style functions implicitly reference. 
 This allows existing scripts to execute unchanged while enabling new code to adopt explicit context management. The compatibility layer introduces no overhead beyond a thread-local lookup and can be removed once legacy usage is retired.
 
-\subsection{Implications for Embedded Applications}
+\section{Implications for Embedded Applications}
 \label{sec:implications}
 
 The architectural changes described above have immediate practical consequences for applications that embed \OpenSees{} as a computational kernel.
@@ -115,7 +115,7 @@ Modern machine learning frameworks construct explicit computational graphs that 
 
 Perhaps most critically, explicit ownership eliminates the hazard of state corruption when multiple libraries embed \OpenSees{}. Each library instantiates its own contexts, and no global state exists for them to share. This property is prerequisite for deploying \OpenSees{} as a ``black-box'' dependency in production systems where robustness requirements preclude the debugging of subtle interaction effects.
 
-\subsection{Validation}\label{sec:validation}
+\section{Validation}\label{sec:validation}
 
 The restructured runtime is accompanied by over three hundred unit and integration tests that execute in under thirty seconds on a single CPU core. Continuous integration builds verify compatibility across Linux, macOS, and Windows with GCC, Clang, and MSVC. 
 The test suite includes regression tests against the legacy interpreter to ensure numerical equivalence for supported features.
@@ -123,7 +123,7 @@ The test suite includes regression tests against the legacy interpreter to ensur
 The runtime entered production deployment in January 2024 as the computational kernel for a real-time seismic monitoring platform operated by a state transportation agency. 
 Since deployment, it has processed over one hundred fifty seismic events, providing automated post-event structural assessments within minutes of ground motion. The platform's requirements for deterministic behavior, parallel scenario evaluation, and reliable embedding motivated the architectural work described in this chapter and validated its practical effectiveness.
 
-\subsection{Conclusion}\label{sec:conclusion}
+\section{Conclusion}\label{sec:conclusion}
 
 The restructured runtime restores the encapsulation envisioned in the original \OpenSees{} design while retaining full compatibility with the underlying C++ core. 
 By eliminating the interpreter's hidden state, it delivers an explicit, composable API that is safe to embed, parallelize, and differentiate. 

@@ -1,5 +1,5 @@
 
-\subsection{Introduction}
+\section{Introduction}
 \label{sec:nonuniform-intro}
 
 Auxiliary warping can generate stress fields that violate the sectional equilibrium equations \eqref{eq:sv-equilibrium}. 
@@ -29,7 +29,7 @@ Outline:
 \end{itemize}
 
 
-\subsection{Preliminaries}
+\section{Preliminaries}
 \label{sec:nonuniform-prelim}
 
 Consider linear elastic deformations of an isotropic body with stresses of the form \eqref{eq:saint-venant-stress} so 
@@ -122,8 +122,8 @@ The compatible linearized strain tensor \(\hat{\StrainTensor}\) is characterized
 
 
 \iftrue
-% \subsection{Equilibrium Violations}
-\subsection{Equilibrium residual}
+% \section{Equilibrium Violations}
+\section{Equilibrium residual}
 \label{sec:nonuniform-residual}
 
 
@@ -281,7 +281,7 @@ Therefore the residual is a linear combination of two independent functionals
 their linear combination.
 
 
-\subsection{Enhanced Subspace}
+\section{Enhanced Subspace}
 \label{sec:nonuniform-enhanced}
 
 The minimal compatible correction space in view of \eqref{eq:nonuniform-residual} is
@@ -334,7 +334,7 @@ Define constants:
 % From your definitions
 
 % \[
-% (\WarpTwistIesan,\WarpTwistIesan)_G=\GJv,\qquad (\psi,\psi)_G=\Js,\qquad (\psi,\WarpTwistIesan)_G=-\EJw,
+% (\WarpTwistIesan,\WarpTwistIesan)_G=\GJv,\qquad (\psi,\psi)_G=\Ja,\qquad (\psi,\WarpTwistIesan)_G=-\EJw,
 % \]
 
 % so the \(2\times2\) Gram data in \((\cdot,\cdot)_G\) is
@@ -342,7 +342,7 @@ Define constants:
 % \[
 % \begin{pmatrix}
 % \GJv & -\EJw\\
-% -\EJw & \Js
+% -\EJw & \Ja
 % \end{pmatrix}.
 % \]
 
@@ -367,7 +367,7 @@ and
 %
 \begin{equation}
 \|\chi_c\|_G^2 \coloneq  (\chi_c,\chi_c)_G
-= \GJv - 2\EnhanConstFA\,\EJw + \EnhanConstFA^2\Js.
+= \GJv - 2\EnhanConstFA\,\EJw + \EnhanConstFA^2\Ja.
 \label{eq:chi-norm}
 \end{equation}
 %
@@ -377,7 +377,7 @@ Hence
 \EnhanParam=(\Twist-\alpha)\,\bar\eta(\EnhanConstFA),
 \qquad 
 \bar\eta(\EnhanConstFA)=\frac{\tilde J(\EnhanConstFA)}{\|\chi_c\|_G^2}
-=\frac{\GJv-\EnhanConstFA\EJw}{\GJv-2\EnhanConstFA\EJw+\EnhanConstFA^2\Js}.
+=\frac{\GJv-\EnhanConstFA\EJw}{\GJv-2\EnhanConstFA\EJw+\EnhanConstFA^2\Ja}.
 \label{eq:nonuniform-eta}
 \end{equation}
 
@@ -411,7 +411,7 @@ After reducing the two independent scalars \((\alpha-\Twist)\) and \(\alpha''\) 
 \end{equation}
 
 
-\subsection{Cannonical Subspace}
+\section{Cannonical Subspace}
 \label{sec:nonuniform-canonical}
 
 A clean normalization chooses \(\EnhanConstFA\) so that \(\chi_c\) is \(G\)-orthogonal
@@ -423,13 +423,13 @@ to \(\WarpFA\):
 (\WarpTwistIesan,\WarpFA)_G
 +\EnhanConstFA (\WarpFA,\WarpFA)_G=0
 \quad\Longleftrightarrow\quad
--\EJw+\EnhanConstFA \Js=0,
+-\EJw+\EnhanConstFA \Ja=0,
 \]
 
 hence
 
 \begin{equation}
-\EnhanConstFA=\frac{\EJw}{\Js}
+\EnhanConstFA=\frac{\EJw}{\Ja}
 = -\frac{(\WarpFA,\WarpTwistIesan)_G}{(\WarpFA,\WarpFA)_G}.
 \label{eq:fa-lambda}
 % \tag{9}
@@ -455,22 +455,22 @@ equivalent characterizations:
 
 
 \[
-(\chi_c,\WarpFA)_G = -\EJw + \EnhanConstFA\Js = 0.
+(\chi_c,\WarpFA)_G = -\EJw + \EnhanConstFA\Ja = 0.
 \]
 
 \item
   \textbf{Minimum \(G\)-norm of the potential \(\chi_c\):}
 
 \[
-\|\chi_c\|_G^2=\GJv-2\EnhanConstFA\EJw+\EnhanConstFA^2\Js
+\|\chi_c\|_G^2=\GJv-2\EnhanConstFA\EJw+\EnhanConstFA^2\Ja
 \ \ \text{is minimized at}\ \ 
-\frac{\dd}{\dd \EnhanConstFA}\|\chi_c\|_G^2 = -2\EJw+2\EnhanConstFA\Js=0
+\frac{\dd}{\dd \EnhanConstFA}\|\chi_c\|_G^2 = -2\EJw+2\EnhanConstFA\Ja=0
 \]
 
 \end{enumerate}
 
 
-\subsection{General Solution}
+\section{General Solution}
 \label{sec:nonuniform-solution}
 
 \iftrue
@@ -492,6 +492,10 @@ T
 \GIo &\triangleq \int_{\Section} r^2 \volG \\
 \end{aligned}
 $$
+Using \eqref{eq:nonuniform-eta} furnishes:
+\[
+T = (\GIo - \bar{\eta}\tilde{J})\Twist - (\GJv - \bar{\eta}\tilde{J})\alpha
+\]
 The bi-moment is
 \begin{equation}
 B = \bm{w} = \int \WarpTwistIesan \FrameBasis \cdot \StressVector \dA =  \EJw \alpha'
@@ -528,7 +532,7 @@ Using \eqref{eq:def-J-enhan}--\eqref{eq:chi-norm}, this simplifies to
 
 \[
 \GJv-\frac{\tilde{J}(\EnhanConstFA)^2}{\|\chi_c\|_G^2}
-=\frac{\EnhanConstFA^2\big(\GJv\Js-\EJw^2\big)}{\GJv-2\EnhanConstFA\,\EJw+\EnhanConstFA^2\Js}.
+=\frac{\EnhanConstFA^2\big(\GJv\Ja-\EJw^2\big)}{\GJv-2\EnhanConstFA\,\EJw+\EnhanConstFA^2\Ja}.
 % \tag{6}
 \]
 
@@ -536,7 +540,7 @@ Therefore the condensed bi-shear is
 
 \begin{equation}
 Q= (\alpha-\Twist)\;
-\frac{\EnhanConstFA^2\big(\GJv\Js-(\EJw)^2\big)}{\GJv-2\EnhanConstFA\,\EJw+\EnhanConstFA^2\Js}.
+\frac{\EnhanConstFA^2\big(\GJv\Ja-(\EJw)^2\big)}{\GJv-2\EnhanConstFA\,\EJw+\EnhanConstFA^2\Ja}.
 \label{eq:nonuniform-bishear}
 %\tag{7}
 \end{equation}
@@ -545,7 +549,7 @@ And bimoment equilibrium \(B'-Q=0\) \eqref{eq:finite-equilibrium}$_3$ becomes
 
 \begin{equation}
 \EJw\,\alpha''\;-\; (\alpha-\Twist)\;
-\frac{\EnhanConstFA^2\big(\GJv\Js-\EJw^2\big)}{\GJv-2\EnhanConstFA\,\EJw+\EnhanConstFA^2\Js}=0.
+\frac{\EnhanConstFA^2\big(\GJv\Ja-\EJw^2\big)}{\GJv-2\EnhanConstFA\,\EJw+\EnhanConstFA^2\Ja}=0.
 \label{eq:bimoment-equilibrium}
 % \tag{8}
 \end{equation}
@@ -595,7 +599,7 @@ Integrating the moment equilibrium equation \eqref{eq:torsion-equilibrium}$_1$ f
      \quad\text{with}\quad 
      \hat{\eta} = \frac{\GIo - \bar{\eta}\tilde{J}}{\GJv - \tilde{J}}
 \end{equation*}
-where \(\EnhanConstFA\) is a constant of integration. 
+where \(C\) is a constant of integration. 
 This produces the bimoment \eqref{eq:nonuniform-bimoment} and bishear \eqref{eq:nonuniform-bishear} expressed in terms of the twist rate \(\Twist\):
 \begin{equation*}
 B = \EJw \hat{\eta} \Twist'(\reflenx) 
@@ -647,15 +651,15 @@ with boundary conditions:
 
 
 \[\|\chi_c\|_G^2
-= \Js\Big(\EnhanConstFA-\frac{\EJw}{\Js}\Big)^2+\Big(\GJv-\frac{\EJw^2}{\Js}\Big),\]
+= \Ja\Big(\EnhanConstFA-\frac{\EJw}{\Ja}\Big)^2+\Big(\GJv-\frac{\EJw^2}{\Ja}\Big),\]
 
 this is \(>0\) for all \(\EnhanConstFA\) provided the Gram determinant
-\(\GJv\Js-\EJw^2>0\) (i.e.~\(\WarpTwistIesan\) and \(\WarpFA\) are
+\(\GJv\Ja-\EJw^2>0\) (i.e.~\(\WarpTwistIesan\) and \(\WarpFA\) are
 \(G\)-independent). 
-For the degenerate case \(\GJv\Js=\EJw^2\), the energy \(\|\chi_c\|_G^2\)
+For the degenerate case \(\GJv\Ja=\EJw^2\), the energy \(\|\chi_c\|_G^2\)
 vanishes at 
 \[
-\EnhanConstFA=\EJw/\Js
+\EnhanConstFA=\EJw/\Ja
 \]
 
 \item Non-degeneracy of the resulting beam coupling:
@@ -665,7 +669,7 @@ One finds
 
 \[
 Q = (\alpha-\Twist)\Big(\GJv-\frac{\tilde J(\EnhanConstFA)^2}{\|\chi_c\|_G^2}\Big)
-   = (\alpha-\Twist)\,\frac{\EnhanConstFA^2(\GJv\Js-\EJw^2)}{\GJv-2\EnhanConstFA\EJw+\EnhanConstFA^2\Js}.
+   = (\alpha-\Twist)\,\frac{\EnhanConstFA^2(\GJv\Ja-\EJw^2)}{\GJv-2\EnhanConstFA\EJw+\EnhanConstFA^2\Ja}.
 \]
 
 In particular, \(\EnhanConstFA=0\Rightarrow Q\equiv 0\), i.e.~this eliminates the

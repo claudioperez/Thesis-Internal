@@ -9,13 +9,15 @@
 This problem investigates the influence of the nonlinear Wagner term \eqref{eq:wagner-gl-strain-pi} on lateral buckling. 
 
 A closed form solution for the critical linearized buckling moment is \citep[(7.22)]{trahair1993flexuraltorsional}:
-$$
+\[
 \begin{aligned}
 M_{\mathrm{cr}} & =\frac{\pi}{L}\sqrt{E I_y \TwistRigidity} \left[\left(1+\frac{\pi^2 \beta_x^2 E I_y}{4L^2 G \Jo}\right)^{1 / 2}+\frac{\pi \beta_x}{2 L}\left(\frac{E I_y}{\TwistRigidity}\right)^{1 / 2}\right] .
 \end{aligned}
-\qquad\text{with}\qquad 
-\beta_x = \frac{1}{I_x}\int y (x^2 + y^2)\dA - 2y_0
-$$
+\]
+where
+\[
+\beta_x \coloneq \frac{1}{I_x}\int y (x^2 + y^2)\dA - 2y_0
+\]
 
 \subparagraph{Setup}
 A simply supported span of length $L = 6\unit{\meter}$ is subjected to constant flexure (\cref{fig:1035-model}). 

@@ -100,8 +100,8 @@ Solving \(\EnhanParam\) for Condition~(ii) by \eqref{eq:def-enhan-residual}
     (\nabla \WarpSV + \EnhanConstFA \nabla \WarpFA)
     \cdot G \left(\alpha \nabla \WarpSV + \Twist\, \FrameBasis \times \PlanePosition + \EnhanShape \EnhanParam \right)
     } \\
-&= \EnhanConstFA \Jw (\Twist - \alpha) - \Jv( \Twist - \alpha) + (\Jv - 2 \EnhanConstFA \Jw + \EnhanConstFA^2 \Js) \EnhanParam \\
-&= - (\Jv - \EnhanConstFA \Jw) (\Twist - \alpha) + (\Jv - 2 \EnhanConstFA \Jw + \EnhanConstFA^2 \Js) \EnhanParam
+&= \EnhanConstFA \Jw (\Twist - \alpha) - \Jv( \Twist - \alpha) + (\Jv - 2 \EnhanConstFA \Jw + \EnhanConstFA^2 \Ja) \EnhanParam \\
+&= - (\Jv - \EnhanConstFA \Jw) (\Twist - \alpha) + (\Jv - 2 \EnhanConstFA \Jw + \EnhanConstFA^2 \Ja) \EnhanParam
 \end{aligned}
 \end{equation*}
 %
@@ -113,7 +113,7 @@ furnishing
 % &= \Twist - \alpha 
 \end{aligned}
 \quad\text{with}\quad 
-\bar{\eta} \triangleq \frac{\Jv - \EnhanConstFA \Jw}{\Jv - \EnhanConstFA (2 \Jw - \EnhanConstFA \Js)}
+\bar{\eta} \triangleq \frac{\Jv - \EnhanConstFA \Jw}{\Jv - \EnhanConstFA (2 \Jw - \EnhanConstFA \Ja)}
 \label{eq:enhan-param}
 \end{equation}
 %
@@ -171,7 +171,7 @@ This furnishes for the dimensionless parameter $\eta \geq 1$ \citep{armero2022ne
 \eta = \begin{cases}
 1+\dfrac{\Jo}{\Jv} & \text { RBV, } \\
 1 & \text { TWKV, } \\ 
-1+\dfrac{\Jo}{\left(\Jw^2 / \Js \right)} & \text { Armero}\end{cases}
+1+\dfrac{\Jo}{\left(\Jw^2 / \Ja \right)} & \text { Armero}\end{cases}
 \end{equation}
 where recall the Saint Venant constant is \(\Jo = \Io - \Jv\)
 and

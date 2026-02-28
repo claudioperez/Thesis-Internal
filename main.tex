@@ -13,6 +13,8 @@
     \copyrightpage
 \fi
 
+\include{Front/abstract}
+
 {
 \hypersetup{linkcolor=black}
 \iffinal\else
@@ -30,14 +32,16 @@
 \clearpage
 
 \begin{Notation}[section]
-% \section{Introduction}
+% \chapter{Introduction}
 % \input{Body/Introduction}
 % \clearpage 
 
-% \part{Finite Element Formulations}
-\part{Structural Mechanics}
 
-\section{Overview}\label{sec:Part-I}
+% \part{Finite Element Formulations}
+% \part{Structural Mechanics}
+\part{Structural Modeling}
+
+\chapter{Overview}\label{sec:Part-I}
 \input{Body/Part-I}
 \clearpage
 
@@ -54,17 +58,17 @@
 % \clearpage
 
 
-\section{An Enhanced Strain Framework for Sections}\label{sec:gensec}
+\chapter{An Enhanced Strain Framework for Sections}\label{sec:gensec}
 %Section Formulation}
 \input{Body/Section/main}
 % \input{Body/Section/21_Literature}
 \clearpage
 
-\section{Enhanced Uniform Warping}\label{sec:timo}
+\chapter{Enhanced Uniform Warping}\label{sec:timo}
 \input{Body/Traces/main}
 \clearpage
 
-\section{Enhanced Nonuniform Warping}\label{sec:nonuniform}
+\chapter{Enhanced Nonuniform Warping}\label{sec:nonuniform}
 \input{Body/Nonuniform/main}
 \clearpage 
 
@@ -73,14 +77,19 @@
 % \input{Body/Transformations/Conclusions}
 % \clearpage 
 
-\section{Summary}
+\chapter{Summary}
 \input{Body/Part-I-Conclusions}
 \clearpage
 
-\part{Applications}
 
-\section{Overview}\label{sec:Part-II}
-\input{Body/Part-II}
+\input{Examples/index}
+\clearpage
+
+
+\part{Regional Application}
+
+% \section{Overview}\label{sec:Part-II}
+% \input{Body/Part-II}
 % \clearpage
 
 
@@ -89,29 +98,32 @@
 % \clearpage
 
 
-\section[Xara]{\Xara{}: A Structured Runtime for Structural Simulation}\label{ch:xara}
-% \input{Body/Xara/main}
-% \clearpage 
-
-\section{BRACE2}\label{sec:irie}
-% \InputChapter{Body/Irie/main}
-% \clearpage
-
-% \InputChapter{Part II/main}%
-\clearpage 
-
-\input{Examples/index}
+\chapter{A Platform for Structural Health Monitoring}\label{sec:irie}
+\input{Body/Irie/main}
 \clearpage
 
-\section{Conclusions}
+\input{Part II/main}%
+\clearpage 
+
+
+\chapter[Xara: A Software Architecture for Mission-Critical Simulation]{\Xara{}: 
+A Software Architecture for Mission-Critical Simulation
+% A Structured Runtime for Structural Simulation
+}\label{ch:xara}
+\input{Body/Xara/main}
+\clearpage
+
+
+\chapter{Conclusions}
 \input{Body/Part-II-Conclusions}
 \clearpage
 
+\part{Appendices}
 \begin{appendices}
 \clearpage
-\section{Notation}\label{sec:notation}
+\chapter{Notation}\label{sec:notation}
 
-\InputDetail{Back/A_Notation}
+\input{Back/A_Notation}
 \clearpage
 
 \glsaddall
@@ -131,25 +143,23 @@
 % % \input{Body/Library/Transform/main}
 % \clearpage
 
-\section{The Force Formulation}\label{sec:ForceFrame}
-\input{Body/ForceFrame/main}
+\include{Body/ForceFrame/main}
 \clearpage
 
 \include{Body/Iesan/main}
 \clearpage
 
-\section{Finite Element Procedures for Warping Functions}
+\chapter{Finite Element Procedures for Warping Functions}
 \input{Body/A_WarpingFunctions/main}
 \clearpage 
 
-\section{Integration over Sections}
-\input{Back/A_IntegralIdentities}
+
+\include{Back/A_IntegralIdentities}
 \clearpage
 
 
-\section{Trace Derivations}
+\chapter{Trace Derivations}
 \input{Body/Traces/A3_Cowper}
-\clearpage
 \clearpage
 \input{Body/Traces/A3_Energetic}
 \clearpage 
@@ -157,7 +167,7 @@
 \end{Notation}
 
 \clearpage
-\hypertarget{references}{\section{References}\label{sec:references}}
+\hypertarget{references}{\chapter{References}\label{sec:references}}
 \printbibliography[heading=none]
 
 \end{document}

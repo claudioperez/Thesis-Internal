@@ -864,7 +864,7 @@ over a cross section discretization as described in Box~\ref{box:prep}:
     \[
     \bm{s} = \int \TotalStrainMatrix^{\top} \bm{\sigma}(\hat{\bm{\varepsilon}} + \EnhanShapes \bm{\EnhanParam}) \dA
     \qquad\text{and}\qquad
-    \Ke = \int \TotalStrainMatrix^{\top}\mathbb{C}\TotalStrainMatrix \dA + \Kwg \dA
+    \Ke = \int \TotalStrainMatrix^{\top}\mathbb{C}\TotalStrainMatrix \dA \dA + \Kwg 
     % - \Kae^{\top} \Kaa^{-1} \Kae
     \]
     with \(\Kwg\) given by \eqref{eq:section-wagner-tangent}.

@@ -4,20 +4,6 @@
 
 Auxiliary warping can generate stress fields that violate the sectional equilibrium equations \eqref{eq:sv-equilibrium}. 
 This phenomenon has been documented for torsional warping \cite{...} and examined in detail by \cite{armero2021modeling}. 
-Within the enhanced strain framework of \cref{sec:enhan-section},
-\[
-\bar\varepsilon(\bm r;x)=\hat\varepsilon(\bm e;x)+\EnhanShapes(\bm r)\,\eta(x),
-\]
-the stationarity/orthogonality condition
-\[
-\residn(\eta)=\int_{\Section} \EnhanShapes^{\top}\StressVector\big(\hat\varepsilon+\EnhanShapes\eta\big)\,dA=0
-\]
-determines the section-local amplitude \(\eta(x)\). For a prescribed dimension \(n_a\), the modeling decision is the choice of an \(n_a\)-dimensional subspace
-\[
-\tilde{\mathscr E}=\{\EnhanShapes(\cdot)\eta:\eta\in\mathbb{R}^{n_a}\}
-\subset L_2(A;\mathbb{R}^3),
-\]
-subject to the stability constraint \(\tilde{\mathscr E}\cap A[\mathcal E]=\{0\}\).
 
 Outline:
 \begin{itemize}

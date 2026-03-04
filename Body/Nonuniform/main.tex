@@ -18,11 +18,11 @@ Outline:
 \section{Preliminaries}
 \label{sec:nonuniform-prelim}
 
-Consider linear elastic deformations of an isotropic body with stresses of the form \eqref{eq:saint-venant-stress} so 
+Consider moderate elastic deformations of an isotropic body with stresses of the form \eqref{eq:saint-venant-stress} so 
 \begin{equation*}
     \bm{\sigma} = \mathbb{C}\bm{\varepsilon}
     \qquad\text{with}\qquad 
-    \mathbf{C} = E \, \FrameBasis \otimes \FrameBasis + G \, \oneS
+    \mathbb{C} = E \, \FrameBasis \otimes \FrameBasis + G \, \oneS
 \end{equation*}
 where \(E\) and \(G\) are Young's and the shear modulus, respectively, and the notation of \cref{sec:std-continuum} is employed. 
 Define smooth, positive differential 2-forms \( \volG \) and \( \volE \)  on the cross-section \( \Section\) weighted by the shear \(G\) and Young's modulus \(E\), respectively:
@@ -34,7 +34,7 @@ Define smooth, positive differential 2-forms \( \volG \) and \( \volE \)  on the
 \end{aligned}
 \]
 where \(\dA\) is the Euclidean area form in the cross section plane \(\Section\). 
-These serve as volume forms over the cross section and define divergence and  integration on the section $\Section$ with densities $\WeightE$ and $\WeightG$ relative to the standard area form \citep{marsden1994mathematical}. 
+These serve as volume forms over the cross section and define divergence and  integration on the section $\Section$ with densities $\WeightE$ and $\WeightG$ relative to the standard area form (\cref{sec:integration}). 
 Define the \(E\)-inner product, \(G\)-energy inner product, and \(G\)-Poisson bracket:
 \begin{equation}
 \left<u,\, v\right>_E \coloneq \int_{\Section} u \, v \, \volE,
@@ -77,7 +77,7 @@ or, equivalently (by \cref{prop:armero-81}), as the solution to the standard Neu
 where \(\DivG\) is the divergence with respect to the volume form \(\mu_G\), as defined by \eqref{eq:def-div} (Box~\ref{box:recall}). 
 
 
-\subsubsection{Pure Torsion}
+\subsection{Pure Torsion}
 Under pure torsion the rotation \(\bm{\Lambda}\)
 can be represented with only a single parameter, say \(\vartheta\), so that:
 \begin{equation}
@@ -121,10 +121,11 @@ The compatible linearized strain tensor \(\hat{\StrainTensor}\) is characterized
 For any stress field satisfying \eqref{eq:saint-venant-stress} and the traction-free condition \(\StressTensor\,\bm{\nu}=\mathbf{0}\) on \(\BodyLateralSurface\),
 the field equations reduce on each section to
 \begin{subequations}
-\label{eq:sv-equilibrium}
+% \label{eq:sv-equilibrium}
 \begin{align}
 \bm{\tau}'&=\mathbf{0} && \text{in }\Section,\\
-\DivS\bm{\tau}+\AxialStress'&=0 && \text{in }\Section, \label{eq:sv-axial-equilibrium}\\
+\DivS\bm{\tau}+\AxialStress'&=0 && \text{in }\Section, %\label{eq:sv-axial-equilibrium}
+\\
 \bm{\tau}\cdot\bm\nu&=0 && \text{on }\SectionBoundary.
 \end{align}
 \end{subequations}
@@ -154,18 +155,8 @@ side is the functional
 
 Therefore the equilibrium condition requires the mapping
 \(v\mapsto\int_{\Section} G\,\PointShearStrain\cdot\nabla v\) to reproduce the mapping
-\(v\mapsto-\alpha''\int_{\Section} E\WarpTwistIesan v\).
-
-
-\paragraph{Reduction.}
-% Use the defining property \eqref{eq:def-sv-riesz} of \(\WarpTwistIesan\): 
-
-% \begin{equation}
-% \int_{\Section} G\,(\FrameBasis\times\bm{r}+\nabla\WarpTwistIesan)\cdot\nabla v\dA = 0
-% \qquad\forall v.
-% \label{eq:sv-property}
-% \end{equation}
-
+\(v\mapsto-\alpha''\int_{\Section} E\WarpTwistIesan v\). 
+%
 Insert \eqref{eq:torsion-strain} into the left side of \eqref{eq:weak-nonuniform-residual} and apply \eqref{eq:def-sv-riesz}:
 
 \begin{equation}
@@ -200,7 +191,7 @@ L_2(v) \coloneq \left<\WarpTwistIesan,\,v\right>_{E}.
 \end{equation}
 
 \begin{Note}
-TODO: Motivate modeling residual strain by a gradient field. This can probably be argued as furnishing models that can be derived via stationarity.
+TODO: Motivate modeling residual strain by a gradient field.
 \end{Note}
 To cancel \eqref{eq:nonuniform-residual} by adding a \emph{compatible} correction shear field
 \(\delta\tilde{\bm{\varepsilon}}_{\gamma}=\nabla\chi_c\), we require
@@ -458,8 +449,9 @@ equivalent characterizations:
 \section{General Solution}
 \label{sec:nonuniform-solution}
 
-\iftrue
+Under pure constant torsion, the geometrically exact rod model (Box~\ref{box:exact-shear-svq}) furnishes the same response as the linearized model (Box~\ref{box:basic-shear}). A general solution for this case is derived in closed form.
 
+\iftrue
 
 \paragraph{Constitution.}
 For \(\bm{\gamma} = \bm{0}\), \(\bm{n} = N \, \FrameBasis\). 

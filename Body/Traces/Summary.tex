@@ -1,6 +1,6 @@
-
-
-\subsection{Summary}\label{sec:trace-summary}
+\section{Summary and Conclusion}\label{sec:trace-summary}
+There are infinitely many ways to represent Saint~Venant's continuum solutions through the family of one-dimensional 
+beam theories described in \cref{sec:gensec}. 
 
 \begin{itemize}
     \item A trace \(\mathcal{T}\) of a continuum displacement \(\hat{\bm u}\) is an operation:
@@ -12,10 +12,10 @@
     \item The elastic shear response is \emph{not} trace-independent. 
     \item The geometric \citep{cowper1966shear} and energetic \citep{renton1991generalized} treatments of shear  
      both lead to exact continuum solutions in the present framework, and are included in the Class I family of traces. 
-    \item Any Class I trace (\cref{def:class-1}) is compatible with Type 1 beam finite elements via a Petrov-Galerkin formulation \eqref{eq:petrov-section}, which preserves the classical section resultants. However, most Class I traces result in an asymmetric tangent stiffness.
-    \item Class II traces (\cref{def:class-ii}) are the subset of Class I traces which may be implemented via a Bubnov-Galerkin section \eqref{eq:bubnov-section} to furnish a symmetric tangent stiffness.
-    \item Class III traces (\cref{def:class-iii}) are the subset of Class II traces that produce the classical beam stress resultants \(\snm = (N,\ShearForce,T,\bm{M})\) under the symmetric Bubnov-Galerkin implementation \eqref{eq:bubnov-section}.
-    \item All Class III traces are equivalent under Saint~Venant loads %(\cref{def:sv-equivalence})
+    \item Any Class~I trace (\cref{def:class-1}) is compatible with Type 1 beam finite elements via a Petrov-Galerkin formulation \eqref{eq:petrov-section}, which preserves the classical section resultants. However, most Class I traces result in an asymmetric tangent stiffness.
+    \item Class~II traces (\cref{def:class-ii}) are the subset of Class I traces which may be implemented via a Bubnov-Galerkin section \eqref{eq:bubnov-section} to furnish a symmetric tangent stiffness.
+    \item Class~III traces (\cref{def:class-iii}) are the subset of Class II traces that produce the classical stress resultants \((N,\ShearForce,T,\bm{M})\) under the symmetric Bubnov-Galerkin implementation \eqref{eq:bubnov-section}.
+    \item All Class~III traces are equivalent under Saint~Venant loads %(\cref{def:sv-equivalence})
     , and their trace matrix is given uniquely by \eqref{eq:energetic-trace-blocks}.
 \end{itemize}
 

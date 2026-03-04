@@ -1,21 +1,7 @@
 
-\section{General solution for Poisson-homogeneous bodies}
-The complete Saint-Venant solution is the sum of the particular solution \eqref{eq:iesan-general-solution}, 
-and a homogeneous solution \(\hat{\bm u}_{\rm R}\):
-\begin{equation}
-\hat{\bm{u}}(x,\bm{r}) = \hat{\bm{u}}_{\rm P}(x,\bm{r}) + \hat{\bm{u}}_{\rm R}(x,\bm{r})
-\label{eq:general-solution}
-\end{equation}
-and \(\hat{\bm{u}}_{\rm R}\) is an arbitrary the rigid body motion with six free parameters \(\bm{q}_u\in \mathbb{R}^3\) and \(\bm{q}_\theta\in \mathbb{R}^3\):
-\begin{equation}
-\begin{aligned}
-\hat{\bm u}_{\rm R}\{\bm{q}\} 
-&= \bm{q}_u + \bm{q}_\theta \times \hat{\bm{x}}(\reflenx,\bm{r}) \\
-% &= \bm{q}_u + \bm{q}_\theta \times (\reflenx \FrameBasis + \bm{r})
-\end{aligned}
-\label{eq:rigid-field}
-\end{equation}
-When Poisson's ratio is uniform, the boundary value problems \eqref{eq:bvp-plane-shapes} admit the closed form solutions:
+\section{General solution for Poisson-homogeneous bodies}\label{sec:iesan-poisson}
+
+When Poisson's ratio \(\nu\) is uniform, the boundary value problems \eqref{eq:bvp-plane-shapes} admit the closed form solutions:
 \begin{subequations}
 \begin{align}
 \PlaneAxialShape&=-\nu\,\bm{r} \\
@@ -27,7 +13,7 @@ When Poisson's ratio is uniform, the boundary value problems \eqref{eq:bvp-plane
 where the deviator \(\operatorname{dev}\bm{r}\otimes\bm{r}\) is understood in the section plane 
 \(\operatorname{dev}\bm{r}\otimes\bm{r}=\bm{r}\otimes\bm{r}-\tfrac12(\bm{r}\cdot\bm{r})\,\oneS\). 
 
-Combining \eqref{eq:iesan-displacement-1} and \eqref{eq:iesan-displacement-2} furnishes the particular solution for the complete Saint-Venant class:
+Combining \eqref{eq:iesan-displacement-1} and \eqref{eq:iesan-displacement-2} and using \eqref{eq:ph-plane-shapes} furnishes the particular solution for the complete Saint-Venant class:
 \begin{equation}
 \begin{aligned}
 \hat{\bm u}_{\rm P}%\{\bm a,\bm{b}_{\Section}\}
@@ -77,8 +63,23 @@ Combining \eqref{eq:iesan-displacement-1} and \eqref{eq:iesan-displacement-2} fu
 with \(\bm a\) fixed by \eqref{eq:2-15}, \(\bm b\) by \eqref{eq:2-18}, \(\WarpTwistIesan\) by \eqref{eq:bvp-warp-twist-iesan},
 \(\WarpShearShape{}\) by \eqref{eq:bvp-warp-shear-iesan},  \(c_\vartheta\) by \eqref{eq:iesan-2-22}. 
 % and $\hat{\bm u}_{\rm R}$ is an arbitrary infinitesimal rigid body displacement field. 
-%
 
+%
+The complete Saint-Venant solution is the sum of the particular solution \eqref{eq:iesan-general-solution}, 
+and a homogeneous solution \(\hat{\bm u}_{\rm R}\):
+\begin{equation}
+\hat{\bm{u}}(x,\bm{r}) = \hat{\bm{u}}_{\rm P}(x,\bm{r}) + \hat{\bm{u}}_{\rm R}(x,\bm{r})
+\label{eq:general-solution}
+\end{equation}
+and \(\hat{\bm{u}}_{\rm R}\) is an arbitrary the rigid body motion with six free parameters \(\bm{q}_u\in \mathbb{R}^3\) and \(\bm{q}_\theta\in \mathbb{R}^3\):
+\begin{equation}
+\begin{aligned}
+\hat{\bm u}_{\rm R}\{\bm{q}\} 
+&= \bm{q}_u + \bm{q}_\theta \times \hat{\bm{x}}(\reflenx,\bm{r}) \\
+% &= \bm{q}_u + \bm{q}_\theta \times (\reflenx \FrameBasis + \bm{r})
+\end{aligned}
+\label{eq:rigid-field}
+\end{equation}
 %
 The infinitesimal strain tensor is
 \[
@@ -226,6 +227,12 @@ Using that $\sym(\FrameBasis\times\oneS)=\mathbf{0}$  and collecting symmetric p
 % \subsubsection{Equilibrium}
 
 \section{Summary}
+
+
+\cref{sec:iesan-plane}
+\cref{sec:iesan-pi}
+\cref{sec:iesan-pii}
+\cref{sec:iesan-poisson}
 
 \newcommand{\SummarySaintVenant}{
 \begin{table}[H]

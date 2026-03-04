@@ -1,16 +1,16 @@
 %
 \input{setup}
 
-% \let\oldsubparagraph\subparagraph
-% \renewcommand{\subparagraph}[1]{}
+\let\oldsubparagraph\subparagraph
+\renewcommand{\subparagraph}[1]{}
 
 
 \begin{document}
 
 \maketitle
 \ifthesis
-    \approvalpage
-    \copyrightpage
+  \approvalpage
+  \copyrightpage
 \fi
 
 \include{Front/abstract}
@@ -110,7 +110,7 @@
 A Software Architecture for Mission-Critical Simulation
 % A Structured Runtime for Structural Simulation
 }\label{ch:xara}
-% \input{Body/Xara/main}
+\input{Body/Xara/main}
 \clearpage
 
 
@@ -118,7 +118,7 @@ A Software Architecture for Mission-Critical Simulation
 % \input{Body/Part-II-Conclusions}
 % \clearpage
 
-\part{Appendices}
+\part{Appendices to Part I}
 \begin{appendices}
 \clearpage
 \chapter{Notation}\label{sec:notation}
@@ -162,12 +162,19 @@ A Software Architecture for Mission-Critical Simulation
 \input{Body/Traces/A3_Energetic}
 \clearpage 
 \end{appendices}
-\end{Notation}
 
+\part{Appendices to Part~II}
+
+\begin{appendices}
+\input{Part II/ModelUpload/main}
 
 \input{Part II/admin/main}
 
 \input{Part II/API/main}
+\end{appendices}
+\end{Notation}
+
+
 
 \clearpage
 \hypertarget{references}{\chapter{References}\label{sec:references}}

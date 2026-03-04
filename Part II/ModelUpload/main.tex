@@ -1,0 +1,17 @@
+\chapter{Upload Procedure}
+
+
+\section{Datums}
+The cardinal basis \(\mathbf{c}_x\), \(\mathbf{c}_y\) and \(\mathbf{c}_z\) is defined such that
+\(\mathbf{c}_x\) is aligned to North, \(\mathbf{c}_y\) is aligned to East, and \(\mathbf{c}_z\)
+is aligned with the vertical direction.
+
+A datum defines a coordinate system with bases \(\{\mathbf{d}_x,\mathbf{d}_y,\mathbf{d}_z\}\) which are defined with respect to the cardinal basis by two angles \texttt{orient\_x} and \texttt{orient\_y} such that
+\begin{equation*}
+\mathbf{d}_x = \operatorname{exp}{\left(\texttt{orient\_x}\, \mathbf{c}_z^{\times}\right)} \mathbf{c}_x,
+\qquad
+\mathbf{d}_y = \operatorname{exp}{\left(\texttt{orient\_y}\, \mathbf{c}_z^{\times}\right)} \mathbf{c}_y
+\qquad\text{and}\qquad
+\mathbf{d}_z = \mathbf{c}_z
+\end{equation*}
+

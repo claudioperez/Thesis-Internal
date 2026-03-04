@@ -1,13 +1,56 @@
-\chapter{Integration over Sections}
+\chapter{Integral Identities}\label{sec:integration}
 
 \input{notation/integration}
-\subsection{Preliminaries}
+\section{Preliminaries}
 
-We recall the following results on a Riemanian manifold \(\PlaneManifold\) with oriented volume form \(\mu\) \citep{marsden1994mathematical,abraham1988manifolds}.
+Box~\ref{box:recall} collects standard definitions and notation concerning integration on a Riemanian manifold \(\PlaneManifold\) with oriented volume form \(\mu\) \citep{marsden1994mathematical,abraham1988manifolds,shilov1996elementary,spivak1965calculus}.
+
+
+% \iffalse
+Define the 2-forms:
+\[
+\begin{aligned}
+    \varrho &\coloneq \interior{\nabla\WarpFA}{\volG}
+            = G\,\starE \dd\WarpFA \;\in\Omega^{1}\PlaneManifold
+    &\qquad
+    \omega &\coloneq \ii_{\qvec}\dd A
+            = \qvec^{\flat},
+\end{aligned}
+\]
+with \(\qvec \coloneq \FrameBasis\times\bm{r}\). 
+The Saint–Venant relation
+\(
+   \operatorname{div}\bigl(\WeightG(\nabla\WarpSV+\qvec)\bigr)=0
+\)
+is
+\begin{equation}
+   \dd \,\Bigl(\ii_{\nabla\WarpSV+\qvec}\volG\Bigr)=0
+   \quad\text{in }\PlaneManifold,
+   \qquad
+   \ii_{\nu}(\dd\WarpSV+\omega)=0
+   \quad\text{on }\PlaneBoundary
+   % \tag{2}
+   \label{eq:warp-sv-bvp}
+\end{equation}
+
+\[
+% \boxed{\;
+   \dd\bigl(\starE(G(\dd\WarpSV+\omega))\bigr)=0
+   \quad\text{in }\Omega,
+   \qquad
+   \ii_{\nu}(\dd\WarpSV+\omega)=0
+   \quad\text{on }\partial\Omega.
+% \;}
+% \tag{2}
+\]
+% \fi
 
 \begin{ambox}[Calculus on Manifolds]{box:recall}
+{\tiny 
+
 Definitions:
 \begin{enumerate}
+
 \item \textbf{Interior product} 
 $\interior{\bm{X}}{}\colon \Omega^p(\PlaneManifold) \rightarrow \Omega^{p-1}(\PlaneManifold)$ with a vector field \(\bm{X}\)  is 
 the {unique graded derivation of degree \(-1\)} satisfying  
@@ -146,50 +189,13 @@ and the \textbf{Divergence Theorem} as a special case:
 where $\bm{\nu}$ is the unit vector normal to $\PlaneBoundary$. 
 Here we have the identities:
 $$
-\interior{\bm{X}}{\mu} = \langle \bm{X},\, \bm{\nu}\rangle \underbrace{\interior{\bm{\nu}}{\mu}}_{:= \eta_{\mu}}
+\interior{\bm{X}}{\mu} = \langle \bm{X},\, \bm{\nu}\rangle \underbrace{\interior{\bm{\nu}}{\mu}}_{\coloneq \eta_{\mu}}
 $$
 \end{enumerate}
+}
 \end{ambox}
 
 
-% \iffalse
-Define the 2-forms:
-\[
-\begin{aligned}
-    \varrho &:= \interior{\nabla\WarpFA}{\volG}
-            = G\,\starE \dd\WarpFA \;\in\Omega^{1}\PlaneManifold
-    &\qquad
-    \omega &:= \ii_{\qvec}\dd A
-            = \qvec^{\flat},
-\end{aligned}
-\]
-where ``\(\flat\)'' lowers indices \citep{abraham1988manifolds}
-The Saint–Venant relation
-\(
-   \operatorname{div}\bigl(\WeightG(\nabla\WarpSV+\qvec)\bigr)=0
-\)
-is
-\begin{equation}
-   \dd \,\Bigl(\ii_{\nabla\WarpSV+\qvec}\volG\Bigr)=0
-   \quad\text{in }\PlaneManifold,
-   \qquad
-   \ii_{\nu}(\dd\WarpSV+\omega)=0
-   \quad\text{on }\PlaneBoundary
-   % \tag{2}
-   \label{eq:warp-sv-bvp}
-\end{equation}
-
-\[
-% \boxed{\;
-   \dd\bigl(\starE(G(\dd\WarpSV+\omega))\bigr)=0
-   \quad\text{in }\Omega,
-   \qquad
-   \ii_{\nu}(\dd\WarpSV+\omega)=0
-   \quad\text{on }\partial\Omega.
-% \;}
-% \tag{2}
-\]
-% \fi
 %
 %
 %
@@ -257,12 +263,12 @@ $$
 where
 
 $$
-A:=\int_{\mathscr D}\nabla u_0\otimes\nabla u_0\,dx,\quad
-C:=\int_{\mathscr D}\nabla w\otimes\nabla w\,dx\ \ (\text{sym.\ \& psd}),
+A\coloneq\int_{\mathscr D}\nabla u_0\otimes\nabla u_0\,dx,\quad
+C\coloneq\int_{\mathscr D}\nabla w\otimes\nabla w\,dx\ \ (\text{sym.\ \& psd}),
 $$
 
 $$
-S:=\int_{\mathscr D}\!\big(\nabla u_0\otimes\nabla w+\nabla w\otimes\nabla u_0\big)\,dx\ \ (\text{sym.}).
+S\coloneq\int_{\mathscr D}\!\big(\nabla u_0\otimes\nabla w+\nabla w\otimes\nabla u_0\big)\,dx\ \ (\text{sym.}).
 $$
 \end{enumerate}
 
@@ -294,7 +300,7 @@ With mean-zero normalization and free $c$:
 \end{itemize}
 \fi
 
-\subsection{Identities}
+\section{Identities}
 
 
 %
@@ -340,7 +346,7 @@ Taking $h=fg$ gives
 \bm{X}[fg]\,\mu
 = \mathcal{L}_{\bm{X}}(fg\,\mu).
 \]
-Integrating over $\PlaneManifold$ and applying the divergence theorem yields
+Integrating over $\PlaneManifold$ and applying the divergence theorem \eqref{eq:gauss-div-thm} yields
 \[
 \int_{\PlaneManifold} \bm{X}[fg]\,\mu
    \;=\;
@@ -369,7 +375,7 @@ Since $\alpha \wedge \beta \in \Omega^n(M)$, the formula follows by integrating 
 \[
 \dd \interior{\bm{X}}{(\alpha \wedge \beta)}=\mathcal{L}_X(\alpha \wedge \beta)=\mathcal{L}_X \alpha \wedge \beta+\alpha \wedge \mathcal{L}_X \beta
 \]
-and using \eqref{eq:gauss-div-thm} (Stoke's Theorem).
+and using Stoke's Theorem \eqref{eq:gauss-div-thm}.
 \end{proof}
 
 \iffalse
@@ -383,7 +389,7 @@ and using \eqref{eq:gauss-div-thm} (Stoke's Theorem).
 % $$
 
 \iffalse
-\subsection{Classical}
+\section{Classical}
 
 \begin{enumerate}
 \item For any vector field \(\bm w\) on \(\Section\), Green’s identity applied componentwise yields
@@ -409,7 +415,7 @@ and using \eqref{eq:gauss-div-thm} (Stoke's Theorem).
 \end{enumerate}
 \fi 
 
-\subsection{Torsion}
+\section{Torsion}
 \begin{proposition}
 \label{prop:armero-81}
 The solution \(\WarpSV\) to the boundary value problem \eqref{eq:warp-sv-bvp} is the Riesz vector:
@@ -431,7 +437,7 @@ This gives the special cases
 \end{equation}
 and
 \begin{equation}
-% \Jv := 
+% \Jv \coloneq 
 \int_{\PlaneManifold} \nabla \WarpSV \cdot \nabla \WarpSV \; \volG 
 = - \int_{\PlaneManifold} [\nabla \WarpSV, \FrameBasis, \PlanePosition] \; \volG > 0
 \label{eq:FA103}
@@ -488,7 +494,7 @@ where we have used
 &= \left<\dd \WarpFA,\, \dd \phi \right> \volG & \qquad \text{\eqref{eq:hodge-defn}} \\
 \end{array}
 \]
-Thus (\(\dagger\)) is exactly an integration by parts of the product rule for \eqref{eq:def-lie-form}
+Thus (\(\dagger\)) is an integration by parts of the product rule for \eqref{eq:def-lie-form}
 \[
 \mathcal{L}_{(\WarpSV \nabla \WarpFA)} \volG = \WarpSV \mathcal{L}_{\nabla \WarpFA}\volG + \dd \WarpSV \wedge \interior{\nabla \WarpFA}{\volG}
 \]

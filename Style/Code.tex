@@ -1,10 +1,24 @@
-\usepackage{matlab-prettifier}
-\usepackage{listings}
 
-\usepackage{color} %red, green, blue, yellow, cyan, magenta, black, white
-\definecolor{mygreen}{RGB}{28,172,0} % color values Red, Green, Blue
-\definecolor{mylilas}{RGB}{170,55,241}
+\usepackage{fancyvrb}
+
+\newenvironment{Shaded}%
+{%
+\definecolor{shadecolor}{rgb}{0.96,0.96,0.96}%
+\begin{shaded*}\quoting[leftmargin=0pt, vskip=0pt]
+}%
+{\endquoting\end{shaded*}}
 
 
-% Use upquote if available, for straight quotes in verbatim environments
-\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+
+
+% \usepackage{matlab-prettifier}
+% \usepackage{listings}
+
+% \usepackage{color} %red, green, blue, yellow, cyan, magenta, black, white
+% \definecolor{mygreen}{RGB}{28,172,0} % color values Red, Green, Blue
+% \definecolor{mylilas}{RGB}{170,55,241}
+
+
+% % Use upquote if available, for straight quotes in verbatim environments
+% \IfFileExists{upquote.sty}{\usepackage{upquote}}{}

@@ -1,11 +1,14 @@
 
 \chapter{Ie\c{s}an--Saint Venant Solution}\label{sec:sv}
 
-The objective of this section is to briefly recall the family of general solutions to Saint-Venant's problems \citep{iesan1987saintvenants,synge1945problem}. 
-This will be used in the following section to identify a dimensionally reduced beam model that exactly represents these solutions.
+The objective of this section is to briefly recall the family of general solutions to Saint-Venant's continuum problems \citep{iesan1987saintvenants,synge1945problem}. 
+This is used in \cref{sec:timo} to identify a dimensionally reduced beam model that exactly represents these solutions. 
+
+
+The exposition follows the approach of \cite{iesan1986saintvenants} and \cite{iesan1976saintvenantsb}, whereby the Saint Venant class is decomposed into two problems: that of torsion-bending-elongation (\cref{sec:iesan-pi}), and that of flexure (\cref{sec:iesan-pii}).
+The developments are specialized in \cref{sec:iesan-poisson} to heterogeneous bodies with homogeneous Poisson ratio.
 
 \begin{Quote}
-The exposition follows the approach of \cite{iesan1986saintvenants}, whereby the Saint Venant class is decomposed into two problems: that of torsion-bending-elongation, and that of flexure.
 
 Salient features of Iesan's treatment include:
 \begin{itemize}
@@ -103,21 +106,35 @@ These prescriptions select particular solutions within the relaxed class that ar
 % % i.e., the in–plane block vanishes as a consequence of the solution.
 % \end{remark}
 
-\section{Auxiliary Problem}
+\section{Plane Warping}\label{sec:iesan-plane}
 % \eqref{eq:def-eight-shapes}
 
 \begin{subequations}
-\begin{align}
+\begin{empheq}[left=\Pi(\FrameBasis_k)\empheqlbrace]{align}
 \operatorname{div}\tilde{\StressTensor}^{(k)}+\nabla \big(\lambda\,(\FrameBasis_{k}\cdot(\bm{r} + \FrameBasis))\big)&=\mathbf{0},
-\qquad\text{in }\Section
+&\text{in }\Section
 \label{eq:ie-3-2-10} 
 \\
+%
 \tilde{\StressTensor}^{(k)}\bm{\nu}&=-\FrameBasis_k\cdot(\bm{r}+\FrameBasis)\,\lambda\bm{\nu},
-\qquad\text{on }\SectionBoundary 
+&\text{on }\SectionBoundary 
 \label{eq:ie-3-2-11}
-\end{align}
+\end{empheq}
 \label{eq:bvp-plane-shapes}
 \end{subequations}
+
+% \begin{subequations}
+% \begin{align}
+% \operatorname{div}\tilde{\StressTensor}^{(k)}+\nabla \big(\lambda\,(\FrameBasis_{k}\cdot(\bm{r} + \FrameBasis))\big)&=\mathbf{0},
+% \qquad\text{in }\Section
+% \label{eq:ie-3-2-10} 
+% \\
+% \tilde{\StressTensor}^{(k)}\bm{\nu}&=-\FrameBasis_k\cdot(\bm{r}+\FrameBasis)\,\lambda\bm{\nu},
+% \qquad\text{on }\SectionBoundary 
+% \label{eq:ie-3-2-11}
+% \end{align}
+% % \label{eq:bvp-plane-shapes}
+% \end{subequations}
 Define
 \begin{equation}
 \PlaneShape \coloneq \hat{\bm u}_{\Section}^{(\beta)}\otimes\FrameBasis_{\beta},
@@ -130,7 +147,7 @@ Define
 \label{eq:def-Theta}
 \end{equation}
 
-\section{Problem I: extension--bending--torsion}
+\section{Problem I: extension--bending--torsion}\label{sec:iesan-pi}
 
 \subsubsection*{Synopsis}
 Problem \(\mathrm{P}_{\rm I}\) covers extension, bending, and torsion under resultants with \(F_\alpha=0\). The identifying kinematic postulate is that the first axial derivative is a rigid body motion,
@@ -247,7 +264,7 @@ and the torsional rigidity \(\TwistRigidity\) and plane moment rigidity \(\Coupl
 \end{equation}
 Note that these are defined with respect to the unspecified coordinate origin. 
 
-\section{Problem II: flexure}
+\section{Problem II: flexure}\label{sec:iesan-pii}
 
 \subsubsection*{Synopsis}
 Problem \(\mathrm{P}_{\mathrm{I\!I}}\) models flexure under a transverse resultant force \(\ShearRxn\) with \(\AxialRxn=0\) and \(\MomentRxn=\mathbf{0}\). 

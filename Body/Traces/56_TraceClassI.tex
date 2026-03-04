@@ -1,5 +1,4 @@
 \section{Traces}\label{sec:trace}
-\subsection{Class I: Kinematic Consistency}\label{sec:class-i}
 
 A trace $\mathcal{T}$ identifies 
 a rule for associating one-dimensional fields to a given the continuum displacement \(\hat{\bm u}(x,\bm{r})\):
@@ -20,6 +19,9 @@ a rule for associating one-dimensional fields to a given the continuum displacem
 % holds identically. 
 
 There are infinitely many traces that may exactly represent a given solution \(\hat{\bm u}_{\rm P}\) to a Saint-Venant problem, and each imparts a distinct physical meaning to boundary conditions like \(\bm{\theta}_{\mathcal{T}}(x_0) = \mathbf{0}\) in a finite element simulation. 
+
+
+\subsection{Class I: Kinematic Consistency}\label{sec:class-i}
 
 % \begin{definition}[Axial Traces]
 % \label{def:sv-trace}
@@ -79,12 +81,12 @@ There are infinitely many traces that may exactly represent a given solution \(\
 It is natural to restrict attention to traces which exhibit the following properties:
 \begin{enumerate}
     \item Strain measures \(\bm{e}\) generated under Saint-Venant loading are at most linear in the axial coordinate $\reflenx$. 
-    \item Any Saint-Venant strain field is exactly reconstructed from only the plane section strains \(\bm{\gamma},\bm{\kappa}\).
+    \item Any Saint-Venant strain field is exactly reconstructed from only the plane section strains \(\bm{\gamma},\bm{\kappa}\) \eqref{eq:gam-kap-linear}.
     \item Continuum plane-section deformations are preserved, in the sense that section‑rigid fields are mapped to pure beam rigid motions.
 \end{enumerate}
 % It is useful to restrict attention to traces generating strains \(\bm{e}(x)\) which are at most linear in $x$ for any problem in the Saint-Venant class.
 This ensures that the strains can be exactly represented by typical beam finite elements. 
-This practical consideration is formalized as follows.
+These considerations are formalized as follows.
 
 \begin{definition}[Class I]\label{def:class-1} % def:e1
 A trace \(\mathcal{T}\) is called a \textbf{Class I} trace if:
@@ -92,13 +94,13 @@ A trace \(\mathcal{T}\) is called a \textbf{Class I} trace if:
     \item For all \(\hat{\bm u} \in \IesanMotions\oplus \RigidMotions\) the following relations are furnished by $x$-independent linear operators \(\TraceEvolveEE\),\(\TraceDeDpOne\), and \(\TraceStiffNM\in\mathrm{GL}(6)\):
     \begin{subequations}
     \begin{align}
-        \bm{e}'(x) &=: \TraceEvolveEE\,\bm{e}(0) 
+        \bm{e}'(x) & \eqqcolon \TraceEvolveEE\,\bm{e}(0) 
         \label{eq:req-t1} 
         \\ 
-        \partial_{\IesanVector}\bm{e}'(x) &=: \TraceDeDpOne 
+        \partial_{\IesanVector}\bm{e}'(x) &\eqqcolon \TraceDeDpOne 
         \label{eq:req-d1}
         \\ 
-        \partial_{\bm{e}} \snm(x) &=: \TraceStiffNM 
+        \partial_{\bm{e}} \snm(x) &\eqqcolon \TraceStiffNM 
         \label{eq:req-c1}
     \end{align}
     \label{eq:class-i-a}

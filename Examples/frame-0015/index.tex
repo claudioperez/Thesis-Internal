@@ -67,76 +67,76 @@ $\Jw=0 \mathrm{~mm}^6$, $I_n=17.778 \times 10^9 \mathrm{~mm}^6$, and length $L=1
 
 
 
-\begin{Note}
+% \begin{Note}
 
-When higher order kinematic terms are incorporated in the formulation of a cross section,
-an additional term \(T_{\mathrm{wag}}\) contributes to the resultant torque \(T\):
+% When higher order kinematic terms are incorporated in the formulation of a cross section,
+% an additional term \(T_{\mathrm{wag}}\) contributes to the resultant torque \(T\):
 
-$$
-T_{\mathrm{wag}} \triangleq \Twist \int \sigma \tilde{r}^2 \dA
-$$
+% $$
+% T_{\mathrm{wag}} \triangleq \Twist \int \sigma \tilde{r}^2 \dA
+% $$
 
-where $\tilde{r}^2 \triangleq (y-\tilde{\rho}_y)^2 + (z-\tilde{\rho}_z)^2$ and
+% where $\tilde{r}^2 \triangleq (y-\tilde{\rho}_y)^2 + (z-\tilde{\rho}_z)^2$ and
 
-$$
-\AxialStress = E\, \begin{bmatrix}
-1 & z & -y & -\varphi
-\end{bmatrix}
-\begin{pmatrix}
-\varepsilon \\ \theta_y' \\ \theta_z' \\ \vartheta''
-\end{pmatrix}
-$$
+% $$
+% \AxialStress = E\, \begin{bmatrix}
+% 1 & z & -y & -\varphi
+% \end{bmatrix}
+% \begin{pmatrix}
+% \varepsilon \\ \theta_y' \\ \theta_z' \\ \vartheta''
+% \end{pmatrix}
+% $$
 
-$$
-\begin{aligned}
-\AxialStress= & \frac{1}{2} E \left\{
-r^2-\left(\frac{I_x+I_y}{A}+z_0^2+y_0^2\right)
-+z\left(\frac{I_{p x}}{I_x}+2 z_0\right)
--y\left(\frac{I_{p y}}{I_y}-2 y_0\right)
--\WarpTwistIesan \frac{I_{p w}}{I_w}
-\right\} \Twist^2
-\end{aligned}
-$$
-so that
+% $$
+% \begin{aligned}
+% \AxialStress= & \frac{1}{2} E \left\{
+% r^2-\left(\frac{I_x+I_y}{A}+z_0^2+y_0^2\right)
+% +z\left(\frac{I_{p x}}{I_x}+2 z_0\right)
+% -y\left(\frac{I_{p y}}{I_y}-2 y_0\right)
+% -\WarpTwistIesan \frac{I_{p w}}{I_w}
+% \right\} \Twist^2
+% \end{aligned}
+% $$
+% so that
 
-$$
-T_{\mathrm{wag}} = \vartheta'\int E  \tilde{r}^2 \, \begin{bmatrix}
-1 & z & -y & -\varphi
-\end{bmatrix}
- \dA
-\begin{pmatrix}
-\varepsilon \\ \theta_y' \\ \theta_z' \\ \vartheta''
-\end{pmatrix}
-$$
-Thus, one might define
+% $$
+% T_{\mathrm{wag}} = \vartheta'\int E  \tilde{r}^2 \, \begin{bmatrix}
+% 1 & z & -y & -\varphi
+% \end{bmatrix}
+%  \dA
+% \begin{pmatrix}
+% \varepsilon \\ \theta_y' \\ \theta_z' \\ \vartheta''
+% \end{pmatrix}
+% $$
+% Thus, one might define
 
-$$
-C_z \triangleq \int y  \tilde{r}^2  \dA
-$$
-and simplify
+% $$
+% C_z \triangleq \int y  \tilde{r}^2  \dA
+% $$
+% and simplify
 
-$$
-\begin{aligned}
-C_z 
-&= \int\left(y-\tilde{\rho}_y\right)^2 y+\left(z-\tilde{\rho}_z\right)^2 y  \dA \\
-&= \int y^3-2 y^2 \tilde{\rho}_y+\tilde{\rho}_y^2 y+z^2 y-2 \tilde{\rho}_z z y+\tilde{\rho}_z^2 y  \dA \\
-& =\int y^3 \dA - 2 \tilde{\rho}_y I_{z z}+\left(\tilde{\rho}_y^2+\tilde{\rho}_z^2\right) A_z
-+\int z^2 y \dA +2 \tilde{\rho}_z I_{z y} \\
-& =\int y^3+z^2 yz  \dA - 2 \tilde{\rho}_y I_{z z}+2 \tilde{\rho}_z I_{z y}+\tilde{\rho}^2 A_z
-\end{aligned}
-$$
-where $I_{zy} \triangleq - \int zy \dA$ and $\tilde{\rho}^2 \triangleq \tilde{\rho}_z^2 + \tilde{\rho}_y^2$. 
-Thus, in terms of the monosymmetry constant $\beta_z$
+% $$
+% \begin{aligned}
+% C_z 
+% &= \int\left(y-\tilde{\rho}_y\right)^2 y+\left(z-\tilde{\rho}_z\right)^2 y  \dA \\
+% &= \int y^3-2 y^2 \tilde{\rho}_y+\tilde{\rho}_y^2 y+z^2 y-2 \tilde{\rho}_z z y+\tilde{\rho}_z^2 y  \dA \\
+% & =\int y^3 \dA - 2 \tilde{\rho}_y I_{z z}+\left(\tilde{\rho}_y^2+\tilde{\rho}_z^2\right) A_z
+% +\int z^2 y \dA +2 \tilde{\rho}_z I_{z y} \\
+% & =\int y^3+z^2 yz  \dA - 2 \tilde{\rho}_y I_{z z}+2 \tilde{\rho}_z I_{z y}+\tilde{\rho}^2 A_z
+% \end{aligned}
+% $$
+% where $I_{zy} \triangleq - \int zy \dA$ and $\tilde{\rho}^2 \triangleq \tilde{\rho}_z^2 + \tilde{\rho}_y^2$. 
+% Thus, in terms of the monosymmetry constant $\beta_z$
 
-$$
-C_z = I_{zz} \beta_z + 2 \tilde{\rho}_z I_{z y}+\tilde{\rho}^2 A_z
-$$
-where
+% $$
+% C_z = I_{zz} \beta_z + 2 \tilde{\rho}_z I_{z y}+\tilde{\rho}^2 A_z
+% $$
+% where
 
-$$
-\beta_z \triangleq \frac{1}{I_{zz}} \int y^3+z^2 yz  \dA - 2 \tilde{\rho}_y
-$$
-\end{Note}
+% $$
+% \beta_z \triangleq \frac{1}{I_{zz}} \int y^3+z^2 yz  \dA - 2 \tilde{\rho}_y
+% $$
+% \end{Note}
 
 \FrameSection{
 label/problem=frame-0015,

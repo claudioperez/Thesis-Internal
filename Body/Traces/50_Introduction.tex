@@ -41,45 +41,79 @@
 % However this is impractical, and it is preferable to forgo auxiliary warping fields altogether whenever possible. 
 % In the case of linear isotropy this is achieved by employing cross sectional constants like the shear correction factor. However, even in the simple case of linear isotropy, the subject of shear warping in beam theory remains a actively debated subject with unresolved ambiguities and strong disagreements \citep{dong2010much,dong2013principal,serpieri2014equivalence}. 
 
-The previous section established a general constitutive framework for beam sections that is compatible with geometrically exact kinematics and multiaxial material response. The present section specializes that framework to the important case of uniform warping, where the cross-sectional distortion is governed by Saint~Venant-type modes and can be represented without introducing additional warping degrees of freedom. 
+The previous section established a general constitutive framework for beam sections that is compatible with geometrically exact kinematics and multiaxial material response. 
+The present section specializes the frameowork of \cref{sec:gensec} to the important case of uniform warping, where the cross-sectional distortion is governed by Saint~Venant-type modes and can be represented without introducing additional warping degrees of freedom. 
 
-The objective is to obtain section-level constitutive relations that remain fully compatible with nonlinear beam equilibrium while reproducing the classical three-dimensional continuum response in the elastic regime. To that end, enhanced strain modes are constructed to enrich the section update locally, preserving the global beam kinematics and balance laws while enforcing continuum-consistent shear and torsion behavior. The resulting family of models furnishes a practical, computationally efficient bridge between standard beam elements and three-dimensional elasticity, and serves as a baseline for the more general nonuniform warping developments that follow.
+
+The objective is to obtain section-level constitutive relations that remain compatible with nonlinear beam equilibrium while reproducing the classical three-dimensional continuum response in the elastic regime.
+To that end, enhanced strain modes are constructed to enrich the section update locally, preserving the global beam kinematics and balance laws while enforcing continuum-consistent shear and torsion behavior. 
+The resulting family of models furnishes a practical, computationally efficient bridge between standard beam elements and three-dimensional elasticity.
 
 Identifying appropriate shapes for the enhanced framework requires an association between the beam fields and the continuum displacement field. 
-This association is not unique, and each choice implies a distinct interpretation of boundary conditions on the beam variables \(\bm{u}\) and \(\bm{\theta}\). The present work addresses this by introducing the abstraction of a \emph{trace} and classifying the admissible associations within the family of beam theories in \cref{sec:genwarp}.
+This association is not unique, and each choice implies a distinct interpretation of boundary conditions on the beam variables \(\bm{u}\) and \(\bm{\theta}\).
+The present work addresses this by introducing the abstraction of a \emph{trace} and classifying the admissible associations within the family of beam theories in \cref{sec:gensec}.
+
 
 %
-\subsubsection{Literature}
+\subsection{Literature}
 The ambiguous nature of Saint~Venant's solutions is well known in the continuum mechanics literature (\cref{sec:sv}). 
-However, we are not aware of any works that formalize this in the context of dimensionally reduced 1D beam theories, or systematically investigate the extent to which beam theories may exactly represent 3D solutions in the Saint Venant class. 
-Rather, it is typically assumed at the outset that the 1D model will only approximate a continuum solution. 
+However, we are not aware of any works that formalize this in the context of dimensionally reduced one-dimensional beam theories, or systematically investigate the extent to which beam theories may exactly represent three-dimensional solutions in the Saint Venant class. 
+Rather, it is typically assumed at the outset that the one-dimensional model will only approximate a continuum solution. 
 The subject is raised by \cite{simo1982bifurcation}, where a brief investigation is made in the context of planar buckling. 
 However, because this investigation was limited to the plane, several salient three dimensional considerations do not arise such as work-conjugacy of resultants and handling of asymmetric sections. 
 
 % The trace formalism developed below provides a concrete way to characterize this ambiguity while retaining compatibility with nonlinear beam kinematics, so that exact Saint~Venant benchmarks can be enforced without altering the global equilibrium equations.
 
 
+\subsection{Outline}
 
-\subsubsection{Outline}
 
 The presentation proceeds as follows. 
-\Cref{sec:uniform-evolution} ...
+\Cref{sec:uniform-evolution} establishes general results concerning the evolution of cross sectional resultants under Saint~Venant's continuum solutions. 
 \Cref{sec:trace} introduces the trace abstraction which represents an association of a continuum deformation with the classical fields \(\bm{u},\bm{\theta}\). 
-\Cref{sec:class-i}, \Cref{sec:class-ii}, and \Cref{sec:class-iii} introduce classifications of traces through their representation of Sain~Venants solutions. 
-Finally, \Cref{sec:trace-shapes} constructs explicit enhanced section shapes in the setting of \cref{sec:enhan-section}.
+\Cref{sec:class-i}, \Cref{sec:class-ii}, and \Cref{sec:class-iii} introduce classifications of traces through their representation of Saint~Venant's solutions. 
+Finally, \Cref{sec:trace-shapes} constructs explicit enhanced section shapes in the setting of \cref{sec:gensec}.
 
-\section{Evolution Equations}\label{sec:uniform-evolution}
+\section{Preliminaries. Evolution Equations}\label{sec:uniform-evolution}
 
-The Saint-Venant equilibrium equations for stress resultants 
-$\snm$ form a first-order initial value problem:
+Our objective is to exactly recover Saint~Venant's solutions (\cref{sec:sv}) through an enhanced section constitutive model of the form \eqref{eq:enhan-strain} in the linearized one-dimensional setting of Box~\ref{box:basic-shear} under the following conditions:
+\begin{enumerate}[label=(\roman*)]
+    \item The body is prismatically composed heterogeneously of a initially isotropic material with homogeneous Poisson ratio \(\nu\). Consequently, Young's modulus \(E\) is:
+    \[
+    E(\bm{r}) = 2G(\bm{r})(1+\nu)
+    \]
+    where the shear modulus \(G(\bm{r})\) is constant in \(\reflenx\) and varies only in \(\bm{r}\in\Section\). 
+    \item Terminal loading in the Saint~Venant class.
+    \item Infinitesimal deformations.
+\end{enumerate}
+The restriction (i) limits attention to bodies where Saint~Venant's solution exactly satisfies the stress condition \eqref{eq:saint-venant-stress} (\cref{sec:iesan-poisson}):
+\RepeatEquation{eq:saint-venant-stress}
+This ensures that constitutive response in the elastic regime is exactly represented through the reduced relations:
+\begin{equation*}
+\bm{\sigma} = \mathbb{C}\bm{\varepsilon}
+\qquad\text{with}\qquad 
+\mathbb{C} = E(\bm{r}) \, \FrameBasis \otimes \FrameBasis + G(\bm{r}) \, \oneS
+\end{equation*}
+where the stress \(\StressVector\) and strain \(\StrainVector\) vectors are defined by \eqref{eq:def-stress-vector} and \eqref{eq:def-strain-vector}, respectively. 
+This is a reasonable restriction for typical construction materials like steel and reinforced concrete, where Poisson's ratio is typically in the range \(0.23\)--\(0.27\).
+
+\subsection{Resultant Evolution}
+Under the stated conditions, the continuum equilibrium equations admit the representation:
+\begin{subequations}
+\label{eq:sv-equilibrium}
+\begin{align}
+\bm{\tau}'&=\mathbf{0} && \text{in }\Section,\\
+\DivS\bm{\tau}+\AxialStress'&=0 && \text{in }\Section, \label{eq:sv-axial-equilibrium}\\
+\bm{\tau}\cdot\bm\nu&=0 && \text{on }\SectionBoundary.
+\end{align}
+\end{subequations}
+Thus the stress resultants \(\snm \coloneq (N,\bm{F},T,\bm{M})\) form a first-order initial value problem:
 \begin{equation}
 \left\{
 \begin{aligned}
 \snm'(x) & = \mathbb{J}\,\snm(x), \\
 \snm(0) &= \bm{s}_0
 \end{aligned}\right.
-\qquad\text{with}\qquad 
-\snm := (N,\ShearForce,T,\bm{M})
 \label{eq:equilibrium-ode}
 \end{equation}
 where \(\mathbb{J}\) is the equilibrium generator:
@@ -103,11 +137,11 @@ where \(\mathbb{J}\) is the equilibrium generator:
 \end{bmatrix},
 \]
 \end{Details}
-Integrating \eqref{eq:equilibrium-ode} in view of the nilpotency property \(\mathbb{J}^2 = \mathbf{0}\) furnishes:
+Integrating \eqref{eq:equilibrium-ode} in view of the nilpotency \(\mathbb{J}^2 = \mathbf{0}\) furnishes:
 \begin{equation*}
 \snm(x) = (\mathbf{1} + \reflenx\mathbb{J})\,\snm(0).
 \end{equation*}
-The resultants at \(\reflenx=0\) are parameterized by the six kinematic constants of the Saint~Venant particular solution.
+The resultants at \(\reflenx=0\) are parameterized by the six kinematic constants of the Saint~Venant particular solution \eqref{eq:iesan-general-solution}.
 The resultants \(\snm\) at \(x=0\) thus depend linearly on the parameters \((a_{\varepsilon},\, \bm{a}_{\Section},\, a_{\vartheta},\, \bm{b}_{\Section})\):
 \begin{equation}
 \snm(0) = \IesanStiff\IesanVector

@@ -1,0 +1,61 @@
+
+\hypertarget{api-examples}{%
+\section{API Examples}\label{sec:api-examples}}
+
+This section collects examples that demonstrate interactions with the API
+from various programming languages. Note that placeholder credentials and hostname have been hard-coded into the programs for the sake of demonstration, but this should not be the case in practice.
+
+% See https://curlconverter.com/ for more.
+
+\subsection{Get all motions}\label{get-all-motions}
+
+%\pagebreak
+\subsubsection{Python}
+The following Python script uses the \texttt{requests} module to perform an HTTP request.
+% \input{Part II/API/code/get-all-python}
+
+
+\subsubsection{Shell (\texttt{curl})}\label{sec:get-all-shell}
+
+The following Shell script uses the \texttt{GET} method of the \texttt{curl} command-line tool to perform an HTTP request to a server.
+% \input{Part II/API/code/get-all-shell}
+
+
+\subsection{Get a single motion}\label{get-a-single-motion}
+
+\subsubsection{C}
+The following C program uses the \texttt{libcurl} library to perform an HTTP request to a server. 
+\input{Part II/API/code/get-one-c}
+
+
+\subsubsection{Go}
+The following program is written in the \emph{Go} programming language and uses the \texttt{net/http} module of the standard library to perform the HTTP request.
+\input{Part II/API/code/get-one-go}
+
+\hypertarget{upload-a-new-motion}{%
+\subsection{Upload a new motion}\label{upload-a-new-motion}}
+
+In the following examples, a string-type variable named \texttt{event\_file}
+is used to store the path to a ground motion file that is to be uploaded from disk, i.e, from a hard drive.
+
+\subsubsection{Python}
+\input{Part II/API/code/upload-python}
+
+\subsubsection{Shell (\texttt{curl})}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#!/bin/sh}
+\VariableTok{username}\OperatorTok{=}\StringTok{"}\VariableTok{\$MOTION\_API\_USERNAME}\StringTok{"}
+\VariableTok{password}\OperatorTok{=}\StringTok{"}\VariableTok{\$MOTION\_API\_PASSWORD}\StringTok{"}
+\VariableTok{hostname}\OperatorTok{=}\StringTok{"}\VariableTok{\$MOTION\_API\_HOSTNAME}\StringTok{"}
+\VariableTok{filename}\OperatorTok{=}\StringTok{"}\VariableTok{\$1}\StringTok{"}
+
+\ExtensionTok{curl} \AttributeTok{{-}X}\NormalTok{ POST }\AttributeTok{{-}H} \StringTok{\textquotesingle{}Content{-}Type:multipart/form{-}data\textquotesingle{}} \DataTypeTok{\textbackslash{}}
+  \AttributeTok{{-}u} \VariableTok{\$username}\NormalTok{:}\VariableTok{\$password} \DataTypeTok{\textbackslash{}}
+  \AttributeTok{{-}F} \StringTok{"event\_file=@}\VariableTok{\$filename}\StringTok{"} \DataTypeTok{\textbackslash{}}
+  \StringTok{"}\VariableTok{\$hostname}\StringTok{/api/events/"}
+
+\BuiltInTok{printf} \StringTok{"\textbackslash{}n"}
+\end{Highlighting}
+\end{Shaded}

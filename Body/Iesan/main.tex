@@ -37,8 +37,8 @@ Neglecting to specify complete pointwise boundary data in this manner produces a
 \qquad\text{with}\qquad 
 %
 \begin{aligned}
-\StressTensor&:=\lambda\,(\operatorname{tr}\StrainTensor)\,\mathbf{1}+2G\,\StrainTensor,\\
-\StrainTensor&:=\tfrac12\big(\nabla\hat{\bm u}+\nabla\hat{\bm u}^{\!\top}\big),
+\StressTensor& \coloneq \lambda\,(\operatorname{tr}\StrainTensor)\,\mathbf{1}+2G\,\StrainTensor,\\
+\StrainTensor& \coloneq \tfrac12\big(\nabla\hat{\bm u}+\nabla\hat{\bm u}^{\!\top}\big),
 \end{aligned}
 \label{eq:cauchy-space}
 \end{equation}
@@ -47,8 +47,8 @@ the family of Saint~Venant problems is decomposed into two classes, the extensio
 \begin{equation}
 \mathrm{P}_{\rm I}(\AxialRxn,\MomentRxn)\left\{
 \begin{aligned}
-\Div\,\StressTensor&=\mathbf{0} &&\text{in }\Body\\
-\StressTensor\,\bm n&=\mathbf{0} &&\text{on }\BodyLateralSurface\\
+\Div\,\StressTensor&=\mathbf{0} &&\text{in }\Body \\
+\StressTensor\,\bm n&=\mathbf{0} &&\text{on }\BodyLateralSurface \\
 \mathscr{M}(\hat{\bm u}) &= \MomentRxn &&\text{on } \Section_0 \\
 \mathscr{F}(\hat{\bm u}) &= \AxialRxn\,\FrameBasis & \\
 \end{aligned}\right.
@@ -90,9 +90,9 @@ These prescriptions select particular solutions within the relaxed class that ar
 % No restriction is imposed on the in–plane stress \((\FrameBasis_\alpha\otimes\FrameBasis_\beta)\,\StressTensor\) at this stage. 
 % Components of interest are singled out as
 % \[
-% \AxialStress:=\FrameBasis\cdot\StressTensor\,\FrameBasis\in\mathbb{R},
+% \AxialStress\coloneq\FrameBasis\cdot\StressTensor\,\FrameBasis\in\mathbb{R},
 % \qquad
-% \PointShearStress :=(\FrameBasis_\beta\otimes\FrameBasis_\beta)\,\StressTensor\,\FrameBasis,
+% \PointShearStress \coloneq(\FrameBasis_\beta\otimes\FrameBasis_\beta)\,\StressTensor\,\FrameBasis,
 % \]
 % % Ie\c{s}an’s construction recovers the Saint–Venant form \eqref{eq:saint-venant-stress}
 % % \begin{equation*}
@@ -143,7 +143,7 @@ Problem \(\mathrm{P}_{\rm I}\) covers extension, bending, and torsion under resu
 which fixes the \(\reflenx\)-dependence of \(\hat{\bm u}\) and reduces the equilibrium equations to planar problems on \(\Section\).
 
 \subsubsection*{Statement}
-Given a resultant axial force \(\AxialRxn\) and couple \(\MomentRxn:=\TwistRxn\FrameBasis + \bar{M}_{\alpha}\,\FrameBasis_{\alpha}\) on \(\Section_{x_0}\),
+Given a resultant axial force \(\AxialRxn\) and couple \(\MomentRxn\coloneq\TwistRxn\FrameBasis + \bar{M}_{\alpha}\,\FrameBasis_{\alpha}\) on \(\Section_{x_0}\),
 determine \((\hat{\bm u},\StressTensor)\) such that:
 \begin{equation}
 \left\{
@@ -208,7 +208,7 @@ The linearized strain tensor under \eqref{eq:iesan-displacement-1} is:
 \big(a_{\varepsilon}+\bm{r}\cdot\bm{a}_{\Section}\big)\,(\FrameBasis\otimes\FrameBasis-\nu\,\oneS)
 +\tfrac12\big(\FrameBasis\otimes\bm\varepsilon_\vartheta+\bm\varepsilon_\vartheta\otimes\FrameBasis\big),
 \quad
-\bm\varepsilon_\vartheta:=a_\vartheta\big(\FrameBasis\times\bm{r}+\nabla\WarpTwistIesan\big),
+\bm\varepsilon_\vartheta \coloneq a_\vartheta\big(\FrameBasis\times\bm{r}+\nabla\WarpTwistIesan\big),
 \label{eq:iesan-strain-tensor-1}
 \end{equation}
 % and Saint–Venant components
@@ -242,7 +242,7 @@ and the torsional rigidity \(\TwistRigidity\) and plane moment rigidity \(\Coupl
 \CoupleRigidity \coloneq \int_{\Section}\bm{r}\otimes\Big[(\lambda+2G)\,\bm{r}+\lambda\,\PlaneShapeStrain\Big]\dA
 % \coloneq \int \bm{r}\otimes\bm{r}\volE
 \qquad\text{and}\qquad
-\TwistRigidity:=\int_\Section \Big(r^2+(\FrameBasis\times\bm{r})\cdot\nabla\WarpTwistIesan\Big)\volG .
+\TwistRigidity \coloneq \int_{\Section} \Big(r^2+(\FrameBasis\times\bm{r})\cdot\nabla\WarpTwistIesan\Big)\volG .
 \label{eq:def-j-origin}
 \end{equation}
 Note that these are defined with respect to the unspecified coordinate origin. 
@@ -304,7 +304,7 @@ where
 \end{equation}
 with
 \begin{equation}
-\CentroidLocation := \frac{1}{\AxialRigidity} \AxialCoupling
+\CentroidLocation \coloneq \frac{1}{\AxialRigidity} \AxialCoupling
 % \frac{1}{\AxialRigidity}\int \bm{r}\volE 
 \label{eq:def-centroid}
 \end{equation}
@@ -387,7 +387,7 @@ and \(c_\vartheta\) is determined by the relaxed torsion boundary condition \(\F
 \end{equation}
 where the \emph{shear point} \(\CenterShearLocation\in\Section\) is defined by:
 \begin{equation}
-\CenterShearLocation := \frac{1}{\TwistRigidity} \int_\Section G(\nabla\WarpShearShape{} + \PlaneShearShape^\top)\,\bm{r} \times \FrameBasis \dA.
+\CenterShearLocation \coloneq \frac{1}{\TwistRigidity} \int_\Section G(\nabla\WarpShearShape{} + \PlaneShearShape^\top)\,\bm{r} \times \FrameBasis \dA.
 \label{eq:def-shear-center}
 \end{equation}
 and \(\TwistRigidity\) is the torsion constant defined by \eqref{eq:def-j-origin}.

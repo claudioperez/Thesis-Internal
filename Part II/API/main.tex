@@ -1,0 +1,22 @@
+\chapter{Event API}\label{ch:event-api}
+\begingroup 
+\input{Part II/API/highlight}
+
+The \BRACE{} Motion API provides a controlled point of contact for sharing and managing ground motion records in real-time. The primary component of the tool is a server-hosted REST API through which all motion data passes. 
+The Motion API has been designed to adhere to standard web protocols, allowing the endpoint to be accessed in a uniform manner from virtually any programming language (see \cref{sec:api-examples} for examples in Python, C, Bourne Shell, Go, Rust, and more). This API returns JSON-serialized ground motion data adhering to the schema that is developed in the following sections. Cryptographic token authentication is being used to authenticate requests.
+
+\hypertarget{design}{%
+\section{Design}\label{design}}
+
+File uploads are sent as HTTP POST operations with a MIME (Multipurpose Internet Mail Extensions) type of
+\texttt{multipart/form-data} {[}RFC 2046{]}.
+These uploads are handled by the REST API that is integrated directly into the \texttt{events} application of the \gls{platform}.
+This application listens to a server port for API requests and fulfills
+these requests by interacting with the database.
+
+
+% The backend application is comprised of the server, REST API, Database,
+% and authentication mechanism.
+\input{Part II/API/examples}
+
+\endgroup

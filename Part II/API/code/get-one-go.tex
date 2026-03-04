@@ -1,0 +1,40 @@
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{// Claudio Perez}
+\KeywordTok{package}\NormalTok{ main}
+
+\KeywordTok{import} \OperatorTok{(}
+        \StringTok{"fmt"}
+        \StringTok{"io/ioutil"}
+        \StringTok{"log"}
+        \StringTok{"net/http"}
+\OperatorTok{)}
+
+\KeywordTok{func}\NormalTok{ main}\OperatorTok{()} \OperatorTok{\{}
+\NormalTok{  hostname }\OperatorTok{:=} \StringTok{"localhost:8000"}
+\NormalTok{  username }\OperatorTok{:=} \StringTok{"brace2"}
+\NormalTok{  password }\OperatorTok{:=} \StringTok{"brace2"}
+\NormalTok{  endpoint }\OperatorTok{:=} \NormalTok{ fmt}\OperatorTok{.}\NormalTok{Sprintf}\OperatorTok{(}\StringTok{"\%s/api/events/"}\OperatorTok{,}\NormalTok{hostname}\OperatorTok{)}
+
+\NormalTok{  client }\OperatorTok{:=} \OperatorTok{\&}\NormalTok{http}\OperatorTok{.}\NormalTok{Client}\OperatorTok{\{\}}
+\NormalTok{  req}\OperatorTok{,}\NormalTok{ err }\OperatorTok{:=}\NormalTok{ http}\OperatorTok{.}\NormalTok{NewRequest}\OperatorTok{(}\StringTok{"GET"}\OperatorTok{,} \NormalTok{endpoint}\OperatorTok{,} \OtherTok{nil}\OperatorTok{)}
+
+\ControlFlowTok{  if}\NormalTok{ err }\OperatorTok{!=} \OtherTok{nil} \OperatorTok{\{}\NormalTok{log}\OperatorTok{.}\NormalTok{Fatal}\OperatorTok{(}\NormalTok{err}\OperatorTok{)\}}
+
+\NormalTok{  req}\OperatorTok{.}\NormalTok{Header}\OperatorTok{.}\NormalTok{Set}\OperatorTok{(}\StringTok{"Content{-}Type"}\OperatorTok{,} \StringTok{"Application/JSON"}\OperatorTok{)}
+\NormalTok{  req}\OperatorTok{.}\NormalTok{SetBasicAuth}\OperatorTok{(}\NormalTok{username}\OperatorTok{,}\NormalTok{ password}\OperatorTok{)}
+\NormalTok{  resp}\OperatorTok{,}\NormalTok{ err }\OperatorTok{:=}\NormalTok{ client}\OperatorTok{.}\NormalTok{Do}\OperatorTok{(}\NormalTok{req}\OperatorTok{)}
+  \ControlFlowTok{if}\NormalTok{ err }\OperatorTok{!=} \OtherTok{nil} \OperatorTok{\{}
+    \NormalTok{     log}\OperatorTok{.}\NormalTok{Fatal}\OperatorTok{(}\NormalTok{err}\OperatorTok{)}
+    \OperatorTok{\}}
+  \ControlFlowTok{defer}\NormalTok{ resp}\OperatorTok{.}\NormalTok{Body}\OperatorTok{.}\NormalTok{Close}\OperatorTok{()}
+\NormalTok{  bodyText}\OperatorTok{,}\NormalTok{ err }\OperatorTok{:=}\NormalTok{ ioutil}\OperatorTok{.}\NormalTok{ReadAll}\OperatorTok{(}\NormalTok{resp}\OperatorTok{.}\NormalTok{Body}\OperatorTok{)}
+  \ControlFlowTok{if}\NormalTok{ err }\OperatorTok{!=} \OtherTok{nil} \OperatorTok{\{}
+\NormalTok{ 
+   log}\OperatorTok{.}\NormalTok{Fatal}\OperatorTok{(}\NormalTok{err}\OperatorTok{)}
+  \OperatorTok{\}}
+\NormalTok{  fmt}\OperatorTok{.}\NormalTok{Printf}\OperatorTok{(}\StringTok{"\%s}\CharTok{\textbackslash{}n}\StringTok{"}\OperatorTok{,}\NormalTok{ bodyText}\OperatorTok{)}
+\OperatorTok{\}}
+\end{Highlighting}
+\end{Shaded}

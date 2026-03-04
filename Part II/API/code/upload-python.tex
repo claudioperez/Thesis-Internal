@@ -1,0 +1,29 @@
+\begin{Shaded}
+\begin{Highlighting}[]
+\ImportTok{import}\NormalTok{ sys}
+\ImportTok{import}\NormalTok{ json}
+\ImportTok{import}\NormalTok{ requests}
+\CommentTok{\# Payload parameters}
+\CommentTok{\# {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}}
+\NormalTok{name }\OperatorTok{=}\NormalTok{ sys.argv[}\DecValTok{1}\NormalTok{]}
+\NormalTok{event\_file }\OperatorTok{=} \StringTok{"/path/to/data/58658\_007\_20210426\_10.09.54.P.zip"}
+\CommentTok{\# Framework parameters}
+\CommentTok{\# {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}}
+\NormalTok{username, password }\OperatorTok{=}\NormalTok{ [}\StringTok{"brace2"}\NormalTok{] }\OperatorTok{*} \DecValTok{2}
+\NormalTok{hostname }\OperatorTok{=} \StringTok{"http://localhost:8000"}
+\CommentTok{\# Setup API request}
+\CommentTok{\# {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}}
+\NormalTok{headers }\OperatorTok{=}\NormalTok{ \{}
+    \StringTok{"Content{-}Type"}\NormalTok{: }\StringTok{"multipart/form{-}data"}\NormalTok{,}
+\NormalTok{\}}
+\NormalTok{files }\OperatorTok{=}\NormalTok{ \{}
+    \StringTok{"event\_file"}\NormalTok{: (event\_file, }\BuiltInTok{open}\NormalTok{(event\_file, }\StringTok{"rb"}\NormalTok{)),}
+    \StringTok{"name"}\NormalTok{: (}\VariableTok{None}\NormalTok{, name),}
+\NormalTok{\}}  
+\NormalTok{response }\OperatorTok{=}\NormalTok{ requests.post(}
+\NormalTok{    hostname }\OperatorTok{+} \StringTok{"/api/events/"}\NormalTok{, headers}\OperatorTok{=}\NormalTok{headers, files}\OperatorTok{=}\NormalTok{files, }
+\NormalTok{    auth}\OperatorTok{=}\NormalTok{(username, password)}
+\NormalTok{)}
+\BuiltInTok{print}\NormalTok{(json.loads(response))}
+\end{Highlighting}
+\end{Shaded}

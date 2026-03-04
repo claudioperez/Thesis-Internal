@@ -1,0 +1,44 @@
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\PreprocessorTok{\#if 0}
+\CommentTok{EXEC=\$\{0\%.*\}}
+\CommentTok{test {-}x }\StringTok{"\$EXEC"}\CommentTok{ || clang }\StringTok{"\$0"}\CommentTok{ {-}lcurl {-}o }\StringTok{"\$EXEC"}
+\CommentTok{exec }\StringTok{"\$EXEC"}\CommentTok{; exit}
+\CommentTok{\{}
+\PreprocessorTok{\#endif}
+\PreprocessorTok{\#include }\ImportTok{\textless{}stdio.h\textgreater{}}
+\PreprocessorTok{\#include }\ImportTok{\textless{}stdlib.h\textgreater{}}
+\PreprocessorTok{\#include }\ImportTok{"curl/curl.h"}
+
+\DataTypeTok{int} \NormalTok{main}\OperatorTok{(}\DataTypeTok{void}\OperatorTok{)} \OperatorTok{\{}
+  \DataTypeTok{int}\NormalTok{ status }\OperatorTok{=}\NormalTok{ EXIT\_SUCCESS}\OperatorTok{;}
+
+  \DataTypeTok{const} \DataTypeTok{char}
+  \OperatorTok{  *}\NormalTok{username }\OperatorTok{=} \StringTok{"brace2"}\OperatorTok{,}
+  \OperatorTok{  *}\NormalTok{password }\OperatorTok{=} \StringTok{"brace2"}\OperatorTok{,}
+  \OperatorTok{  *}\NormalTok{hostname }\OperatorTok{=} \StringTok{"localhost:8000"}\OperatorTok{;}
+  \DataTypeTok{char} \OperatorTok{*}\NormalTok{url }\OperatorTok{=}\NormalTok{ strfmt}\OperatorTok{(}\StringTok{"https://}\SpecialCharTok{\%s}\StringTok{:}\SpecialCharTok{\%s}\StringTok{@}\SpecialCharTok{\%s}\StringTok{/api/events/"}\OperatorTok{,}
+\NormalTok{    username}\OperatorTok{,}\NormalTok{password}\OperatorTok{,}\NormalTok{hostname}
+  \OperatorTok{);}
+
+\NormalTok{  CURL }\OperatorTok{*}\NormalTok{curl}\OperatorTok{;}
+  \DataTypeTok{char}\NormalTok{ buffer}\OperatorTok{[}\NormalTok{CURL\_ERROR\_SIZE}\OperatorTok{];}
+  \ControlFlowTok{if} \OperatorTok{((}\NormalTok{curl }\OperatorTok{=}\NormalTok{ curl\_easy\_init}\OperatorTok{())} \OperatorTok{!=}\NormalTok{ NULL}\OperatorTok{)} \OperatorTok{\{}
+\NormalTok{          curl\_easy\_setopt}\OperatorTok{(}\NormalTok{curl}\OperatorTok{,}\NormalTok{ CURLOPT\_URL}\OperatorTok{,}\NormalTok{ url}\OperatorTok{);}
+\NormalTok{          curl\_easy\_setopt}\OperatorTok{(}\NormalTok{curl}\OperatorTok{,}\NormalTok{ CURLOPT\_FOLLOWLOCATION}\OperatorTok{,} \DecValTok{1}\OperatorTok{);}
+\NormalTok{          curl\_easy\_setopt}\OperatorTok{(}\NormalTok{curl}\OperatorTok{,}\NormalTok{ CURLOPT\_ERRORBUFFER}\OperatorTok{,}\NormalTok{ buffer}\OperatorTok{);}
+          \ControlFlowTok{if} \OperatorTok{(}\NormalTok{curl\_easy\_perform}\OperatorTok{(}\NormalTok{curl}\OperatorTok{)} \OperatorTok{!=}\NormalTok{ CURLE\_OK}\OperatorTok{)} \OperatorTok{\{}
+\NormalTok{                  fprintf}\OperatorTok{(}\NormalTok{stderr}\OperatorTok{,} \StringTok{"}\SpecialCharTok{\%s\textbackslash{}n}\StringTok{"}\OperatorTok{,}\NormalTok{ buffer}\OperatorTok{);}
+                  \ControlFlowTok{return}\NormalTok{ EXIT\_FAILURE}\OperatorTok{;}
+          \OperatorTok{\}}
+\NormalTok{          curl\_easy\_cleanup}\OperatorTok{(}\NormalTok{curl}\OperatorTok{);}
+  \OperatorTok{\}}
+\NormalTok{  free}\OperatorTok{(}\NormalTok{url}\OperatorTok{);}
+  \ControlFlowTok{return}\NormalTok{ EXIT\_SUCCESS}\OperatorTok{;}
+\OperatorTok{\}}
+\PreprocessorTok{\#if 0}
+\CommentTok{\}}
+\PreprocessorTok{\#endif}
+\end{Highlighting}
+\end{Shaded}

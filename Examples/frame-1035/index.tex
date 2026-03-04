@@ -5,7 +5,7 @@
     \label{fig:1035-model}
 \end{figure}
 
-\subparagraph{Context}
+\subparagraph{Context.} 
 This problem investigates the influence of the nonlinear Wagner term \eqref{eq:wagner-gl-strain-pi} on lateral buckling. 
 
 A closed form solution for the critical linearized buckling moment is \citep[(7.22)]{trahair1993flexuraltorsional}:
@@ -16,10 +16,10 @@ M_{\mathrm{cr}} & =\frac{\pi}{L}\sqrt{E I_y \TwistRigidity} \left[\left(1+\frac{
 \]
 where
 \[
-\beta_x \coloneq \frac{1}{I_x}\int y (x^2 + y^2)\dA - 2y_0
+\beta_x \coloneq \frac{1}{I_x}\int y r^2\dA - 2y_0
 \]
 
-\subparagraph{Setup}
+\subparagraph{Setup.}
 A simply supported span of length $L = 6\unit{\meter}$ is subjected to constant flexure (\cref{fig:1035-model}). 
 
 The span is discretized by 10 elements. 
@@ -32,7 +32,7 @@ unit/stress={\giga\pascal}
 }
 
 
-\subparagraph{Results}
+\subparagraph{Results.}
 \cite{du2021threedimensionala} obtained similar results with 20 elements and \cite{kitipornchai1986lateral} with 30 elements.
 
 \begin{figure}[H]

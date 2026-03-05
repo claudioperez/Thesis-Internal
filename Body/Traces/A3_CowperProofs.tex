@@ -30,16 +30,17 @@ Insert \(\bar{\bm u}\) from \eqref{eq:def-avg-ubar} and set \(\CoordinateCentroi
 \;-\;
 \int_{\Section}\bm{r}\times\big(\bar{\bm\theta}\times(\bm{r}-\CentroidLocation)\big)\dA=\mathbf{0}.
 \]
-The first term equals \(\int_{\Section}(\bm{r} - \CentroidLocation)\times\hat{\bm u}\dA\).
-In the second term, \(\int_{\Section}\bm{r}\times(\bar{\bm\theta}\times\CoordinateCentroid)\dA
-=\int_{\Section}\CoordinateCentroid\times(\bar{\bm\theta}\times\CoordinateCentroid)\dA\), and using the vector identity
+% The first term equals \(\int_{\Section}(\bm{r} - \CentroidLocation)\times\hat{\bm u}\dA\).
+% In the second term, \(\int_{\Section}\bm{r}\times(\bar{\bm\theta}\times\CoordinateCentroid)\dA
+% =\int_{\Section}\CoordinateCentroid\times(\bar{\bm\theta}\times\CoordinateCentroid)\dA\), 
+Using the vector identity
 %$\bm{a} \times(\bm{b} \times \bm{a})=|\bm{a}|^2 \bm{b}-(\bm{a} \cdot \bm{b}) \bm{a}$, 
-\(\CentroidLocation \times(\bar{\bm{\theta}} \times \CentroidLocation)=\left(\|\CentroidLocation\|^2 \mathbf{1}-\CentroidLocation \otimes \CentroidLocation\right) \bar{\bm{\theta}}\) we can write:
+\(\CentroidLocation \times(\bar{\bm{\theta}} \times \CentroidLocation)=\left(\|\CentroidLocation\|^2 \mathbf{1}-\CentroidLocation \otimes \CentroidLocation\right) \bar{\bm{\theta}}\) the second term furnishes:
 \[
 \int_{\Section}\CoordinateCentroid\times(\bar{\bm\theta}\times\CoordinateCentroid)\dA
 =\CentroidStaticInertia\,\bar{\bm\theta},
 \]
-Hence
+Hence with \(\CentroidLocation \equiv \SectionAverage{\bm{r}}\) by material homogeneity,
 \[
 \CentroidStaticInertia\,\bar{\bm\theta}
 =\int_{\Section}(\bm{r}-\CentroidLocation)\times\hat{\bm u}\dA,\qquad

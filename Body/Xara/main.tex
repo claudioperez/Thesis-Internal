@@ -91,8 +91,8 @@ This pattern admits a natural extension to language bindings. The Python interfa
 
 \subsubsection{Backward Compatibility}
 
-The restructured runtime does not require abandoning existing command implementations. Because the new API is strictly more explicit than the old one, a compatibility layer can present the legacy interface by maintaining a thread-local ``current context'' that global-style functions implicitly reference. 
-This allows existing scripts to execute unchanged while enabling new code to adopt explicit context management. The compatibility layer introduces no overhead beyond a thread-local lookup and can be removed once legacy usage is retired.
+The restructured runtime is designed to support a backward compatible API. Because the new API is strictly more explicit than the old one, a compatibility layer can present the legacy interface by maintaining a thread-local ``current context'' that global-style functions implicitly reference. 
+This allows existing scripts to execute unchanged while enabling new code to adopt explicit context management. 
 
 \section{Implications for Embedded Applications}
 \label{sec:implications}

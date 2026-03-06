@@ -1,0 +1,248 @@
+
+\subsection{The Adjoint (Reverse‐Mode) Method} \label{sec:adjoint}
+
+For many-parameter optimisation one usually seeks the gradient of a scalar
+objective $\Objective(\bm{u},\bm{y})$. 
+Using the Lagrangian
+%
+\[
+  \mathcal{L}(\bm{u},\bm{y},\bm{\eta})
+  \;=\;
+  J(\bm{u},\bm{y})
+  +\bigl\langle\bm{\eta},\bm{g}(\bm{u},\bm{y})\bigr\rangle,
+\]
+%
+stationarity with respect to $\bm{u}$ at the solution
+$\bm{u}=\bm{u}(\bm{y})$ gives the \emph{adjoint equation}
+%
+\begin{equation}\label{eq:adjoint}
+  \bigl(\partial_{\bm{u}}\bm{g}\bigr)^{\!\!\mathsf{T}}\bm{\eta}
+  \;=\;
+  \bigl(\partial_{\bm{u}} \Objective \bigr)^{\!\!\mathsf{T}} .
+\end{equation}
+or
+\begin{equation}\label{eq:adjoint}
+\bigl(\tfrac{\partial\bm{g}}{\partial\bm{u}}\bigr)^{\!\mathsf{T}}
+\,\bm{\AdjointState}
+\;=\;
+\left(\frac{\partial \Objective}{\partial\bm{u}}\right)^{\!\mathsf{T}} .
+\end{equation}
+%
+Once $\bm{\eta}$ is known, the gradient
+$\nabla_{\!\bm{y}} \Objective$ follows from the \emph{vector–Jacobian product}
+%
+\begin{equation}\label{eq:vjp}
+  \nabla_{\!\bm{y}} \Objective
+  \;=\;
+  -\,\bigl\langle\bm{\eta},\partial_{\bm{y}}\bm{g}\bigr\rangle
+  +\partial_{\bm{y}} \Objective
+\end{equation}
+or, equivalently,
+\begin{equation}\label{eq:grad}
+\nabla_{\!\bm{y}} \Objective
+\;=\;
+-\bm{\AdjointState}^{\mathsf{T}}
+\frac{\partial\bm{g}}{\partial\bm{y}}
+\;+\;
+\frac{\partial \Objective}{\partial\bm{y}} .
+\end{equation}
+
+\paragraph{Reverse-mode AD.}
+The operation
+$\bm{\eta}^{\mathsf{T}}\!\partial\bm{h}(\bm{y})$ in~\eqref{eq:vjp} is the
+\emph{vector–Jacobian product} (VJP), the fundamental linear map produced by
+\textbf{reverse-mode automatic differentiation}.
+Reverse mode traverses the computational graph \emph{backwards}, reusing the
+factorisation (or iterations) already computed for the primal Newton solve.
+
+\paragraph{Complexity.}
+The FLOP cost of solving~\eqref{eq:adjoint} is comparable to one primal
+linearisation and is \emph{independent of $n_p$}.  The entire gradient is
+available after a single VJP.  The trade-off is memory: all primal
+intermediates must be stored (or recomputed via checkpointing), so memory
+scales with the depth of the solve.
+
+\paragraph{Automatic–differentiation view.}
+Eqs.~\eqref{eq:adjoint}–\eqref{eq:grad} constitute \textbf{reverse–mode
+automatic differentiation}: one first executes the \emph{primal} solve to
+obtain $\bm{u}$, then runs a reverse sweep that back–propagates the covector
+$\bm{\AdjointState}$ through every operation (row–wise evaluation of
+$\partial\bm{h}^\mathsf{T}$).  The FLOP cost scales with the
+\emph{number of outputs} $n_g$ (often one),
+while memory grows with the depth of the computation because intermediate
+states must be available for the reverse sweep \cite{MITAD2023}.
+
+\paragraph{When is it efficient?}
+Reverse mode shines when $n_g\!\ll\!n_p$ (wide Jacobians), e.g.
+\begin{itemize}
+  \item gradient‐based optimization of a scalar loss depending on
+        millions of design variables,
+  \item machine‐learning training where $\bm{y}$ are network weights.
+\end{itemize}
+
+
+
+The adjoint state space is chosen to simplify the physical
+interpretation of equation
+\href{constraint_(mathematics)}{constraints}.\footnote{Plessix, R-E. "A
+  review of the adjoint-state method for computing the gradient of a
+  functional with geophysical applications." Geophysical Journal
+  International, 2006, 167(2): 495-503.
+  \href{https://academic.oup.com/gji/article/167/2/495/559970}{free
+  access on GJI website}}
+
+Adjoint state techniques allow the use of
+\href{integration_by_parts}{integration by parts}, resulting in a form
+which explicitly contains the physically interesting quantity. An
+adjoint state equation is introduced, including a new unknown variable.
+
+The adjoint method formulates the gradient of a function towards its
+parameters in a constraint optimization form. By using the dual form of
+this constraint optimization problem, it can be used to calculate the
+gradient very fast. A nice property is that the number of computations
+is independent of the number of parameters for which you want the
+gradient. The adjoint method is derived from the
+\emph{dual problem} and is used e.g. in the Landweber iteration method.
+
+When the initial problem consists of calculating the product \(s^T x\)
+and \(x\) must satisfy \(Ax=b\), the dual problem can be realized as
+calculating the product , where \(r\) must satisfy \(A^* r = s\). And
+\(r\) is called the adjoint state vector.
+
+\subsubsection{General case}\label{general_case}
+
+The original adjoint calculation method goes back to \cite{cea1986conception} with the use of the Lagrangian of the optimization
+problem to compute the derivative of a functional with respect to a
+\href{Shape_optimization}{shape} parameter.
+
+For a state variable \(\TangentState \in \mathcal{U}\), an optimization variable
+\(v\in\mathcal{V}\), an objective functional
+\(J:\mathcal{U}\times\mathcal{V}\to\mathbb{R}\) is defined. The state
+variable \(u\) is often implicitly dependent on \(v\) through the
+(direct) state equation \(D_{\bm{y}}(u)=0\) (usually the weak form of a partial differential equation),
+thus the considered objective is \(j(v) = J(u_{\bm{y}},v)\), where \(u_{\bm{y}}\) is
+the solution of the state equation given the optimization variables
+\(v\). Usually, one would be interested in calculating \(\nabla j(v)\)
+using the \href{chain_rule}{chain rule}:
+
+\[\nabla j(v) = \nabla_{\bm{y}} \Objective(u_{\bm{y}},v) + \nabla_u \Objective(u_{\bm{y}})\nabla_{\bm{y}} u_{\bm{y}}.\]
+
+Generally the term \(\nabla_{\bm{y}} u_{\bm{y}}\) is often very hard to
+differentiate analytically since the dependance is defined through an
+implicit equation. The Lagrangian functional can be used as a workaround
+for this issue. Since the state equation can be considered as a
+constraint in the minimization of \(j\), the problem
+
+\[\text{minimize}\ j(v) = J(u_{\bm{y}},v)\]
+
+\[\text{subject to}\ \Residual_{\bm{y}}(\TangentState_{\bm{y}}) = 0\]
+
+has an associate Lagrangian functional
+\(\mathcal{L}:\mathcal{U}\times\mathcal{V}\times\mathcal{U} \to \mathbb{R}\)
+defined by
+
+\[\mathcal{L}(u,v,\AdjointState) = J(u,v) + \langle D_{\bm{y}}(u),\AdjointState\rangle,\]
+
+where \(\AdjointState \in\mathcal{U}\) is a Lagrange multiplier or \textbf{adjoint state variable} and \(\langle\cdot,\cdot\rangle\) is an inner product
+on \(\mathcal{U}\). 
+The method of Lagrange multipliers states that a
+solution to the problem has to be a \href{stationary_point}{stationary
+point} of the lagrangian, namely
+
+\[\begin{cases}
+d_u\mathcal{L}(u,v,\AdjointState;\delta_u) = d_uJ(u,v;\delta_u) + \langle \delta_u,D_{\bm{y}}^*(\AdjointState)\rangle = 0 & \forall \delta_u \in \mathcal{U},\\
+d_{\bm{y}}\mathcal{L}(u,v,\AdjointState;\delta_{\bm{y}}) = d_{\bm{y}}J(u,v;\delta_{\bm{y}}) + \langle d_{\bm{y}}D_{\bm{y}}(u;\delta_{\bm{y}}),\AdjointState\rangle = 0 & \forall \delta_{\bm{y}}\in\mathcal{V},\\
+d_\AdjointState\mathcal{L}(u,v,\AdjointState;\delta_\AdjointState) = \langle D_{\bm{y}}(u), \delta_\AdjointState\rangle = 0 \quad & \forall \delta_\AdjointState \in \mathcal{U},
+\end{cases}\] where \(d_xF(x;\delta_x)\) is the
+\href{Gateaux_derivative}{Gateaux derivative} of \(F\) with respect to
+\(x\) in the direction \(\delta_x\). The last equation is equivalent to
+\(D_{\bm{y}}(u) = 0\), the state equation, to which the solution is \(u_{\bm{y}}\).
+The first equation is the so-called adjoint state equation,
+
+\[
+\langle \delta_u,D_{\bm{y}}^*(\AdjointState)\rangle = -d_uJ(u_{\bm{y}},v;\delta_u) \quad \forall \delta_u \in \mathcal{U},
+\]
+%
+because the operator involved is the adjoint operator of \(D_{\bm{y}}\),
+\(D_{\bm{y}}^*\). Resolving this equation yields the adjoint state
+\(\AdjointState_{\bm{y}}\). The gradient of the quantity of interest \(j\) with
+respect to \(v\) is
+\(\langle \nabla j(v),\delta_{\bm{y}}\rangle = d_{\bm{y}} j(v;\delta_{\bm{y}}) = d_{\bm{y}} \mathcal{L}(u_{\bm{y}},v,\AdjointState_{\bm{y}};\delta_{\bm{y}})\)
+(the second equation with \(u=u_{\bm{y}}\) and \(\AdjointState=\AdjointState_{\bm{y}}\)), thus it
+can be easily identified by subsequently resolving the direct and
+adjoint state equations. The process is even simpler when the operator
+\(D_{\bm{y}}\) is \href{Self-adjoint_operator}{self-adjoint} or symmetric since
+the direct and adjoint state equations differ only by their right-hand
+side.
+
+\subsubsection{Example: Linear case}\label{example_linear_case}
+
+In a real finite dimensional \href{linear_programming}{linear
+programming} context, the objective function could be
+\(J(u,v) = \langle Au , v \rangle\), for \(v\in\mathbb{R}^n\),
+\(u\in\mathbb{R}^m\) and \(A \in \mathbb{R}^{n\times m}\), and let the
+state equation be \(K_{\bm{y}} u = b\), with \(K_{\bm{y}} \in \mathbb{R}^{m\times m}\)
+and \(b\in \mathbb{R}^m\).
+
+The Lagrangian function of the problem is
+\(\mathcal{L}(u,v,\AdjointState) = \langle A u,v\rangle + \left< K_{\bm{y}}u - b,\AdjointState\right>\),
+where \(\AdjointState\in\mathbb{R}^m\).
+
+The derivative of \(\mathcal{L}\) with respect to \(\AdjointState\) yields the
+state equation as shown before, and the state variable is
+\(u_{\bm{y}} = B_{\bm{y}}^{-1}b\). The derivative of \(\mathcal{L}\) with respect to
+\(u\) is equivalent to the adjoint equation, which is, for every
+\(\delta_u \in \mathbb{R}^m\),
+
+\[d_u[\langle K_{\bm{y}}\cdot- b, \AdjointState\rangle](u;\delta_u)= - \langle A^\top v,\delta u\rangle \iff \langle K_{\bm{y}} \delta_u,\AdjointState\rangle = - \langle A^\top v,\delta u\rangle \iff \langle K_{\bm{y}}^\top \AdjointState +  A^\top v,\delta_u\rangle = 0 \iff K_{\bm{y}}^\top \AdjointState = - A^\top v.\]
+Thus, we can write symbolically \(\AdjointState_{\bm{y}} = K_{\bm{y}}^{-\top}A^\top v\). 
+The gradient would be
+
+\[
+\langle \nabla j(v),\delta_{\bm{y}}\rangle = \langle Au_{\bm{y}},\delta_{\bm{y}}\rangle + \langle \nabla_{\bm{y}} B_{\bm{y}} : \AdjointState_{\bm{y}}\otimes u_{\bm{y}},\delta_{\bm{y}}\rangle,
+\]
+where \(\nabla_{\bm{y}} B_{\bm{y}} = \frac{\partial B_{ij}}{\partial v_k}\) is a
+third-order \url{tensor}, \(\AdjointState_{\bm{y}} \otimes u_{\bm{y}} = \AdjointState^\top_{\bm{y}} u_{\bm{y}}\)
+is the dyadic product between the direct and
+adjoint states and \(:\) denotes a double tensor contraction. 
+It is assumed that
+\(B_{\bm{y}}\) has a known analytic expression that can be differentiated
+easily.
+
+\paragraph{Numerical consideration for the self-adjoint
+case}\label{numerical_consideration_for_the_self_adjoint_case}
+
+If the operator \(B_{\bm{y}}\) was self-adjoint, \(B_{\bm{y}} = B_{\bm{y}}^\top\), the direct
+state equation and the adjoint state equation would have the same
+left-hand side. In the goal of never inverting a matrix, which is a very
+slow process numerically, a \href{LU_decomposition}{LU decomposition}
+can be used instead to solve the state equation, in \(O(m^3)\)
+operations for the decomposition and \(O(m^2)\) operations for the
+resolution. That same decomposition can then be used to solve the
+adjoint state equation in only \(O(m^2)\) operations since the matrices
+are the same.
+
+\subsubsection{External links}\label{external_links}
+
+\begin{itemize}
+\tightlist
+\item
+  A well written explanation by Errico:
+  \href{https://dx.doi.org/10.1175/1520-0477(1997)078\%3C2577:WIAAM\%3E2.0.CO;2}{What
+  is an adjoint Model?}
+\item
+  Another well written explanation with worked examples, written by
+  Bradley \href{http://cs.stanford.edu/~ambrad/adjoint_tutorial.pdf}{1}
+\item
+  More technical explanation: A
+  \href{https://doi.org/10.1111/j.1365-246X.2006.02978.x}{review} of the
+  adjoint-state method for computing the gradient of a functional with
+  geophysical applications
+\item
+  MIT course
+  \href{https://web.archive.org/web/20150906095132/http://ocw.mit.edu/courses/mathematics/18-325-topics-in-applied-mathematics-waves-and-imaging-fall-2012/lecture-notes/MIT18_325F12_Chapter4.pdf}{2}
+\item
+  MIT notes \href{http://math.mit.edu/~stevenj/18.336/adjoint.pdf}{3}
+\end{itemize}
+
+

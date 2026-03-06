@@ -1,0 +1,319 @@
+\section{Level I: Dual Numbers}
+
+The resulting framework exposes a convenient high-level interface
+through the Python programming language which can be used to state,
+compose, and efficiently deploy complex physical models. 
+Not only does
+this open the door for powerful new computational procedures and inverse
+analyses, but it substantially simplifies how we interact with FE
+software, and provides an accessible tool for engineering education.
+
+% \hypertarget{part-i-composition-of-expressions}{\chapter{Part I: Composition of Expressions}\label{part-i-composition-of-expressions}}
+
+In \textcite{frostig2018compiling}, researchers from the Google Brain
+team begin their presentation of the JAX project with a
+simple observation; machine learning workloads tend to consist largely
+of subroutines satisfying two simple properties:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  They are \emph{pure} in the sense that their execution is free of side
+  effects, and
+\item
+  They are \emph{statically composed} in the sense that they implement a
+  computation which can be defined as a static data dependency on a
+  graph of some set of \emph{primitive} operations (This will be further
+  explained).
+\end{enumerate}
+
+The exploitation of these properties with techniques such as automatic
+differentiation and just-in-time compilation has become a central
+component of tools like TensorFlow, Matlab and PyTorch, which in the
+recent decade have been at the forefront of an ``explosion'' in the
+field of deep learning. The utility that these ground-breaking platforms
+provide is that they present researchers and developers with a high
+level platform for concisely staging mathematical computations with an
+intuitive ``neural network'' paradigm. By their structure, these
+resulting models admit analytic gradients which allows for the
+application of powerful optimization algorithms.
+
+Algorithmic differentiation (AD) is a class of computational methods
+which leverage the chain rule in order to exactly evaluate\footnote{Within
+  machine precision} the gradient of a mathematical computation which is
+implemented as a computer program. These methods are often further
+categorized into \emph{forward} and \emph{reverse} modes, the later of
+which further specializes to the \emph{backpropagation} class of
+algorithms which has become ubiquitous in the field of machine learning.
+These methods generally leverage either (1) source code transformation
+techniques or (2) operator overloading so that such a gradient
+computation can be deduced entirely from the natural semantics of the
+programming language being used. Much of the early literature which
+explores applications of AD to fields like structural modeling
+\autocite{ozaki1995higherorder,martins2001connection} employ the first
+approach, where prior to compilation, an pre-processing step is
+performed on some source code which generates new code implementing the
+derivative of an operation. This approach is generally used with
+primitive languages like FORTRAN and C which lack built-in abstractions
+like operator overloading and was likely selected for these works
+because at the time, such languages were the standard in the field.
+Although these compile-time methods allow for powerful optimizations to
+be used, they can add significant complexity to a project. Languages
+like C++, Python and Matlab allow user-defined types to \emph{overload}
+built-in primitive operators like \texttt{+} and \texttt{*} so that when
+they are applied to certain data types they invoke a user-specified
+procedure. These features allow for AD implementations which are
+entirely contained within a programming language's standard ecosystem.
+
+\subsection{Dual Numbers}\label{building-a-differentiable-model}
+
+There are several approaches which may be followed to arrive at the same
+formulation of forward mode automatic differentiation
+\autocite{hoffmann2016hitchhiker}. A particularly elegant entry point
+for the purpose of illustration is that used by
+\textcite{pearlmutter2007lazy} which begins by considering the algebra
+of \emph{dual numbers}. 
+These numbers are expressions of the form
+\(a + b\varepsilon\), with \(a,b \in \mathbb{R}\) for which addition
+and multiplication is like that of complex numbers, save that the symbol
+\(\varepsilon\) be defined to satisfy \(\varepsilon^2 = 0\).
+
+Consider an arbitrary analytic function
+\(f: \mathbb{R} \rightarrow \mathbb{R}\), admitting the following Taylor series expansion:
+%
+\[
+f(a+b \varepsilon)=\sum_{n=0}^{\infty} \frac{f^{(n)}(a) b^{n} \varepsilon^{n}}{n !} 
+\]
+%
+By truncating the series at \(n = 1\) and adhering to the operations
+defined over dual number arithmetic, one obtains the expression
+%
+\[
+f(a + b \varepsilon) = f(a) + bf^\prime (a) \varepsilon, 
+\]
+%
+This result insinuates that by elevating such a function to perform on
+dual numbers, it has effectively been transformed into a new function
+which simultaneously evaluates both it's original value, and it's
+derivative \(f^\prime\).
+
+For instance, consider the following pair of mappings:
+
+\[
+\begin{aligned}
+f: & \mathbb{R} \rightarrow \mathbb{R} \\
+   & x \mapsto (c - x)
+\end{aligned}
+\]
+
+\begin{equation}
+\begin{aligned}
+g: & \mathbb{R} \rightarrow \mathbb{R} \\
+   & x \mapsto a x + b f(x)
+\end{aligned}
+\label{eq:dual-area}\end{equation}
+%
+One can use the system of dual numbers to evaluate the gradient of \(g\)
+at some point \(x \in \mathbb{R}\), by evaluating \(g\) at the dual
+number \(x + \varepsilon\), where it is noted that the dual coefficient
+\(b = 1\) is in fact equal to the derivative of the dependent variable
+\(x\). This procedure may be thought of as \emph{propagating} a
+differential \(\varepsilon\) throughout the computation.
+
+\[
+\begin{aligned}
+g(x + \varepsilon)   & = a (x + \varepsilon) + b f(x + \varepsilon ) \\
+                     & = a x + a \varepsilon + b ( c - x - \varepsilon) \\
+                     & = (a - b) x + bc + (a - b) \varepsilon 
+\end{aligned}
+\]
+
+The result of this expansion is a dual number whose real component is
+the value of \(g(x)\), and dual component, \(a-b\), equal to the
+gradient of \(g\) evaluated at \(x\).
+
+\begin{figure}
+\hypertarget{fig:area-graph}{%
+\centering
+\includegraphics{Figures/area.pdf}
+\caption{Computational graph for the area of a
+T-section.}\label{fig:area-graph}
+}
+\end{figure}
+
+Such a system lends itself well to implementation in programming
+languages where an object might be defined to transparently act as a
+scalar. For example, in C, one might create a simple data structure with
+fields \texttt{real} and \texttt{dual} that store the real component,
+\(a\) and \emph{dual} component, \(b\) of such a number as show in \cref{lst:struct-dual}.
+
+\hypertarget{lst:struct-dual}{%
+\label{lst:struct-dual}}%
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{typedef} \KeywordTok{struct}\NormalTok{ dual }\OperatorTok{\{}
+    \DataTypeTok{float}\NormalTok{ real}\OperatorTok{,}\NormalTok{ dual}\OperatorTok{;}
+\OperatorTok{\}} \DataTypeTok{dual\_t}\OperatorTok{;}
+\end{Highlighting}
+\end{Shaded}
+
+Then, using the operator overloading capabilities of C++, the
+application of the \texttt{*} operator can be overwritten as follows so
+that the property \(\varepsilon = 0\) is enforced, as show in
+\cref{lst:dual-mult}.
+
+\hypertarget{lst:dual-mult}{%
+\label{lst:dual-mult}}%
+\begin{Shaded}
+\begin{Highlighting}[]
+\DataTypeTok{dual\_t} \DataTypeTok{dual\_t}\OperatorTok{::}\KeywordTok{operator} \OperatorTok{*} \OperatorTok{(}\DataTypeTok{dual\_t}\NormalTok{ a}\OperatorTok{,} \DataTypeTok{dual\_t}\NormalTok{ b}\OperatorTok{)\{}
+    \ControlFlowTok{return} \OperatorTok{(}\DataTypeTok{dual\_t}\OperatorTok{)} \OperatorTok{\{}
+        \OperatorTok{.}\NormalTok{real }\OperatorTok{=}\NormalTok{ a}\OperatorTok{.}\NormalTok{real }\OperatorTok{*}\NormalTok{ b}\OperatorTok{.}\NormalTok{real}\OperatorTok{,}
+        \OperatorTok{.}\NormalTok{dual }\OperatorTok{=}\NormalTok{ a}\OperatorTok{.}\NormalTok{real }\OperatorTok{*}\NormalTok{ b}\OperatorTok{.}\NormalTok{dual }\OperatorTok{+}\NormalTok{ b}\OperatorTok{.}\NormalTok{real }\OperatorTok{*}\NormalTok{ a}\OperatorTok{.}\NormalTok{dual}
+    \OperatorTok{\};}
+\OperatorTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+Similar operations are defined for variations of the \texttt{*},
+\texttt{+}, and \texttt{-} operators in a single-file library in the
+appendix. With this complete arithmetic interface implemented, forward
+propagation may be performed simply with statements like that of
+\cref{lst:dual-expr}.
+
+\hypertarget{lst:dual-expr}{%
+\label{lst:dual-expr}}%
+\begin{Shaded}
+\begin{Highlighting}[]
+\DataTypeTok{int}\NormalTok{ main}\OperatorTok{(}\DataTypeTok{int}\NormalTok{ argc}\OperatorTok{,} \DataTypeTok{char} \OperatorTok{**}\NormalTok{argv}\OperatorTok{)\{}
+  \DataTypeTok{dual\_t}\NormalTok{ x}\OperatorTok{(}\FloatTok{6.0}\OperatorTok{,}\FloatTok{1.0}\OperatorTok{);}
+  \DataTypeTok{dual\_t}\NormalTok{ dg }\OperatorTok{=}\NormalTok{ a }\OperatorTok{*}\NormalTok{ x }\OperatorTok{+} \OperatorTok{(}\NormalTok{c }\OperatorTok{{-}}\NormalTok{ x}\OperatorTok{)} \OperatorTok{*}\NormalTok{ b}\OperatorTok{;}
+\NormalTok{  printd}\OperatorTok{(}\NormalTok{dA}\OperatorTok{);}
+\OperatorTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{template-expressions}{%
+\subsection{Function Composition}\label{template-expressions}}
+
+The simple \texttt{dual\_t} numeric type developed in the previous
+section allows both an expression, and its gradient to be evaluated
+simultaneously with only the minor penalty that each value stores an
+associated \texttt{dual} value. However, if such a penalty was imposed
+on every value carried in a modeling framework, both memory and
+computation demands would scale very poorly. In order to eliminate this
+burden, the concept of a \emph{template expression} is introduced. This
+is again illustrated using the C++ programming language in order to
+maintain transparency to the corresponding machine instructions, but as
+expanded in the following part, this technique becomes extremely
+powerful when implemented in a context where access to the template
+expression in a processed form, such as an abstract syntax tree, can be
+readily manipulated. Examples of this might be through a higher-level
+language offering introspective capabilities (e.g., Python or most
+notably Lisp), or should one be so brave, via compiler extensions (an
+option which is becoming increasingly viable with recent developments
+and investment in projects like LLVM \autocite{lattner2004llvm}).
+
+In \ref{lst:dual-template}, the function \(g\) has been defined as
+a \emph{template} on generic types \texttt{TA}, \texttt{TB}, \texttt{TC}
+and \texttt{TX}. In basic use cases, like that shown in
+\ref{lst:dual-template}, a modern C++ compiler will deduce the
+types of the arguments passed in a call to \texttt{G} so that dual
+operations will only be used when arguments of type
+\VERB|\NormalTok{dual\_t}| are passed. Furthermore, such an
+implementation will produce a derivative of \texttt{G} with respect to
+whichever parameter is of type \VERB|\NormalTok{dual\_t}|. For example,
+in the assignment to variable \texttt{dg} in
+\ref{lst:dual-template}, a \VERB|\NormalTok{dual\_t}| value is
+created from variable \texttt{x} within the call to \texttt{G}, which
+automatically causes the compiler to create a function with signature
+\VERB|\NormalTok{dual\_t }\OperatorTok{(*)(}\NormalTok{dual\_t}\OperatorTok{,}\NormalTok{ real\_t}\OperatorTok{,}\NormalTok{ real\_t}\OperatorTok{,}\NormalTok{ real\_t}\OperatorTok{)}|
+which propagates derivatives in \texttt{x}.
+
+
+\hypertarget{lst:dual-template}{%
+\label{lst:dual-template}}%
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{template}\OperatorTok{\textless{}}\KeywordTok{typename}\NormalTok{ TX}\OperatorTok{,}\KeywordTok{typename}\NormalTok{ TB}\OperatorTok{,} \KeywordTok{typename}\NormalTok{ TA}\OperatorTok{,} \KeywordTok{typename}\NormalTok{ TC}\OperatorTok{\textgreater{}}
+\KeywordTok{auto}\NormalTok{ G}\OperatorTok{(}\NormalTok{TX x}\OperatorTok{,}\NormalTok{ TB b}\OperatorTok{,}\NormalTok{ TA a}\OperatorTok{,}\NormalTok{ TC c}\OperatorTok{)\{}
+\NormalTok{  printd}\OperatorTok{(}\NormalTok{b}\OperatorTok{*}\NormalTok{x}\OperatorTok{);}
+\NormalTok{  printd}\OperatorTok{(}\NormalTok{c }\OperatorTok{{-}}\NormalTok{ x}\OperatorTok{);}
+  \ControlFlowTok{return}\NormalTok{ a }\OperatorTok{*}\NormalTok{ x }\OperatorTok{+} \OperatorTok{(}\NormalTok{c }\OperatorTok{{-}}\NormalTok{ x}\OperatorTok{)} \OperatorTok{*}\NormalTok{b}\OperatorTok{;}
+\OperatorTok{\}}
+
+\DataTypeTok{int}\NormalTok{ main}\OperatorTok{(}\DataTypeTok{int}\NormalTok{ argc}\OperatorTok{,} \DataTypeTok{char} \OperatorTok{**}\NormalTok{argv}\OperatorTok{)\{}
+  \DataTypeTok{real\_t}\NormalTok{ a }\OperatorTok{=} \FloatTok{60.0}\OperatorTok{,}\NormalTok{ c}\OperatorTok{=}\FloatTok{18.0}\OperatorTok{,}\NormalTok{ b}\OperatorTok{=}\FloatTok{18.0}\OperatorTok{;}
+  \DataTypeTok{real\_t}\NormalTok{ x }\OperatorTok{=} \FloatTok{6.0}\OperatorTok{;}
+  \DataTypeTok{real\_t}\NormalTok{ g }\OperatorTok{=}\NormalTok{ G}\OperatorTok{(}\NormalTok{x}\OperatorTok{,}\NormalTok{b}\OperatorTok{,}\NormalTok{a}\OperatorTok{,}\NormalTok{c}\OperatorTok{);}
+  \DataTypeTok{dual\_t}\NormalTok{ dg }\OperatorTok{=}\NormalTok{ G}\OperatorTok{(}\DataTypeTok{dual\_t}\OperatorTok{(}\NormalTok{x}\OperatorTok{,}\DecValTok{1}\OperatorTok{),}\NormalTok{b}\OperatorTok{,}\NormalTok{a}\OperatorTok{,}\NormalTok{c}\OperatorTok{);}
+\NormalTok{  printd}\OperatorTok{(}\NormalTok{dg}\OperatorTok{);}
+\OperatorTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+In this minimal example, the set of operations for which we have
+explicitly defined corresponding dual operations constitute a set of
+\emph{primitive} operations which may be composed arbitrarily in
+expressions which will implicitly propagate machine precision first
+derivatives. These compositions may include arbitrary use of control
+structures like \VERB|\ControlFlowTok{while}| /
+\VERB|\ControlFlowTok{for}| loops, branching via
+\VERB|\ControlFlowTok{if}| statements, and by composition of such
+operations, numerical schemes involving indefinite iteration.
+
+
+
+\hypertarget{part-ii-the-finite-element-method}{%
+\subsection{Finite Element Models}\label{part-ii-the-finite-element-method}}
+
+
+
+A particularly powerful dialect of FE methods for problems in resilience
+is the composable approach developed through works like
+\textcite{spacone1996fibre} where the classical beam element is
+generalized as a composition of arbitrary section models, which may in
+turn be comprised of several material models. Platforms like
+{[}FEDEASLab{]} and {[}OpenSees{]} are designed from the ground up to
+natively support such compositions \autocite{mckenna2010nonlinear}. This
+study builds on this composable architecture by defining a single
+protocol for model components which can be used to nest or compose
+elements indefinitely.
+
+In order to establish an analogous structure to that of ANNs which is
+sufficiently general to model geometric and material nonlinearities, we
+first assert that such a FE program will act as a mapping,
+\(\Phi: \Theta\times\mathcal{S}\times\mathcal{U}\rightarrow\mathcal{S}\times\mathcal{U}\),
+which walks a function,
+\(f: \Theta\times\mathcal{S}\times\mathcal{U}\rightarrow\mathcal{S}\times\mathcal{R}\)
+(e.g.~by applying the Newton-Raphson method), until arriving at a
+solution, \((S^*,U^*)=\Phi(\Theta,S_0,U_0)\) such that
+\(f(\Theta,S_0,U^*) = (S^*, \mathbf{0})\) in the region of \(U_0\). In
+problems of mechanics, \(f\) may be thought of as a potential energy
+gradient or equilibrium statement, and the elements of \(\mathcal{U}\)
+typically represent a displacement vector, \(\mathcal{R}\) a normed
+force residual, \(\mathcal{S}\) a set of path-dependent state variables,
+and \(\Theta\) a set of parameters which an analyst may wish to optimize
+(e.g.~the locations of nodes, member properties, parameters, etc.). The
+function \(f\) is composed from a set of \(i\) local functions
+\(g_i: \theta\times s\times u \rightarrow s\times r\) that model the
+response and dissipation of elements over regions of the domain, which
+in turn may be comprised of a substructure or material function, until
+ultimately resolving through elementary operations,
+\(h_j: \mathbb{R}^n\rightarrow\mathbb{R}^m\) (e.g.~Vector products,
+trigonometric functions, etc.).
+
+In a mathematical sense, for a given solution routine, all of the
+information that is required to specify a computation which evaluates
+\(\Phi\), and some gradient, \(D_\Theta \Phi\), of this model with
+respect to locally well behaved parameters \(\Theta\) is often defined
+entirely by the combination of (1) a set of element response functions
+\(g_i\), and (2) a graph-like data structure, indicating their
+connectivity (i.e., the static data dependency of
+\textcite{frostig2018compiling}) . For such problems, within a
+well-structured framework, the procedures of deriving analytic gradient
+functions and handling low-level machine instructions can be lifted
+entirely from the analyst through abstraction, who should only be
+concerned with defining the trial functions, \(g_i\), and establishing
+their connectivity.

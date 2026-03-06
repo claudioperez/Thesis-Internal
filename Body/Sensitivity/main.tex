@@ -1,0 +1,254 @@
+
+
+\section{Literature}
+% Hybrid Differentiation in Finite Element Analysis\label{hybrid-differentiation-in-finite-element-analysis}
+
+\subsubsection{Direct Differentiation Method (DDM) in
+FEA}\label{direct-differentiation-method-ddm-in-fea}
+
+The \textbf{direct differentiation method (DDM)} computes sensitivities
+by analytically differentiating the finite element governing equations
+with respect to model parameters. In the earthquake engineering and
+reliability community, DDM has been a preferred approach for obtaining
+exact response gradients. 
+For example, \cite{haukaas2003finite} implemented a comprehensive DDM-based sensitivity module in the OpenSees platform, enabling ``accurate, consistent and efficient computation of
+response sensitivities'' for material, load, and even shape parameters.
+
+In such implementations, one derives the partial derivative of each
+element's stiffness matrix, internal force, etc., and assembles the
+global gradient. 
+The benefit is that the gradients are \textbf{exact (to
+machine precision)} and often very efficient to evaluate. Studies have
+shown that compared to finite difference or complex-step perturbation,
+DDM yields sensitivities that are both \textbf{accurate and
+computationally efficient}. 
+\cite{scott2004resposne}, 
+applied DDM to nonlinear beam-column elements and highlighted that it
+offers a robust and efficient approach for response sensitivity analysis
+of yielding structures.
+
+Despite its advantages, DDM can be cumbersome to implement.
+Every element formulation and material model in the FE code requires
+hand-derived differentiation. 
+This was feasible in research codes (e.g.~OpenSees) written in C++, but it poses a high barrier to integration with high-level scientific computing ecosystems (like Python). 
+Maintaining and extending an analytically differentiated code
+is labor-intensive and error-prone -- any change in the model requires
+updating the derivatives. 
+Thus, while DDM is well-known in structural optimization and reliability analysis for its efficiency, its use in
+broader optimization or machine learning pipelines has been limited. 
+In short, \textbf{DDM provides exact gradients at runtime with minimal
+overhead, but demands significant upfront implementation effort}. 
+This trade-off motivates exploring alternatives that can be more easily
+generalized.
+
+
+\subsubsection{Automatic Differentiation in Computational Mechanics}\label{automatic-differentiation-in-computational-mechanics}
+
+In the past decade, \textbf{automatic differentiation (AD)} has made
+significant inroads into computational mechanics, offering a way to
+obtain exact gradients \emph{without} manual derivation. AD (also called
+algorithmic differentiation or simply \emph{autodiff}) treats the FE
+algorithm as a composition of differentiable operations and applies the
+chain rule systematically. 
+
+A thorough treatment of AD for iterative procedures such as the use of
+the Newton-Raphson method for solving nonlinear equations is presented
+by \textcite{beck1994automatic}, \textcite{gilbert1992automatic} and
+\textcite{griewank1993derivative}. 
+Historic accounts of the development
+of AD can be found in \textcite{iri2009automatic}. 
+Such treatments
+generally begin with the work of Wengert (e.g. \textcite{wengert1964simple}). 
+A more recent work,
+\textcite{elliott2009beautiful} develops an elegant presentation and
+implementation of forward-mode AD in the context of purely functional
+programming.
+
+
+Modern AD tools can compute Jacobians and
+gradients \emph{programmatically}, and researchers have started
+leveraging these tools in finite element contexts:
+
+\begin{itemize}
+\item
+  \textbf{AD in FE Frameworks:} Large-scale multiphysics codes have
+  begun to incorporate AD to form exact system Jacobians. A notable
+  example is the MOOSE framework (INL) which uses the MetaPhysicL AD
+  library. 
+  \cite{lindsay2021automatic} describe the integration of AD
+  into MOOSE's finite element routines, allowing the automatic
+  computation of consistent tangent matrices for nonlinear solves. 
+  They report that this approach yields an exact Jacobian at relatively small overhead, enhancing the robustness and convergence of Newton--Raphson solvers. 
+  The key point is that developers can write the residual 
+  equations in a natural way, and the AD system generates the Jacobian
+  -- bypassing tedious manual differentiation.
+\item
+  \textbf{Differentiable FE Libraries:} Outside of traditional FE
+  codebases, new libraries built on machine-learning frameworks have
+  emerged. For example, \emph{Liang et al.} (2023) introduced
+  \textbf{PyTorch-FEA}, which implements finite element analysis using
+  PyTorch tensor operations. By ``taking advantage of autograd, an
+  automatic differentiation mechanism in PyTorch,'' the library can
+  seamlessly compute gradients of FE response with respect to input
+  parameters. This enabled them to tackle inverse problems by coupling
+  the FE model with neural networks. Notably, PyTorch-FEA was shown to
+  \textbf{significantly speed up forward simulations} (benchmarking
+  against Abaqus) while maintaining accuracy, and to improve inverse
+  analysis accuracy and efficiency, especially when integrated with deep
+  neural nets. The implication is that autodiff allows tight integration
+  of FEM into optimization loops and machine learning pipelines --
+  something that was traditionally cumbersome with low-level DDM codes.
+\item
+  \textbf{High-Performance Differentiable Simulation:} In tandem,
+  efforts like \textbf{JAX-FEM} \citep{xue2023jaxfem} demonstrate
+  that AD can be applied at scale. 
+  JAX-FEM is a differentiable 3D FE solver built on Google's JAX library \citep{frostig2018compiling}, allowing GPU-accelerated computations. 
+  Impressively, it handled a 3D problem with 7.7 million
+  degrees of freedom and achieved an order-of-magnitude speedup over a
+  commercial FE code by running on GPU. 
+  JAX-FEM uses reverse-mode AD to
+  obtain gradients, so one can perform \textbf{automatic inverse design}
+  -- e.g.~topology optimization -- ``in a fully automatic manner
+  \textbf{without} the need to manually derive sensitivities''. 
+  This
+  shows that with modern hardware and AD tools, even large-scale FE
+  models can be made differentiable, opening the door to integrating FEM
+  with AI-driven design. 
+  (That said, JAX-FEM's success also relies on
+  problem structure and substantial computing power; fully
+  differentiating a million-DOF nonlinear problem is still extremely
+  memory-intensive in general.)
+\item
+  \textbf{AD in Specialized Methods:} Researchers have also applied AD
+  within specific computational mechanics techniques to simplify their
+  implementation. 
+  \cite{oberbichler2021efficient} used AD (with both forward and reverse modes) to derive the internal force vector and consistent stiffness matrix for
+  \textbf{nonlinear isogeometric elements} from a single energy
+  functional. 
+  They specifically compared forward-mode vs.~reverse-mode
+  AD for this task and found the reverse (adjoint) mode far more
+  efficient for high-degree elements: the reverse-mode Jacobian required
+  \emph{significantly fewer operations} and intermediate storage, and
+  crucially, the number of AD intermediate variables no longer grew with
+  the polynomial degree of shape functions. 
+  This result underscores a
+  general insight -- the choice of AD mode (forward or adjoint) must be
+  tailored to the problem to avoid excessive overhead. In FE problems
+  with many state variables but relatively fewer output quantities
+  (e.g.~objective function or a few constraints), adjoint/reverse mode
+  is usually optimal.
+\end{itemize}
+
+\textbf{Challenges:} While AD offers automation and exactness, it can
+become \textbf{computationally prohibitive for entire nonlinear FE
+simulations}. The memory footprint of reverse-mode AD is a known concern
+-- e.g.~backpropagating through a long time-stepping simulation requires
+storing or recomputing the state at each step. Some authors have noted
+``strong limitations'' of naive AD when applied to general physics
+problems, including high memory use and even issues with
+non-differentiable points in simulations. 
+In practice, fully
+differentiable FE codes often require careful engineering
+(checkpointing, code simplifications) to be feasible. This is where
+\textbf{hybrid approaches} enter the picture -- combining analytic and
+automatic differentiation to balance performance with flexibility.
+
+\subsubsection{Hybrid Approaches}\label{hybrid-approaches-combining-ddm-and-ad}
+
+Given the pros and cons of the two methods, a \textbf{hybrid
+differentiation strategy} is attractive: use \emph{analytic
+differentiation} for parts of the problem where we can efficiently
+derive formulas, and use \emph{automatic differentiation} to handle the
+rest. This idea has been explored in various forms.
+
+% \textbf{Concept of Hybrid Differentiation:} 
+\cite{bartlett2008hybrid} were early proponents of this approach in the context of
+simulation codes. 
+They observed that ``present AD tools\ldots rarely
+compare to analytically derived versions'' in efficiency, but AD is
+far easier to implement. 
+Thus, \emph{``the focus of {[}their{]} work
+{[}was{]} to combine the strength of these methods into a hybrid
+strategy''}. In other words, one should \textbf{``select the
+appropriate components''} of the simulation to differentiate manually
+vs.~automatically to achieve an optimal balance of developer effort
+and runtime cost. In their demonstration (fluid dynamics simulation in
+C++), they hand-differentiated critical low-level routines and used
+template-based AD for the rest -- yielding near-analytic performance
+with much less manual coding. This philosophy directly inspires our
+approach: we aim to differentiate the FE \emph{element kernel}
+analytically (for efficiency), and let a higher-level AD system handle
+glue code and complex couplings (for flexibility).
+
+% \textbf{Contemporary Examples:} 
+Very recently, \cite{dummer2024robust} put a hybrid approach into practice for nonlinear material modeling. 
+They introduced a \emph{``semi-analytical split approach''}
+  for a finite strain \textbf{generalized continuum} model. In their
+  framework, the global finite element equations were derived
+  analytically as usual, but the \textbf{material's stress-update
+  algorithm} (which was quite complex, involving a gradient-enhanced
+  damage model) was differentiated using automatic differentiation
+  \textbf{with hyper-dual numbers}. Hyper-dual AD provided first and
+  second derivatives of the stress update in a black-box fashion,
+  yielding an exact consistent tangent matrix for the material
+  sub-problem. This \textbf{split} saved them from manually
+  differentiating an arduous constitutive law, while still embedding
+  that law into an efficient FE solver. 
+  In effect, Dummer \emph{et al.} achieved a modular differentiation: the element
+  stiffness contributions from a complicated material are obtained via
+  AD, and everything else (element formulation, assembly, solver) uses
+  standard analytic differentiation.
+
+% \textbf{Adjoint-AD Hybrids:} 
+Another flavor of hybridization is mixing \emph{adjoint methods} with AD. 
+Adjoint (reverse) differentiation is itself an analytic approach at the system level, often used in topology optimization or sensitivity analysis to avoid recomputing a full Jacobian. 
+One can use an adjoint equation to get the gradient of a single objective with respect to many inputs very efficiently -- but one still needs partial derivatives (Jacobian blocks) inside that adjoint equation. 
+%
+\cite{oberbichler2021efficient} provide a nice
+example: they apply the adjoint method to the \textbf{global} IGA
+system (yielding what they call a ``core-congruential formulation''
+separating geometry from mechanics), but they obtain the necessary
+\textbf{element-level derivatives} via algorithmic differentiation of
+the energy functional. 
+The result was a \textbf{clean separation}: the
+CAD-based geometry routines were automatically differentiated, and
+then the adjoint method assembled the total sensitivity with far fewer
+operations than a pure forward differentiation would require. This
+hybrid of AD and adjoint analytic methods allowed them to tackle shape
+sensitivities for very high-order elements efficiently. We anticipate
+a similar layering in our work: the low-level FE code provides
+\emph{analytic} derivatives (DDM-style) for element responses, which
+can then be used in high-level autodiff (which functions much like an
+adjoint when computing gradients of a larger objective that includes
+the FE model).
+
+In summary, the literature suggests that \textbf{combining direct and
+automatic differentiation is a promising route} to bring finite elements
+into the realm of optimization and machine learning. 
+Pure AD-based FEM implementations exist and have shown what's possible (e.g.~end-to-end differentiable simulators like JAX-FEM and PyTorch-FEA). However, they also highlight the downsides -- namely, the runtime and memory costs -- when applied to large, nonlinear FE problems. 
+On the other hand, decades of work on DDM in computational mechanics have given us methods to get
+gradients efficiently for very specific problems (e.g.~the OpenSees DDM
+for structural sensitivities, or recent DDM for geometrically-nonlinear
+frame elements). 
+
+The \textbf{hybrid approach seeks to get the ``best of
+both worlds.''} By embedding an analytically differentiated FE
+\emph{kernel} inside a higher-level AD framework, we retain the
+efficiency of hand-coded derivatives for the heavy lifting (the finite
+element internal calculations) and the flexibility of automatic
+differentiation for coupling with other software (optimization
+algorithms, machine learning models, etc.). 
+This approach has only started to appear in the literature in the last few years, and to our knowledge, no general-purpose Python-based FE tool with built-in DDM
+sensitivities exists yet. 
+Our work will fill that gap. 
+We will demonstrate how a \textbf{DDM-enhanced FE solver} can be \emph{embedded}
+in an autodiff environment to enable gradient-based design,
+optimization, and learning on complex FE models -- \emph{without} the
+prohibitive memory cost of differentiating through the entire nonlinear
+solve. This aligns with the trends seen in recent research and pushes
+them a step further by uniting the efficiency of classical methods with
+the flexibility of modern autodiff frameworks.
+
+
+
+

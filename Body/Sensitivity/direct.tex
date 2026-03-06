@@ -1,0 +1,110 @@
+\subsection{The Direct (Forward‐Mode) Method}  \label{sec:direct}
+Let\footnote{Throughout we write $\langle\cdot,\cdot\rangle$ for the Euclidean inner
+product on $\mathbb{R}^{n}$ and identify dual vectors with their
+corresponding covectors via this pairing.}
+%
+\[
+  \bm{g}:\mathbb{R}^{n_u}\!\times\!\mathbb{R}^{n_p}\longrightarrow\mathbb{R}^{n_u},
+  \qquad
+  (\bm{u},\bm{y})\mapsto\bm{g}(\bm{u},\bm{y}),
+\]
+%
+denote the residual of a fully discretised (e.g.\ finite–element) model.
+Equilibrium is the root–finding problem.
+%
+\begin{equation}\label{eq:equil}
+  \bm{g}\bigl(\bm{u}(\bm{y}),\bm{y}\bigr)=\bm{0}.
+\end{equation}
+or equivalently:
+\begin{equation*}
+ \left< \bm{g}\bigl(\bm{u}(\bm{y}),\bm{y}\bigr),\; \AdjointState \right>= 0
+ \qquad\forall \AdjointState
+\end{equation*}
+For a fixed parameter vector $\bm{y}$ we assume that the stiffness 
+$\partial_{\bm{u}}\bm{g}(\bm{u},\bm{y})$ is nonsingular so that the Implicit‐Function
+Theorem guarantees a differentiable map
+$\bm{h}:\bm{y}\mapsto\bm{u}(\bm{y})$.
+
+\paragraph{Forward sensitivity (Jacobian–vector product).}
+Differentiating~\eqref{eq:equil} in the direction
+$\dot{\bm{y}}\in\mathbb{R}^{n_p}$ yields the \emph{tangent system}
+%
+\begin{equation}\label{eq:forward}
+  \bigl(\partial_{\bm{u}}\bm{g}\bigr)\,\dot{\bm{u}}
+  \;=\;-\bigl(\partial_{\bm{y}}\bm{g}\bigr)\,\dot{\bm{y}},
+  \qquad
+  \dot{\bm{u}}\equiv\dfrac{\partial \bm{u}}{\partial \bm{y}}\dot{\bm{y}}.
+\end{equation}
+%
+The linear map
+$(\dot{\bm{y}}\mapsto\dot{\bm{u}})$ is the \emph{Jacobian–vector product} (JVP)
+%
+\[
+ \dot{\TangentState} = \mathrm{JVP}_{\bm{h}}(\bm{y};\dot{\bm{y}})
+  \;=\;
+  \partial\bm{h}(\bm{y})\,\dot{\bm{y}},
+\]
+%
+and its numerical evaluation is called \textbf{forward-mode automatic
+differentiation} in the AD literature.  Substituting $\dot{\bm{u}}$
+into\footnote{Here
+$\partial_{\bm{u}} \Objective$ and $\partial_{\bm{y}} \Objective$ denote column gradients of a scalar
+functional $\Objective :\mathbb{R}^{n_u}\!\times\!\mathbb{R}^{n_p}\to\mathbb{R}$.}
+%
+\[
+  d\Objective
+  \;=\;
+  \bigl\langle\partial_{\bm{u}} \Objective,\dot{\bm{u}}\bigr\rangle
+  +\bigl\langle\partial_{\bm{y}} \Objective,\dot{\bm{y}}\bigr\rangle
+\]
+%
+provides the directional derivative $d \Objective(\bm{y};\dot{\bm{y}})$.
+
+\paragraph{Summary.}
+Given a nonlinear residual equation $\bm{g}(\bm{u},\bm{y})=\bm{0}$, the \emph{direct differentiation
+method} (DDM) forms its tangent (Jacobian) system and \emph{propagates} a
+perturbation of the parameters
+$\dot{\bm{y}}\in\mathbb{R}^{n_p}$ forward to the state perturbation
+$\dot{\bm{u}}\in\mathbb{R}^{n_u}$ by solving \eqref{eq:forward}.
+%
+% \begin{equation}\label{eq:forward}
+% \frac{\partial\bm{g}}{\partial\bm{u}}\;\dot{\bm{u}}
+%  \;=\; -\frac{\partial\bm{g}}{\partial\bm{y}}\;\dot{\bm{y}} .
+% \end{equation}
+%
+Subsequently, gradients of any scalar objective
+$\ell(\bm{u},\bm{y})$ follow from the total derivative
+$d \ell = \ell_{\bm{u}}\dot{\bm{u}} + \ell_{\bm{y}}\dot{\bm{y}}$.
+
+
+
+\paragraph{Automatic–differentiation view.}
+Eq.~\eqref{eq:forward} is the \textbf{Jacobian–vector product}
+$\partial\bm{h}(\bm{y})\,\dot{\bm{y}}$ with
+$\bm{h}: \bm{y}\mapsto \bm{u}(\bm{y})$,
+i.e.\ \emph{forward–mode automatic differentiation}.%
+\footnote{The AD literature calls this the \emph{discrete–direct} or
+\emph{tangent‐linear} approach \cite{barthelemy1995automatic}.}
+The FLOP cost scales with the \emph{number of inputs}
+$n_p$ because each independent direction
+$\dot{\bm{y}}$ requires a solve of \eqref{eq:forward}.
+Memory is modest: no intermediate states need to be stored.
+
+\paragraph{When is it efficient?}
+Forward mode is attractive when $n_p\!\ll\!n_g$, where $n_g$ is the number of
+scalar outputs whose derivatives are required
+(tall Jacobians).  Typical examples are
+\begin{itemize}
+  \item design of a single component subject to many sensor outputs, or
+  \item time–integration of ODEs/PDEs where sensitivities to a small set of
+        initial conditions are sought at \emph{all} time steps.
+\end{itemize}
+For modern implementations, Eq.~\eqref{eq:forward} can be assembled from
+hand–coded element tangents (classical DDM) or generated automatically by a
+forward‐mode AD tool; hybrid approaches combine the two.
+
+\paragraph{Complexity.}
+Solving~\eqref{eq:forward} once costs roughly as much as one Newton step of the
+primal problem and yields one column of $\partial\bm{h}$.  Hence the work scales
+like $\mathcal{O}(n_p)$, whereas memory is $\,\mathcal{O}(1)$ with respect to the
+depth of the nonlinear solve.

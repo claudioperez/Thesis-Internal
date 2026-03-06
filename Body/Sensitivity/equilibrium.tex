@@ -22,54 +22,9 @@ TODO: Introduce concept of ``section'' and ``element'' level.
 % \end{Quote}
 
 
-\subsection{Literature}
 
-% Differential
-%
-% \begin{itemize}
-%     \item \cite{euler1744curvis}, \cite{kirchhoff1859ueber}, \cite{love1906treatise}
-
-%     \item \cite{cosserat1896theorie}
-
-%     \item \cite{ericksen1957exact}, \cite{green1966general},  \cite{naghdi1973theory}.
-%     From this period, the works of \cite{antman1973theory,antman1974kirchhoffs} were particularly influential. \cite{antman2005nonlinear} is a preeminent source for mathematical treatment of the geometrically exact three-dimensional theory. However, the focus of this work is on analytic results. 
-
-% \end{itemize}
-
-% Supplements
-\cite{oreilly2017modeling,goss2003snap,levien2008elastica} offer rich historical accounts of nonlinear beam theories. 
-\cite{hjelmstad2005fundamentals} presents a comprehensive treatment of two-dimensional beam theories, with limited coverage of three-dimensional theories and the complications that arise from the non-vectorial manifold. 
-Useful resources which treat beam theory with  differential geometry are \cite{landau1970theory,connor1976analysis}. 
-
-\cite{zienkiewicz2014finite} provides an account of the
-necessary theory for approximating such models by the finite element method,
-while \cite{meier2019geometrically} offers a comprehensive survey of the 
-state of the art for geometrically exact finite elements. 
-
-\citep{antman1974kirchhoffs,simo1991geometricallyexact,klinkel2003anisotropic}
-
-% \cite[p39]{vlasov1961thinwalled}
-
-% \paragraph{Elastostatics}
-
-% \cite{brown1994nonuniform}
-
-
-
-% Inelastic response with warping is investigated by \cite{neal1961effecta,neal1961effect}.
-
-See also \cite{ladeveze1998new}.
-
-
-\paragraph{Section Kinematics (Moderate Strain).}
-\cite{rong2020geometrically} incorporated Wagner effects in a geometrically exact beam element with torsion warping.
-
-
-% The asymmetric formulation of \cite{hsiao2000corotational} takes the shear-center as reference point.
-
-
-\iffalse
-\subsection{Mechanical Systems}
+\iftrue
+\section{Mechanical Systems}
 
 This section presents a general approach for discretizing a large class of structural equilibrium problems that are governed by partial differential equations to formulate a representative discrete internal force vector $\intern$. 
 The procedure generalizes the classical finite element method which is typically formulated on Sobolev vector spaces \citep{hughes1987finite} to the setting of nonlinear manifolds{\footnote{A manifold is a mathematical representation of a curved surface. Manifolds naturally arise as solution sets of constrained systems of equations and as graphs of functions.}}, which are encountered in the geometrically nonlinear analysis of plates, rods, and shells.
@@ -162,68 +117,3 @@ The constitutive response is defined between the material stress
 \end{ambox}
 \fi
 \fi 
-
-\subsection{Kinematics}
-
-The configuration variables for a beam include a vector
-\(\bm{x}\) identifying the curve, a rotation
-\(\FrameRotation\) identifying the cross section
-orientation, and a warping amplitude vector
-\(\bm{\alpha}\) which is used to represent deformation modes within a
-cross section.
-\[
-\chi \triangleq \left(\bm{x}, \FrameRotation, \bm{\alpha}\right)
-\]
-
-The cross-section orientation is identified by a variable \(\FrameRotation(\reflenx) = \frameBasis \otimes \FrameBasis + \frameBasis_{\beta} \otimes \FrameBasis_{\beta}\) representing the constrained map from three directors in the reference configuration 
-\(\left\{\FrameBasis, \FrameBasis_\alpha\right\}\) to their placement in the current configuration \(\{\frameBasis, \frameBasis_\alpha\}\). 
-% The index-free directors \(\FrameBasis\) and \(\frameBasis\) are, by definition, normal to the cross section plane. 
-The body coordinate \(\reflenx \in[0, L]\) is taken as the reference arc-length and
-the notation \((~\cdot~)^{\prime} \coloneq \partial(~\cdot~) / \partial \reflenx\) is adopted. 
-The placement of the deformed curve is represented by a vector \(\bm{x}(\reflenx) \in \mathbb{R}^3\), and cross sectional warping is represented by a vector \(\bm{\alpha}(\reflenx) \in \mathbb{R}^{n_w}\) of \(n_w\) \emph{warping amplitudes}. 
-The strain measures arise uniquely from the differential geometry of
-directed curves embedded in Euclidean space
-\citep{cosserat1909theorie,ericksen1957exact}. 
-These furnish components representing axial \(\epsilon\), shear \(\gamma_{\alpha}\), torsion \(\Twist\),
-and curvature \(\kappa_{\alpha}\) strains in the reference director basis \(\{\FrameBasis,\, \FrameBasis_{\beta}\}\):
-%
-\begin{SaveEquation}{eq:def-gam-kap}
-  \begin{aligned}
-    \bm{\gamma} &= \FrameRotation^{\top} \left(\bm{x}^\prime - \frameBasis \right) \\
-    &= \epsilon \FrameBasis + \gamma_\beta \FrameBasis_\beta 
-  \end{aligned}
-  \qquad\text{ and }\qquad
-  \begin{aligned}
-    \bm{\kappa} &= \left(\FrameRotation^\mathrm{t} \FrameRotation^\prime \right)^{\vee} \\
-    &= \Twist \FrameBasis + \kappa_\beta  \FrameBasis_{\beta }
-  \end{aligned}
-% \label{eq:def-gam-kap}
-\end{SaveEquation}
-%
-where summation over the two cross-section directors \(\FrameBasis_{\beta}\) is implied by the repeated indices \(\beta\), and 
-the notation \((~\cdot~)^{\vee}\) indicates that the argument \(\FrameRotation^{\prime}\FrameRotation^{\top}\) is a skew-symmetric map with axial vector \(\bm{\kappa}\).
-Similarly, the notation \((\,\cdot\,)^{\times}\) is adopted to represent a vector \(\bm{a} \in \mathbb{R}^3\) acting as a skew-symmetric linear operator \(\bm{a}^{\times}: \mathbb{R}^3 \rightarrow \mathbb{R}^3\) so, for example,
-\[
-\bm{\kappa}^{\times} = \FrameRotation^\mathrm{t} \FrameRotation^\prime
-\]
-This way \((\,\cdot\,)^{\vee}\) and \((\,\cdot\,)^{\times}\) represent the \emph{vee} and \emph{hat} isomorphisms on the Lie algebra \(\mathfrak{so}(3)\).
-%
-A constitutive relation is required between the material stress \(\bm{s}\) and strain \(\bm{e}\):
-\begin{SaveEquation}{eq:cosserat-strain} 
-  \bm{s} \coloneq \begin{pmatrix}
-  \bm{n} \\ 
-  \bm{m} \\
-  \bm{w} \\
-  \bm{v}
-  \end{pmatrix}
-  \quad\text{ and }\quad 
-  \bm{e} \coloneq \begin{pmatrix}
-  \bm{\gamma}\\ 
-  \bm{\kappa} \\
-  \bm{\alpha}' \\
-  \bm{\alpha}
-  \end{pmatrix}
-  % \label{eq:cosserat-strain}
-\end{SaveEquation}
-
-We restrict our attention to prismatic initially straight rods so that \(\FrameBasis' = \mathbf{0}\).

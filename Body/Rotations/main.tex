@@ -1,0 +1,162 @@
+
+\section{The Rotation Group}\label{sec:rotations}
+
+\hypertarget{definition}{%
+\subsection{Definition}\label{definition}}
+
+Geometrically, a rotation is a transformation of a plane or space that causes no
+deformation or reflection so that distance, orientation, and the origin
+are preserved. Mathematically this is realized in \(\mathbb{R}^3\) by
+considering \emph{all} functions
+\(\bm{\Lambda}\colon \mathbb{R}^3\rightarrow \mathbb{R}^3\), and
+filtering out those which do not preserve the origin \(\bm{0}\),
+the vector dot product \(\bm{a}\cdot \bm{b}\),
+and the scalar triple product
+\([\bm{a},\bm{b},\bm{c}] = \bm{a}\cdot\left(\bm{b}\times\bm{c}\right)\)
+for vectors \(\bm{a},\bm{b}\) and \(\bm{c}\) in \(\mathbb{R}^3\). The
+set \(\mathrm{SO}(3)\) is defined as the collection of all functions
+that have these properties: %features:
+\begin{equation}
+\mathrm{SO}(3) \triangleq \left\{\,
+    \bm{\Lambda}\colon \mathbb{R}^3\rightarrow\mathbb{R}^3
+~\left|~~
+\begin{aligned}
+\bm{\Lambda}\bm{a}\cdot\bm{\Lambda}\bm{b} &= \bm{a}\cdot\bm{b}\,
+,  \\
+[\bm{\Lambda a}, \bm{\Lambda b}, \bm{\Lambda c}]&=[\bm{a}, \bm{b}, \bm{c}]
+,~\text{ and } ~\bm{\Lambda}\bm{0} = \bm{0}
+\text{ for all }\bm{a},\bm{b},\bm{c}\in\mathbb{R}^3
+\end{aligned}
+\right.
+\,\right\}
+\label{eq:def-SO3}\end{equation}
+These properties alone that ensure any such map \(\bm{\Lambda}\) acts linearly on vectors\footnote{The linearity of $\mathrm{SO}(n)$ is more commonly specified directly by taking it as a subgroup of the general linear group, $\mathrm{GL}(n)$ (see e.g. \cite{artin1991algebra}).
+However, it is helpful to observe this implication from the rotation constraints in \eqref{eq:def-SO3}.}. 
+The properties in \eqref{eq:def-SO3} for any 
+\(\bm{a},\bm{b},\bm{c}\in\mathbb{R}^3\)
+imply the familiar relations:
+\begin{equation*} 
+\begin{aligned}
+\bm{\Lambda}\bm{a}\cdot\bm{\Lambda}\bm{b} &= \bm{a}\cdot\bm{b}\,
+  \\
+[\bm{\Lambda a}, \bm{\Lambda b}, \bm{\Lambda c}]&=[\bm{a}, \bm{b}, \bm{c}] \\
+\end{aligned} \ \Longleftrightarrow
+\begin{aligned}
+\bm{\Lambda}^{\mathrm{t}} \bm{\Lambda}&=\mathbf{1} \\
+\det\bm{\Lambda} &= 1 .
+\end{aligned}
+\end{equation*}
+%where the left-hand side is asserted again for any
+%\(\bm{a},\bm{b},\bm{c}\in\mathbb{R}^3\).
+
+\hypertarget{representation}{%
+\subsection{Representation}\label{representation}}
+
+In this work, the term \emph{representation} is used to indicate how a
+rotation \(\bm{\varLambda}\) is stored in computer memory, and how
+its action on vectors and matrices is computed.
+This is unrelated to the \emph{parameterization} of a given problem and is not considered a transformation of the configuration space.
+Any of the standard ``parameterizations'' can be used both to \emph{represent}
+rotation operations, and to \emph{parameterize} a configuration space.
+Well known examples %\FCF{alternatives} %examples
+% NOTE: "examples" is used in the sense of "examples of the standard parameterizations mentioned in the preceeding sentence". I dont see what these are "alternatives" to.
+include Euler angles, and the Euler, Rodriguez, and Cayley parameters.
+The most intuitive representation results from evaluating the nine scalars
+\(\varLambda_{ij} = \mathbf{e}_i\cdot\bm{\varLambda}\mathbf{e}_j\) on a basis
+\(\{\mathbf{e}_i\}\) spanning \(\mathbb{R}^3\) and forming a matrix, but
+this is not recommended for implementation. It is well known that only
+\emph{five} parameters are needed to uniquely and globally represent
+elements of the rotation group \citep{stuelpnagel1964parametrization},
+and in practice the non-unique double-cover\footnote{The unit quaternions are known as a ``double-cover'' because any single rotation is represented by two unit quaternions.} 
+offered by the four \emph{Euler parameters} identifying a unit quaternion is generally the ideal choice.
+
+In practical structural applications the impact of
+the number of rotation parameters on computer memory requirements is often
+inconsequential.
+However, the size of the linear system that results from the tangent stiffness is important. 
+This size is governed by the dimension of the \emph{variation} of a rotation, not the rotation itself. 
+Because the rotation group \(\mathrm{SO}(3)\) is fundamentally a three-dimensional manifold, variations use only three parameters, regardless of the number of parameters used for the rotation variables.
+Another consideration is the computational complexity of basic rotation operations for a given parameterization. 
+The Euler parameters tend to be ideal in this regard, as quaternion operations generally incur the fewest trigonometric function evaluations.
+
+\hypertarget{algebra}{%
+\subsection{Algebra}\label{algebra}}
+
+There is no useful way to combine elements of
+\(\mathrm{SO}(3)\) associatively %which maintains
+while maintaining the constraints of \eqref{eq:def-SO3}.
+This means that when treating problems in terms of variables 
+in \(\mathrm{SO}(3)\), addition is undefined, and one is left without the structure of a \emph{vector space}.
+Fortunately, the collection \(\mathrm{SO}(3)\) as
+defined preserves the weaker algebraic nature of a \emph{group}.
+Although weaker than a vector space, this provides a very useful and
+well-understood apparatus for algebraic manipulation (see e.g.
+\cite{artin1991algebra}).
+
+From this definition, it can also be shown that the group
+\(\mathrm{SO}(3)\) forms a smooth manifold, allowing one to recover
+constructs from calculus and work within the stronger structure of a
+\emph{Lie group}.
+The characterization as a Lie group is significant
+because it allows operations in any tangent space, say
+\(T_{\bm{R}}\mathrm{SO}(3)\) at an element \(\bm{R}\),
+to be systematically related to the single tangent space
+\(T_{\bm{1}}\mathrm{SO}(3)\) at the identity element \(\bm{1}\),
+essentially representing the entire \emph{tangent bundle} \(\left\{T_{\scriptscriptstyle{\Lambda}}\,\mathrm{SO}(3)\mid \bm{\Lambda}\in\mathrm{SO}(3)\right\}\) %\FCF{???}
+with a single vector space.
+For this reason, the space \(T_{\bm{1}}\mathrm{SO}(3)\)
+is given the special designation \(\mathfrak{so}(3)\) and is referred to
+as the \emph{Lie algebra} of the group \(\mathrm{SO}(3)\).
+Note that for problems in a vector space \(\mathcal{V}\),
+this ordeal of tangent spaces %business \FCF{???!!!} 
+is generally circumvented altogether by implicitly
+identifying the tangent space \(T_x\mathcal{V}\) at each point \(x\) in
+\(\mathcal{V}\) with the vector space \(\mathcal{V}\) itself.
+
+The constraints in Equation (\ref{eq:def-SO3}) require that 
+elements \(\bm{\Omega}\) of the Lie algebra \(\mathfrak{so}(3)\) behave like skew-symmetric linear operators. This immediately furnishes two convenient representations for these objects using either (1) vectors in \(\mathbb{R}^3\), or (2) the skew symmetric matrices in \(\mathbb{R}^{3 \times 3}\). 
+Any vector \(\bm{\omega}\) in \(\mathbb{R}^3\) is associated
+with a skew-symmetric matrix \(\bm{\Omega}\) using the \emph{hat} isomorphism
+\((~\cdot~)^{\times}\). %\colon \mathbb{R}^3 \rightarrow \mathfrak{so}(3)\).
+This is defined by the relation
+\(\bm{\Omega}\bm{a} = \bm{\omega}^{\times} \bm{a}=\bm{\omega}\times \bm{a}\)
+for any vector \(\bm{a}\) in \(\mathbb{R}^3\) and expressed in
+coordinates as
+\begin{equation}
+\bm{\omega}^{\times}=\begin{pmatrix}
+\omega_1 \\
+\omega_2 \\
+\omega_3
+\end{pmatrix}^{\times}=\begin{pmatrix}
+0 & -\omega_3 & \omega_2 \\
+\omega_3 & 0 & -\omega_1 \\
+-\omega_2 & \omega_1 & 0
+\end{pmatrix} = \bm{\Omega}.
+\label{eq:hat}\end{equation}
+% Similarly, skew-symmetric operators are identified with a vector
+% in \(\mathbb{R}^3\) using the \emph{vee} isomorphism
+% \((~\cdot~)^{\vee}\). %\colon \mathfrak{so}(3)\rightarrow\mathbb{R}^3\). 
+Similarly, given a skew-symmetric matrix \(\bm{\Omega}=\bm{\omega}^{\times}\),
+the \emph{vee} isomorphism \((~\cdot~)^{\vee}\) is defined such that
+\(\bm{\Omega}^{\vee}=\bm{\omega}\), which is expressed in
+coordinates as: \begin{equation}
+\bm{\Omega}^{\vee}= \begin{pmatrix}
+0 & -\omega_3 & \omega_2 \\
+\omega_3 & 0 & -\omega_1 \\
+-\omega_2 & \omega_1 & 0
+\end{pmatrix}^{\vee} = \begin{pmatrix}
+\omega_1 \\
+\omega_2 \\
+\omega_3
+\end{pmatrix}
+= \bm{\omega}.
+\label{eq:vee}\end{equation}
+
+The inner product
+\(\langle\cdot, \cdot\rangle\colon T_{\scriptscriptstyle{\Lambda}} \mathrm{SO}(3) \times T_{\scriptscriptstyle{\Lambda}} \mathrm{SO}(3) \rightarrow \mathbb{R}\)
+is defined by (\cite{abraham1994foundations})
+
+\begin{equation}
+\left\langle\bm{\Omega}_{\bm{\Lambda}}, \bm{W}_{\bm{\Lambda}}\right\rangle
+\triangleq \frac{1}{2} \operatorname{tr}\left[\bm{\Omega}_{\scriptscriptstyle{\Lambda}}^{\mathrm{t}} \bm{W}_{\scriptscriptstyle{\Lambda}}\right].
+\label{eq:def-SO3-inner}\end{equation}

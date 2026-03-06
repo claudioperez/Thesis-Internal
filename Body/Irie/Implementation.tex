@@ -114,11 +114,12 @@ To facilitate this communication, two protocols have been developed, one for eac
 The protocols rely on JSON-encoded messaging in a manner that is compatible with frameworks like  \cite{deierlein2020cloudenabled,deierlein2021state}.  
 
 The flexibility afforded by this design has made it possible to integrate a wide variety of scientific computing tools into the platform to be used as predictors. 
-These include the \texttt{mdof} Python library for system identification \citep{chern2024mdof}, the \OpenSees{} Tcl interpreter for nonlinear structural analysis \citep{mckenna1997object}, and the new \Xara{} library \citep{perez2024xara}, a redesigned and optimized frontend to the core \OpenSees{} framework which has been redesigned to facilitate model updating and machine learning tasks.
+These include the \texttt{mdof} Python library for system identification \citep{chern2024mdof}, the \OpenSees{} Tcl interpreter for nonlinear structural analysis \citep{mckenna1997object}, and the new \Xara{} library \citep{perez2024xara}, a redesigned and optimized frontend to the core \OpenSees{} framework which has been redesigned to facilitate model updating and machine learning tasks. 
 % A pilot study for this class of prediction has been carried out for the route 580/238 separation structure (Caltrans bridge number \texttt{33-0214L}). This is presented in \cite{perez2024brace2}.
 
 The \texttt{PredictorDaemon} class also plays a crucial role in resource management. 
-By providing an abstract interface for dispatching predictors, it allows the \texttt{EvaluationDaemon} class of the \texttt{evaluation} module (see \cref{sec:evaluation-module} below) to control the computational resources consumed by the predictors. This feature ensures that the platform can handle a large number of simultaneous evaluations without overloading the system resources.
+By providing an abstract interface for dispatching predictors, it allows the \texttt{EvaluationDaemon} class of the \texttt{evaluation} module (\cref{sec:evaluation-module}) to control the computational resources consumed by the predictors. 
+This feature ensures that the platform can handle a large number of simultaneous evaluations without overloading the system resources.
 
 \subsubsection{The \texttt{evaluation} Module}\label{sec:evaluation-module}
 

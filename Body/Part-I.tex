@@ -18,7 +18,7 @@
 
 
 % A family of models are developed for simulating slender members exhibiting geometric and material nonlinearities. 
-Slender members are typically represented by dimensionally reduced \citep{kantorovich1958approximate} models of three dimensional continua, known as beam theories, which simplify the partial differential equations of elastostatics to produce an ordinary differential equation in one spatial variable.
+Structural members are typically represented by dimensionally reduced \citep{kantorovich1958approximate} models of three dimensional continua, known as beam theories, which simplify the partial differential equations of elastostatics to produce an ordinary differential equation in one spatial variable.
 When discretized by the finite element method, these models offer a substantial advantage in computational demand over direct finite element modeling of the continuum field equations, but several complications arise in the face of geometric and material nonlinear response:
 \begin{description}
 \item[Geometric Nonlinearity.]
@@ -28,7 +28,8 @@ Formulations that restore objectivity exist, but they sacrifice the symmetric ta
 
 \item[Material Nonlinearity.]
 Inelastic material response exhibits a complicated dependency on the three dimensional state of stress and strain in a body. 
-Fiber section models reconstruct a uniaxial strain field by leveraging the plane section hypothesis of Euler-Bernoulli and Timoshenko beam theories. This approach yields acceptable accuracy when a uniaxial material model can sufficiently capture the inelastic response, as is often the case for slender members with simple cross sections not expected to experience significant torsion. 
+Fiber section models reconstruct a uniaxial strain field by leveraging the plane section hypothesis of Euler-Bernoulli and Timoshenko beam theories. 
+This approach yields acceptable accuracy when a uniaxial material model can sufficiently capture the inelastic response, as is often the case for slender members with simple cross sections not expected to experience significant torsion. 
 
 For members subject to more general loading conditions, a multiaxial strain state must be accounted for in the resultant formulation. 
 The plane section hypothesis alone fails to capture cross-sectional warping, which governs the distribution of shear and torsional strains over the section, and neglecting these effects tends to over-predict strength and stiffness. 

@@ -39,32 +39,6 @@ intuitive ``neural network'' paradigm. By their structure, these
 resulting models admit analytic gradients which allows for the
 application of powerful optimization algorithms.
 
-Algorithmic differentiation (AD) is a class of computational methods
-which leverage the chain rule in order to exactly evaluate\footnote{Within
-  machine precision} the gradient of a mathematical computation which is
-implemented as a computer program. These methods are often further
-categorized into \emph{forward} and \emph{reverse} modes, the later of
-which further specializes to the \emph{backpropagation} class of
-algorithms which has become ubiquitous in the field of machine learning.
-These methods generally leverage either (1) source code transformation
-techniques or (2) operator overloading so that such a gradient
-computation can be deduced entirely from the natural semantics of the
-programming language being used. Much of the early literature which
-explores applications of AD to fields like structural modeling
-\autocite{ozaki1995higherorder,martins2001connection} employ the first
-approach, where prior to compilation, an pre-processing step is
-performed on some source code which generates new code implementing the
-derivative of an operation. This approach is generally used with
-primitive languages like FORTRAN and C which lack built-in abstractions
-like operator overloading and was likely selected for these works
-because at the time, such languages were the standard in the field.
-Although these compile-time methods allow for powerful optimizations to
-be used, they can add significant complexity to a project. Languages
-like C++, Python and Matlab allow user-defined types to \emph{overload}
-built-in primitive operators like \texttt{+} and \texttt{*} so that when
-they are applied to certain data types they invoke a user-specified
-procedure. These features allow for AD implementations which are
-entirely contained within a programming language's standard ecosystem.
 
 \subsection{Dual Numbers}\label{building-a-differentiable-model}
 

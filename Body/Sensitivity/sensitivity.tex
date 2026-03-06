@@ -1,0 +1,75 @@
+
+
+\section{Tangent and Adjoint Differentiation}
+
+A state \(\bm{x}\) is in equilibrium if the following equation is satisfied:
+\begin{equation}
+    \left<\Residual (\bm{x},\AutoParameters{}),\; \bm{\eta}\right> = 0
+    \qquad\forall \bm{\eta}
+\end{equation}
+Linearization furnishes:
+\begin{equation}
+\left<
+   \partial_{\bm{x}} \Residual [\dot{\bm{x}}] 
+ + \partial_{\AutoParameters{}} \Residual [\dot{\AutoParameters{}}]
+ ,\; \bm{\eta}
+\right>
++\left<\Residual,\; \dot{\bm{\eta}}\right> = 0
+\end{equation}
+
+For a smooth map $\bm{F}:\mathbb{R}^{n_p}\!\to\!\mathbb{R}^{n_u}$ and directions
+$(\dot{\AutoParameters{}},\dot{\bm{u}})$, define the linearization
+$\partial\bm{F}(\AutoParameters{})$.  
+Then
+%
+\[
+    \left< \partial\bm{F}(\AutoParameters{})\,\dot{\AutoParameters{}},\,\bm{\eta} \right>
+    =
+    \left< \dot{\AutoParameters{}},\, \partial\bm{F}(\AutoParameters{})^{\!\mathsf{T}}\bm{\eta} \right>
+\]
+%
+Forward mode computes the left‐hand JVP, reverse mode the right‐hand VJP.  
+One chooses the cheaper side of the equality: forward when $n_p$ is small, reverse
+when $n_u$ (or the number of scalar objectives) is small.
+
+
+
+\input{Body/Sensitivity/direct}
+\input{Body/Sensitivity/adjoint}
+
+\subsection{Summary}
+
+\begin{center}
+\begin{tabular}{lcc}
+\toprule
+\textbf{Aspect} & \textbf{Forward / Direct} & \textbf{Reverse / Adjoint} \\
+\midrule
+Linear object & JVP: $\partial\bm{F}\,\dot{\AutoParameters{}}$ &
+                 VJP: $\bm{\eta}^{\mathsf{T}}\partial\bm{F}$\\
+Cost scaling  & $\mathcal{O}(n_p)$ & $\mathcal{O}(n_g)$ \\
+Memory        & constant (streaming) & $\propto$ depth  \\
+Best for      & few inputs, many outputs &
+                 many inputs, few outputs \\
+Classical names &
+  Direct/tangent, TLM, DDM &
+  Adjoint method, backprop, reverse mode \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+
+Reverse mode is attractive when $n_g \ll n_p$, e.g.
+\begin{itemize}
+  \item gradient‐based optimization of a scalar loss depending on
+        millions of design variables,
+  \item machine‐learning training where $\AutoParameters{}$ are network weights.
+\end{itemize}
+
+Forward mode is attractive when $n_p \ll n_g$, where $n_g$ is the number of
+scalar outputs whose derivatives are required.  
+Typical examples are
+\begin{itemize}
+  \item design of a single component subject to many sensor outputs, or
+  \item time–integration of ODEs/PDEs where sensitivities to a small set of
+        initial conditions are sought at \emph{all} time steps.
+\end{itemize}

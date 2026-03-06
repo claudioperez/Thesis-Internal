@@ -1,27 +1,4 @@
 
-In this section, governing equations are developed for a line embedded in 3D space.
-
-TODO: Introduce concept of ``section'' and ``element'' level.
-
-% The Type 1 case is of interest because it is relatively easy to implement and appears regularly in the literature (though usually not in such a general form) like Reissner's theory of torsion warping \citep{reissner1952nonuniform}.
-% Type~2 is harder to implement because it seems to produce higher-order equilibrium equations, but it is important because it covers several widely studied models, such as Vlasov's nonuniform torsion theory.
-% Finally, the Type~3 case is particularly interesting.
-% It is not as easy to implement as Type~1, but our goal is to show that the resulting differential equations are such that standard finite elements can be reused to model it, provided that the cross-sectional constitutive law is appropriately condensed.
-% In particular, we aim to show that a section implemented for the general Type~1 formulation can be ``wrapped'' by a procedure applying the operators $\mathbf{L}$.
-% In a later section we show that, when this Type~3 condensed/wrapped section is used in a standard $6$-DOF shear-deformable beam finite element (which expects only six stress resultants), it is possible to represent the full Saint~Venant class exactly, without altering the element.
-% Moreover, when the section exhibits material or geometric nonlinearity through the resultant mapping, the resulting wrapper/Type~3 element combination remains a consistent approximation to a well-posed governing equilibrium boundary-value problem.
-% % Within the Saint~Venant class the differential constraints arise only in a few fields and display several simplifying features; this will allow us to restrict the treatment of such constraints so as to avoid most of the pathological consequences they normally entail.
-
-
-% \begin{Quote}
-% The Type 4 case is of interest because it's relatively easy to implemented, and sees regular use in literature (but not in such a general form). Type 3 is harder to implement because it seems to produce a higher order equilibrium equation, but nonetheless it is of interest because it covers several widely studied models like Vlasov's nonuniform torsion model. 
-% Finally, type 3 is extremely interesting. its not as easy to implement as Type 4, but my goal is to show that the resulting differential equations are such that standard finite elements can be reused to model it, provided that the resultant constitutive model is appropriately condensed. 
-% I ultimately want to show that a section that is implemented for the general type 4 formulation can be simply "wrapped" by a procedure that applies the L operators. 
-% In a later section we want to show that when this Type 3 condensed/wrapped section is used in a ``standard" 6-DOF shear deformable beam finite element (which expects only 6 resultants), it is possible to exactly model the complete Saint Venant Class, without any alterations to the element. Furthermore, we want that when the section exhibits material or geometric nonlinear response through the resultant mapping, the wrapper-type3 element combination remains a ``consistant" approximant to a meaningful governing equilibrium BVP. 
-% In the Saint~Venant-class,  differential constraints only arise in a few fields which exhibit several simplifying features which I hope will allow us to sufficiently restrict the treatment of such constraints so as to eliminate all the messy implications they entail. 
-% \end{Quote}
-
-
 
 \iftrue
 \section{Mechanical Systems}

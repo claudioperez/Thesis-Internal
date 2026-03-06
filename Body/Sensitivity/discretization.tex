@@ -2,7 +2,7 @@
 
 
 \hypertarget{sec:discretization}{%
-\subsection{Projection}\label{sec:discretization}}
+\subsubsection{Projection}\label{sec:discretization}}
 
 The structure outlined in Box~\ref{box:mechanical-equilibrium} implies a weak statement
 of \eqref{eq:strong} that is centered around the Galerkin \emph{residual functional}:
@@ -50,7 +50,7 @@ finite-dimensional representation of the linearized residual in
 \cref{sec:galerkin-discretization}.
 
 \hypertarget{sec:linearization}{%
-\subsection{Linearization}\label{sec:linearization}}
+\subsubsection{Linearization}\label{sec:linearization}}
 
 The linearization of the residual functional \(\mathcal{G}\)
 in \eqref{eq:galerkin} is akin to a first-order Taylor series expansion
@@ -177,7 +177,7 @@ both terms will naturally vanish. %both of these terms naturally vanish.
 \fi
 
 \hypertarget{sec:galerkin-discretization}{%
-\subsection{Discretization}\label{sec:galerkin-discretization}}
+\subsubsection{Discretization}\label{sec:galerkin-discretization}}
 
 Because \eqref{eq:galerkin-linearized} and \eqref{eq:def-K} are linear in both
 \(\bm{\eta}\) and \(\bm{u}\), a discrete algebraic problem
@@ -281,6 +281,29 @@ represents the residual element nodal forces \(\{\intern_a\}\).
 % \label{eq:def-pa}
 % \end{equation}
 
+Let
+%
+\[
+  \bm{g}:\mathbb{R}^{n_u}\!\times\!\mathbb{R}^{n_p}\longrightarrow\mathbb{R}^{n_u},
+  \qquad
+  (\bm{u},\bm{y})\mapsto\bm{g}(\bm{u},\bm{y}),
+\]
+%
+denote the residual of a fully discretized model.
+Equilibrium is the root–finding problem.
+%
+\begin{equation}\label{eq:equil}
+  \bm{g}\bigl(\bm{u}(\bm{y}),\bm{y}\bigr)=\bm{0}.
+\end{equation}
+or equivalently:
+\begin{equation*}
+ \left< \bm{g}\bigl(\bm{u}(\bm{y}),\bm{y}\bigr),\; \AdjointState \right>= 0
+ \qquad\forall \AdjointState
+\end{equation*}
+For a fixed parameter vector $\bm{y}$ we assume that the stiffness 
+$\partial_{\bm{u}}\bm{g}(\bm{u},\bm{y})$ is non-singular so that the Implicit‐Function
+Theorem guarantees a differentiable map
+$\bm{h}:\bm{y}\mapsto\bm{u}(\bm{y})$.
 
 \paragraph{Tangent Stiffness.}
 
@@ -337,7 +360,7 @@ are furnished by summation on \(i\) and \(j\):
 \end{equation}
 
 
-\subsection{Summary}
+\subsubsection{Summary}
 
   The results of this section are collected in Box~\ref{box:fea}.
   The operators \(\bm{B}_a\),     \(\bm{B}^\star_b\), and \(\bm{G}_{ab}\) 

@@ -28,6 +28,16 @@ This chapter presents verification studies of the formulations developed in Part
     \LightRule
     & & Element & Section & Shear & Twist & & & \\
     \midrule
+    \ExRef{shape-0012}
+    & C. Sol. 
+    & Linear 
+    & Linear
+    & Uniform
+    & Uniform
+    & 
+    & Elastic
+    & \ref{sec:timo}
+    \\
     \ExRef{frame-0012}
       & C. Sol.
       & Linear %\eqref{eq:trace-lift-linear}
@@ -101,10 +111,10 @@ This chapter presents verification studies of the formulations developed in Part
      % & Elastic
      % & \ref{sec:transform}
      % \\
-     \ExRef{frame-1002}
-     & Ana.
-     & Finite
-     \\
+     % \ExRef{frame-1002}
+     % & Ana.
+     % & Finite
+     % \\
      % \ExRef{frame-1003}
      % & Ben.
      % % Kinematics
@@ -182,6 +192,7 @@ This chapter presents verification studies of the formulations developed in Part
     & Uniform
     & 
     & Plastic
+    & \ref{sec:nonuniform}
     \\
     \ExRef{frame-3032}
     & Ben.
@@ -215,7 +226,45 @@ The source code implementing these simulations is available at \url{https://gith
 % \subsection{Sensitivity \ShowLabel{0002}}\label{sec:frame-0002}
 % \input{Examples/frame-0002/index}
 
-\subsection{Trace correspondence to classical shear corrections}\label{sec:shape-0012}
+
+\begin{figure}[t]
+  \centering
+  % --- Row 1: three side-by-side ---
+  \begin{subfigure}[t]{0.32\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{Figures/column.png}
+    \caption{\(\mathrm{P}_{\rm I}\) Extension.}
+    \label{fig:demo-a}
+  \end{subfigure}\hfill
+  \begin{subfigure}[t]{0.32\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{Figures/column.png}
+    \caption{\(\mathrm{P}_{\rm I}\) Bending.}
+    \label{fig:demo-b}
+  \end{subfigure}\hfill
+  \begin{subfigure}[t]{0.32\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{Figures/column.png}
+    \caption{\(\mathrm{P}_{\rm I}\) Torsion.}
+    \label{fig:demo-c}
+  \end{subfigure}
+
+  \medskip
+
+  % --- Row 2: one centered ---
+  \begin{subfigure}[t]{0.66\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{Figures/column.png}
+    \caption{\(\mathrm{P}_{\rm I\!I}\) Flexure.}
+    \label{fig:demo-d}
+  \end{subfigure}
+
+  \caption{Saint~Venant's problems.}
+  \label{fig:sv-problems}
+\end{figure}
+
+\subsection{Trace correspondence to classical shear corrections}
+\label{sec:shape-0012}
 \input{Examples/shape-0012/index}
 
 \subsection{Saint-Venant flexure \ShowLabel{0012}}\label{sec:frame-0012}

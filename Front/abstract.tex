@@ -27,11 +27,12 @@ There is a wealth of literature addressing these phenomena, but many issues rema
 
 
 Part~I of this dissertation develops a family of beam finite elements that address these issues. 
-[TODO: Elaborate].
-% The formulation admits an arbitrary number of cross-sectional warping modes and classifies beam theories according to how the associated amplitudes are constrained.
-% A \emph{trace formalism} is introduced that characterizes the family of theories capable of exactly representing Saint~Venant's solution. %, and explicit expressions are derived for the warping shapes consistent with each.
+The central contribution is an enhanced section constitutive framework that improves reconstruction of the three-dimensional strain field while preserving the standard one-dimensional equilibrium equations, with correction amplitudes resolved locally at each section and condensed from the global system.
+This constitutive framework is developed in the general setting of geometrically exact beam theory with an arbitrary number of warping modes, and remains valid for linearizations of that model including classical Timoshenko beam theory.
+It is then specialized in two directions.
+For uniform warping, a trace-based construction is used as a means to derive enhanced shapes that exactly recover Saint~Venant continuum solutions in the elastic regime.
+For nonuniform warping, the framework yields enhanced shapes that rectify the torsional equilibrium violation known to arise in standard torsion-warping models.
 For inelastic analysis, the framework permits warping effects to be condensed at the section level, so that standard six-degree-of-freedom beam elements can be employed without modification to the element formulation.
-% Geometric transformations are treated separately from element kinematics, following the modular approach of \citet{scott2008software}, and extended to ensure strain objectivity in the sense of \citet{crisfield1999objectivity} while maintaining a symmetric tangent stiffness at equilibrium. 
 The resulting formulations are implemented in \Xara{}, a simulation environment extending the work by \cite{mckenna1997object} that supports automatic differentiation through a hybrid adjoint approach.
 
 
@@ -53,39 +54,24 @@ Following a pilot deployment covering 22 bridges, Caltrans has funded continued 
 
 
 
-\section*{Outline}
+% \section*{Outline}
 
-% Part~I develops finite element formulations.
-% Chapter~2 surveys relevant literature.
-% Chapter~3 derives governing equations for beams with warping modes.
-% Chapter~4 presents the geometric transformation framework.
-% Chapter~5 develops the section constitutive theory.
-% Chapter~6 introduces the trace formalism.
-% Chapter~7 documents the modeling library.
-% Chapters~8 and~9 verify the formulations against benchmark problems.
-% Chapter~10 applies them to a Caltrans bridge model.
+% The dissertation is organized in two parts.
+
+% Part~I develops finite element formulations for structural members.
+% \Cref{sec:Part-I} motivates the theoretical developments and surveys relevant literature. 
+% \Cref{sec:genwarp} derives governing equations for a a family of beam theories incorporating warping and finite deformation. 
+% % \Cref{sec:transform} presents a framework for geometric transformations that rectifies issues pertaining to strain objectivity that arise in the treatment of finite rotations.
+% \Cref{sec:gensec} develops the section-level constitutive framework relating the one-dimensional beam model to the three-dimensional continuum. 
+
+% \Cref{sec:timo} investigates the optimal selection of enhanced shapes in the absence of auxiliary warping fields. The objective is to achieve exact representation of Saint~Venant's continuum solutions through standard beam finite elements. 
+% %This precipitates in a novel family of cross section models that exactly represent Saint-Venant's continuum solutions in the linear isotropic regime. 
+% % \Cref{sec:library} summarizes the developments and describes their implementation in the \Xara{} and FEDEASLab simulation environments. 
+% % \Cref{sec:verify-elastic} presents verification case studies.
+% % \Cref{sec:painter} applies the formulations to a Caltrans bridge model.
 
 % Part~II addresses structural health monitoring.
-% Chapter~11 describes the architecture of \textsc{OpenSeesRT}.
-% Chapter~12 presents the \BRACE{} platform.
-
-The dissertation is organized in two parts.
-
-Part~I develops finite element formulations for slender members.
-\Cref{sec:Part-I} motivates the theoretical developments and surveys relevant literature.
-\Cref{sec:genwarp} derives governing equations for a a family of beam theories incorporating warping and finite deformation, classifying theories into four types according to the treatment of warping amplitudes.
-% \Cref{sec:transform} presents a framework for geometric transformations that rectifies issues pertaining to strain objectivity that arise in the treatment of finite rotations.
-\Cref{sec:gensec} develops the section-level constitutive theory relating the one-dimensional beam model to the three-dimensional continuum.
-\Cref{sec:timo} investigates the optimal selection of enhanced shapes in the absence of auxiliary warping fields. The objective is to achieve exact representation of Saint~Venant's continuum solutions through standard beam finite elements. This precipitates in a novel family of cross section models that exactly represent Saint-Venant's continuum solutions in the linear isotropic regime. 
-% \Cref{sec:library} summarizes the developments and describes their implementation in the \Xara{} and FEDEASLab simulation environments. 
-% \Cref{sec:verify-elastic} presents verification case studies.
-% \Cref{sec:painter} applies the formulations to a Caltrans bridge model.
-
-Part~II addresses structural health monitoring.
-\Cref{ch:xara} describes the architecture of \Xara{}, with attention to features that support differentiable simulation.
-\Cref{sec:irie} presents the implementation of a structural health monitoring framework for the \BRACE{} project.
-
-Appendices collect notation and provide supplementary derivations.
-
+% \Cref{ch:xara} describes the architecture of \Xara{}, with attention to features that support differentiable simulation.
+% \Cref{sec:irie} presents the implementation of a structural health monitoring framework for the \BRACE{} project.
 
 \end{abstract}

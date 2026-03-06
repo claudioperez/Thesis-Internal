@@ -8,11 +8,12 @@
 % The enhanced modes are resolved locally at each section through a procedure that introduces no additional degrees of freedom into the global system. 
 % \end{Note}
 
-This section develops a constitutive framework for a broad class of nonlinear beam theories. 
+This chapter develops a constitutive framework for a broad class of nonlinear beam theories. 
 The construction is motivated by enhanced strain methods in finite element analysis, in which the compatible strain is augmented by additional modes that do not enter the admissible stress work.
 
-Here the same idea is applied at the cross-sectional level. 
-For a prescribed set of beam strain measures, additional section strain modes are introduced to improve the representation of the underlying three-dimensional strain field. The associated mode amplitudes are determined locally at each cross section and are condensed out of the global system. As a result, the beam equilibrium equations are unchanged, while the section constitutive mapping is enriched.
+For a prescribed set of beam strain measures, additional section strain modes are introduced to improve the representation of the underlying three-dimensional strain field. 
+The associated mode amplitudes are determined locally at each cross section and are condensed out of the global system. 
+As a result, the beam equilibrium equations are unchanged, while the section constitutive mapping is enriched.
 
 \subsection{Literature}
 
@@ -200,7 +201,7 @@ $$
 %
 % \subsection{Material Strain Tensor}\label{sec:material-strain}
 
-The Green-Lagrange strain tensor \(\hat{\StrainTensor}\coloneq\tfrac12(\bm{F}^{\top}\bm{F}-\mathbf{1})\) with \eqref{eq:F-Phi} is:
+The Green-Lagrange strain tensor \(\hat{\StrainTensor}\coloneq\tfrac12(\bm{F}^{\top}\bm{F}-\mathbf{1})\) with \(\bm{F}\) from \eqref{eq:F-Phi} is:
 \begin{equation}
 \begin{aligned}
 \hat{\StrainTensor} = \bm{\mu}
@@ -259,7 +260,7 @@ In terms of \(\bm{u}\triangleq\bm{x}- \reflenx\,\FrameBasis\) the linearized bea
 \end{remark}
 
 \begin{remark}
-The nonlinearities in the strain tensor \eqref{eq:exact-gl-strain-Phi} are of two distinct origins:
+The nonlinearities in the strain tensor \eqref{eq:exact-gl-strain-Phi} are of two origins:
 \begin{itemize}
     \item \emph{Element-level nonlinearity}: encoded in the beam strains \(\ShearStrain\), \(\CurveStrain\) and resolved by the finite element discretization of the beam axis.
     This includes the finite rotation \(\FrameRotation\) and the strain measures \eqref{eq:def-gam-kap}.
@@ -276,18 +277,18 @@ All strain representations derived below may be employed in connection with eith
 In \cref{sec:std-kinematics} the measures \(\ShearStrain\), \(\CurveStrain\), \(\bm{\alpha}\) and \(\bm{\alpha}'\) arise as natural strain measures on the curve \(\mathcal{C}\). 
 Thus the state of stress and strain along \(\reflenx\) is modeled by:
 \begin{SaveEquation}{eq:cosserat-strain} 
+  \bm{e} \coloneq \begin{pmatrix}
+  \bm{\gamma}  \\ 
+  \bm{\kappa}  \\
+  \bm{\alpha}' \\
+  \bm{\alpha}
+  \end{pmatrix}
+  \quad\text{ and }\quad 
   \bm{s} \coloneq \begin{pmatrix}
   \bm{n} \\ 
   \bm{m} \\
   \bm{w} \\
   \bm{v}
-  \end{pmatrix}
-  \quad\text{ and }\quad 
-  \bm{e} \coloneq \begin{pmatrix}
-  \bm{\gamma}\\ 
-  \bm{\kappa} \\
-  \bm{\alpha}' \\
-  \bm{\alpha}
   \end{pmatrix}
 \end{SaveEquation}
 % where \(\bm{n}\),\(\bm{m}\), ...
@@ -298,10 +299,10 @@ The governing equations of the beam theory are obtained by requiring that the vi
 \label{eq:seSE}
 \end{equation}
 hold for all admissible variations \(\delta\bm{e}\). 
+%
+The identity \eqref{eq:seSE} is enforced in two steps: integration along the beam axis \(\FrameBasis\) yields the equilibrium equations \eqref{eq:finite-equilibrium}, and integration over the cross section yields the stress resultants \eqref{eq:stress-resultants}.
 
-The identity \eqref{eq:seSE} is enforced in two steps: integration over the cross section yields the stress resultants \eqref{eq:stress-resultants}, and subsequent integration along the beam axis yields the equilibrium equations \eqref{eq:finite-equilibrium}.
-
-Imposing the remainder of \eqref{eq:seSE} by integration along \(\reflenx\) and integrating by parts furnishes the complete system of equilibrium equations:
+Imposing \eqref{eq:seSE} by integration along \(\reflenx\) and integrating by parts furnishes the system of equilibrium equations:
 \begin{equation} 
 \left\{\begin{array}{r}
 (\FrameRotation \bm{n})^{\prime}+{\bm{f}}_n=\mathbf{0} \\
@@ -317,16 +318,13 @@ where \(\bm{f}_n\) and \(\bm{f}_m\) are given body force and moment loadings, re
 
 The general state of strain has the decomposition:
 \begin{SaveEquation}{eq:strain-tensor-decomp}
-\hat{\StrainTensor} = \FrameBasis\stackrel{s}{\otimes}(\PointAxialStrain\,\FrameBasis 
-+ \PointShearStrain) + \PlaneStrainTensor
+\hat{\StrainTensor} = \FrameBasis\stackrel{s}{\otimes}\hat{\StrainVector} + \PlaneStrainTensor
 \end{SaveEquation}
-with \(\PointShearStrain\) a vector with zero projection on \(\FrameBasis\)
-and \(\PlaneStrainTensor = \oneS \hat{\StrainTensor}\oneS\) so that \(\FrameBasis\otimes\FrameBasis\PlaneStrainTensor\,\FrameBasis\otimes\FrameBasis = \mathbf{0}\). 
-The compatible strain \eqref{eq:exact-gl-strain-Phi} contributes to both parts: 
-the terms involving \(\stackrel{\mathrm{s}}{\otimes}\FrameBasis\) furnish the 
-axial and shear components, while the quadratic term 
-\(\tfrac{1}{2}\nabla\AxialWarp\otimes\nabla\AxialWarp\) produces in-plane 
-(\(\alpha\beta\)) components.
+where \(\PlaneStrainTensor = \oneS \hat{\StrainTensor}\oneS\) so that \(\FrameBasis\otimes\FrameBasis\PlaneStrainTensor\,\FrameBasis\otimes\FrameBasis = \mathbf{0}\). The strain vector \(\hat{\StrainVector}\) is further decomposed:
+\[
+\hat{\StrainVector} = \PointAxialStrain\,\FrameBasis 
++ \PointShearStrain
+\]
 
 It is standard to restrict the material response to stress tensors with the Saint-Venant form:
 \begin{SaveEquation}{eq:saint-venant-stress}
@@ -406,12 +404,13 @@ By the virtual work reduction \eqref{eq:sv-vw-reduction}, the section constituti
 relation requires only the strain vector \(\hat{\StrainVector}\). 
 The compatible in-plane 
 contributions (such as \(\tfrac{1}{2}\nabla\AxialWarp\otimes\nabla\AxialWarp\)) 
-and the condensed strains \(\PlaneStrainTensor_{\alpha\beta}\) are invisible to 
-the virtual work and need not appear explicitly. 
-Extracting from \eqref{eq:exact-gl-strain-Phi} only the terms involving 
-\(\stackrel{\mathrm{s}}{\otimes}\FrameBasis\), one obtains the strain vector 
-\(\hat{\StrainVector}\) as a function of the beam strains \(\bm{e}\) and the 
-section coordinates \(\bm{r}\). This expression may be truncated at various 
+and the condensed strains \(\PlaneStrainTensor_{\alpha\beta}\) are orthogonal to 
+the residual and need not appear explicitly. 
+% Extracting from \eqref{eq:exact-gl-strain-Phi} only the terms involving 
+% \(\stackrel{\mathrm{s}}{\otimes}\FrameBasis\), one obtains the strain vector 
+% \(\hat{\StrainVector}\) as a function of the beam strains \(\bm{e}\) and the 
+% section coordinates \(\bm{r}\). 
+The strain vector \(\hat{\StrainVector}\) may be truncated at various 
 orders of section-level nonlinearity; two cases of interest are:
 
 \begin{description}
@@ -658,7 +657,7 @@ $$
 \CurveStrain = \bm{\theta}^{\prime}
 \end{aligned}
 $$
-
+\iffalse
 \textbf{Operators}
 \[
   \mathbb{B}
@@ -679,6 +678,7 @@ $$
     0 & 0 & \mathbf{1}
   \end{array}\right].
 \]
+\fi
 \end{ambox}
 
 
@@ -910,7 +910,7 @@ These results specialize to several notable works in the literature:
     In the present approach the effect is encapsulated in the section resultant model and is compatible with any finite element formulation in the family presented in \cref{sec:genwarp} without loss of accuracy as demonstrated in Example~\ref{sec:frame-0015} and Example~\ref{sec:frame-1041}.
 \end{itemize}
 
-The enhanced strain framework of \cref{sec:enhan-section} enriches the constitutive model without introducing auxiliary fields beyond those considered by the underlying beam theory, and is likewise encapsulated within the cross-section resultant model. 
+The enhanced strain framework of \cref{sec:enhan-section} enriches the constitutive model without introducing auxiliary fields beyond those considered by the underlying beam theory, and is encapsulated within the cross-section resultant model. 
 This has the limitation that it is only capable of applying corrections which vary along \(\reflenx\) in proportion with the strain measures \(\bm{e}\). 
 However, this is the quality that allows the method to enhance response without introducing additional auxiliary fields.
 

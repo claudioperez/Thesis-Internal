@@ -65,6 +65,55 @@ However, because this investigation was limited to the plane, several salient th
 % The trace formalism developed below provides a concrete way to characterize this ambiguity while retaining compatibility with nonlinear beam kinematics, so that exact Saint~Venant benchmarks can be enforced without altering the global equilibrium equations.
 
 
+\begin{itemize}
+    \item \cite{timoshenko1987theory} investigated a the flexural solution identified by the root boundary condition:
+    \[
+    \hat{\bm u}'(x_0, \mathbf{0}) = \mathbf{0}
+    \]
+    A trace defined to realize boundary conditions in this form exactly reproduces the response of classical Euler-Bernoulli beam theory, while remaining exact in the Saint-Venant class.
+
+    \item \cite{timoshenko1921correction} imposed the root condition by requiring the directional derivative of the axial displacement component along a chosen cross-section direction \(\mathbf{t}\) vanishes at that boundary point. 
+    In 3D this might be stated as:
+    $$
+    \left.\mathbf{t} \cdot \nabla_r(\hat{\bm u} \cdot \FrameBasis)\right|_{x=L, \bm{r}=r_0}=0,
+    $$
+    This produces a shear correction of \(\kappa = 2/3\).
+    % The full trace is derived in \cref{sec:trace-timo}.
+    \item In the landmark work by \cite{cowper1966shear}, a systematic investigation was conducted to obtain shear-correction factors corresponding to a trace which we have generalized to 3D with the form:
+    \begin{equation}
+    \bar{\bm{u}}(x) \coloneq \SectionAverage{\hat{\bm{u}}} - \bar{\bm{\theta}} \times \CentroidLocation, 
+    \qquad 
+    \bar{\bm{\theta}}(x) \coloneq \RotationAverage{\hat{\bm{u}}},
+    \label{eq:def-section-avg-trace}
+    \end{equation}
+    Here $\SectionAverage{\cdot}$ and $\RotationAverage{\cdot}$ are integral functionals defined by \eqref{eq:def-section-averages} which average the 3D field \(\hat{\bm u}\) at a cross section and furnish an $L^2$-optimal fitting of a section-rigid field to the 3D displacement \(\hat{\bm u}_{\rm P}\). 
+    The free parameters are determined by section geometry through rotation and translation averages of the warping functions, which is carried out in \cref{sec:trace-cowper}.
+    The approach by \cite{cowper1966shear} laid the foundation for the plane beam theories developed by \cite{simo1982bifurcation,hjelmstad1983seismic,hjelmstad1987warping}. 
+
+    \item The shear-correction factors of \cite{krenk1985pretwist}, \cite{renton1991generalized} and \cite{romano1992shear} are realized by a trace that defines beam strains to be 
+    work-conjugate to the classical resultants:
+    \begin{equation}
+    \delta\bm{\gamma} \cdot \bm{n} + \delta\bm{\kappa} \cdot \bm{m} 
+    = \int_\Section \delta\bm{\varepsilon} \cdot \bm{\sigma} \, \mathrm{d}A
+    \label{eq:def-trace-conjugate}
+    \end{equation}
+    for all variations within the Saint~Venant class.
+      % \begin{equation*}
+      %   \int \ShearStress_{(b)}\cdot (\ShearStress_{(b)}/G)\,\mathrm{d}A
+      %   = \ShearForce\cdot \bm\gamma^{\rm sh} + T_{\mathrm C^{\rm sh}}\varkappa_{(b)}
+      % \end{equation*}
+    This uniquely determines all 18 
+    parameters and guarantees a symmetric section stiffness matrix. The full trace is derived in \cref{sec:trace-energy}. 
+    \item
+    \cite[Eq. (7.4.52)]{slaughter2013linearized}, and \cite{reddy2002energy}:
+    \[
+    \tfrac12 \bm{\epsilon}\nabla\times\hat{\bm u}= \mathbf{0}
+    \]
+    This produces a \emph{stiffening} shear correction of \(\kappa = 4/3\), which is peculiarly greater than unity. 
+    % The full trace is derived in \cref{sec:trace-slaughter}.
+\end{itemize}
+
+
 \subsection{Outline}
 
 
@@ -94,7 +143,7 @@ This ensures that constitutive response in the elastic regime is exactly represe
 \qquad\text{with}\qquad 
 \mathbb{C} = E(\bm{r}) \, \FrameBasis \otimes \FrameBasis + G(\bm{r}) \, \oneS
 \end{equation*}
-where the stress \(\StressVector\) and strain \(\StrainVector\) vectors are defined by \eqref{eq:def-stress-vector} and \eqref{eq:def-strain-vector}, respectively. 
+where the stress \(\StressVector\) and strain \(\StrainVector\) vectors are defined by \eqref{eq:def-stress-vector} and \eqref{eq:strain-tensor-decomp}, respectively. 
 This is a reasonable restriction for typical construction materials like steel and reinforced concrete, where Poisson's ratio is typically in the range \(0.23\)--\(0.27\).
 
 \subsection{Resultant Evolution}

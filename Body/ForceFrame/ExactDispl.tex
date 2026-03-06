@@ -1,0 +1,709 @@
+\hypertarget{sec:elements}{%
+\section{Cosserat Elements}\label{sec:cosserat-elements}}
+
+In this section, the three operators of Box~\ref{box:discrete-operators} are derived for the
+wrapped elements used in \cref{sec:implementation}.
+Each case follows the following methodology:
+(1) identify the fields with simple interpolation and the pull-back \(g^*\) to relate these fields to the variations \(\bm{\eta}\) and \(\bm{u}\) of the configuration manifold
+\(\mathscr{C}\), (2) form the effective interpolation bases
+\(\bm{\varphi}_{\eta a}\) and \(\bm{\varphi}_{u b}\) for representing
+\(\bm{\eta}\) and \(\bm{u}\), (3) derive expressions for
+the operators \(\bm{B}_a\), \(\bm{B}^\star_b\), and
+\(\bm{G}_{a b}[\bm{s}]\), and (4) if necessary, form the connection
+correction \(\mathcal{G}[\nabla_{\bm{u}}\bm{\eta}]\).
+
+With the inner product for the model given by Equation~(\ref{eq:rod-inner}), the
+nodal forces \(\bm{p}_a\) and stiffness \(\mathbf{k}_{a b}\) are given
+explicitly by: 
+%
+\begin{equation*} 
+\begin{aligned}
+\bm{p}_a &= \int_0^L \bm{B}_a\bm{\sigma} \,d \xi \\
+\mathbf{k}_{a b} &= \int_0^L \bm{B}_a \bm{C}_\sigma \, \bm{B}^\star_b  
+ +  \bm{G}_{a b}[\bm{s}] \, d \xi
+\end{aligned}
+\end{equation*}
+The discrete geometric operator \(\bm{G}_{ab}[\bm{s}]\) is formed in
+two parts by application of the product rule: %
+\begin{equation} 
+\begin{aligned}
+\bm{G}_{ab}[\bm{s}] &= \partial_b[\bm{B}_a\bm{A}_*\mid\bm{s}] \\
+&= \partial_b[\bm{B}_a\mid\bm{\sigma}] + \bm{B}_a \, \partial_{\bm{u}} [\bm{A}_*\mid\bm{s}] \bm{\varphi}_{u b} \\
+%
+%&= \partial_{\bm{u}}[\bm{B}_a^{}\mid\bm{\sigma}]\bm{B}^\star_b + \bm{B}_a \, \partial_{\bm{u}} [\bm{A}_*\mid\bm{s}]\bm{\varphi}_b \\
+%
+%&= \partial_b [\bm{A}\mathbb{B}^*\bm{\varphi}_a]^{\mathrm{t}}\bm{s}\bm{\varphi}_b
+\end{aligned}
+\label{eq:geom-terms}
+\end{equation}
+%
+The derivative \(\partial_{\bm{u}} [\bm{A}_*\mid\bm{s}]\) follows immediately from Equation~(\ref{eq:LeftTangSO3}): 
+%
+\begin{equation*} 
+\partial_{\bm{u}} [\bm{A}_*\mid\bm{s}]
+%= \partial_{\bm{u}}\begin{pmatrix}
+%\bm{\Lambda}
+%\end{pmatrix}
+=\begin{bmatrix}
+\mathbf{0} & -\bm{n}^{\times} \\
+\mathbf{0} & -\bm{m}^{\times}
+\end{bmatrix}.
+\end{equation*}
+This expression is used in all formulations that follow.
+
+Furthermore, the following common shorthand notation is introduced for the exponential differentials of \cref{sec:exponential-differentials}:
+\begin{equation*} 
+\mathbf{T}_{\scriptscriptstyle{R}} \triangleq \operatorname{d_{\scriptscriptstyle{R}}Exp}(\bm{\theta})
+\qquad\text{ and }\qquad
+\mathbf{T}_{\scriptscriptstyle{L}} \triangleq \operatorname{d_{\scriptscriptstyle{L}}Exp}(\bm{\theta}).
+%
+\end{equation*}
+The following identities are of interest: %
+\begin{equation*} 
+\begin{aligned}
+\mathbf{T}_{\scriptscriptstyle{R}} &= \mathbf{T}_{\scriptscriptstyle{L}}^{\mathrm{t}} \\
+\mathbf{T}_{\scriptscriptstyle{R}} &= \bm{\Lambda} \mathbf{T}_{\scriptscriptstyle{L}} \\
+\operatorname{Exp} \bm{\theta} &=\mathbf{1}+\bm{\theta}^{\times} \mathbf{T}_{\scriptscriptstyle{R}} \\
+%\bm{\Lambda}^{\mathrm{t}} &= \mathbf{T}_{\scriptscriptstyle{R}}^{\mathrm{t}} \mathbf{T}_{\scriptscriptstyle{R}}^{-1} \\
+\end{aligned}
+\end{equation*}
+%
+Additionally:
+\begin{equation*} 
+\begin{aligned}
+\mathbf{T}_{\scriptscriptstyle{R}}^{\prime} &= \operatorname{d^2_{L}Exp}(\bm{\theta};\,\bm{\theta}^{\prime}) +  \left(\mathbf{T}_{\scriptscriptstyle{R}}\bm{\theta}^{\prime}\right)^\times \mathbf{T}_{\scriptscriptstyle{R}} \\
+  &=  \operatorname{Exp}\bm{\theta} \, \operatorname{d^2_{\scriptscriptstyle{L}}Exp}(\bm{\theta}; \bm{\theta}^{\prime}) \\
+\end{aligned}
+  \qquad\text{ and }\qquad
+\begin{aligned}
+\mathbf{T}_{\scriptscriptstyle{L}}^\prime
+&= \operatorname{d^2_{\scriptscriptstyle{R}}Exp}\left({\bm{\theta}};\,\bm{\theta}^{\prime}\right)^{\mathrm{t}} - \mathbf{T}_{\scriptscriptstyle{L}}^{\mathrm{t}} \left(\mathbf{T}_{\scriptscriptstyle{L}}\bm{\theta}^{\prime}\right)^{\times} \\
+  &= \operatorname{d^2_{\scriptscriptstyle{L}}Exp}\left(\bm{\theta}; \, \bm{\theta}^{\prime}\right)^{\mathrm{t}} \operatorname{Exp}(\bm{\theta})^{\mathrm{t}}
+\end{aligned}
+%
+% \mathbf{T}_{\scriptscriptstyle{R}}^\prime 
+% %\triangleq \left[\mathbf{T} \bm{\theta}^{\prime}\right]{\times} \mathbf{T}+\operatorname{d^2_{\scriptscriptstyle{R}}Exp}_{\bm{\theta}}\bm{\theta}^{\prime}
+% = \bm{\Lambda}\operatorname{d^2_{\scriptscriptstyle{L}}Exp}(\bm{\theta}; \bm{\theta}^{\prime})
+% \qquad\text{ and }\qquad
+% \mathbf{T}_{\scriptscriptstyle{L}}^\prime
+% %\triangleq \left[\operatorname{d^2_{\scriptscriptstyle{R}}Exp}_{\bm{\theta}}\bm{\theta}^{\prime}\right]^{\mathrm{t}} - \mathbf{T}^{\mathrm{t}} \left[\mathbf{T}\bm{\theta}^{\prime}\right]^{\times}
+% = \operatorname{d^2_{\scriptscriptstyle{L}}Exp}(\bm{\theta}; \bm{\theta}^{\prime})^{\mathrm{t}} \bm{\Lambda}^{\mathrm{t}}
+% .
+\end{equation*}
+ 
+\hypertarget{sec:element-svq}{%
+\subsection{Natural Bubnov-Galerkin}\label{sec:element-svq}}
+
+In the formulation by \cite{simo1986threedimensional}, both
+\(\bm{\eta}^h\) and \(\bm{u}^h\) are interpolated with standard
+Lagrange polynomials \(\phi_a\) so that the basis operators
+\(\bm{\varphi}^{}_{u b}\) and \(\bm{\varphi}^{}_{\eta a}\) are given
+simply by:
+
+%
+\begin{equation*} 
+\bm{\varphi}^{}_{u b} = \begin{bmatrix}
+    \phi_b \mathbf{1} & \mathbf{0} \\
+    \mathbf{0} & \phi_b \mathbf{1}
+\end{bmatrix}
+\qquad\text{ and }\qquad
+\bm{\varphi}^{}_{\eta a} = 
+    \begin{bmatrix}
+    \phi_a \mathbf{1} & \mathbf{0} \\
+    \mathbf{0} & \phi_a \mathbf{1}
+\end{bmatrix}.
+\end{equation*}
+With \(\mathbb{B}\) given by Equation~(\ref{eq:cosserat-B}) and \(\mathbb{B}^*\)
+by Equation~(\ref{eq:def-Bstar}), the operators of Box~\ref{box:discrete-operators} take the form:
+
+\paragraph{Discrete equilibrium operator}
+\begin{equation}
+   \begin{aligned}
+   \bm{B}_a^{\mathrm{t}} = \mathbb{B}^*[\bm{\varphi}^{}_{\eta a}] &=\begin{bmatrix}
+   \frac{\mathrm{d}}{\mathrm{d} \xi}\mathbf{1} & \bm{x}^{\prime \times}  \\
+   \mathbf{0} & \frac{\mathrm{d}}{\mathrm{d} \xi} \mathbf{1}
+   \end{bmatrix}
+   \begin{bmatrix}
+   \phi_a \mathbf{1} & \mathbf{0} \\
+   \mathbf{0} & \phi_a \mathbf{1}
+   \end{bmatrix} \\ 
+   %&= \begin{bmatrix}
+   %\phi_a^{\prime} \mathbf{1} & \phi_a \bm{x}^{\prime\times}  \\
+   %\mathbf{0} & \phi_a^{\prime} \mathbf{1}
+   %\end{bmatrix}
+   \end{aligned}
+   \qquad\text{ so }\qquad
+   \bm{B}_a = \begin{bmatrix}
+       \phi_a^\prime\mathbf{1} & \mathbf{0} \\
+       -\phi_a \bm{x}^{\prime\times} \, & \phi_a^{\prime} \mathbf{1}
+   \end{bmatrix} 
+   \label{eq:Ba-svq}
+\end{equation}
+
+\paragraph{Discrete strain operator} 
+\begin{equation}
+   \begin{aligned}
+   \bm{B}^{\star}_b = \mathbb{B}^*[\bm{\varphi}^{}_{u b}] 
+   % &=\begin{bmatrix}
+   % \frac{\mathrm{d}}{\mathrm{d} \xi}\mathbf{1} & \bm{x}^{\prime \times}  \\
+   % \mathbf{0} & \frac{\mathrm{d}}{\mathrm{d} \xi} \mathbf{1}
+   % \end{bmatrix}
+   % \begin{bmatrix}
+   % \phi_b \mathbf{1} & \mathbf{0} \\
+   % \mathbf{0} & \phi_b \mathbf{1}
+   % \end{bmatrix} \\ 
+   &= \begin{bmatrix}
+   \phi_b^{\prime} \mathbf{1} & \phi_b \bm{x}^{\prime\times}  \\
+   \mathbf{0} & \phi_b^{\prime} \mathbf{1}
+   \end{bmatrix} \\
+   \end{aligned}
+   \label{eq:Bb-svq}
+\end{equation}
+
+
+\paragraph{Discrete geometric operator}
+Recall Equation~(\ref{eq:geom-terms}):
+\begin{equation*} 
+\begin{aligned}
+\bm{G}_{ab}[\bm{s}] &= 
+%\partial_b[\bm{B}_a\bm{A}_*\mid\bm{s}] \\
+&= \partial_b[\bm{B}_a\mid\bm{\sigma}] + \bm{B}_a \, \partial_{\bm{u}} [\bm{A}_*\mid\bm{s}] \bm{\varphi}_{u b} \\
+\end{aligned}
+\end{equation*}
+%
+First term of Equation~(\ref{eq:geom-terms}): %
+\begin{equation*} 
+     \begin{aligned}
+     \bm{B}_a\partial_u [\bm{A}_*\mid\bm{s}]\bm{\varphi}_{u b}
+     &= \begin{bmatrix}
+      \phi_a^\prime\mathbf{1} & \mathbf{0} \\
+      -\phi_a \bm{x}^{\prime\times} \, & \phi_a^{\prime} \mathbf{1}
+      \end{bmatrix} \begin{bmatrix}
+       \mathbf{0} & -\bm{n}^{\times} \\
+       \mathbf{0} & -\bm{m}^{\times}
+      \end{bmatrix} \begin{bmatrix}
+          \phi_b \mathbf{1} & \mathbf{0} \\
+          \mathbf{0} & \phi_b \mathbf{1}
+      \end{bmatrix}\\
+     % &= \begin{bmatrix}
+     %  \phi_a^\prime\mathbf{1} & \mathbf{0} \\
+     %  -\phi_a \bm{x}^{\prime\times} \, & \phi_a^{\prime} \mathbf{1}
+     %  \end{bmatrix} \begin{bmatrix}
+     %   \mathbf{0} & -(\bm{n})^{\times} \phi_b \\
+     %   \mathbf{0} & -(\bm{m})^{\times} \phi_b
+     %  \end{bmatrix} \\
+     &= \begin{bmatrix}
+       \mathbf{0} & -\phi_a^\prime \bm{n}^{\times} \phi_b \\
+       \mathbf{0} & \phi_a[\bm{x}^{\prime\times}][\bm{n}^\times]\phi_b 
+       -\phi_a^\prime  \bm{m}^{\times} \phi_b
+      \end{bmatrix} \\
+     % &= \left[\begin{array}{cc}
+     %   \mathbf{0} & -\phi_a^\prime \bm{n}^{\times} \phi_b \\
+     %   \mathbf{0} & \phi_a\left(\bm{n} \otimes \bm{x}^\prime-\bm{n} \cdot \bm{x}^\prime \mathbf{1}\right)\phi_b + \phi_a^\prime \bm{m}^{\times} \phi_b
+     %   \end{array}\right]
+     \end{aligned}
+     \end{equation*}
+ 
+Second term of Equation~(\ref{eq:geom-terms}): %
+\begin{equation} 
+     \begin{aligned}
+     \partial_b\left[\bm{B}_a\mid\bm{\sigma}\right]
+     %\left< \bm{\Lambda}^\mathrm{t}D[\mathbb{B}^*\bm{\eta}] \cdot \bm{u}, \bm{s}\right>
+     &=    \bm{\Lambda}^{\mathrm{t}}\left[-\bm{\eta}_{\scriptscriptstyle{\Lambda}} \times \bm{u}_x^{\prime}\right] \cdot \bm{\Lambda}^{\mathrm{t}}\bm{n}  \\
+     &=  \left[\begin{array}{cc}
+     \mathbf{0} & \mathbf{0} \\
+     \phi_a \bm{n}^{\times} \phi_b^\prime & \mathbf{0}
+     \end{array}\right]
+     \end{aligned}
+     \label{eq:G2-svq}
+\end{equation}
+
+
+\paragraph{Covariant stiffness} %
+\begin{equation*} 
+  \begin{aligned}
+  %\mathcal{K}_C\left[\bm{\eta}, \bm{u}\right]
+  \mathcal{G}\left[\nabla_{\bm{u}} \bm{\eta}\right]
+  &= \left<\nabla_{\bm{u}} \bm{\eta}, \mathbb{B}\bm{\sigma}\right>
+  % %&= \int (\nabla_{\bm{u}} \bm{\eta}) \cdot\left(\bm{m}^{\prime}+\bm{x}^{\prime} \times \bm{n}\right) \\
+  % & =\int \frac{1}{2}(\bm{\eta}_{\scriptscriptstyle{\Lambda}} \times \bm{u}_{\scriptscriptstyle{\Lambda}}) \cdot\left[-\bm{m}^{\prime}-\bm{x}^{\prime} \times \bm{n}\right] \, d \xi 
+  %  \\
+   = \left<\mathbb{B}^* \left[\nabla_{\bm{u}} \bm{\eta}\right], \bm{\sigma}\right> \\
+  &=\frac{1}{2} \int \bm{n} \cdot \bm{x}^{\prime} \times(\bm{\eta}_{\scriptscriptstyle{\Lambda}} \times \bm{u}_{\scriptscriptstyle{\Lambda}})+\bm{m} \cdot(\bm{\eta}_{\scriptscriptstyle{\Lambda}} \times \bm{u}_{\scriptscriptstyle{\Lambda}})^{\prime} \, d \xi 
+  \\
+  &=\frac{1}{2} \int \bm{n} \cdot \bm{x}^{\prime} \times(\bm{\eta}_{\scriptscriptstyle{\Lambda}} \times \bm{u}_{\scriptscriptstyle{\Lambda}})
+  +\bm{m} \cdot(\bm{\eta}_{\scriptscriptstyle{\Lambda}}^{\prime} \times \bm{u}_{\scriptscriptstyle{\Lambda}}) 
+  +\bm{m} \cdot(\bm{\eta}_{\scriptscriptstyle{\Lambda}} \times \bm{u}_{\scriptscriptstyle{\Lambda}}^\prime)\, d \xi \\
+  %& \equiv\frac{1}{2}\left(\mathcal{K}_G\left[\bm{\eta}, \bm{u}\right]-\mathcal{K}_G\left[\bm{u}, \bm{\eta}\right]\right) \\
+  &= \frac{1}{2}\int \bm{\eta}_a \cdot \begin{bmatrix}
+    \mathbf{0} & \mathbf{0} \\
+    \mathbf{0} & \phi_a \phi_b \left(\bm{n}\otimes\bm{x}^\prime + \bm{n}\otimes\bm{x}^\prime\right)
+                    +\phi_a^\prime \phi_b \bm{m}^\times
+                    -\phi_a \phi_b^\prime \bm{m}^\times
+  \end{bmatrix}\bm{u}_b
+  \end{aligned}
+\end{equation*}
+ 
+
+\begin{ambox}[E1]{box:e1}
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  \emph{Discrete equilibrium operator} 
+  \begin{equation*}
+   \bm{B}_a = \begin{bmatrix}
+       \phi_a^\prime\mathbf{1} & \mathbf{0} \\
+       -\phi_a \bm{x}^{\prime\times} \, & \phi_a^{\prime} \mathbf{1}
+   \end{bmatrix}
+   \end{equation*}
+\item
+  \emph{Discrete strain operator} 
+  \begin{equation*}
+   \begin{aligned}
+   \bm{B}^{\star}_b =
+   &= \begin{bmatrix}
+   \phi_b^{\prime} \mathbf{1} & \phi_b \bm{x}^{\prime\times}  \\
+   \mathbf{0} & \phi_b^{\prime} \mathbf{1}
+   \end{bmatrix} \\
+   \end{aligned}
+   \end{equation*}
+\item
+  \emph{Discrete geometric operator}
+Equation~(\ref{eq:geom-terms})
+    \begin{equation*} 
+     \begin{aligned}
+     \bm{G}_{ab} [\bm{s}]
+     &= \begin{bmatrix}
+           \mathbf{0} 
+        & -\phi_a^\prime \bm{n}^{\times} \phi_b 
+       \\ \phi_a \bm{n}^{\times} \phi_b^\prime 
+       & \phi_a[\bm{x}^{\prime\times}][\bm{n}^\times]\phi_b 
+       -\phi_a^\prime  \bm{m}^{\times} \phi_b
+      \end{bmatrix} \\
+     \end{aligned}
+     \end{equation*}
+\item
+  \emph{Covariant stiffness} %
+\begin{equation*} 
+  \begin{aligned}
+  \mathcal{G}\left[\nabla_{\bm{u}} \bm{\eta}\right]
+  &= \frac{1}{2}\int \bm{\eta}_a \cdot \begin{bmatrix}
+    \mathbf{0} & \mathbf{0} \\
+    \mathbf{0} & \phi_a \phi_b \left(\bm{n}\otimes\bm{x}^\prime + \bm{n}\otimes\bm{x}^\prime\right)
+                    +\phi_a^\prime \phi_b \bm{m}^\times
+                    -\phi_a \phi_b^\prime \bm{m}^\times
+  \end{bmatrix}\bm{u}_b
+  \end{aligned}
+  \end{equation*}
+ 
+\end{enumerate}
+
+\end{ambox}
+
+\hypertarget{sec:element-ifk}{%
+\subsection{Logarithmic Bubnov-Galerkin}\label{sec:element-ifk}}
+
+In the formulation by \cite{ibrahimbegović1995computational} the
+logarithm on \(\mathrm{SO}(3)\) in Algorithm~\ref{alg:LogSO3} gives the
+transformed fields \(\bar{\bm{\eta}}^h\) and \(\bar{\bm{u}}^h\) which are
+interpolated by the Lagrange polynomials \(\phi_a\) 
+giving simple basis operators
+\(\bar{\bm{\varphi}}^{}_{\eta a}\) and \(\bar{\bm{\varphi}}_{u b}\) in the transformed space:
+
+\begin{equation}
+\bar{\bm{\varphi}}^{}_{\eta a} = 
+    \begin{bmatrix}
+    \phi_a \mathbf{1} & \mathbf{0} \\
+    \mathbf{0} & \phi_a \mathbf{1}
+\end{bmatrix}
+\qquad\text{ and }\qquad
+\bar{\bm{\varphi}}_{u b} = \begin{bmatrix}
+    \phi_b \mathbf{1} & \mathbf{0} \\
+    \mathbf{0} & \phi_b \mathbf{1}
+\end{bmatrix}.
+\label{eq:interp-ifk}\end{equation}
+The transformation map \(g\) and the pull-back \(g^*\) are:
+
+%
+\begin{equation*} 
+g: (\bm{x}, \bm{\Lambda})\mapsto (\bm{x}, \operatorname{Log} \bm{\Lambda})
+\qquad\text{ and }\qquad
+{{g}}^*(\bm{\xi}) = \begin{bmatrix}
+\mathbf{1} & \mathbf{0}\\
+\mathbf{0} & \operatorname{d_{\scriptscriptstyle{R}}Exp}\bm{\theta}^h
+\end{bmatrix}.
+\end{equation*}
+where \(\operatorname{Log}\) and \(\operatorname{d_{\scriptscriptstyle{R}}Exp}\)
+are functions given by Algorithm~\ref{alg:LogSO3} and Equation~(\ref{eq:drExpSO3}), respectively.
+The effective interpolations are:
+%
+\begin{equation*} 
+\begin{aligned}
+\bm{\varphi}^{}_{\eta a} &= g^*\bar{\bm{\varphi}}^{}_a %\\
+%&=
+=\begin{bmatrix}
+    \phi_a \mathbf{1} & \mathbf{0} \\
+    \mathbf{0} & \phi_a \operatorname{d_{\scriptscriptstyle{R}}Exp} \bm{\theta}^h
+    \end{bmatrix} 
+\end{aligned} 
+\qquad\text{ and }\qquad 
+\begin{aligned}
+\bm{\varphi}^{}_{u b} &= g^*\bar{\bm{\varphi}}_{u b} %\\
+%&=
+= \begin{bmatrix}
+    \phi_b \mathbf{1} & \mathbf{0} \\
+    \mathbf{0} & \phi_b \operatorname{d_{\scriptscriptstyle{R}}Exp} \bm{\theta}^h
+    \end{bmatrix} .
+\end{aligned}
+\end{equation*}
+%
+This interpolation gives rise to the following Box~\ref{box:discrete-operators} operators, where the \(\mathbf{T}\) notation for exponential differentials is employed:
+%
+
+\paragraph{Discrete equilibrium operator}
+The discrete equilibrium operator \(\bm{B}_a^{\mathrm{t}} \triangleq \mathbb{B}^* \bm{\varphi}_{\eta a}\) is furnished by
+\begin{equation*} 
+   \begin{aligned}
+   \bm{B}_a^{\mathrm{t}} &=\begin{bmatrix}
+   \frac{\mathrm{d}}{\mathrm{d} \xi}\mathbf{1} & {\bm{x}^{\prime\times}} \\
+   \mathbf{0} & \frac{\mathrm{d}}{\mathrm{d} \xi} \mathbf{1}
+   \end{bmatrix}
+   \begin{bmatrix}
+   \phi_a \mathbf{1} & \mathbf{0} \\
+   \mathbf{0} & \phi_a \mathbf{T}_{\scriptscriptstyle{R}}
+   \end{bmatrix}
+   &= \begin{bmatrix}
+   \phi_a^\prime\mathbf{1} & \phi_a \bm{x}^{\prime\times} \,\mathbf{T}_{\scriptscriptstyle{R}} \\
+   \mathbf{0} & \left(\phi_a \mathbf{T}_{\scriptscriptstyle{R}}\right)^{\prime}
+   \end{bmatrix}
+   \end{aligned}
+\end{equation*}
+Taking the derivative \(\left(\phi_a \mathbf{T}_{\scriptscriptstyle{R}}\right)^{\prime}\) and transposing then furnishes:
+\begin{equation}
+   \bm{B}_a = \begin{bmatrix}
+   \phi_a^\prime\mathbf{1} & \mathbf{0} \\
+   -\phi_a \,\mathbf{T}_{\scriptscriptstyle{L}} \bm{x}^{\prime\times} & \phi_a^\prime \mathbf{T}_{\scriptscriptstyle{L}}+ \phi_a\mathbf{T}_{\scriptscriptstyle{L}}^{\prime}
+   \end{bmatrix}.
+   \label{eq:Ba-ifk}
+\end{equation}
+ 
+\paragraph{Discrete strain operator} 
+\begin{equation}
+   \begin{aligned}
+   \bm{B}_b^* %&= \mathbb{B}^*\bm{\varphi}_{u b} \\
+   &= \begin{bmatrix}
+   \phi_b^\prime\mathbf{1} & \phi_b \bm{x}^{\prime\times} \, \mathbf{T}_{\scriptscriptstyle{R}}  \\
+   \mathbf{0} & \phi_b^{\prime} \mathbf{T}_{\scriptscriptstyle{R}} +  \phi_b^{\prime} \mathbf{T}_{\scriptscriptstyle{R}}^{\prime}
+   \end{bmatrix}
+   \end{aligned}
+   \label{eq:Bb-ifk}
+\end{equation}
+
+\paragraph{Discrete geometric operator}
+Recall Equation~(\ref{eq:geom-terms}):
+\begin{equation*} 
+\begin{aligned}
+\bm{G}_{ab}[\bm{s}] &= 
+%\partial_b[\bm{B}_a\bm{A}_*\mid\bm{s}] \\
+&= \partial_b[\bm{B}_a\mid\bm{\sigma}] + \bm{B}_a \, \partial_{\bm{u}} [\bm{A}_*\mid\bm{s}] \bm{\varphi}_{u b} \\
+\end{aligned}
+\end{equation*}
+First term of Equation~(\ref{eq:geom-terms}): %
+\begin{equation*} 
+   \begin{aligned}
+   \bm{B}_a \partial_{\bm{u}} [\bm{A}_*\mid\bm{s}]\bm{\varphi}_{u b}
+   &= \begin{bmatrix}
+   \phi_a^\prime\mathbf{1} & \mathbf{0} \\
+   -\phi_a \,\mathbf{T}_{\scriptscriptstyle{L}} [\bm{x}^{\prime\times}] & \phi_a^\prime \mathbf{T}_{\scriptscriptstyle{L}}+ \phi_a\mathbf{T}_{\scriptscriptstyle{L}}^{\prime}
+   \end{bmatrix}
+   \partial_b\begin{pmatrix}
+   \bm{\Lambda}\bm{N} \\ \bm{\Lambda} \bm{M}
+   \end{pmatrix}  \begin{bmatrix}
+   \phi_b \mathbf{1} & \mathbf{0} \\
+   \mathbf{0} & \phi_b \operatorname{d_{\scriptscriptstyle{R}}Exp}\bm{\theta}^h
+   \end{bmatrix} \\
+   \end{aligned}
+\end{equation*}
+%
+\begin{equation*} 
+   \begin{aligned}
+   \bm{B}_a \partial_{\bm{u}} [\bm{A}_*\mid\bm{s}]\bm{\varphi}_{u b}
+   &= \begin{bmatrix}
+   \phi_a^\prime\mathbf{1} & \mathbf{0} \\
+   -\phi_a \,\mathbf{T}_{\scriptscriptstyle{L}} \bm{x}^{\prime\times} & \phi_a^\prime \mathbf{T}_{\scriptscriptstyle{L}}+ \phi_a\mathbf{T}_{\scriptscriptstyle{L}}^{\prime}
+   \end{bmatrix} \begin{bmatrix}
+   \mathbf{0} & -\bm{n}^\times\\
+   \mathbf{0} & -\bm{m}^\times
+   \end{bmatrix}  \begin{bmatrix}
+   \phi_b \mathbf{1} & \mathbf{0} \\
+   \mathbf{0} & \phi_b \mathbf{T}_{\scriptscriptstyle{R}}
+   \end{bmatrix} \\
+   % &=\begin{bmatrix}
+   % \phi_a^\prime\mathbf{1} & \mathbf{0} \\
+   % -\phi_a \,\mathbf{T}_{\scriptscriptstyle{L}} [\bm{x}^{\prime\times}] & \phi_a^\prime \mathbf{T}_{\scriptscriptstyle{L}}+ \phi_a\mathbf{T}_{\scriptscriptstyle{L}}^{\prime}
+   % \end{bmatrix} \begin{bmatrix}
+   % \mathbf{0} & -\bm{n}^\times \mathbf{T}_{\scriptscriptstyle{R}} \phi_b \\
+   % \mathbf{0} & -\bm{m}^\times \mathbf{T}_{\scriptscriptstyle{R}} \phi_b
+   % \end{bmatrix} \\
+   % &=\begin{bmatrix}
+   % \mathbf{0} & -\phi_a^{\prime} \bm{n}^\times\mathbf{T}_{\scriptscriptstyle{R}} \phi_b\\
+   % \mathbf{0} & \phi_a \mathbf{T}_{\scriptscriptstyle{L}}[\bm{x}^\prime\times][\bm{n}\times]\mathbf{T}_{\scriptscriptstyle{R}} \phi_b 
+   %        - \phi_a^\prime\mathbf{T}_{\scriptscriptstyle{L}}[\bm{m}\times]\mathbf{T}_{\scriptscriptstyle{R}} \phi_b 
+   %        - \phi_a \mathbf{T}^{\prime}_r[\bm{m}\times]\mathbf{T}_{\scriptscriptstyle{R}} \phi_b
+   % \end{bmatrix} \\
+    &=\begin{bmatrix}
+    \mathbf{0} & -\phi_a^{\prime} \bm{n}^\times\mathbf{T}_{\scriptscriptstyle{R}} \phi_b\\
+      \mathbf{0} & \phi_a( \mathbf{T}_{\scriptscriptstyle{L}} \bm{x}^{\prime\times} \bm{n}^\times \mathbf{T}_{\scriptscriptstyle{R}}
+           -  \mathbf{T}^{\prime}_{\scriptscriptstyle{L}} \bm{m}^\times \mathbf{T}_{\scriptscriptstyle{R}}) \phi_b
+           - \phi_a^\prime\mathbf{T}_{\scriptscriptstyle{L}} \bm{m}^\times \mathbf{T}_{\scriptscriptstyle{R}} \phi_b 
+    \end{bmatrix} \\
+   &=\begin{bmatrix}
+   \mathbf{0} & \phi_a^\prime \phi_b A_1\\
+   \mathbf{0} & \phi_a^\prime \phi_b A_2
+          + \phi_a  \phi_b       A_3
+   \end{bmatrix}
+   \end{aligned}
+\end{equation*}
+%
+Second term of Equation~(\ref{eq:geom-terms}): %
+\begin{equation*} 
+   \begin{aligned}
+   \partial_b\left[\bm{B}_a\mid\bm{\sigma}\right]
+   &=\partial_b \begin{pmatrix}
+   \phi_a \bm{n} \\
+   -\phi_a \,\mathbf{T}_{\scriptscriptstyle{L}} [\bm{x}^{\prime\times}]\bm{n} + (\phi_a^\prime \mathbf{T}_{\scriptscriptstyle{L}}+ \phi_a\mathbf{T}_{\scriptscriptstyle{L}}^{\prime})\bm{m}
+   \end{pmatrix} \\
+   &=\partial_u \begin{pmatrix}
+   \phi_a \bm{n} \\
+   \phi_a \,\mathbf{T}_{\scriptscriptstyle{L}} [\bm{n}\times]\bm{x}^{\prime} + (\phi_a^\prime \mathbf{T}_{\scriptscriptstyle{L}}+ \phi_a\mathbf{T}_{\scriptscriptstyle{L}}^{\prime})%\bm{m}
+   \end{pmatrix}\begin{bmatrix}
+   \phi_b^\prime\mathbf{1} & \phi_b [\bm{x}^{\prime\times}] \,\mathbf{T} \\
+   \mathbf{0} & \phi_b^\prime \mathbf{T}+ \phi_b\mathbf{T}^{\prime}
+   \end{bmatrix} \\
+   &= \begin{bmatrix}
+   \mathbf{0} & \mathbf{0} \\
+   \phi_a \partial_{b x}[\mathbf{T}_{\scriptscriptstyle{L}} \mid \bm{n}^\times] %\phi_b^\prime \,\mathbf{T}_{\scriptscriptstyle{L}} \bm{n}^\times
+   &\phi_a \,\partial_{b \scriptscriptstyle{\Lambda}}  [\mathbf{T}_{\scriptscriptstyle{L}} \bm{n}\times\bm{x}^{\prime}] 
+   + \phi_a^\prime \partial_{b \scriptscriptstyle{\Lambda}}  \left[\mathbf{T}_{\scriptscriptstyle{L}}\mid\bm{m}\right]+ \phi_a\partial_{b \scriptscriptstyle{\Lambda}}  [{\mathbf{T}_{\scriptscriptstyle{L}}^{\prime}}\mid\bm{m}]
+   \end{bmatrix}\\
+   % &= \begin{bmatrix}
+   % \mathbf{0} & \mathbf{0} \\
+   % \phi_a \phi_b^\prime B_1
+   % & \phi_a^\prime \phi_b B_2 + \phi_a \phi_b B_3 + \phi_a \phi_b^\prime B_4 
+   % \end{bmatrix}
+   \end{aligned}
+\end{equation*}
+%
+where \(\partial_{b x}\) and
+  \(\partial_{b \scriptscriptstyle{\Lambda}}\) denote partial
+  derivatives with respect to the translational \(\bm{u}_{b x}\) and
+  rotational \(\bm{u}_{b \scriptscriptstyle{\Lambda}}\) nodal
+  parameters, respectively, and: %
+\begin{equation*} 
+   \begin{array}{lllll}
+   \partial_{b x}[\mathbf{T}_{\scriptscriptstyle{L}} \mid \bm{n}^\times]
+   &=& \operatorname{d_{\scriptscriptstyle{L}}Exp}_{\bm{\theta}}  \bm{n}^\times  \phi_b^{\prime}
+   \\
+   \partial_{b \scriptscriptstyle{\Lambda}} [\mathbf{T}_{\scriptscriptstyle{L}} \,\bm{n}\times\bm{x}^{\prime}]
+   &=&
+      \operatorname{d^2_{\scriptscriptstyle{L}}Exp}\left(\bm{\theta};\, \bm{n} \times \bm{x}^{\prime}\right) \phi_b
+   \\
+   \partial_{b \scriptscriptstyle{\Lambda}}  \left[\mathbf{T}_{\scriptscriptstyle{L}}\mid\bm{m}\right] 
+   &=&
+       \operatorname{d^2_{\scriptscriptstyle{L}}Exp}\left(\bm{\theta};\, \bm{m}\right) \phi_b \\
+
+   \end{array}
+\end{equation*}
+
+\begin{equation*}
+   \begin{array}{lllll}
+   \partial_{b \scriptscriptstyle{\Lambda}}  \left[\mathbf{T}_{\scriptscriptstyle{L}}^\prime \mid \bm{m}\right]
+   &=& \partial_{b \scriptscriptstyle{\Lambda}}  \left[\operatorname{d^2_{\scriptscriptstyle{L}}Exp}(\bm{\theta}; \bm{\theta}^\prime)^{\mathrm{t}}\bm{\Lambda}^{\mathrm{t}}\mid\bm{m}\right]_{\bm{\theta}}
+   &+& \partial_{b \scriptscriptstyle{\Lambda}}  \left[\operatorname{d^2_{\scriptscriptstyle{L}}Exp}(\bm{\theta}; \bm{\theta}^\prime)^{\mathrm{t}}\bm{\Lambda}^{\mathrm{t}}\mid\bm{m}\right]_{\bm{\theta}^{\prime}}
+   \\
+   &=& \operatorname{d^2_{\scriptscriptstyle{R}}Exp}(\bm{\theta};\, \bm{M})^{\mathrm{t}} \phi_b^\prime 
+   &+& \operatorname{d^3_{\scriptscriptstyle{L}}Exp}(\bm{\theta}; \bm{\theta}^{\prime},\bm{M}) \phi_b
+       +  \operatorname{d^2_{\scriptscriptstyle{L}}Exp}(\bm{\theta}; \bm{\theta}^\prime)^{\mathrm{t}}\bm{\Lambda}^{\mathrm{t}} [\bm{m}^\times] \mathbf{T}_{\scriptscriptstyle{R}} \phi_b
+   %\\
+   %&=& B_4^{} \phi_b^\prime
+   %&+& B_{3B}^{} \phi_b
+   \end{array}
+\end{equation*}
+ 
+
+\begin{ambox}[E2]{box:e2}
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  \emph{Discrete equilibrium operator} %
+\begin{equation*}
+   \bm{B}_a = \begin{bmatrix}
+   \phi_a^\prime\mathbf{1} & \mathbf{0} \\
+   -\phi_a \,\mathbf{T}_{\scriptscriptstyle{L}} \bm{x}^{\prime\times} & \phi_a^\prime \mathbf{T}_{\scriptscriptstyle{L}}+ \phi_a\mathbf{T}_{\scriptscriptstyle{L}}^{\prime}
+   \end{bmatrix}.
+   \end{equation*}
+\item
+  \emph{Discrete strain operator} 
+  \begin{equation*}
+   \begin{aligned}
+   \bm{B}_b^* %&= \mathbb{B}^*\bm{\varphi}_{u b} \\
+   &= \begin{bmatrix}
+   \phi_b^\prime\mathbf{1} & \phi_b \bm{x}^{\prime\times} \, \mathbf{T}_{\scriptscriptstyle{R}}  \\
+   \mathbf{0} & \phi_b^{\prime} \mathbf{T}_{\scriptscriptstyle{R}} +  \phi_b^{\prime} \mathbf{T}_{\scriptscriptstyle{R}}^{\prime}
+   \end{bmatrix}
+   \end{aligned}
+   \end{equation*}
+\item
+  \emph{Discrete geometric operator} %
+  \begin{itemize}
+    \item First term of Equation~(\ref{eq:geom-terms}): %
+\begin{equation*} 
+   \begin{aligned}
+   \bm{B}_a \partial_{\bm{u}} [\bm{A}_*\mid\bm{s}]\bm{\varphi}_{u b}
+    &=\begin{bmatrix}
+    \mathbf{0} & -\phi_a^{\prime} \bm{n}^\times\mathbf{T}_{\scriptscriptstyle{R}} \phi_b\\
+      \mathbf{0} & \phi_a( \mathbf{T}_{\scriptscriptstyle{L}} \bm{x}^{\prime\times} \bm{n}^\times \mathbf{T}_{\scriptscriptstyle{R}}
+           -  \mathbf{T}^{\prime}_{\scriptscriptstyle{L}} \bm{m}^\times \mathbf{T}_{\scriptscriptstyle{R}}) \phi_b
+           - \phi_a^\prime\mathbf{T}_{\scriptscriptstyle{L}} \bm{m}^\times \mathbf{T}_{\scriptscriptstyle{R}} \phi_b 
+    \end{bmatrix} \\
+   % &=\begin{bmatrix}
+   % \mathbf{0} & \phi_a^\prime \phi_b A_1\\
+   % \mathbf{0} & \phi_a^\prime \phi_b A_2
+   %        + \phi_a  \phi_b       A_3
+   % \end{bmatrix}
+   \end{aligned}
+   \end{equation*}
+  \item Second term of Equation~(\ref{eq:geom-terms}): %
+\begin{equation*} 
+   \begin{aligned}
+   \partial_b\left[\bm{B}_a\mid\bm{\sigma}\right]
+   &= \begin{bmatrix}
+   \mathbf{0} & \mathbf{0} \\
+   \phi_a \partial_{b x}[\mathbf{T}_{\scriptscriptstyle{L}} \mid \bm{n}^\times] %\phi_b^\prime \,\mathbf{T}_{\scriptscriptstyle{L}} \bm{n}^\times
+   &\phi_a \,\partial_{b \scriptscriptstyle{\Lambda}}  [\mathbf{T}_{\scriptscriptstyle{L}} \bm{n}\times\bm{x}^{\prime}] 
+   + \phi_a^\prime \partial_{b \scriptscriptstyle{\Lambda}}  \left[\mathbf{T}_{\scriptscriptstyle{L}}\mid\bm{m}\right]+ \phi_a\partial_{b \scriptscriptstyle{\Lambda}}  [{\mathbf{T}_{\scriptscriptstyle{L}}^{\prime}}\mid\bm{m}]
+   \end{bmatrix}\\
+   % &= \begin{bmatrix}
+   % \mathbf{0} & \mathbf{0} \\
+   % \phi_a \phi_b^\prime B_1
+   % & \phi_a^\prime \phi_b B_2 + \phi_a \phi_b B_3 + \phi_a \phi_b^\prime B_4 
+   % \end{bmatrix}
+   \end{aligned}
+   \end{equation*}
+  \end{itemize}
+  where \(\partial_{b x}\) and
+  \(\partial_{b \scriptscriptstyle{\Lambda}}\) denote partial
+  derivatives with respect to the translational \(\bm{u}_{b x}\) and
+  rotational \(\bm{u}_{b \scriptscriptstyle{\Lambda}}\) nodal
+  parameters, respectively, and: %
+\begin{equation*} 
+   \begin{aligned}
+   \partial_{b x}[\mathbf{T}_{\scriptscriptstyle{L}} \mid \bm{n}^\times]
+   &= \operatorname{d_{\scriptscriptstyle{L}}Exp}_{\bm{\theta}}  \bm{n}^\times  \phi_b^{\prime}
+   \\
+   \partial_{b \scriptscriptstyle{\Lambda}} [\mathbf{T}_{\scriptscriptstyle{L}} \,\bm{n}\times\bm{x}^{\prime}]
+   &=
+      \operatorname{d^2_{\scriptscriptstyle{L}}Exp}\left(\bm{\theta};\, \bm{n} \times \bm{x}^{\prime}\right) \phi_b
+   \\
+   \partial_{b \scriptscriptstyle{\Lambda}}  \left[\mathbf{T}_{\scriptscriptstyle{L}}\mid\bm{m}\right] 
+   &=
+       \operatorname{d^2_{\scriptscriptstyle{L}}Exp}\left(\bm{\theta};\, \bm{m}\right) \phi_b \\
+   \partial_{b \scriptscriptstyle{\Lambda}}  \left[\mathbf{T}_{\scriptscriptstyle{L}}^\prime \mid \bm{m}\right]
+   %&=& \partial_{b \scriptscriptstyle{\Lambda}}  \left[\operatorname{d^2_{\scriptscriptstyle{L}}Exp}(\bm{\theta}; \bm{\theta}^\prime)^{\mathrm{t}}\bm{\Lambda}^{\mathrm{t}}\mid\bm{m}\right]_{\bm{\theta}}
+   %&+& \partial_{b \scriptscriptstyle{\Lambda}}  \left[\operatorname{d^2_{\scriptscriptstyle{L}}Exp}(\bm{\theta}; \bm{\theta}^\prime)^{\mathrm{t}}\bm{\Lambda}^{\mathrm{t}}\mid\bm{m}\right]_{\bm{\theta}^{\prime}}
+   %\\
+   &= \operatorname{d^2_{\scriptscriptstyle{R}}Exp}(\bm{\theta};\, \bm{M})^{\mathrm{t}} \phi_b^\prime %\bm{\Xi}^{\mathrm{t}}_{DT}(\bm{M})\phi_b^\prime
+   + \operatorname{d^3_{\scriptscriptstyle{L}}Exp}(\bm{\theta}; \bm{\theta}^{\prime},\bm{M}) \phi_b
+       +  \operatorname{d^2_{\scriptscriptstyle{L}}Exp}(\bm{\theta}; \bm{\theta}^\prime)^{\mathrm{t}}\bm{\Lambda}^{\mathrm{t}} [\bm{m}^\times] \mathbf{T}_{\scriptscriptstyle{R}} \phi_b
+   \end{aligned}
+   \end{equation*}
+\end{enumerate}
+\end{ambox}
+
+\hypertarget{sec:element-cj2}{%
+\subsection{Logarithmic Petrov-Galerkin}\label{sec:element-cj2}}
+
+Lagrange interpolation is applied on the transformed fields
+\(\bar{\bm{u}}^h\) and \(\bm{\eta}^h\) so that bases
+\(\bar{\bm{\varphi}}_{u b}\) and \(\bm{\varphi}^{}_{\eta a}\) are given
+by:
+
+\begin{equation}
+\bar{\bm{\varphi}}_{u b} = \begin{bmatrix}
+    \phi_b \mathbf{1} & \mathbf{0} \\
+    \mathbf{0} & \phi_b \mathbf{1}
+\end{bmatrix}
+\qquad\text{ and }\qquad
+\bm{\varphi}^{}_{\eta a} = 
+    \begin{bmatrix}
+    \phi_a \mathbf{1} & \mathbf{0} \\
+    \mathbf{0} & \phi_a \mathbf{1}
+\end{bmatrix}.
+\label{eq:interp-cj2}\end{equation}
+The transformation map \(g\) and the pull-back \(g^*\) are given by:
+
+%
+\begin{equation*} 
+g: (\bm{x}, \bm{\Lambda})\mapsto (\bm{x}, \operatorname{Log} \bm{\Lambda})
+\qquad\text{ and }\qquad
+{{g}}^*(\bm{\xi}) = \begin{bmatrix}
+\mathbf{1} & \mathbf{0}\\
+\mathbf{0} & \operatorname{d_{\scriptscriptstyle{R}}Exp}\bm{\theta}^h
+\end{bmatrix}.
+\end{equation*}
+  where \(\operatorname{Log}\) and
+\(\operatorname{d_{\scriptscriptstyle{R}}Exp}\) are given by
+Algorithm~\ref{alg:LogSO3} and Equation~(\ref{eq:drExpSO3}), respectively. The effective
+interpolation of \(\bm{u}^h\) is given by: %
+\begin{equation*} 
+\begin{aligned}
+\bm{\varphi}^{}_{u b} &= g^*\bar{\bm{\varphi}}_{u b} %\\
+%&= 
+=
+\begin{bmatrix}
+    \phi_b \mathbf{1} & \mathbf{0} \\
+    \mathbf{0} & \phi_b \operatorname{d_{\scriptscriptstyle{R}}Exp} \bm{\theta}^h
+\end{bmatrix} .
+\end{aligned}
+\end{equation*}
+This interpolation gives rise to the following operators, where the \(\mathbf{T}\) notation is used once again:
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+
+\item \emph{Discrete equilibrium operator} This is equivalent to Equation~(\ref{eq:Ba-svq}).
+%
+\item \emph{Discrete strain operator} This is equivalent to Equation~(\ref{eq:Bb-ifk}).
+%
+\item \emph{Discrete geometric operator}
+Recall Equation~(\ref{eq:geom-terms}):
+\begin{equation*} 
+\begin{aligned}
+\bm{G}_{ab}[\bm{s}] &= 
+% \partial_b[\bm{B}_a\bm{A}_*\mid\bm{s}] \\
+&= \partial_b[\bm{B}_a\mid\bm{\sigma}] + \bm{B}_a \, \partial_{\bm{u}} [\bm{A}_*\mid\bm{s}] \bm{\varphi}_{u b} \\
+\end{aligned}
+\end{equation*}
+%
+First term of Equation~(\ref{eq:geom-terms}): %
+\begin{equation*} 
+     \begin{aligned}
+     \bm{B}_a\partial_u [\bm{A}_*\mid\bm{s}]\bm{\varphi}_{u b}
+     &= \begin{bmatrix}
+      \phi_a^\prime\mathbf{1} & \mathbf{0} \\
+      -\phi_a \bm{x}^{\prime\times} \, & \phi_a^{\prime} \mathbf{1}
+      \end{bmatrix} \begin{bmatrix}
+       \mathbf{0} & -\bm{n}^{\times} \\
+       \mathbf{0} & -\bm{m}^{\times}
+      \end{bmatrix}  \begin{bmatrix}
+      \phi_b \mathbf{1} & \mathbf{0} \\
+      \mathbf{0} & \phi_b \mathbf{T}_{\scriptscriptstyle{R}}
+      \end{bmatrix} \\
+     % &= \left[\begin{array}{cc}
+     %  \mathbf{0} & -\phi_a^\prime \bm{n}^{\times} \mathbf{T}_{\scriptscriptstyle{R}} \phi_b \\
+     %  \mathbf{0} & \phi_a\left(\bm{n} \otimes \bm{x}^\prime-\bm{n} \cdot \bm{x}^\prime \mathbf{1}\right)\mathbf{T}_{\scriptscriptstyle{R}} \phi_b + \phi_a^\prime \bm{m}^{\times} \mathbf{T}_{\scriptscriptstyle{R}} \phi_b
+     %  \end{array}\right]
+     \end{aligned}
+     \end{equation*}
+%
+Second term of Equation~(\ref{eq:geom-terms}) is equivalent to Equation (\ref{eq:G2-svq}).
+\end{enumerate}

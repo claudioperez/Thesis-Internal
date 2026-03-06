@@ -118,7 +118,7 @@ A Software Architecture for Mission-Critical Simulation
 % \input{Body/Part-II-Conclusions}
 % \clearpage
 
-\part{Appendices to Part I}
+\part{~Appendices to Part I}
 \begin{appendices}
 \clearpage
 \chapter{Notation}\label{sec:notation}
@@ -131,18 +131,11 @@ A Software Architecture for Mission-Critical Simulation
 % \printglossary[type=brace]
 % \clearpage
 
-% \input{Part I/Rotations}
-% % \input{Part I/Derivatives}
-% \input{Body/Rotations/Functions}
-% \clearpage 
 
 
 % \section{Corotational Transformations}\label{sec:coro-details}
 % % \input{Body/Library/Transform/main}
 % \clearpage
-
-\include{Body/ForceFrame/main}
-\clearpage
 
 \include{Body/Iesan/main}
 \clearpage
@@ -161,9 +154,21 @@ A Software Architecture for Mission-Critical Simulation
 \clearpage
 \input{Body/Traces/A3_Energetic}
 \clearpage 
+
+
+\chapter{Finite Element Procedures for Frame Elements}\label{sec:ForceFrame}
+\include{Body/ForceFrame/main}
+\clearpage
+\input{Body/ForceFrame/ExactDispl}
+
+\input{Body/Rotations}
+% \input{Part I/Derivatives}
+\input{Body/Rotations/Functions}
+\clearpage
+
 \end{appendices}
 
-\part{Appendices to Part~II}
+\part{~Appendices to Part~II}
 
 \begin{appendices}
 \input{Part II/ModelUpload/main}

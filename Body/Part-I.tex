@@ -32,7 +32,7 @@ Fiber section models reconstruct a uniaxial strain field by leveraging the plane
 This approach yields acceptable accuracy when a uniaxial material model can sufficiently capture the inelastic response, as is often the case for slender members with simple cross sections not expected to experience significant torsion. 
 
 For members subject to more general loading conditions, a multiaxial strain state must be accounted for in the resultant formulation. 
-The plane section hypothesis alone fails to capture cross-sectional warping, which governs the distribution of shear and torsional strains over the section, and neglecting these effects tends to over-predict strength and stiffness. 
+The plane section hypothesis alone fails to capture cross-sectional warping, and neglecting these effects tends to over-predict strength and stiffness. 
 Depending on the problem, warping may be incorporated into a beam theory either implicitly, through appropriately constructed resultant relations, or explicitly, through auxiliary kinematic fields.
 
 % Fiber section models \citep{taucer1991fiber} reconstruct a \emph{uniaxial} strain field by leveraging the plane section hypothesis of Euler-Bernoulli and Timoshenko beam theories. 
@@ -53,50 +53,42 @@ Depending on the problem, warping may be incorporated into a beam theory either 
 A beam theory is only able of representing a subset of motions which a body may experience. Increasing the number of warping fields enlarges this class, but it also increases the number of section-level unknowns and the associated boundary conditions and response quantities that must be specified and interpreted. 
 It is therefore of considerable practical interest to determine, for a given kinematic description, the most faithful representation of the multiaxial strain state that is accessible without further enrichment. 
 
-This work proposes an enhanced strain principle for beam sections that improves the three-dimensional strain field used for multiaxial constitutive integration without altering the element kinematics. 
+This work proposes an enhanced strain principle for beam sections that improves the three-dimensional strain field used for multiaxial constitutive integration without altering the element kinematics, thereby maintaining compatibility with a broad class of beam finite elements. 
 For a prescribed kinematic description, the strain reconstruction is augmented by section-level fields whose amplitudes are determined by an assumed-strain construction. 
 The general framework is specialized for two classes of problems. 
 For standard beam elements without auxiliary warping fields, the resulting section models support multiaxial inelastic response and, in the elastic limit, reproduce Saint~Venant's continuum solutions for the corresponding loading classes. 
 When nonuniform warping requires auxiliary fields and continuum benchmarks are generally unavailable, the same framework enforces pointwise equilibrium in the elastic regime and improves the accuracy obtained for a prescribed set of warping modes, thereby reducing the number of auxiliary fields needed in practice.
 
-% This work proposes an enhanced strain principle for beam sections that improves the three-dimensional strain field used for multiaxial constitutive integration without altering the underlying element kinematics. 
-% For a prescribed kinematic description, the enhancement augments the strain reconstruction by additional section-level fields whose amplitudes are determined by an assumed-strain construction. 
-% In a standard beam element without auxiliary warping fields, the framework is applied to derive a family of section resultant models that exactly recover Saint~Venant's continuum solutions. 
-% In the context of nonuniform warping, where auxiliary warping fields are required and continuum solutions are generally unavailable, the framework may be used to enforce pointwise equilibrium in the elastic regime and to improve the accuracy obtained for a given set of warping modes, thereby reducing the number of auxiliary fields needed in practice.
-
 
 
 \section{Literature}
 
-% Throughout this work extensive reference is made to the classical continuum solutions of \cite{...,saint-venant1856memoire}. 
-% These solutions comprise the four uncoupled problems in \cref{fig:sv-problems}. 
-% Relevant results are recalled with more detail in \cref{sec:sv}. 
-
 Beam theories which are capable of representing multiaxial nonlinear material response fall into two broad categories:
 \begin{itemize}
-    \item Type I theories employ only the classical deflection and rotation fields as unknowns and furnish finite element implementations with six degrees of freedom per node.
-    \item Type II theories include at least one auxiliary field to model cross sectional warping and furnish finite element implementations with more than six degrees of freedom per node.
+    \item Type I theories employ only the classical deflection and rotation fields as unknowns and furnish three-dimensional finite element implementations with six degrees of freedom per node.
+    \item Type II theories include at least one auxiliary field to model cross sectional warping and furnish three-dimensional finite element implementations with more than six degrees of freedom per node.
 \end{itemize}
 
-% In three dimensions, torsional warping is well understood for Type I elements with good fidelity, whereas an analogous treatment of shear-induced warping remains less developed—particularly when coupled to multiaxial inelastic constitutive response.
 
 \subsection{Type I}
 % For uniform warping, the central open problem is handling complications associated with shear (Saint Venant's P_II).
 When cross sectional warping is expected to vary uniformly over the body, auxiliary warping fields can be eliminated by associating various warping modes with classical beam deformations like curvature \(\bm{\kappa}\). 
-The phenomenon of torsional warping is particularly amenable to this approach and has been successfully incorporated into beam finite elements by several authors \citep{gruttmann1998geometrical}, but warping induced by transverse shear introduces several difficulties:
+The phenomenon of torsional warping is particularly amenable to this approach and has been successfully incorporated into beam finite elements by several authors %\citep{gruttmann1998geometrical}
+, but warping induced by transverse shear introduces several difficulties:
 \begin{enumerate}
-    \item Warping is not naturally proportional to a classical beam deformation field
+    \item Warping is not trivially proportional to a classical beam deformation field
     \item The shear warping shapes arising in Saint-Venant's solution do not exhibit the same orthogonality properties as the torsion warping function.
     \item Shear-induced warping is coupled to Poisson's effect.
 \end{enumerate}
 In the two-dimensional setting, (2) is avoided and a satisfactory remedy for (1) may be obtained by appealing to classical shear-correction arguments.
 An example of such a treatment is the investigation by \cite{simo1982bifurcation} which employed Cowper's construction \citep{cowper1966shear} to produce a two-dimensional beam theory of elastomeric bearings. 
 However, as elaborated in \cref{sec:timo}, this approach cannot be made variationally consistent in the three-dimensional setting. 
-A similar two dimensional approach was taken by \cite{saritas2006mixed} to formulate a beam theory of shear-yielding structural steel members where Poisson's ratio was assumed to vanish.
+A similar two-dimensional approach was taken by \cite{saritas2006mixed} to formulate a beam theory of shear-yielding structural steel members where Poisson's ratio was assumed to vanish.
 
-In the case of pure bending, it is standard that inelastic elements maintain exact consistency with Saint-Venant's pure bending solution \citep[Art.87]{love1944treatise}, which finds bending resistance in proportion to the elastic modulus \(E\) and the second-area-tensor of the cross section \(\bm{I}\) \citep{spacone1992beam,ibrahimbegovic2023geometrically}. Similar consistency in torsion and elongation is also standard \citep{gruttmann1998geometrical}. 
+In the case of pure bending, it is standard that inelastic elements maintain exact consistency with Saint-Venant's pure bending solution \citep[Art.87]{love1944treatise}, which finds bending resistance in proportion to the elastic modulus \(E\) and the second-area-tensor of the cross section \(\bm{I}\) \citep{spacone1992beam,simo1984numerical}. 
+Similar consistency in torsion and elongation is also standard \citep{gruttmann1998geometrical}. 
 A comparably consistent treatment for shear appears to remain an open problem.
-% There does not appear to be a formulation for shear that accomplishes this achievement. 
+
 
 \subsection{Type II}
 % For nonuniform warping, 
@@ -106,16 +98,16 @@ These additional degrees
 of freedom inflate the global system of equations, incurring a cost 
 that scales as the cube of the DOF count for direct linear solvers.
 
-A pioneering work is that of \cite{timoshenko1905torsional,vlasov1961thinwalled}\footnote{A comprehensive review of nonuniform torsion is provided by \cite{armero2021modeling}}, where warping is formally constrained to the rate of twist to produce a higher order governing system of beam differential equations. 
-This falls outside the Type I/Type II classification employed here as warping is not truly modeled by an independent field, but due to the higher-order governing differential equation the model cannot be realized in the classical 6-DOF/node finite element setting. 
+A pioneering work is that of \cite{timoshenko1905torsional,vlasov1961thinwalled}\footnote{A comprehensive review of nonuniform torsion is provided by \cite{armero2021modeling}}, where warping is constrained to the rate of twist to produce a higher order governing system of beam differential equations. 
+This falls outside the Type I/Type II classification employed in this work as warping is not truly modeled by an independent field, but due to the higher-order governing differential equation the model cannot be realized in the classical 6-DOF/node finite element setting of Type I theories. 
 
 \paragraph{Single-Field Twist Theories.}
-The first true Type II formulation is the RBV model due to \cite{reissner1952nonuniform,benscoter1954theory} which incorporates a single auxiliary warping field \(\alpha\) associated to Saint~Venant's torsion warping function \(\WarpTwistIesan\). 
-The unconstrained nature of this theory as compared to the Vlasov model makes it much more amenable to implementation in a finite element setting. A notable example is the geometrically exact variant put forth by \cite{simo1991geometricallyexact} and extended by \cite{gruttmann2000theory} to investigate inelastic material response. 
+An early Type II formulation is the RBV\footnote{An acronym of the original author's names coined by \cite{armero2021modeling}} model due to \cite{reissner1952nonuniform,benscoter1954theory} which incorporates a single auxiliary warping field \(\alpha\) associated to Saint~Venant's torsion warping function \(\WarpTwistIesan\). 
+The unconstrained nature of this theory as compared to the Vlasov model makes it more amenable to implementation in a finite element setting. 
+A notable example is the geometrically exact variant put forth by \cite{simo1991geometricallyexact} and extended by \cite{gruttmann2000theory} to investigate inelastic material response. 
 This theory has also been investigated by \cite{rong2020geometrically} in the context of isogeometric analysis. 
-% who considered the nonlinear Wagner term. 
 % However, in this work the reference curve is restricted to intersect sections at the centroid. 
-However, \cite{armero2021modeling} has observed that in the linear-elastic regime, the three dimensional stresses arising from this model fail to satisfy the continuum equilibrium equations, and the predicted torsional stiffness can be inaccurate for short shafts and closed thin-walled sections. 
+However, \cite{armero2021modeling} has observed that in the linear-elastic regime, the three dimensional stresses arising from this model fail to satisfy the continuum equilibrium equations, and the predicted torsional response can be inaccurate for short shafts and closed thin-walled sections. 
 
 \paragraph{Three-Field Twist/Shear Theories.}
 The foundation laid by the RBV model has been directly extended to incorporate Saint~Venant's shear warping functions in a Type II theory with three auxiliary warping fields. 
@@ -124,14 +116,14 @@ The foundation laid by the RBV model has been directly extended to incorporate S
 
 \paragraph{General Field Theories.}
 \cite{lecorvec2011enhanced} % lecorvec2012nonlinear
-generalized this line of work further by considering an arbitrary number of warping fields with warping shapes constructed by Lagrange interpolation polynomials in a geometrically linear inelastic finite element formulation.
+generalized this line of work further by considering an arbitrary number of warping fields with warping shapes represented by Lagrange interpolation polynomials in a geometrically linear inelastic finite element formulation. \cite{lecorvec2012nonlinear} leveraged a corotational formulation to accurately model finite deformation benchmark problems. 
 The resulting formulation is particularly powerful when several auxiliary fields are included, and has been championed by several authors \citep{dire20173d,addessi2021enriched}. 
-However, these interpolation schemes had to be constructed uniquely for a given section geometry, and were not able to reproduce classical Timoshenko beam solutions in the elastic range. 
+However, these interpolation schemes had to be constructed uniquely for a given section geometry.%, and were not able to reproduce classical continuum solutions in the elastic range. 
 Furthermore, due to the general nature of the Lagrange interpolation basis, several warping fields were required to accurately reproduce classical solutions. 
 
 \subsection{Scope and Methodology}
 
-An assumed strain framework is developed that enhances section constitutive models for standard beam elements in Type I and II categories, and supports integrating inelastic multiaxial material response over the cross section. 
+An assumed strain framework is presented that enhances section constitutive models for standard beam elements in Type I and II categories, and supports integrating inelastic multiaxial material response over the cross section. 
 
 
 % Beam theories are typically derived for finite element analysis by one of two approaches \citep{antman1995nonlinear}:
@@ -143,7 +135,7 @@ An assumed strain framework is developed that enhances section constitutive mode
 
 
 \begin{remark}\label{rem:inelastic-consistency}
-Although the objective of this work is enhanced simulation in the nonlinear regime, the methodology of \cref{sec:timo} and \cref{sec:nonuniform} which targets linear elastic consistency is naturally a necessary feature of an inelastic model, and follows a standard motif:
+Although the objective of this work is enhanced simulation in the nonlinear regime, the methodology of \cref{sec:timo} and \cref{sec:nonuniform} which targets linear elastic consistency is naturally a necessary feature of an inelastic model, and follows a standard protocol:
 \begin{itemize}
     \item The enhanced strain fields employed for inelastic plane finite elements \citep{simo1990class} are derived from those exhibited in elastic bending \citep{wilson1990use}.
     \item The plane-section strain profile employed by standard fiber beam elements \citep{spacone1992beam} ensures agreement with the elastic solution for bending  \citep[Art. 87]{love1944treatise}.
@@ -166,24 +158,22 @@ With few judiciously selected auxiliary warping fields, the beam theory of \cref
 \begin{description}
 \item[Preliminaries.]
 \Cref{sec:genwarp} introduces the general mathematical setting. 
-Notation is introduced and the theory of geometrically exact Cosserat beams with auxiliary warping is recalled. 
-The configuration manifold of the dimensionally reduced model is postulated and general governing equilibrium equations are derived by imposing objectivity. 
+Notation is introduced and a family of geometrically exact Cosserat beam theories with auxiliary warping is outlined. Two sources of geometric nonlinearities are identified.
 The distinction between uniform and nonuniform warping is introduced and discussed. 
 
 
 \item[Enhanced Strain Framework.]
-\Cref{sec:gensec} presents a novel enhanced strain principle for formulating constitutive equations in the setting of \cref{sec:genwarp}, and presents an algorithm for its implementation. 
-This general principle is specialized in \Cref{sec:timo} and \Cref{sec:nonuniform} for uniform and nonuniform warping, respectively. 
-In both cases, the enhanced shapes are derived to ensure continuum-consistent response in the elastic regime (\cref{rem:inelastic-consistency}). 
+\Cref{sec:enhan-section} presents a novel enhanced strain principle for formulating constitutive equations in the setting of \cref{sec:genwarp} which incorporates assumed strain shapes \(\EnhanShapes\) into the section response. General conditions are imposed on the assumed fields \(\EnhanShapes\), but specific identifications are not made until the following chapters. A general section state determination algorithm is presented. 
+% This general principle is specialized in \Cref{sec:timo} and \Cref{sec:nonuniform} for uniform and nonuniform warping, respectively. 
+% In both cases, the enhanced shapes are derived to ensure continuum-consistent response in the elastic regime (\cref{rem:inelastic-consistency}). 
 
 \item[Enhanced Uniform Warping.]
-\Cref{sec:timo} develops enhanced shapes for situations where warping is expected to be uniform. 
-The objective is to achieve agreement with Saint Venant's linear elastic continuum solutions for loads in the \(\mathrm{P}_{\mathrm{I\!I}}\) class (\cref{sec:sv}). 
+\Cref{sec:timo} develops enhanced shapes \(\EnhanShapes\) that are suitable when warping is expected to be uniform. By systematically imposing agreement with Saint Venant's linear elastic continuum solutions, the space of arbitrary shape functions \(\EnhanShapes\) is reduced to a family of formulations with 16 free parameters. Within the framework of the chapter, these parameters may be selected to represent physical details like the nature of boundary conditions. \Cref{sec:trace-cowper} and \cref{sec:trace-energy} present two alternative identifications of these parameters with explicit formulae that depend on the geometry and composition of the member. 
 Example~\ref{sec:frame-0012} demonstrates continuum consistency of the resulting section model using standard beam elements without auxiliary warping degrees of freedom.
 
 \item[Enhanced Nonuniform Warping.]
-\Cref{sec:nonuniform} develops enhanced shapes for situations where non-uniform warping is expected to be significant.
-Continuum solutions are not generally available for these problems, and consistency is instead achieved by requiring pointwise equilibrium in the elastic regime. 
+\Cref{sec:nonuniform} develops enhanced shapes \(\EnhanShapes\) that are suitable when non-uniform torsional warping is expected to be significant.
+In contrast with \cref{sec:timo}, continuum solutions are not available in this setting, and consistency is instead achieved by requiring pointwise equilibrium in the elastic regime. The space of shape functions is reduced to a one-parameter family. 
 \end{description}
 
 

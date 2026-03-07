@@ -14,14 +14,14 @@ This chapter presents verification studies of the formulations developed in Part
 
 \begin{table}[H]
 \centering
-\caption{Summary of verification problems in connection with Box~\ref{box:model-summary}.}
+\caption{Summary of verification problems.}% in connection with Box~\ref{box:model-summary}.}
 \label{tab:verification}
-\begin{tabular}{llccccccccl}
+\begin{tabular}{llcccccccl}
     \toprule
     Problem & Type 
     & \multicolumn{2}{c}{Kinematics} 
     & \multicolumn{2}{c}{Warping}
-    & Loading
+    % & Loading
     & Material
     & Chapter 
     \\
@@ -34,7 +34,7 @@ This chapter presents verification studies of the formulations developed in Part
     & Linear
     & Uniform
     & Uniform
-    & 
+    % & 
     & Elastic
     & \ref{sec:timo}
     \\
@@ -45,7 +45,7 @@ This chapter presents verification studies of the formulations developed in Part
       & Uniform
       & Uniform
       % Loading
-      & % $\delta(x) N_k\FrameBasis_k$
+      % & % $\delta(x) N_k\FrameBasis_k$
       & Elastic
       %
       & \ref{sec:timo}
@@ -58,7 +58,7 @@ This chapter presents verification studies of the formulations developed in Part
      & Uniform
      & Nonuniform
      % Loading
-     &
+     % &
      & Elastic
      %
      & \ref{sec:nonuniform}
@@ -71,7 +71,7 @@ This chapter presents verification studies of the formulations developed in Part
      & - 
      & -
      % Loading
-     &
+     % &
      & Elastic
      & \ref{sec:gensec}
      \\
@@ -81,7 +81,7 @@ This chapter presents verification studies of the formulations developed in Part
      & Moderate
      & 
      & Uniform 
-     & Uniform 
+     % & Uniform 
      & Elastic 
      & \ref{sec:gensec}
      \\
@@ -169,10 +169,19 @@ This chapter presents verification studies of the formulations developed in Part
     & F. Sol.
     & Finite
     & Moderate
+    & Uniform
+    & Uniform
+    & Elastic
+    & \ref{sec:gensec}
     \\
     \ExRef{frame-1041}
-    & 
-    &
+    & Exp.
+    & Linear
+    & Moderate
+    & Uniform
+    & Uniform
+    & Elastic
+    & \ref{sec:gensec}
     \\
     \ExRef{frame-2007} 
     & Exp.
@@ -180,7 +189,7 @@ This chapter presents verification studies of the formulations developed in Part
     & Linear
     & Uniform
     & Uniform
-    &
+    % &
     & Plastic
     & \ref{sec:timo}
     \\
@@ -190,7 +199,7 @@ This chapter presents verification studies of the formulations developed in Part
     & Moderate
     & Nonuniform
     & Uniform
-    & 
+    % & 
     & Plastic
     & \ref{sec:nonuniform}
     \\
@@ -200,7 +209,7 @@ This chapter presents verification studies of the formulations developed in Part
     & Linear
     & Uniform
     & Uniform
-    & Eccentric
+    % & Eccentric
     & Plastic
     \\
      \bottomrule
@@ -227,32 +236,50 @@ The source code implementing these simulations is available at \url{https://gith
 % \input{Examples/frame-0002/index}
 
 
-\begin{figure}[b]
+\begin{figure}[h]
   \centering
-  % --- Row 1: three side-by-side ---
+  % Row 1
   \begin{subfigure}[t]{0.32\textwidth}
     \centering
     \includegraphics[width=\linewidth]{Figures/column.png}
-    \caption{\(\mathrm{P}_{\rm I}\) Extension.}
-    \label{fig:demo-a}
+    \caption{Closed, Solid.}
+    \label{fig:shape-rectangle}
   \end{subfigure}\hfill
-  \begin{subfigure}[t]{0.32\textwidth}
+  \begin{subfigure}[t]{0.25\textwidth}
     \centering
-    \includegraphics[width=\linewidth]{Figures/column.png}
-    \caption{\(\mathrm{P}_{\rm I}\) Bending.}
-    \label{fig:demo-b}
+    \includegraphics[width=\linewidth]{Figures/Shapes/HollowRectangle.pdf}
+    \caption{Closed, Hollow.}
+    \label{fig:shape-hollow}
   \end{subfigure}\hfill
-  \begin{subfigure}[t]{0.32\textwidth}
+  \begin{subfigure}[t]{0.25\textwidth}
     \centering
     \includegraphics[page=1,width=\linewidth]{Figures/Shapes/HalfFlange.pdf}
-    % \caption{\(\mathrm{P}_{\rm I}\) Torsion.}
-    \label{fig:demo-c}
+    \caption{Closed, Composite.}
+    \label{fig:shape-halfflange}
   \end{subfigure}
 
+  % Row 2
+  \begin{subfigure}[t]{0.32\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{Examples/frame-2007/img/frame-2007.png}
+    \caption{Open, Double Sym..}
+    \label{fig:shape-wideflange}
+  \end{subfigure}\hfill
+  \begin{subfigure}[t]{0.25\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{Examples/frame-3032/img/shell-1032.png}
+    \caption{Open, Single Sym. (Also Channel).}
+    \label{fig:demo-b}
+  \end{subfigure}\hfill
+  \begin{subfigure}[t]{0.25\textwidth}
+    \centering
+    \includegraphics[page=1,width=\linewidth]{Examples/frame-1041/img/frame-1041.png}
+    \caption{Asymmetric.}
+    \label{fig:shape-angle}
+  \end{subfigure}
   \medskip
-
-  % --- Row 2: one centered ---
-  \begin{subfigure}[t]{0.66\textwidth}
+  % Row 3
+  \begin{subfigure}[t]{0.95\textwidth}
     \centering
     \includegraphics[page=1,width=\linewidth]{Figures/Shapes/SingleCellGirder.pdf}
     \caption{Bridge girder.}
@@ -328,7 +355,7 @@ The source code implementing these simulations is available at \url{https://gith
 \input{Examples/frame-2007/index}
 
 
-\subsection{Inelastic nonlinear uniform torsion \ShowLabel{3011}}\label{sec:frame-3011}
+\subsection{Inelastic nonlinear nonuniform torsion \ShowLabel{3011}}\label{sec:frame-3011}
 \input{Examples/frame-3011/index}
 \clearpage
 

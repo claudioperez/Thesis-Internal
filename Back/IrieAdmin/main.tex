@@ -1,5 +1,5 @@
 \begingroup 
-\input{Part II/API/highlight}
+\input{Back/IrieAPI/highlight}
 
 \chapter{Platform Administration}\label{sec:administration}
 % Please provide us with a data diagram of what is currently taking place and the roles and responsibilities of UCB and Caltrans specifically to each process.
@@ -25,7 +25,7 @@ Currently, Django officially supports \emph{PostgreSQL}, \emph{MariaDB}, \emph{M
 \end{table}
 
 \section{Users and Groups}
-Users of the application are divided into three \emph{groups}{\footnote{The term \emph{group} should not be confused with the usual \emph{working groups} of projects. Here, the term is used in a standard I.T. sense to refer to a collection of users that are granted a common set of privileges.}}, based on their required privileges (see also \cref{fig:interaction,fig:database}):
+Users of the application are divided into three \emph{groups}, based on their required privileges (see also \cref{fig:interaction,fig:database}):
 \begin{description}
     \item[Group 1] consists of agents (currently, only California Geological Survey ``CGS'' and its California Strong Motion Instrumentation Program ``\href{https://www.conservation.ca.gov/cgs/smi/program}{CSMIP}'', which hosts and manages the Center for Engineering Strong Motion Data ``\href{https://www.strongmotioncenter.org/}{CESMD}'') that provide ground motion data in real-time. This is the only group that will most likely need access from outside of the host's local network. This user group makes \texttt{POST} requests over a secured API (\cref{ch:event-api}) that is provided by the \texttt{brace2.events} sub-application. These posts contain a ground motion archive file that must be stored temporarily on the disk while the \emph{predictors} are executed. Any data from these files that is needed for long-term operations on the platform is parsed out and stored as an entry in the \texttt{Event} database table. 
     %
@@ -37,13 +37,13 @@ Users of the application are divided into three \emph{groups}{\footnote{The term
 \end{description}
 \begin{figure}[h!]
     \centering
-    \includegraphics[width=\linewidth]{Part II/admin/Figures//BRACE2 Overview.pdf}
+    \includegraphics[width=\linewidth]{Back/IrieAdmin/Figures//BRACE2 Overview.pdf}
     \caption{\BRACE{} platform user access.}
     \label{fig:interaction}
 \end{figure}
 \begin{figure}[h!]
     \centering
-    \includegraphics[width=\linewidth,trim={0 2cm 0 0},clip]{Part II/admin/Figures//BRACE2 Database.pdf}
+    \includegraphics[width=\linewidth,trim={0 2cm 0 0},clip]{Back/IrieAdmin/Figures//BRACE2 Database.pdf}
     \caption{\BRACE{} platform database implementation details.}
     \label{fig:database}
 \end{figure}

@@ -1,0 +1,171 @@
+
+
+\chapter{Type I Prediction: Damage Metrics}\label{ch:predictor_t1}
+
+\section{Introduction}
+
+% \begin{quote}
+% \noindent
+% The state of a structure as it experiences an event is assumed to be characterized by its displacement $\displ$ and velocity $\veloc$, which is governed by Newton's laws of motion:
+% \begin{equation}
+%     \Mass \accel = \extern -  \intern(\displ,\veloc), %\force (\displ, \veloc, \accel) = \mathbf{f}
+%     \label{eq:newton-discrete}
+% \end{equation}
+% where $\accel$ is the acceleration associated with the state of the structure, $\intern$ characterizes the internal resisting force produced by the structure in response to its configuration, and $\extern$ is the external loading that is imposed by the event. \glspl{predictor-t1} are premised on the idea that if the form of $\intern$ is \emph{assumed} and the loading $\extern$ is \emph{given}, then $\displ$ and $\veloc$ can be approximately \emph{determined} by methods of integration of the second order system of differential equations in \eqref{eq:newton-discrete}.
+% %
+% On the \gls{platform}, this is realized by employing a \emph{finite element} approximation of $\Mass$ and $\intern$ and constructing an approximation to $\extern$ from the sensor data.
+% \end{quote}
+
+\noindent
+In the field of civil engineering, a common class of prediction techniques leverages structural analysis models.
+These techniques are widely accessible to engineers who routinely develop models for design and rehabilitation.
+Structural analysis models are constructed by characterizing the properties of each structural component of an asset. 
+On the \BRACE{} platform, these models leverage finite elements that are typically unavailable in basic commercial products. 
+
+% For each structure that has its recorded acceleration responses streamed to the \gls{platform}, the platform is able to host a family of structural analysis models that perform response prediction in near real-time. 
+% Over time, the growing collection of response predictions can be studied to identify the configurations that are best for generating meaningful condition assessments depending on situational characteristics and requirements (for example, event intensity, prediction resolution and fidelity, and relative modeling costs). From these studies, best practices in structural analysis modeling for health monitoring can be defined; meanwhile, techniques that are more established within the discipline of structural health monitoring tend to fall under the category of ``data-driven" methods.
+
+
+The present chapter focuses on how Type~I response predictions are reduced to damage metrics and interpreted for decision-making.
+The abstract \gls{predictor} framework is developed in \cref{sec:framework}, and the platform architecture is documented in \cref{sec:irie}.
+
+\subsection{Literature}
+
+Capacity limit states are often absent from post-event decision support, particularly for older nonductile bridge columns. 
+\citet{zhou2022capacitya} highlight this gap in the context of ShakeCast and develop component capacity limit states for pre-1971 columns, spanning minor damage through collapse. 
+Their work motivates the explicit strain-based mapping adopted in the \gls{platform}, which provides a direct link between simulated response and operational guidance.
+The report synthesizes an experimental database of nonductile columns to ground the taxonomy in observable damage mechanisms, and documents both the scarcity of data at the most severe states and the sensitivity of ductility-based thresholds under earthquake loading \citep{zhou2022capacitya}. 
+These observations reinforce the need for damage metrics that are physically interpretable and compatible with the strain fields produced by nonlinear simulation.
+
+\subsection{Outline}
+
+This chapter proceeds as follows. 
+\Cref{sec:t1-framework} presents the damage state framework, beginning with the capacity taxonomy in \cref{sec:t1-taxonomy} and the role of section kinematics in \cref{sec:t1-kinematics}. 
+\Cref{sec:t1-pipeline} describes the Type~I pipeline and response reduction, with \cref{sec:t1-dsmapping} formalizing the mapping rules. 
+\Cref{sec:t1-interpretation} discusses how metrics are presented on the platform, and \cref{sec:t1-discussion} summarizes implications, limitations, and calibration needs.
+
+\section{Damage State Framework}\label{sec:t1-framework}
+
+The damage state mapping for bridge columns is based on fiber strains, which link computed response to observable phenomena such as cover cracking, spalling, and bar buckling. 
+In the present framework, columns are modeled with distributed-inelasticity frame elements and fiber-discretized sections. 
+For each column, strain histories are computed at representative fibers and reduced to maxima that define the damage state.
+
+\subsection{Capacity Limit State Taxonomy}\label{sec:t1-taxonomy}
+For nonductile bridge columns, \citet{zhou2022capacitya} propose a seven-state taxonomy (DS$_0$--DS$_7$) with associated consequences that range from no action and patching at low damage to jacketing, column replacement, and bridge replacement at the highest damage states. 
+Their classification connects recognizable damage mechanisms, including cover cracking and spalling, exposure of the confined core, bar buckling, and loss of lateral or vertical capacity, to outcomes that can be operationalized in a post-event workflow. 
+This taxonomy provides a useful anchor for the metric mapping employed on the \gls{platform}, which retains the same qualitative progression while expressing each state in terms of computed material strains. 
+In their classification, the early states are tied to cracking and spalling of the cover, intermediate states to the onset and progression of crushing into the confined core, and the severe states to bar buckling, possible rupture, and collapse identified by a significant loss of lateral capacity \citep{zhou2022capacitya}. 
+The study also notes that data supporting some transition thresholds are sparse, particularly at the highest damage states, since many experiments terminate once lateral strength has degraded by roughly 20\% \citep{zhou2022capacitya}. 
+This motivates a cautious interpretation of collapse states and underscores the need for calibration as more observed event data are accumulated.
+
+% \begin{figure}[h!]
+% \centering
+% % \includegraphics[height=0.3\textheight]{Body/DamageMetrics/figures/general/ColumnGeometry.pdf}
+% \includegraphics[height=0.3\textheight]{Body/DamageMetrics/figures/meloland/Section_Meloland.pdf}
+% \caption{Strategy of fiber modeling of column members.}
+% \label{fig:sec_modeling}
+% \end{figure}
+
+There are multiple schemes for defining damage states, including strain-based damage states (\cref{tab:DS}) that relates fiber strains to component capacity based on prior Caltrans-PEER studies, and ductility-based DS \citep{saini2014probabilistic} that models the relationship between a displacement-based damage index and component capacity. 
+\citet{zhou2022capacitya} show that ductility can be a reasonable indicator for minor to moderate damage under cyclic loading, but that it becomes inconsistent for severe damage under earthquake loading as peak ductility can occur before bar buckling and severe strength deterioration. 
+The \gls{platform} therefore employs strain-based DS because it provides a direct mapping from simulated response to observed local damage and admits a consistent interpretation across different column geometries and reinforcement layouts.
+
+% \subsection{Section Kinematics}\label{sec:t1-kinematics}
+% The accuracy of fiber strain histories depends on the section kinematics used by the predictor. 
+% The enhanced strain framework developed in Part~I improves the reconstruction of the three-dimensional strain field at the section level without modifying the global element kinematics. 
+% This is particularly important when damage states are tied to shear- and torsion-sensitive fibers, since conventional plane-section assumptions can underestimate these strain components. 
+% The Type~I pipeline therefore benefits directly from the section models of Part~I, which furnish the strain fields used in the damage state criteria while retaining a computational form suitable for rapid post-event evaluation.
+
+Table~\ref{tab:DS} summarizes the strain-based criteria used on the \gls{platform}. 
+The sequence mirrors the taxonomy proposed by \citet{zhou2022capacitya} but is expressed in terms of fiber-level quantities that are directly available from the simulation output.
+The terminal collapse state in \citet{zhou2022capacitya} is presently treated as part of the highest damage state in this mapping, pending improved calibration of distinct thresholds at extreme damage levels.
+
+
+\input{Body/DamageMetrics/DamageStateTable}
+
+% \begin{table}[H]
+% \centering
+% \caption{Damage state criteria for strain-based component capacity model.}
+% \begin{adjustbox}{width=1\textwidth}
+% \begin{tabular}{@{}cNNLLc@{}}\toprule
+% \multirow{3}{*}{Label} & \multirow{3}{*}{Description} & \multirow{3}{5cm}{\centering Defining Criteria} & \multicolumn{3}{c}{Damage State} \\ \cmidrule{4-6} & & & Fiber Location & Compression or Tension & Strain \\ \midrule
+% {DS0} & No damage & -- & -- & -- & -- \\ \midrule
+% {DS1} & Tight cracking of cover & Cover cracking occurs when the cover surface reaches tensile strength & Any outermost cover fiber & Tension & \gls{et} \\ \midrule
+% {DS2} & Moderate cracking (mixed orientations) \& minor spalling/flaking & Minor spalling occurs when the cover surface reaches compressive strength & Any outermost cover fiber  & Compression & \gls{esp} \\ \midrule
+% {DS3} & Open cracking or major spalling (exterior to confinement) & Major spalling occurs when a significant depth of the cover reaches compressive strength & Any cover fiber at 1/2-3/4 of the cover depth & Compression & \gls{esp} \\ \midrule
+% {DS4} & Exposed core (interior of confinement) & Exposed core occurs when the entire depth of the cover reaches compressive strength & Any innermost cover fiber & Compression & \gls{esp} \\ \midrule
+% \multirow{2}{*}{{DS5}} & Visible bar buckling; confinement loss or core shedding & Core shedding occurs when the outer surface of the core begins to fail & Any outermost core fiber & Compression & \gls{ecu} \\ \cmidrule{2-6} & Multi-bar rupture or buckling; large drift; or core crushing & Bar rupture occurs when longitudinal bars reach ultimate tensile strength & Any longitudinal bar & Tension & \gls{esu} \\ \midrule
+% {DS6} & Column collapse (Near-total loss of axial capacity) & Loss of axial capacity occurs when approximately 1/2 of the core fails & All core fibers at 1/4 of the core depth & Compression & \gls{ecu} \\
+% \bottomrule
+% \end{tabular}
+% \end{adjustbox}
+% \label{tab:DS}
+% \end{table}
+
+At the most severe state, the platform continues to rely on strain thresholds applied to the designated regions. 
+No additional capacity checks are performed in the current workflow; the reported output is the DS label for each column.
+
+The damage state metric can be used to further extend the decision-making process for operational actions with standard practices by Caltrans' Structures Maintenance and Investigations group, such as those outlined in \cite{caltrans2017first}. 
+For example, DS1-2 corresponds to allowing the structure to remain open; DS3-4 corresponds to inspecting the structure while allowing it to remain open; DS5 corresponds to closing the bridge for further inspection, and DS6 corresponds to closing the bridge immediately. 
+The {\em{decision boundaries}} are to be calibrated in the future as more events occur and are analyzed by the \gls{platform}.
+
+\section{Type I Pipeline}\label{sec:t1-pipeline}
+With the damage state framework defined, the Type~I pipeline specifies how event records are converted into these metrics. 
+Type~I prediction on the \gls{platform} begins with streamed ground motion, propagates through a structural analysis model, and terminates in a set of metrics that are interpretable by decision-makers. 
+The pipeline is modular, with input motions extracted from event records, component and global response computed by the predictor, and response histories reduced to a small set of engineered quantities.
+
+\subsection{Response Reduction}\label{sec:t1-reduction}
+For \glspl{predictor-t1}, the response history is the output of a nonlinear finite element analysis driven by the recorded input motions. 
+The reduction to metrics proceeds by aggregating response over time and space into quantities relevant to a decision.
+In the present implementation, the primary component-level metric is the damage state of critical members, while structure-level metrics include drift ratios and select response envelopes.
+The damage state mapping described below is the central link between raw simulation output and actionable reporting.
+
+At the component level, the reduction step tracks strain extrema in cover, core, and reinforcement fibers at monitored sections along a column. 
+These extrema are mapped to discrete damage states and associated with physical damage mechanisms.
+At the structure level, component metrics are complemented by global indicators such as peak drift and acceleration envelopes, which provide a compact view of overall response intensity. 
+
+\subsubsection{Damage State Mapping Rules}\label{sec:t1-dsmapping}
+The mapping from response histories to discrete damage states follows a set of rules that are independent of any particular software implementation. 
+First, a small set of monitored sections is selected for each column, typically at locations where plastic hinges are expected or where demand is known to concentrate. 
+Second, fibers are grouped into physically meaningful regions, including cover, core, and longitudinal reinforcement, by geometric offsets from the section boundary and the reinforcement layout. 
+These regions are defined by a small number of concentric bands parameterized by cover thickness and section size, so the same regional taxonomy can be applied across a family of column geometries by scaling band boundaries.
+Third, at each monitored section, the longitudinal fiber strain history is reconstructed from the section axial strain and curvatures, and extrema are tracked separately in tension and compression. 
+Fourth, each damage state is tied to a region and a strain threshold, with compression thresholds applied to cover and core regions and tension thresholds applied to reinforcement regions. 
+Finally, the damage state at a section is defined as the highest state whose strain criterion is satisfied by any fiber in the corresponding region, and the member-level damage state is the maximum over monitored sections. 
+To avoid ambiguity when multiple thresholds are exceeded, the evaluation proceeds from severe to mild states so that the maximum triggered state governs. 
+When initiation time is needed, it is taken as the first exceedance of the governing threshold. 
+This rule set preserves the physical meaning of each state while remaining compatible with the strain measures produced by the finite element predictor, and it yields a single DS for every column without auxiliary capacity checks.
+
+\begin{Note}
+The mapping logic is well structured, but the uncertainty/calibration path is still underdeveloped. Add a concise calibration protocol describing how thresholds are updated with new post-event evidence, how uncertainty is propagated into DS assignments, and how false positives from ``max over many fibers/sections'' are controlled.
+\end{Note}
+
+\section{Interpretation}\label{sec:t1-interpretation}
+
+Following their execution on the platform, \glspl{predictor-t1} results are processed into metrics. 
+%  they assign a little bit of meaning to the results -- for exmample, we might get a certain strain response and say this equals damage state 1, or minor damage -- flexural cracks.
+%  we might get a certain max displacement and say this equals some % drift ratio.
+%  the interpretation of these is pretty obvious. 
+For a given event, component metrics such as damage state are evaluated for each critical member, while structure-level summaries typically include peak drift and acceleration envelopes. 
+These quantities are intentionally few in number and physically interpretable, so they can be compared across predictors without re-examining the full response history.
+The processed metrics are displayed on the metric cards (\cref{fig:sam_metrics}). 
+As they are results of \glspl{predictor-t1}, they correspond to \emph{simulated} response values. 
+When there are multiple predictors, the desired predictor can be selected from the predictor selection region at the bottom of each metric card.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.5\linewidth]{Body/DamageMetrics/figures/predictors/t1_metrics_ds.png}
+\includegraphics[width=0.5\linewidth]{Body/DamageMetrics/figures/predictors/t1_metrics_drift.png}
+\includegraphics[width=0.5\linewidth]{Body/DamageMetrics/figures/predictors/t1_metrics_accel.png}
+\caption{Type I predictor metrics.}
+\label{fig:sam_metrics}
+\end{figure}
+
+\section{Discussion. Implications and Limitations}\label{sec:t1-discussion}
+The strain-based mapping provides a direct, physically interpretable link between nonlinear simulation and actionable reporting, but it also exposes several limitations. 
+First, the damage state boundaries in \cref{tab:DS} remain sensitive to uncertainty in material properties, detailing, and confinement, and therefore must be calibrated as additional events are captured. 
+Second, the mapping is local by construction; it captures member-level damage but does not directly encode system-level redundancy or load redistribution. 
+Finally, the reliance on fiber strains means that model form errors in section kinematics can propagate directly into the reported damage state. 
+The enhanced section formulations of Part~I mitigate this by improving the underlying strain field, but continued validation against observed event data remains essential as the platform scales.
+
+\input{Examples/04-0236/index}

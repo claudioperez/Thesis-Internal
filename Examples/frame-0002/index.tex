@@ -19,6 +19,8 @@ A typical instance is
 \[
 \HostParameters = (L,E,d,b),
 \qquad
+\]
+\[
 \ParameterMap(\HostParameters)
 =
 \bigl(
@@ -53,13 +55,10 @@ This yields derivatives with respect to \(d\) and \(b\) even though \(d\) and \(
 
 \end{Note}
 
-Consider a cantilever beam
-of length~$L$, loaded by a tip force~$H$, whose cross-section is a
-solid rectangle of width~$b$ and depth~$d$. 
+The cantilever of \cref{fig:frame-0002} is loaded by a tip force~$H$. The  cross-section is a solid rectangle of width~$b$ and depth~$d$. 
 
-The beam is modeled with
-fiber-section frame elements, so that the cross-section is
-represented by a grid of $N$~integration points, each characterised by its
+The beam is modeled with fiber-section frame elements, so that the cross-section is
+represented by a grid of $N$~integration points, each characterized by its
 a location $(y_k,z_k) \in\Section$ and weight $A_k$.
 
 % \paragraph{Core parameters.}
@@ -113,9 +112,9 @@ point load~$H$ is
 \begin{equation*}
     u = \frac{H L^{3}}{3\,E\,I_y} + \frac{H\,L}{G\,A},
 \end{equation*}
-where $I_y = b\,d^{3}/12$ is the second moment of area and
+where the second moment of area is $I_y = b\,d^{3}/12$  and
 $G$ is the shear modulus.  
-The analytical derivative with respect to~$d$ is
+The derivative with respect to~$d$ is
 \begin{equation*}
 % \label{eq:example-exact-deriv}
     \frac{\partial u}{\partial d}

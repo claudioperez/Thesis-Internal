@@ -6,25 +6,6 @@
 % https://journals.sagepub.com/doi/pdf/10.1177/87552930241231686
 % https://peer.berkeley.edu/sites/default/files/2020-peerannualmeeting-taciroglu-digitaltwins.pdf
 
-The digital twin concept has emerged as a significant development in the realm of structural health monitoring that holds substantial promise for transforming infrastructure maintenance, especially for bridges, which are integral to our transportation networks. %particular relevance to bridge structures, among other applications \cite{alibrandi2022riskinformed}. 
-%A digital twin is essentially a dynamic software model that reflects the physical state of a structure, facilitating real-time monitoring and prediction of its performance and health \cite{garter}. 
-% This concept holds substantial promise for transforming infrastructure maintenance, especially for bridges, which are integral to our transportation networks.
-However, the path to actualizing this concept in practice is fraught with challenges. The literature, while replete with promising studies, lacks a unified understanding for the responsibilities of a digital twin, leading to disparate interpretations of its role and functionality. Moreover, the swift progression of artificial intelligence in this field poses an additional challenge, as it necessitates the development of solutions that can adapt to a rapidly evolving technological landscape.
-
-To address these issues, this study seeks to delineate the objectives of digital twins and structural health monitoring clearly, in order to facilitate the coherent implementation of state-of-the-art ideas \citep{kapteyn2021probabilistic, torzoni2024digital}, in a framework that aims to remain readily adaptable to the continual advances in machine learning technology. 
-We propose a framework comprising five fundamental abstractions—\glspl{asset}, \glspl{predictor}, \glspl{event}, \glspl{evaluation}, and \glspl{metric}—that can guide the development of scalable and enduring software platforms. This framework is designed to accommodate the fluidity of artificial intelligence advancements while maintaining a steadfast focus on the core objectives of structural health monitoring.
-% - Add willcox's definition
-% - change to discuss how there may be a consensus forming around definition, but in practice many new developments still fail to fit together in a tangible or coherent framework.
-The proposed framework is compatible with the myriad procedures proposed in
-the literature, and facilitates their robust implementation
-as part of a cohesive commercial-grade software platform.
-% This framework is not intended to supersede existing literature but to build upon it. 
-By offering a software platform that supports the implementation of a broad range of existing methods, we aim to foster a more cohesive and collaborative approach to advancing structural health monitoring. Through this study, we aim to contribute to the ongoing discourse on refining the digital twin concept and advancing the field of structural health monitoring.
-
-
-The outline of the paper is as follows. In \cref{sec:framework} the five fundamental abstractions
-are introduced and developed for general applications of digital twins. In \cref{sec:architecture} we present the \BRACE{} platform, a fully-realized implementation
-of the framework which illustrates the viability and efficacy of these abstractions. 
 
 % Special attention is paid to...
 % However, implementing digital twins for bridge health monitoring presents unique challenges. Given the involvement of various entities, such as the Department of Transportation and the USGS, in the monitoring process, the software may need to incorporate networking capabilities to enable efficient data exchange and collaboration.
@@ -41,3 +22,47 @@ of the framework which illustrates the viability and efficacy of these abstracti
 % it is becoming increasingly desirable to apply this technology
 % to achieve goals like
 % proactive maintenance and real-time surveillance, significantly enhancing our ability to ensure the integrity of these critical structures. Despite the rapid development in this field, the quest for an optimal solution that satisfies the diverse needs of owners remains elusive.
+
+
+
+Over the past two decades performance‑based methodologies have reshaped
+structural engineering practice by demanding ever more faithful
+simulations of how bridges behave under extreme loading. Earthquakes
+remain the dominant driver, but blast, vehicular impact, scour, and
+progressive collapse scenarios all place similar expectations on
+computational models: they must accommodate nonlinear material
+behavior; capture large‑displacement kinematics; and execute robust,
+dynamically stable solution algorithms. At the same time, the
+proliferation of long‑term monitoring networks has created a parallel
+demand for data‑centric identification methods that can translate
+ambient or event‑recorded vibrations into quantitative measures of
+health. High‑fidelity finite‑element analysis and data‑driven system
+identification therefore coexist as complementary lenses through which
+resilience is assessed.
+
+Delivering these capabilities at operational speed requires software
+that is not only numerically efficient but also flexible enough to
+absorb new element formulations, identification techniques, and
+computing paradigms as they emerge. Previous frameworks have
+demonstrated how careful separation of concerns and disciplined use of
+composition can yield simulation environments that remain viable across
+multiple research generations. Building on that lineage, the present
+framework unifies physics‑based prediction and data‑driven inference
+behind a common set of abstractions---\textbf{Asset, Event, Predictor,
+Metric,} and \textbf{Evaluation}---so that analysts can mix and match
+numerical engines without rewriting orchestration logic.
+
+Each abstraction is realized through a modest interface that hides
+implementation details while exposing the minimum behavior required for
+collaboration. Predictors, for example, are interchangeable whether they
+wrap a nonlinear time‑history analysis or a stochastic
+subspace‑identification routine; both accept the same event records and
+both emit metrics in a standard format understood by the evaluation
+layer. 
+The resulting architecture balances computational performance
+with a level of flexibility that allows it to track advances in material
+models, solution algorithms, surrogate learning, and parallel hardware.
+
+\Cref{sec:irie-arch} describes the architectural layers, 
+\Cref{sec:scheduling} describes the
+predictor‑scheduling workflow, and \cref{sec:policy} describes the policy mechanism that aggregates metrics into actionable health evaluations.

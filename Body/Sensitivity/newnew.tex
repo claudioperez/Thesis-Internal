@@ -21,27 +21,26 @@ The direct differentiation method (DDM) provides exact sensitivities
 of the discrete equilibrium equations that govern a finite element
 model. 
 Given a residual $\residual(\ModelState;\corey)=\mathbf{0}$
-parameterised by a vector of model inputs~$\corey$, the DDM
+parameterized by a vector of model inputs~$\corey$, the DDM
 differentiates this equation implicitly with respect to each
 component~$y_i$ and solves the resulting linear system to obtain
 $\partial\ModelState/\partial y_i$ at negligible marginal cost once the
-primal factorisation is available.  
+primal factorization is available.  
 The method is well established in
 computational mechanics and forms the backbone of gradient-based
-design optimisation, reliability analysis, and parameter identification
+design optimization, reliability analysis, and parameter identification
 in structural and solid-mechanics codes.
 
 Despite its efficiency, the DDM is limited in scope: it can only
 differentiate with respect to quantities that appear explicitly in the
 finite element residual.  In practice, however, the
 parameters of interest to the analyst are often higher-level quantities
-that \emph{determine} these core inputs through an arbitrarily complex
-preprocessing chain.  Cross-section dimensions must be converted to
-fiber discretisations; topology descriptors must be mapped to element
+that \emph{determine} these core inputs through an arbitrarily complex pre-processing chain.  
+Cross-section dimensions must be converted to
+fiber discretizations; topology descriptors must be mapped to element
 connectivities and material layouts; stochastic field coefficients
 must be transformed into spatially varying material properties.  Each
-such transformation introduces a link in the chain rule that the DDM
-alone cannot traverse.
+such transformation introduces a link in the chain rule that the DDM alone cannot traverse.
 
 Automatic differentiation (AD) frameworks such as \Jax{} and PyTorch
 face the complementary limitation.  
@@ -55,7 +54,7 @@ Furthermore, the natural host environments for these frameworks are
 generally not well suited for the efficient implementation of finite
 element procedures.  Python, for instance, does not provide sufficient
 control over memory layout and allocation to support the kind of
-low-level optimisation that production finite element codes require.
+low-level optimization that production finite element codes require.
 Even higher-level compiled languages that target scientific computing,
 such as Julia, lack the fine-grained control over memory ownership,
 lifetime, and the separation of compile-time and run-time computation
@@ -137,7 +136,8 @@ f(x),
 \D f(x)[\dot x]
 \bigr).
 \]
-This is the natural primal-tangent object in forward mode. It returns both the value and the Jacobian-vector product.
+This is the natural primal-tangent object in forward mode. 
+It returns both the value and the Jacobian-vector product.
 
 For composable differentiable maps \(g:X\to Y\) and \(f:Y\to Z\),
 \[

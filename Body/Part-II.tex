@@ -1,4 +1,22 @@
 
+The digital twin concept has emerged as a significant development in the realm of structural health monitoring that holds substantial promise for transforming infrastructure maintenance, especially for bridges, which are integral to our transportation networks. %particular relevance to bridge structures, among other applications \cite{alibrandi2022riskinformed}. 
+%A digital twin is essentially a dynamic software model that reflects the physical state of a structure, facilitating real-time monitoring and prediction of its performance and health \cite{garter}. 
+% This concept holds substantial promise for transforming infrastructure maintenance, especially for bridges, which are integral to our transportation networks.
+However, the path to actualizing this concept in practice is fraught with challenges. The literature, while replete with promising studies, lacks a unified understanding for the responsibilities of a digital twin, leading to disparate interpretations of its role and functionality. Moreover, the swift progression of artificial intelligence in this field poses an additional challenge, as it necessitates the development of solutions that can adapt to a rapidly evolving technological landscape.
+
+To address these issues, this study seeks to delineate the objectives of digital twins and structural health monitoring clearly, in order to facilitate the coherent implementation of state-of-the-art ideas \citep{kapteyn2021probabilistic, torzoni2024digital}, in a framework that aims to remain readily adaptable to the continual advances in machine learning technology. 
+We propose a framework comprising five fundamental abstractions—\glspl{asset}, \glspl{predictor}, \glspl{event}, \glspl{evaluation}, and \glspl{metric}—that can guide the development of scalable and enduring software platforms. This framework is designed to accommodate the fluidity of artificial intelligence advancements while maintaining a steadfast focus on the core objectives of structural health monitoring.
+% - Add willcox's definition
+% - change to discuss how there may be a consensus forming around definition, but in practice many new developments still fail to fit together in a tangible or coherent framework.
+The proposed framework is compatible with the myriad procedures proposed in
+the literature, and facilitates their robust implementation
+as part of a cohesive commercial-grade software platform.
+% This framework is not intended to supersede existing literature but to build upon it. 
+By offering a software platform that supports the implementation of a broad range of existing methods, we aim to foster a more cohesive and collaborative approach to advancing structural health monitoring. Through this study, we aim to contribute to the ongoing discourse on refining the digital twin concept and advancing the field of structural health monitoring.
+
+
+
+
 The Bridge Rapid Assessment Center for Extreme Events (\BRACE{}) is a platform developed in collaboration with the California Department of Transportation to provide real-time post-earthquake assessments for instrumented bridges.
 Its computational backend, the Infrastructure Resilience Engine (IRiE), requires finite element models that can be assembled from inventory data, executed rapidly, and embedded in inference workflows.
 The bridges in the current deployment are composed predominantly of beam and column members whose inelastic behavior governs damage progression.

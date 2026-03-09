@@ -1,5 +1,5 @@
 
-\section{Abstract Framework}\label{sec:framework}
+\section{**Abstract Framework}\label{sec:framework}
 
 % In the current state of the field of structural health monitoring, regardless of the method employed, evaluations rely on some form of \emph{model} that is created to predict some form of \emph{metric} describing structural behavior for a given excitation. The structure experiences service-level conditions for long periods of time, during which structural behavior remains within an ostensibly predictable range. This concept has been shown during the first trial operational period of the \BRACE{} health monitoring platform. Throughout, the bridge inventory has been subject to low levels of excitation. On the health monitoring platform, physics-based methods are primarily used to report intensity measures, and data-driven methods to report deviations from the normal condition. For both types of methods, there is great use in investigating structural behavior as a \emph{linear time invariant} (LTI) system during the normal condition. This allows the physics-based modeler to tailor modeling assumptions for different cases of excitation, and the data-driven modeler to characterize the normal linear system behavior. Several promising formulations for LTI systems have been established for both physics-based and data-driven models, and the \BRACE{} platform allows for their long-term proof-of-concept and validation.
 
@@ -25,9 +25,9 @@ In order to conduct a meaningful structural health assessment, the assessor must
 The \gls{asset} abstraction represents the primary subject of structural health monitoring. For example, the Painter St. Overcrossing in \cref{fig:continuous-flare} (a) is an \gls{asset} identified with station number \texttt{CE89324} of the California Strong Motion Instrumentation Program (CSMIP) and structure number \texttt{04 0236} in the Federal Highway Administration’s National Bridge Inventory.
 Naturally, an inventory of \glspl{asset} will consist of a wide variety of structural designs, each with distinct vulnerabilities and strengths. 
 It is essential that the representation of an \gls{asset} is able to account for these contextual details.
-For example, several older bridges in the Caltrans inventory, including the Painter St. overcrossing, are designed with continuous flared columns like that shown in \cref{fig:continuous-flare} (a).  
-Structures with this design are particularly vulnerable to certain failure modes as shown in \cref{fig:continuous-flare} (b) \citep{sanchez1997seismic,soleimani2017seismic,caltrans2009memo-6-1}.
-% An asset must be represented by a well-defined schema.
+% For example, several older bridges in the Caltrans inventory, including the Painter St. overcrossing, are designed with continuous flared columns like that shown in \cref{fig:continuous-flare} (a).  
+% Structures with this design are particularly vulnerable to certain failure modes as shown in \cref{fig:continuous-flare} (b) \citep{sanchez1997seismic,soleimani2017seismic,caltrans2009memo-6-1}.
+% % An asset must be represented by a well-defined schema.
 
 \begin{figure}[h!]
     \centering
@@ -175,39 +175,19 @@ Second, it encourages experimentation with different training algorithms. By abs
 %     \label{fig:irie-classes}
 % \end{figure}
 
-\begin{figure}[H]
-    \centering
-    \resizebox{0.9\linewidth}{!}{\input{Body/Irie/Figures/fig_sequence}}
-    \caption{Sequence diagram illustrating the process of evaluating an event.}
-    \label{fig:irie-sequences}
-\end{figure}
 The \gls{event} and \gls{evaluation} abstractions provide a general framework for capturing and processing data from the physical system, enabling the digital twin to reflect the state of the physical system accurately and in real time.
 In the context of bridge health monitoring, this generally corresponds to any situation that could place the health of a structure in jeopardy
 and for which an \gls{evaluation} is desired, but more generally, may also be used to represent any relaying of data from the physical structure to the digital twin. 
 The processing of an \gls{event} generally culminates in the creation of an \gls{evaluation}, which is expected to be of immediate interest to the user or the decision-maker.
 
 \subsubsection{Event Abstraction}
-\begin{figure}
-    \centering
-    \includegraphics[width=0.5\linewidth]{Body/Irie//Figures/SGMD.png}
-    \caption{Enter Caption}
-    \label{fig:sgmd}
-\end{figure}
+
 
 The \gls{event} abstraction represents any occurrence that results in data being relayed from the physical system to the digital twin. An \gls{event} could be a routine data collection, a triggered sensor reading due to a significant change in the physical system, or any other situation that necessitates the transfer of data for processing and analysis.
 %
 This abstraction is designed to be broad and flexible, accommodating a wide range of scenarios and data types.
 It allows the digital twin to respond to changes in the physical system promptly and accurately, regardless of the nature or cause of the \gls{event}.
 
-\begin{Note}
-
-An example of how SGMD \cite{mccallen2025open-access} can be leveraged to advance structural resilience research is through its integration with existing structural health monitoring platforms.
-
-As a practical application of these advancements, integrating SGMD with \BRACE{} can significantly enhance structural health monitoring efforts. 
-
-Data driven methods are currently limited by data sparsity, particularly for structures without instrumentation. 
-Integrating SGMD with \BRACE{} addresses this limitation by enabling preemptive analysis through simulated ground motions. This integration allows for predictive modeling for structures lacking sensor data, improving the ability to forecast structural responses during future seismic events. Additionally, SGMD data can inform real-time assessments by providing baseline models against which real-time sensor data can be compared, enhancing the accuracy of structural health evaluations. This integration extends the benefits of \BRACE{} to a broader range of infrastructure within the transportation network, contributing to more comprehensive community resilience.
-\end{Note}
 
 \subsubsection{Evaluation Abstraction}
 
@@ -216,5 +196,3 @@ The \gls{evaluation} abstraction represents the process of analyzing the data re
 The \gls{evaluation} abstraction is designed to be adaptable and scalable, capable of handling a wide range of analysis methods and data volumes. 
 It ensures that the digital twin can provide meaningful and actionable insights, regardless of the complexity or scale of the data.
 
-
-\input{Body/Irie/Algorithms}

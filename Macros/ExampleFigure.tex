@@ -2,5 +2,13 @@
   \includegraphics[page=\csname framepage@#2\endcsname,#1]{Examples/figures.pdf}%
 }
 
-\expandafter\def\csname framepage@frame-0012\endcsname{4}
-\expandafter\def\csname framepage@frame-0013\endcsname{14}
+\newcommand{\SectionFigure}[2][]{%
+\includegraphics[page=\csname shapepage@#2\endcsname,#1]{Figures/Shapes/Shapes.pdf}
+}
+
+\expandafter\def\csname framepage@frame-0012\endcsname{13}
+\expandafter\def\csname framepage@frame-2007\endcsname{4}
+\expandafter\def\csname framepage@frame-3011\endcsname{14}
+\expandafter\def\csname framepage@frame-1035\endcsname{8}
+
+\expandafter\def\csname shapepage@Rectangle\endcsname{1}

@@ -189,7 +189,18 @@ The processing of an \gls{event} generally culminates in the creation of an \gls
 
 The \gls{event} abstraction represents any occurrence that results in data being relayed from the physical system to the digital twin. An \gls{event} could be a routine data collection, a triggered sensor reading due to a significant change in the physical system, or any other situation that necessitates the transfer of data for processing and analysis.
 %
-This abstraction is designed to be broad and flexible, accommodating a wide range of scenarios and data types. It allows the digital twin to respond to changes in the physical system promptly and accurately, regardless of the nature or cause of the \gls{event}.
+This abstraction is designed to be broad and flexible, accommodating a wide range of scenarios and data types.
+It allows the digital twin to respond to changes in the physical system promptly and accurately, regardless of the nature or cause of the \gls{event}.
+
+\begin{Note}
+
+An example of how SGMD \cite{mccallen2025open-access} can be leveraged to advance structural resilience research is through its integration with existing structural health monitoring platforms.
+
+As a practical application of these advancements, integrating SGMD with \BRACE{} can significantly enhance structural health monitoring efforts. 
+
+Data driven methods are currently limited by data sparsity, particularly for structures without instrumentation. 
+Integrating SGMD with \BRACE{} addresses this limitation by enabling preemptive analysis through simulated ground motions. This integration allows for predictive modeling for structures lacking sensor data, improving the ability to forecast structural responses during future seismic events. Additionally, SGMD data can inform real-time assessments by providing baseline models against which real-time sensor data can be compared, enhancing the accuracy of structural health evaluations. This integration extends the benefits of \BRACE{} to a broader range of infrastructure within the transportation network, contributing to more comprehensive community resilience.
+\end{Note}
 
 \subsubsection{Evaluation Abstraction}
 

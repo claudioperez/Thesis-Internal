@@ -21,6 +21,7 @@ In order to conduct a meaningful structural health assessment, the assessor must
 %
 %
 \subsection{Assets}\label{sec:assets}
+
 The \gls{asset} abstraction represents the primary subject of structural health monitoring. For example, the Painter St. Overcrossing in \cref{fig:continuous-flare} (a) is an \gls{asset} identified with station number \texttt{CE89324} of the California Strong Motion Instrumentation Program (CSMIP) and structure number \texttt{04 0236} in the Federal Highway Administration’s National Bridge Inventory.
 Naturally, an inventory of \glspl{asset} will consist of a wide variety of structural designs, each with distinct vulnerabilities and strengths. 
 It is essential that the representation of an \gls{asset} is able to account for these contextual details.
@@ -186,6 +187,12 @@ and for which an \gls{evaluation} is desired, but more generally, may also be us
 The processing of an \gls{event} generally culminates in the creation of an \gls{evaluation}, which is expected to be of immediate interest to the user or the decision-maker.
 
 \subsubsection{Event Abstraction}
+\begin{figure}
+    \centering
+    \includegraphics[width=0.5\linewidth]{Body/Irie//Figures/SGMD.png}
+    \caption{Enter Caption}
+    \label{fig:sgmd}
+\end{figure}
 
 The \gls{event} abstraction represents any occurrence that results in data being relayed from the physical system to the digital twin. An \gls{event} could be a routine data collection, a triggered sensor reading due to a significant change in the physical system, or any other situation that necessitates the transfer of data for processing and analysis.
 %
@@ -206,4 +213,8 @@ Integrating SGMD with \BRACE{} addresses this limitation by enabling preemptive 
 
 The \gls{evaluation} abstraction represents the process of analyzing the data received from an \gls{event}. This involves invoking the appropriate \glspl{predictor}, processing the data, and generating metrics that provide insights into the state and performance of the physical system.
 %
-The \gls{evaluation} abstraction is designed to be adaptable and scalable, capable of handling a wide range of analysis methods and data volumes. It ensures that the digital twin can provide meaningful and actionable insights, regardless of the complexity or scale of the data.
+The \gls{evaluation} abstraction is designed to be adaptable and scalable, capable of handling a wide range of analysis methods and data volumes. 
+It ensures that the digital twin can provide meaningful and actionable insights, regardless of the complexity or scale of the data.
+
+
+\input{Body/Irie/Algorithms}

@@ -6,24 +6,26 @@
 % you don't get any numbering.  You probably won't be using any of
 % these commands in the abstract anyway.
 % \lipsum[2]
+This work develops computational methods for the rapid and accurate assessment of infrastructure following natural hazards.
 
-This work presents contributions to the field of computational mechanics that target advances in structural health monitoring. 
+% The objective of this work is to implement a system for rapid and accurate assessment of infrastructure in the wake of natural hazards.
+
+% This work presents contributions to the field of computational mechanics that target the rapid simulation of structural systems for the purpose of infrastructure assessment in the wake of natural hazards. 
+
 The California Department of Transportation maintains over thirteen thousand bridges, many instrumented with accelerometers that record ground and structural motions during seismic events.
-These instruments produce data within seconds of an earthquake, yet the path from recorded accelerations to an actionable assessment of structural condition remains difficult to traverse at the speed and scale that post-earthquake decision-making demands.
+These instruments produce data within seconds of an earthquake, yet the path from recorded accelerations to an actionable assessment of structural condition remains difficult to traverse at the speed and scale that post-earthquake decision-making demands. 
 
-% Structural health monitoring seeks to close this gap.
-% The objective is to transform sensor data into quantitative indicators of structural condition that can inform decisions about closures, inspections, and repairs.
-% Two broad strategies are available.
-% The first, which may be termed forward or physics-based, constructs a mathematical model of the structure and simulates its response to the recorded input motions; predicted response quantities are then compared against capacity thresholds to assess damage.
-% The second, which may be termed inverse or data-driven, uses recorded input and output motions to identify parameters of a dynamic system; changes in these parameters over time, or deviations from baseline values, serve as indicators of damage.
-% Both strategies have been explored extensively in the literature, and both have demonstrated value in controlled studies. 
-% Their integration into operational platforms capable of assessing many structures in near-real-time, however, has proceeded slowly.
+A mean toward this end is to transform sensor data into quantitative indicators of structural condition that can inform decisions about closures, inspections, and repairs.
+Two broad strategies are available.
+The first, which may be termed forward or physics-based, constructs a mathematical model of the structure and simulates its response to the recorded input motions; predicted response quantities are then compared against capacity thresholds to assess damage.
+The second, which may be termed inverse or data-driven, uses recorded input and output motions to identify parameters of a dynamic system; changes in these parameters over time, or deviations from baseline values, serve as indicators of damage.
+Both strategies have been explored extensively in the literature, and both have demonstrated value in controlled studies. 
+Their integration into operational platforms capable of assessing many structures in near-real-time, however, has proceeded slowly.
 
-A central obstacle is computational.
+A central obstacle is computational. 
 Physics-based assessment requires finite element models capable of representing the inelastic behavior that governs damage progression in structural members.
 For bridges, these members are predominantly beams and columns, and their accurate simulation under seismic loading involves geometric nonlinearity, cross-sectional warping, and inelastic material response.
-There is a wealth of literature addressing these phenomena, but many issues remain unresolved. 
-% Furthermore, much of this literature precipitates in specialized element types whose implementations are difficult to validate in combination, difficult to embed in workflows requiring gradient information, and are not amendble to adaptive model refinement algorithms or integration with emerging standards in building information modeling like IFC. 
+There is a wealth of literature addressing the simulation of these phenomena, but many issues remain unresolved. 
 
 
 Part~I of this dissertation develops a family of beam finite elements that address these issues. 
@@ -36,11 +38,10 @@ For inelastic analysis, the framework permits warping effects to be condensed at
 The resulting formulations are implemented in \Xara{}, a simulation environment extending the work by \cite{mckenna1997object} that supports automatic differentiation through a hybrid adjoint approach.
 
 
-
 Part~II develops a framework for structural health monitoring that motivated and employs the developments of Part~I. 
 This framework was implemented for the Bridge Rapid Assessment Center for Extreme Events (\BRACE{}) project with funding from Caltrans to deliver post-earthquake assessments for instrumented highway bridges.
-Its computational backend, the Infrastructure Resilience Engine (IRiE), organizes health monitoring around five abstractions: \emph{Assets} representing physical structures, \emph{Events} representing earthquakes or other triggering conditions, \emph{Predictors} implementing physics-based or data-driven analysis methods, \emph{Metrics} quantifying structural condition, and \emph{Evaluations} assembling metrics into actionable reports.
-This architecture permits physics-based simulation (Type~I prediction) and system identification (Type~II prediction) to coexist within a unified framework, with results presented through a common interface.
+Its computational backend, the Infrastructure Resilience Engine (IRiE), organizes health monitoring around five abstractions: \emph{Assets} representing physical structures, \emph{Events} representing earthquakes or other triggering conditions, \emph{Predictors} implementing physics-based or data-driven analysis methods, \emph{Metrics} quantifying structural condition, and \emph{Evaluations} assembling metrics into actionable reports. 
+This architecture permits physics-based simulation and data driven methods to coexist within a unified framework, with results presented through a common interface.
 The developments of Part~I contribute the simulation engine for Type~I predictors on this platform.
 Following a pilot deployment covering 22 bridges, Caltrans has funded continued development to extend coverage across the California highway network.
 

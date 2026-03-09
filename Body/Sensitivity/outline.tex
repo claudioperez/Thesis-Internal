@@ -1,0 +1,224 @@
+\newcommand{\haty}{\hat{\bm{y}}}
+\newcommand{\corey}{\bm{y}}
+% \newcommand{\state}{\bm{u}}
+\newcommand{\nhost}{\hat{n}}
+\newcommand{\ncore}{n}
+\newcommand{\nstate}{m}
+
+% Maps
+\newcommand{\Ymap}{\mathcal{Y}}   % host -> core parameter map
+\newcommand{\Mmap}{\mathcal{M}}   % core parameters -> state (FE solve)
+\newcommand{\Tmap}{\mathcal{T}}   % composed map
+
+\section{A Compositional Framework for Sensitivity Analysis}
+
+% -------------------------------------------------------
+\subsection{Motivation}
+% -------------------------------------------------------
+% Premise:
+%   - DDM computes exact sensitivities of the discrete equilibrium,
+%     but the quantities it differentiates with respect to are limited
+%     to parameters that appear explicitly in the finite element
+%     residual (material constants, nodal coordinates, applied loads, etc.).
+%   - In practice, the design or uncertainty parameters of interest
+%     are often higher-level quantities (e.g.\ cross-section geometry,
+%     topology descriptors, stochastic field coefficients) that
+%     determine the core model inputs through an arbitrarily complex
+%     preprocessing chain.
+%   - AD frameworks such as JAX can differentiate arbitrary
+%     host-language code, but are unaware of the implicit function
+%     defined by the finite element solve.
+%   - Goal: compose DDM inside the FE kernel with AD outside it,
+%     so that the user obtains end-to-end sensitivities with
+%     respect to any host-level parameter.
+
+% -------------------------------------------------------
+\subsection{Setting}
+% -------------------------------------------------------
+Define three vector spaces and two maps.
+
+  Host parameters:   $\haty \in \mathbb{R}^{\nhost}$
+      — the quantities the analyst wishes to differentiate with
+        respect to (section dimensions, load multipliers, random
+        field coefficients, etc.).
+
+  Core parameters:   $\corey \in \mathbb{R}^{\ncore}$
+      — the quantities that appear explicitly in the finite element
+        residual and to which DDM can be applied directly
+        (Young's modulus, fiber coordinates and areas, etc.).
+
+  Model state:        $\state \in \mathbb{R}^{\nstate}$
+      — the discrete solution vector (e.g.\ nodal displacements)
+        obtained by solving the governing equilibrium.
+
+  Parameter map:
+  \[
+      \Ymap : \mathbb{R}^{\nhost} \to \mathbb{R}^{\ncore},
+      \qquad \haty \mapsto \corey = \Ymap(\haty).
+  \]
+      — a user-defined, differentiable mapping implemented in host
+        code (e.g.\ a Python/JAX function that converts section
+        dimensions to fiber discretisations).  Because it is
+        ordinary host code, its Jacobian
+        $\partial\Ymap/\partial\haty$ is available through AD.
+
+  Model map:
+  \[
+      \Mmap : \mathbb{R}^{\ncore} \to \mathbb{R}^{\nstate},
+      \qquad \corey \mapsto \state = \Mmap(\corey).
+  \]
+      — the (implicit) map defined by the finite element analysis:
+        given core parameters $\corey$, assemble and solve
+        $\bm{R}(\state;\corey) = \bm{0}$ to obtain $\state$.
+        Its Jacobian $\partial\Mmap/\partial\corey$ is furnished
+        column-by-column by the DDM.
+
+  Composed map:
+  \[
+      \Tmap = \Mmap \circ \Ymap :
+      \mathbb{R}^{\nhost} \to \mathbb{R}^{\nstate},
+      \qquad \haty \mapsto \Mmap\!\bigl(\Ymap(\haty)\bigr).
+  \]
+
+% -------------------------------------------------------
+\subsection{Differential Operations}
+% -------------------------------------------------------
+Describe JVP and VJP of each map, then their composition.
+
+\subsubsection{Jacobian--vector product (forward mode)}
+
+  By the chain rule the JVP of the composed map is
+  \[
+      \mathrm{D}\Tmap(\haty)\,\dot{\haty}
+      \;=\;
+      \underbrace{%
+          \mathrm{D}\Mmap\!\bigl(\Ymap(\haty)\bigr)
+      }_{\text{kernel (DDM)}}
+      \;\cdot\;
+      \underbrace{%
+          \mathrm{D}\Ymap(\haty)\,\dot{\haty}
+      }_{\text{host (AD forward)}}.
+  \]
+
+  Concretely:
+  \begin{enumerate}
+      \item \textbf{Host forward pass.}
+            Evaluate $\corey = \Ymap(\haty)$ and propagate the
+            tangent $\dot{\corey} = \mathrm{D}\Ymap(\haty)\,\dot{\haty}$
+            using AD in forward mode.
+      \item \textbf{Kernel forward pass.}
+            Solve the primal problem $\bm{R}(\state;\corey)=\bm{0}$
+            and, for each core parameter $y_i$ with
+            $\dot{y}_i \neq 0$, obtain the sensitivity
+            $\partial\state/\partial y_i$ from the DDM.
+      \item \textbf{Contraction.}
+            Form the JVP:
+            \[
+                \dot{\state}
+                = \sum_{i=1}^{\ncore}
+                  \frac{\partial\state}{\partial y_i}\,\dot{y}_i.
+            \]
+  \end{enumerate}
+
+\subsubsection{Vector--Jacobian product (reverse mode)}
+
+  The VJP (adjoint) of the composed map is
+  \[
+      \bar{\haty}
+      \;=\;
+      \bigl[\mathrm{D}\Tmap(\haty)\bigr]^\top \bar{\state}
+      \;=\;
+      \underbrace{%
+          \bigl[\mathrm{D}\Ymap(\haty)\bigr]^\top
+      }_{\text{host (AD reverse)}}
+      \;\cdot\;
+      \underbrace{%
+          \bigl[\mathrm{D}\Mmap(\corey)\bigr]^\top \bar{\state}
+      }_{\text{kernel (DDM)}}.
+  \]
+
+  Concretely:
+  \begin{enumerate}
+      \item \textbf{Kernel adjoint pass.}
+            Given the cotangent (objective gradient) $\bar{\state}$,
+            compute
+            $\bar{y}_i
+              = \bigl(\partial\state/\partial y_i\bigr)^\top
+                \bar{\state}$
+            for each core parameter using the DDM sensitivities
+            already available from the primal solve.
+      \item \textbf{Host reverse pass.}
+            Propagate $\bar{\corey}$ back through $\Ymap$ by
+            invoking AD in reverse mode to obtain $\bar{\haty}$.
+  \end{enumerate}
+
+  Note: Because the DDM furnishes the full sensitivity matrix
+  $\partial\state/\partial\corey$ column-by-column, both the JVP
+  and VJP of $\Mmap$ are available at the same cost — the
+  distinction between forward and reverse mode applies only to the
+  host map $\Ymap$.
+
+% -------------------------------------------------------
+\subsection{Composition Protocol}
+% -------------------------------------------------------
+  The framework requires three ingredients, each supplied by a
+  different layer:
+
+  \begin{enumerate}
+      \item \textbf{Kernel primitive.}
+            The finite element library exposes $\Mmap$ as a
+            primitive operation together with its JVP and VJP rules,
+            both implemented via DDM.
+
+      \item \textbf{Host parameter map.}
+            The user writes $\Ymap$ in the host language.
+            No special annotation is needed; the AD framework
+            differentiates it automatically.
+
+      \item \textbf{Automatic composition.}
+            The AD framework composes the two layers by the chain
+            rule.  From the user's perspective, the result is a
+            single differentiable function
+            $\Tmap : \haty \mapsto \state$ that can be passed to
+            any gradient-based algorithm (optimisation, UQ,
+            inverse problems) without further manual derivation.
+  \end{enumerate}
+
+% -------------------------------------------------------
+\subsection{Illustrative Example}
+% -------------------------------------------------------
+  Consider a cantilever beam whose response $u$ at the tip is a
+  function of:
+    - beam length $L$,
+    - Young's modulus $E$, and
+    - flange width $b$ and web depth $d$ of a rectangular section.
+
+  The core parameters are $\corey = (L,\, E,\, y_1, z_1, A_1,
+  \ldots, y_N, z_N, A_N)$ — the coordinates and areas of $N$
+  fibers that discretise the cross-section.
+
+  The host parameters are $\haty = (L,\, E,\, b,\, d)$.
+
+  The parameter map $\Ymap$ generates a fiber layout from the
+  section dimensions:
+  \[
+      (b,d) \;\xmapsto{\;\Ymap\;}\;
+      \{(y_k, z_k, A_k)\}_{k=1}^{N}.
+  \]
+
+  The model map $\Mmap$ solves the equilibrium and returns the tip
+  displacement $u$.
+
+  End-to-end gradients such as $\partial u/\partial d$ are then
+  obtained automatically:
+  \[
+      \frac{\partial u}{\partial d}
+      = \sum_{k=1}^{N}
+        \biggl(
+          \frac{\partial u}{\partial y_k}\frac{\partial y_k}{\partial d}
+        + \frac{\partial u}{\partial z_k}\frac{\partial z_k}{\partial d}
+        + \frac{\partial u}{\partial A_k}\frac{\partial A_k}{\partial d}
+        \biggr),
+  \]
+  where the $\partial u/\partial(\cdot)$ terms come from DDM and
+  the $\partial(\cdot)/\partial d$ terms come from AD of $\Ymap$.

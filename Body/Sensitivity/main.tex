@@ -1,32 +1,31 @@
 \begingroup 
-\newcommand{\autodiff}{algorithmic differentiation}
-\newcommand{\Autodiff}{Algorithmic differentiation}
-\newcommand{\TangentState}{u}
-\newcommand{\ModelState}{\bm{u}}
-\newcommand{\AutoParameters}{\bm{y}}
-\newcommand{\HandParameters}{\hat{\bm{y}}}
-\newcommand{\AdjointState}{\eta}
-\newcommand{\Objective}{J}
-\newcommand{\Residual}{\bm{g}}
+
+\input{notation/sensitivity}
 
 \begin{Note}
     Premise:
     \begin{itemize}
         \item DDM is a popular approach for sensitivity in computational mechanics.
         \item DDM lacks the flexibility of AD and is not amenable to modern workflows.
+        \item AD is slow, and for inelasticity GPU acceleration is an open problem.
     \end{itemize}
 
-    Summary:
+    Literature:
     \begin{itemize}
-        \item Implement \(\operatorname{JVP}(\HandParameters;\dot{\HandParameters})\) in the finite element kernel
-        \item 
+        \item \cite{mcdonnell2024geometrically}, \cite{brüls2008sensitivity}, \cite{arnold2007convergence}
     \end{itemize}
 \end{Note}
-\input{Body/Sensitivity/literature}
-\input{Body/Sensitivity/equilibrium}
-\subsection{Discretization}
-\input{Body/Sensitivity/discretization}
-\input{Body/Sensitivity/sensitivity}
-\input{Body/Sensitivity/implementation}
+
+\input{Body/Sensitivity/newnew}
+
 \input{Body/Sensitivity/examples}
+\input{Body/Sensitivity/discussion}
+
+\input{Body/Sensitivity/new}
+
+% \input{Body/Sensitivity/equilibrium}
+% \subsection{Discretization}
+% \input{Body/Sensitivity/discretization}
+% \input{Body/Sensitivity/sensitivity}
+% \input{Body/Sensitivity/implementation}
 \endgroup

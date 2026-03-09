@@ -1,0 +1,510 @@
+
+
+\chapter{Compositional differentiation for finite element analysis}
+
+
+
+
+\section{Introduction}
+
+\subsection{Premise}
+
+\begin{itemize}
+    \item The direct differentiation method yields sensitivities with respect to parameters that appear natively inside the finite element kernel.
+    \item Modern analysis workflows often introduce design variables at a higher level. Typical examples are geometric dimensions, section generators, discretization rules, and load parametrizations.
+    \item The proposed formulation separates these layers. The kernel differentiates the native mechanics response. The host differentiates the parameterization that constructs native parameters. The full derivative is then recovered by composition.
+\end{itemize}
+
+
+\subsection{Motivation}
+The direct differentiation method (DDM) provides exact sensitivities
+of the discrete equilibrium equations that govern a finite element
+model. 
+Given a residual $\residual(\ModelState;\corey)=\mathbf{0}$
+parameterised by a vector of model inputs~$\corey$, the DDM
+differentiates this equation implicitly with respect to each
+component~$y_i$ and solves the resulting linear system to obtain
+$\partial\ModelState/\partial y_i$ at negligible marginal cost once the
+primal factorisation is available.  
+The method is well established in
+computational mechanics and forms the backbone of gradient-based
+design optimisation, reliability analysis, and parameter identification
+in structural and solid-mechanics codes.
+
+Despite its efficiency, the DDM is limited in scope: it can only
+differentiate with respect to quantities that appear explicitly in the
+finite element residual.  In practice, however, the
+parameters of interest to the analyst are often higher-level quantities
+that \emph{determine} these core inputs through an arbitrarily complex
+preprocessing chain.  Cross-section dimensions must be converted to
+fiber discretisations; topology descriptors must be mapped to element
+connectivities and material layouts; stochastic field coefficients
+must be transformed into spatially varying material properties.  Each
+such transformation introduces a link in the chain rule that the DDM
+alone cannot traverse.
+
+Automatic differentiation (AD) frameworks such as \Jax{} and PyTorch
+face the complementary limitation.  
+They can differentiate arbitrary
+host-language code with ease, but they are unaware of the implicit
+function defined by the finite element solve.  Treating the analysis
+as an opaque subroutine and differentiating through its internal
+linear algebra is possible in principle but is neither efficient nor
+numerically robust for large-scale structural models.
+Furthermore, the natural host environments for these frameworks are
+generally not well suited for the efficient implementation of finite
+element procedures.  Python, for instance, does not provide sufficient
+control over memory layout and allocation to support the kind of
+low-level optimisation that production finite element codes require.
+Even higher-level compiled languages that target scientific computing,
+such as Julia, lack the fine-grained control over memory ownership,
+lifetime, and the separation of compile-time and run-time computation
+that languages like C++ and Fortran treat as first-class abstractions.
+
+% Automatic differentiation (AD) frameworks---JAX, PyTorch, and their
+% relatives---face the complementary limitation.  They can differentiate
+% arbitrary host-language code with ease, but they are unaware of the
+% implicit function defined by the finite element solve.  Treating the
+% analysis as an opaque subroutine and differentiating through its
+% internal linear algebra is possible in principle but is neither
+% efficient nor numerically robust for large-scale structural models. 
+% Furthermore, natural host environments like Python are generally not well suited for the efficient implementation of finite element procedures, as they do not provide sufficient control over memory. Even high level languages like Julia, which target scientific computing, [idk how to phrase it, but i'm just thinking about how in Julia things like memory management and the ability to distinguish runtime/compile time operations are not truly ``first class'' concepts like they are in C++]
+
+The goal of this chapter is to describe a compositional framework that
+bridges these two worlds.  
+The finite element kernel exposes its
+primal solve and DDM sensitivities as a \emph{differentiable
+primitive} whose forward- and reverse-mode rules are known.  
+The host
+platform contributes automatic differentiation of everything outside
+the kernel.  The chain rule then composes the two layers, yielding
+end-to-end sensitivities with respect to any host-level parameter
+without manual derivation.
+
+
+% \input{Body/Sensitivity/literature}
+
+\section{Setting. State and response maps}
+
+Let \(\ModelFamily\) denote a fixed discrete model family. 
+It determines the governing residual and the output operator, but it is not itself the differentiated map. 
+
+A user-defined parameterization is a differentiable map
+\[
+\ParameterMap : \HostSpace \to \CoreSpace,
+\qquad
+\CoreParameters = \ParameterMap(\HostParameters).
+\]
+
+For each \(\CoreParameters \in \CoreSpace\), the equilibrium state \(\State \in \StateSpace\) satisfies
+\[
+\Residual_{\ModelFamily}(\State,\CoreParameters) = \bm 0.
+\]
+Assume that this problem is locally well posed so that a differentiable solution map exists,
+\[
+\StateMap_{\ModelFamily} : \CoreSpace \to \StateSpace,
+\qquad
+\State = \StateMap_{\ModelFamily}(\CoreParameters).
+\]
+
+Let
+\[
+\Observation_{\ModelFamily} : \StateSpace \times \CoreSpace \to \ResponseSpace
+\]
+denote the quantity of interest. The reduced response map is
+\[
+\ResponseMap_{\ModelFamily}(\CoreParameters)
+=
+\Observation_{\ModelFamily}(\StateMap_{\ModelFamily}(\CoreParameters),\CoreParameters).
+\]
+If the quantity of interest is the full discrete state, then one may take
+\[
+\Observation_{\ModelFamily}(\State,\CoreParameters)=\State,
+\]
+in which case
+\[
+\ResponseMap_{\ModelFamily}=\StateMap_{\ModelFamily}.
+\]
+
+\section{Differential Structure}
+
+For any differentiable map \(f:X\to Z\), define its tangent extension by
+\[
+\Tan{f}(x,\dot x)
+=
+\bigl(
+f(x),
+\D f(x)[\dot x]
+\bigr).
+\]
+This is the natural primal-tangent object in forward mode. It returns both the value and the Jacobian-vector product.
+
+For composable differentiable maps \(g:X\to Y\) and \(f:Y\to Z\),
+\[
+\Tan{f\circ g} = \Tan{f}\circ\Tan{g}.
+\]
+
+\subsection{Kernel level operators}
+
+The finite element kernel is required to provide the tangent extension of the reduced response map
+\[
+\Tan{\ResponseMap_{\ModelFamily}} :
+\CoreSpace \times \CoreSpace
+\to
+\ResponseSpace \times \ResponseSpace.
+\]
+Equivalently, for any \((\CoreParameters,\dot{\CoreParameters})\), the kernel returns
+\[
+\ResponseMap_{\ModelFamily}(\CoreParameters),
+\qquad
+\D \ResponseMap_{\ModelFamily}(\CoreParameters)[\dot{\CoreParameters}].
+\]
+
+If \(\State=\StateMap_{\ModelFamily}(\CoreParameters)\), the tangent state \(\dot{\State}\) is defined by the linearized equilibrium equation
+\[
+\D_1 \Residual_{\ModelFamily}(\State,\CoreParameters)[\dot{\State}]
+=
+-
+\D_2 \Residual_{\ModelFamily}(\State,\CoreParameters)[\dot{\CoreParameters}].
+\]
+The corresponding response variation is
+\[
+\D \ResponseMap_{\ModelFamily}(\CoreParameters)[\dot{\CoreParameters}]
+=
+\D_1 \Observation_{\ModelFamily}(\State,\CoreParameters)[\dot{\State}]
++
+\D_2 \Observation_{\ModelFamily}(\State,\CoreParameters)[\dot{\CoreParameters}].
+\]
+When the quantity of interest is a pure state extraction, the second term vanishes.
+
+\subsection{Host level operators}
+
+The host system is required to provide the tangent extension of the parameterization map
+\[
+\Tan{\ParameterMap} :
+\HostSpace \times \HostSpace
+\to
+\CoreSpace \times \CoreSpace.
+\]
+Equivalently, for any \((\HostParameters,\dot{\HostParameters})\), the host returns
+\[
+\ParameterMap(\HostParameters),
+\qquad
+\D \ParameterMap(\HostParameters)[\dot{\HostParameters}].
+\]
+
+This layer contains all differentiable preprocessing that is external to the finite element kernel. It includes geometry generation, section construction, discretization rules, constitutive preprocessing, and load parametrization.
+
+\section{Differential structure}
+\label{sec:differential}
+
+
+The user-facing response is the composite map
+\[
+\ComposedResponse_{\ModelFamily}
+=
+\ResponseMap_{\ModelFamily}\circ\ParameterMap
+:
+\HostSpace \to \ResponseSpace,
+\qquad
+\CoreParameters=\ParameterMap(\HostParameters).
+\]
+If the quantity of interest is the full discrete state, then
+\(\ResponseSpace=\StateSpace\) and
+\(\ResponseMap_{\ModelFamily}=\StateMap_{\ModelFamily}\).
+
+Its total derivative satisfies the chain rule
+\begin{equation}
+\label{eq:composed-derivative}
+\D \ComposedResponse_{\ModelFamily}(\HostParameters)
+=
+\D \ResponseMap_{\ModelFamily}(\CoreParameters)
+\circ
+\D \ParameterMap(\HostParameters)
+\in \mathcal L(\HostSpace,\ResponseSpace).
+\end{equation}
+After choosing coordinates on \(\HostSpace\), \(\CoreSpace\), and \(\ResponseSpace\), this becomes
+\begin{equation}
+\label{eq:composed-jacobian}
+\frac{\partial \ComposedResponse_{\ModelFamily}}{\partial \HostParameters}
+=
+\frac{\partial \ResponseMap_{\ModelFamily}}{\partial \CoreParameters}
+\;
+\frac{\partial \ParameterMap}{\partial \HostParameters}.
+\end{equation}
+The Jacobian in \eqref{eq:composed-jacobian} is not formed explicitly. One evaluates its action on tangent vectors or on cotangent vectors. The forward view is encoded by
+\[
+\Tan{\ComposedResponse_{\ModelFamily}}
+=
+\Tan{\ResponseMap_{\ModelFamily}}
+\circ
+\Tan{\ParameterMap},
+\]
+and the reverse view is encoded by
+\[
+\D \ComposedResponse_{\ModelFamily}(\HostParameters)^*
+=
+\D \ParameterMap(\HostParameters)^*
+\circ
+\D \ResponseMap_{\ModelFamily}(\CoreParameters)^*.
+\]
+
+\subsection{Forward mode}
+\label{sec:jvp}
+
+Given a tangent direction \(\dot{\HostParameters}\in \HostSpace\), the Jacobian--vector product is
+\begin{equation}
+\label{eq:jvp-composed}
+\dot{\bm z}
+=
+\D \ComposedResponse_{\ModelFamily}(\HostParameters)[\dot{\HostParameters}]
+=
+\underbrace{\D \ResponseMap_{\ModelFamily}(\CoreParameters)}_{\text{kernel}}
+\Bigl[
+\underbrace{\D \ParameterMap(\HostParameters)[\dot{\HostParameters}]}_{\text{host}}
+\Bigr],
+\end{equation}
+where \(\bm z = \ComposedResponse_{\ModelFamily}(\HostParameters)\).
+
+The computation separates into two stages:
+\begin{enumerate}
+    \item \textbf{Host forward pass.} Evaluate
+    \[
+    (\CoreParameters,\dot{\CoreParameters})
+    =
+    \Tan{\ParameterMap}(\HostParameters,\dot{\HostParameters}),
+    \qquad
+    \dot{\CoreParameters}
+    =
+    \D \ParameterMap(\HostParameters)[\dot{\HostParameters}].
+    \]
+
+    \item \textbf{Kernel forward pass.} Evaluate
+    \[
+    (\bm z,\dot{\bm z})
+    =
+    \Tan{\ResponseMap_{\ModelFamily}}(\CoreParameters,\dot{\CoreParameters}),
+    \qquad
+    \bm z=\ResponseMap_{\ModelFamily}(\CoreParameters).
+    \]
+\end{enumerate}
+
+When the response map is induced by the residual and observation operators,
+\[
+\Residual_{\ModelFamily}(\State,\CoreParameters)=\bm 0,
+\qquad
+\bm z=\Observation_{\ModelFamily}(\State,\CoreParameters),
+\]
+the tangent variables satisfy
+\begin{align}
+\label{eq:forward-linearized-equilibrium}
+\D_1 \Residual_{\ModelFamily}(\State,\CoreParameters)[\dot{\State}]
+&=
+-
+\D_2 \Residual_{\ModelFamily}(\State,\CoreParameters)[\dot{\CoreParameters}],
+\\
+\label{eq:forward-response-variation}
+\dot{\bm z}
+&=
+\D_1 \Observation_{\ModelFamily}(\State,\CoreParameters)[\dot{\State}]
++
+\D_2 \Observation_{\ModelFamily}(\State,\CoreParameters)[\dot{\CoreParameters}].
+\end{align}
+After choosing coordinates \(\CoreParameters=(y_1,\ldots,y_{n_{\mathrm c}})\),
+\begin{equation}
+\label{eq:jvp-contraction}
+\dot{\bm z}
+=
+\sum_{i=1}^{n_{\mathrm c}}
+\frac{\partial \ResponseMap_{\ModelFamily}}{\partial y_i}(\CoreParameters)\,\dot y_i.
+\end{equation}
+If \(\ResponseMap_{\ModelFamily}=\StateMap_{\ModelFamily}\), then \(\bm z=\State\) and \(\dot{\bm z}=\dot{\State}\). Forward mode is natural when derivatives are required in only a small number of host directions.
+
+\subsection{Reverse mode}
+\label{sec:vjp}
+
+Given a cotangent \(\bar{\bm z}\in \ResponseSpace^*\), the vector--Jacobian product is
+\begin{equation}
+\label{eq:vjp-composed}
+\bar{\HostParameters}
+=
+\D \ComposedResponse_{\ModelFamily}(\HostParameters)^*[\bar{\bm z}]
+=
+\underbrace{\D \ParameterMap(\HostParameters)^*}_{\text{host}}
+\Bigl[
+\underbrace{\D \ResponseMap_{\ModelFamily}(\CoreParameters)^*[\bar{\bm z}]}_{\text{kernel}}
+\Bigr].
+\end{equation}
+In finite-dimensional Euclidean coordinates this is
+\begin{equation}
+\label{eq:vjp-euclidean}
+\bar{\HostParameters}
+=
+\bigl[\D \ParameterMap(\HostParameters)\bigr]^{\top}\bar{\CoreParameters},
+\qquad
+\bar{\CoreParameters}
+=
+\bigl[\D \ResponseMap_{\ModelFamily}(\CoreParameters)\bigr]^{\top}\bar{\bm z}.
+\end{equation}
+For a scalar objective \(\Objective:\ResponseSpace\to\mathbb R\), one takes
+\[
+\bar{\bm z}
+=
+\D \Objective(\bm z),
+\qquad
+\bar{\HostParameters}
+=
+\D (\Objective\circ\ComposedResponse_{\ModelFamily})(\HostParameters),
+\]
+so that a single reverse sweep delivers the gradient with respect to all host parameters.
+
+The computation again separates into two stages:
+\begin{enumerate}
+    \item \textbf{Kernel reverse pass.} Compute the core-parameter cotangent
+    \[
+    \bar{\CoreParameters}
+    =
+    \D \ResponseMap_{\ModelFamily}(\CoreParameters)^*[\bar{\bm z}].
+    \]
+    After choosing coordinates \(\CoreParameters=(y_1,\ldots,y_{n_{\mathrm c}})\),
+    \begin{equation}
+    \label{eq:vjp-kernel-contraction}
+    \bar y_i
+    =
+    \left(
+        \frac{\partial \ResponseMap_{\ModelFamily}}{\partial y_i}(\CoreParameters)
+    \right)^{\!\top}
+    \bar{\bm z},
+    \qquad
+    i=1,\ldots,n_{\mathrm c}.
+    \end{equation}
+    If \(\ResponseMap_{\ModelFamily}\) is described through
+    \(\Residual_{\ModelFamily}\) and \(\Observation_{\ModelFamily}\), the same quantity may be obtained from the adjoint system
+    \begin{align}
+    \label{eq:adjoint-equation}
+    \D_1 \Residual_{\ModelFamily}(\State,\CoreParameters)^*[\AdjointState]
+    &=
+    \D_1 \Observation_{\ModelFamily}(\State,\CoreParameters)^*[\bar{\bm z}],
+    \\
+    \label{eq:adjoint-gradient}
+    \bar{\CoreParameters}
+    &=
+    \D_2 \Observation_{\ModelFamily}(\State,\CoreParameters)^*[\bar{\bm z}]
+    -
+    \D_2 \Residual_{\ModelFamily}(\State,\CoreParameters)^*[\AdjointState].
+    \end{align}
+
+    \item \textbf{Host reverse pass.} Propagate \(\bar{\CoreParameters}\) through the parameter map:
+    \[
+    \bar{\HostParameters}
+    =
+    \D \ParameterMap(\HostParameters)^*[\bar{\CoreParameters}].
+    \]
+\end{enumerate}
+Reverse mode is natural when the number of outputs, or the number of scalar objectives, is small relative to the number of host parameters.
+
+\begin{remark}
+If the kernel derivative is available in coordinates as the family
+\(\{\partial \ResponseMap_{\ModelFamily}/\partial y_i\}_{i=1}^{n_{\mathrm c}}\),
+then both \eqref{eq:jvp-contraction} and \eqref{eq:vjp-kernel-contraction}
+are contractions against the same family. The principal distinction between forward and reverse modes therefore arises in the differentiation of the host map \(\ParameterMap\).
+\end{remark}
+
+
+\section{Summary and Implementation}
+% \section{Composition Protocol}\label{sec:protocol}
+
+The response exposed to the user is the composite map
+\[
+\ComposedResponse_{\ModelFamily}
+=
+\ResponseMap_{\ModelFamily}\circ\ParameterMap
+:
+\HostSpace \to \ResponseSpace.
+\]
+Its tangent extension follows from the compositional identity,
+\[
+\Tan{\ComposedResponse_{\ModelFamily}}
+=
+\Tan{\ResponseMap_{\ModelFamily}}\circ\Tan{\ParameterMap}.
+\]
+In directional derivative form,
+\[
+\D \ComposedResponse_{\ModelFamily}(\HostParameters)[\dot{\HostParameters}]
+=
+\D \ResponseMap_{\ModelFamily}(\ParameterMap(\HostParameters))
+\Bigl[
+\D \ParameterMap(\HostParameters)[\dot{\HostParameters}]
+\Bigr].
+\]
+
+This identity is the central statement of the formulation. The host differentiates the construction of native parameters. The kernel differentiates the mechanics response with respect to those parameters. The full derivative is obtained by composition, and neither layer needs to materialize a full Jacobian.
+
+% \section{Scalar objectives}
+
+If a scalar objective is introduced,
+\[
+\Objective : \ResponseSpace \to \mathbb R,
+\qquad
+\widehat{\Objective}
+=
+\Objective \circ \ComposedResponse_{\ModelFamily},
+\]
+then forward differentiation gives
+\[
+\D \widehat{\Objective}(\HostParameters)[\dot{\HostParameters}]
+=
+\D \Objective\bigl(\ComposedResponse_{\ModelFamily}(\HostParameters)\bigr)
+\Bigl[
+\D \ComposedResponse_{\ModelFamily}(\HostParameters)[\dot{\HostParameters}]
+\Bigr].
+\]
+
+If reverse mode is later required, an adjoint state \(\AdjointState\) may be introduced at the kernel level for \(\ResponseMap_{\ModelFamily}\) or for \(\Objective\circ\ResponseMap_{\ModelFamily}\). This does not change the separation between the host and kernel layers.
+
+
+The framework rests on a separation of responsibilities between
+three layers, each of which contributes one ingredient.
+
+\paragraph{Kernel primitive.}
+The finite element library exposes the model map~$\Mmap$ as a
+\emph{differentiable primitive}---an atomic operation whose primal
+evaluation, JVP rule, and VJP rule are each implemented internally
+using the DDM.  
+From the perspective of the AD framework, $\Mmap$ is
+a black box with known first-order differential structure. 
+
+\paragraph{Host parameter map.}
+The user writes the parameter map~$\Ymap$ in the host language as
+ordinary, unrestricted code.  
+No special annotation or manual
+derivative is required; the AD framework differentiates~$\Ymap$
+automatically.
+
+\paragraph{Automatic composition.}
+The AD framework composes the two layers by the chain
+rule~\eqref{eq:chain-rule}.  
+From the user's perspective, the result
+is a single differentiable function
+$\Tmap : \haty \mapsto \ModelState$ that can be passed directly to any
+gradient-based algorithm without further manual derivation.
+
+The key consequence of this decomposition is that extending the
+sensitivity analysis to new parameterisations requires changes only in
+the host code; the kernel primitive remains fixed.  
+Conversely, improvements to the finite element solver or the DDM implementation
+propagate automatically to every host-level workflow that uses the
+primitive.
+
+
+
+\begin{itemize}
+    \item Use \(\ModelFamily\) for the fixed discrete model family.
+    \item Use \(\ParameterMap\) for the host-to-core parameterization.
+    \item Use \(\StateMap_{\ModelFamily}\) for the implicit state solution map.
+    \item Use \(\ResponseMap_{\ModelFamily}\) for the reduced response map.
+    \item Use \(\Tan{f}\) for the primal-tangent extension of a map \(f\).
+    \item Use \(\D f(x)[\dot x]\) for the Jacobian-vector product at a point.
+\end{itemize}
+
+Once \(\ModelFamily\) has been fixed, the subscript \(\ModelFamily\) may be omitted when no ambiguity is possible. This notation avoids overloading a single symbol such as \(M\) or \(T\) for several distinct objects.

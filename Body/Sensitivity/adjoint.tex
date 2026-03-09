@@ -6,18 +6,18 @@ problem to compute the derivative of a functional with respect to a shape parame
 
 
 For many-parameter optimization one usually seeks the gradient of a scalar
-objective $\Objective(\bm{u},\AutoParameters{})$. 
+objective $\Objective(\bm{u},\HostParameters{})$. 
 Using the Lagrangian
 %
 \[
-  \mathcal{L}(\bm{u},\AutoParameters{},\bm{\eta})
+  \mathcal{L}(\bm{u},\HostParameters{},\bm{\eta})
   \;=\;
-  J(\bm{u},\AutoParameters{})
-  +\bigl\langle\bm{\eta},\bm{g}(\bm{u},\AutoParameters{})\bigr\rangle,
+  J(\bm{u},\HostParameters{})
+  +\bigl\langle\bm{\eta},\bm{g}(\bm{u},\HostParameters{})\bigr\rangle,
 \]
 %
 stationarity with respect to $\bm{u}$ at the solution
-$\bm{u}=\bm{u}(\AutoParameters{})$ gives the \emph{adjoint equation}
+$\bm{u}=\bm{u}(\HostParameters{})$ gives the \emph{adjoint equation}
 %
 \begin{equation}\label{eq:adjoint}
   \bigl(\partial_{\bm{u}}\bm{g}\bigr)^{\top}\bm{\eta}
@@ -26,27 +26,27 @@ $\bm{u}=\bm{u}(\AutoParameters{})$ gives the \emph{adjoint equation}
 \end{equation}
 %
 Once $\bm{\eta}$ is known, the gradient
-$\nabla_{\!\AutoParameters{}} \Objective$ follows from the \emph{vector–Jacobian product}
+$\nabla_{\!\HostParameters{}} \Objective$ follows from the \emph{vector–Jacobian product}
 %
 \begin{equation}\label{eq:vjp}
-  \nabla_{\!\AutoParameters{}} \Objective
+  \nabla_{\!\HostParameters{}} \Objective
   \;=\;
-  -\,\bigl\langle\bm{\eta},\partial_{\AutoParameters{}}\bm{g}\bigr\rangle
-  +\partial_{\AutoParameters{}} \Objective
+  -\,\bigl\langle\bm{\eta},\partial_{\HostParameters{}}\bm{g}\bigr\rangle
+  +\partial_{\HostParameters{}} \Objective
 \end{equation}
 or, equivalently,
 \begin{equation}\label{eq:grad}
-\nabla_{\!\AutoParameters{}} \Objective
+\nabla_{\!\HostParameters{}} \Objective
 \;=\;
 -\bm{\AdjointState}^{\mathsf{T}}
-\frac{\partial\bm{g}}{\partial\AutoParameters{}}
+\frac{\partial\bm{g}}{\partial\HostParameters{}}
 \;+\;
-\frac{\partial \Objective}{\partial\AutoParameters{}} .
+\frac{\partial \Objective}{\partial\HostParameters{}} .
 \end{equation}
 
 
 The operation
-$\bm{\eta}^{\mathsf{T}}\!\partial\bm{h}(\AutoParameters{})$ in~\eqref{eq:vjp} is the
+$\bm{\eta}^{\mathsf{T}}\!\partial\bm{h}(\HostParameters{})$ in~\eqref{eq:vjp} is the
 \emph{vector–Jacobian product} (VJP), the fundamental linear map produced by
 \emph{reverse-mode automatic differentiation}.
 Reverse mode traverses the computational graph \emph{backwards}, reusing the
@@ -95,15 +95,15 @@ is independent of the number of parameters for which you want the gradient.
 % \(J:\mathcal{U}\times\mathcal{V}\to\mathbb{R}\) is defined. 
 % The state
 % variable \(u\) is often implicitly dependent on \(v\) through the
-% (direct) state equation \(D_{\AutoParameters{}}(u)=0\) (usually the weak form of a partial differential equation),
-% thus the considered objective is \(j(v) = J(u_{\AutoParameters{}},v)\), where \(u_{\AutoParameters{}}\) is
+% (direct) state equation \(D_{\HostParameters{}}(u)=0\) (usually the weak form of a partial differential equation),
+% thus the considered objective is \(j(v) = J(u_{\HostParameters{}},v)\), where \(u_{\HostParameters{}}\) is
 % the solution of the state equation given the optimization variables
 % \(v\). Usually, one would be interested in calculating \(\nabla j(v)\)
 % using the chain rule:
 
-% \[\nabla j(v) = \nabla_{\AutoParameters{}} \Objective(u_{\AutoParameters{}},v) + \nabla_u \Objective(u_{\AutoParameters{}})\nabla_{\AutoParameters{}} u_{\AutoParameters{}}.\]
+% \[\nabla j(v) = \nabla_{\HostParameters{}} \Objective(u_{\HostParameters{}},v) + \nabla_u \Objective(u_{\HostParameters{}})\nabla_{\HostParameters{}} u_{\HostParameters{}}.\]
 
-% Generally the term \(\nabla_{\AutoParameters{}} u_{\AutoParameters{}}\) is often very hard to
+% Generally the term \(\nabla_{\HostParameters{}} u_{\HostParameters{}}\) is often very hard to
 % differentiate analytically since the dependence is defined through an
 % implicit equation. 
 % The Lagrangian functional can be used as a workaround
@@ -111,17 +111,17 @@ is independent of the number of parameters for which you want the gradient.
 % constraint in the minimization of \(j\), the problem
 
 % \[
-% \text{minimize }\ j(v) = J(u_{\AutoParameters{}},v)
+% \text{minimize }\ j(v) = J(u_{\HostParameters{}},v)
 % \quad
 % \text{ subject to }\quad
-% \Residual_{\AutoParameters{}}(\TangentState_{\AutoParameters{}}) = 0
+% \Residual_{\HostParameters{}}(\TangentState_{\HostParameters{}}) = 0
 % \]
 
 % has an associate Lagrangian functional
 % \(\mathcal{L}:\mathcal{U}\times\mathcal{V}\times\mathcal{U} \to \mathbb{R}\)
 % defined by
 
-% \[\mathcal{L}(u,v,\AdjointState) = J(u,v) + \langle D_{\AutoParameters{}}(u),\AdjointState\rangle,\]
+% \[\mathcal{L}(u,v,\AdjointState) = J(u,v) + \langle D_{\HostParameters{}}(u),\AdjointState\rangle,\]
 
 % where \(\AdjointState \in\mathcal{U}\) is a Lagrange multiplier or \textbf{adjoint state variable} and \(\langle\cdot,\cdot\rangle\) is an inner product
 % on \(\mathcal{U}\). 
@@ -130,30 +130,30 @@ is independent of the number of parameters for which you want the gradient.
 % point of the Lagrangian, namely
 
 % \[\begin{cases}
-% d_u\mathcal{L}(u,v,\AdjointState;\delta_u) = d_uJ(u,v;\delta_u) + \langle \delta_u,D_{\AutoParameters{}}^*(\AdjointState)\rangle = 0 & \forall \delta_u \in \mathcal{U},\\
-% d_{\AutoParameters{}}\mathcal{L}(u,v,\AdjointState;\delta_{\AutoParameters{}}) = d_{\AutoParameters{}}J(u,v;\delta_{\AutoParameters{}}) + \langle d_{\AutoParameters{}}D_{\AutoParameters{}}(u;\delta_{\AutoParameters{}}),\AdjointState\rangle = 0 & \forall \delta_{\AutoParameters{}}\in\mathcal{V},\\
-% d_\AdjointState\mathcal{L}(u,v,\AdjointState;\delta_\AdjointState) = \langle D_{\AutoParameters{}}(u), \delta_\AdjointState\rangle = 0 \quad & \forall \delta_\AdjointState \in \mathcal{U},
+% d_u\mathcal{L}(u,v,\AdjointState;\delta_u) = d_uJ(u,v;\delta_u) + \langle \delta_u,D_{\HostParameters{}}^*(\AdjointState)\rangle = 0 & \forall \delta_u \in \mathcal{U},\\
+% d_{\HostParameters{}}\mathcal{L}(u,v,\AdjointState;\delta_{\HostParameters{}}) = d_{\HostParameters{}}J(u,v;\delta_{\HostParameters{}}) + \langle d_{\HostParameters{}}D_{\HostParameters{}}(u;\delta_{\HostParameters{}}),\AdjointState\rangle = 0 & \forall \delta_{\HostParameters{}}\in\mathcal{V},\\
+% d_\AdjointState\mathcal{L}(u,v,\AdjointState;\delta_\AdjointState) = \langle D_{\HostParameters{}}(u), \delta_\AdjointState\rangle = 0 \quad & \forall \delta_\AdjointState \in \mathcal{U},
 % \end{cases}\] where \(d_xF(x;\delta_x)\) is the Gateaux derivative of \(F\) with respect to
 % \(x\) in the direction \(\delta_x\). 
 % The last equation is equivalent to
-% \(D_{\AutoParameters{}}(u) = 0\), the state equation, to which the solution is \(u_{\AutoParameters{}}\).
+% \(D_{\HostParameters{}}(u) = 0\), the state equation, to which the solution is \(u_{\HostParameters{}}\).
 % The first equation is the so-called adjoint state equation,
 
 % \[
-% \langle \delta_u,D_{\AutoParameters{}}^*(\AdjointState)\rangle = -d_uJ(u_{\AutoParameters{}},v;\delta_u) \quad \forall \delta_u \in \mathcal{U},
+% \langle \delta_u,D_{\HostParameters{}}^*(\AdjointState)\rangle = -d_uJ(u_{\HostParameters{}},v;\delta_u) \quad \forall \delta_u \in \mathcal{U},
 % \]
 % %
-% because the operator involved is the adjoint operator of \(D_{\AutoParameters{}}\),
-% \(D_{\AutoParameters{}}^*\). 
+% because the operator involved is the adjoint operator of \(D_{\HostParameters{}}\),
+% \(D_{\HostParameters{}}^*\). 
 % Resolving this equation yields the adjoint state
-% \(\AdjointState_{\AutoParameters{}}\). 
+% \(\AdjointState_{\HostParameters{}}\). 
 % The gradient of the quantity of interest \(j\) with
 % respect to \(v\) is
-% \(\langle \nabla j(v),\delta_{\AutoParameters{}}\rangle = d_{\AutoParameters{}} j(v;\delta_{\AutoParameters{}}) = d_{\AutoParameters{}} \mathcal{L}(u_{\AutoParameters{}},v,\AdjointState_{\AutoParameters{}};\delta_{\AutoParameters{}})\)
-% (the second equation with \(u=u_{\AutoParameters{}}\) and \(\AdjointState=\AdjointState_{\AutoParameters{}}\)), thus it
+% \(\langle \nabla j(v),\delta_{\HostParameters{}}\rangle = d_{\HostParameters{}} j(v;\delta_{\HostParameters{}}) = d_{\HostParameters{}} \mathcal{L}(u_{\HostParameters{}},v,\AdjointState_{\HostParameters{}};\delta_{\HostParameters{}})\)
+% (the second equation with \(u=u_{\HostParameters{}}\) and \(\AdjointState=\AdjointState_{\HostParameters{}}\)), thus it
 % can be easily identified by subsequently resolving the direct and
 % adjoint state equations. The process is even simpler when the operator
-% \(D_{\AutoParameters{}}\) is self-adjoint or symmetric since
+% \(D_{\HostParameters{}}\) is self-adjoint or symmetric since
 % the direct and adjoint state equations differ only by their right-hand
 % side.
 
@@ -163,38 +163,38 @@ is independent of the number of parameters for which you want the gradient.
 % programming context, the objective function could be
 % \(J(u,v) = \langle Au , v \rangle\), for \(v\in\mathbb{R}^n\),
 % \(u\in\mathbb{R}^m\) and \(A \in \mathbb{R}^{n\times m}\), and let the
-% state equation be \(K_{\AutoParameters{}} u = b\), with \(K_{\AutoParameters{}} \in \mathbb{R}^{m\times m}\)
+% state equation be \(K_{\HostParameters{}} u = b\), with \(K_{\HostParameters{}} \in \mathbb{R}^{m\times m}\)
 % and \(b\in \mathbb{R}^m\).
 
 % The Lagrangian function of the problem is
-% \(\mathcal{L}(u,v,\AdjointState) = \langle A u,v\rangle + \left< K_{\AutoParameters{}}u - b,\AdjointState\right>\),
+% \(\mathcal{L}(u,v,\AdjointState) = \langle A u,v\rangle + \left< K_{\HostParameters{}}u - b,\AdjointState\right>\),
 % where \(\AdjointState\in\mathbb{R}^m\).
 
 % The derivative of \(\mathcal{L}\) with respect to \(\AdjointState\) yields the
 % state equation as shown before, and the state variable is
-% \(u_{\AutoParameters{}} = B_{\AutoParameters{}}^{-1}b\). The derivative of \(\mathcal{L}\) with respect to
+% \(u_{\HostParameters{}} = B_{\HostParameters{}}^{-1}b\). The derivative of \(\mathcal{L}\) with respect to
 % \(u\) is equivalent to the adjoint equation, which is, for every
 % \(\delta_u \in \mathbb{R}^m\),
 
-% \[d_u[\langle K_{\AutoParameters{}}\cdot- b, \AdjointState\rangle](u;\delta_u)= - \langle A^\top v,\delta u\rangle \iff \langle K_{\AutoParameters{}} \delta_u,\AdjointState\rangle = - \langle A^\top v,\delta u\rangle \iff \langle K_{\AutoParameters{}}^\top \AdjointState +  A^\top v,\delta_u\rangle = 0 \iff K_{\AutoParameters{}}^\top \AdjointState = - A^\top v.\]
-% Thus, we can write symbolically \(\AdjointState_{\AutoParameters{}} = K_{\AutoParameters{}}^{-\top}A^\top v\). 
+% \[d_u[\langle K_{\HostParameters{}}\cdot- b, \AdjointState\rangle](u;\delta_u)= - \langle A^\top v,\delta u\rangle \iff \langle K_{\HostParameters{}} \delta_u,\AdjointState\rangle = - \langle A^\top v,\delta u\rangle \iff \langle K_{\HostParameters{}}^\top \AdjointState +  A^\top v,\delta_u\rangle = 0 \iff K_{\HostParameters{}}^\top \AdjointState = - A^\top v.\]
+% Thus, we can write symbolically \(\AdjointState_{\HostParameters{}} = K_{\HostParameters{}}^{-\top}A^\top v\). 
 % The gradient would be
 
 % \[
-% \langle \nabla j(v),\delta_{\AutoParameters{}}\rangle = \langle Au_{\AutoParameters{}},\delta_{\AutoParameters{}}\rangle + \langle \nabla_{\AutoParameters{}} B_{\AutoParameters{}} : \AdjointState_{\AutoParameters{}}\otimes u_{\AutoParameters{}},\delta_{\AutoParameters{}}\rangle,
+% \langle \nabla j(v),\delta_{\HostParameters{}}\rangle = \langle Au_{\HostParameters{}},\delta_{\HostParameters{}}\rangle + \langle \nabla_{\HostParameters{}} B_{\HostParameters{}} : \AdjointState_{\HostParameters{}}\otimes u_{\HostParameters{}},\delta_{\HostParameters{}}\rangle,
 % \]
-% where \(\nabla_{\AutoParameters{}} B_{\AutoParameters{}} = \frac{\partial B_{ij}}{\partial v_k}\) is a
-% third-order tensor, \(\AdjointState_{\AutoParameters{}} \otimes u_{\AutoParameters{}}\)
+% where \(\nabla_{\HostParameters{}} B_{\HostParameters{}} = \frac{\partial B_{ij}}{\partial v_k}\) is a
+% third-order tensor, \(\AdjointState_{\HostParameters{}} \otimes u_{\HostParameters{}}\)
 % is the dyadic product between the direct and
 % adjoint states and \(:\) denotes a double tensor contraction. 
 % It is assumed that
-% \(B_{\AutoParameters{}}\) has a known analytic expression that can be differentiated
+% \(B_{\HostParameters{}}\) has a known analytic expression that can be differentiated
 % easily.
 
 % \paragraph{Numerical consideration for the self-adjoint
 % case}
 
-% If the operator \(B_{\AutoParameters{}}\) was self-adjoint, \(B_{\AutoParameters{}} = B_{\AutoParameters{}}^\top\), the direct
+% If the operator \(B_{\HostParameters{}}\) was self-adjoint, \(B_{\HostParameters{}} = B_{\HostParameters{}}^\top\), the direct
 % state equation and the adjoint state equation would have the same
 % left-hand side. 
 % In the goal of never inverting a matrix, which is a very

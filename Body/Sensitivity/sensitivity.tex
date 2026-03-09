@@ -4,28 +4,28 @@
 
 A state \(\bm{x}\) is in equilibrium if the following equation is satisfied:
 \begin{equation}
-    \left<\Residual (\bm{x},\AutoParameters{}),\; \bm{\eta}\right> = 0
+    \left<\Residual (\bm{x},\HostParameters{}),\; \bm{\eta}\right> = 0
     \qquad\forall \bm{\eta}
 \end{equation}
 Linearization furnishes:
 \begin{equation}
 \left<
    \partial_{\bm{x}} \Residual [\dot{\bm{x}}] 
- + \partial_{\AutoParameters{}} \Residual [\dot{\AutoParameters{}}]
+ + \partial_{\HostParameters{}} \Residual [\dot{\HostParameters{}}]
  ,\; \bm{\eta}
 \right>
 +\left<\Residual,\; \dot{\bm{\eta}}\right> = 0
 \end{equation}
 
 For a smooth map $\bm{F}:\mathbb{R}^{n_p}\!\to\!\mathbb{R}^{n_u}$ and directions
-$(\dot{\AutoParameters{}},\dot{\bm{u}})$, define the linearization
-$\partial\bm{F}(\AutoParameters{})$.  
+$(\dot{\HostParameters{}},\dot{\bm{u}})$, define the linearization
+$\partial\bm{F}(\HostParameters{})$.  
 Then
 %
 \[
-    \left< \partial\bm{F}(\AutoParameters{})\,\dot{\AutoParameters{}},\,\bm{\eta} \right>
+    \left< \partial\bm{F}(\HostParameters{})\,\dot{\HostParameters{}},\,\bm{\eta} \right>
     =
-    \left< \dot{\AutoParameters{}},\, \partial\bm{F}(\AutoParameters{})^{\!\mathsf{T}}\bm{\eta} \right>
+    \left< \dot{\HostParameters{}},\, \partial\bm{F}(\HostParameters{})^{\!\mathsf{T}}\bm{\eta} \right>
 \]
 %
 Forward mode computes the left‐hand JVP, reverse mode the right‐hand VJP.  
@@ -44,7 +44,7 @@ when $n_u$ (or the number of scalar objectives) is small.
 \toprule
 \textbf{Aspect} & \textbf{Forward / Direct} & \textbf{Reverse / Adjoint} \\
 \midrule
-Linear object & JVP: $\partial\bm{F}\,\dot{\AutoParameters{}}$ &
+Linear object & JVP: $\partial\bm{F}\,\dot{\HostParameters{}}$ &
                  VJP: $\bm{\eta}^{\mathsf{T}}\partial\bm{F}$\\
 Cost scaling  & $\mathcal{O}(n_p)$ & $\mathcal{O}(n_g)$ \\
 Memory        & constant (streaming) & $\propto$ depth  \\
@@ -62,7 +62,7 @@ Reverse mode is attractive when $n_g \ll n_p$, e.g.
 \begin{itemize}
   \item gradient‐based optimization of a scalar loss depending on
         millions of design variables,
-  \item machine‐learning training where $\AutoParameters{}$ are network weights.
+  \item machine‐learning training where $\HostParameters{}$ are network weights.
 \end{itemize}
 
 Forward mode is attractive when $n_p \ll n_g$, where $n_g$ is the number of

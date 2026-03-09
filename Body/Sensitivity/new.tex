@@ -1,0 +1,234 @@
+
+
+
+\section{Setting}
+\label{sec:setting}
+
+
+We distinguish three vector spaces and two maps that connect them.
+
+\emph{Host parameters}
+are $\haty \in \HostSpace\sim\mathbb{R}^{\nhost}$ quantities the analyst
+wishes to differentiate with respect to.  
+These are the ``outermost''
+variables in the workflow---cross-section dimensions, load
+multipliers, random-field coefficients, or any other inputs that the
+user controls.
+
+\emph{Core parameters} 
+ $\corey \in \CoreSpace\sim\mathbb{R}^{\ncore}$ are quantities that
+appear explicitly in the finite element residual and to which the DDM
+can be applied directly.  
+Typical core parameters include Young's
+modulus, Poisson's ratio, fiber coordinates and areas, nodal
+coordinates, and prescribed force magnitudes.
+
+The \emph{model state} $\ModelState \in \mathbb{R}^{\nstate}$ is represented by the discrete solution
+vector---for example, the vector of nodal displacements obtained by
+solving the governing equilibrium equations
+$\residual(\ModelState;\corey)=\mathbf{0}$.
+
+\paragraph{Model map.}
+The \emph{model map}
+\begin{equation}\label{eq:Mmap}
+    \Mmap : \mathbb{R}^{\ncore} \to \mathbb{R}^{\nstate},
+    \qquad \corey \mapsto \ModelState = \Mmap(\corey),
+\end{equation}
+is the implicit function defined by the finite element analysis: given
+core parameters~$\corey$, assemble the residual
+$\residual(\ModelState;\corey)$, solve $\residual = \mathbf{0}$, and return
+the equilibrium state~$\ModelState$.  The Jacobian
+$\partial\Mmap/\partial\corey \in \mathbb{R}^{\nstate\times\ncore}$
+is furnished column-by-column by the DDM; its $i$-th column is the
+sensitivity vector $\partial\ModelState/\partial y_i$.
+
+\paragraph{Parameter map.}
+The \emph{parameter map}
+\begin{equation}\label{eq:Ymap}
+    \Ymap : \mathbb{R}^{\nhost} \to \mathbb{R}^{\ncore},
+    \qquad \haty \mapsto \corey = \Ymap(\haty),
+\end{equation}
+is a user-defined, differentiable function that converts host
+parameters into core parameters.  Because $\Ymap$ is implemented
+entirely in the host language, its Jacobian
+$\partial\Ymap/\partial\haty \in \mathbb{R}^{\ncore\times\nhost}$ is
+available through automatic differentiation at no additional
+implementation effort.
+
+
+\paragraph{Composed map.}
+The \emph{composed map} is the composition of the two:
+\begin{equation}\label{eq:Tmap}
+    \Tmap = \Mmap \circ \Ymap :
+    \mathbb{R}^{\nhost} \to \mathbb{R}^{\nstate},
+    \qquad \haty \mapsto \Mmap\!\bigl(\Ymap(\haty)\bigr).
+\end{equation}
+This is the end-to-end function that maps host parameters to the model
+state.  The purpose of the framework is to make $\Tmap$ and its
+derivatives available to gradient-based algorithms without requiring
+the user to derive or implement the chain rule manually.
+
+% Requires: \usepackage{tikz-cd}
+
+\begin{equation}\label{eq:diagram}
+\begin{tikzcd}[column sep=large, row sep=large]
+    \mathbb{R}^{\nhost}
+        \arrow[r, "\Ymap"]
+        \arrow[dr, "\Tmap"']
+    & \mathbb{R}^{\ncore}
+        \arrow[d, "\Mmap"]
+    \\
+    & \mathbb{R}^{\nstate}
+\end{tikzcd}
+\end{equation}
+
+
+\section{Differential Structure}
+\label{sec:differential}
+
+
+The chain rule for the composed map~\eqref{eq:Tmap} decomposes the
+total derivative into a product of two Jacobians:
+\begin{equation}\label{eq:chain-rule}
+    \frac{\partial\Tmap}{\partial\haty}
+    = \frac{\partial\Mmap}{\partial\corey}
+      \;\frac{\partial\Ymap}{\partial\haty}
+    \;\in\; \mathbb{R}^{\nstate \times \nhost}.
+\end{equation}
+In practice one never forms this matrix explicitly.  Instead, the
+product is evaluated through either a \emph{Jacobian--vector product}
+(JVP, forward mode) or a \emph{vector--Jacobian product} (VJP,
+reverse mode), depending on the relative dimensions and the
+application at hand.
+
+
+\subsection{Forward mode: Jacobian--vector product}
+% \label{sec:jvp}
+
+Given a tangent vector $\dot{\haty} \in \mathbb{R}^{\nhost}$
+representing a perturbation direction in the host parameter space, the
+JVP of the composed map is
+\begin{equation}\label{eq:jvp}
+    \dot{\ModelState}
+    = \mathrm{D}\Tmap(\haty)\;\dot{\haty}
+    = \underbrace{%
+        \mathrm{D}\Mmap\!\bigl(\Ymap(\haty)\bigr)
+      }_{\text{kernel (DDM)}}
+      \;\circ\;
+      \underbrace{%
+        \mathrm{D}\Ymap(\haty)\;\dot{\haty}
+      }_{\text{host (AD forward)}}.
+\end{equation}
+The computation proceeds in two stages:
+\begin{enumerate}
+    \item \textbf{Host forward pass.}  Evaluate
+          $\corey = \Ymap(\haty)$ and propagate the tangent through
+          the parameter map to obtain
+          $\dot{\corey} = \mathrm{D}\Ymap(\haty)\;\dot{\haty}$ using
+          forward-mode AD.
+    \item \textbf{Kernel forward pass.}  With the core parameters
+          $\corey$ in hand, solve the primal problem
+          $\residual(\ModelState;\corey)=\mathbf{0}$ and invoke the DDM to
+          obtain the sensitivity vectors
+          $\partial\ModelState/\partial y_i$ for each core parameter.
+          Contract these with the tangent:
+          \begin{equation}\label{eq:jvp-contract}
+              \dot{\ModelState}
+              = \sum_{i=1}^{\ncore}
+                \frac{\partial\ModelState}{\partial y_i}\;\dot{y}_i.
+          \end{equation}
+\end{enumerate}
+
+The cost of the JVP scales with~$\nhost$ (one tangent propagation per
+host-parameter direction), making forward mode efficient when the
+number of host parameters is small relative to the dimension of the
+state.
+
+
+\subsection{Reverse mode: vector--Jacobian product}
+% \label{sec:vjp}
+
+
+Given a cotangent vector $\bar{\ModelState} \in \mathbb{R}^{\nstate}$
+(e.g.\ the gradient of an objective $J$ with respect to~$\ModelState$),
+the VJP of the composed map is
+\begin{equation}\label{eq:vjp}
+    \bar{\haty}
+    = \bigl[\mathrm{D}\Tmap(\haty)\bigr]^{\!\top} \bar{\ModelState}
+    = \underbrace{%
+        \bigl[\mathrm{D}\Ymap(\haty)\bigr]^{\!\top}
+      }_{\text{host (AD reverse)}}
+      \;\cdot\;
+      \underbrace{%
+        \bigl[\mathrm{D}\Mmap(\corey)\bigr]^{\!\top} \bar{\ModelState}
+      }_{\text{kernel (DDM)}}.
+\end{equation}
+The computation now proceeds in the reverse order:
+\begin{enumerate}
+    \item \textbf{Kernel adjoint pass.}  Using the DDM sensitivities
+          $\partial\ModelState/\partial y_i$ already available from the
+          primal solve, compute the core-parameter cotangent
+          \begin{equation}\label{eq:vjp-kernel}
+              \bar{y}_i
+              = \biggl(\frac{\partial\ModelState}{\partial y_i}\biggr)^{\!\top}
+                \bar{\ModelState},
+              \qquad i = 1,\ldots,\ncore.
+          \end{equation}
+    \item \textbf{Host reverse pass.}  Propagate
+          $\bar{\corey} = (\bar{y}_1,\ldots,\bar{y}_{\ncore})^{\!\top}$
+          back through the parameter map~$\Ymap$ using reverse-mode
+          AD to obtain
+          $\bar{\haty} = [\mathrm{D}\Ymap(\haty)]^{\!\top}\,\bar{\corey}$.
+\end{enumerate}
+
+The cost of the VJP is independent of~$\nhost$: a single reverse pass
+through~$\Ymap$ delivers the gradient with respect to all host
+parameters.  This makes reverse mode the natural choice whenever the
+number of outputs (or objectives) is small relative to the number of
+inputs.
+
+\begin{remark}
+    Because the DDM furnishes the full sensitivity matrix
+    $\partial\ModelState/\partial\corey$ column-by-column, both the JVP
+    and VJP of the model map~$\Mmap$ are available at the same
+    computational cost.  The distinction between forward and reverse
+    mode is therefore relevant only to the host map~$\Ymap$.
+\end{remark}
+
+
+
+% \section{Composition Protocol}
+% \label{sec:protocol}
+
+
+% The framework rests on a separation of responsibilities between
+% three layers, each of which contributes one ingredient.
+
+% \paragraph{Kernel primitive.}
+% The finite element library exposes the model map~$\Mmap$ as a
+% \emph{differentiable primitive}---an atomic operation whose primal
+% evaluation, JVP rule, and VJP rule are each implemented internally
+% using the DDM.  From the perspective of the AD framework, $\Mmap$ is
+% a black box with known first-order differential structure.
+
+% \paragraph{Host parameter map.}
+% The user writes the parameter map~$\Ymap$ in the host language as
+% ordinary, unrestricted code.  
+% No special annotation or manual
+% derivative is required; the AD framework differentiates~$\Ymap$
+% automatically.
+
+% \paragraph{Automatic composition.}
+% The AD framework composes the two layers by the chain
+% rule~\eqref{eq:chain-rule}.  From the user's perspective, the result
+% is a single differentiable function
+% $\Tmap : \haty \mapsto \ModelState$ that can be passed directly to any
+% gradient-based algorithm---optimisation, uncertainty quantification,
+% inverse problems---without further manual derivation.
+
+% The key consequence of this decomposition is that extending the
+% sensitivity analysis to new parameterisations requires changes only in
+% the host code; the kernel primitive remains fixed.  Conversely,
+% improvements to the finite element solver or the DDM implementation
+% propagate automatically to every host-level workflow that uses the
+% primitive.

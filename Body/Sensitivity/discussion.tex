@@ -1,0 +1,37 @@
+
+\section{Discussion}
+\label{sec:discussion}
+
+
+Several features of the framework are worth highlighting.
+
+\paragraph{Separation of concerns.}
+The kernel developer implements the DDM once, exposing $\Mmap$ and its
+differential rules as a fixed primitive.  The end user writes the
+parameter map~$\Ymap$ in unrestricted host code and obtains
+end-to-end gradients automatically.  
+Neither party needs to know the internals of the other's contribution.
+
+\paragraph{Generality.}
+The decomposition $\Tmap = \Mmap \circ \Ymap$ is not restricted to
+static analysis or to any particular element type. 
+Any analysis
+procedure that can be expressed as a differentiable primitive---linear
+or nonlinear statics, transient dynamics, eigenvalue
+problems---fits into the same pattern.  
+Likewise, the parameter
+map~$\Ymap$ can encode arbitrarily complex preprocessing logic:
+mesh generation, material homogenisation, stochastic field sampling,
+or any combination thereof.
+
+\paragraph{Higher-order composition.}
+Because the composed map~$\Tmap$ is itself a differentiable function
+in the host framework, it can participate in further compositions.
+For instance, an objective function $J(\ModelState)$ defined in host code
+yields the fully differentiable pipeline
+\begin{equation}\label{eq:full-pipeline}
+    \haty \;\xmapsto{\;\Ymap\;}\; \corey
+    \;\xmapsto{\;\Mmap\;}\; \ModelState
+    \;\xmapsto{\;J\;}\; \mathbb{R},
+\end{equation}
+whose gradient $\nabla_{\haty} J$ is available via a single reverse-mode pass without any additional implementation.

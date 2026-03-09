@@ -15,6 +15,14 @@ The design replaces process-level singletons with user-owned objects whose lifet
 This architectural change enables reliable embedding of \OpenSees{} in mission-critical systems, safe concurrent evaluation of multiple models, and integration with automatic differentiation frameworks that require explicit computational graphs. 
 The proposed architecture derives largely from the FEDEASLab toolbox for MATLAB \citep{filippou2004fedeaslab}. 
 
+\subsection{Literature}
+\begin{itemize}
+    \item \cite{taylor1970finite}
+    \item \cite{wilson1970sap}
+    \item \citep{mckenna1997object}
+    \item \citep{zhu2018openseespy}
+\end{itemize}
+
 \section{The Legacy Interpreter Architecture}
 \label{sec:legacy}
 
@@ -24,7 +32,9 @@ While this design reduced the implementation burden for adding new commands, it 
 
 \subsubsection{Implicit State and Referential Opacity}
 
-The OPS API exposes functions of the form \texttt{OPS\_GetAnalysisModel()} and \texttt{OPS\_GetUniaxialMaterial(tag)}
+The OPS API exposes functions of the form \texttt{OPS\_GetAnalysisModel()} 
+% and \linebreak[1]
+% \texttt{OPS\_GetUniaxialMaterial(tag)}
 that return pointers to objects held in global tables. 
 A command implementation retrieves its dependencies by calling these functions, which access ambient state rather than receiving arguments explicitly. 
 This design violates the principle of referential transparency: the same function call may return different results depending on the order of prior commands, and the dependencies of any given function are not apparent from its signature.
@@ -129,3 +139,15 @@ The restructured runtime restores the encapsulation envisioned in the original \
 By eliminating the interpreter's hidden state, it delivers an explicit, composable API that is safe to embed, parallelize, and differentiate. 
 The successful deployment in a mission-critical monitoring system confirms both its robustness and its practical value. 
 This architectural foundation positions \OpenSees{} to serve emerging applications in data-driven structural engineering that require tight integration with modern computational infrastructure.
+
+
+Re-engineering the \OpenSees{} interpreters was a significant but necessary endeavor to address systemic issues that prevented their use in mission-critical software like \BRACE{}. 
+The existing interpreters employ over 30 global variables, defined across over 20 C++ files, which collectively hold the state of one analysis. These are manipulated indiscriminately through the internal \emph{OPS} API, which consists largely of functions taking no arguments (e.g., \texttt{OPS\_GetAnalysisModel()}) that lack a structured programming paradigm. 
+This lack of encapsulation or explicit object ownership leaves the existing interpreters difficult to reason about and plagued with undefined behavior.
+
+The user-facing API provided by OpenSeesPy is similarly unstructured. 
+Its extensive reliance on implicit command sequencing—where a function like \texttt{load()} depends on a hidden state set by a previous \texttt{pattern()} call—relegates \OpenSees{} to a standalone scripting tool. 
+This global state creates a fragile environment for software development; any function call can have unforeseen side effects on any analysis model, leading to silent numerical corruption or non-deterministic crashes that bypass the interpreter's own exception handling. Consequently, any library that embeds the existing OpenSeesPy must warn its users against combining it with other \OpenSees{}-based libraries for fear that the two libraries will unknowingly corrupt each other's state.
+
+\Xara{} addresses these limitations by stripping global singletons, introducing an explicit object ownership model, and imposing strict encapsulation. 
+All commands now operate exclusively on user-owned analysis objects, guaranteeing their state cannot be altered by any routine that has not been explicitly passed a reference to the object. This work, validated by a suite of over \textbf{30} unit tests and merged into the central \OpenSees{} repository, transforms \OpenSees{} into a library-grade engine that can be safely embedded as a predictable ``black-box'' dependency.

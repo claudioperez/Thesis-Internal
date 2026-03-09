@@ -2,22 +2,22 @@
 
 
 Differentiating~\eqref{eq:equil} in the direction
-$\dot{\AutoParameters{}}\in\mathbb{R}^{n_p}$ yields the \emph{tangent system}
+$\dot{\HostParameters{}}\in\mathbb{R}^{n_p}$ yields the \emph{tangent system}
 %
 \begin{equation}\label{eq:forward}
   \bigl(\partial_{\bm{u}}\bm{g}\bigr)\,\dot{\bm{u}}
-  \;=\;-\bigl(\partial_{\AutoParameters{}}\bm{g}\bigr)\,\dot{\AutoParameters{}},
+  \;=\;-\bigl(\partial_{\HostParameters{}}\bm{g}\bigr)\,\dot{\HostParameters{}},
   \qquad
-  \dot{\bm{u}}\equiv\dfrac{\partial \bm{u}}{\partial \AutoParameters{}}\dot{\AutoParameters{}}.
+  \dot{\bm{u}}\equiv\dfrac{\partial \bm{u}}{\partial \HostParameters{}}\dot{\HostParameters{}}.
 \end{equation}
 %
 The linear map
-$\dot{\AutoParameters{}}\mapsto\dot{\bm{u}}$ is the \emph{Jacobian–vector product} (JVP)
+$\dot{\HostParameters{}}\mapsto\dot{\bm{u}}$ is the \emph{Jacobian–vector product} (JVP)
 %
 \[
- \dot{\TangentState} = \mathrm{JVP}_{\bm{h}}(\AutoParameters{};\dot{\AutoParameters{}})
+ \dot{\TangentState} = \mathrm{JVP}_{\bm{h}}(\HostParameters{};\dot{\HostParameters{}})
   \;=\;
-  \partial\bm{h}(\AutoParameters{})\,\dot{\AutoParameters{}},
+  \partial\bm{h}(\HostParameters{})\,\dot{\HostParameters{}},
 \]
 %
 and its numerical evaluation is called forward-mode automatic
@@ -30,28 +30,28 @@ into:
   d\Objective
   \;=\;
   \bigl\langle\partial_{\bm{u}} \Objective,\dot{\bm{u}}\bigr\rangle
-  +\bigl\langle\partial_{\AutoParameters{}} \Objective,\dot{\AutoParameters{}}\bigr\rangle
+  +\bigl\langle\partial_{\HostParameters{}} \Objective,\dot{\HostParameters{}}\bigr\rangle
 \]
 %
-provides the directional derivative $d \Objective(\AutoParameters{};\dot{\AutoParameters{}})$ where 
-$\partial_{\bm{u}} \Objective$ and $\partial_{\AutoParameters{}} \Objective$ are column gradients of a scalar
+provides the directional derivative $d \Objective(\HostParameters{};\dot{\HostParameters{}})$ where 
+$\partial_{\bm{u}} \Objective$ and $\partial_{\HostParameters{}} \Objective$ are column gradients of a scalar
 functional $\Objective :\mathbb{R}^{n_u}\!\times\!\mathbb{R}^{n_p}\to\mathbb{R}$.
 
 \paragraph{Summary.}
-Given a nonlinear residual equation $\bm{g}(\bm{u},\AutoParameters{})=\bm{0}$, the \emph{direct differentiation
+Given a nonlinear residual equation $\bm{g}(\bm{u},\HostParameters{})=\bm{0}$, the \emph{direct differentiation
 method} (DDM) forms its tangent (Jacobian) system and \emph{propagates} a
 perturbation of the parameters
-$\dot{\AutoParameters{}}\in\mathbb{R}^{n_p}$ forward to the state perturbation
+$\dot{\HostParameters{}}\in\mathbb{R}^{n_p}$ forward to the state perturbation
 $\dot{\bm{u}}\in\mathbb{R}^{n_u}$ by solving \eqref{eq:forward}.
 %
 % \begin{equation}\label{eq:forward}
 % \frac{\partial\bm{g}}{\partial\bm{u}}\;\dot{\bm{u}}
-%  \;=\; -\frac{\partial\bm{g}}{\partial\AutoParameters{}}\;\dot{\AutoParameters{}} .
+%  \;=\; -\frac{\partial\bm{g}}{\partial\HostParameters{}}\;\dot{\HostParameters{}} .
 % \end{equation}
 %
 Subsequently, gradients of any scalar objective
-$\ell(\bm{u},\AutoParameters{})$ follow from the total derivative
-$d \ell = \ell_{\bm{u}}\dot{\bm{u}} + \ell_{\AutoParameters{}}\dot{\AutoParameters{}}$.
+$\ell(\bm{u},\HostParameters{})$ follow from the total derivative
+$d \ell = \ell_{\bm{u}}\dot{\bm{u}} + \ell_{\HostParameters{}}\dot{\HostParameters{}}$.
 
 
 
@@ -63,5 +63,5 @@ depth of the nonlinear solve.
 
 The cost scales with the \emph{number of inputs}
 $n_p$ because each independent direction
-$\dot{\AutoParameters{}}$ requires a solve of \eqref{eq:forward}.
+$\dot{\HostParameters{}}$ requires a solve of \eqref{eq:forward}.
 Memory is modest: no intermediate states need to be stored.

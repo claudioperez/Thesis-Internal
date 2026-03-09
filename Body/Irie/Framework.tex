@@ -3,7 +3,7 @@
 
 % In the current state of the field of structural health monitoring, regardless of the method employed, evaluations rely on some form of \emph{model} that is created to predict some form of \emph{metric} describing structural behavior for a given excitation. The structure experiences service-level conditions for long periods of time, during which structural behavior remains within an ostensibly predictable range. This concept has been shown during the first trial operational period of the \BRACE{} health monitoring platform. Throughout, the bridge inventory has been subject to low levels of excitation. On the health monitoring platform, physics-based methods are primarily used to report intensity measures, and data-driven methods to report deviations from the normal condition. For both types of methods, there is great use in investigating structural behavior as a \emph{linear time invariant} (LTI) system during the normal condition. This allows the physics-based modeler to tailor modeling assumptions for different cases of excitation, and the data-driven modeler to characterize the normal linear system behavior. Several promising formulations for LTI systems have been established for both physics-based and data-driven models, and the \BRACE{} platform allows for their long-term proof-of-concept and validation.
 
-\begin{figure}[h!]
+\begin{figure}[h]
     \centering
     \includegraphics[width=0.9\textwidth]{Body/Irie/Figures/abstractions.png}
     \caption{The \gls{asset}, \gls{predictor}, \gls{event}, \gls{evaluation}, and \gls{metric} represent the central abstractions of the \BRACE{} platform for bridge health monitoring.}
@@ -114,7 +114,7 @@ Health monitoring then entails tracking the data-fitted identity of a structure 
 \subsection{Metrics}
 \begin{figure}[H]
     \centering
-    \resizebox{0.8\linewidth}{!}{\input{Body/Irie/Figures/fig_metrics}}
+    \resizebox{0.9\linewidth}{!}{\input{Body/Irie/Figures/fig_metrics}}
     \caption{Class diagram for the Metric abstraction.}
     \label{fig:metric-class}
 \end{figure}
@@ -166,17 +166,17 @@ Second, it encourages experimentation with different training algorithms. By abs
 % Finally, the \gls{metric} abstraction also plays a vital role in facilitating collaboration and knowledge sharing. By providing a common language for expressing the outputs of different \glspl{predictor}, it allows developers to share and compare their results, learn from each other’s successes and failures, and collectively push the boundaries of what is possible.
 
 \subsection{Events and Evaluations}\label{sec:events}
-\begin{figure}[H]
-    \centering
-    \resizebox{0.25\linewidth}{!}{\input{Body/Irie/Figures/fig_layer_classes}}
-    \resizebox{0.25\linewidth}{!}{\input{Body/Irie/Figures/fig_classdiagram}}
-    % \caption{Class diagram for the Metric abstraction.}
-    \label{fig:irie-classes}
-\end{figure}
+% \begin{figure}[H]
+%     \centering
+%     \resizebox{0.25\linewidth}{!}{\input{Body/Irie/Figures/fig_layer_classes}}
+%     \resizebox{0.25\linewidth}{!}{\input{Body/Irie/Figures/fig_classdiagram}}
+%     % \caption{Class diagram for the Metric abstraction.}
+%     \label{fig:irie-classes}
+% \end{figure}
 
 \begin{figure}[H]
     \centering
-    \resizebox{0.6\linewidth}{!}{\input{Body/Irie/Figures/fig_sequence}}
+    \resizebox{0.9\linewidth}{!}{\input{Body/Irie/Figures/fig_sequence}}
     \caption{Sequence diagram illustrating the process of evaluating an event.}
     \label{fig:irie-sequences}
 \end{figure}

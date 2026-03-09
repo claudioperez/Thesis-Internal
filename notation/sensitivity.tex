@@ -1,0 +1,44 @@
+
+\newcommand{\autodiff}{algorithmic differentiation}
+\newcommand{\Autodiff}{Algorithmic differentiation}
+\newcommand{\TangentState}{u}
+\newcommand{\ModelState}{\bm{u}}
+% \newcommand{\CoreParameters}{\bm{y}}
+% \newcommand{\HostParameters}{\hat{\bm{y}}}
+% \newcommand{\AdjointState}{\eta}
+\newcommand{\Objective}{J}
+% \newcommand{\Residual}{\bm{g}}
+\newcommand{\HostToCore}{Y}
+
+\newcommand{\HostParameter}{\widehat{y}}
+\newcommand{\HostParameters}{\widehat{\bm y}}
+\newcommand{\CoreParameters}{\bm y}
+\renewcommand{\State}{\bm u}
+\newcommand{\HostSpace}{\widehat{\mathcal Y}}
+\newcommand{\CoreSpace}{\mathcal Y}
+\newcommand{\StateSpace}{\mathcal U}
+\newcommand{\ResponseSpace}{\mathcal Z}
+\newcommand{\ModelFamily}{\mathcal M}
+\newcommand{\Residual}{\mathcal G}
+\newcommand{\ParameterMap}{\Phi}
+\newcommand{\StateMap}{S}
+\newcommand{\Observation}{Q}
+\newcommand{\ResponseMap}{R}
+\newcommand{\ComposedResponse}{\widehat{R}}
+\renewcommand{\Objective}{J}
+\newcommand{\AdjointState}{\bm\eta}
+\newcommand{\D}{\mathrm D}
+\newcommand{\Tan}[1]{\operatorname{Tan}\left[\,#1\,\right]}
+
+\newcommand{\haty}{\hat{\bm{y}}}
+\newcommand{\corey}{\bm{y}}
+% \newcommand{\ModelState}{\bm{u}}
+\newcommand{\residual}{\bm{g}}
+\newcommand{\nhost}{\hat{n}}
+\newcommand{\ncore}{n}
+\newcommand{\nstate}{m}
+
+% Maps
+\newcommand{\Ymap}{\ParameterMap} %\mathcal{Y}}   % host -> core parameter map
+\newcommand{\Mmap}{\mathcal{M}}   % core parameters -> state (FE solve)
+\newcommand{\Tmap}{\ComposedResponse_{\ModelFamily}}%\mathcal{T}}   % composed tangent map

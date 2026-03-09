@@ -1,0 +1,18 @@
+
+The Bridge Rapid Assessment Center for Extreme Events (\BRACE{}) is a platform developed in collaboration with the California Department of Transportation to provide real-time post-earthquake assessments for instrumented bridges.
+Its computational backend, the Infrastructure Resilience Engine (IRiE), requires finite element models that can be assembled from inventory data, executed rapidly, and embedded in inference workflows.
+The bridges in the current deployment are composed predominantly of beam and column members whose inelastic behavior governs damage progression.
+The beam formulations developed here serve as the primary simulation engine, and the modular structure of the framework---permitting, for instance, a transition from a coarse linear model to a refined inelastic model by changing a single component---directly supports the operational requirements of the platform.
+
+
+\Cref{sec:irie} presents the implementation of a structural health monitoring framework for the \BRACE{} project.
+Its computational backend, the Infrastructure Resilience Engine (IRiE), organizes health monitoring around five abstractions: \emph{Assets} representing physical structures, \emph{Events} representing earthquakes or other triggering conditions, \emph{Predictors} implementing physics-based or data-driven analysis methods, \emph{Metrics} quantifying structural condition, and \emph{Evaluations} assembling metrics into actionable reports.
+This architecture permits physics-based simulation and system identification to coexist within a unified framework, with results presented through a common interface. 
+The developments of Part~I contribute the simulation engine for Type~I predictors on this platform.
+Following a pilot deployment covering 22 bridges, Caltrans has funded continued development to extend coverage across the California highway network.
+
+\Cref{ch:predictor_t1}
+
+\Cref{ch:xara} develops a software architecture for finite element simulations that addresses the demands of \cref{sec:irie}. The developments are implemented in the open source project \Xara{}, which drives the physics-based simulations on the \BRACE{} platform. 
+
+\Cref{ch:autodiff}

@@ -1,32 +1,29 @@
 
 
+Part~II of this dissertation presents \BRACE{}, a real-time structural health monitoring platform that the California Department of Transportation (Caltrans) now uses as its frontline tool for post-earthquake bridge assessment. 
 
-\paragraph{Project (197/200 words).}
-Part~II of this dissertation presents \BRACE{} (\cref{sec:irie}), a real-time structural health monitoring platform that the California Department of Transportation (Caltrans) now uses as its frontline tool for post-earthquake bridge assessment.
-The platform streams accelerometer data from the field to a cloud service, runs \OpenSees{} models, and generates structural health reports for bridges in the California highway network. 
-My research proposes an architecture that sends sensor data over a REST API, queues analyses, and processes results into actionable health scores. 
+The platform, detailed in \cref{sec:irie}, streams accelerometer data from the field to a cloud service, runs \OpenSees{} models, and generates structural health reports for bridges in the California highway network. 
+The proposed architecture sends sensor data over a REST API, queues analyses, and processes results into actionable health scores. 
 These summaries reach Caltrans operators within seconds of an event, providing a quantitative basis for closure and inspection decisions. 
 
-The tools that have been developed for this platform are documented online and published as open-source software. 
-Most notable among these is \Xara{} (\cref{ch:xara}), a C++ runtime framework for implementing interpreters that has been merged into the central \OpenSees{} repository. 
+
+Type~I simulations on the platform are performed using \Xara{} (\cref{ch:xara}), a C++ runtime framework for implementing interpreters that has been merged into the central \OpenSees{} repository. 
 This framework supports the new \Xara{} Python package, which exposes the first truly embeddable interface for \OpenSees{}, as well as backward-compatible reimplementations of the original Tcl and OpenSeesPy interpreters. 
+The stable, encapsulated API exposed through \Xara{} package eliminates barriers to integration with modern machine learning toolchains like \Jax{} and PyTorch, which rely crucially on explicit state management. 
+This is central for implementing the developments of \cref{ch:autodiff}.
 
-The visualization features of the platform are released through the Python package \Veux{}.  
+\Cref{ch:autodiff} 
+
+The developments of this work are supported through an ecosystem of open-source software tools:
+\begin{itemize}
+\item The visualization features of the platform are released through the Python package \Veux{}. 
 This library generates 3D models from \OpenSees{} simulations using the modern glTF format, bypassing the need to distribute heavyweight rendering dependencies. 
+\item \texttt{xsection}
+\end{itemize}
 
-\paragraph{Merit (398/400 words).}
-Re-engineering the \OpenSees{} interpreters was a significant but necessary endeavor to address systemic issues that prevented their use in mission-critical software like \BRACE{}. 
-The existing interpreters employ over 30 global variables, defined across over 20 C++ files, which collectively hold the state of one analysis. These are manipulated indiscriminately through the internal \emph{OPS} API, which consists largely of functions taking no arguments (e.g., \texttt{OPS\_GetAnalysisModel()}) that lack a structured programming paradigm. 
-This lack of encapsulation or explicit object ownership leaves the existing interpreters difficult to reason about and plagued with undefined behavior.
+% \paragraph{Merit (398/400 words).}
 
-The user-facing API provided by OpenSeesPy is similarly unstructured. 
-Its extensive reliance on implicit command sequencing—where a function like \texttt{load()} depends on a hidden state set by a previous \texttt{pattern()} call—relegates \OpenSees{} to a standalone scripting tool. 
-This global state creates a fragile environment for software development; any function call can have unforeseen side effects on any analysis model, leading to silent numerical corruption or non-deterministic crashes that bypass the interpreter's own exception handling. Consequently, any library that embeds the existing OpenSeesPy must warn its users against combining it with other \OpenSees{}-based libraries for fear that the two libraries will unknowingly corrupt each other's state.
+\section{Closure}
+In May 2024, Caltrans renewed the \BRACE{} platform for a second development phase, expanding its coverage to bridges across California, and work is underway to grant access to over \textbf{40} Caltrans engineers. 
+The platform has processed over \textbf{150} seismic events since its initial deployment.
 
-\Xara{} addresses these limitations by stripping global singletons, introducing an explicit object ownership model, and imposing strict encapsulation. 
-All commands now operate exclusively on user-owned analysis objects, guaranteeing their state cannot be altered by any routine that has not been explicitly passed a reference to the object. This work, validated by a suite of over \textbf{30} unit tests and merged into the central \OpenSees{} repository, transforms \OpenSees{} into a library-grade engine that can be safely embedded as a predictable ``black-box'' dependency.
-
-In May 2024, Caltrans renewed the BRACE2 platform for a second development phase, expanding its coverage to bridges across California, and work is underway to grant access to over \textbf{40} Caltrans engineers. This adoption solidifies \OpenSees{}RT at the core of the state's seismic response protocol, which has processed over \textbf{150} seismic events since its initial deployment.
-
-Furthermore, the stable, encapsulated API exposed through the companion \Xara{} package is a catalyst for new research, eliminating barriers to integration with modern machine learning toolchains like JAX and PyTorch, which rely crucially on explicit state management. 
-This is already being demonstrated by its adoption in novel studies on parameter sensitivities and surrogate modeling, empowering the community to build more complex and reliable research tools.

@@ -13,14 +13,12 @@ boundaries for security and audit.
 \subsection{Presentation Layer}\label{presentation-layer}
 
 The topmost layer delivers HTML dashboards, REST endpoints, and
-programmatic client libraries. 
-Its single obligation is to translate internal domain concepts into artifacts that humans or external services
-can consume. 
+programmatic client libraries \citep{richardson2015restful}. 
+Its single obligation is to translate internal domain concepts into artifacts that humans or external services can consume. 
 All interaction with the analysis core is mediated through
-type‑checked view models; raw database cursors or solver handles never
-cross this boundary. The separation prevents tightly coupled
-dependencies and allows rapid evolution of the interface without risking
-regressions in numerical behavior.
+type‑checked view models; raw database cursors or solver handles never cross this boundary. 
+The separation prevents tightly coupled
+dependencies and allows rapid evolution of the interface without risking regressions in numerical behavior.
 
 \subsection{Orchestration Layer}\label{orchestration-layer}
 
@@ -74,9 +72,8 @@ Communication proceeds strictly downward. For example, when the
 Presentation Layer receives a request for the latest bridge health
 report it calls the Orchestration Layer, which in turn queries the
 Domain Layer for immutable \emph{Evaluation} objects. 
-Only the
-Infrastructure Layer is permitted to reach outside the codebase. Upward calls are prohibited; infrastructure
-code does not emit direct UI updates, and domain objects have no
+Only the Infrastructure Layer is permitted to reach outside the codebase. 
+Upward calls are prohibited; infrastructure code does not emit direct UI updates, and domain objects have no
 knowledge of HTTP semantics. 
 The unidirectional rule guards against hidden coupling and ensures that each layer can be tested in isolation.
 
@@ -86,7 +83,7 @@ The design objective of the Prediction Subsystem is to permit the
 continuous integration of new modeling techniques while shielding the
 rest of the platform from solver‑specific details. 
 To this end, each
-concrete predictor is packaged behind a \textbf{Strategy} object that
+concrete predictor is packaged behind a \textbf{Strategy} object \cite{gamma2011design} that
 realizes a simplified four‑phase template: \emph{initialize},
 \emph{execute}, \emph{harvest}, and \emph{summarize}. 
 A lightweight
@@ -109,16 +106,14 @@ of performing a new analysis.
 
 \subsection{Metrics}\label{metrics}
 
-Health metrics in BRACE are small, immutable value objects that bind
-three pieces of information: a \emph{tag} that identifies the physical
+Health metrics are immutable value objects \citep{fowler2013patterns} that bind three pieces of information: a \emph{tag} that identifies the physical
 quantity (e.g., fundamental period, peak deck acceleration, column
 strain state), a compact \emph{payload} containing the numerical
-value(s), and a \emph{verdict} that classifies the value against
-user‑defined thresholds.
+value(s), and a \emph{verdict} that classifies the value against user‑defined thresholds.
 Metrics understand how to render themselves in the web interface, how to serialize into
 archival formats, and how to participate in evaluation‑level
 aggregation. 
-Because all predictors pledge to emit metrics rather than
+Because all predictors emit metrics rather than
 solver‑specific artifacts, downstream consumers need not know whether a
 given metric was extracted from a finite‑element response history,
 inferred by a statistical emulator, or read from a fragility table.
@@ -150,12 +145,12 @@ The policy mechanism is again a Strategy: facilities managers can supply
 their own decision logic---ranging from simple threshold checks to
 Bayesian belief networks---without disturbing core services.
 
-\emph{Figure~2} illustrates the complete event path, from acceleration
+\Cref{fig:irie-sequences} illustrates the complete event path, from acceleration
 time histories arriving at the web gateway to color‑coded health tiles
-appearing on the bridge dashboard. Every arrow in the sequence diagram
-is traceable to a method on one of the abstractions, underscoring the
-principle that \emph{workflow emerges from the collaboration of simple,
-well‑defined objects}.
+appearing on the bridge dashboard. 
+Every arrow in the sequence diagram is traceable to a method on one of the abstractions.
 
 
 \input{Body/Irie/Algorithms}
+
+\FloatBarrier

@@ -1,21 +1,26 @@
 \section{Summary and Conclusion}\label{sec:trace-summary}
-There are infinitely many ways to represent Saint~Venant's continuum solutions through the family of one-dimensional 
-beam theories described in \cref{sec:gensec}. 
 
+There are infinitely many distinct warping free beam models in the family of \cref{sec:gensec} that exactly trace solutions to Saint~Venant's continuum problems. 
+% A trace \(\mathcal{T}\) of a continuum displacement \(\hat{\bm u}\) is an operation:
+% \RepeatEquation{eq:trace-map}
+% such that
+% \RepeatEquation{eq:trace-lift-linear} 
+Under the Saint~Venant equivalence class (\cref{def:sv-equivalence}) one has the results:
 \begin{itemize}
-    \item A trace \(\mathcal{T}\) of a continuum displacement \(\hat{\bm u}\) is an operation:
-    \RepeatEquation{eq:trace-map}
-    such that
-    \RepeatEquation{eq:trace-lift-linear} 
-    \item Traces are physically distinguished by how they manifest in boundary fixities on the beam displacement \(\bm{u}\) and rotation \(\bm{\theta}\) fields.
-    \item The elastic moment-curvature response of a section is trace-independent (\cref{rem:bend-trace-indep}), and therefore is uniquely determined solely by the cross sectional geometry and Young's modulus \(E\). 
-    \item The elastic shear response is \emph{not} trace-independent. 
+    \item Traces are physically distinguished by how they manifest boundary fixities on the beam displacement \(\bm{u}\) and rotation \(\bm{\theta}\) fields.
+    \item Any Class~I trace (\cref{def:class-1}) is compatible with Type~1 beam finite elements and represented through the enhanced strain section of \cref{sec:enhan-section} through relaxation of the consistency condition \eqref{eq:enhan-cii}. %via a Petrov-Galerkin formulation \eqref{eq:petrov-section}, which preserves the classical section resultants. 
+    However, most Class I traces are not variational and result in an asymmetric tangent stiffness.
+
+    \item In Class~I, the elastic moment-curvature response of a section is \emph{not} trace dependent (\cref{rem:bend-trace-indep}), and therefore is uniquely determined solely by the cross sectional geometry and material properties. 
+
+    \item The presence of trace parameters in the shear rigidity through \eqref{eq:shear-correction} reveals that the elastic shear response \emph{is} trace dependent. 
+
     \item The geometric \citep{cowper1966shear} and energetic \citep{renton1991generalized} treatments of shear  
      both lead to exact continuum solutions in the present framework, and are included in the Class I family of traces. 
-    \item Any Class~I trace (\cref{def:class-1}) is compatible with Type 1 beam finite elements via a Petrov-Galerkin formulation \eqref{eq:petrov-section}, which preserves the classical section resultants. However, most Class I traces result in an asymmetric tangent stiffness.
-    \item Class~II traces (\cref{def:class-ii}) are the subset of Class I traces which may be implemented via a Bubnov-Galerkin section \eqref{eq:bubnov-section} to furnish a symmetric tangent stiffness.
-    \item Class~III traces (\cref{def:class-iii}) are the subset of Class II traces that produce the classical stress resultants \((N,\ShearForce,T,\bm{M})\) under the symmetric Bubnov-Galerkin implementation \eqref{eq:bubnov-section}.
-    \item All Class~III traces are equivalent under Saint~Venant loads %(\cref{def:sv-equivalence})
+    
+    \item Class~II traces (\cref{def:class-ii}) are the subset of Class I traces which support the variational condition \eqref{eq:enhan-cii} and furnish a symmetric tangent stiffness.
+    \item Class~III traces (\cref{def:class-iii}) are the subset of Class II traces that produce the classical stress resultants \((N,\ShearForce,T,\bm{M})\) under variational condition \eqref{eq:enhan-cii}.%the symmetric Bubnov-Galerkin implementation \eqref{eq:bubnov-section}.
+    \item All Class~III traces are equivalent under the Saint~Venant class %(\cref{def:sv-equivalence})
     , and their trace matrix is given uniquely by \eqref{eq:energetic-trace-blocks}.
 \end{itemize}
 

@@ -37,12 +37,16 @@ state of the art for geometrically exact finite elements.
 
 % The asymmetric formulation of \cite{hsiao2000corotational} takes the shear-center as reference point.
 
+\subsection{Outline}
 
-\section{Element Model}\label{sec:genwarp}
-
-The governing equations for the standard Type II family of beam theories is briefly recalled. The objective is to obtain a model on a curve \(\mathcal{C}\) that represents finite deformations of a 3D body \(\Body\).
+The governing equations for a family of Type~II beam theories is recalled in \cref{sec:genwarp}, through which the warping-free Type~I family may be regarded as a subset. 
+The objective is to obtain a model on a curve \(\mathcal{C}\) that represents finite deformations of a three-dimensional body \(\Body\) exhibiting small to moderate strains.
 In \cref{sec:std-continuum}, the body is introduced in the continuum setting. \Cref{sec:std-kinematics} introduces the kinematic representation of this body in terms of fields on the curve \(\mathcal{C}\), from which the beam deformations \(\bm{e}\) naturally precipitate and conjugate generalized stress \(\bm{s}\) are implied. \Cref{sec:std-equilibrium} derives equilibrium equations for these resultants \(\bm{s}\). 
 \Cref{sec:std-section} derives the section constitutive relation \(\bm{e}\rightarrow\bm{s}\) by completing the virtual work identity.
+
+\Cref{sec:enhan-section} introduces a family of strain-enhanced section constitutive models in the setting of \cref{sec:genwarp}. 
+
+\section{Element Model}\label{sec:genwarp}
 
 \subsection{Continuum}\label{sec:std-continuum}
 In the continuum setting the model is a body
@@ -728,21 +732,25 @@ which ensures identifiability of the split in \eqref{eq:enhan-strain} and preven
 
 % Let $L \coloneq L_2(\Section;\mathbb{R}^3)$ denote the ambient space of stress vectors over the section, and let $\StressSpaceH\subset L$ denote the admissible stress space induced by the Saint-Venant restriction \eqref{eq:saint-venant-stress} together with the chosen material model and local stress constraint enforcement. 
 An ideal consistency requirement is that the enhanced strain space is $L_2$-orthogonal to $\StressSpaceH$. 
-In the present setting this is enforced by stationarity of the sectional internal work with respect to variations of the local parameters $\bm{\EnhanParam}$, which is equivalent to requiring the residual:
+In the present setting this is enforced by stationarity of the sectional internal work with respect to variations of the local parameters $\bm{\EnhanParam}$, which is equivalent to requiring:
+\begin{equation}
+    \residn(\bm{\EnhanParam}) = \mathbf{0}
+    \label{eq:enhan-cii}
+\end{equation}
+where the residual \(\residn\) is:
 % To express this compactly, write $\StressVector(\bm{\varepsilon})$ for the \emph{constrained} stress vector returned by the material routine for a given strain vector $\bm{\varepsilon}$ (including the local enforcement of $\StressTensor_{\alpha\beta}=0$, cf.\ \citep{klinkel2002using}). 
 % Then the condition reads: find $\bm{\EnhanParam}(x)$ such that
 \begin{SaveEquation}{eq:def-enhan-residual}
 \residn(\bm{\EnhanParam}) \coloneq \int_{\Section} \EnhanShapes^{\top} \StressVector \left(\hat{\StrainVector}(\bm{e}) + \EnhanShapes \bm{\EnhanParam} \right) \dA
 \end{SaveEquation}
-vanishes. 
-When a strain-energy potential exists, the stationarity condition \eqref{eq:def-enhan-residual} preserves the variational structure.
+When a strain-energy potential exists, the stationarity condition \eqref{eq:enhan-cii} preserves the variational structure.
 
 
-When \eqref{eq:def-enhan-residual} holds, virtual work contributions associated with variations $\delta\bm{\EnhanParam}$ vanish, so the beam-level balance laws remain those of \cref{sec:genwarp}; only the section constitutive mapping $\bm{e}\mapsto \bm{s}$ is modified through the enhanced stress response.
+When \eqref{eq:enhan-cii} holds, virtual work contributions associated with variations $\delta\bm{\EnhanParam}$ vanish, so the beam-level balance laws remain those of \cref{sec:genwarp}; only the section constitutive mapping $\bm{e}\mapsto \bm{s}$ is modified through the enhanced stress response.
 This enforces $L_2$ orthogonality of the enhanced strain space to the admissible stress space. 
 When the material response admits a potential, this identification preserves the variational structure through the sectional condensation because $\bm{\EnhanParam}$ is obtained from the same stationarity principle. 
 
-The condition \eqref{eq:def-enhan-residual} may be relaxed while still reproducing Saint-Venant fields exactly in the cases examined later, but the resulting beam model then lacks a variational interpretation. 
+The condition \eqref{eq:enhan-cii} may be relaxed while still reproducing Saint-Venant fields exactly in the linear elastic regime, but the resulting beam model then lacks a variational interpretation. This is investigated further in \cref{sec:timo}. 
 In contrast, the stability condition \eqref{eq:def-enhan-stability} is required for a well-posed split. 
 
 \subsection{Implementation}

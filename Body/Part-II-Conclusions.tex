@@ -7,9 +7,8 @@ The proposed architecture sends sensor data over a REST API, queues analyses, an
 These summaries reach Caltrans operators within seconds of an event, providing a quantitative basis for closure and inspection decisions. 
 
 
-Type~I simulations on the platform are performed using \Xara{} (\cref{ch:xara}), a C++ runtime framework for implementing interpreters that has been merged into the central \OpenSees{} repository. 
-This framework supports the new \Xara{} Python package, which exposes the first truly embeddable interface for \OpenSees{}, as well as backward-compatible reimplementations of the original Tcl and OpenSeesPy interpreters. 
-The stable, encapsulated API exposed through \Xara{} package eliminates barriers to integration with modern machine learning toolchains like \Jax{} and PyTorch, which rely crucially on explicit state management. 
+Type~I simulations on the platform are enabled by \Xara{} (\cref{ch:xara}), a C++ runtime framework for implementing interpreters that has been merged into the central \OpenSees{} repository. 
+The stable, encapsulated API exposed through \Xara{} eliminates barriers to integration with modern machine learning toolchains like \Jax{} and PyTorch, which rely crucially on explicit state management. 
 This is central for implementing the developments of \cref{ch:autodiff}.
 
 \Cref{ch:autodiff} 
@@ -24,6 +23,6 @@ This library generates 3D models from \OpenSees{} simulations using the modern g
 % \paragraph{Merit (398/400 words).}
 
 \section{Closure}
-In May 2024, Caltrans renewed the \BRACE{} platform for a second development phase, expanding its coverage to bridges across California, and work is underway to grant access to over \textbf{40} Caltrans engineers. 
-The platform has processed over \textbf{150} seismic events since its initial deployment.
+In May 2024, Caltrans renewed the \BRACE{} platform for a second development phase, expanding its coverage to bridges across California, and work is underway to grant access to over 40 Caltrans engineers. 
+The platform has processed over 150 seismic events since its initial deployment.
 

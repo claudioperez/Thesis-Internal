@@ -13,13 +13,28 @@
     \label{fig:frame-0002}
 \end{figure}
 
-\begin{Note}
+The cantilever of \cref{fig:frame-0002} is loaded by a tip force~$H$. The  cross-section is a solid rectangle of width~$b$ and depth~$d$. 
 
-A typical instance is
-\[
-\HostParameters = (L,E,d,b),
-\qquad
-\]
+The cross-section is
+represented by a grid of $N$~integration points, each characterized by its a location $(y_k,z_k) \in\Section$ and weight $A_k$.
+
+The host parameters are the input data of the section (Box~\ref{box:prep}):
+\begin{equation*}
+    \corey = \bigl(L,\; E,\; y_1,\, z_1,\, A_1,\;\ldots,\;
+                    y_N,\, z_N,\, A_N\bigr)
+    \;\in\; \mathbb{R}^{2+3N},
+\end{equation*}
+where $E$ is Young's modulus. 
+The DDM can deliver
+$\partial u/\partial y_i$, where $u$ is the tip displacement.
+
+The analyst, however, is interested in the dependence of~$u$ on the
+section geometry:
+\begin{equation}\label{eq:example-host}
+    \haty = (L,\; E,\; b,\; d) \;\in\; \mathbb{R}^{4}.
+\end{equation}
+
+Thus the parameter map~$\ParameterMap$ is 
 \[
 \ParameterMap(\HostParameters)
 =
@@ -29,62 +44,12 @@ E,
 \mathcal F(d,b)
 \bigr),
 \]
-where \(\mathcal F(d,b)\) generates a fiber discretization from geometric dimensions.
-
-The kernel differentiates the response with respect to the native parameters
-\[
-\CoreParameters
-=
-\bigl(
-L,
-E,
-\mathcal F(d,b)
-\bigr),
-\]
-while the host differentiates the generator \(\mathcal F\). Therefore
-\[
-\D \bigl(\ResponseMap_{\ModelFamily}\circ\ParameterMap\bigr)(L,E,d,b)
-[\dot L,\dot E,\dot d,\dot b]
-=
-\D \ResponseMap_{\ModelFamily}\bigl(L,E,\mathcal F(d,b)\bigr)
-\Bigl[
-\D \ParameterMap(L,E,d,b)[\dot L,\dot E,\dot d,\dot b]
-\Bigr].
-\]
-This yields derivatives with respect to \(d\) and \(b\) even though \(d\) and \(b\) are not native kernel parameters.
-
-\end{Note}
-
-The cantilever of \cref{fig:frame-0002} is loaded by a tip force~$H$. The  cross-section is a solid rectangle of width~$b$ and depth~$d$. 
-
-The beam is modeled with fiber-section frame elements, so that the cross-section is
-represented by a grid of $N$~integration points, each characterized by its
-a location $(y_k,z_k) \in\Section$ and weight $A_k$.
-
-% \paragraph{Core parameters.}
-The quantities that enter the finite element residual directly are
-\begin{equation*}
-    \corey = \bigl(L,\; E,\; y_1,\, z_1,\, A_1,\;\ldots,\;
-                    y_N,\, z_N,\, A_N\bigr)
-    \;\in\; \mathbb{R}^{2+3N},
-\end{equation*}
-where $E$ is Young's modulus. 
-The DDM can deliver
-$\partial u/\partial y_i$ for each of these $2+3N$ parameters, where
-$u$ is the tip displacement.
-
-The analyst, however, is interested in the dependence of~$u$ on the
-section \emph{geometry}:
-\begin{equation}\label{eq:example-host}
-    \haty = (L,\; E,\; b,\; d) \;\in\; \mathbb{R}^{4}.
-\end{equation}
-
-The parameter map~$\Ymap$ generates the fiber layout from the section
-dimensions.  Given a regular $n_x \times n_y$ grid over the rectangle
+where \(\mathcal F(d,b)\) generates a fiber discretization from geometric dimensions. 
+Given a regular $n_x \times n_y$ grid over the rectangle
 $[-b/2,\,b/2]\times[-d/2,\,d/2]$, the fiber coordinates and areas
 are deterministic, differentiable functions of~$b$ and~$d$:
 \begin{equation*}
-    (b,\,d) \;\xmapsto{\;\Ymap\;}\;
+    (b,\,d) \;\xmapsto{\;\mathcal{F}\;}\;
     \bigl\{(y_k,\, z_k,\, A_k)\bigr\}_{k=1}^{N}.
 \end{equation*}
 
@@ -104,10 +69,9 @@ where the terms $\partial u/\partial y_k$,
 $\partial u/\partial z_k$, $\partial u/\partial A_k$ are provided by
 the DDM inside the kernel, and the terms
 $\partial y_k/\partial d$, $\partial z_k/\partial d$,
-$\partial A_k/\partial d$ are computed by AD of the fiber-generation
-function~$\Ymap$.
+$\partial A_k/\partial d$ are computed by \autodiff{} of the parameter map function~$\Ymap$.
 
-For the Euler--Bernoulli cantilever, the tip displacement under a
+The tip displacement under a
 point load~$H$ is
 \begin{equation*}
     u = \frac{H L^{3}}{3\,E\,I_y} + \frac{H\,L}{G\,A},
@@ -125,6 +89,7 @@ The derivative with respect to~$d$ is
 \end{equation*}
 and serves as a verification target.
 
+\subparagraph{Result.}
 The composed numerical gradient
 $\partial u/\partial d$ computed through the framework agrees with
 this expression to the precision of the fiber discretisation.

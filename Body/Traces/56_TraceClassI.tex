@@ -18,10 +18,17 @@ a rule for associating one-dimensional fields to a given the continuum displacem
 % \end{equation}
 % holds identically. 
 
-There are infinitely many traces that may exactly represent a given solution \(\hat{\bm u}_{\rm P}\) to a Saint-Venant problem, and each imparts a distinct physical meaning to boundary conditions like \(\bm{\theta}_{\mathcal{T}}(x_0) = \mathbf{0}\) in a finite element simulation. 
+There are infinitely many traces that may exactly represent a given particular solution \(\hat{\bm u}_{\rm P}\) to a Saint-Venant problem, and Each imparts a distinct physical meaning to boundary conditions like \(\bm{\theta}_{\mathcal{T}}(x_0) = \mathbf{0}\) in a finite element simulation with displacements differing by the rigid homogeneous solution \(\hat{\bm u}_{\rm R}\). 
 
+In general a trace \(\mathcal{T}\) may be defined as a functional which operates on continuum fields, as for example the geometric representation \eqref{eq:def-section-avg-trace}. 
+However, because we only require exact consistency under finite dimensional space of Saint~Venant solutions, we seek to identify traces by membership in the following equivalence class\footnote{Equivalence classes are expounded on, for example, by \cite{halmos1974finitedimensional}.}:
 
-\subsection{Class I: Kinematic Consistency}\label{sec:class-i}
+\begin{definition}[Saint~Venant Equivalence]
+\label{def:sv-equivalence}
+Two traces $\mathcal T_1,\mathcal T_2$ are \emph{Saint~Venant-equivalent} if
+$\mathcal T_1[\hat{\bm u}]=\mathcal T_2[\hat{\bm u}]$ for all $\hat{\bm u}\in\mathcal U_{\rm SV}$.
+% All ``trace matrix'' objects below characterize only the Saint~Venant-equivalence class.
+\end{definition}
 
 % \begin{definition}[Axial Traces]
 % \label{def:sv-trace}
@@ -78,6 +85,9 @@ There are infinitely many traces that may exactly represent a given solution \(\
 
 
 
+\subsection{Class I: Kinematic Consistency}\label{sec:class-i}
+
+
 It is natural to restrict attention to traces which exhibit the following properties:
 \begin{enumerate}
     \item Strain measures \(\bm{e}\) generated under Saint-Venant loading are at most linear in the axial coordinate $\reflenx$. 
@@ -94,13 +104,13 @@ A trace \(\mathcal{T}\) is called a \textbf{Class I} trace if:
     \item For all \(\hat{\bm u} \in \IesanMotions\oplus \RigidMotions\) the following relations are furnished by $x$-independent linear operators \(\TraceEvolveEE\),\(\TraceDeDpOne\), and \(\TraceStiffNM\in\mathrm{GL}(6)\):
     \begin{subequations}
     \begin{align}
-        \bm{e}'(x) & \eqqcolon \TraceEvolveEE\,\bm{e}(0) 
+        \TraceStrain'(x) & \eqqcolon \TraceEvolveEE\,\bm{e}(0) 
         \label{eq:req-t1} 
         \\ 
-        \partial_{\IesanVector}\bm{e}'(x) &\eqqcolon \TraceDeDpOne 
+        \partial_{\IesanVector}\TraceStrain'(x) &\eqqcolon \TraceDeDpOne 
         \label{eq:req-d1}
         \\ 
-        \partial_{\bm{e}} \snm(x) &\eqqcolon \TraceStiffNM 
+        \partial_{\TraceStrain} \snm(x) &\eqqcolon \TraceStiffNM 
         \label{eq:req-c1}
     \end{align}
     \label{eq:class-i-a}
@@ -119,9 +129,9 @@ A trace \(\mathcal{T}\) is called a \textbf{Class I} trace if:
 %
 % These conditions 
 
-Strains \(\bm{e}\) generated from a trace with the property \eqref{eq:class-i-a} can be written in the form:
+Strains \(\TraceStrain\) generated from a trace with the property \eqref{eq:class-i-a} can be written in the form:
 \begin{equation}
-\bm{e}(x) 
+\TraceStrain(x) 
 % = \TraceDeDpRoot(\mathbf{1} + x\TraceEvolveEP)\bm{p}
 =(\mathbf{1} + x\TraceEvolveEE)\TraceDeDpRoot\bm{p}
 \label{eq:def-T0}
@@ -432,7 +442,7 @@ This is addressed in \cref{sec:class-iii}.
 \end{remark}
 
 % \clearpage
-\subsection{Summary.}
+\subsection{Class~I Summary.}
 The Class I traces represent a family of beam theories parameterized by 16 constants (\cref{tab:trace-consts}) which are all capable of exactly representing Saint~Venant solutions through Type 1 beam finite elements.
 
 \begin{table}[H]

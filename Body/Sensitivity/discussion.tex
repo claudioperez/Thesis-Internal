@@ -2,36 +2,55 @@
 \section{Discussion}
 \label{sec:discussion}
 
+The framework rests on a separation of responsibilities between
+four layers:
+\begin{itemize}
+\item 
+% \paragraph{Kernel primitive.}
+The finite element library exposes the model map~$\Mmap$ as a
+\emph{differentiable primitive}---an atomic operation whose primal
+evaluation, JVP rule, and VJP rule are each implemented internally
+using the DDM.  
+From the perspective of the \autodiff{} framework, $\Mmap$ is
+a black box with known first-order differential structure. 
 
-Several features of the framework are worth highlighting.
+\item
+% \paragraph{Host parameter map.}
+The user writes the parameter map~$\Ymap$ in the host language as
+ordinary, unrestricted code.  
+No special annotation or manual
+derivative is required; the \autodiff{} framework differentiates~$\Ymap$
+automatically.
 
-\paragraph{Separation of concerns.}
+\item The binding layer...
+
+\item
+% \paragraph{Automatic composition.}
+The \autodiff{} framework composes the two layers by the chain
+rule~\eqref{eq:composed-jacobian}.  
+From the user's perspective, the result
+is a single differentiable function
+$\Tmap : \haty \mapsto \ModelState$ that can be passed directly to any
+gradient-based algorithm without further manual derivation.
+\end{itemize}
+
+
+The primary consequence of this decomposition is that extending the
+sensitivity analysis to new parameterizations requires changes only in
+the host code; the kernel primitive remains fixed.  
+Conversely, improvements to the finite element solver or the DDM implementation
+propagate automatically to every host-level workflow that uses the primitive.
+
+
 The kernel developer implements the DDM once, exposing $\Mmap$ and its
-differential rules as a fixed primitive.  The end user writes the
-parameter map~$\Ymap$ in unrestricted host code and obtains
-end-to-end gradients automatically.  
-Neither party needs to know the internals of the other's contribution.
+differential rules as a fixed primitive.  
+The end user writes the parameter map~$\Ymap$ in unrestricted host code and obtains end-to-end gradients automatically.  
 
-\paragraph{Generality.}
+
 The decomposition $\Tmap = \Mmap \circ \Ymap$ is not restricted to
 static analysis or to any particular element type. 
-Any analysis
-procedure that can be expressed as a differentiable primitive---linear
-or nonlinear statics, transient dynamics, eigenvalue
-problems---fits into the same pattern.  
+Any analysis procedure that can be expressed as a differentiable primitive fits into the same pattern.  
 Likewise, the parameter
-map~$\Ymap$ can encode arbitrarily complex preprocessing logic:
-mesh generation, material homogenisation, stochastic field sampling,
+map~$\Ymap$ can encode arbitrarily complex pre-processing logic which may include 
+mesh generation, material homogenization, stochastic field sampling,
 or any combination thereof.
-
-\paragraph{Higher-order composition.}
-Because the composed map~$\Tmap$ is itself a differentiable function
-in the host framework, it can participate in further compositions.
-For instance, an objective function $J(\ModelState)$ defined in host code
-yields the fully differentiable pipeline
-\begin{equation}\label{eq:full-pipeline}
-    \haty \;\xmapsto{\;\Ymap\;}\; \corey
-    \;\xmapsto{\;\Mmap\;}\; \ModelState
-    \;\xmapsto{\;J\;}\; \mathbb{R},
-\end{equation}
-whose gradient $\nabla_{\haty} J$ is available via a single reverse-mode pass without any additional implementation.

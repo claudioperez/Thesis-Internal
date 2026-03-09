@@ -139,10 +139,8 @@ The computation proceeds in two stages:
           \end{equation}
 \end{enumerate}
 
-The cost of the JVP scales with~$\nhost$ (one tangent propagation per
-host-parameter direction), making forward mode efficient when the
-number of host parameters is small relative to the dimension of the
-state.
+The cost of the JVP scales with~$\nhost$, incurring one tangent propagation per
+host-parameter direction. Thus forward mode is efficient when the number of host parameters \(\nhost\) is small relative to the dimension of the state \(\nstate\).
 
 
 \subsection{Reverse mode: vector--Jacobian product}

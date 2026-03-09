@@ -3,6 +3,8 @@
 \input{notation/sensitivity}
 
 \begin{Note}
+Phrase this instead as an \emph{extension} of DDM.
+
     Premise:
     \begin{itemize}
         \item DDM is a popular approach for sensitivity in computational mechanics.
@@ -14,14 +16,27 @@
     \begin{itemize}
         \item \cite{mcdonnell2024geometrically}, \cite{brüls2008sensitivity}, \cite{arnold2007convergence}
     \end{itemize}
+
+Notation:
+\begin{itemize}
+    \item \(\ModelFamily\) is the fixed discrete model family.
+    \item \(\ParameterMap\) is the host-to-core parameterization.
+    \item \(\StateMap_{\ModelFamily}\) is the implicit state solution map.
+    \item \(\ResponseMap_{\ModelFamily}\) is the reduced response map.
+    \item \(\Tan{f}\) is the primal-tangent extension of a map \(f\).
+    \item \(\D f(x)[\dot x]\) is the Jacobian-vector product at a point.
+\end{itemize}
+
+Once \(\ModelFamily\) has been fixed, the subscript \(\ModelFamily\) may be omitted when no ambiguity is possible. This notation avoids overloading a single symbol such as \(M\) or \(T\) for several distinct objects.
+
 \end{Note}
 
-\input{Body/Sensitivity/newnew}
+\input{Body/Sensitivity/setting}
 \input{Body/Sensitivity/propagation}
 \input{Body/Sensitivity/examples}
 \input{Body/Sensitivity/discussion}
 
-\input{Body/Sensitivity/new}
+% \input{Body/Sensitivity/new}
 
 % \input{Body/Sensitivity/equilibrium}
 % \subsection{Discretization}

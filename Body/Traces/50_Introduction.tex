@@ -148,10 +148,10 @@ This ensures that constitutive response in the elastic regime is exactly represe
 \mathbb{C} = E(\bm{r}) \, \FrameBasis \otimes \FrameBasis + G(\bm{r}) \, \oneS
 \end{equation*}
 where the stress \(\StressVector\) and strain \(\StrainVector\) vectors are defined by \eqref{eq:def-stress-vector} and \eqref{eq:strain-tensor-decomp}, respectively. 
-This is a reasonable restriction for typical construction materials like steel and reinforced concrete, where Poisson's ratio is typically in the range \(0.23\)--\(0.27\).
+This is a reasonable restriction for typical composite sections like reinforced concrete, where Poisson's ratio of each material is typically in the range \(0.23\)--\(0.27\).
 
 \subsection{Resultant Evolution}
-Under the stated conditions, the continuum equilibrium equations admit the representation:
+Under the condition \eqref{eq:saint-venant-stress}, the continuum equilibrium equations admit the representation:
 \begin{subequations}
 \label{eq:sv-equilibrium}
 \begin{align}
@@ -160,7 +160,15 @@ Under the stated conditions, the continuum equilibrium equations admit the repre
 \bm{\tau}\cdot\bm\nu&=0 && \text{on }\SectionBoundary.
 \end{align}
 \end{subequations}
-Thus the stress resultants \(\snm \coloneq (N,\bm{F},T,\bm{M})\) form a first-order initial value problem:
+Thus the classical stress resultants \(\snm \coloneq (N,\bm{F},T,\bm{M})\) with
+\begin{equation}
+N \coloneq \int_\Section \sigma \dA, \qquad 
+\bm{F} \coloneq \int_\Section \bm{\tau} \dA, \qquad 
+T \coloneq \int_\Section (\FrameBasis \times \bm{r}) \cdot \bm{\tau} \dA, \qquad 
+\bm{M} \coloneq \int_\Section \bm{r} \times \bm{\sigma} \dA,
+\label{eq:resultant-defs}
+\end{equation}
+form a first-order initial value problem identical to Box~\ref{box:basic-shear}:
 \begin{equation}
 \left\{
 \begin{aligned}
@@ -190,10 +198,12 @@ where \(\mathbb{J}\) is the equilibrium generator:
 \end{bmatrix},
 \]
 \end{Details}
+
 Integrating \eqref{eq:equilibrium-ode} in view of the nilpotency \(\mathbb{J}^2 = \mathbf{0}\) furnishes:
-\begin{equation*}
+\begin{equation}
 \snm(x) = (\mathbf{1} + \reflenx\mathbb{J})\,\snm(0).
-\end{equation*}
+\label{eq:resultant-evolution}
+\end{equation}
 The resultants at \(\reflenx=0\) are parameterized by the six kinematic constants of the Saint~Venant particular solution \eqref{eq:iesan-general-solution}, furnishing the expression:
 \begin{equation}
 \snm(0) = \IesanStiff\IesanVector
@@ -271,8 +281,8 @@ Using $\IesanEvolveSP^2=\mathbf 0$:
 =\IesanStiff(\mathbf 1+x\IesanEvolveSP)\bm p,
 % \label{eq:snm-in-p}
 \end{equation*}
-\end{Details}
-\begin{Details}
+% \end{Details}
+% \begin{Details}
 Note:
 \begin{equation*}
 \mathbb{J}\IesanStiff = 

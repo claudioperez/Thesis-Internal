@@ -1,45 +1,38 @@
-\subsection{Parameter binding in the evaluation trace}
+\section{Parameter binding in the evaluation trace}
 \label{sec:parameter-binding}
+The preceding discussion treats the core parameter vector
+\(\CoreParameters\) as if its coordinates were already known. In a
+typical model-building workflow this identification is not immediate.
+A host variable may appear at different levels of the model description and may induce perturbations at many concrete locations in the discrete model. 
+A separate registration step is therefore needed to identify which kernel entries are controlled by each scalar
+coordinate.
 
-The differential formulas of Section~\ref{sec:differential} assume
-that the coordinates of \(\CoreParameters\) are already identified.
-In a model-building workflow this identification is itself part of the
-construction. A host variable is introduced during the evaluation of a
-model factory, is attached to one or more intermediate objects, and
-ultimately acts on one or more concrete parameter locations in the
-finite element kernel. The purpose of the present subsection is to
-describe this binding process in terms that are closer to the
-literature on automatic differentiation.
-
-\paragraph{Evaluation trace.}
 Let
 \[
 \HostParameters = (\hat y_1,\ldots,\hat y_{n_{\mathrm h}})
 \]
-denote the scalar host coordinates. The model factory is evaluated as
-a finite sequence of elementary construction operations. 
-This sequence may be regarded as an evaluation trace, or equivalently as a
-computational graph whose nodes are the intermediate objects created during model construction.
+denote the scalar host coordinates. 
+The model factory is evaluated as
+a finite sequence of elementary construction operations defining a computational graph \citep{frostig2018compiling} whose nodes are the intermediate objects created during model construction. 
 
-Let
+The set of model objects \(\mathcal{O}\) appearing in this trace is partitioned
+into materials, sections, fibers, and elements:
 \[
-\mathcal O
+\mathcal{O}
 =
-\mathcal O_{\mathrm{mat}}
+\mathcal{O}_{\mathrm{mat}}
 \cup
-\mathcal O_{\mathrm{sec}}
+\mathcal{O}_{\mathrm{sec}}
 \cup
-\mathcal O_{\mathrm{fib}}
+\mathcal{O}_{\mathrm{fib}}
 \cup
-\mathcal O_{\mathrm{ele}}
+\mathcal{O}_{\mathrm{ele}}
 \]
-denote the set of model objects appearing in this trace, partitioned
-into materials, sections, fibers, and elements. The trace induces a
-directed dependency relation on \(\mathcal O\). For example, a fiber
-depends on the section in which it is created, and an element depends
-on the section instances referenced in its definition.
+The trace induces a
+directed dependency relation on \(\mathcal{O}\). 
+For example, a fiber depends on the section in which it is created, and an element depends on the section instances referenced in its definition.
 
-\paragraph{Labelled coordinates.}
+\paragraph{Labeling and Binding.}
 Each scalar host coordinate is treated together with an identifying
 label,
 \[
@@ -51,41 +44,42 @@ symbolic name. The value \(\hat y_i\) is used in the primal
 construction, while \((i,\nu_i)\) records the identity of the
 coordinate in the differential structure.
 
-\paragraph{Binding.}
-When a labelled coordinate \(\pi_i\) appears in the evaluation trace,
+% \paragraph{Binding.}
+When a labeled coordinate \(\pi_i\) appears in the evaluation trace,
 it is bound to an object
 \[
-a_i \in \mathcal O,
+a_i \in \mathcal{O},
 \]
 called its anchor. The anchor specifies the level at which the
-coordinate enters the model description. A modulus may be anchored at
+coordinate enters the model description. 
+A material constant may be anchored at
 a material object, a geometric parameter at a section object, and a
-fiber area at a fiber object.
+fiber area at a fiber object. 
 
 The evaluation trace then propagates this dependence downstream
-through the computational graph. In this way, one obtains the set of
-all concrete parameter locations in the kernel that are controlled by
+through the computational graph. 
+In this way, one obtains the set of all concrete parameter locations in the kernel that are controlled by
 coordinate \(i\).
 
 \paragraph{Kernel addresses.}
-Let \(\mathcal A\) denote the set of admissible kernel addresses. An
-address \(\alpha \in \mathcal A\) identifies a concrete parameter slot
+Let \(\mathcal{A}\) denote the set of admissible kernel addresses. 
+An
+address \(\alpha \in \mathcal{A}\) identifies a parameter slot
 in the assembled model, for example a material parameter at a given
 section point within a given element, or a fiber attribute within a
-section occurrence.
-
+section occurrence. 
 The binding process determines a set-valued map
 \[
-\mathcal B : \{1,\ldots,n_{\mathrm h}\} \to 2^{\mathcal A},
+\mathcal{B} : \{1,\ldots,n_{\mathrm h}\} \to 2^{\mathcal{A}},
 \]
-where \(\mathcal B(i)\) is the set of all kernel addresses reached by
-following the dependency graph outward from the anchor \(a_i\).
-Accordingly, \(\mathcal B(i)\) is the support of the global coordinate
-\(i\) in the assembled model.
+where \(\mathcal{B}(i)\) is the set of all kernel addresses reached by
+following the dependency graph outward from the anchor \(a_i\) 
+and \(2^{\mathcal{A}}\) is the power set of \(\mathcal{A}\) \citep{halmosNaiveSetTheory1998}.
 
-\paragraph{Meaning of a core coordinate.}
-Once the binding map \(\mathcal B\) has been resolved, the host
-coordinates acquire a concrete realization in the kernel. In the
+
+Once the binding map \(\mathcal{B}\) has been resolved, the host
+coordinates acquire a concrete realization in the kernel. 
+In the
 simplest case one identifies
 \[
 \CoreParameters = (y_1,\ldots,y_{n_{\mathrm c}}),
@@ -95,18 +89,18 @@ n_{\mathrm c}=n_{\mathrm h},
 y_i=\hat y_i,
 \]
 so that the host and kernel use the same scalar coordinates, but the
-binding map \(\mathcal B\) specifies where each coordinate acts in the
+binding map \(\mathcal{B}\) specifies where each coordinate acts in the
 assembled model.
 
-With this interpretation, the derivative
-\[
-\frac{\partial \ResponseMap_{\ModelFamily}}{\partial y_i}
-\]
-means the sensitivity obtained by perturbing simultaneously every
-kernel address in \(\mathcal B(i)\), while holding all remaining
-coordinates fixed. Thus the kernel derivative is not attached to a
-single local slot, but to the full support of a global coordinate
-throughout the evaluation trace.
+% With this interpretation, the derivative
+% \[
+% \frac{\partial \ResponseMap_{\ModelFamily}}{\partial y_i}
+% \]
+% means the sensitivity obtained by perturbing simultaneously every
+% kernel address in \(\mathcal{B}(i)\), while holding all remaining
+% coordinates fixed. Thus the kernel derivative is not attached to a
+% single local slot, but to the full support of a global coordinate
+% throughout the evaluation trace.
 
 \paragraph{Forward contraction.}
 The forward differential therefore takes the form
@@ -122,22 +116,12 @@ addresses associated with coordinate \(i\). The host layer determines
 the perturbation coefficients \(\dot y_i\), while the kernel layer
 evaluates the corresponding directional effect on the response.
 
-\paragraph{Role in the overall framework.}
-The binding map does not alter the chain rule of
-Section~\ref{sec:differential}. Its role is more basic. It identifies
-the coordinates with respect to which the kernel derivative is to be
-understood. In automatic-differentiation language, it supplies the
-missing connection between the host-side evaluation trace and the
-kernel-side response map by recording how labelled host coordinates
-are bound to concrete parameter addresses in the assembled finite
-element model.
 
 \begin{remark}
 The preceding description assumes that the evaluation trace produces a
-fixed model topology. Under this assumption the binding map
-\(\mathcal B\) is locally constant, and the composite response is
-differentiable in the usual sense. If the topology itself changes with
+fixed model topology. 
+Under this assumption the binding map \(\mathcal{B}\) is locally constant, and the composite response is differentiable in the usual sense. 
+If the topology itself changes with
 the host parameters, then the map \(\ParameterMap\) is only piecewise
-smooth, and the resulting differential structure requires additional
-care.
+smooth, and the resulting differential structure requires additional care.
 \end{remark}

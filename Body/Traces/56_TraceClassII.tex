@@ -1,4 +1,5 @@
-
+A general procedure for implementing the Class~I traces parameterized by \cref{tab:trace-consts} in the setting of \cref{sec:genwarp} will be developed in \cref{sec:trace-shapes}. 
+However, before this, two special cases of the Class~I traces are investigated.
 
 \subsection{Class II: Equilibrium Consistency}\label{sec:class-ii}
 The traces that fall under Class I are capable of exactly representing Saint~Venant's solutions in a standard finite element context, but without further restriction they may still exhibit certain undesirable properties.
@@ -8,62 +9,79 @@ In particular, [TODO: elaborate]
     \item Nodal loads
 \end{itemize}
 
-The conjugate stiffness is constructed from the material strain energy:
+The strain measures \(\TraceStrain\) associated to a trace \(\mathcal{T}\) define work conjugate resultants \(\TraceStress\) through the relation 
+\[
+\left<\TraceStress,\,\delta\TraceStrain\right> = \left<\StressVector,\,\delta\StrainVector\right>
+\]
+Thus the conjugate resultants \(\TraceStress\) are generally distinct from the classical resultants \(\snm\) of \eqref{eq:resultant-defs} and do not necessarily follow the evolution \eqref{eq:resultant-evolution}. 
+Thus a section constitutive model that returns \(\snm\) in the setting of Box~\ref{box:basic-shear} may be variationally incompatible, but one returning \(\TraceStress\) may violate continuum consistency. 
+The former is not ideal, but nonetheless will produce a continuum exact representation as demonstrated in Example~\ref{sec:frame-0012}. 
+The latter would appear unjustifiable unless it can be shown that the conjugate resultants of the trace \(\TraceStress\) satisfy the evolution \eqref{eq:equilibrium-ode}. 
+The subset of Class~I traces for which this holds 
+
+\begin{definition}[Class II]\label{def:class-ii}
+A Class I trace \(\mathcal{T}\) is a \textbf{Class II} trace if the energy-conjugate resultants $\TraceStress$ satisfy the same equilibrium as the classical resultants \eqref{eq:equilibrium-ode}:
+\begin{equation}
+\TraceStress' = \mathbb{J}\,\TraceStress.
+\label{eq:sbar-equilibrium}
+\end{equation}
+\end{definition}
+
+Evidently the conjugate resultants \(\TraceStress\) will depend linearly on the trace deformations \(\TraceStrain\) through a linear operator \(\bar{\mathbf{C}}_T(x)\) defined by:
+% The conjugate stiffness is constructed from the material strain energy:
 \begin{equation}
 \mathcal{U}(x) \coloneq \tfrac{1}{2}\int_\Section \bm{\varepsilon}\cdot \mathbb{C}\, \bm{\varepsilon}\dA 
 = \tfrac{1}{2}\bm{e}\cdot \bar{\mathbf{C}}_T(x)\,\bm{e},
 \label{eq:energy-conjugacy-def}
 \end{equation}
-
-
-\begin{definition}[Class II]\label{def:class-ii}
-A Class I trace \(\mathcal{T}\) is a \textbf{Class II} trace if the energy-conjugate resultants $\bar{\bm{s}}$ satisfy the same equilibrium as the classical resultants \eqref{eq:equilibrium-ode}:
-\begin{equation}
-\bar{\bm{s}}' = \mathbb{J}\,\bar{\bm{s}}.
-\label{eq:sbar-equilibrium}
-\end{equation}
-\end{definition}
-
+The \emph{conjugate resultant stiffness} \(\bar{\mathbf{C}}_T(x)\) is said to be \emph{prismatic} if it is independent of \(\reflenx\). 
+Evidently, through inheritance of the Class~I property \eqref{eq:req-c1}, every \(\bar{\mathbf{C}}_T(x)\) in Class~II is prismatic.
 
 \begin{remark}
-Prismatic $\mathbf{C}_T$ implies prismatic $\bar{\mathbf{C}}_T$ but the converse does not hold. 
+Prismatic $\TraceStiffNM$ implies prismatic $\bar{\mathbf{C}}_T$ but the converse does not hold. 
 Prismatic $\bar{\mathbf{C}}_T$ with non-prismatic 
-$\mathbf{C}_T$ requires $\TraceEvolveEP - \IesanEvolveSP \neq \mathbf{0}$ 
-but $\IesanEnergy$-skew. This is an exceptional situation. 
+% $\TraceStiffNM$ requires $\TraceDpDeRoot\TraceDeDpOne - \IesanEvolveSP \neq \mathbf{0}$ 
+% but $\IesanEnergy$-skew. This is an exceptional situation. 
 \end{remark}
 
 % \begin{proposition}[S2. Equilibrium-Conjugate]
 % \label{prop:equilibrium-compatibility}
-Let $\mathbf{C}_T$ and $\bar{\mathbf{C}}_T$ be prismatic (C2). 
+% Let $\mathbf{C}_T$ and $\bar{\mathbf{C}}_T$ be prismatic. 
 The condition 
 \eqref{eq:sbar-equilibrium} holds if and only if
 \begin{equation}
-[\bar{\mathbf{G}}(x), \mathbb{J}] = \mathbf{0}, \qquad 
-\bar{\mathbf{G}} \coloneq \bar{\mathbf{C}}_T(x)\,\mathbf{C}_T^{-1}(x)
+[\bar{\mathbf{G}}, \mathbb{J}] = \mathbf{0}, 
+\quad \text{with}\quad
+\bar{\mathbf{G}} \coloneq \bar{\mathbf{C}}_T\,\mathbf{C}_T^{-1}
 \qquad\forall x.
 \label{eq:commutator-condition}
 \end{equation}
-% \end{proposition}
-
+where \([\cdot,\,\cdot]\) is the commutator \citep{abraham1988manifolds}. 
+% \end{proposition} 
 % \begin{proof}
-With prismatic stiffnesses, $\bar{\bm{s}} = \bar{\mathbf{C}}\,\bm{e}$ and 
-$\snm = \mathbf{C}_T\,\bm{e}$, so $\bar{\bm{s}} = \bar{\mathbf{G}}\,\snm$. 
+A proof is as follows. 
+With prismatic stiffnesses, $\TraceStress = \bar{\mathbf{C}}\,\bm{e}$ and 
+$\snm = \mathbf{C}_T\,\bm{e}$, so $\TraceStress = \bar{\mathbf{G}}\,\snm$. 
 From \eqref{eq:equilibrium-ode}:
 \begin{equation*}
-\bar{\bm{s}}' = \bar{\mathbf{G}}\,\snm' = \bar{\mathbf{G}}\,\mathbb{J}\,\snm 
-= \bar{\mathbf{G}}\,\mathbb{J}\,\bar{\mathbf{G}}^{-1}\,\bar{\bm{s}}.
+\TraceStress' = \bar{\mathbf{G}}\,\snm' = \bar{\mathbf{G}}\,\mathbb{J}\,\snm 
+= \bar{\mathbf{G}}\,\mathbb{J}\,\bar{\mathbf{G}}^{-1}\,\TraceStress.
 \end{equation*}
-For this to equal $\mathbb{J}\,\bar{\bm{s}}$, we require 
-$\bar{\mathbf{G}}\,\mathbb{J}\,\bar{\mathbf{G}}^{-1} = \mathbb{J}$, i.e., 
-$[\bar{\mathbf{G}}, \mathbb{J}] = \mathbf{0}$. 
+The equality \eqref{eq:sbar-equilibrium} thus requires 
+\[
+\bar{\mathbf{G}}\,\mathbb{J}\,\bar{\mathbf{G}}^{-1} = \mathbb{J}
+\qquad\implies\qquad
+[\bar{\mathbf{G}}, \mathbb{J}] = \mathbf{0}.
+\]
 % \end{proof}
 %
 The set of all matrices satisfying \eqref{eq:commutator-condition} comprise the equilibrium invariance group $G$:
 \[
 G \coloneq \bigl\{\,\mathbf{K} \in \mathrm{GL}(6) \;\big|\; [\mathbf{K},\mathbb{J}] = 0\,\bigr\}.
 \]
-This further restricts the space of trace matrices \(\TraceDeDpRoot\) to a nonlinear sub-manifold, for which a clean structure like that obtained under \eqref{eq:req-p1} does not exist.
+This restricts the space of Class~II trace matrices \(\TraceDeDpRoot\) to a nonlinear sub-manifold, for which a clean parameterization like that of \cref{tab:trace-consts} does not exist.
 However, it is possible to conveniently parameterize a subset of these traces, by first identifying a reference trace \(\mathcal{T}_R\) in the class. 
+The Class~III trace developed in the following section provides such a reference. 
 
 
 \subsection{Class III: Variational Consistency}\label{sec:class-iii}
@@ -72,7 +90,7 @@ A final restriction is now considered which eliminates all remaining free parame
 \begin{definition}[Class III]\label{def:class-iii}
 A Class I trace is a \textbf{Class III} trace if the conjugate resultants \(\TraceTotalEnergyStress\) are exactly the classical rigid-section resultants \(\snm\):
 \begin{equation}
-    \bar{\bm{s}} \equiv \snm .
+    \TraceStress \equiv \snm .
     \label{eq:def-s3}
 \end{equation}
 \end{definition}
@@ -83,39 +101,49 @@ All Class III traces are equivalent in the Saint~Venant class, with trace matrix
 \TraceDeDpRoot = \IesanStiff^{-\top} \IesanEnergy
 \label{eq:T0-formula}
 \end{equation}
-
+where \(\IesanEnergy\) is furnished by \eqref{eq:def-iesan-energy}.
 % \end{proposition}
 % \begin{proof}
-For a Class I trace with $\bm{e}(x) = \TraceDeDpRoot \exp(x\IesanEvolveSP)\bm{p}$, 
-the energy tangent \eqref{eq:energy-conjugacy-def} becomes:
+The demonstration is as follows. 
+For a Class I trace with $\TraceStrain(x)$ following \eqref{eq:def-T0}, 
+the conjugate stiffness \eqref{eq:energy-conjugacy-def} is:
 \begin{equation*}
 \delta\bm{p}\cdot \left(\mathbf{1} + x\TraceEvolveEP^\top\right) \TraceDeDpRoot^\top \bm{s}(x) 
 = \delta\bm{p}\cdot \left(\mathbf{1} + x\TraceEvolveEP^\top\right) \IesanEnergy\, \left(\mathbf{1} + x\TraceEvolveEP\right) \bm{p}.
 \end{equation*}
-Since this must hold for all $\bm{p}$, the class requires:
+% with \(\TraceEvolveEP \coloneq\TraceDpDeRoot\TraceDeDpOne\). 
+Since this must hold for all $\IesanVector$, the class requires:
 \begin{equation*}
-\TraceDeDpRoot^\top \mathbf{R}(x) = \IesanEnergy\, \left(\mathbf{1} + x\TraceEvolveEP\right).
+\TraceDeDpRoot^\top \IesanStiff(1+x\IesanEvolveSP) = \IesanEnergy\, \left(\mathbf{1} + x\TraceEvolveEP\right).
 % \label{eq:conjugacy-condition}
-\end{equation*}
-with \(\IesanEnergy\) furnished by \eqref{eq:def-iesan-energy}. 
+\end{equation*} 
+with \(\mathbf{R}(x)=\IesanStiff(1+x\IesanEvolveSP).\)
 Expanding both sides using $\left(\mathbf{1} + x\TraceEvolveEP\right) = \mathbf{1} + x\IesanEvolveSP$ and 
-matching powers of $x$:
+matching powers of $x$ produces:
 \begin{align*}
 x^0: \qquad & \TraceDeDpRoot^\top \IesanStiff = \IesanEnergy, 
 \\ %\label{eq:x0-condition} \\[4pt]
-x^1: \qquad & \TraceDeDpRoot^\top \mathbf{R}_1 = \IesanEnergy\,\IesanEvolveSP.
+x^1: \qquad & \TraceDeDpRoot^\top 
+\TraceStiffNM\TraceDeDpOne% \mathbf{R}_1
+= \IesanEnergy\,\IesanEvolveSP.
 % \label{eq:x1-condition}
 \end{align*}
-Consistency in \(x^0\) requires:
+Consistency in \(x^0\) furnishes the identification of \(\TraceDeDpRoot\):
 \begin{equation*}
 \TraceDeDpRoot = \IesanStiff^{-\top} \IesanEnergy
 % \label{eq:T0-formula}
 \end{equation*}
 The linear evolution \(x^1\) yields the consistency condition:
 \begin{equation}
-\IesanEnergy\,\IesanStiff^{-1} \mathbf{R}_1 = \IesanEnergy\,\IesanEvolveSP
+\IesanEnergy\,\IesanStiff^{-1} 
+\TraceStiffNM\TraceDeDpOne% \mathbf{R}_1 
+= \IesanEnergy\,\IesanEvolveSP
 \qquad \Longrightarrow \qquad 
-\IesanStiff^{-1} \mathbf{R}_1 = \IesanEvolveSP
+\IesanStiff^{-1} 
+\TraceStiffNM\TraceDeDpOne%\mathbf{R}_1
+= \IesanEvolveSP
 \label{eq:consistency-condition}
 \end{equation}
 % \end{proof}
+
+Explicit expressions for the parameters (\cref{tab:trace-consts}) identifying the Class~III trace matrix \(\TraceDpDeRoot\) for a given cross section and material composition are derived in \cref{sec:trace-energy} and collected in \eqref{eq:energetic-trace-blocks}.

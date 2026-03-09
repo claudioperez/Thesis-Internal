@@ -5,6 +5,10 @@
 %     \hat{u}_z &= \frac{-M}{EI} yz
 % \end{aligned}
 % \]
+
+\subparagraph{Setup.}
+
+
 \begin{figure}[H]
     \centering
     \begin{subfigure}[c]{0.6\linewidth}
@@ -13,11 +17,36 @@
     \begin{subfigure}[c]{0.3\linewidth}
         \SectionFigure[width=\linewidth]{HalfFlange}
     \end{subfigure}
-    \caption{Model  for Example~\ref{sec:frame-0001}.}
+    \caption{Model for Example~\ref{sec:frame-0001}.}
     \label{fig:frame-0001}
 \end{figure}
 
-\begin{figure}
+The cantilever of \cref{fig:frame-0001} is loaded by a tip force~$H$. 
+The cross-section is a single-flange ``T'' shape characterized by the flange width \(b_f\), depth \(d\), flange thickness \(t_f\), and web thickness \(t_w\). 
+The simulation employs simple elastic cross section model for which the area \(A\), Young's modulus \(E\), and second moment of area \(I\), are directly supplied as input data. 
+Thus the core parameters are 
+\[
+\CoreParameters = (E,I,A)
+\]
+In a model updating procedure, the material parameter \(E\) and section dimensions \(b_f, d, t_f, t_w\) furnish a natural parameterization for which gradients would be desired. 
+Thus the host parameters are taken as 
+\[
+\HostParameters = (E, b_f, b_w, t_f, t_w)
+\]
+with \(b_w \coloneq d - t_f\), 
+for which the parameter map is 
+\[
+\ParameterMap \colon \HostParameters \mapsto \Big(\ParameterMap_A(\HostParameters),\;\ParameterMap_I(\HostParameters)\Big)
+\quad\text{with}\quad 
+\begin{aligned}
+    \ParameterMap_A(\HostParameters) &= b_wt_w + b_ft_f \\
+    \ParameterMap_I(\HostParameters) &= \tfrac13 t_w(d_w+t_f)^3 + \tfrac13 (b_f-t_w)t_f^3 - \ParameterMap_A(\HostParameters) \,\bar{y}(\HostParameters)^2 \\
+    \bar{y}((\HostParameters) &= \frac{1}{2\ParameterMap_A(\HostParameters)}t_w(d_w+t_w)^2 + (b_f-t_w)t_f^2
+\end{aligned}
+\]
+\Cref{fig:area-graph} illustrates the computational graph induced by \(\ParameterMap_A\).
+
+\begin{figure}[H]
 \hypertarget{fig:area-graph}{%
 \centering
 \includegraphics{Examples/frame-0001/img/area.pdf}

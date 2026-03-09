@@ -1,5 +1,11 @@
-
 \section{Enhanced Shapes}\label{sec:trace-shapes}
+In view of the developments in \cref{sec:trace}, any Class~I (including Class~II and Class~III as subsets) trace is representable without any auxiliary fields by a finite element that models the system of Box~\ref{box:basic-shear}. 
+However, the consistency condition \eqref{eq:enhan-cii} is only meaningful for Class~II (with Class~III as a subset). 
+Thus, in the following developments we derive enhanced strain shapes of the form \eqref{eq:enhan-strain} 
+for the general Class~I family parameterized by \cref{tab:trace-consts} and only impose \eqref{eq:enhan-cii} for traces of Class~II. 
+The resulting section model is generally non-variational for any trace outside of Class~II. 
+% Thus the complete iterative procedure of Box~\ref{box:impl} which imposes \eqref{eq:enhan-cii}.
+
 
 In the absence of auxiliary warping fields, the  linearized compatible section kinematic operator \eqref{eq:def-section-kinematic-matrix-Phi} is
 \begin{equation*}
@@ -9,7 +15,7 @@ In the absence of auxiliary warping fields, the  linearized compatible section k
 \end{bmatrix}_{3\times6} 
 \end{aligned}
 \end{equation*}
-In view of the Saint~Venant strains \eqref{eq:iesan-point-strain}, the enhanced shapes must take the form:
+In view of the Saint~Venant strain field \eqref{eq:iesan-point-strain}, the enhanced shapes must take the form:
 \begin{SaveEquation}{eq:uniform-shapes}
 \EnhanShapes = \RigidStrainMatrix\RigidShift + \WarpStrainMatrix\ShapeShift
 \qquad\text{with}\qquad
@@ -26,12 +32,13 @@ where \(\RigidShift\) and \(\ShapeShift\) are constant matrices, and the functio
 % \begin{SaveEquation}{eq:eps-B-e}
 % \StrainVector(\reflenx,\bm{r}) = \Big(\RigidStrainMatrix  + \RigidStrainMatrix\RigidShift + \WarpStrainMatrix \ShapeShift\Big) \,\bm{e}(\reflenx)
 % \end{SaveEquation}
-In view of \eqref{eq:def-T0}, the strain at \(\reflenx=0\) is:
+Because all Class~I traces generate deformations \(\TraceStrain\) that evolve with the form \eqref{eq:def-T0}, 
+it is sufficient to match the \(\reflenx\)-constant strain field represented by \(\bm{\varepsilon}(0,\bm{r})\):
 \begin{equation}
 \bm{\varepsilon}(0,\bm{r}) = \Big(\RigidStrainMatrix (\bm{r})(\mathbf{1} + \RigidShift) + \WarpStrainMatrix(\bm{r})\ShapeShift\Big) \,\TraceDeDpRoot \bm{p}
 \label{eq:trace-strain}
 \end{equation}
-Equating the \(\reflenx\)-constant strains in \eqref{eq:iesan-point-strain} with \eqref{eq:trace-strain} and exploiting the block structure of \(\TraceDpDeRoot\) \eqref{eq:T0-inv} furnishes:
+Equating the \(\reflenx\)-constant strains in \eqref{eq:iesan-point-strain} with \eqref{eq:trace-strain} and exploiting the block structure of \(\TraceDpDeRoot\) \eqref{eq:T0-inv} furnishes after a lengthy but otherwise straightforward manipulation:
 \begin{equation}
 \RigidShift = \begin{bmatrix}
 \FrameBasis\otimes\ShiftN - \oneS & \ShiftScaleN\FrameBasis\otimes\FrameBasis %+ \FrameBasis\otimes(\CenterTrace\times\FrameBasis) 
@@ -52,21 +59,21 @@ and
 \label{eq:class-i-La}
 \end{equation}
 
-In a Petrov-Galerkin formulation the stress resultants are furnished by 
-\begin{SaveEquation}{eq:petrov-section}
-\begin{aligned}
-    \bm{s} &= \int \TotalStrainMatrix^{\top}\StressVector(\StrainVector)\dA\\
-    \TraceStiffNM &= \int \RigidStrainMatrix^{\top}\StressVectorTangent\Big(\TotalStrainMatrix + \EnhanShapes\Big)\dA + \Kwg \\
-\end{aligned}
-\end{SaveEquation}
-where \(\Kwg\) is the contribution from the Wagner term \eqref{eq:section-wagner-tangent}:
+% In a Petrov-Galerkin formulation the stress resultants are furnished by 
+% \begin{SaveEquation}{eq:petrov-section}
+% \begin{aligned}
+%     \bm{s} &= \int \TotalStrainMatrix^{\top}\StressVector(\StrainVector)\dA\\
+%     \TraceStiffNM &= \int \RigidStrainMatrix^{\top}\StressVectorTangent\Big(\TotalStrainMatrix + \EnhanShapes\Big)\dA + \Kwg \\
+% \end{aligned}
+% \end{SaveEquation}
+% where \(\Kwg\) is the contribution from the Wagner term \eqref{eq:section-wagner-tangent}:
 
 
-In a Bubnov-Galerkin formulation, the stress resultants and tangent are:
-\begin{SaveEquation}{eq:bubnov-section}
-\begin{aligned}
-\TraceTotalEnergyStress &= (\mathbf{1} + \RigidShift^{\top})\snm + \ShapeShift^{\top}\int \WarpStrainMatrix^{\top}\StressVector(\StrainVector)\dA \\
-\bar{\mathbf{C}}_T &= \int \Big(\RigidStrainMatrix (\mathbf{1} + \RigidShift) + \WarpStrainMatrix \ShapeShift\Big)^{\top}\StressVectorTangent\Big(\RigidStrainMatrix (\mathbf{1} + \RigidShift) + \WarpStrainMatrix \ShapeShift\Big)\dA
-\end{aligned}
-\end{SaveEquation}
+% In a Bubnov-Galerkin formulation, the stress resultants and tangent are:
+% \begin{SaveEquation}{eq:bubnov-section}
+% \begin{aligned}
+% \TraceTotalEnergyStress &= (\mathbf{1} + \RigidShift^{\top})\snm + \ShapeShift^{\top}\int \WarpStrainMatrix^{\top}\StressVector(\StrainVector)\dA \\
+% \bar{\mathbf{C}}_T &= \int \Big(\RigidStrainMatrix (\mathbf{1} + \RigidShift) + \WarpStrainMatrix \ShapeShift\Big)^{\top}\StressVectorTangent\Big(\RigidStrainMatrix (\mathbf{1} + \RigidShift) + \WarpStrainMatrix \ShapeShift\Big)\dA
+% \end{aligned}
+% \end{SaveEquation}
 

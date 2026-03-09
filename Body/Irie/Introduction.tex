@@ -46,7 +46,8 @@ absorb new element formulations, identification techniques, and
 computing paradigms as they emerge. Previous frameworks have
 demonstrated how careful separation of concerns and disciplined use of
 composition can yield simulation environments that remain viable across
-multiple research generations. Building on that lineage, the present
+multiple research generations \citep{mckenna1997object,scott2004software}. 
+Building on that lineage, the present
 framework unifies physics‑based prediction and data‑driven inference
 behind a common set of abstractions---\textbf{Asset, Event, Predictor,
 Metric,} and \textbf{Evaluation}---so that analysts can mix and match
@@ -54,7 +55,8 @@ numerical engines without rewriting orchestration logic.
 
 Each abstraction is realized through a modest interface that hides
 implementation details while exposing the minimum behavior required for
-collaboration. Predictors, for example, are interchangeable whether they
+collaboration. 
+Predictors, for example, are interchangeable whether they
 wrap a nonlinear time‑history analysis or a stochastic
 subspace‑identification routine; both accept the same event records and
 both emit metrics in a standard format understood by the evaluation

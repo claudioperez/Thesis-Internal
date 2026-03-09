@@ -1,36 +1,45 @@
 
-The digital twin concept has emerged as a significant development in the realm of structural health monitoring that holds substantial promise for transforming infrastructure maintenance, especially for bridges, which are integral to our transportation networks. %particular relevance to bridge structures, among other applications \cite{alibrandi2022riskinformed}. 
+The digital twin concept has emerged as a significant development in the realm of structural health monitoring that holds substantial promise for transforming infrastructure maintenance, especially for bridges, which are integral to  transportation networks \cite{alibrandi2022riskinformed,torzoni2024digital}. %particular relevance to bridge structures, among other applications \cite{alibrandi2022riskinformed}. 
 %A digital twin is essentially a dynamic software model that reflects the physical state of a structure, facilitating real-time monitoring and prediction of its performance and health \cite{garter}. 
 % This concept holds substantial promise for transforming infrastructure maintenance, especially for bridges, which are integral to our transportation networks.
-However, the path to actualizing this concept in practice is fraught with challenges. The literature, while replete with promising studies, lacks a unified understanding for the responsibilities of a digital twin, leading to disparate interpretations of its role and functionality. Moreover, the swift progression of artificial intelligence in this field poses an additional challenge, as it necessitates the development of solutions that can adapt to a rapidly evolving technological landscape.
+However, the path to actualizing this concept in practice is fraught with challenges. 
+The literature, while replete with promising studies, lacks a unified understanding for the responsibilities of a digital twin, leading to disparate interpretations of its role and functionality. 
+Moreover, the swift progression of artificial intelligence in this field poses an additional challenge, as it necessitates the development of solutions that can adapt to a rapidly evolving technological landscape.
 
-To address these issues, this study seeks to delineate the objectives of digital twins and structural health monitoring clearly, in order to facilitate the coherent implementation of state-of-the-art ideas \citep{kapteyn2021probabilistic, torzoni2024digital}, in a framework that aims to remain readily adaptable to the continual advances in machine learning technology. 
-We propose a framework comprising five fundamental abstractions—\glspl{asset}, \glspl{predictor}, \glspl{event}, \glspl{evaluation}, and \glspl{metric}—that can guide the development of scalable and enduring software platforms. This framework is designed to accommodate the fluidity of artificial intelligence advancements while maintaining a steadfast focus on the core objectives of structural health monitoring.
+To address these issues, this study seeks to delineate the objectives of digital twins and structural health monitoring, in order to facilitate the coherent implementation of emerging advancements \citep{kapteyn2021probabilistic,torzoni2024digital}, in a framework that aims to remain readily adaptable to the continual advances in machine learning technology. 
+We propose a framework comprising five fundamental abstractions that guide the development of scalable and enduring software platforms. 
+This framework is designed to accommodate the fluidity of artificial intelligence advancements while maintaining a steadfast focus on the core objectives of structural health monitoring.
 % - Add willcox's definition
 % - change to discuss how there may be a consensus forming around definition, but in practice many new developments still fail to fit together in a tangible or coherent framework.
 The proposed framework is compatible with the myriad procedures proposed in
 the literature, and facilitates their robust implementation
 as part of a cohesive commercial-grade software platform.
 % This framework is not intended to supersede existing literature but to build upon it. 
-By offering a software platform that supports the implementation of a broad range of existing methods, we aim to foster a more cohesive and collaborative approach to advancing structural health monitoring. Through this study, we aim to contribute to the ongoing discourse on refining the digital twin concept and advancing the field of structural health monitoring.
+By offering a software platform that supports the implementation of a broad range of existing methods, we aim to foster a more cohesive and collaborative approach to advancing structural health monitoring. 
+Through this study, we aim to contribute to the ongoing discourse on refining the digital twin concept and advancing the field of structural health monitoring.
 
 
 
 
-The Bridge Rapid Assessment Center for Extreme Events (\BRACE{}) is a platform developed in collaboration with the California Department of Transportation to provide real-time post-earthquake assessments for instrumented bridges.
-Its computational backend, the Infrastructure Resilience Engine (IRiE), requires finite element models that can be assembled from inventory data, executed rapidly, and embedded in inference workflows.
-The bridges in the current deployment are composed predominantly of beam and column members whose inelastic behavior governs damage progression.
-The beam formulations developed here serve as the primary simulation engine, and the modular structure of the framework---permitting, for instance, a transition from a coarse linear model to a refined inelastic model by changing a single component---directly supports the operational requirements of the platform.
+The framework is implemented as the Bridge Rapid Assessment Center for Extreme Events (\BRACE{}), a platform developed in collaboration with the California Department of Transportation (Caltrans) to provide real-time post-earthquake assessments for instrumented bridges.
+% Its computational backend, the Infrastructure Resilience Engine (IRiE), requires 
+% finite element models that can be assembled from inventory data, executed rapidly, and embedded in inference workflows.
+% The bridges in the current deployment are composed predominantly of beam and column members whose inelastic behavior governs damage progression.
+The developments of Part~I contribute to the primary simulation engine, and the modular structure of the framework directly supports the operational requirements of the platform.
 
+The presentation is structured as follows. 
+\Cref{sec:irie} presents the architectural development of the \BRACE{} platform, where structural health assessment is organized around five abstractions: \emph{Assets} representing physical structures, \emph{Events} representing earthquakes or other triggering natural hazards, \emph{Predictors} implementing physics-based or data-driven analysis methods, \emph{Metrics} quantifying structural condition, and \emph{Evaluations} assembling metrics into actionable reports.
+This architecture permits physics-based simulation and emerging data driven methods to coexist within a unified framework, with results presented through a common interface. 
+% The developments of Part~I contribute the simulation engine for Type~I predictors on this platform.
+% Following a pilot deployment covering 22 bridges, Caltrans has funded continued development to extend coverage across the California highway network.
 
-\Cref{sec:irie} presents the implementation of a structural health monitoring framework for the \BRACE{} project.
-Its computational backend, the Infrastructure Resilience Engine (IRiE), organizes health monitoring around five abstractions: \emph{Assets} representing physical structures, \emph{Events} representing earthquakes or other triggering conditions, \emph{Predictors} implementing physics-based or data-driven analysis methods, \emph{Metrics} quantifying structural condition, and \emph{Evaluations} assembling metrics into actionable reports.
-This architecture permits physics-based simulation and system identification to coexist within a unified framework, with results presented through a common interface. 
-The developments of Part~I contribute the simulation engine for Type~I predictors on this platform.
-Following a pilot deployment covering 22 bridges, Caltrans has funded continued development to extend coverage across the California highway network.
+% \Cref{ch:predictor_t1} details the 
 
-\Cref{ch:predictor_t1}
-
-\Cref{ch:xara} develops a software architecture for finite element simulations that addresses the demands of \cref{sec:irie}. The developments are implemented in the open source project \Xara{}, which drives the physics-based simulations on the \BRACE{} platform. 
-
-\Cref{ch:autodiff}
+\Cref{ch:autodiff} describes a compositional system for computing
+analytic parameter gradients of finite element simulations.  The
+approach extends the work of 
+\cite{haukaas2003finite,scott2007response} by embedding a solver supported by direct differentiation within a
+differentiable pipeline that chains gradients through transformations
+of arbitrary depth, including those computed by algorithmic
+differentiation of host-language code.  
+This provides critical functionality for the model updating and reliability workflows under development on the \BRACE{} platform, and its efficient implementation is enabled through the software architecture of \cref{ch:xara}.

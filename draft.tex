@@ -1,0 +1,186 @@
+%
+\input{setup}
+
+\let\oldsubparagraph\subparagraph
+\renewcommand{\subparagraph}[1]{}
+
+
+\begin{document}
+
+\maketitle
+\ifthesis
+  \approvalpage
+  \copyrightpage
+\fi
+
+\include{Front/abstract}
+
+{
+\hypersetup{linkcolor=black}
+\iffinal\else
+  % \setcounter{tocdepth}{2}
+  \setcounter{secnumdepth}{3}
+\fi
+\tableofcontents
+}
+\clearpage
+\iffinal\else
+\listoftables
+% \clearpage 
+\fi
+\tcblistof[\section*]{ambox}{List of Boxes}
+\clearpage
+
+\begin{Notation}[section]
+% \chapter{Introduction}
+% \input{Body/Introduction}
+% \clearpage 
+
+
+% \part{Finite Element Formulations}
+% \part{Structural Mechanics}
+\part{Structural Modeling}\label{part:modeling}
+
+\chapter{Overview to Part~I}\label{sec:Part-I}
+\input{Body/Part-I}
+\clearpage
+
+
+\chapter{An Enhanced Strain Framework for Sections}\label{sec:gensec}
+%Section Formulation}
+\input{Body/Section/main}
+\input{Body/Section/21_Literature}
+\clearpage
+
+\chapter{Enhanced Uniform Warping}\label{sec:timo}
+\input{Body/Traces/main}
+\clearpage
+
+\chapter{Enhanced Nonuniform Warping}\label{sec:nonuniform}
+\input{Body/Nonuniform/main}
+\clearpage 
+
+% \section{Geometric Transformations}\label{sec:transform}
+% \input{Body/Transformations/index}
+% \input{Body/Transformations/Conclusions}
+% \clearpage 
+
+\chapter{Summary}\label{sec:part-i-summary}
+\input{Body/Part-I-Conclusions}
+\clearpage
+
+
+\input{Examples/index}
+\clearpage
+
+
+\part{Regional Application}
+
+\chapter{Overview to Part~II}\label{sec:Part-II}
+\input{Body/Part-II}
+\clearpage
+
+
+% \section{Modeling Library}\label{sec:library}
+% \input{Body/Library/main}
+% \clearpage
+
+
+\chapter{A Platform for Structural Health Monitoring}\label{sec:irie}
+\input{Body/Irie/main}
+\clearpage
+
+\input{Body/DamageMetrics/main}%
+\clearpage 
+
+\chapter[Xara: A Software Architecture for Mission-Critical Simulation]{\Xara{}: 
+A Software Architecture for Mission-Critical Simulation
+% A Structured Runtime for Structural Simulation
+}\label{ch:xara}
+\input{Body/Xara/main}
+\clearpage
+
+\chapter{A Compositional Framework for Sensitivity Analysis}
+\label{ch:autodiff}
+\input{Body/Sensitivity/main}
+\clearpage
+
+
+
+\chapter{Conclusions}
+\input{Body/Part-II-Conclusions}
+\clearpage
+
+\part{~Appendices to Part I}
+\begin{appendices}
+\clearpage
+\chapter{Notation}\label{sec:notation}
+
+\input{Back/A_Notation}
+\clearpage
+
+\glsaddall
+% \printglossary[type=frame]
+% \printglossary[type=brace]
+% \clearpage
+
+
+
+% \section{Corotational Transformations}\label{sec:coro-details}
+% % \input{Body/Library/Transform/main}
+% \clearpage
+
+\include{Body/Iesan/main}
+\clearpage
+
+\chapter{Finite Element Procedures for Warping Functions}
+\input{Body/A_WarpingFunctions/main}
+\clearpage 
+
+
+\include{Back/A_IntegralIdentities}
+\clearpage
+
+
+\chapter{Trace Derivations}
+\input{Body/Traces/A3_Cowper}
+\clearpage
+\input{Body/Traces/A3_Energetic}
+\clearpage 
+
+
+\chapter{Finite Element Procedures for Frame Elements}\label{sec:ForceFrame}
+\include{Body/ForceFrame/main}
+\clearpage
+% \input{Body/ForceFrame/ExactDispl}
+
+% \input{Body/Rotations/main}
+% % \input{Part I/Derivatives}
+% \input{Body/Rotations/Functions}
+% \clearpage
+
+\end{appendices}
+
+\part{~Appendices to Part~II}
+
+\begin{appendices}
+% \input{Part II/ModelUpload/main}
+
+\chapter{Gradients of the mixed section formulation}
+\input{Back/A_MixedSectionTangent}
+
+\input{Back/IrieAdmin/main}
+
+\input{Back/IrieAPI/main}
+
+\end{appendices}
+\end{Notation}
+
+
+
+\clearpage
+\chapter{References}\label{sec:references}
+\printbibliography[heading=none]
+
+\end{document}
+

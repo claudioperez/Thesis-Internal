@@ -1,8 +1,8 @@
-\begin{figure}
+\begin{figure}[H]
     \centering
-    \includegraphics[width=0.5\linewidth]{Examples/frame-0012/img/setup.pdf}
-    \caption{Caption}
-    \label{fig:placeholder}
+    \includegraphics[width=0.9\linewidth]{Examples/frame-0012/img/setup.pdf}
+    \caption{Model for Example~\ref{sec:frame-0012}.}
+    \label{fig:frame-0012-setup}
 \end{figure}
 
 This example verifies consistency with Saint~Venant's solutions, as developed in \cref{sec:timo}. 
@@ -15,7 +15,7 @@ This class consists of the terminal loadings described in \cref{sec:sv} in the r
 Subsequent examples will demonstrate the formulation with problems beyond these restrictions. 
 
 \subparagraph{Setup.}
-A cantilever beam fixed at $x=0$ is loaded with a transverse force $\bar{F}\,\FrameBasis_z$ and torque $\bar{T}\,\FrameBasis$ at the free end $\reflenx=L$.
+A cantilever beam fixed at $x=0$ is loaded with a transverse force $\bar{F}\,\FrameBasis_z$ and torque $\bar{T}\,\FrameBasis$ at the free end $\reflenx=L$ (\cref{fig:frame-0012-setup}).
 A variety of cross sections are investigated with a length-depth ratio fixed at $L/d = 3/2$. 
 
 All problems are solved using a single \ForceFrame{} element with the \ShearFiber{} section at 5 Gauss-Legendre integration points along the reference length \(\reflenx\in [0,L]\). 
@@ -23,7 +23,7 @@ All problems are solved using a single \ForceFrame{} element with the \ShearFibe
 
 
 
-\subsubsection{Channel}
+% \subsubsection{Channel}
 
 \begin{figure}[H]
     \centering
@@ -63,6 +63,7 @@ Strains are evaluated at the 5$^{\rm th}$ Gauss point down the length, and at th
     \end{tabular}
 \end{table}
 
+\iffalse
 \subsubsection{Bridge Girder}\label{sec:frame-0012/G02}
 
 \begin{figure}[H]
@@ -71,4 +72,4 @@ Strains are evaluated at the 5$^{\rm th}$ Gauss point down the length, and at th
     \caption{Girder from the Painter Street Overcrossing.}
     \label{fig:0012}
 \end{figure}
-
+\fi 

@@ -5,7 +5,6 @@
 This chapter presents verification studies of the formulations developed in Part~I.
 
 {
-\small
 \newcommand{\ExRef}[1]{\texttt{#1} (\ref{sec:#1})}
 %
 \newcommand{\NoteNewProblem}{$^{\rm P}$}
@@ -16,6 +15,8 @@ This chapter presents verification studies of the formulations developed in Part
 \centering
 \caption{Summary of verification problems.}% in connection with Box~\ref{box:model-summary}.}
 \label{tab:verification}
+{
+\small
 \begin{tabular}{llcccccccl}
     \toprule
     Problem & Type 
@@ -212,8 +213,18 @@ This chapter presents verification studies of the formulations developed in Part
     % & Eccentric
     & Plastic
     \\
-     \bottomrule
+    \ExRef{frame-0002}
+    &
+    & Linear
+    & Linear
+    & Uniform
+    & Uniform
+    & Elastic
+    & \ref{ch:autodiff}
+    \\
+    \bottomrule
 \end{tabular}
+}
 \end{table}
 }
 

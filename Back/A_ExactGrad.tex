@@ -1,0 +1,189 @@
+
+\section{Element}
+
+To accommodate parameters that may affect the element length, reference geometry, or interpolation data, it is convenient to express the element resisting force on a fixed parent domain \(\hat e\):
+\begin{equation}
+\bm{p}_a(\ModelState,\HostParameter)
+=
+\int_{\hat e}
+J(\hat{\reflenx},\HostParameter)\,\bm{B}_a(\ModelState,\HostParameter)\,\bm{\sigma}(\ModelState,\HostParameter)\,\dd\hat{\reflenx}
+=
+\int_{\hat e}
+J\,\bm{B}_a\,\bm{A}_*\,\bm{s}\,\dd\hat{\reflenx} .
+\label{eq:pa-parent}
+\end{equation}
+Here \(\ModelState\) denotes the vector of discrete configuration variables in the chosen chart, \(J\) is the parent-to-element Jacobian, and \(\bm{\sigma}=\bm{A}_*\bm{s}\).
+
+Define
+\begin{equation}
+(\,\cdot\,)_{,\HostParameter} \coloneq \frac{\dd}{\dd \HostParameter}(\,\cdot\,),
+\qquad
+(\,\cdot\,)_{;\HostParameter}
+\coloneq
+\left.\frac{\partial}{\partial \HostParameter}(\,\cdot\,)\right|_{\ModelState},
+\label{eq:def-direct-h}
+\end{equation}
+so that \((\,\cdot\,)_{;\HostParameter}\) denotes the explicit parameter derivative at fixed discrete state. Differentiating \eqref{eq:pa-parent} along the equilibrium path gives
+\begin{equation}
+\bm{p}_{a,\HostParameter}
+=
+\int_{\hat e}
+\left[
+D_\chi[\bm{B}_a\bm{A}_*\mid\bm{s}] \cdot \bm{u}_h
++
+J\,\bm{B}_a\bm{A}_*\,\bm{s}_{,\HostParameter}
++
+\bigl(J\,\bm{B}_a\bm{A}_*\mid\bm{s}\bigr)_{;\HostParameter}
+\right]\,\dd\hat{\reflenx} ,
+\label{eq:pa-h-raw}
+\end{equation}
+where \(\bm{u}_h\) is the configuration sensitivity field induced by the nodal sensitivities,
+\begin{equation}
+\bm{u}_h^h
+=
+\sum_b \bm{\varphi}_{u b}\,\ModelState_{b,h}.
+\label{eq:uh-field}
+\end{equation}
+
+The first term in \eqref{eq:pa-h-raw} is the state-induced geometric contribution. 
+By definition of the discrete geometric operator,
+\begin{equation}
+D_\chi[\bm{B}_a\bm{A}_*\mid\bm{s}] \cdot \bm{u}_h
+=
+\sum_b \bm{G}_{ab}[\bm{s}]\,\ModelState_{b,h}.
+\label{eq:geom-state-sens}
+\end{equation}
+The constitutive term is treated by differentiating the section response. The strain sensitivity admits the decomposition
+\begin{equation}
+\bm{e}_{,\HostParameter}
+=
+D\bm{e}\cdot \bm{u}_h + \bm{e}_{;\HostParameter}
+=
+\sum_b \bm{B}_b^\star \ModelState_{b,h} + \bm{e}_{;\HostParameter},
+\label{eq:eh-split}
+\end{equation}
+and therefore
+\begin{equation}
+\bm{s}_{,\HostParameter}
+=
+\bm{C}_s\,\bm{e}_{,\HostParameter} + \bm{s}_{;\HostParameter}
+=
+\bm{C}_s\sum_b \bm{B}_b^\star \ModelState_{b,h}
++
+\bm{C}_s\,\bm{e}_{;\HostParameter}
++
+\bm{s}_{;\HostParameter}.
+\label{eq:sh-split}
+\end{equation}
+Substituting \eqref{eq:geom-state-sens} and \eqref{eq:sh-split} into \eqref{eq:pa-h-raw} yields
+\begin{equation}
+\bm{p}_{a,\HostParameter}
+=
+\sum_b
+\left[
+\int_{\hat e}
+J\Bigl(
+\bm{B}_a\,\bm{C}_\sigma\,\bm{B}_b^\star
++
+\bm{G}_{ab}[\bm{s}]
+\Bigr)\,\dd\hat{\reflenx}
+\right]\ModelState_{b,h}
++
+\bm{p}_{a;\HostParameter},
+\label{eq:pa-h-final}
+\end{equation}
+with
+\begin{equation}
+\bm{p}_{a;\HostParameter}
+=
+\int_{\hat e}
+\left[
+\bigl(J\,\bm{B}_a\bm{A}_*\mid\bm{s}\bigr)_{;\HostParameter}
++
+J\,\bm{B}_a\bm{A}_*
+\Bigl(
+\bm{C}_s\,\bm{e}_{;\HostParameter}
++
+\bm{s}_{;\HostParameter}
+\Bigr)
+\right]\,\dd\hat{\reflenx} .
+\label{eq:pa-h-direct}
+\end{equation}
+The first term in \eqref{eq:pa-h-direct} expands to
+\begin{equation}
+\bigl(J\,\bm{B}_a\bm{A}_*\mid\bm{s}\bigr)_{;\HostParameter}
+=
+J_{,\HostParameter}\,\bm{B}_a\bm{\sigma}
++
+J\,(\bm{B}_a\bm{A}_*)_{;\HostParameter}\,\bm{s}.
+\label{eq:pa-h-direct-expand}
+\end{equation}
+
+Equation \eqref{eq:pa-h-final} gives the component sensitivity of the resisting force vector. In matrix form,
+\begin{equation}
+\bm{p}_{,\HostParameter}
+=
+\bm{k}\,\ModelState_{,\HostParameter}
++
+\bm{p}_{;\HostParameter},
+\label{eq:p-h-matrix}
+\end{equation}
+with element tangent
+\begin{equation}
+\bm{k}_{ab}
+=
+\int_{\hat e}
+J\Bigl(
+\bm{B}_a\,\bm{C}_\sigma\,\bm{B}_b^\star
++
+\bm{G}_{ab}[\bm{s}]
+\Bigr)\,\dd\hat{\reflenx} .
+\label{eq:k-ab-sens}
+\end{equation}
+Thus the force sensitivity splits into a state-induced term, obtained by applying the consistent tangent to the nodal sensitivity vector, and a direct term that collects all explicit parameter dependence of the element geometry, interpolation, and constitutive response.
+
+% For a pure material parameter, such as \(E\) or \(G\), the geometry and interpolation are fixed, so that
+% \[
+% J_{,\HostParameter}=0,
+% \qquad
+% (\bm{B}_a\bm{A}_*)_{;\HostParameter}=0,
+% \qquad
+% \bm{e}_{;\HostParameter}=0,
+% \]
+% and \eqref{eq:pa-h-direct} reduces to
+% \begin{equation}
+% \bm{p}_{a;\HostParameter}
+% =
+% \int_{\hat e}
+% J\,\bm{B}_a\bm{A}_*\,\bm{s}_{;\HostParameter}\,\dd\hat{\reflenx}.
+% \label{eq:pa-h-material}
+% \end{equation}
+% If the constitutive law is linear in the form \(\bm{s}=\bm{C}_s(h)\bm{e}\), then
+% \begin{equation}
+% \bm{s}_{;\HostParameter}=\bm{C}_{s,h}\bm{e},
+% \qquad
+% \bm{p}_{a;\HostParameter}
+% =
+% \int_{\hat e}
+% J\,\bm{B}_a\bm{A}_*\,\bm{C}_{s,h}\bm{e}\,\dd\hat{\reflenx}.
+% \label{eq:pa-h-linear-material}
+% \end{equation}
+
+At the assembled level, if the equilibrium residual is written as
+\begin{equation}
+\bm{g}(\ModelState,\HostParameter)=\bm{p}(\ModelState,\HostParameter)-\bm{f}(\ModelState,\HostParameter),
+\label{eq:residual-sens}
+\end{equation}
+then differentiation gives
+\begin{equation}
+\bm{g}_{,\HostParameter}
+=
+\bm{K}\,\ModelState_{,\HostParameter}
++
+\bm{p}_{;\HostParameter}
+-
+\bm{f}_{,\HostParameter},
+\label{eq:residual-sens-final}
+\end{equation}
+where \(\bm{K}\) is the assembled consistent tangent formed from \eqref{eq:k-ab-sens}. 
+This is the form required in direct differentiation procedures for nonlinear static and dynamic sensitivity analysis.

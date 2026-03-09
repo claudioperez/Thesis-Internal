@@ -1,0 +1,185 @@
+\begingroup
+\input{notation/sensitivity}
+
+\section{Section Formulation}
+
+After the primal section state has been converged (Box~\ref{box:impl}), one differentiates the enhanced equilibrium equation at fixed generalized deformation \(\bm{e}\) to recover the enhanced sensitivity \(\bm{\eta}_{,\HostParameter}\).
+The strain and stress sensitivities at each integration point then follow from the differentiated kinematic map and the material sensitivity relation. 
+The section sensitivity is obtained by integrating the differentiated generalized stress-resultant operator.
+
+\begin{SaveEquation}{eq:section-sensitivity-condensation}
+\Knn \bm{\eta}_{,\HostParameter} = -\residn_{,\HostParameter}^{\mathrm{dir}}
+\end{SaveEquation}
+where \(\residn_{,\HostParameter}^{\mathrm{dir}}\) is the derivative of the enhanced residual \eqref{eq:def-enhan-residual} with respect to the active host parameter \(\HostParameter\) while holding \(\bm{\eta}\) fixed. 
+
+
+
+Differentiating the enhanced residual \eqref{eq:def-enhan-residual} furnishes:
+\begin{SaveEquation}{eq:enhanced-residual-sensitivity-full}
+\residn_{,\HostParameter}
+=
+\int_{\Section}
+\left(
+{\EnhanShapes}_{,\HostParameter}^{\top}\StressVector
++
+\EnhanShapes^{\top}\StressVector_{,\HostParameter}
++
+a_h\,\EnhanShapes^{\top}\StressVector
+\right)\dA.
+\end{SaveEquation}
+where 
+\[
+a_h \coloneq \frac{(\dA)_{,\HostParameter}}{\dA}
+\]
+is the relative sensitivity of the section measure and the stress sensitivity \(\StressVector_{,\HostParameter}\) at each integration point \(\bm{r}_{\ell}\) is
+\begin{SaveEquation}{eq:section-stress-sensitivity}
+\StressVector_{,\HostParameter}
+=
+\StressVector_{,\HostParameter}^{\mathrm{mat}}
++ \mathbb{C}\StrainVector_{,\HostParameter}.
+\end{SaveEquation}
+with
+\begin{SaveEquation}{eq:section-strain-sensitivity}
+\StrainVector_{,\HostParameter}
+=
+\hat{\StrainVector}_{,\HostParameter}
++ {\EnhanShapes}_{,\HostParameter}\bm{\eta}
++ \EnhanShapes\,\bm{\eta}_{,\HostParameter}
+\end{SaveEquation}
+%
+Using \eqref{eq:section-strain-sensitivity} and \eqref{eq:section-stress-sensitivity}
+% \[
+% \StressVector_{,\HostParameter}
+% =
+% \StressVector_{,\HostParameter}^{\mathrm{mat}}
+% +
+% \mathbb{C}\StrainVector_{,\HostParameter},
+% \qquad
+% \StrainVector_{,\HostParameter}
+% =
+% {\TotalStrainMatrix}_{,\HostParameter}\bm{e}
+% +
+% {\EnhanShapes}_{,\HostParameter}\bm{\eta}
+% +
+% \EnhanShapes\,\bm{\eta}_{,\HostParameter},
+% \]
+one obtains
+\[
+\residn_{,\HostParameter}
+=
+\Knn \bm{\eta}_{,\HostParameter}
++
+\residn_{,\HostParameter}^{\mathrm{dir}}, 
+\]
+with \(\Knn\) furnished by \eqref{eq:Knn} and 
+\begin{SaveEquation}{eq:enhanced-residual-sensitivity-direct}
+\residn_{,\HostParameter}^{\mathrm{dir}}
+=
+\int_{\Section}
+\Big[
+{\EnhanShapes}_{,\HostParameter}^{\top}\StressVector
++
+\EnhanShapes^{\top}
+\bigl(
+\StressVector_{,\HostParameter}^{\mathrm{mat}}
++
+\mathbb{C}\bigl({\TotalStrainMatrix}_{,\HostParameter}\bm{e}
++ {\EnhanShapes}_{,\HostParameter}\bm{\eta}\bigr)
+\bigr)
++
+a_h\,\EnhanShapes^{\top}\StressVector
+\Big]\dA.
+\end{SaveEquation}
+
+Hence the condensed sensitivity equation is
+\[
+\Knn \bm{\eta}_{,\HostParameter} = -\residn_{,\HostParameter}^{\mathrm{dir}}.
+\]
+
+% For the generalized resultants,
+% \begin{SaveEquation}{eq:section-resultant-sensitivity-split}
+% \bm{s}_{,\HostParameter}
+% =
+% \int_{\Section}
+% \TotalStrainMatrix^{\top}\StressVector_{,\HostParameter}\,\dA
+% +
+% \bm{s}_{,\HostParameter}^{\mathrm{geom}},
+% \end{SaveEquation}
+% where the explicit operator and measure contribution is
+% \begin{SaveEquation}{eq:section-resultant-geom}
+% \bm{s}_{,\HostParameter}^{\mathrm{geom}}
+% =
+% \int_{\Section}
+% \left(
+% {\TotalStrainMatrix}_{,\HostParameter}^{\top}\StressVector
+% +
+% a_h\,\TotalStrainMatrix^{\top}\StressVector
+% \right)\dA.
+% \end{SaveEquation}
+
+The full resultant derivative is then:
+\[
+\bm{s}_{,\HostParameter}
+=
+\int_{\Section}
+\left(
+{\TotalStrainMatrix}_{,\HostParameter}^{\top}\StressVector
++
+\TotalStrainMatrix^{\top}\StressVector_{,\HostParameter}
++
+a_h\,\TotalStrainMatrix^{\top}\StressVector
+\right)\dA.
+\]
+
+\begin{ambox}[Section Sensitivity Determination.]{box:section-sensitivity}
+\paragraph{Objective.}
+Given generalized deformations \(\bm{e}\), the converged section state \(\bm{\eta}\), and an active parameter \(\HostParameter\), compute the conditional sensitivities \(\bm{\eta}_{,\HostParameter}\) and \(\bm{s}_{,\HostParameter}\) over the cross-section discretization.
+
+\paragraph{Procedure.}
+\begin{enumerate}
+    \item Retrieve the converged section state \(\bm{\eta}\), together with the stresses \(\StressVector_\ell\) and material tangents \(\mathbb{C}_\ell\) at the quadrature points of the section discretization.
+
+    \item Solve for \(\bm{\eta}_{,\HostParameter}\):
+    \[
+    \Knn \bm{\eta}_{,\HostParameter} = -\residn_{,\HostParameter}^{\mathrm{dir}}
+    \]
+    where
+    \RepeatEquation{eq:enhanced-residual-sensitivity-direct}
+    \item Integrate the section resultant sensitivity:
+    \[
+    \bm{s}_{,\HostParameter}
+    =
+    \int_{\Section}
+    \TotalStrainMatrix^{\top}\StressVector_{,\HostParameter}\,\dA
+    +
+    \bm{s}_{,\HostParameter}^{\mathrm{geom}},
+    \]
+    \begin{itemize}
+
+    \item At each quadrature point, evaluate the strain sensitivity from the differentiated kinematic relation:
+    \[
+    \StrainVector_{,\HostParameter}
+    =
+    \hat{\StrainVector}_{,\HostParameter}
+    +
+    {\EnhanShapes}_{,\HostParameter}\bm{\eta}
+    +
+    \EnhanShapes\,\bm{\eta}_{,\HostParameter}.
+    \]
+
+    \item Evaluate the stress sensitivity with the material sensitivity relation:
+    \[
+    \StressVector_{,\HostParameter}
+    =
+    \StressVector_{,\HostParameter}^{\mathrm{mat}}
+    +
+    \mathbb{C}\StrainVector_{,\HostParameter}.
+    \]
+    \end{itemize}
+
+\end{enumerate}
+\end{ambox}
+
+\input{Back/A_ExactGrad}
+
+\endgroup

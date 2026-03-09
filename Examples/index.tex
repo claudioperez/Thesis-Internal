@@ -252,18 +252,21 @@ The source code implementing these simulations is available at \url{https://gith
   % Row 1
   \begin{subfigure}[t]{0.32\textwidth}
     \centering
-    \includegraphics[width=\linewidth]{Figures/column.png}
+    \SectionFigure[width=\linewidth]{Rectangle}
+    % \includegraphics[width=\linewidth]{Figures/column.png}
     \caption{Closed, Solid.}
     \label{fig:shape-rectangle}
   \end{subfigure}\hfill
   \begin{subfigure}[t]{0.25\textwidth}
     \centering
-    \includegraphics[width=\linewidth]{Figures/Shapes/HollowRectangle.pdf}
+    \SectionFigure[width=\linewidth]{HollowRectangle}
+    % \includegraphics[width=\linewidth]{Figures/Shapes/HollowRectangle.pdf}
     \caption{Closed, Hollow.}
     \label{fig:shape-hollow}
   \end{subfigure}\hfill
   \begin{subfigure}[t]{0.25\textwidth}
     \centering
+    % \SectionFigure{HalfFlange}
     \includegraphics[page=1,width=\linewidth]{Figures/Shapes/HalfFlange.pdf}
     \caption{Closed, Composite.}
     \label{fig:shape-halfflange}
@@ -272,19 +275,22 @@ The source code implementing these simulations is available at \url{https://gith
   % Row 2
   \begin{subfigure}[t]{0.32\textwidth}
     \centering
-    \includegraphics[width=\linewidth]{Examples/frame-2007/img/frame-2007.png}
-    \caption{Open, Double Sym..}
+    \SectionFigure[width=0.9\linewidth]{WideFlange}
+    % \includegraphics[width=\linewidth]{Examples/frame-2007/img/frame-2007.png}
+    \caption{Open, Double Sym.}
     \label{fig:shape-wideflange}
   \end{subfigure}\hfill
   \begin{subfigure}[t]{0.25\textwidth}
     \centering
-    \includegraphics[width=\linewidth]{Examples/frame-3032/img/shell-1032.png}
+    \SectionFigure[width=\linewidth]{Channel}
+    % \includegraphics[width=\linewidth]{Examples/frame-3032/img/shell-1032.png}
     \caption{Open, Single Sym. (Also Channel).}
-    \label{fig:demo-b}
+    \label{fig:shape-channel}
   \end{subfigure}\hfill
   \begin{subfigure}[t]{0.25\textwidth}
     \centering
-    \includegraphics[page=1,width=\linewidth]{Examples/frame-1041/img/frame-1041.png}
+    \SectionFigure[width=\linewidth]{Angle}
+    % \includegraphics[page=1,width=\linewidth]{Examples/frame-1041/img/frame-1041.png}
     \caption{Asymmetric.}
     \label{fig:shape-angle}
   \end{subfigure}
@@ -299,8 +305,10 @@ The source code implementing these simulations is available at \url{https://gith
   \end{subfigure}
 
   \caption{Shapes.}
-  \label{fig:sv-problems}
+  \label{fig:shapes}
 \end{figure}
+
+
 
 \subsection{Trace correspondence to classical shear corrections}
 \label{sec:shape-0012}

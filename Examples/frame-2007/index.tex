@@ -29,6 +29,7 @@ The built-in span in \cref{fig:shear-link} represents a shear link with a steel 
 Three formulations are considered: 
 \begin{enumerate} 
 \item A standard shear-free force-interpolated element with a uniaxial fiber section \citep{taucer1991fiber}, 
+\item The \ForceFrame element with the shear fiber section of \cite{scott2004response} (the \texttt{NDFiber} section of \OpenSees{}).
 \item The \ForceFrame{} element with a section that neglects cross sectional warping (i.e., \(\WarpShearIesan_z =0\)), and 
 \item The \ForceFrame{} element with the section formulation of \cref{sec:timo}. 
 \end{enumerate}

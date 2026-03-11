@@ -108,14 +108,10 @@ of performing a new analysis.
 
 Health metrics are immutable value objects \citep{fowler2013patterns} that bind three pieces of information: a \emph{tag} that identifies the physical
 quantity (e.g., fundamental period, peak deck acceleration, column
-strain state), a compact \emph{payload} containing the numerical
+strain state), a compact payload containing the numerical
 value(s), and a \emph{verdict} that classifies the value against user‑defined thresholds.
-Metrics understand how to render themselves in the web interface, how to serialize into
-archival formats, and how to participate in evaluation‑level
-aggregation. 
-Because all predictors emit metrics rather than
-solver‑specific artifacts, downstream consumers need not know whether a
-given metric was extracted from a finite‑element response history,
+Metrics understand how to render themselves in the web interface, how to serialize into archival formats, and how to participate in evaluation‑level aggregation. 
+Because all predictors emit metrics rather than solver‑specific artifacts, downstream consumers need not know whether a given metric was extracted from a finite‑element response history,
 inferred by a statistical emulator, or read from a fragility table.
 
 \section{Event and Evaluation Workflow}\label{sec:policy}

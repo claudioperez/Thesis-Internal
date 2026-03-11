@@ -1,5 +1,5 @@
 A general procedure for implementing the Class~I traces parameterized by \cref{tab:trace-consts} in the setting of \cref{sec:genwarp} will be developed in \cref{sec:trace-shapes}. 
-However, before this, two special cases of the Class~I traces are investigated.
+However, first two special cases of the Class~I traces are investigated.
 
 \subsection{Class II: Equilibrium Consistency}\label{sec:class-ii}
 The traces that fall under Class I are capable of exactly representing Saint~Venant's solutions in a standard finite element context, but without further restriction they may still exhibit certain undesirable properties.
@@ -30,11 +30,11 @@ A Class I trace \(\mathcal{T}\) is a \textbf{Class II} trace if the energy-conju
 Evidently the conjugate resultants \(\TraceStress\) will depend linearly on the trace deformations \(\TraceStrain\) through a linear operator \(\bar{\mathbf{C}}_T(x)\) defined by:
 % The conjugate stiffness is constructed from the material strain energy:
 \begin{equation}
-\mathcal{U}(x) \coloneq \tfrac{1}{2}\int_\Section \bm{\varepsilon}\cdot \mathbb{C}\, \bm{\varepsilon}\dA 
-= \tfrac{1}{2}\bm{e}\cdot \bar{\mathbf{C}}_T(x)\,\bm{e},
+\mathcal{U}(x) \coloneq \tfrac{1}{2}\int_\Section \bm{\varepsilon} \cdot \mathbb{C}\, \bm{\varepsilon} \dA 
+= \tfrac{1}{2}\TraceStrain \cdot \bar{\mathbf{C}}_T \,\TraceStrain,
 \label{eq:energy-conjugacy-def}
 \end{equation}
-The \emph{conjugate resultant stiffness} \(\bar{\mathbf{C}}_T(x)\) is said to be \emph{prismatic} if it is independent of \(\reflenx\). 
+The \emph{conjugate resultant stiffness} \(\bar{\mathbf{C}}_T(x)\) is called \emph{prismatic} if it is independent of \(\reflenx\). 
 Evidently, through inheritance of the Class~I property \eqref{eq:req-c1}, every \(\bar{\mathbf{C}}_T(x)\) in Class~II is prismatic.
 
 \begin{remark}

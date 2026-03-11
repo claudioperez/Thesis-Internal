@@ -90,7 +90,7 @@ $\mathcal T_1[\hat{\bm u}]=\mathcal T_2[\hat{\bm u}]$ for all $\hat{\bm u}\in\ma
 
 It is natural to restrict attention to traces which exhibit the following properties:
 \begin{enumerate}
-    \item Strain measures \(\bm{e}\) generated under Saint-Venant loading are at most linear in the axial coordinate $\reflenx$. 
+    \item Strain measures \(\TraceStrain\) generated under Saint-Venant loading are at most linear in the axial coordinate $\reflenx$. 
     \item Any Saint-Venant strain field is exactly reconstructed from only the plane section strains \(\bm{\gamma},\bm{\kappa}\) \eqref{eq:gam-kap-linear}.
     \item Continuum plane-section deformations are preserved, in the sense that section‑rigid fields are mapped to pure beam rigid motions.
 \end{enumerate}
@@ -101,10 +101,10 @@ These considerations are formalized as follows.
 \begin{definition}[Class I]\label{def:class-1} % def:e1
 A trace \(\mathcal{T}\) is called a \textbf{Class I} trace if:
 \begin{enumerate}[label=(\roman*)]
-    \item For all \(\hat{\bm u} \in \IesanMotions\oplus \RigidMotions\) the following relations are furnished by $x$-independent linear operators \(\TraceEvolveEE\),\(\TraceDeDpOne\), and \(\TraceStiffNM\in\mathrm{GL}(6)\):
+    \item For all \(\hat{\bm u} \in \IesanMotions\oplus \RigidMotions\) the following relations are furnished by $x$-independent linear operators \(\TraceEvolveEE\), \(\TraceDeDpOne\), and \(\TraceStiffNM\in\mathrm{GL}(6)\):
     \begin{subequations}
     \begin{align}
-        \TraceStrain'(x) & \eqqcolon \TraceEvolveEE\,\bm{e}(0) 
+        \TraceStrain'(x) & \eqqcolon \TraceEvolveEE\,\TraceStrain(0) 
         \label{eq:req-t1} 
         \\ 
         \partial_{\IesanVector}\TraceStrain'(x) &\eqqcolon \TraceDeDpOne 

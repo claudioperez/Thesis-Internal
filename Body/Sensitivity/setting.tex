@@ -11,66 +11,67 @@
 
 \begin{itemize}
     \item The direct differentiation method yields sensitivities with respect to parameters that appear natively inside the finite element kernel.
-    \item Modern analysis workflows often introduce design variables at a higher level. Typical examples are geometric dimensions, section generators, discretization rules, and load parametrizations.
+    \item Modern analysis workflows often introduce design variables at a higher level. Typical examples are geometric dimensions, section generators, discretization rules, and load parameterizations.
+    \item Implementing general sensitivity by DDM for fiber sections can incur a considerable computational cost
     \item The proposed formulation separates these layers. The kernel differentiates the native mechanics response. The host differentiates the parameterization that constructs native parameters. The full derivative is then recovered by composition.
 \end{itemize}
 
 
-\subsection{Motivation}
-The direct differentiation method (DDM) provides exact sensitivities
-of the discrete equilibrium equations that govern a finite element
-model. 
-Given a residual $\residual(\ModelState;\corey)=\mathbf{0}$
-parameterized by a vector of model inputs~$\corey$, the DDM
-differentiates this equation implicitly with respect to each
-component~$y_i$ and solves the resulting linear system to obtain
-$\partial\ModelState/\partial y_i$ at negligible marginal cost once the
-primal factorization is available.  
-The method is well established in
-computational mechanics and forms the backbone of gradient-based
-design optimization, reliability analysis, and parameter identification
-in structural and solid-mechanics codes.
+% \subsection{Motivation}
+% The direct differentiation method (DDM) provides exact sensitivities
+% of the discrete equilibrium equations that govern a finite element
+% model. 
+% Given a residual $\residual(\ModelState;\corey)=\mathbf{0}$
+% parameterized by a vector of model inputs~$\corey$, the DDM
+% differentiates this equation implicitly with respect to each
+% component~$y_i$ and solves the resulting linear system to obtain
+% $\partial\ModelState/\partial y_i$ at negligible marginal cost once the
+% primal factorization is available.  
+% The method is well established in
+% computational mechanics and forms the backbone of gradient-based
+% design optimization, reliability analysis, and parameter identification
+% in structural and solid-mechanics codes.
 
-Despite its efficiency, the DDM is limited in scope: it can only
-differentiate with respect to quantities that appear explicitly in the
-finite element residual.  In practice, however, the
-parameters of interest to the analyst are often higher-level quantities
-that \emph{determine} these core inputs through an arbitrarily complex pre-processing chain.  
-Cross-section dimensions must be converted to
-fiber discretizations; topology descriptors must be mapped to element
-connectivities and material layouts; stochastic field coefficients
-must be transformed into spatially varying material properties.  Each
-such transformation introduces a link in the chain rule that the DDM alone cannot traverse.
+% Despite its efficiency, the DDM is limited in scope: it can only
+% differentiate with respect to quantities that appear explicitly in the
+% finite element residual.  In practice, however, the
+% parameters of interest to the analyst are often higher-level quantities
+% that \emph{determine} these core inputs through an arbitrarily complex pre-processing chain.  
+% Cross-section dimensions must be converted to
+% fiber discretizations; topology descriptors must be mapped to element
+% connectivities and material layouts; stochastic field coefficients
+% must be transformed into spatially varying material properties.  Each
+% such transformation introduces a link in the chain rule that the DDM alone cannot traverse.
 
-Automatic differentiation (AD) frameworks such as \Jax{} and PyTorch
-face the complementary limitation.  
-They can differentiate arbitrary
-host-language code with ease, but they are unaware of the implicit
-function defined by the finite element solve.  Treating the analysis
-as an opaque subroutine and differentiating through its internal
-solution procedure is possible in principle \citep{beck1994automatic,gilbert1992automatic,griewank1993derivative} but is neither efficient nor
-numerically robust for large-scale structural models.
-Furthermore, the natural host environments for these frameworks are
-generally not well suited for the efficient implementation of finite
-element procedures.  
-Python, for instance, does not provide sufficient
-control over memory layout and allocation to support the kind of
-low-level optimization that production finite element codes require.
-Even higher-level compiled languages that target scientific computing,
-such as Julia, lack the fine-grained control over memory ownership,
-lifetime, and the separation of compile-time and run-time computation
-that languages like C++ and Fortran treat as first-class abstractions.
+% Automatic differentiation (AD) frameworks such as \Jax{} and PyTorch
+% face the complementary limitation.  
+% They can differentiate arbitrary
+% host-language code with ease, but they are unaware of the implicit
+% function defined by the finite element solve.  Treating the analysis
+% as an opaque subroutine and differentiating through its internal
+% solution procedure is possible in principle \citep{beck1994automatic,gilbert1992automatic,griewank1993derivative} but is neither efficient nor
+% numerically robust for large-scale structural models.
+% Furthermore, the natural host environments for these frameworks are
+% generally not well suited for the efficient implementation of finite
+% element procedures.  
+% Python, for instance, does not provide sufficient
+% control over memory layout and allocation to support the kind of
+% low-level optimization that production finite element codes require.
+% Even higher-level compiled languages that target scientific computing,
+% such as Julia, lack the fine-grained control over memory ownership,
+% lifetime, and the separation of compile-time and run-time computation
+% that languages like C++ and Fortran treat as first-class abstractions.
 
-The goal of this chapter is to describe a compositional framework that
-bridges these two worlds.  
-The finite element kernel exposes its
-primal solve and DDM sensitivities as a \emph{differentiable
-primitive} whose forward- and reverse-mode rules are known.  
-The host
-platform contributes automatic differentiation of everything outside
-the kernel.  The chain rule then composes the two layers, yielding
-end-to-end sensitivities with respect to any host-level parameter
-without manual derivation.
+% The goal of this chapter is to describe a compositional framework that
+% bridges these two worlds.  
+% The finite element kernel exposes its
+% primal solve and DDM sensitivities as a \emph{differentiable
+% primitive} whose forward- and reverse-mode rules are known.  
+% The host
+% platform contributes automatic differentiation of everything outside
+% the kernel.  The chain rule then composes the two layers, yielding
+% end-to-end sensitivities with respect to any host-level parameter
+% without manual derivation.
 
 
 % \input{Body/Sensitivity/literature}
@@ -110,7 +111,7 @@ For each \(\CoreParameters \in \CoreSpace\), the equilibrium state \(\State \in 
 \[
 \Residual_{\ModelFamily}(\State,\CoreParameters) = \bm 0.
 \]
-where \(\ModelFamily\) denotes a fixed discretization of the physical model. 
+where \(\ModelFamily\) is a fixed discretization of the physical model. 
 For a well posed problem this implicitly defines a differentiable solution map:
 \[
 \StateMap_{\ModelFamily} : \CoreSpace \to \StateSpace,

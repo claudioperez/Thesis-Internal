@@ -9,13 +9,14 @@
 The software requirements are very flexible. The host server should be capable of supporting at least a standard Python 3.8 environment, but a newer version is recommended. The application has been successfully run on both cloud-hosted servers and a local server with a variety of operating systems and databases. All of these would be adequate options for Caltrans. On the \href{https://www.heroku.com}{Heroku} cloud hosting platform, with current demands, the application can easily be hosted for under \$20/month.
 
 Both \emph{SQLite} and \emph{PostgreSQL} databases have been successfully used between various deployments, and any database supported by the Django framework should also be acceptable. 
-Currently, Django officially supports \emph{PostgreSQL}, \emph{MariaDB}, \emph{MySQL}, \emph{Oracle}, and \emph{SQLite}{\footnote{More information on database support can be found in the Django database documentation page:  \url{https://docs.djangoproject.com/en/5.0/ref/databases/}.}}. Various deployment environments have been used successfully to host the platform. The Heroku stack that is currently hosting the instance at \url{https://structures.live} is summarized in Table \ref{tab:heroku-stack}. 
+Currently, Django officially supports \emph{PostgreSQL}, \emph{MariaDB}, \emph{MySQL}, \emph{Oracle}, and \emph{SQLite}{\footnote{More information on database support can be found in the Django database documentation page:  \url{https://docs.djangoproject.com/en/5.0/ref/databases/}.}}. 
+Various deployment environments have been used successfully to host the platform. The Heroku stack that is currently hosting the instance at \url{https://structures.live} is summarized in Table \ref{tab:heroku-stack}. 
 \begin{table}[h!]
     \centering
     \caption{Heroku stack currently employed in serving the \BRACE{} platform.}
     \begin{tabular}{ll}
     \toprule
-        {\bf{Component}} & {\bf{Product}} \\ \hline
+        \textbf{Component} & \textbf{Product} \\ \hline
          Dyno & \texttt{eco} \\
          Datastore &  \texttt{postgresql-asymmetrical-28930} \\
          Gateway & \texttt{gunicorn } \\
@@ -27,7 +28,8 @@ Currently, Django officially supports \emph{PostgreSQL}, \emph{MariaDB}, \emph{M
 \section{Users and Groups}
 Users of the application are divided into three \emph{groups}, based on their required privileges (see also \cref{fig:interaction,fig:database}):
 \begin{description}
-    \item[Group 1] consists of agents (currently, only California Geological Survey ``CGS'' and its California Strong Motion Instrumentation Program ``\href{https://www.conservation.ca.gov/cgs/smi/program}{CSMIP}'', which hosts and manages the Center for Engineering Strong Motion Data ``\href{https://www.strongmotioncenter.org/}{CESMD}'') that provide ground motion data in real-time. This is the only group that will most likely need access from outside of the host's local network. This user group makes \texttt{POST} requests over a secured API (\cref{ch:event-api}) that is provided by the \texttt{brace2.events} sub-application. These posts contain a ground motion archive file that must be stored temporarily on the disk while the \emph{predictors} are executed. Any data from these files that is needed for long-term operations on the platform is parsed out and stored as an entry in the \texttt{Event} database table. 
+    \item[Group 1] consists of agents (currently, only California Geological Survey ``CGS'' and its California Strong Motion Instrumentation Program ``\href{https://www.conservation.ca.gov/cgs/smi/program}{CSMIP}'', which hosts and manages the Center for Engineering Strong Motion Data ``\href{https://www.strongmotioncenter.org/}{CESMD}'') that provide ground motion data in real-time. This is the only group that will most likely need access from outside of the host's local network. This user group makes \texttt{POST} requests over a secured API (\cref{ch:event-api}) that is provided by the \texttt{brace2.events} sub-application. These posts contain a ground motion archive file that must be stored temporarily on the disk while the \emph{predictors} are executed. 
+    Any data from these files that is needed for long-term operations on the platform is parsed out and stored as an entry in the \texttt{Event} database table. 
     %
     \item[Group 2] consists of users (likely engineers within the host's local network, i.e., Caltrans) that will be granted privileges to configure inventory predictors. These users will interact with the platform over a standard
     web browser by accessing HTML{\footnote{HyperText Markup Language (HTML) is the standard markup language for documents designed to be displayed in a web browser.}} pages that are served by the \texttt{brace2.inventory} and \texttt{brace2.predictors} sub-applications. These actions may result in insertions and deletions

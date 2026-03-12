@@ -13,16 +13,18 @@
     \label{fig:frame-0002}
 \end{figure}
 
-The cantilever of \cref{fig:frame-0002} is loaded by a tip force~$H$. The  cross-section is a solid rectangle of width~$b$ and depth~$d$. 
+\subparagraph{Setup.}
+The cantilever of \cref{fig:frame-0002} is loaded by a tip force~$H$. 
+The  cross-section is a solid rectangle of width~$b$ and depth~$d$. 
 
 The cross-section is
 represented by a grid of $N$~integration points, each characterized by its a location $(y_k,z_k) \in\Section$ and weight $A_k$.
 
 The host parameters are the input data of the section (Box~\ref{box:prep}):
 \begin{equation*}
-    \corey = \bigl(L,\; E,\; y_1,\, z_1,\, A_1,\;\ldots,\;
-                    y_N,\, z_N,\, A_N\bigr)
-    \;\in\; \mathbb{R}^{2+3N},
+\corey = \bigl(L,\; E,\; y_1,\, z_1,\, A_1,\;\ldots,\;
+                y_N,\, z_N,\, A_N\bigr)
+\;\in\; \mathbb{R}^{2+3N},
 \end{equation*}
 where $E$ is Young's modulus. 
 The DDM can deliver
@@ -31,7 +33,7 @@ $\partial u/\partial y_i$, where $u$ is the tip displacement.
 The analyst, however, is interested in the dependence of~$u$ on the
 section geometry:
 \begin{equation}\label{eq:example-host}
-    \haty = (L,\; E,\; b,\; d) \;\in\; \mathbb{R}^{4}.
+\haty = (L,\; E,\; b,\; d) \;\in\; \mathbb{R}^{4}.
 \end{equation}
 
 Thus the parameter map~$\ParameterMap$ is 

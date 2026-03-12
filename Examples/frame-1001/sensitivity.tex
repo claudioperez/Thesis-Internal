@@ -1,0 +1,164 @@
+
+
+% \subsection{Planar Response of Cantilever Beam Under End Moment and End Force}\label{sec:plane}
+\begin{figure}[H]
+\centering
+\begin{subfigure}[b]{0.48\textwidth}
+\includegraphics[width=0.7\textwidth,keepaspectratio]{Examples/frame-1001/Figures/Figure_1a}
+  \caption{\(\lambda = 0.7\)}
+  \label{fig:helical-a}
+\end{subfigure}
+\begin{subfigure}[b]{0.48\textwidth}
+  \includegraphics[width=0.8\textwidth,keepaspectratio]{Examples/frame-1001/Figures/Figure_1b}
+  \caption{\(\lambda = 2\)}
+  \label{fig:helical-b}
+\end{subfigure}
+\caption{Deformed configuration of cantilever beam under two moment magnitudes.}
+\label{fig:cantilever-1001}
+\end{figure}
+%
+This example is selected to demonstrate the ability of the proposed formulations to accurately reproduce available analytical solutions through finite rotations.
+
+The cantilever beam 
+in Figure~\ref{fig:cantilever-1001} is subjected to either a point moment \(\bm{M}\) 
+or a point force \(F \, \mathbf{E}_3\) at its free end \(\reflenx=L\). 
+%
+The centerline of the reference configuration 
+is given by \(\bm{x}_0(\reflenx) = \reflenx\,\mathbf{E}_1\).
+%
+\subsubsection{End Moment \ShowLabel{1001}}\label{sec:frame-1001}
+%
+%
+When \(F = 0\) the configuration is expected
+to remain in the \(\mathbf{E}_1 - \mathbf{E}_2\) plane.
+Consequently, the out-of-plane director
+\(\FrameBasis_3\) does not change during deformation so that \(\FrameBasis_3 \equiv \frameBasis_3\).
+This simplification has two consequences:
+\begin{itemize}
+  \item There is no distinction between a spatially applied moment \(\bm{M} = M \, \frameBasis_3\)
+    and a materially applied moment \(\bm{M} = M \, \FrameBasis_3\).
+  \item The rotation \(\FrameRotation\) becomes
+    vectorial, its variations \(\bm{u}_{\scriptscriptstyle{\Lambda}}^{(i)}\) at different configurations \(\chi^{(i)}\) can be added, and the sum of these variations over the course of global equilibrium iterations is equivalent
+    to the logarithmic rotation increment:
+    \[
+      \sum_{i=0}^n \bm{u}_{\scriptscriptstyle{\Lambda}}^{(i)} \equiv \bm{\theta} 
+     = \operatorname{Log} \left(\FrameRotation_{(n)}\FrameRotation_{(0)}^{\top}\right).
+    \]
+    %This is because the plane constraint has rendered the configuration manifold for \(\boldsymbol{\Lambda}\) vectorial.
+\end{itemize}
+%
+In this case, the moment loading can be treated identically for all analyses by simply scaling a constant reference load vector for the node at \(\reflenx=L\):
+%
+\begin{equation}
+  \mathbf{f}_{M,\text{ref}} = \begin{pmatrix}
+     0 & 0 & M
+  \end{pmatrix}^{\top}
+  \label{eq:fref}
+\end{equation}
+%
+where the reference magnitude \(M = \lambda 2 \pi EI/L \) varies with $\lambda=1/8, \ 1$, and $2$ for different cases causing the cantilever to loop over itself \(\lambda\) times. 
+The following parameters are used:
+\[
+\begin{array}{lcr}
+    L  &=&    10\hphantom{..}    \\ % ,& A  &= 1 \\
+    E  &=&    10^4  \\ % ,& I  &= 10^{-2} \\
+    G  &=&    10^4  \\ % ,& J  &= 10^{-2} \\
+\end{array}
+\qquad\qquad
+\begin{array}{lcr}
+    A  &=& 1\hphantom{..} \\
+    I  &=& 10^{-2} \\
+    J  &=& 10^{-2} \\
+\end{array}
+\]
+The simulation uses a single load step with uniform meshes of 5 and 10 \ExactFrame{} elements for the  2-node and 3-node
+variants of all formulations in Table~\ref{tab:variants}. 
+%
+The solution requires only two iterations for each formulation matching the ideal performance reported by \cite{simo1986threedimensional}.
+The tip displacements for the case \(\lambda = 1/8\) are collected in Table~\ref{tab:helical-plane} along with
+the analytic solution of the governing boundary value problem in \eqref{eq:finite-equilibrium} given by:
+\begin{equation*}
+  \left\{
+  \begin{aligned}
+  \bm{x}(\reflenx)&=\frac{EI}{M} \sin \vartheta(\reflenx) \, \mathbf{E}_1
+                      + \frac{EI}{M}\left(\cos \vartheta(\reflenx)-1\right) \, \mathbf{E}_2 \\
+    \vartheta(\reflenx)   &=  \reflenx \frac{M}{EI}
+  \end{aligned}
+  \right.
+\end{equation*}
+%
+where \(\vartheta\) parameterizes the rotation \(\FrameRotation(\reflenx) = \operatorname{Exp} \vartheta(\reflenx) \, \mathbf{E}_3\). 
+% This result is derived in Appendix~\ref{sec:closed-solution}. 
+The displacements for \(n=2\)-node elements match exactly those reported by \cite{ibrahimbegović1995computational} for both the natural \texttt{None}, and the logarithmic \texttt{Init}/\texttt{Incr} variants.
+For \(n=3\)-node elements, the results match the analytic solution up to the reported precision.
+%
+%
+\begin{center}
+\begin{table}[H]
+\caption{Tip displacements for the helical cantilever beam under $\lambda = 1/8$ for a discretization with 10 \(n\)-node elements.}
+\label{tab:helical-plane}
+\input{Examples/frame-1001/Tables/HelicalPlane}
+\end{table}
+\end{center}
+%
+%
+\subsubsection{End Force \ShowLabel{1002}}\label{sec:frame-1002}
+% \begin{figure}
+% \centering
+% \includegraphics[width=0.6\textwidth,keepaspectratio]{Figures/Buckling_2}
+% \caption{.}
+% \end{figure}
+% This example investigates the response of the cantilver for a more complicated analytic planar solution.
+In this case the cantilever beam is subjected only to a transverse force of \(\bm{F} = 10 \, \mathbf{E}_2\) in a single step. 
+The simulation uses the following geometric and material properties from the literature:
+\[
+\begin{array}{lr}
+L  =&    1 \\
+E  =&   10 \\
+\hphantom{.}
+% G  =   GAv/A
+\end{array}
+\qquad 
+\begin{array}{lr}
+A  =&   10^7 \\
+I  =&    1   \\
+J  =&   10^7 \\
+\end{array}
+\]
+Two values for the shear modulus \(G\) are used with a shear stiffness \(GA\) of \(500\) and \(10\), respectively, the latter representing the case with significant shear deformations. 
+Table~\ref{tab:transv} presents the simulated tip displacements and the analytic solution by \cite{batista2016closedform} using Jacobi elliptic functions and accounting for flexural and shear deformations.
+%
+The analysis uses both 2-node and 4-node elements.
+For the sake of brevity, the results are reported only for the variants using
+the same parameterization as the wrapped element's interpolation.
+%
+\begin{center}
+\begin{table}[H]
+\caption{Tip displacements for transversely loaded plane cantilever.}
+\label{tab:transv}
+\input{Examples/frame-1001/Tables/Batista.tex}
+\end{table}
+\end{center}
+
+\iffalse
+\begin{center}
+\begin{table*}%[hb]
+\caption{Buckling with two elements in 15 steps. \texttt{Petrov=false},
+\(A = 50000\) and \textbf{B2} triad.}
+\begin{tabular*}{\textwidth}{@{\extracolsep\fill}llrrrr@{}}
+%\begin{tabular*}[]{@{}llrrrr@{}}
+\toprule
+Element & Rotation & Avg. Iter & Max. Iter & \(u_t\) & Error \\
+\midrule
+\texttt{Elastica1D}           & Init & 4.03 & 6 & 0.775947 & 0\% \\
+\texttt{LE2dFrm\_w2ndOrdFF}   & Init & 7.53 & 16 & 0.793910 & 2.3149\% \\
+\texttt{DisplShear3dFrm\_wCS} & Iter & 6.13 & 9 & 0.833646 & 7.4359\% \\
+\texttt{DisplShear3dFrm\_wCS} & Incr & 6.13 & 9 & 0.833646 & 7.4359\% \\
+\texttt{DisplShear3dFrm\_wCS} & Init & 6.13 & 9 & 0.833646 & 7.4359\% \\
+\texttt{Corot3dFrm} & Iter & 6.87 & 11 & 0.825041 & 6.3269\% \\
+\texttt{Corot3dFrm} & Incr & 7.00 & 13 & 0.833647 & 7.4361\% \\
+\texttt{Corot3dFrm} & Init & 7.00 & 13 & 0.833647 & 7.4361\% \\
+\end{tabular*}
+\end{table*}
+\end{center}
+\fi

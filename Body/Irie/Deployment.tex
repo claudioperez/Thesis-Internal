@@ -3,8 +3,8 @@
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.5\linewidth]{Body/Irie/Figures/BridgeMap.pdf}
-    \caption{Caption}
-    \label{fig:placeholder}
+    \caption{Assets in the California deployment of \BRACE{}.}
+    \label{fig:brace2-map}
 \end{figure}
 
 The platform was initially deployed in a 6-month pilot phase, where digital twins were created for 22 instrumented bridges in the Caltrans inventory (\cref{tab:pilots}). 
@@ -41,7 +41,7 @@ Following the success of this trial deployment, development of the platform was 
     \texttt{CE01336} & Hwy8/Meloland Overpass                      &  13  &  32 & 7  \\ % & 13 \\
     \texttt{CE58658} & Hayward Hwy 580-238 Interchange             &  62  &  20 & 7  \\ % \\
 \midrule
-\textbf{Total} & & & 279 & 518 & 93 \\
+\textbf{Total} & & 279 & 518 & 93 \\
 \bottomrule
 \end{tabular}
 \label{tab:pilots}
@@ -53,20 +53,22 @@ Following the success of this trial deployment, development of the platform was 
 % Considerable time and effort has been put into ensuring that the design of the framework is (1) able to remain relevant as progress continues to be made in these fields, and (2) provides a connection between these fields that is able to facilitate new and useful conclusions. Because of the novelty provided by this unique arrangement of tools, the \BRACE{} project sits at a vantage point from which several new possibilities exist for reaching new understandings in the interdisciplinary realm of seismic structural health monitoring.
 
 
-\begin{figure}
+\begin{figure}[h]
     \centering
-    \includegraphics[width=0.5\linewidth]{Body/Irie//Figures/SGMD.png}
+    \includegraphics[width=0.75\linewidth]{Body/Irie//Figures/SGMD.png}
     \caption{Enter Caption}
     \label{fig:sgmd}
 \end{figure}
-\begin{Note}
 
-An example of how SGMD \citep{mccallen2025open-access} can be leveraged to advance structural resilience research is through its integration with existing structural health monitoring platforms.
 
-As a practical application of these advancements, integrating SGMD with \BRACE{} can significantly enhance structural health monitoring efforts. 
 
-Data driven methods are currently limited by data sparsity, particularly for structures without instrumentation. 
-Integrating SGMD with \BRACE{} addresses this limitation by enabling preemptive analysis through simulated ground motions. 
-This integration allows for predictive modeling for structures lacking sensor data, improving the ability to forecast structural responses during future seismic events. Additionally, SGMD data can inform real-time assessments by providing baseline models against which real-time sensor data can be compared, enhancing the accuracy of structural health evaluations. 
-This integration extends the benefits of \BRACE{} to a broader range of infrastructure within the transportation network, contributing to more comprehensive community resilience.
-\end{Note}
+Data driven methods are currently limited by data sparsity. 
+The recently released Simulated Ground Motion Database (SGMD) \citep{mccallen2025open-access} addresses this limitation by enabling preemptive analysis through simulated ground motions. 
+The database currently includes simulations over an 80 \unit{\kilo\meter}$\times120$ \unit{\kilo\meter} region of the San-Francisco bay area (\cref{fig:sgmd})
+and has been linked to \BRACE{}, enabling predictive modeling for structures lacking sensor data, and improving the ability to forecast structural responses during future seismic events. 
+Additionally, SGMD data can inform real-time assessments by providing baseline models against which real-time sensor data can be compared, enhancing the accuracy of structural health evaluations. 
+This integration extends the scope of \BRACE{} to a broader range of infrastructure within the transportation network, contributing to more comprehensive community resilience.
+
+
+
+\subsection{Future Directions}

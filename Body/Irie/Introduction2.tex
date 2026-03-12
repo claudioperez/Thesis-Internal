@@ -1,0 +1,45 @@
+\section{Introduction}
+% https://doi.org/10.1016/j.istruc.2022.05.041
+% https://www.semanticscholar.org/paper/Damage-detection-on-beam-structures-by-means-of-Mordini-Wenzel/f545da25c57bce2d882b80bc30c1ea187f0b5ceb
+% https://doi.org/10.1016/j.cirpj.2020.02.002
+% https://glisic-structuralhealthmonitoring.princeton.edu/StreickerBridge.html
+% https://journals.sagepub.com/doi/pdf/10.1177/87552930241231686
+% https://peer.berkeley.edu/sites/default/files/2020-peerannualmeeting-taciroglu-digitaltwins.pdf
+
+The digital twin concept has emerged as a significant development in the realm of structural health monitoring that holds substantial promise for transforming infrastructure maintenance, especially for bridges, which are integral to our transportation networks. %particular relevance to bridge structures, among other applications \cite{alibrandi2022riskinformed}. 
+%A digital twin is essentially a dynamic software model that reflects the physical state of a structure, facilitating real-time monitoring and prediction of its performance and health \cite{garter}. 
+% This concept holds substantial promise for transforming infrastructure maintenance, especially for bridges, which are integral to our transportation networks.
+However, the path to actualizing this concept in practice is fraught with challenges. 
+The literature, while replete with promising studies, lacks a unified understanding for the responsibilities of a digital twin, leading to disparate interpretations of its role and functionality. 
+Moreover, the swift progression of artificial intelligence in this field poses an additional challenge, as it necessitates the development of solutions that can adapt to a rapidly evolving technological landscape.
+
+To address these issues, this study seeks to delineate the objectives of digital twins and structural health monitoring clearly, in order to facilitate the coherent implementation of state-of-the-art ideas \citep{kapteyn2021probabilistic, torzoni2024digital}, in a framework that aims to remain readily adaptable to the continual advances in machine learning technology. 
+We propose a framework comprising five fundamental abstractions—\glspl{asset}, \glspl{predictor}, \glspl{event}, \glspl{evaluation}, and \glspl{metric}—that can guide the development of scalable and enduring software platforms. This framework is designed to accommodate the fluidity of artificial intelligence advancements while maintaining a steadfast focus on the core objectives of structural health monitoring.
+% - Add willcox's definition
+% - change to discuss how there may be a consensus forming around definition, but in practice many new developments still fail to fit together in a tangible or coherent framework.
+The proposed framework is compatible with the myriad procedures proposed in
+the literature, and facilitates their robust implementation
+as part of a cohesive commercial-grade software platform.
+% This framework is not intended to supersede existing literature but to build upon it. 
+By offering a software platform that supports the implementation of a broad range of existing methods, we aim to foster a more cohesive and collaborative approach to advancing structural health monitoring. Through this study, we aim to contribute to the ongoing discourse on refining the digital twin concept and advancing the field of structural health monitoring.
+
+
+The outline of the paper is as follows. In \cref{sec:framework} the five fundamental abstractions
+are introduced and developed for general applications of digital twins. In \cref{sec:architecture} we present the \BRACE{} platform, a fully-realized implementation
+of the framework which illustrates the viability and efficacy of these abstractions. 
+
+% Special attention is paid to...
+% However, implementing digital twins for bridge health monitoring presents unique challenges. Given the involvement of various entities, such as the Department of Transportation and the USGS, in the monitoring process, the software may need to incorporate networking capabilities to enable efficient data exchange and collaboration.
+
+% Developed based on these four abstractions, \BRACE{} exemplifies how this approach can successfully actualize the concept of a digital twin for structural health monitoring of bridges. 
+
+%
+%
+%
+% Introduce digital twins and their importance for structural health monitoring
+% Interest in Structural Health Monitoring (SHM) is rapidly growing, but the rapid advancement of AI technology in the field makes it challenging to develop solutions that will remain relevant in the constantly evolving landscape.
+
+% With recent rapid developments in technology for monitoring structures,
+% it is becoming increasingly desirable to apply this technology
+% to achieve goals like
+% proactive maintenance and real-time surveillance, significantly enhancing our ability to ensure the integrity of these critical structures. Despite the rapid development in this field, the quest for an optimal solution that satisfies the diverse needs of owners remains elusive.

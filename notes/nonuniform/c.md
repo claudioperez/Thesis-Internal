@@ -1,0 +1,163 @@
+
+$$
+\newcommand{\FrameBasis}{\mathbf{i}}
+\newcommand{\WarpSV}{\varphi}
+\newcommand{\WarpFA}{\psi}
+\newcommand{\Twist}{\varkappa}
+\newcommand{\PlanePosition}{\rho}
+\newcommand{\Jv}{J_v}
+\newcommand{\Ja}{J_a}
+\newcommand{\Jw}{J_w}
+\newcommand{\Js}{J_a}
+\newcommand{\EnhanParam}{\eta}
+\newcommand{\EnhanConstFA}{c}
+\newcommand{\EnhanShape}{\bar{\bm{A}}}
+$$
+
+
+### 1) Rewrite your $\tilde J$, denominator, and $\bar\eta$ using $(\cdot,\cdot)_G$
+
+Let
+
+$$\omega:=\WarpSV,\qquad \psi:=\WarpFA,\qquad c:=\EnhanConstFA.$$
+
+From your definitions
+
+$$(\omega,\omega)_G=\Jv,\qquad (\psi,\psi)_G=\Js,\qquad (\psi,\omega)_G=-\Jw,$$
+
+so the $2\times2$ Gram data in $(\cdot,\cdot)_G$ is
+
+$$\begin{pmatrix}
+\Jv & -\Jw\\
+-\Jw & \Js
+\end{pmatrix}.$$
+
+Define the combined “enhanced” potential
+
+$$\chi_c := \omega + c\,\psi.$$
+
+Then the two scalar combinations that appear everywhere in your write-up are just
+
+$$\tilde J(c):=(\omega,\chi_c)_G
+= (\omega,\omega)_G + c(\omega,\psi)_G
+= \Jv - c\,\Jw,
+\tag{1}
+$$
+
+and
+
+$$\|\chi_c\|_G^2 := (\chi_c,\chi_c)_G
+= \Jv - 2c\,\Jw + c^2\Js.
+\tag{2}
+$$
+
+Your condition (ii) equation is exactly
+
+$$0=-(\Twist-\alpha)\,\tilde J(c) + \|\chi_c\|_G^2\,\EnhanParam,$$
+
+hence
+
+$$\boxed{\EnhanParam=(\Twist-\alpha)\,\bar\eta(c),\qquad 
+\bar\eta(c)=\frac{\tilde J(c)}{\|\chi_c\|_G^2}
+=\frac{\Jv-c\Jw}{\Jv-2c\Jw+c^2\Js}.}
+\tag{3}
+$$
+
+This is your $\bar\eta$, but now you can see it is literally a ratio of Gram quantities.
+
+
+### 2) Put $B'-Q=0$ in the same Gram form and see what it can (and cannot) determine
+
+You have
+
+$$
+B = \bar E\,\Jw\,\alpha',\qquad 
+Q = \bar G\bigl[-\Jv\Twist+\Jv\alpha+\tilde J(c)\EnhanParam\bigr].$$
+
+Substitute $\EnhanParam=(\Twist-\alpha)\bar\eta(c)$ and regroup:
+
+$$
+Q
+=\bar G\Big(\Jv(\alpha-\Twist)+\tilde J(c)(\Twist-\alpha)\bar\eta(c)\Big)
+=\bar G(\alpha-\Twist)\Big(\Jv-\tilde J(c)\bar\eta(c)\Big).
+\tag{4}
+$$
+
+Now insert (3):
+
+$$
+\Jv-\tilde J\,\bar\eta
+=\Jv-\frac{\tilde J(c)^2}{\|\chi_c\|_G^2}.
+\tag{5}
+$$
+
+Using (1)–(2), this simplifies to
+
+$$
+\boxed{\Jv-\frac{\tilde J(c)^2}{\|\chi_c\|_G^2}
+=\frac{c^2\big(\Jv\Js-\Jw^2\big)}{\Jv-2c\Jw+c^2\Js}.}
+\tag{6}
+$$
+
+Therefore the condensed bi-shear is
+
+$$
+Q=\bar G(\alpha-\Twist)\;
+\frac{c^2\big(\Jv\Js-\Jw^2\big)}{\Jv-2c\Jw+c^2\Js}.
+\tag{7}
+$$
+
+And bimoment equilibrium $B'-Q=0$ (with constant $\bar E,\bar G,\Jw$) becomes
+
+$$\boxed{
+\bar E\,\Jw\,\alpha''\;-\;\bar G(\alpha-\Twist)\;
+\frac{c^2\big(\Jv\Js-\Jw^2\big)}{\Jv-2c\Jw+c^2\Js}=0.
+}
+\tag{8}
+$$
+
+**Key point:** (8) is an ODE relating $\alpha$ and $\Twist$ *given a choice of $c$*. It does **not** furnish an additional, independent algebraic condition that can determine $c$. Instead, $c$ sits inside the effective sectional coefficient multiplying $(\alpha-\Twist)$. That’s the “circle”: you’re trying to extract $c$ from an equation whose role is to solve $\alpha$ once $c$ has been chosen.
+
+You can see the non-identifiability sharply: for any admissible $c$, the theory just predicts a different proportionality factor between $\alpha''$ and $(\alpha-\Twist)$ through (8). Equilibrium does not privilege one $c$ over another.
+
+Also, if you try to force the *classical* coefficient $\Jv$ back, i.e.
+
+$$
+\Jv-\frac{\tilde J^2}{\|\chi_c\|_G^2}=\Jv,
+$$
+
+you get $\tilde J=0\Rightarrow c=\Jv/\Jw$, and then $\bar\eta=0\Rightarrow \EnhanParam=0$: the enhancement collapses. So **bimoment equilibrium cannot give you a nontrivial $c$ while keeping the unmodified $B'-Q$ form** under your condition (ii).
+
+### 3) If your goal is *only* to remove the $(\bar\eta,c)$ redundancy, there is a canonical algebraic choice
+
+Because your enhanced direction is $\nabla\chi_c=\nabla(\omega+c\psi)$, the pair $(\bar\eta,c)$ is partly a **normalization choice**. A clean normalization that kills the extra scalar is to pick $c$ so that $\chi_c$ is $G$-orthogonal to $\psi$:
+
+$$
+(\chi_c,\psi)_G=0
+\quad\Longleftrightarrow\quad
+(\omega,\psi)_G+c(\psi,\psi)_G=0
+\quad\Longleftrightarrow\quad
+-\Jw+c\Js=0,
+$$
+
+hence
+
+$$\boxed{c=\frac{\Jw}{\Js}.}
+\tag{9}
+$$
+
+With this choice,
+
+$$
+\|\chi_c\|_G^2=\tilde J(c)\quad\Longrightarrow\quad \bar\eta=1,
+$$
+
+so the enhancement becomes completely determined:
+
+$$
+\boxed{\EnhanParam=\Twist-\alpha,\qquad 
+\EnhanShape=\nabla\bigl(\WarpSV+\tfrac{\Jw}{\Js}\WarpFA\bigr).}
+\tag{10}
+$$
+
+This does **not** come from $B'-Q=0$; it comes from fixing a canonical normalization (Gram–Schmidt in the $(\cdot,\cdot)_G$ metric). But it is the mathematically clean way to “do away with redundancy between $\eta$ and $c_{FA}$” using only your $J$-data.

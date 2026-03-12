@@ -2,17 +2,14 @@
 %
 \begin{figure}[H]
     \centering
-    \begin{subfigure}[c]{0.48\linewidth}
+    \begin{subfigure}[c]{\linewidth}
         \ExampleFigure[width=\linewidth]{frame-1041}
         % \includegraphics[width=\linewidth]{Examples/frame-1041/img/frame-1041.png}
         % \caption{Enter Caption}
         \label{fig:frame-1041}
     \end{subfigure}
-    \begin{subfigure}[c]{0.48\linewidth}
-        \includegraphics[width=\linewidth]{Examples/frame-1041/img/frame-1041-solution.png}
-    \end{subfigure}
-    \caption{Comparison with the experiment by \cite{engel1953measurements} for Example~\ref{sec:frame-1041}.}
-    \label{fig:frame-1041-solution}
+    \caption{Model for Example~\ref{sec:frame-1041}.}
+    \label{fig:frame-1041}
 \end{figure}
 
 \subparagraph{Context.}
@@ -29,4 +26,14 @@ shape={Angle},
 kinematics/section={\eqref{eq:wagner-gl-strain-pi}},
 }
 
+\subparagraph{Results.}
 Both the \ForceFrame{} and \ExactFrame{} elements show excellent agreement.
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[c]{0.6\linewidth}
+        \includegraphics[width=\linewidth]{Examples/frame-1041/img/frame-1041-solution.png}
+    \end{subfigure}
+    \caption{Comparison with the experiment by \cite{engel1953measurements} for Example~\ref{sec:frame-1041}.}
+    \label{fig:frame-1041-solution}
+\end{figure}

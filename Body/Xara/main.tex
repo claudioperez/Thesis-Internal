@@ -72,7 +72,8 @@ The architecture is guided by three principles drawn from functional programming
     \item[Explicit ownership.] Every finite-element object---node, material, element, load pattern---is owned by a specific context object. Object lifetimes are tied to context lifetimes, and no global tables exist. This eliminates aliasing hazards and makes memory management deterministic.
 
     \item[Referential transparency.] API functions are pure in the sense that their behavior depends only on their explicit arguments. 
-    Two calls with identical arguments produce identical results, regardless of the history of prior calls. This property enables equational reasoning about program behavior and is prerequisite for integration with automatic differentiation.
+    Two calls with identical arguments produce identical results, regardless of the history of prior calls. 
+    This property enables equational reasoning about program behavior and is prerequisite for integration with automatic differentiation.
 
     \item[Context threading.] Rather than accessing ambient state, command implementations receive their dependencies through explicit context parameters. This pattern, sometimes called dependency injection, allows the same command implementation to operate on different models by passing different contexts.
 \end{description}
@@ -109,19 +110,19 @@ This allows existing scripts to execute unchanged while enabling new code to ado
 
 The architectural changes described above have immediate practical consequences for applications that embed \OpenSees{} as a computational kernel.
 
-\paragraph{Determinism and Reproducibility}
+\paragraph{Determinism and Reproducibility.}
 
 Explicit state management ensures that repeated invocations of the same analysis produce identical results, independent of program history. This determinism is essential for applications that must demonstrate regulatory compliance or that use simulation results as evidence in engineering decisions. It also simplifies debugging: when behavior depends only on explicit inputs, failures can be reproduced by capturing those inputs rather than reconstructing an entire execution history.
 
-\paragraph{Shared-Memory Parallelism}
+\paragraph{Shared-Memory Parallelism.}
 
 The absence of global state permits multiple analyses to execute concurrently on separate threads without synchronization. Each thread operates on its own context objects, and the runtime imposes no mutual exclusion. This enables embarrassingly parallel workflows---Monte Carlo sampling, parametric sweeps, ensemble Kalman filtering---to scale with available cores rather than requiring distributed-memory parallelism. For a seismic monitoring platform evaluating hundreds of earthquake scenarios, the difference between process-level and thread-level parallelism translates directly to reduced latency and infrastructure cost.
 
-\paragraph{Integration with Differentiable Programming}
+\paragraph{Integration with Differentiable Programming.}
 
 Modern machine learning frameworks construct explicit computational graphs that enable automatic differentiation. Integrating a simulation engine with these frameworks requires that the engine's state be representable as nodes in the graph---a requirement incompatible with hidden global state. The restructured runtime exposes all relevant state through context objects that can be traced by differentiation libraries, enabling gradient-based optimization, sensitivity analysis, and neural surrogate modeling without invasive modification of the simulation code.
 
-\paragraph{Reliable Embedding}
+\paragraph{Reliable Embedding.}
 
 Perhaps most critically, explicit ownership eliminates the hazard of state corruption when multiple libraries embed \OpenSees{}. Each library instantiates its own contexts, and no global state exists for them to share. This property is prerequisite for deploying \OpenSees{} as a ``black-box'' dependency in production systems where robustness requirements preclude the debugging of subtle interaction effects.
 

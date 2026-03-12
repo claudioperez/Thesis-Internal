@@ -5,6 +5,8 @@
 % Please provide us with a data diagram of what is currently taking place and the roles and responsibilities of UCB and Caltrans specifically to each process.
 
 % Please provide a list of all software/hardware that is used to run the current system.  If known, please provide a list of future hardware/software that will be required for BRACE2 as well.
+
+
 \section{Hosting}
 The software requirements are very flexible. The host server should be capable of supporting at least a standard Python 3.8 environment, but a newer version is recommended. The application has been successfully run on both cloud-hosted servers and a local server with a variety of operating systems and databases. All of these would be adequate options for Caltrans. On the \href{https://www.heroku.com}{Heroku} cloud hosting platform, with current demands, the application can easily be hosted for under \$20/month.
 
@@ -24,6 +26,68 @@ Various deployment environments have been used successfully to host the platform
     \end{tabular}
     \label{tab:heroku-stack}
 \end{table}
+
+\section{Installation}
+The installation procedure is as follows:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  Create a virtual environment.
+
+\item
+  Install dependencies by executing the command:
+
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ pip install }\AttributeTok{{-}r}\NormalTok{ requirements.txt}
+\end{Highlighting}
+\end{Shaded}
+
+  \begin{quote}
+  {[}Note{]} If you plan to run locally, comment out the following
+  dependencies in \texttt{requirements.txt} by inserting a \texttt{\#}
+  character.
+
+  \begin{itemize}
+  \tightlist
+  \item
+    psycopg2\textgreater=2.0,\textless3.0
+  \item
+    tcinter\textgreater=0.0.4
+  \end{itemize}
+  \end{quote}
+
+
+\item
+  Set up the database
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{python} \AttributeTok{{-}m}\NormalTok{ irie.init core.settings }
+\end{Highlighting}
+\end{Shaded}
+\item 
+  Create a superuser:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\VariableTok{DEBUG}\OperatorTok{=}\NormalTok{True }\ExtensionTok{python}\NormalTok{ manage.py createsuperuser}
+\end{Highlighting}
+\end{Shaded}
+\item
+  Start the app
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\VariableTok{DEBUG}\OperatorTok{=}\NormalTok{True }\ExtensionTok{python}\NormalTok{ manage.py runserver}
+\end{Highlighting}
+\end{Shaded}
+
+  The app should now be running at \texttt{http://127.0.0.1:8000/}.
+\end{enumerate}
+
 
 \section{Users and Groups}
 Users of the application are divided into three \emph{groups}, based on their required privileges (see also \cref{fig:interaction,fig:database}):
@@ -49,7 +113,6 @@ Users of the application are divided into three \emph{groups}, based on their re
     \caption{\BRACE{} platform database implementation details.}
     \label{fig:database}
 \end{figure}
-
 
 \section{Initializing the Pilot Models}
 
@@ -104,6 +167,6 @@ database for each of the predictors listed in \texttt{bridges.py}:
 
 %The credentials needed to access the platform can be obtained by contacting the authors of this report or the Office of Earthquake Engineering Analysis \& Research (OEEAR), Caltrans.
 
-Once this setup is completed, users can be created with credentials in the standard manner using the Django admin page. For more information, refer to the Django documentation: \url{https://docs.djangoproject.com/en/5.0/ref/}.
+% Once this setup is completed, users can be created with credentials in the standard manner using the Django admin page. For more information, refer to the Django documentation: \url{https://docs.djangoproject.com/en/5.0/ref/}.
 
 \endgroup

@@ -2,6 +2,10 @@
 
 \chapter{Type I Prediction: Damage Metrics}\label{ch:predictor_t1}
 
+\begingroup 
+\newcommand{\gls}[1]{#1}
+\newcommand{\glspl}[1]{#1}
+
 \section{Introduction}
 
 % \begin{quote}
@@ -40,17 +44,19 @@ These observations reinforce the need for damage metrics that are physically int
 \subsection{Outline}
 
 This chapter proceeds as follows. 
-\Cref{sec:t1-framework} presents the damage state framework, beginning with the capacity taxonomy in \cref{sec:t1-taxonomy} and the role of section kinematics in \cref{sec:t1-kinematics}. 
+\Cref{sec:t1-framework} presents the damage state framework. 
+%, beginning with the capacity taxonomy in \cref{sec:t1-taxonomy} and the role of section kinematics in \cref{sec:t1-kinematics}. 
 \Cref{sec:t1-pipeline} describes the Type~I pipeline and response reduction, with \cref{sec:t1-dsmapping} formalizing the mapping rules. 
 \Cref{sec:t1-interpretation} discusses how metrics are presented on the platform, and \cref{sec:t1-discussion} summarizes implications, limitations, and calibration needs.
 
-\section{Damage State Framework}\label{sec:t1-framework}
+% \section{Damage State Framework}\label{sec:t1-framework}
+
+\section{Limit State Taxonomy}\label{sec:t1-taxonomy}
 
 The damage state mapping for bridge columns is based on fiber strains, which link computed response to observable phenomena such as cover cracking, spalling, and bar buckling. 
 In the present framework, columns are modeled with distributed-inelasticity frame elements and fiber-discretized sections. 
 For each column, strain histories are computed at representative fibers and reduced to maxima that define the damage state.
 
-\subsection{Capacity Limit State Taxonomy}\label{sec:t1-taxonomy}
 For nonductile bridge columns, \citet{zhou2022capacitya} propose a seven-state taxonomy (DS$_0$--DS$_7$) with associated consequences that range from no action and patching at low damage to jacketing, column replacement, and bridge replacement at the highest damage states. 
 Their classification connects recognizable damage mechanisms, including cover cracking and spalling, exposure of the confined core, bar buckling, and loss of lateral or vertical capacity, to outcomes that can be operationalized in a post-event workflow. 
 This taxonomy provides a useful anchor for the metric mapping employed on the \gls{platform}, which retains the same qualitative progression while expressing each state in terms of computed material strains. 
@@ -109,7 +115,7 @@ The damage state metric can be used to further extend the decision-making proces
 For example, DS1-2 corresponds to allowing the structure to remain open; DS3-4 corresponds to inspecting the structure while allowing it to remain open; DS5 corresponds to closing the bridge for further inspection, and DS6 corresponds to closing the bridge immediately. 
 The {\em{decision boundaries}} are to be calibrated in the future as more events occur and are analyzed by the \gls{platform}.
 
-\section{Type I Pipeline}\label{sec:t1-pipeline}
+\section{Implementation}\label{sec:t1-pipeline}
 With the damage state framework defined, the Type~I pipeline specifies how event records are converted into these metrics. 
 Type~I prediction on the \gls{platform} begins with streamed ground motion, propagates through a structural analysis model, and terminates in a set of metrics that are interpretable by decision-makers. 
 The pipeline is modular, with input motions extracted from event records, component and global response computed by the predictor, and response histories reduced to a small set of engineered quantities.
@@ -169,3 +175,5 @@ Finally, the reliance on fiber strains means that model form errors in section k
 The enhanced section formulations of Part~I mitigate this by improving the underlying strain field, but continued validation against observed event data remains essential as the platform scales.
 
 % \input{Examples/04-0236/index}
+
+\endgroup

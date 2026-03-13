@@ -13,23 +13,27 @@
     \label{fig:frame-0002}
 \end{figure}
 
+\subparagraph{Context.} 
+This example extends the analysis of Example~\ref{sec:frame-0001} to use a section discretized by fibers. 
+In the finite element kernel the section is not provided with any geometry-specific data apart from the general data described in Box~\ref{box:prep}.
+The proposed compositional framework is employed to compute response gradients with respect to geometric parameters of interest. 
+
 \subparagraph{Setup.}
-The cantilever of \cref{fig:frame-0002} is loaded by a tip force~$H$. 
-The  cross-section is a solid rectangle of width~$b$ and depth~$d$. 
+The cantilever of \cref{fig:frame-0002} is loaded by a transverse tip force $\bar{F}$. 
+The  cross-section is a solid rectangle of width $b$ and depth $d$. 
 
 The cross-section is
-represented by a grid of $N$~integration points, each characterized by its a location $(y_k,z_k) \in\Section$ and weight $A_k$.
+represented by a grid of $N$~integration points, each characterized by a location $\bm{r}_k \in\Section$ and weight $A_k$.
 
 The host parameters are the input data of the section (Box~\ref{box:prep}):
 \begin{equation*}
-\corey = \bigl(L,\; E,\; y_1,\, z_1,\, A_1,\;\ldots,\;
-                y_N,\, z_N,\, A_N\bigr)
+\corey = \bigl(L,\; E,\; \bm{r}_1,\, A_1,\;\ldots,\;
+               \bm{r}_N,\, A_N\bigr)
 \;\in\; \mathbb{R}^{2+3N},
 \end{equation*}
 where $E$ is Young's modulus. 
-The DDM can deliver
-$\partial u/\partial y_i$, where $u$ is the tip displacement.
-
+Direct differentiation delivers $\partial u/\partial y_i$, where $u$ is the transverse tip displacement. 
+%
 The analyst, however, is interested in the dependence of~$u$ on the
 section geometry:
 \begin{equation}\label{eq:example-host}
@@ -71,23 +75,22 @@ where the terms $\partial u/\partial y_k$,
 $\partial u/\partial z_k$, $\partial u/\partial A_k$ are provided by
 the DDM inside the kernel, and the terms
 $\partial y_k/\partial d$, $\partial z_k/\partial d$,
-$\partial A_k/\partial d$ are computed by \autodiff{} of the parameter map function~$\Ymap$.
+$\partial A_k/\partial d$ are computed by \autodiff{} of the parameter map $\Ymap$.
 
-The tip displacement under a
-point load~$H$ is
+The analytic solution is
 \begin{equation*}
-    u = \frac{H L^{3}}{3\,E\,I_y} + \frac{H\,L}{G\,A},
+    u = \frac{\bar{F} L^{3}}{3\,E\,I_y} + \frac{\bar{F}\,L}{G\,A},
 \end{equation*}
 where the second moment of area is $I_y = b\,d^{3}/12$  and
 $G$ is the shear modulus.  
-The derivative with respect to~$d$ is
+The derivative with respect to the depth $d$ is
 \begin{equation*}
 % \label{eq:example-exact-deriv}
     \frac{\partial u}{\partial d}
-    = \frac{\partial u}{\partial I_y}\,\frac{\partial I_y}{\partial d}
-    + \frac{\partial u}{\partial A}\,\frac{\partial A}{\partial d}
-    = -\frac{H L^{3}}{3\,E\,I_y^{2}}\;\frac{b\,d^{2}}{4}
-      -\frac{H\,L}{G\,A^{2}}\;b,
+    % = \frac{\partial u}{\partial I_y}\,\frac{\partial I_y}{\partial d}
+    % + \frac{\partial u}{\partial A}\,\frac{\partial A}{\partial d}
+    = -\frac{\bar{F} L^{3}}{3\,E\,I_y^{2}}\;\frac{b\,d^{2}}{4}
+      -\frac{\bar{F}\,L}{G\,A^{2}}\;b,
 \end{equation*}
 and serves as a verification target.
 

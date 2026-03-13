@@ -7,10 +7,7 @@ four layers:
 \begin{itemize}
 \item 
 % \paragraph{Kernel primitive.}
-The finite element library exposes the model map~$\Mmap$ as a
-\emph{differentiable primitive}---an atomic operation whose primal
-evaluation, JVP rule, and VJP rule are each implemented internally
-using the DDM.  
+The finite element library exposes the model map~$\Mmap$ as an atomic \emph{differentiable primitive} whose primal evaluation, JVP rule, and VJP rule are each implemented internally using the direct differentiation.  
 From the perspective of the \autodiff{} framework, $\Mmap$ is
 a black box with known first-order differential structure. 
 

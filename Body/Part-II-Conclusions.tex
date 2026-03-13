@@ -11,12 +11,15 @@ Type~I simulations on the platform are enabled by \Xara{} (\cref{ch:xara}), a C+
 The stable, encapsulated API exposed through \Xara{} eliminates barriers to integration with modern machine learning toolchains like \Jax{} and PyTorch, which rely crucially on explicit state management. 
 This is central for implementing the developments of \cref{ch:autodiff}.
 
-\Cref{ch:autodiff} 
+\Cref{ch:autodiff} presents the compositional differentiation of finite element programs. Leveraging the architecture of \cref{ch:xara}, the procedure allows for natural interaction with machine learning toolchains like \Jax{} and PyTorch.
 
 The developments of this work are supported through an ecosystem of open-source software tools:
 \begin{itemize}
+\item \Xara{} is hosted at \href{https://github.com/peer-open-source/xara}{https://github.com/peer-open-source/xara}. 
 \item The visualization features of the platform are released through the Python package \Veux{}. 
-This library generates 3D models from \OpenSees{} simulations using the modern glTF format, bypassing the need to distribute heavyweight rendering dependencies. 
+This library generates three-dimensional models from \OpenSees{} simulations using the modern glTF format, bypassing the need to distribute heavyweight rendering dependencies. 
+Source code for the project is hosted at \href{https://github.com/stairlab/veux}{https://github.com/stairlab/veux}.
+
 \item \texttt{xsection}
 \end{itemize}
 

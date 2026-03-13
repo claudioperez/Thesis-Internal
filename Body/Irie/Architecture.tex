@@ -73,7 +73,7 @@ report it calls the Orchestration Layer, which in turn queries the
 Domain Layer for immutable \emph{Evaluation} objects. 
 Only the Infrastructure Layer is permitted to reach outside the codebase. 
 Upward calls are prohibited; infrastructure code does not emit direct UI updates, and domain objects have no
-knowledge of HTTP semantics. 
+knowledge of HTTP\footnote{The Hypertext transfer protocol is a standard protocol established by \cite{fielding2022http}.} semantics. 
 The unidirectional rule guards against hidden coupling and ensures that each layer can be tested in isolation.
 
 \section{Prediction Subsystem}\label{sec:scheduling}
@@ -86,10 +86,9 @@ concrete predictor is packaged behind a \textbf{Strategy} object \citep{gamma201
 realizes a simplified four‑phase template: \emph{initialize},
 \emph{execute}, \emph{harvest}, and \emph{summarize}. 
 A lightweight
-\textbf{Factory Registry} maps protocol identifiers---strings that live
-in configuration files and database rows---to concrete strategy
-instances at runtime. Adding a novel predictor therefore requires no
-modification to orchestration code, only the registration of a new
+\textbf{Factory Registry} maps protocol identifiers to concrete strategy
+instances at runtime. 
+Adding a novel predictor therefore requires no modification to orchestration code, only the registration of a new
 strategy class and, if desired, the definition of new metric types to
 reflect its particular output.
 
@@ -105,7 +104,7 @@ of performing a new analysis.
 
 \subsection{Metrics}\label{metrics}
 
-Health metrics are immutable value objects \citep{fowler2013patterns} that bind three pieces of information: a \emph{tag} that identifies the physical
+Health metrics are immutable value objects \citep{fowler2013patterns} that bind three pieces of information: a \emph{label} that identifies the physical
 quantity (e.g., fundamental period, peak deck acceleration, column
 strain state), a compact payload containing the numerical
 value(s), and a \emph{verdict} that classifies the value against user‑defined thresholds.
@@ -125,8 +124,8 @@ inferred by a statistical emulator, or read from a fragility table.
 An event enters the system through a secure web service that
 authenticates the request, stores raw sensor streams in object storage,
 and inserts a new row in the \emph{Event} ledger. 
-At that instant an \textbf{Evaluation Daemon}---a long‑lived scheduler running in the
-Orchestration Layer---receives a notification. 
+At that instant a long‑lived scheduler running in the
+Orchestration Layer called the \textbf{Evaluation Daemon} receives a notification. 
 The daemon queries the Asset record to discover which predictors are active and queues them for
 execution according to resource‑aware policies. 
 Predictors may run concurrently, and each operates in isolation within its own working directory.
@@ -137,8 +136,8 @@ Once all predictors for an event have reported, the daemon invokes an
 \textbf{Evaluation Policy} that scans the assembled metric set, assigns
 an overall health state, and dispatches notifications to stakeholders.
 The policy mechanism is again a Strategy: facilities managers can supply
-their own decision logic---ranging from simple threshold checks to
-Bayesian belief networks---without disturbing core services.
+their own decision logic, ranging from simple threshold checks to
+Bayesian belief networks, without disturbing core services.
 
 \Cref{fig:irie-sequences} illustrates the complete event path, from acceleration
 time histories arriving at the web gateway to color‑coded health tiles

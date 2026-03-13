@@ -32,19 +32,18 @@ Part~I of this dissertation develops a family of beam finite elements that addre
 The central contribution is an enhanced section constitutive framework that improves reconstruction of the three-dimensional strain field while preserving the standard one-dimensional equilibrium equations, with correction amplitudes resolved locally at each section and condensed from the global system.
 This constitutive framework is developed in the general setting of geometrically exact beam theory with an arbitrary number of warping modes, and remains valid for linearizations of that model including classical Timoshenko beam theory.
 It is then specialized in two directions.
-For uniform warping, enhanced shapes are derived that exactly recover Saint~Venant continuum solutions in the elastic regime.
-For nonuniform warping, the framework yields enhanced shapes that rectify the torsional equilibrium violation known to arise in standard torsion-warping models.
-For inelastic analysis, the framework permits warping effects to be condensed at the section level, so that standard six-degree-of-freedom beam elements can be employed without modification to the element formulation.
-The resulting formulations are implemented in \Xara{}, a simulation environment extending the work by \cite{mckenna1997object} that supports automatic differentiation through a hybrid adjoint approach.
+For uniform warping, enhanced shapes are derived that exactly recover Saint~Venant continuum solutions in the elastic regime (\cref{sec:timo}). 
+For nonuniform warping, the framework yields enhanced shapes that rectify the torsional equilibrium violation known to arise in standard torsion-warping models (\cref{sec:nonuniform}).
+% For inelastic analysis, the framework permits warping effects to be condensed at the section level, so that standard six-degree-of-freedom beam elements can be employed without modification to the element formulation.
 
 
 Part~II describes the implementation of a framework for structural health monitoring that leverages the developments of Part~I. 
 This framework was implemented for the Bridge Rapid Assessment Center for Extreme Events (\BRACE{}) project with funding from Caltrans to deliver post-earthquake assessments for instrumented highway bridges.
-Its computational backend organizes health monitoring around five abstractions: \emph{Assets} representing physical structures, \emph{Events} representing earthquakes or other triggering conditions, \emph{Predictors} implementing physics-based or data-driven analysis methods, \emph{Metrics} quantifying structural condition, and \emph{Evaluations} assembling metrics into actionable reports. 
+Its computational backend organizes health monitoring around five abstractions: \emph{Assets} representing physical structures, \emph{Events} representing earthquakes or other triggering conditions, \emph{Predictors} implementing physics-based or data-driven analysis methods, \emph{Metrics} quantifying structural condition, and \emph{Evaluations} assembling metrics into actionable reports (\cref{sec:irie}). 
 This architecture permits physics-based simulation and data driven methods to coexist within a unified framework, with results presented through a common interface.
 The developments of Part~I contribute the simulation engine for Type~I predictors on this platform.
-Following a pilot deployment covering 22 bridges, Caltrans has funded continued development to extend coverage across the California highway network.
-
+Following a pilot deployment covering 22 bridges, Caltrans has funded continued development to extend coverage across the California highway network. 
+The formulations of Part~I are implemented in \Xara{} (\cref{ch:xara}), a simulation environment extending the work by \cite{mckenna1997object} that supports automatic differentiation through a hybrid compositional approach (\cref{ch:autodiff}).
 
 
 

@@ -16,12 +16,14 @@ This architectural change enables reliable embedding of \OpenSees{} in mission-c
 The proposed architecture derives largely from the FEDEASLab toolbox for MATLAB \citep{filippou2004fedeaslab}. 
 
 \subsection{Literature}
+Finite element software:
 \begin{itemize}
     \item \cite{taylor1970finite}
     \item \cite{wilson1970sap}
     \item \citep{mckenna1997object}
     \item \citep{zhu2018openseespy}
 \end{itemize}
+
 
 \section{The Legacy Interpreter Architecture}
 \label{sec:legacy}
@@ -61,6 +63,12 @@ The lack of encapsulation means that a library embedding \OpenSees{} cannot guar
 % The architectural deficiency lies not in the core but in the interpreter layer that mediates access to it. 
 % The OPS API, by interposing global state between the user and the core, forfeits the composability and encapsulation that the core's object-oriented design was intended to provide.
 
+Several solutions have been proposed to address the architectural limitations in the OpenSeesPy interface \citep{marafi2022openseesapi,manousakis2022opensees,dong2022smartanalyze,talley2021opswrapper,cslotboom2021openseespytools,2022o3seespy}. 
+However, all of these act as wrappers within the interpreter and do not address the underlying source of the problem.
+
+\begin{Note}
+    TODO: perhaps elaborate on the presence of a functions like \texttt{OPS\_GetAlgorithm()},\texttt{OPS\_GetSOE()}, and \texttt{OPS\_{GetNumberer}} defeat the purpose of the encapsulation offered by the aggregation classes presented by \cite{mckenna1997object}.
+\end{Note}
 \section{A Structured Runtime}\label{sec:runtime}
 
 The restructured runtime eliminates global state by introducing explicit context objects that own finite-element entities and encapsulate analysis state. 
@@ -100,15 +108,15 @@ Command implementations follow a uniform pattern in which the context is receive
 
 This pattern admits a natural extension to language bindings. The Python interface, for instance, represents contexts as first-class objects that users construct and pass to API functions. The ``current model'' is a variable in user code, not a hidden interpreter state.
 
-\subsubsection{Backward Compatibility}
 
-The restructured runtime is designed to support a backward compatible API. Because the new API is strictly more explicit than the old one, a compatibility layer can present the legacy interface by maintaining a thread-local ``current context'' that global-style functions implicitly reference. 
-This allows existing scripts to execute unchanged while enabling new code to adopt explicit context management. 
-
-\section{Implications for Embedded Applications}
+\section{Discussion}
 \label{sec:implications}
 
 The architectural changes described above have immediate practical consequences for applications that embed \OpenSees{} as a computational kernel.
+
+The restructured runtime is designed to support a backward compatible API. 
+Because the new API is strictly more explicit than the old one, a compatibility layer can present the legacy interface by maintaining a thread-local ``current context'' that global-style functions implicitly reference. 
+This allows existing scripts to execute unchanged while enabling new code to adopt explicit context management. 
 
 \paragraph{Determinism and Reproducibility.}
 

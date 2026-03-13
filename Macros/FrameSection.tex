@@ -2,6 +2,7 @@
 \usepackage{tcolorbox}
 \usepackage{xkeyval}
 \usepackage{siunitx}
+\usepackage{xstring}
 
 \makeatletter
 
@@ -22,19 +23,33 @@
 %% Section Geometry
 \define@key{beamsec}{d}[]{\def\beamsec@d{#1}}
 \define@key{beamsec}{b}[]{\def\beamsec@b{#1}}
+\define@key{beamsec}{t}[]{\def\beamsec@t{#1}}
+\define@key{beamsec}{bf}[]{\def\beamsec@bf{#1}}
+\define@key{beamsec}{tf}[]{\def\beamsec@tf{#1}}
+\define@key{beamsec}{tw}[]{\def\beamsec@tw{#1}}
 % 
 \define@key{beamsec}{A}[]{\def\beamsec@A{#1}}
-\define@key{beamsec}{Ay}[]{\def\beamsec@Ay{#1}}
-\define@key{beamsec}{Az}[]{\def\beamsec@Az{#1}}
 \define@key{beamsec}{Iy}[]{\def\beamsec@Iy{#1}}
 \define@key{beamsec}{Iz}[]{\def\beamsec@Iz{#1}}
 \define@key{beamsec}{J}[]{\def\beamsec@J{#1}}
-\define@key{beamsec}{ry}[]{\def\beamsec@ry{#1}}
-\define@key{beamsec}{rz}[]{\def\beamsec@rz{#1}}
+%
+\define@key{beamsec}{EA}[]{\def\beamsec@EA{#1}}
+\define@key{beamsec}{GJ}[]{\def\beamsec@GJ{#1}}
+%
+\define@key{beamsec}{energetic/GAy}[]{ \def\beamsec@ener@GAy{#1}}
+\define@key{beamsec}{energetic/GAz}[]{ \def\beamsec@ener@GAz{#1}}
+\define@key{beamsec}{energetic/GAyz}[]{\def\beamsec@ener@GAyz{#1}}
+\define@key{beamsec}{energetic/GAzy}[]{\def\beamsec@ener@GAzy{#1}}
+\define@key{beamsec}{geometric/GAy}[]{ \def\beamsec@geom@GAy{#1}}
+\define@key{beamsec}{geometric/GAz}[]{ \def\beamsec@geom@GAz{#1}}
+\define@key{beamsec}{geometric/GAyz}[]{\def\beamsec@geom@GAyz{#1}}
+\define@key{beamsec}{geometric/GAzy}[]{\def\beamsec@geom@GAzy{#1}}
 
 %% Material properties
 \define@key{beamsec}{E}[]{\def\beamsec@E{#1}}
 \define@key{beamsec}{G}[]{\def\beamsec@G{#1}}
+\define@key{beamsec}{Hi}[]{\def\beamsec@Hi{#1}}
+\define@key{beamsec}{Hk}[]{\def\beamsec@Hk{#1}}
 \define@key{beamsec}{nu}[]{\def\beamsec@nu{#1}}
 \define@key{beamsec}{Fy}[]{\def\beamsec@Fy{#1}}
 \define@key{beamsec}{rho}[]{\def\beamsec@rho{#1}}
@@ -44,10 +59,34 @@
 \define@key{beamsec}{unit/stress}[]{\def\beamsec@unit@stress{#1}}
 
 % Helper for property row
+% \newcommand{\beamsec@row}[4]{%
+%   \ifx#2\empty\else$#1$ & $\!\!=\!$ & \num{#2}\ifx#3\empty\else\;\si{#3\ifx#4\empty\else\tothe{#4}\fi}\fi \tabularnewline \fi
+% }
 \newcommand{\beamsec@row}[4]{%
-  \ifx#2\empty\else$#1$ & $\!\!=\!$ & \num{#2}\ifx#3\empty\else\;\si{#3\ifx#4\empty\else\tothe{#4}\fi}\fi \tabularnewline \fi
+  \ifx#2\empty\else$#1$ & $\!\!=\!$ & %
+  #2 & %
+  \ifx#3\empty\else\;\si{#3\ifx#4\empty\else\tothe{#4}\fi}\fi %
+  \tabularnewline \fi
 }
 
+% \newcommand{\beamsec@numexpr}[1]{%
+%   \StrCount{#1}{ }[\beamsec@spcount]%
+%   \ifnum\beamsec@spcount>0\relax
+%     \StrBefore{#1}{ }[\beamsec@numpart]%
+%     \StrBehind{#1}{ }[\beamsec@sympart]%
+%     \num{\beamsec@numpart}\,$\beamsec@sympart$%
+%   \else
+%     \num{#1}%
+%   \fi
+% }
+
+% \newcommand{\beamsec@row}[4]{%
+%   \ifx#2\empty\else
+%     $#1$ & $\!\!=\!$ & $\beamsec@numexpr{#2}$ %
+%     \ifx#3\empty\else\;\si{#3\ifx#4\empty\else\tothe{#4}\fi}\fi
+%     \tabularnewline
+%   \fi
+% }
 \newtcolorbox{beamsecbox}{
     colback=white,
     colframe=black!60,
@@ -73,13 +112,34 @@
     % Section Geometry
     \def\beamsec@d{}
     \def\beamsec@b{}
+    \def\beamsec@t{}
+    \def\beamsec@bf{}
+    \def\beamsec@tf{}
+    \def\beamsec@tw{}
+    %
     \def\beamsec@A{}
-    \def\beamsec@Ay{}\def\beamsec@Az{}%
     \def\beamsec@Iy{}\def\beamsec@Iz{}%
-    \def\beamsec@J{}\def\beamsec@ry{}\def\beamsec@rz{}%
+    \def\beamsec@J{}
+    \def\beamsec@EA{}
+    \def\beamsec@GJ{}
+    %
+    \def\beamsec@ener@GAy{}
+    \def\beamsec@ener@GAz{}
+    \def\beamsec@ener@GAyz{}
+    \def\beamsec@ener@GAzy{}
+    \def\beamsec@geom@GAy{}
+    \def\beamsec@geom@GAz{}
+    \def\beamsec@geom@GAyz{}
+    \def\beamsec@geom@GAzy{}
+
     % Material
-    \def\beamsec@E{}\def\beamsec@G{}\def\beamsec@nu{}
-    \def\beamsec@Fy{}\def\beamsec@rho{}%
+    \def\beamsec@E{}
+    \def\beamsec@G{}
+    \def\beamsec@nu{}
+    \def\beamsec@Hi{}
+    \def\beamsec@Hk{}
+    \def\beamsec@Fy{}
+    \def\beamsec@rho{}%
     \def\beamsec@unit@length{}\def\beamsec@unit@stress{}%
 
     % 2) Parse keys
@@ -105,49 +165,88 @@
         \vspace{6pt}
         %
         % side-by-side tables
-        \begin{minipage}[t]{0.3\linewidth}
-          \textit{Kinematics} \\[2pt]
-          \begin{tabular}{@{}rl}
-             Section: & \beamsec@kinematics@section \\
-             Element: & \beamsec@kinematics@element \\
-             
-             
-          \end{tabular}
-        \end{minipage}
-        \hfill
-        \begin{minipage}[t]{0.3\linewidth}
-            
-            \ifx\beamsec@shape\empty
-                \textit{Section}
-            \else 
-                \textit{\beamsec@shape}
-            \fi
-            \ifx\beamsec@label@shape\empty\else 
-              (\beamsec@label@shape)
-            \fi
-            \\[2pt]
-            \begin{tabular}{@{}lcl@{}}
-                \beamsec@row{d}{\beamsec@d}{\beamsec@unit@length}{2}
-                \beamsec@row{b}{\beamsec@b}{\beamsec@unit@length}{2}
-                \beamsec@row{A}{\beamsec@A}{\beamsec@unit@length}{2}
-                \beamsec@row{A_y}{\beamsec@Ay}{\beamsec@unit@length}{2}
-                \beamsec@row{A_z}{\beamsec@Az}{\beamsec@unit@length}{2}
-                \beamsec@row{I_y}{\beamsec@Iy}{\beamsec@unit@length}{4}
-                \beamsec@row{I_z}{\beamsec@Iz}{\beamsec@unit@length}{4}
-                  \beamsec@row{J}{\beamsec@J }{\beamsec@unit@length}{4}
-            \end{tabular}
-        \end{minipage}%
-        \hfill
-        \begin{minipage}[t]{0.3\linewidth}
-            \textit{Material}\\[2pt]
-            \begin{tabular}{@{}rcl@{}}
+        \begin{minipage}[t]{0.25\linewidth}
+            \textit{Material}\\[3pt]
+            \begin{tabular}{@{}lcr@{\hskip 2pt}l@{}} %
                 \beamsec@row{E}{\beamsec@E}{\beamsec@unit@stress}{}
                 \beamsec@row{G}{\beamsec@G}{\beamsec@unit@stress}{}
+                \beamsec@row{H_{\mathrm{iso}}}{\beamsec@Hi}{\beamsec@unit@stress}{}
+                \beamsec@row{H_{\mathrm{kin}}}{\beamsec@Hk}{\beamsec@unit@stress}{}
                 % \beamsec@row{\nu}{\beamsec@nu}{}
                 \beamsec@row{F_y}{\beamsec@Fy}{\beamsec@unit@stress}{}
                 % \beamsec@row{\rho}{\beamsec@rho}{}
             \end{tabular}
         \end{minipage}
+        \hfill
+        \begin{minipage}[t]{0.25\linewidth}
+          \textit{Dimensions} 
+            % \ifx\beamsec@shape\empty
+            %     % \textit{Section}
+            % \else 
+            %     (\textit{\beamsec@shape})
+            % \fi
+            % \ifx\beamsec@label@shape\empty
+            %   (\textit{\beamsec@shape})
+            % \else 
+            %   (\beamsec@label@shape)
+            % \fi
+          \\[3pt]
+          \begin{tabular}{@{}rl}
+             % Section: & \beamsec@kinematics@section \\
+             % Element: & \beamsec@kinematics@element \\
+            \begin{tabular}{@{}lcr@{\hskip 2pt}l@{}} %
+                \beamsec@row{d}{\beamsec@d}{\beamsec@unit@length}{}
+                \beamsec@row{b}{\beamsec@b}{\beamsec@unit@length}{}
+                \beamsec@row{t}{\beamsec@t}{\beamsec@unit@length}{}
+                \beamsec@row{b_f}{\beamsec@bf}{\beamsec@unit@length}{}
+                \beamsec@row{t_f}{\beamsec@tf}{\beamsec@unit@length}{}
+                \beamsec@row{t_w}{\beamsec@tw}{\beamsec@unit@length}{}
+            \end{tabular}
+          \end{tabular}
+        \end{minipage}
+        \hfill
+        \begin{minipage}[t]{0.4\linewidth}
+            \cref{tab:rigid-constants}
+            \\[3pt]
+            % {\setlength{\tabcolsep}{2pt}%
+            \begin{tabular}{@{}lcr@{\hskip 2pt}l@{}} %
+                % \beamsec@row{d}{\beamsec@d}{\beamsec@unit@length}{2}
+                % \beamsec@row{b}{\beamsec@b}{\beamsec@unit@length}{2}
+                % \beamsec@row{A}{\beamsec@A $E$}{\beamsec@unit@stress \beamsec@unit@length}{2}
+                \beamsec@row{\AxialRigidity}{\beamsec@EA}{\beamsec@unit@stress \beamsec@unit@length}{2}
+                \beamsec@row{I_y}{\beamsec@Iy}{\beamsec@unit@length}{4}
+                \beamsec@row{I_z}{\beamsec@Iz}{\beamsec@unit@length}{4}
+                \beamsec@row{J}{\beamsec@J }{\beamsec@unit@length}{4}
+                \beamsec@row{\TwistRigidity}{\beamsec@GJ}{\beamsec@unit@stress \beamsec@unit@length}{4}
+                % \beamsec@row{\widehat{GA}_y}{\beamsec@GAy}{\beamsec@unit@stress \beamsec@unit@length}{2}
+            \end{tabular}%}
+        \end{minipage}%
+
+        %
+        %
+        \ifx\beamsec@ener@GAz\empty\else
+          \vspace{6pt}
+          \begin{center}
+          \cref{tab:trace-consts}
+          \end{center}
+          \begin{minipage}[t]{0.4\linewidth}
+            \textit{Energetic} \eqref{eq:energetic-trace-blocks}\\[3pt]
+            \begin{tabular}{@{}lcr@{\hskip 2pt}l@{}} %
+                \beamsec@row{\widehat{GA}_y}{\beamsec@ener@GAy}{\beamsec@unit@stress \beamsec@unit@length}{2}
+                \beamsec@row{\widehat{GA}_z}{\beamsec@ener@GAz}{\beamsec@unit@stress \beamsec@unit@length}{2}
+            \end{tabular}
+          \end{minipage}%
+        \fi
+        \ifx\beamsec@geom@GAz\empty\else
+          \hfill
+          \begin{minipage}[t]{0.4\linewidth}
+            \textit{Geometric} \eqref{eq:trace-blocks-geometric}\\[3pt]
+            \begin{tabular}{@{}lcr@{\hskip 2pt}l@{}} %
+                \beamsec@row{\widehat{GA}_y}{\beamsec@geom@GAy}{\beamsec@unit@stress \beamsec@unit@length}{2}
+                \beamsec@row{\widehat{GA}_z}{\beamsec@geom@GAz}{\beamsec@unit@stress \beamsec@unit@length}{2}
+            \end{tabular}
+          \end{minipage}%
+        \fi
     \end{beamsecbox}
 }
 \makeatother

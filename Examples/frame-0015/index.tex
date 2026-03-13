@@ -62,7 +62,7 @@ $$
 % \subsubsection{Uniform Twist}
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.5\linewidth]{Examples/frame-0015/img/0015-twist.png}
+    \includegraphics[width=0.75\linewidth]{Examples/frame-0015/img/0015-twist.png}
     \caption{Simulated and analytical torque \(\TwistRxn\) vs. rotation \(\vartheta\) from Example~\ref{sec:frame-0015}.}
 \end{figure}
 Under a constant torque $\TwistRxn$ the twist $\vartheta'$ is constant along the member and  ($\dagger$) admits the solution:
@@ -70,8 +70,9 @@ Under a constant torque $\TwistRxn$ the twist $\vartheta'$ is constant along the
 T(x)= \TwistRigidity\frac{\vartheta_L}{L}+\tfrac{1}{2} E I_n\left(\frac{\vartheta_L}{L}\right)^3
 \label{eq:0015-solution}
 \end{equation}
-The section dimensions are $200 \times 10$\unit{\milli\meter} with constants $J=66.667 \times 10^3 \mathrm{~mm}^4$, 
-$\Jw=0 \mathrm{~mm}^6$, $I_n=17.778 \times 10^9 \mathrm{~mm}^6$, and length $L=1,000 \mathrm{~mm}$. 
+The section dimensions are $200 \times 10$\unit{\milli\meter} with constants 
+%$J=66.667 \times 10^3 \mathrm{~mm}^4$, 
+$\Jw\approx 0 \mathrm{~mm}^6$, $I_n=17.778 \times 10^9 \mathrm{~mm}^6$, and length $L=1,000 \mathrm{~mm}$. 
 
 
 
@@ -150,9 +151,11 @@ $\Jw=0 \mathrm{~mm}^6$, $I_n=17.778 \times 10^9 \mathrm{~mm}^6$, and length $L=1
 label/problem=frame-0015,
 %
 shape=Rectangle,
-kinematics/section={\eqref{eq:wagner-gl-strain-pi}},
+d=200,
+b=10,
+%
 % Cw=0,
-J=66.667e3,
+GJ={\num{66.667e3} $G$},
 unit/length={\milli\meter},
 % Material
 E={200,000},

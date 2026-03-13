@@ -1,0 +1,162 @@
+
+
+\section{Introduction}
+
+The \OpenSees{} framework \citep{mckenna1997object} is underpinned by a carefully layered C++ core that offers powerful abstractions for creating nonlinear finite-element programs. 
+Among the most widely used applications built on this core are the Tcl and Python interpreters, which provide domain-specific scripting environments for structural and geotechnical modeling. 
+These interpreters have enabled a generation of researchers to perform sophisticated analyses without engaging directly with compiled code.
+
+However, the interpreter layer introduces architectural constraints that become problematic when \OpenSees{} must function not as a standalone scripting environment but as an embedded component within a larger software system. 
+Contemporary applications in structural health monitoring, uncertainty quantification, and machine learning require simulation engines that are deterministic, thread-safe, and composable with external libraries.
+These properties are difficult to achieve when the interpreter maintains implicit global state that any function call may read or mutate. 
+
+This chapter presents a restructured runtime that eliminates the global state underlying the existing interpreters. 
+The design replaces process-level singletons with user-owned objects whose lifetimes and interactions are explicit in the program's control flow. 
+This architectural change enables reliable embedding of \OpenSees{} in mission-critical systems, safe concurrent evaluation of multiple models, and integration with automatic differentiation frameworks that require explicit computational graphs. 
+The proposed architecture derives largely from the FEDEASLab toolbox for MATLAB \citep{filippou2004fedeaslab}. 
+
+\subsection{Literature}
+Finite element software:
+\begin{itemize}
+    \item \cite{taylor1970finite}
+    \item \cite{wilson1970sap}
+    \item \citep{mckenna1997object}
+    \item \citep{zhu2018openseespy}
+\end{itemize}
+
+
+\section{The Legacy Interpreter Architecture}
+\label{sec:legacy}
+
+The \OpenSees{} interpreters are built on an intermediary layer of stateful functions known as the OPS API \citep{zhu2018openseespy}. 
+This layer, introduced to simplify the creation of interpreter bindings, operates on global state distributed across more than thirty variables defined in over twenty source files. 
+While this design reduced the implementation burden for adding new commands, it introduced fundamental limitations from the perspective of software architecture.
+
+\subsubsection{Implicit State and Referential Opacity}
+
+The OPS API exposes functions of the form \texttt{OPS\_GetAnalysisModel()} 
+% and \linebreak[1]
+% \texttt{OPS\_GetUniaxialMaterial(tag)}
+that return pointers to objects held in global tables. 
+A command implementation retrieves its dependencies by calling these functions, which access ambient state rather than receiving arguments explicitly. 
+This design violates the principle of referential transparency: the same function call may return different results depending on the order of prior commands, and the dependencies of any given function are not apparent from its signature.
+
+The user-facing consequence is that commands exhibit implicit sequential coupling. 
+For instance, the \texttt{load} command depends on state established by a prior \texttt{pattern} command. 
+Similarly, material and element definitions implicitly reference the ``current'' model, and analysis commands operate on whichever domain object was most recently constructed. 
+These dependencies are not enforced by the type system or checked at parse time and thus  manifest as silent numerical corruption or segmentation faults at runtime.
+
+\subsubsection{Model Aliasing}
+
+Because the interpreter maintains at most one model in its global state, any command that constructs a new model overwrites the previous one. This creates an aliasing hazard: references held by user code may become dangling when a subsequent model command reinitializes the global domain. Consider a workflow in which a calibration routine constructs a model, performs an analysis, and stores a reference to the results. 
+If a later stage of the same process constructs a second model the stored reference now points to deallocated or reinitialized memory.
+
+This limitation renders the interpreter unsuitable for any application that requires multiple concurrent models. Monte Carlo simulations, parametric studies, and ensemble methods all require independent model instances that can be evaluated in parallel. 
+The global singleton architecture forces such workflows to spawn separate processes, incurring the overhead of inter-process communication and precluding shared-memory parallelism.
+
+The analysis machinery exhibits analogous issues. 
+The integrator, algorithm, system of equations, and convergence test are held as global pointers that any command may reassign. 
+Because these components hold internal state that evolves during the solution process, concurrent access---or even interleaved access from ostensibly independent analyses---produces race conditions and corrupted solutions. 
+The lack of encapsulation means that a library embedding \OpenSees{} cannot guarantee isolation from other libraries that may also embed it; two such libraries executing in the same process will silently corrupt each other's analyses.
+
+% The C++ classes developed by  \citep{mckenna1997object,scott2004software} are strong abstractions that support multiple instances and explicit ownership. 
+% The architectural deficiency lies not in the core but in the interpreter layer that mediates access to it. 
+% The OPS API, by interposing global state between the user and the core, forfeits the composability and encapsulation that the core's object-oriented design was intended to provide.
+
+Several solutions have been proposed to address the architectural limitations in the OpenSeesPy interface \citep{marafi2022openseesapi,manousakis2022opensees,dong2022smartanalyze,talley2021opswrapper,cslotboom2021openseespytools,2022o3seespy}. 
+However, all of these act as wrappers within the interpreter and do not address the underlying source of the problem.
+
+\begin{Note}
+    TODO: perhaps elaborate on the presence of a functions like \texttt{OPS\_GetAlgorithm()},\texttt{OPS\_GetSOE()}, and \texttt{OPS\_{GetNumberer}} defeat the purpose of the encapsulation offered by the aggregation classes presented by \cite{mckenna1997object}.
+\end{Note}
+\section{A Structured Runtime}\label{sec:runtime}
+
+The restructured runtime eliminates global state by introducing explicit context objects that own finite-element entities and encapsulate analysis state. 
+Every API function receives the relevant context as an argument, making dependencies explicit and enabling multiple independent analyses within a single process.
+
+The architecture is guided by three principles drawn from functional programming and modern systems design:
+
+\begin{description}
+    \item[Explicit ownership.] Every finite-element object---node, material, element, load pattern---is owned by a specific context object. Object lifetimes are tied to context lifetimes, and no global tables exist. This eliminates aliasing hazards and makes memory management deterministic.
+
+    \item[Referential transparency.] API functions are pure in the sense that their behavior depends only on their explicit arguments. 
+    Two calls with identical arguments produce identical results, regardless of the history of prior calls. 
+    This property enables equational reasoning about program behavior and is prerequisite for integration with automatic differentiation.
+
+    \item[Context threading.] Rather than accessing ambient state, command implementations receive their dependencies through explicit context parameters. This pattern, sometimes called dependency injection, allows the same command implementation to operate on different models by passing different contexts.
+\end{description}
+
+\subsubsection{Context Hierarchy}
+
+The runtime introduces three primary context classes that partition the state previously held in global variables:
+
+\begin{description}
+\item[ModelRegistry.]
+This context owns all prototype objects: materials, sections, coordinate transformations, and other entities that define constitutive behavior or geometric properties. 
+It maintains typed tables indexed by user-assigned tags and enforces a dependency graph that prevents use-before-definition errors. When a command requests a material by tag, it does so through a method on a specific registry instance rather than through a global accessor.
+
+\item[DomainContext.]
+This context represents the evolving state of a single finite-element model: the mesh of nodes and elements, boundary conditions, and applied loads. It corresponds to the \texttt{Domain} class of the underlying C++ core but is instantiated explicitly by user code rather than as a global singleton. Multiple domain contexts may coexist, enabling concurrent models.
+
+\item[AnalysisContext.]
+This context encapsulates the solution strategy: the integrator, solution algorithm, system of equations, constraint handler, and convergence test. It holds the transient state that evolves during Newton--Raphson iterations and is invalidated when the analysis completes or fails. Separating analysis state from domain state allows the same model to be analyzed under different strategies without reconstruction.
+\end{description}
+
+\subsubsection{Command Encapsulation}
+
+Command implementations follow a uniform pattern in which the context is received as an opaque handle and downcast to the appropriate type. The command retrieves its dependencies by querying the context rather than global tables, constructs the requested object, and registers it with the context for lifetime management. Because the context is local to a single model, two threads operating on different contexts cannot interfere---thread safety is a structural property rather than a synchronization discipline.
+
+This pattern admits a natural extension to language bindings. The Python interface, for instance, represents contexts as first-class objects that users construct and pass to API functions. The ``current model'' is a variable in user code, not a hidden interpreter state.
+
+
+\section{Discussion}
+\label{sec:implications}
+
+The architectural changes described above have immediate practical consequences for applications that embed \OpenSees{} as a computational kernel.
+
+The restructured runtime is designed to support a backward compatible API. 
+Because the new API is strictly more explicit than the old one, a compatibility layer can present the legacy interface by maintaining a thread-local ``current context'' that global-style functions implicitly reference. 
+This allows existing scripts to execute unchanged while enabling new code to adopt explicit context management. 
+
+\paragraph{Determinism and Reproducibility.}
+
+Explicit state management ensures that repeated invocations of the same analysis produce identical results, independent of program history. This determinism is essential for applications that must demonstrate regulatory compliance or that use simulation results as evidence in engineering decisions. It also simplifies debugging: when behavior depends only on explicit inputs, failures can be reproduced by capturing those inputs rather than reconstructing an entire execution history.
+
+\paragraph{Shared-Memory Parallelism.}
+
+The absence of global state permits multiple analyses to execute concurrently on separate threads without synchronization. Each thread operates on its own context objects, and the runtime imposes no mutual exclusion. This enables embarrassingly parallel workflows---Monte Carlo sampling, parametric sweeps, ensemble Kalman filtering---to scale with available cores rather than requiring distributed-memory parallelism. For a seismic monitoring platform evaluating hundreds of earthquake scenarios, the difference between process-level and thread-level parallelism translates directly to reduced latency and infrastructure cost.
+
+\paragraph{Integration with Differentiable Programming.}
+
+Modern machine learning frameworks construct explicit computational graphs that enable automatic differentiation. Integrating a simulation engine with these frameworks requires that the engine's state be representable as nodes in the graph---a requirement incompatible with hidden global state. The restructured runtime exposes all relevant state through context objects that can be traced by differentiation libraries, enabling gradient-based optimization, sensitivity analysis, and neural surrogate modeling without invasive modification of the simulation code.
+
+\paragraph{Reliable Embedding.}
+
+Perhaps most critically, explicit ownership eliminates the hazard of state corruption when multiple libraries embed \OpenSees{}. Each library instantiates its own contexts, and no global state exists for them to share. This property is prerequisite for deploying \OpenSees{} as a ``black-box'' dependency in production systems where robustness requirements preclude the debugging of subtle interaction effects.
+
+\section{Validation}\label{sec:validation}
+
+% The restructured runtime is accompanied by over three hundred unit and integration tests that execute in under thirty seconds on a single CPU core. Continuous integration builds verify compatibility across Linux, macOS, and Windows with GCC, Clang, and MSVC. 
+% The test suite includes regression tests against the legacy interpreter to ensure numerical equivalence for supported features.
+
+% The runtime entered production deployment in January 2024 as the computational kernel for a real-time seismic monitoring platform operated by a state transportation agency. 
+% Since deployment, it has processed over one hundred fifty seismic events, providing automated post-event structural assessments within minutes of ground motion. The platform's requirements for deterministic behavior, parallel scenario evaluation, and reliable embedding motivated the architectural work described in this chapter and validated its practical effectiveness.
+
+\section{Conclusion}\label{sec:conclusion}
+
+The restructured runtime restores the encapsulation envisioned in the original \OpenSees{} design while retaining full compatibility with the underlying C++ core. 
+By eliminating the interpreter's hidden state, it delivers an explicit, composable API that is safe to embed, parallelize, and differentiate. 
+The successful deployment in a mission-critical monitoring system confirms both its robustness and its practical value. 
+This architectural foundation positions \OpenSees{} to serve emerging applications in data-driven structural engineering that require tight integration with modern computational infrastructure.
+
+
+Re-engineering the \OpenSees{} interpreters was a significant but necessary endeavor to address systemic issues that prevented their use in mission-critical software like \BRACE{}. 
+The existing interpreters employ over 30 global variables, defined across over 20 C++ files, which collectively hold the state of one analysis. These are manipulated indiscriminately through the internal \emph{OPS} API, which consists largely of functions taking no arguments (e.g., \texttt{OPS\_GetAnalysisModel()}) that lack a structured programming paradigm. 
+This lack of encapsulation or explicit object ownership leaves the existing interpreters difficult to reason about and plagued with undefined behavior.
+
+The user-facing API provided by OpenSeesPy is similarly unstructured. 
+Its extensive reliance on implicit command sequencing—where a function like \texttt{load()} depends on a hidden state set by a previous \texttt{pattern()} call—relegates \OpenSees{} to a standalone scripting tool. 
+This global state creates a fragile environment for software development; any function call can have unforeseen side effects on any analysis model, leading to silent numerical corruption or non-deterministic crashes that bypass the interpreter's own exception handling. Consequently, any library that embeds the existing OpenSeesPy must warn its users against combining it with other \OpenSees{}-based libraries for fear that the two libraries will unknowingly corrupt each other's state.
+
+\Xara{} addresses these limitations by stripping global singletons, introducing an explicit object ownership model, and imposing strict encapsulation. 
+All commands now operate exclusively on user-owned analysis objects, guaranteeing their state cannot be altered by any routine that has not been explicitly passed a reference to the object. This work, validated by a suite of over \textbf{30} unit tests and merged into the central \OpenSees{} repository, transforms \OpenSees{} into a library-grade engine that can be safely embedded as a predictable ``black-box'' dependency.

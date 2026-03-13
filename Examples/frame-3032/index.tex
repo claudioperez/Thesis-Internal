@@ -6,19 +6,39 @@
     \caption{Model and deformed shape for Example~\ref{sec:frame-3032}.}
 \end{figure}
 
+\subparagraph{Setup.}
 A cantilever with a channel section is loaded by an eccentric transverse force into the inelastic range. 
 Warping plays a significant role in the analysis. 
 The material is modeled using $J_2$ plasticity with linear hardening. 
+\FrameSection{
+label/problem=frame-3032,
+% Section
+shape={Channel},
+d=30,
+b=10,
+t=1,
+% 
+EA={\num{58.8} $E$},
+GJ={\num{35} $G$},
+% Properties
+% kinematics/section={\eqref{eq:linear-gl-strain-pi}},
+unit/length={\centi\meter},
+E={\num{29e3}},
+G={\num{12e3}},
+Fy={\num{35}},
+Hi={0.002 $E$},
+unit/stress={\pascal}
+}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.6\linewidth]{Examples/frame-3032/img/shell-1032.png}
+    \includegraphics[width=0.75\linewidth]{Examples/frame-3032/img/shell-1032.png}
     \caption{Deformed shape for Example~\ref{sec:frame-3032}.}
 \end{figure}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.5\linewidth]{Examples/frame-3032/img/e0013.png}
+    \includegraphics[width=0.75\linewidth]{Examples/frame-3032/img/e0013.png}
     \caption{Caption}
     \label{fig:3032}
 \end{figure}

@@ -16,22 +16,34 @@ This example verifies the proposed handling of the Wagner term \eqref{eq:wagner-
 \subparagraph{Setup.} 
 The span in \cref{fig:frame-3011} is subjected to a concentrated torque \(\TwistRxn\) at midspan (\(\reflenx=L/2\)). 
 The section is a wide flange shape with dimensions:
-$$
-\begin{aligned}
-b_f&=0.1509 ~\unit{\meter} \\
-d  &=0.1524 ~\unit{\meter} \\
-t_w&=0.008 ~\unit{\meter} \\
-t_f&=0.0122 ~\unit{\meter}
-\end{aligned}
-$$
+% $$
+% \begin{aligned}
+% b_f&=0.1509 ~\unit{\meter} \\
+% d  &=0.1524 ~\unit{\meter} \\
+% t_w&=0.008 ~\unit{\meter} \\
+% t_f&=0.0122 ~\unit{\meter}
+% \end{aligned}
+% $$
 
+\FrameSection{
+label/problem=frame-3011,
+% Section
+shape={Wide Flange},
+b=0.1509,
+d=0.1524,
+tf=0.0122,
+tw=0.008,
+% kinematics/section={\eqref{eq:linear-gl-strain-pi}},
+unit/length={\meter},
+unit/stress={\ksi}
+}
 
 
 Results are displayed in \cref{fig:frame-3011-u}. 
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.5\linewidth]{Examples/frame-3011/img/3011-mesh5.png}
+    \includegraphics[width=0.75\linewidth]{Examples/frame-3011/img/3011-mesh5.png}
     \caption{Caption}
     \label{fig:frame-3011-u}
 \end{figure}

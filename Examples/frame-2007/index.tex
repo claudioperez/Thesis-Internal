@@ -25,53 +25,120 @@
 This example demonstrates the effectiveness of the formulation from \cref{sec:timo} under inelastic material response. 
 
 \subparagraph{Setup.}
-The built-in span in \cref{fig:shear-link} represents a shear link with a steel W18x40 section \citep{aisc2017steel}. 
-Three formulations are considered: 
-\begin{enumerate} 
-\item A standard shear-free force-interpolated element with a uniaxial fiber section \citep{taucer1991fiber}, 
-\item The \ForceFrame{} element with the shear fiber section of \cite{scott2004response} (the \texttt{NDFiber} section of \OpenSees{}).
-\item The \ForceFrame{} element with a section that neglects cross sectional warping (i.e., \(\WarpShearIesan_z =0\)), and 
-\item The \ForceFrame{} element with the section formulation of \cref{sec:timo}. 
-\end{enumerate}
-%
-All cases use the multiaxial \(J_2\) plasticity model with yield stress \(f_y = 35\) ksi, and linear isotropic and kinematic hardening with moduli \(H_{\mathrm{iso}} = H_{\mathrm{kin}} = 0.002E\). 
-The shear correction factor for this section is \(A/A_z = 0.46\) according to \cite{cowper1966shear}. 
-The span is discretized by 2 elements.  
-Warping is assumed to occur uniformly and no auxiliary warping fields are introduced. 
-A displacement cycle is imposed at the end \(\reflenx=L\). 
-\begin{figure}[H]
-  \centering
-  \begin{subfigure}[c]{0.5\linewidth}
-    \centering
-    % \includegraphics[width=\linewidth,trim={12cm 0 12cm 0},clip]{Figures/w18x40-warp.png}
-    \includegraphics[width=\linewidth]{Examples/frame-2007/img/plot_1.png}
-    \caption{Shear force \(V_y\) vs. displacement \(u_y\) at \(\reflenx=L\).}
-    \label{fig:2007-C}
-  \end{subfigure}
-    % \hfill
-    % \begin{subfigure}[c]{0.5\linewidth}
-    % \includegraphics[width=0.9\linewidth]{Examples//frame-2007/2007-plastic-spread.png}
-    % \caption{Plastic spread over time.}
-    % \end{subfigure}
-    \begin{subfigure}[c]{0.35\linewidth}
-        
-    \includegraphics[width=0.9\linewidth]{Examples//frame-2007/2007-section-1.png}
-    \caption{$J_2$ stress in section 1 at the end of the simulation.}
-    \end{subfigure}
-\end{figure}
-
-\subparagraph{Results.}
-\cref{fig:2007-C} reports the transverse \((z)\) shear force -- displacement response at the point of imposed displacement \(\reflenx=L\). 
-The significant impact of shear and warping deformations is evident. 
-A section that incorporates shear deformations without warping fails to reproduce the elastic stiffness and overestimates both the strength and the energy dissipation.
-
-}
+The built-in span in \cref{fig:shear-link} represents a shear link with a steel wide-flange (\cref{fig:WideFlange}) W18x40 section \citep{aisc2017steel}. 
 
 \FrameSection{
 label/problem=frame-2007,
 label/shape={W18x40},
 % Section
 shape={Wide Flange},
-kinematics/section={\eqref{eq:linear-gl-strain-pi}},
-unit/length={\inch}
+d=17.9,
+bf=6.02,
+tw=0.315,
+tf=0.525,
+% 
+EA={\num{11.783022979073422} $E$},
+GJ={\num{0.8736721708821547} $G$},
+% Properties
+energetic/GAy={\num{0.47285944978981287} $GA$},
+energetic/GAz={\num{0.46146055510521405} $GA$},
+energetic/GAyz={\num{4.035690838572184e-06} $GA$},
+energetic/GAzy={\num{4.035690838572863e-06} $GA$},
+geometric/GAy={\num{0.7128020693831201} $GA$},
+geometric/GAz={\num{0.46665745193021124} $GA$},
+geometric/GAyz={\num{-1.904404809159846e-06} $GA$},
+geometric/GAzy={\num{3.6564421257585155e-06} $GA$},
+% kinematics/section={\eqref{eq:linear-gl-strain-pi}},
+unit/length={\inch},
+E={\num{29e3}},
+G={\num{12e3}},
+Fy={\num{35}},
+Hi={0.002 $E$},
+unit/stress={\ksi}
 }
+
+The following formulations are considered: 
+\begin{table}[H]
+    \centering
+    \caption{Models compared by Example~\ref{sec:frame-2007}.}
+    \label{tab:frame-2007}
+    \begin{tabular}{ccccc}
+\toprule
+\textbf{Case} & \textbf{Element} & \textbf{Shear} & \textbf{Warping} & $n_{\mathrm{IP}}$ \\
+\midrule 
+1 &  \ForceFrame{} &  No &  No &  5  \\
+2 &  \ForceFrame{} &  Yes &  No &  5  \\
+3 &  \ForceFrame{} &  Yes &  \cite{scott2004software} &  5  \\
+4 &  \ForceFrame{} &  Yes &  \cref{sec:trace-energy}  &  5  \\
+5 &  \ForceFrame{} &  Yes &  \cref{sec:trace-cowper}  &  5  \\
+6 &  \ExactFrame{} &  Yes &  \cref{sec:trace-energy}  &  1  \\
+7 &  \ExactFrame{} &  Yes &  \cref{sec:trace-energy}  &  3  \\
+\bottomrule
+    \end{tabular}
+\end{table}
+
+% \begin{enumerate} 
+% \item A standard shear-free force-interpolated element with a uniaxial fiber section \citep{taucer1991fiber}, 
+% \item The \ForceFrame{} element with the shear fiber section of \cite{scott2004response} (the \texttt{NDFiber} section of \OpenSees{}).
+% \item The \ForceFrame{} element with a section that neglects cross sectional warping (i.e., \(\WarpShearIesan_z =0\)),  
+% \item The \ForceFrame{} element with the section formulation of \cref{sec:timo} and the trace of \cref{sec:trace-energy}. 
+% \item The \ForceFrame{} element with the section formulation of \cref{sec:timo} and the trace of \cref{sec:trace-cowper}. 
+% \item The \ExactFrame{} element with linear interpolation (two nodes), the section of \cref{sec:timo}, and the trace of \cref{sec:trace-energy}.
+% \item The \ExactFrame{} element with cubic interpolation (four nodes), the section of \cref{sec:timo}, and the trace of \cref{sec:trace-energy}.
+% \end{enumerate}
+%
+All cases use the multiaxial \(J_2\) plasticity model with yield stress \(f_y = 35\) ksi, and linear isotropic and kinematic hardening with moduli \(H_{\mathrm{iso}} = H_{\mathrm{kin}} = 0.002E\). 
+The span is discretized by 2 elements.  
+Warping is assumed to occur uniformly and no auxiliary warping fields are introduced. 
+A displacement cycle is imposed at the end \(\reflenx=L\). 
+
+
+The shear correction factor for this section is \(A/A_z = 0.46\) according to \cite{cowper1966shear}. 
+
+\begin{figure}[H]
+  \centering
+  \begin{subfigure}[c]{0.45\linewidth}
+    \centering
+    % \includegraphics[width=\linewidth,trim={12cm 0 12cm 0},clip]{Figures/w18x40-warp.png}
+    \includegraphics[width=\linewidth]{Examples/frame-2007/img/plot_1.png}
+    % \caption{Shear force \(V_y\) vs. displacement \(u_y\) at \(\reflenx=L\).}
+    \label{fig:2007-C}
+  \end{subfigure}
+  \begin{subfigure}[c]{0.45\linewidth}
+    \includegraphics[width=\linewidth]{Examples/frame-2007/img/plot_2.png}
+    % \caption{$J_2$ stress in section 1 at the end of the simulation.}
+  \end{subfigure}
+  \caption{Shear force \(V_y\) vs. displacement \(u_y\) at \(\reflenx=L\).}
+  \label{fig:2007-displ}
+\end{figure}
+
+\begin{figure}[ht]
+  \centering
+  \begin{subfigure}[c]{0.45\linewidth}
+    % \centering
+    \includegraphics[width=\linewidth]{Examples/frame-2007/img/stress_3.png}
+    \label{fig:2007-stress-3}
+  \end{subfigure}
+  \begin{subfigure}[c]{0.45\linewidth}
+    \includegraphics[width=\linewidth]{Examples//frame-2007/img/stress_4.png}
+  \end{subfigure}
+  \begin{subfigure}[c]{0.45\linewidth}
+    % \centering
+    \includegraphics[width=\linewidth]{Examples/frame-2007/img/stress_5.png}
+    \label{fig:2007-stress-5}
+  \end{subfigure}
+  \begin{subfigure}[c]{0.45\linewidth}
+    \includegraphics[width=\linewidth]{Examples//frame-2007/img/stress_6.png}
+  \end{subfigure}
+  \caption{$J_2$ stress in section 1 at the end of the simulation.}
+\end{figure}
+\subparagraph{Results.}
+
+\Cref{fig:2007-displ} reports the transverse \((z)\) shear force -- displacement response at the point of imposed displacement \(\reflenx=L\). 
+The significant impact of shear and warping deformations is evident. 
+A section that incorporates shear deformations without warping fails to reproduce the elastic stiffness and overestimates both the strength and the energy dissipation.
+
+}
+
+
+\FloatBarrier

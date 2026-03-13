@@ -62,6 +62,12 @@ The pre-processing procedure of Box~\ref{box:prep} may be conveniently performed
 
 \subsection{Implementation}
 
+Implementation remarks:
+\begin{itemize}
+    \item Shared memory.
+    \item Multithreading.
+\end{itemize}
+
 \begin{ambox}[Section Preprocessing.]{box:prep}
 \paragraph{Objective.}
 Given a cross section \(\Section \subset \mathbb{R}^2\) where each point is assigned a tensorial stress-strain material \(\TensorMaterial: \StrainTensor \mapsto \StressTensor\), 
@@ -69,10 +75,20 @@ define a \emph{cross section discretization} \(\Section^h\).
 \paragraph{Procedure.}
 \begin{enumerate}
     \item Discretize the section \(\Section\) into quadrature points \(\{\PlanePosition_{\ell}\}\) and weights \(\{\dd A_{\ell}\}\)
-    \item Solve the BVPs \cref{eq:bvp-warp-twist-iesan} for \(\WarpTwistIesan\) and \cref{eq:warp-fa-bvp} for \(\WarpFA\), and for each point \(\PlanePosition_{\ell}\) in the discretization store 
+    \item Compute the relevant warping shapes for \(\EnhanShapes\) over \(\Section^h\):
     \begin{itemize}
-        \item \(\TotalStrainMatrix(\PlanePosition_{\ell})\) \eqref{eq:def-section-kinematic-matrix-Phi} or \eqref{eq:def-section-kinematic-matrix-wagner}.
-        \item \(\EnhanShapes(\PlanePosition_{\ell})\) from \cref{sec:timo} or \eqref{eq:nonuniform-shapes}.
+        \item \(\WarpTwistIesan\) via \cref{eq:bvp-warp-twist-iesan} for \cref{sec:timo} and \cref{sec:nonuniform}
+        \item \(\WarpShearShape\) via \cref{eq:bvp-warp-shear-iesan} for \cref{sec:timo}
+        \item \(\WarpFA\) via \cref{eq:warp-fa-bvp} for \cref{sec:nonuniform}
+    \end{itemize}
+    \item Supply the constants \cref{tab:trace-consts} (\cref{sec:timo}) or \eqref{eq:fa-lambda} (\cref{sec:nonuniform}). 
+    \item For each point \({\ell}\) in the discretization supply 
+    \begin{itemize}
+        \item The coordinates \(\bm{\PlanePosition}_{\ell}\) and weight \(\dd A_{\ell}\). 
+        \item The value \(\varphi(\bm{\PlanePosition}_{\ell})\) and section gradients \(\nabla_{\beta}\varphi(\bm{\PlanePosition}_{\ell})\) for each relevant warping shape. 
+        % \item \(\TotalStrainMatrix(\PlanePosition_{\ell})\) %\eqref{eq:def-section-kinematic-matrix-Phi} or 
+        % \eqref{eq:def-section-kinematic-matrix-wagner}.
+        % \item \(\EnhanShapes(\PlanePosition_{\ell})\) from \cref{sec:timo} or \eqref{eq:nonuniform-shapes}.
         % \item \(~~\WarpSV(\PlanePosition_{\ell}) \in \mathbb{R}\)
         % \item \(\nabla \WarpSV(\PlanePosition_{\ell}) \in \mathbb{R}^2\)
         % \item \(\nabla \WarpFA (\PlanePosition_{\ell}) \in \mathbb{R}^2\)

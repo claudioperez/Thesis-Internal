@@ -3,11 +3,11 @@ However, first two special cases of the Class~I traces are investigated.
 
 \subsection{Class II: Equilibrium Consistency}\label{sec:class-ii}
 The traces that fall under Class I are capable of exactly representing Saint~Venant's solutions in a standard finite element context, but without further restriction they may still exhibit certain undesirable properties.
-In particular, [TODO: elaborate]
-\begin{itemize}
-    \item Tangent symmetry
-    \item Nodal loads
-\end{itemize}
+% In particular, [TODO: elaborate]
+% \begin{itemize}
+%     \item Tangent symmetry
+%     \item Nodal loads
+% \end{itemize}
 
 The strain measures \(\TraceStrain\) associated to a trace \(\mathcal{T}\) define work conjugate resultants \(\TraceStress\) through the relation 
 \[
@@ -17,7 +17,7 @@ Thus the conjugate resultants \(\TraceStress\) are generally distinct from the c
 Thus a section constitutive model that returns \(\snm\) in the setting of Box~\ref{box:basic-shear} may be variationally incompatible, but one returning \(\TraceStress\) may violate continuum consistency. 
 The former is not ideal, but nonetheless will produce a continuum exact representation as demonstrated in Example~\ref{sec:frame-0012}. 
 The latter would appear unjustifiable unless it can be shown that the conjugate resultants of the trace \(\TraceStress\) satisfy the evolution \eqref{eq:equilibrium-ode}. 
-The subset of Class~I traces for which this holds 
+Thus define Class~II as the subset of Class~I traces for which this holds. 
 
 \begin{definition}[Class II]\label{def:class-ii}
 A Class I trace \(\mathcal{T}\) is a \textbf{Class II} trace if the energy-conjugate resultants $\TraceStress$ satisfy the same equilibrium as the classical resultants \eqref{eq:equilibrium-ode}:
@@ -31,15 +31,16 @@ Evidently the conjugate resultants \(\TraceStress\) will depend linearly on the 
 % The conjugate stiffness is constructed from the material strain energy:
 \begin{equation}
 \mathcal{U}(x) \coloneq \tfrac{1}{2}\int_\Section \bm{\varepsilon} \cdot \mathbb{C}\, \bm{\varepsilon} \dA 
-= \tfrac{1}{2}\TraceStrain \cdot \bar{\mathbf{C}}_T \,\TraceStrain,
+= \tfrac{1}{2}\TraceStrain \cdot \bar{\mathbf{C}}_T(x) \,\TraceStrain,
 \label{eq:energy-conjugacy-def}
 \end{equation}
-The \emph{conjugate resultant stiffness} \(\bar{\mathbf{C}}_T(x)\) is called \emph{prismatic} if it is independent of \(\reflenx\). 
-Evidently, through inheritance of the Class~I property \eqref{eq:req-c1}, every \(\bar{\mathbf{C}}_T(x)\) in Class~II is prismatic.
 
 \begin{remark}
-Prismatic $\TraceStiffNM$ implies prismatic $\bar{\mathbf{C}}_T$ but the converse does not hold. 
-Prismatic $\bar{\mathbf{C}}_T$ with non-prismatic 
+The \emph{conjugate resultant stiffness} \(\bar{\mathbf{C}}_T(x)\) is called \emph{prismatic} if it is independent of \(\reflenx\). 
+Evidently, through inheritance of the Class~I property \eqref{eq:req-c1}, every \(\bar{\mathbf{C}}_T(x)\) in Class~II is prismatic. 
+%
+Thus prismatic $\TraceStiffNM$ implies prismatic $\bar{\mathbf{C}}_T$ but the converse does not hold. 
+% Prismatic $\bar{\mathbf{C}}_T$ with non-prismatic 
 % $\TraceStiffNM$ requires $\TraceDpDeRoot\TraceDeDpOne - \IesanEvolveSP \neq \mathbf{0}$ 
 % but $\IesanEnergy$-skew. This is an exceptional situation. 
 \end{remark}
@@ -79,13 +80,14 @@ The set of all matrices satisfying \eqref{eq:commutator-condition} comprise the 
 \[
 G \coloneq \bigl\{\,\mathbf{K} \in \mathrm{GL}(6) \;\big|\; [\mathbf{K},\mathbb{J}] = 0\,\bigr\}.
 \]
-This restricts the space of Class~II trace matrices \(\TraceDeDpRoot\) to a nonlinear sub-manifold, for which a clean parameterization like that of \cref{tab:trace-consts} does not exist.
-However, it is possible to conveniently parameterize a subset of these traces, by first identifying a reference trace \(\mathcal{T}_R\) in the class. 
+This restricts the space of Class~II trace matrices \(\TraceDeDpRoot\) to a nonlinear sub-manifold, for which a simple parameterization like that of \cref{tab:trace-consts} does not exist. 
+Nonetheless, any Class~II trace may be represented by the parameters of \cref{tab:trace-consts} provided \eqref{eq:commutator-condition} is satisfied. 
+It is possible to conveniently parameterize a subset of Class~II traces, by first identifying a reference trace \(\mathcal{T}_R\) in the class. 
 The Class~III trace developed in the following section provides such a reference. 
 
 
 \subsection{Class III: Variational Consistency}\label{sec:class-iii}
-A final restriction is now considered which eliminates all remaining free parameters, and furnishes a unique trace matrix: the \emph{energetic} trace. 
+A final restriction is now considered which eliminates all remaining free parameters, and furnishes a unique trace matrix called the \emph{energetic} trace. 
 
 \begin{definition}[Class III]\label{def:class-iii}
 A Class I trace is a \textbf{Class III} trace if the conjugate resultants \(\TraceTotalEnergyStress\) are exactly the classical rigid-section resultants \(\snm\):

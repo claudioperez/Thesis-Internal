@@ -142,11 +142,8 @@ To avoid ambiguity when multiple thresholds are exceeded, the evaluation proceed
 When initiation time is needed, it is taken as the first exceedance of the governing threshold. 
 This rule set preserves the physical meaning of each state while remaining compatible with the strain measures produced by the finite element predictor, and it yields a single DS for every column without auxiliary capacity checks.
 
-\begin{Note}
-The mapping logic is well structured, but the uncertainty/calibration path is still underdeveloped. Add a concise calibration protocol describing how thresholds are updated with new post-event evidence, how uncertainty is propagated into DS assignments, and how false positives from ``max over many fibers/sections'' are controlled.
-\end{Note}
 
-\section{Interpretation}\label{sec:t1-interpretation}
+\subsection{Presentation}\label{sec:t1-interpretation}
 
 Following their execution on the platform, \glspl{predictor-t1} results are processed into metrics. 
 %  they assign a little bit of meaning to the results -- for exmample, we might get a certain strain response and say this equals damage state 1, or minor damage -- flexural cracks.
@@ -167,6 +164,8 @@ When there are multiple predictors, the desired predictor can be selected from t
 \label{fig:sam_metrics}
 \end{figure}
 
+
+
 \section{Discussion. Implications and Limitations}\label{sec:t1-discussion}
 The strain-based mapping provides a direct, physically interpretable link between nonlinear simulation and actionable reporting, but it also exposes several limitations. 
 First, the damage state boundaries in \cref{tab:DS} remain sensitive to uncertainty in material properties, detailing, and confinement, and therefore must be calibrated as additional events are captured. 
@@ -174,6 +173,5 @@ Second, the mapping is local by construction; it captures member-level damage bu
 Finally, the reliance on fiber strains means that model form errors in section kinematics can propagate directly into the reported damage state. 
 The enhanced section formulations of Part~I mitigate this by improving the underlying strain field, but continued validation against observed event data remains essential as the platform scales.
 
-% \input{Examples/04-0236/index}
 
 \endgroup

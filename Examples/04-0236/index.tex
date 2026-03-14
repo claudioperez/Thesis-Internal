@@ -3,7 +3,7 @@
 % \newcommand{\RecordID}[1]{\href{https://structures.live/admin/irie_apps_events/eventrecord/#1/change/}{\texttt{#1}}}
 % \newcommand{\AssetID}[1]{\href{https://structures.live/inventory/#1/}{\texttt{#1}}}
 
-\section{Caltrans Bridge No. 04-0236} %{CE89324} Painter St
+\chapter{Example: Caltrans Bridge No. 04-0236} %{CE89324} Painter St
 \label{sec:painter}
 
 \begin{figure}[H]
@@ -13,10 +13,35 @@
     \label{fig:painter_instrumentation}
 \end{figure}
 
-\subsection{Introduction}
+\section{Introduction}
 
-\subsubsection{Literature}
-\subparagraph{System Identification}
+
+\subsection{Description}
+
+The US 101/Painter St. Overcrossing is a continuous reinforced concrete box-girder bridge. 
+The skewed 265-foot-long deck consists of
+two unequal spans which meet at a two-column bent. 
+The 40-foot-wide roadway accommodates one traffic lane in each direction, each with a comfortable shoulder. 
+There is no horizontal or vertical curvature to the structure. 
+The structure rests on two skewed integral abutments and
+two column footings supported by 20 piles each.
+
+Continuous flared columns use an obsolete detail. 
+An experimental investigation on this matter was conducted by \cite{sanchez1997seismic}. 
+A numerical investigation of the continuous detail is conducted by \cite{soleimani2017seismic}. 
+This issue is addressed by \textcite{caltrans2009memo-6-1}.
+
+% \subparagraph{Abutments}
+The east abutment is monolithic with the superstructure and is supported
+by 14 driven 45-ton concrete friction piles. 
+The west abutment has a thermal expansion joint and rests on a neoprene bearing strip. 
+The foundation of this abutment consists of 16 driven 45-ton concrete friction piles. 
+
+
+\subsection{Literature}
+\subparagraph{Structural Modeling.}
+\subparagraph{System Identification.}
+
 \cite{maroney1990interpretation} utilized records from this Painter Street Overcrossing
 in conjunction with a number of finite-element and lumped-parameter
 (stick) models of the entire bridge. 
@@ -33,31 +58,8 @@ parameterization and calibration of the Painter Street models are those of
 %
 Other system identification and modeling studies have been performed and consistent identification of a fundamental period of about 0.29 seconds and a secondary period of about 0.23 seconds have been obtained and verified \citep{fraino_seismic_2012,safak_use_1994,turek_ambient_2014,mosquera2009utilization,ventura_dynamic_nodate,mccallen1994dynamic}.
 
-\subsection{Structure}
 
-The US 101/Painter St. Overcrossing is a continuous reinforced concrete box-girder bridge. 
-The skewed 265-foot-long deck consists of
-two unequal spans which meet at a two-column bent. 
-The 40-foot-wide roadway accommodates one traffic lane in each direction, each with a
-comfortable shoulder. 
-There is no horizontal or vertical curvature to the structure. 
-The structure rests on two skewed integral abutments and
-two column footings supported by 20 piles each.
-
-Continuous flared columns use an obsolete detail. 
-An experimental investigation on this matter was conducted by \cite{sanchez1997seismic}. 
-A numerical investigation of the continuous detail is conducted by \cite{soleimani2017seismic}. 
-This issue is addressed by \textcite{caltrans2009memo-6-1}.
-
-\subparagraph{Abutments}
-The east abutment is monolithic with the superstructure and is supported
-by 14 driven 45-ton concrete friction piles. 
-The west abutment has a thermal expansion joint and rests on a neoprene bearing strip. 
-The foundation of this abutment consists of 16 driven 45-ton concrete
-friction piles. 
-
-
-\subsection{Instrumentation and System Identification}
+\section{Instrumentation and System Identification}
 
 The Painter St. Overcrossing was instrumented in 1977. 
 The bridge has recorded accelerations from a total of 22 strong motion events. 
@@ -87,14 +89,6 @@ No additional significant displacement or damage was observed.
 % St.~Overcrossing (transverse direction using Channels 3 vs. 7). Event dates range between 1980 and 2023 with peak station accelerations ranging between $0.1g$ and $0.63g$.}\label{fig:painter-stfe}
 % \end{figure}
 
-% \begin{figure}
-% \hypertarget{fig:painter-column}{%
-% \centering
-% \includegraphics{figures/painter-column-dwg.png}
-% \caption{Lower section view of the typical bent
-% column}\label{fig:painter-column}
-% }
-% \end{figure}
 
 
 %
@@ -142,39 +136,66 @@ Transverse (high intensity) & 7,500 & 12,000 \\
 % \end{figure}
 
 
+\section{Structural Modeling}
+
+
+\begin{figure}[H]
+\hypertarget{fig:painter-column}{%
+\centering
+\includegraphics[width=0.5\linewidth]{Examples/04-0236/img/shape-column.png}
+\caption{Lower section view of the typical bent
+column}\label{fig:painter-column}
+}
+\end{figure}
+
+\FrameSection{
+E=\num{3604.9965325919525},
+G=\num{1453.6276341096582},
+A=\num{2982.3376490862797},
+GJ={\num{1484551.42781691} $G$},
+%
+energetic/GAy={\num{0.7822153294915868} $GA$},
+energetic/GAz={\num{0.7821106010607018} $GA$},
+energetic/GAyz={\num{-6.950733520924195e-05} $GA$},
+energetic/GAzy={\num{-6.950733520923945e-05} $GA$},
+energetic/ShiftTwistY={\num{0.001890810633663612}},
+energetic/ShiftTwistZ={\num{-0.005703177135324342}},
+energetic/ShiftAxialY={\num{0.0026466602201081686}},
+energetic/ShiftAxialZ={\num{-0.007983299435629415}},
+%
+geometric/GAy={\num{0.8062172930581111} $GA$},
+geometric/GAz={\num{0.8061044593307325} $GA$},
+geometric/GAyz={\num{-7.387784650658562e-05} $GA$},
+geometric/GAzy={\num{-7.386812515591689e-05} $GA$},
+geometric/ShiftTwistY={\num{-0.0}},
+geometric/ShiftTwistZ={\num{-0.0}},
+geometric/ShiftAxialY={\num{0.00235575932757286}},
+geometric/ShiftAxialZ={\num{-0.007934443357838925}},
+}
+
+
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\linewidth,trim={5cm 0 0 5cm},clip]{Examples/04-0236/img/shape-girder.png}
+    \caption{Girder from the Painter Street Overcrossing.}
+    \label{fig:0012}
+\end{figure}
+
+
 \iffalse
-\subsection{Old}
-The US 101/Painter street overpass is a continuous reinforced concrete
-multicell box-girder bridge. 
-The skewed 265 foot long deck consists of
-two unequal spans which meet at a two-column bent. 
-The 40 foot wide
-roadway accommodates one lane of traffic in each direction, each with a
-comfortable shoulder. 
-There is no horizontal or vertical curvature to
-the structure. The structure sits on two skewed integral abutments and
-two column footings resting on 20 piles each.
+\section{Old}
 
 \subparagraph{Abutments}
 
 The east abutment is monolithic with the superstructure and is supported
-by 14 driven 45-ton concrete friction piles. The west abutment meets at
-a thermal expansion joint and rests on a neoprene bearing strip. The
-foundation of this abutment consists of 16 driven 45-ton concrete
-friction piles.
+by 14 driven 45-ton concrete friction piles. 
+The west abutment meets at a thermal expansion joint and rests on a neoprene bearing strip. 
+The foundation of this abutment consists of 16 driven 45-ton concrete friction piles.
 
 \subparagraph{Details}
 Some details that should be noted about this bridge include:
 
-\begin{itemize}
-\tightlist
-\item
-  Continuous flared columns use obsolete detail An experimental
-  investigation was conducted by \textcite{sanchez1997seismic} . A
-  numerical investigation of the continuous detail is conducted by
-  \textcite{soleimani2017seismic}. This issue is addressed by
-  \textcite{caltrans2009memo-6-1}.
-\end{itemize}
 
 \begin{figure}
 \hypertarget{fig:painter-warping}{%
@@ -185,14 +206,6 @@ constant.}\label{fig:painter-warping}
 }
 \end{figure}
 
-\begin{figure}
-\hypertarget{fig:painter-column}{%
-\centering
-% \includegraphics{figures/painter-column-dwg.png}
-\caption{Lower section view of the typical bent
-column}\label{fig:painter-column}
-}
-\end{figure}
 
 
 \subparagraph{Instrumentation}
@@ -212,7 +225,7 @@ The Painter street overpass was instrumented in 1977.
 }
 \end{figure}
 
-\subsection{Literature}
+\section{Literature}
 
 \cite{maroney1990interpretation} utilized records from the Painter street overpass
 in conjunction with a number of finite-element and lumped-parameter
@@ -251,7 +264,7 @@ Additional studies whose findings have been worked into the
 parameterization and calibration of the Painter St.~models are those of
 \textcite{zhang2001seismic} and \textcite{arici2003system}.
 
-\subsection{Analysis}
+\section{Analysis}
 \subparagraph{System ID}
 Various system identification studies have been conducted by the \BRACE{}
 team, and results of several historical transfer function estimates are
@@ -278,7 +291,7 @@ overpass}\label{fig:painter-transverse}
 }
 \end{figure}
 
-\subsection{M1 Model}
+\section{M1 Model}
 
 The superstructure is modeled using traditional linear-elastic frame
 elements with gross section properties.
@@ -298,20 +311,18 @@ the literature.
 Mass is assigned to the structure using consistent mass distribution in
 the frame elements.
 
-\hypertarget{m2}{%
-\subsection{M2}\label{m2}}
 
 \hypertarget{m3}{%
-\subsection{M3}\label{m3}}
+\section{M3}\label{m3}}
 
 \hypertarget{analysis}{%
 \section{Analysis}\label{analysis}}
 
 \hypertarget{a1---modal-analysis}{%
-\subsection{A1 - Modal Analysis}\label{a1---modal-analysis}}
+\section{A1 - Modal Analysis}\label{a1---modal-analysis}}
 
 \hypertarget{a2---instrumentation-response-history}{%
-\subsection{A2 - Instrumentation Response
+\section{A2 - Instrumentation Response
 History}\label{a2---instrumentation-response-history}}
 
 Channels which may be considered for transverse excitation include 7, 9,
@@ -320,5 +331,5 @@ Channels which may be considered for transverse excitation include 7, 9,
 \fi
 
 
-\subsection{Appendix: Events at Painter Street.}
+\section{Appendix: Events at Painter Street.}
 \input{Examples/04-0236/events}

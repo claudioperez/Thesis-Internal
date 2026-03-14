@@ -40,10 +40,19 @@
 \define@key{beamsec}{energetic/GAz}[]{ \def\beamsec@ener@GAz{#1}}
 \define@key{beamsec}{energetic/GAyz}[]{\def\beamsec@ener@GAyz{#1}}
 \define@key{beamsec}{energetic/GAzy}[]{\def\beamsec@ener@GAzy{#1}}
+\define@key{beamsec}{energetic/ShiftTwistY}{\def\beamsec@ener@ShiftTwistY}
+\define@key{beamsec}{energetic/ShiftTwistZ}{\def\beamsec@ener@ShiftTwistZ}
+\define@key{beamsec}{energetic/ShiftAxialY}{\def\beamsec@ener@ShiftAxialY}
+\define@key{beamsec}{energetic/ShiftAxialZ}{\def\beamsec@ener@ShiftAxialZ}
+%
 \define@key{beamsec}{geometric/GAy}[]{ \def\beamsec@geom@GAy{#1}}
 \define@key{beamsec}{geometric/GAz}[]{ \def\beamsec@geom@GAz{#1}}
 \define@key{beamsec}{geometric/GAyz}[]{\def\beamsec@geom@GAyz{#1}}
 \define@key{beamsec}{geometric/GAzy}[]{\def\beamsec@geom@GAzy{#1}}
+\define@key{beamsec}{geometric/ShiftTwistY}{\def\beamsec@geom@ShiftTwistY}
+\define@key{beamsec}{geometric/ShiftTwistZ}{\def\beamsec@geom@ShiftTwistZ}
+\define@key{beamsec}{geometric/ShiftAxialY}{\def\beamsec@geom@ShiftAxialY}
+\define@key{beamsec}{geometric/ShiftAxialZ}{\def\beamsec@geom@ShiftAxialZ}
 
 %% Material properties
 \define@key{beamsec}{E}[]{\def\beamsec@E{#1}}
@@ -127,10 +136,18 @@
     \def\beamsec@ener@GAz{}
     \def\beamsec@ener@GAyz{}
     \def\beamsec@ener@GAzy{}
+    \def\beamsec@ener@ShiftTwistY{}
+    \def\beamsec@ener@ShiftTwistZ{}
+    \def\beamsec@ener@ShiftAxialY{}
+    \def\beamsec@ener@ShiftAxialZ{}
     \def\beamsec@geom@GAy{}
     \def\beamsec@geom@GAz{}
     \def\beamsec@geom@GAyz{}
     \def\beamsec@geom@GAzy{}
+    \def\beamsec@geom@ShiftTwistY{}
+    \def\beamsec@geom@ShiftTwistZ{}
+    \def\beamsec@geom@ShiftAxialY{}
+    \def\beamsec@geom@ShiftAxialZ{}
 
     % Material
     \def\beamsec@E{}
@@ -234,6 +251,10 @@
             \begin{tabular}{@{}lcr@{\hskip 2pt}l@{}} %
                 \beamsec@row{\widehat{GA}_y}{\beamsec@ener@GAy}{\beamsec@unit@stress \beamsec@unit@length}{2}
                 \beamsec@row{\widehat{GA}_z}{\beamsec@ener@GAz}{\beamsec@unit@stress \beamsec@unit@length}{2}
+                \beamsec@row{(\TraceFT)_y}{\beamsec@ener@ShiftTwistY}{\beamsec@unit@length}{2}
+                \beamsec@row{(\TraceFT)_z}{\beamsec@ener@ShiftTwistZ}{\beamsec@unit@length}{2}
+                \beamsec@row{(\TraceTF)_y}{\beamsec@ener@ShiftAxialY}{\beamsec@unit@length}{2}
+                \beamsec@row{(\TraceTF)_z}{\beamsec@ener@ShiftAxialZ}{\beamsec@unit@length}{2}
             \end{tabular}
           \end{minipage}%
         \fi
@@ -244,6 +265,10 @@
             \begin{tabular}{@{}lcr@{\hskip 2pt}l@{}} %
                 \beamsec@row{\widehat{GA}_y}{\beamsec@geom@GAy}{\beamsec@unit@stress \beamsec@unit@length}{2}
                 \beamsec@row{\widehat{GA}_z}{\beamsec@geom@GAz}{\beamsec@unit@stress \beamsec@unit@length}{2}
+                \beamsec@row{(\TraceFT)_y}{\beamsec@geom@ShiftTwistY}{\beamsec@unit@length}{2}
+                \beamsec@row{(\TraceFT)_z}{\beamsec@geom@ShiftTwistZ}{\beamsec@unit@length}{2}
+                \beamsec@row{(\TraceTF)_y}{\beamsec@geom@ShiftAxialY}{\beamsec@unit@length}{2}
+                \beamsec@row{(\TraceTF)_z}{\beamsec@geom@ShiftAxialZ}{\beamsec@unit@length}{2}
             \end{tabular}
           \end{minipage}%
         \fi

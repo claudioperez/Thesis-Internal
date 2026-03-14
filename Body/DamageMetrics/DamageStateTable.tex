@@ -1,4 +1,5 @@
 
+
 \begin{table}[H]
 \centering
 \caption{Damage state criteria for strain-based component capacity model.}
@@ -6,15 +7,20 @@
 \begin{tabular}{@{}cNNLLc@{}}\toprule
 \multirow{3}{*}{Label} & \multirow{3}{*}{Description} & \multirow{3}{5cm}{\centering Defining Criteria} & \multicolumn{3}{c}{Damage State} \\ \cmidrule{4-6} & & & Fiber Location & Compression or Tension & Strain 
 \\ \midrule
-{DS0} & No damage & -- & -- & -- & -- \\ \midrule
-{DS1} & Tight cracking of cover & Cover cracking: the cover surface reaches tensile strength & Any outermost cover fiber & Tension & \gls{et} \\ \midrule
-{DS2} & Moderate cracking (mixed orientations) \& minor spalling/flaking & Minor spalling: the cover surface reaches compressive strength & Any outermost cover fiber  & Compression & \gls{esp} \\ \midrule
-{DS3} & Open cracking or major spalling (exterior to confinement) & Major spalling: a significant depth of the cover reaches compressive strength & Any cover fiber at 1/2-3/4 of the cover depth & Compression & \gls{esp} \\ \midrule
-{DS4} & Exposed core (interior of confinement) & Exposed core: the entire depth of the cover reaches compressive strength & Any innermost cover fiber & Compression & \gls{esp} \\ \midrule
-\multirow{2}{*}{{DS5}} & Visible bar buckling; confinement loss or core shedding & Core shedding: the outer surface of the core begins to fail & Any outermost core fiber & Compression & \gls{ecu} 
+{$\mathrm{LS}_{0}$} & No damage & -- & -- & -- & -- \\ \midrule
+{$\mathrm{LS}_{1}$} & Tight cracking of cover & Cover cracking: the cover surface reaches tensile strength & Any outermost cover fiber \(\bm{r}\in \partial\SectionCover\) & Tension & \gls{et} \\ \midrule
+{$\mathrm{LS}_{2}$} & Moderate cracking (mixed orientations) \& minor spalling/flaking & Minor spalling: the cover surface reaches compressive strength 
+& Any outermost cover fiber  \(\bm{r}\in \partial\SectionCover\)
+& Compression & \gls{esp} \\ \midrule
+{$\mathrm{LS}_{3}$} & Open cracking or major spalling (exterior to confinement) & Major spalling: a significant depth of the cover reaches compressive strength 
+& Any cover fiber at 1/2-3/4 of the cover depth 
+\(\{\bm{r} \mid \bm{r}\cdot\SectionCoverNormal\}\)
+& Compression & \gls{esp} \\ \midrule
+{$\mathrm{LS}_{4}$} & Exposed core (interior of confinement) & Exposed core: the entire depth of the cover reaches compressive strength & Any innermost cover fiber & Compression & \gls{esp} \\ \midrule
+\multirow{2}{*}{{$\mathrm{LS}_{5}$}} & Visible bar buckling; confinement loss or core shedding & Core shedding: the outer surface of the core begins to fail & Any outermost core fiber & Compression & \gls{ecu} 
 \\ 
 \cmidrule{2-6} & Multi-bar rupture or buckling; large drift; or core crushing & Bar rupture: longitudinal bars reach ultimate tensile strength & Any longitudinal bar & Tension & \gls{esu} \\ \midrule
-{DS6} & Column collapse (Near-total loss of axial capacity) & Loss of axial capacity: approximately 1/2 of the core fails & All core fibers at 1/4 of the core depth & Compression & \gls{ecu} \\
+{$\mathrm{LS}_{6}$} & Column collapse (Near-total loss of axial capacity) & Loss of axial capacity: approximately 1/2 of the core fails & All core fibers at 1/4 of the core depth & Compression & \gls{ecu} \\
 \bottomrule
 \end{tabular}
 \end{adjustbox}
@@ -51,25 +57,25 @@
 \textbf{Strain} \\
 \midrule
 
-DS0 & No damage & -- & -- & -- & -- \\
+$\mathrm{LS}_{0}$ & No damage & -- & -- & -- & -- \\
 \rowcolor{lightgray}
-DS1 & Tight cracking of cover &
+$\mathrm{LS}_{1}$ & Tight cracking of cover &
   Cover surface reaches tensile strength &
-  Any outermost cover fiber & Tension & \gls{et} \\
+  $\SectionCover$ & Tension & \gls{et} \\
 
-DS2 & Moderate cracking \& minor spalling/flaking &
+$\mathrm{LS}_{2}$ & Moderate cracking \& minor spalling/flaking &
   Cover surface reaches compressive strength &
   Any outermost cover fiber & Compression & \gls{esp} \\
 \rowcolor{lightgray}
-DS3 & Open cracking or major spalling &
+$\mathrm{LS}_{3}$ & Open cracking or major spalling &
   Significant depth of cover reaches compressive strength &
   Cover fiber at $\tfrac{1}{2}$--$\tfrac{3}{4}$ cover depth & Compression & \gls{esp} \\
 
-DS4 & Exposed core &
+$\mathrm{LS}_{4}$ & Exposed core &
   Entire cover depth reaches compressive strength &
   Any innermost cover fiber & Compression & \gls{esp} \\
 \rowcolor{lightgray}
-DS5 & Visible bar buckling; confinement loss or core shedding &
+$\mathrm{LS}_{5}$ & Visible bar buckling; confinement loss or core shedding &
   Outer core surface begins to fail &
   Any outermost core fiber & Compression & \gls{ecu} \\
 \rowcolor{lightgray}
@@ -77,14 +83,14 @@ DS5 & Visible bar buckling; confinement loss or core shedding &
   Longitudinal bars reach ultimate tensile strength &
   Any longitudinal bar & Tension & \gls{esu} \\
 
-DS6 & Column collapse (near-total loss of axial capacity) &
+$\mathrm{LS}_{6}$ & Column collapse (near-total loss of axial capacity) &
   Approximately $\tfrac{1}{2}$ of core fails &
   All core fibers at $\tfrac{1}{4}$ core depth & Compression & \gls{ecu} \\
 
 \bottomrule
 \end{tabular}
 \end{adjustbox}
-\label{tab:DS2}
+\label{tab:DSv2}
 \end{table}
 
 \begin{table}[H]
@@ -109,30 +115,30 @@ DS6 & Column collapse (near-total loss of axial capacity) &
 \midrule
 \addlinespace[4pt]
 
-DS0 & No damage & -- & -- & -- & -- \\
+$\mathrm{LS}_{0}$ & No damage & -- & -- & -- & -- \\
 \addlinespace[8pt]
 
-DS1 & Tight cracking of cover &
+$\mathrm{LS}_{1}$ & Tight cracking of cover &
   Cover surface reaches tensile strength &
   Any outermost cover fiber & Tension & \gls{et} \\
 \addlinespace[8pt]
 
-DS2 & Moderate cracking \& minor spalling/flaking &
+$\mathrm{LS}_{2}$ & Moderate cracking \& minor spalling/flaking &
   Cover surface reaches compressive strength &
   Any outermost cover fiber & Compression & \gls{esp} \\
 \addlinespace[8pt]
 
-DS3 & Open cracking or major spalling &
+$\mathrm{LS}_{3}$ & Open cracking or major spalling &
   Significant depth of cover reaches compressive strength &
   Cover fiber at $\tfrac{1}{2}$--$\tfrac{3}{4}$ cover depth & Compression & \gls{esp} \\
 \addlinespace[8pt]
 
-DS4 & Exposed core &
+$\mathrm{LS}_{4}$ & Exposed core &
   Entire cover depth reaches compressive strength &
   Any innermost cover fiber & Compression & \gls{esp} \\
 \addlinespace[8pt]
 
-\multirow{2}{*}{DS5} &
+\multirow{2}{*}{$\mathrm{LS}_{5}$} &
   Visible bar buckling; confinement loss or core shedding &
   Outer core surface begins to fail &
   Any outermost core fiber & Compression & \gls{ecu} \\[6pt]
@@ -141,7 +147,7 @@ DS4 & Exposed core &
   Any longitudinal bar & Tension & \gls{esu} \\
 \addlinespace[8pt]
 
-DS6 & Column collapse (near-total loss of axial capacity) &
+$\mathrm{LS}_{6}$ & Column collapse (near-total loss of axial capacity) &
   Approximately $\tfrac{1}{2}$ of core fails &
   All core fibers at $\tfrac{1}{4}$ core depth & Compression & \gls{ecu} \\
 \addlinespace[4pt]
@@ -149,7 +155,7 @@ DS6 & Column collapse (near-total loss of axial capacity) &
 \bottomrule
 \end{tabular}
 \end{adjustbox}
-\label{tab:DS3}
+\label{tab:DSv3}
 \end{table}
 
 \begin{table}[H]
@@ -170,24 +176,24 @@ DS6 & Column collapse (near-total loss of axial capacity) &
 \textbf{Fiber Location} & \textbf{Comp.\ or Tens.} & \textbf{Strain} \\
 \midrule
 
-Undamaged       & DS0 & No damage & -- & -- & -- & -- \\
+Undamaged       & $\mathrm{LS}_{0}$ & No damage & -- & -- & -- & -- \\
 \cmidrule{2-7}
 \multirow{3}{*}{Cosmetic}
-                & DS1 & Tight cracking of cover &
+                & $\mathrm{LS}_{1}$ & Tight cracking of cover &
   Cover surface reaches tensile strength &
   Any outermost cover fiber & Tension & \gls{et} \\
-                & DS2 & Moderate cracking \& minor spalling/flaking &
+                & $\mathrm{LS}_{2}$ & Moderate cracking \& minor spalling/flaking &
   Cover surface reaches compressive strength &
   Any outermost cover fiber & Compression & \gls{esp} \\
-                & DS3 & Open cracking or major spalling &
+                & $\mathrm{LS}_{3}$ & Open cracking or major spalling &
   Significant depth of cover reaches compressive strength &
   Cover fiber at $\tfrac{1}{2}$--$\tfrac{3}{4}$ cover depth & Compression & \gls{esp} \\
 \cmidrule{2-7}
 \multirow{3}{*}{Structural}
-                & DS4 & Exposed core &
+                & $\mathrm{LS}_{4}$ & Exposed core &
   Entire cover depth reaches compressive strength &
   Any innermost cover fiber & Compression & \gls{esp} \\
-                & \multirow{2}{*}{DS5} &
+                & \multirow{2}{*}{$\mathrm{LS}_{5}$} &
   Visible bar buckling; confinement loss or core shedding &
   Outer core surface begins to fail &
   Any outermost core fiber & Compression & \gls{ecu} \\
@@ -195,7 +201,7 @@ Undamaged       & DS0 & No damage & -- & -- & -- & -- \\
   Longitudinal bars reach ultimate tensile strength &
   Any longitudinal bar & Tension & \gls{esu} \\
 \cmidrule{2-7}
-Collapse        & DS6 & Column collapse (near-total loss of axial capacity) &
+Collapse        & $\mathrm{LS}_{6}$ & Column collapse (near-total loss of axial capacity) &
   Approximately $\tfrac{1}{2}$ of core fails &
   All core fibers at $\tfrac{1}{4}$ core depth & Compression & \gls{ecu} \\
 \bottomrule
@@ -219,27 +225,27 @@ Collapse        & DS6 & Column collapse (near-total loss of axial capacity) &
 \textbf{Fiber Location} & \textbf{Comp.\ or Tens.} & \textbf{Strain} \\
 \midrule
 
-\textbf{DS0} & \small No damage & \small -- & \small -- & \small -- & \small -- \\
-\textbf{DS1} & \small Tight cracking of cover &
+\textbf{$\mathrm{LS}_{0}$} & \small No damage & \small -- & \small -- & \small -- & \small -- \\
+\textbf{$\mathrm{LS}_{1}$} & \small Tight cracking of cover &
   \small Cover surface reaches tensile strength &
   \small Any outermost cover fiber & \small Tension & \small \gls{et} \\
-\textbf{DS2} & \small Moderate cracking \& minor spalling/flaking &
+\textbf{$\mathrm{LS}_{2}$} & \small Moderate cracking \& minor spalling/flaking &
   \small Cover surface reaches compressive strength &
   \small Any outermost cover fiber & \small Compression & \small \gls{esp} \\
-\textbf{DS3} & \small Open cracking or major spalling &
+\textbf{$\mathrm{LS}_{3}$} & \small Open cracking or major spalling &
   \small Significant depth of cover reaches compressive strength &
   \small Cover fiber at $\tfrac{1}{2}$--$\tfrac{3}{4}$ cover depth & \small Compression & \small \gls{esp} \\
-\textbf{DS4} & \small Exposed core &
+\textbf{$\mathrm{LS}_{4}$} & \small Exposed core &
   \small Entire cover depth reaches compressive strength &
   \small Any innermost cover fiber & \small Compression & \small \gls{esp} \\
-\multirow{2}{*}{\textbf{DS5}} &
+\multirow{2}{*}{\textbf{$\mathrm{LS}_{5}$}} &
   \small Visible bar buckling; confinement loss or core shedding &
   \small Outer core surface begins to fail &
   \small Any outermost core fiber & \small Compression & \small \gls{ecu} \\
 & \small Multi-bar rupture or buckling; large drift; or core crushing &
   \small Longitudinal bars reach ultimate tensile strength &
   \small Any longitudinal bar & \small Tension & \small \gls{esu} \\
-\textbf{DS6} & \small Column collapse (near-total loss of axial capacity) &
+\textbf{$\mathrm{LS}_{6}$} & \small Column collapse (near-total loss of axial capacity) &
   \small Approximately $\tfrac{1}{2}$ of core fails &
   \small All core fibers at $\tfrac{1}{4}$ core depth & \small Compression & \small \gls{ecu} \\
 \bottomrule
@@ -264,15 +270,15 @@ Collapse        & DS6 & Column collapse (near-total loss of axial capacity) &
 \textbf{Fiber Location} & \textbf{Comp.\ or Tens.} & \textbf{Strain} \\
 \midrule
 
-DS0 & No damage & -- & -- & -- \\
-DS1 & Tight cracking of cover\tnote{a} & Any outermost cover fiber & Tension & \gls{et} \\
-DS2 & Moderate cracking \& minor spalling/flaking\tnote{b} & Any outermost cover fiber & Compression & \gls{esp} \\
-DS3 & Open cracking or major spalling\tnote{c} & Cover fiber at $\tfrac{1}{2}$--$\tfrac{3}{4}$ cover depth & Compression & \gls{esp} \\
-DS4 & Exposed core\tnote{d} & Any innermost cover fiber & Compression & \gls{esp} \\
-\multirow{2}{*}{DS5}
+$\mathrm{LS}_{0}$ & No damage & -- & -- & -- \\
+$\mathrm{LS}_{1}$ & Tight cracking of cover\tnote{a} & $\SectionCover$ & Tension & \gls{et} \\
+$\mathrm{LS}_{2}$ & Moderate cracking \& minor spalling/flaking\tnote{b} & Any outermost cover fiber & Compression & \gls{esp} \\
+$\mathrm{LS}_{3}$ & Open cracking or major spalling\tnote{c} & Cover fiber at $\tfrac{1}{2}$--$\tfrac{3}{4}$ cover depth & Compression & \gls{esp} \\
+$\mathrm{LS}_{4}$ & Exposed core\tnote{d} & Any innermost cover fiber & Compression & \gls{esp} \\
+\multirow{2}{*}{$\mathrm{LS}_{5}$}
     & Visible bar buckling; confinement loss or core shedding\tnote{e} & Any outermost core fiber & Compression & \gls{ecu} \\
     & Multi-bar rupture, buckling, large drift, or core crushing\tnote{f} & Any longitudinal bar & Tension & \gls{esu} \\
-DS6 & Column collapse (near-total loss of axial capacity)\tnote{g} & All core fibers at $\tfrac{1}{4}$ core depth & Compression & \gls{ecu} \\
+$\mathrm{LS}_{6}$ & Column collapse (near-total loss of axial capacity)\tnote{g} & All core fibers at $\tfrac{1}{4}$ core depth & Compression & \gls{ecu} \\
 \bottomrule
 \end{tabular}
 \begin{tablenotes}\footnotesize
@@ -286,5 +292,5 @@ DS6 & Column collapse (near-total loss of axial capacity)\tnote{g} & All core fi
 \end{tablenotes}
 \end{threeparttable}
 \end{adjustbox}
-\label{tab:DS4}
+\label{tab:DSv4}
 \end{table}

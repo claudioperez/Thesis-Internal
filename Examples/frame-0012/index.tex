@@ -6,6 +6,7 @@
     \label{fig:frame-0012-setup}
 \end{figure}
 
+\subparagraph{Context.}
 This example verifies consistency with Saint~Venant's solutions, as developed in \cref{sec:timo}. 
 The reference continuum solution is derived in \cref{sec:sv}. 
 
@@ -20,7 +21,33 @@ A cantilever beam fixed at $x=0$ is loaded with a transverse force $\bar{F}\,\Fr
 A variety of cross sections are investigated with a length-depth ratio fixed at $L/d = 3/2$. 
 
 All problems are solved using a single \ForceFrame{} element with the \ShearFiber{} section at 5 Gauss-Legendre integration points along the reference length \(\reflenx\in [0,L]\). 
-
+\FrameSection{
+label/problem=frame-0012,
+d=14,
+b=8,
+t=1,
+unit/length={\inch},
+unit/stress={\ksi},
+GJ={\num{9.276665165633778} $G$},
+%
+energetic/GAy={\num{0.37478264768887964} $GA$},
+energetic/GAz={\num{0.3898287802056708} $GA$},
+energetic/GAyz={\num{4.69833005013764e-06} $GA$},
+energetic/GAzy={\num{4.698330050142051e-06} $GA$},
+energetic/ShiftTwistY={\num{-1.4444056457181394e-05}},
+energetic/ShiftTwistZ={\num{2.849398889496064}},
+energetic/ShiftAxialY={\num{-0.007207037880631407}},
+energetic/ShiftAxialZ={\num{655.9249730749403}},
+%
+geometric/GAy={\num{0.40810328066868784} $GA$},
+geometric/GAz={\num{0.388727873453717} $GA$},
+geometric/GAyz={\num{5.078947333310244e-06} $GA$},
+geometric/GAzy={\num{4.887480214260639e-06} $GA$},
+geometric/ShiftTwistY={\num{-0.0}},
+geometric/ShiftTwistZ={\num{-0.0}},
+geometric/ShiftAxialY={\num{-0.0006595052220775562}},
+geometric/ShiftAxialZ={\num{656.1278913542012}},
+}
 
 
 

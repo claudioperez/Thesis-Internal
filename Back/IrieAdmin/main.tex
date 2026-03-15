@@ -8,7 +8,9 @@
 
 
 \section{Hosting}
-The software requirements are very flexible. The host server should be capable of supporting at least a standard Python 3.8 environment, but a newer version is recommended. The application has been successfully run on both cloud-hosted servers and a local server with a variety of operating systems and databases. All of these would be adequate options for Caltrans. On the \href{https://www.heroku.com}{Heroku} cloud hosting platform, with current demands, the application can easily be hosted for under \$20/month.
+The software requirements are very flexible. The host server should be capable of supporting at least a standard Python~3.9 environment, but a newer version is recommended. 
+The application has been successfully run on both cloud-hosted servers and a local server with a variety of operating systems and databases. All of these would be adequate options for Caltrans. 
+On the \href{https://www.heroku.com}{Heroku} cloud hosting platform, with current demands, the application can easily be hosted for under \$20/month.
 
 Both \emph{SQLite} and \emph{PostgreSQL} databases have been successfully used between various deployments, and any database supported by the Django framework should also be acceptable. 
 Currently, Django officially supports \emph{PostgreSQL}, \emph{MariaDB}, \emph{MySQL}, \emph{Oracle}, and \emph{SQLite}{\footnote{More information on database support can be found in the Django database documentation page:  \url{https://docs.djangoproject.com/en/5.0/ref/databases/}.}}. 
@@ -85,7 +87,7 @@ The installation procedure is as follows:
 \end{Highlighting}
 \end{Shaded}
 
-  The app should now be running at \texttt{http://127.0.0.1:8000/}.
+The application will begin serving at \texttt{http://127.0.0.1:8000/}.
 \end{enumerate}
 
 

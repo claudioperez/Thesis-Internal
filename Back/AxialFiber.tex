@@ -1,0 +1,35 @@
+\[
+\begin{aligned}
+\ShiftA &= 0 &= 0 \\
+\ShiftN &= 0 &= 0 \\
+\ShiftF &= 0 &= 0 \\
+\ShiftScaleN &= 0 &= 0\\
+\end{aligned}
+\]
+\eqref{eq:C-C1} simplifies to:
+\begin{equation}
+\TraceStiffNM 
+=
+\left[\begin{array}{cc|cc}
+\AxialRigidity
+& \mathbf{0}
+& 0
+& \AxialCoupling^\top\FrameBasis^\times
+\\[2pt]
+\mathbf{0} &
+\TraceShearRigidity &
+\TraceShearRigidity\TraceShearOrigin &
+\mathbf{0}
+\\ \hline &&& \\[-7pt] 
+0 &
+\TwistRigidity\,(\ShiftT)^\top
+& \TwistRigidity\,\ShiftScaleT &
+\mathbf{0}
+\\ %[8pt]
+-\FrameBasis\times\AxialCoupling 
+& \mathbf{0}
+& \mathbf{0}
+&
+- \FrameBasis^\times E\IntRoR\,\FrameBasis^\times
+\end{array}\right].
+\end{equation}

@@ -73,7 +73,7 @@ report it calls the Orchestration Layer, which in turn queries the
 Domain Layer for immutable \emph{Evaluation} objects. 
 Only the Infrastructure Layer is permitted to reach outside the codebase. 
 Upward calls are prohibited; infrastructure code does not emit direct UI updates, and domain objects have no
-knowledge of HTTP\footnote{The Hypertext transfer protocol is a standard protocol established by \cite{fielding2022http}.} semantics. 
+knowledge of HTTP\footnote{The Hypertext Transfer Protocol (HTTP) is a standard protocol established by \cite{fielding2022http}.} semantics. 
 The unidirectional rule guards against hidden coupling and ensures that each layer can be tested in isolation.
 
 \section{Prediction Subsystem}\label{sec:scheduling}

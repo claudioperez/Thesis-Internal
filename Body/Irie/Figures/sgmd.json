@@ -1,0 +1,188 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 500,
+  "height": 600,
+  "title": "",
+  "projection": {
+    "type": "mercator",
+    "center": [-122.2, 37.8],
+    "scale": 9000
+  },
+  "layer": [
+    {
+      "data": {
+        "url": "https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson/ne_10m_admin_1_states_provinces.geojson",
+        "format": {
+          "type": "json",
+          "property": "features"
+        }
+      },
+      "transform": [
+        {"filter": "datum.properties.iso_3166_2 === 'US-CA'"}
+      ],
+      "mark": {
+        "type": "geoshape",
+        // "fill": "transparent",
+        "fill": "#e0e0e0",
+        "stroke": "#999",
+        "strokeWidth": 1.5
+      }
+    },
+    {
+      "data": {
+        "url": "https://cdn.jsdelivr.net/npm/us-atlas@3/counties-10m.json",
+        "format": {
+          "type": "topojson",
+          "feature": "counties"
+        }
+      },
+      "transform": [
+        {"filter": "datum.id >= 6001 && datum.id <= 6115"}
+      ],
+      "mark": {
+        "type": "geoshape",
+        "fill": "transparent", //"#e0e0e0",
+        "stroke": "#ffffff",
+        "strokeWidth": 1.0
+      }
+    },
+    {
+      "data": {
+        "url": "https://cdn.jsdelivr.net/npm/us-atlas@3/counties-10m.json",
+        "format": {
+          "type": "topojson",
+          "feature": "states"
+        }
+      },
+      "transform": [
+        {"filter": "datum.id == 6"}
+      ],
+      "mark": {
+        "type": "geoshape",
+        "fill": "transparent",
+        "stroke": "#999",
+        "strokeWidth": 1.5
+      }
+    },
+    {
+      "data": {
+        "values": [
+          {
+            "type": "Feature",
+            "properties": {},
+            "geometry": {
+              "type": "Polygon",
+              "coordinates": [
+                [
+                  [-122.183500, 38.352300],
+                  [-122.922797, 37.928587],
+                  [-122.130836, 37.051209],
+                  [-121.387071, 37.474881],
+                  [-122.183500, 38.352300]
+                ]
+              ]
+            }
+          }
+        ]
+      },
+      "mark": {
+        "type": "geoshape",
+        "fill": "rgba(105, 105, 105, 0.15)",
+        "stroke": "black",
+        "strokeWidth": 2
+      }
+    },
+    {
+      "data": {
+        "values": [
+          {"lon": -122.183500, "lat": 38.352300, "label": "O (-122.1835, 38.3523)"}
+        ]
+      },
+      "encoding": {
+        "longitude": {"field": "lon", "type": "quantitative"},
+        "latitude": {"field": "lat",  "type": "quantitative"}
+      },
+      "layer": [
+        {
+          "mark": {
+            "type": "circle",
+            "size": 60,
+            "fill": "rgb(47,153,211)",
+            "stroke": "white",
+            "strokeWidth": 1
+          }
+        }
+      ]
+    },
+    {
+      "data": {
+        "values": [
+          {"lon": -122.183500, "lat": 38.352300},
+          {"lon": -122.922797, "lat": 37.928587},
+          {"lon": -122.130836, "lat": 37.051209},
+          {"lon": -121.387071, "lat": 37.474881}
+        ]
+      },
+      "encoding": {
+        "longitude": {"field": "lon", "type": "quantitative"},
+        "latitude": {"field": "lat", "type": "quantitative"}
+      },
+      "mark": {
+        "type": "circle",
+        "size": 70,
+        "fill": "rgb(47,153,211)",
+        "opacity": 1
+        // "stroke": "white",
+        // "strokeWidth": 1
+      }
+    },
+    {
+      "data": {"values": [{"lon": -122.183500, "lat": 38.352300}]},
+      "encoding": {
+        "longitude": {"field": "lon", "type": "quantitative"},
+        "latitude": {"field": "lat", "type": "quantitative"}
+      },
+      "mark": {
+        "type": "text", "text": "(-122.1835, 38.3523)",
+        "dx": 0, "dy": -10, "align": "center", "baseline": "bottom",
+        "fontSize": 14, "font": "Latin Modern Roman, Computer Modern, STIX Two Text, Georgia, serif"
+      }
+    },
+    {
+      "data": {"values": [{"lon": -122.922797, "lat": 37.928587}]},
+      "encoding": {
+        "longitude": {"field": "lon", "type": "quantitative"},
+        "latitude": {"field": "lat", "type": "quantitative"}
+      },
+      "mark": {
+        "type": "text", "text": "(-122.9228, 37.9286)",
+        "dx": -12, "dy": 0, "align": "right", "baseline": "middle",
+        "fontSize": 14, "font": "Latin Modern Roman, Computer Modern, STIX Two Text, Georgia, serif"
+      }
+    },
+    {
+      "data": {"values": [{"lon": -122.130836, "lat": 37.051209}]},
+      "encoding": {
+        "longitude": {"field": "lon", "type": "quantitative"},
+        "latitude": {"field": "lat", "type": "quantitative"}
+      },
+      "mark": {
+        "type": "text", "text": "(-122.1308, 37.0512)",
+        "dx": 70, "dy": 1, "align": "center", "baseline": "top",
+        "fontSize": 14, "font": "Latin Modern Roman, Computer Modern, STIX Two Text, Georgia, serif"
+      }
+    },
+    {
+      "data": {"values": [{"lon": -121.387071, "lat": 37.474881}]},
+      "encoding": {
+        "longitude": {"field": "lon", "type": "quantitative"},
+        "latitude": {"field": "lat", "type": "quantitative"}
+      },
+      "mark": {
+        "type": "text", "text": "(-121.3871, 37.4749)",
+        "dx": -4, "dy": 14, "align": "left", "baseline": "middle",
+        "fontSize": 14, "font": "Latin Modern Roman, Computer Modern, STIX Two Text, Georgia, serif"
+      }
+    }
+  ]
+}

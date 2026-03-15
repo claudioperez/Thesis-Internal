@@ -10,16 +10,15 @@ This API returns JSON-serialized ground motion data adhering to the schema that 
 \section{Design}\label{design}}
 
 File uploads are sent as HTTP POST operations with a MIME (Multipurpose Internet Mail Extensions) type of
-\texttt{multipart/form-data} {[}RFC 2046{]}.
+\texttt{multipart/form-data} \citep{freed1996multipurpose}.
 These uploads are handled by the REST API that is integrated directly into the \texttt{events} application of the \BRACE{} platform. %\gls{platform}.
-This application listens to a server port for API requests and fulfills
-these requests by interacting with the database.
+This application listens to a server port for API requests and fulfills these requests by interacting with the database.
 
 
 % The backend application is comprised of the server, REST API, Database,
 % and authentication mechanism.
 
-\section{API Examples}\label{sec:api-examples}
+\section{Examples}\label{sec:api-examples}
 \input{Back/IrieAPI//examples}
 
 \endgroup

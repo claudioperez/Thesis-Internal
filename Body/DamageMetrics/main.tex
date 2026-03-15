@@ -1,6 +1,6 @@
 
 
-\chapter{Damage Metrics}\label{ch:predictor_t1}
+\chapter{Structural Metrics}\label{ch:predictor_t1}
 
 \begingroup 
 \newcommand{\gls}[1]{#1}
@@ -29,7 +29,7 @@
 % \end{quote}
 \begin{itemize}
     \item Strain-based is bad for cyclic loading, but easier to define. This approach was adopted in the initial development of \BRACE{} \citep{mosalam2021brace2}.
-    \item Energy-based is better for cyclic loading, but can require additional (indirect) parameters. Generalizes to multiaxial material response.
+    \item Damage-based is better for cyclic loading, but can require additional (indirect) parameters. Generalizes to multiaxial material response.
 \end{itemize}
 
 % In the field of civil engineering, a common class of prediction techniques leverages structural analysis models.
@@ -123,9 +123,9 @@ $\mathrm{LS}_7$ &  Column collapse or near total loss of axial capacity & Bridge
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.5\linewidth]{Examples/33}
-    \caption{Caption}
-    \label{fig:placeholder}
+    \includegraphics[width=0.75\linewidth]{Examples/33-0214L/img/column-regions.png}
+    \caption{Irregular column cross section from structure \AssetID{33-0214L}.}
+    \label{fig:hayward-regions}
 \end{figure}
 \[
 \Section_{\mathrm c} := \SectionCore \cup \SectionCover,
@@ -210,13 +210,15 @@ Define the core failure set
 % The sequence mirrors the taxonomy proposed by \citet{zhou2022capacitya} but is expressed in terms of fiber-level quantities that are directly available from the simulation output.
 The terminal collapse state in \citet{zhou2022capacitya} is presently treated as part of the highest damage state in this mapping, pending improved calibration of distinct thresholds at extreme damage levels.
 
-\newcommand{\StrainCoverCrack}{et}
-\newcommand{\StrainCoverCrush}{esp}
-\newcommand{\StrainCoreCrush}{ecu}
-\newcommand{\StrainSteelPeak}{esu}
+\newcommand{\StrainCoverCrack}{\varepsilon_{r}} % et
+\newcommand{\StrainCoverCrush}{\varepsilon_{s}} % esp
+\newcommand{\StrainCoreCrush}{\varepsilon_{c}} % ecu
+\newcommand{\StrainSteelPeak}{\varepsilon_{u}} % esu
 
 \begin{table}[H]
     \centering
+    \caption{Caption}
+    \label{tab:placeholder}
     \begin{tabular}{cl}
     \toprule 
     Strain & Description \\
@@ -227,8 +229,6 @@ The terminal collapse state in \citet{zhou2022capacitya} is presently treated as
         $\StrainCoreCrush$ & Core concrete crushing strain \\
     \bottomrule
     \end{tabular}
-    \caption{Caption}
-    \label{tab:placeholder}
 \end{table}
 
 \begin{table}[H]
@@ -248,17 +248,17 @@ $\mathrm{LS}_{0}$
 \addlinespace[2pt]
 $\mathrm{LS}_{1}$
 & Outer cover boundary \(\Gamma_o\)
-& \(\displaystyle \max_{\bm r\in\Gamma_o}\varepsilon_c(\bm r)\ge \StrainCoverCrack\). \\
+& \(\displaystyle \max_{\bm r\in\Gamma_o}\varepsilon(\bm r)\ge \StrainCoverCrack\). \\
 
 \addlinespace[2pt]
 $\mathrm{LS}_{2}$
 & Outer cover boundary \(\Gamma_o\)
-& \(\displaystyle \min_{\bm r\in\Gamma_o}\varepsilon_c(\bm r)\le -\StrainCoverCrush\). \\
+& \(\displaystyle \min_{\bm r\in\Gamma_o}\varepsilon(\bm r)\le -\StrainCoverCrush\). \\
 
 \addlinespace[2pt]
 $\mathrm{LS}_{3}$
 & Cover band \(\displaystyle \SectionCover\!\left[\tfrac12,\tfrac34\right]\)
-& \(\displaystyle \min_{\bm r\in \SectionCover[\tfrac12,\tfrac34]}\varepsilon_c(\bm r)\le -\StrainCoverCrush\). \\
+& \(\displaystyle \min_{\bm r\in \SectionCover\left[\tfrac12,\tfrac34\right]}\varepsilon(\bm r)\le -\StrainCoverCrush\). \\
 
 \addlinespace[2pt]
 $\mathrm{LS}_{4}$

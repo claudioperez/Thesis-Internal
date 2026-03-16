@@ -3,7 +3,13 @@
 }
 
 \newcommand{\SectionFigure}[2][]{%
-\includegraphics[page=\csname shapepage@#2\endcsname,#1,trim={3cm 0.5cm 3cm 0},clip]{Figures/Shapes/Shapes.pdf}
+\includegraphics[page=\csname shapepage@#2\endcsname,#1,%
+trim={%
+3cm % left
+1.5cm % lower
+3cm % right
+1cm % upper
+},clip]{Figures/Shapes/Shapes.pdf}
 }
 
 \expandafter\def\csname framepage@frame-2007\endcsname{2}

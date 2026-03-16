@@ -134,12 +134,22 @@ Transverse (high intensity) & 7,500 & 12,000 \\
 
 
 \section{Structural Modeling}
-\begin{figure}
+
+% \begin{figure}[H]
+%     \centering
+%     \SectionFigure[width=0.8\linewidth]{G01M}
+%     \caption{Caption}
+%     \label{fig:placeholder}
+% \end{figure}
+
+\begin{figure}[H]
     \centering
-    \SectionFigure[width=\linewidth]{G01M}
-    \caption{Caption}
-    \label{fig:placeholder}
+    \includegraphics[width=0.8\linewidth,trim={5cm 0 0 8cm},clip]{Examples/04-0236/img/shape-girder.png}
+    \caption{Girder from the Painter Street Overcrossing.}
+    \label{fig:painter-girder}
 \end{figure}
+
+Girders are modeled using elastic beam elements with cross sectional properties:
 
 \FrameSection{
 title={Girder section properties for \AssetID{04-0236}},
@@ -172,29 +182,23 @@ geometric/ShiftAxialZ={\num{0.003142026214156304}},
 %
 }
 
-
 \begin{figure}[H]
 \hypertarget{fig:painter-column-regions}{%
 \centering
 \includegraphics[width=0.65\linewidth]{Examples/04-0236/img/column-regions.png}
-\caption{Lower section view of the typical bent column}
+\caption{Column section model.}
 \label{fig:painter-column-regions}
 }
 \end{figure}
 
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.5\linewidth]{Examples/04-0236/img/shape-column.png}
-\caption{Lower section view of the typical bent
-column}\label{fig:painter-column}
-\end{figure}
+Columns are modeled using \ForceFrame{} elements and the uniaxial section described in \cref{sec:uniaxial-section}. 
+Strain regions for the limit state metrics of \cref{ch:predictor_t1} are depicted in \cref{fig:painter-column-regions}. 
 
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.75\linewidth]{Examples/04-0236/img/warp-column.png}
-\caption{Warping shapes.}
-\label{fig:painter-column-warping}
-\end{figure}
+% \begin{figure}[H]
+% \centering
+% \includegraphics[width=0.5\linewidth]{Examples/04-0236/img/shape-column.png}
+% \caption{Lower section view of the typical bent column}\label{fig:painter-column}
+% \end{figure}
 
 \FrameSection{
 title={Column section properties for \AssetID{04-0236}},
@@ -227,13 +231,14 @@ geometric/ShiftAxialZ={\num{-0.007934443357838925}},
 }
 
 
-
 \begin{figure}[H]
-    \centering
-    \includegraphics[width=0.8\linewidth,trim={5cm 0 0 5cm},clip]{Examples/04-0236/img/shape-girder.png}
-    \caption{Girder from the Painter Street Overcrossing.}
-    \label{fig:0012}
+\centering
+\includegraphics[width=0.75\linewidth]{Examples/04-0236/img/warp-column.png}
+\caption{Warping shapes.}
+\label{fig:painter-column-warping}
 \end{figure}
+
+
 
 
 \iffalse

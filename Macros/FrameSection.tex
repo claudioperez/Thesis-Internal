@@ -6,7 +6,8 @@
 
 \makeatletter
 
-% Define all keys (all optional)
+% Define all keys
+\define@key{beamsec}{title}[]{\def\beamsec@title{#1}}
 \define@key{beamsec}{name}[]{\def\beamsec@name{#1}}
 \define@key{beamsec}{model}[]{\def\beamsec@shape{#1}}
 \define@key{beamsec}{shape}[]{\def\beamsec@shape{#1}}
@@ -109,7 +110,9 @@
 
 \newcommand{\FrameSection}[1]{%
     % 1) Initialize all to empty
-    \def\beamsec@name{}\def\beamsec@shape{}\def\beamsec@material{}%
+    \def\beamsec@title{}
+    \def\beamsec@name{}
+    \def\beamsec@shape{}\def\beamsec@material{}%
     \def\beamsec@model{}
     % Labels
     \def\beamsec@label@section{}
@@ -165,8 +168,13 @@
     %
     \begin{beamsecbox}
         % Header
-        \ifx\beamsec@label@problem\empty\else 
-          {\textbf{Properties for Example~\ref{sec:\beamsec@label@problem}. (\texttt{\beamsec@label@problem})}}\par
+        \ifx\beamsec@title\empty
+            \ifx\beamsec@label@problem\empty
+            \else 
+              {\textbf{Properties for Example~\ref{sec:\beamsec@label@problem}. (\texttt{\beamsec@label@problem})}}\par
+            \fi
+        \else 
+          \textbf{\beamsec@title}
         \fi
         % \ifx\beamsec@shape\empty
         %     \ifx\beamsec@material\empty\else
